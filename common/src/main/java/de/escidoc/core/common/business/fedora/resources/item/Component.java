@@ -24,6 +24,7 @@
 package de.escidoc.core.common.business.fedora.resources.item;
 
 import de.escidoc.core.common.business.fedora.Constants;
+import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.Triple;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.GenericResourcePid;
@@ -49,7 +50,11 @@ import de.escidoc.core.common.util.xml.renderer.VelocityXmlItemFoXmlRenderer;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
+import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -66,6 +71,7 @@ import java.util.Set;
  *
  * @author Frank Schwichtenberg
  */
+@Configurable
 public class Component extends GenericResourcePid implements ComponentInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Component.class);
@@ -100,20 +106,20 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     public Component(final String id, final String parentId, final String timestamp) throws ResourceNotFoundException,
         ItemNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
         XmlParserSystemException, WebserverSystemException {
-
         super(id);
-
         this.parent = parentId;
         this.parentVersionDate = timestamp;
         setHref(Constants.COMPONENT_URL_PART + id);
+    }
 
+    @PostConstruct
+    protected void init() throws ResourceNotFoundException, ItemNotFoundException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
         initDatastreams();
         getSomeValuesFromFedora();
-
         if (!checkResourceType(ResourceType.COMPONENT)) {
-            throw new ItemNotFoundException("Component with the provided objid '" + id + "' does not exit.");
+            throw new ItemNotFoundException("Component with the provided objid '" + this.getId() + "' does not exit.");
         }
-
     }
 
     /**

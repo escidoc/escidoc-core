@@ -25,11 +25,17 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
+import org.apache.velocity.context.Context;
+import org.apache.velocity.util.ContextAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -42,9 +48,12 @@ import java.util.Map;
  *
  * @author Michael Schneider
  */
-public class BeanMethod {
+@Configurable
+public class BeanMethod implements ApplicationContextAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BeanMethod.class);
+
+    private ApplicationContext applicationContext;
 
     private static final Map<String, Object> RESOURCE_POOL = Collections.synchronizedMap(new HashMap<String, Object>());
 
@@ -62,10 +71,14 @@ public class BeanMethod {
      * @param parameters The array containing the parameters.
      */
     public BeanMethod(final String beanId, final String method, final Object[] parameters) {
-
         this.beanId = beanId;
         this.method = method;
         this.parameters = parameters;
+    }
+
+    @Override
+    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 
     /**
@@ -178,10 +191,7 @@ public class BeanMethod {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(StringUtility.format("Create Bean", getBeanId()));
             }
-
-            result =
-                "service.StagingFileHandlerBean".equals(getBeanId()) ? BeanLocator.getBean(BeanLocator.ST_FACTORY_ID,
-                    getBeanId()) : BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID, getBeanId());
+            result = this.applicationContext.getBean(this.beanId);
             RESOURCE_POOL.put(getBeanId(), result);
         }
         return result;

@@ -6,11 +6,19 @@ import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+@Service("de.escidoc.core.index.internal.IndexServiceImpl")
 public class IndexServiceImpl {
 
+    @Autowired
+    @Qualifier("common.business.indexing.IndexingHandler")
     private IndexingHandler indexingHandler;
 
+    @Autowired
+    @Qualifier("service.AdminHandler")
     private AdminHandlerInterface adminHandler;
 
     public void onNewIndexRequest(final IndexRequest indexRequest) throws IndexServiceException {

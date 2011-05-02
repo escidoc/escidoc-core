@@ -12,6 +12,9 @@ import edu.harvard.hul.ois.jhove.JhoveException;
 import edu.harvard.hul.ois.jhove.OutputHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -26,6 +29,7 @@ import java.io.OutputStream;
 /**
  * @author Michael Schneider
  */
+@Service("business.JhoveHandler")
 public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JhoveHandlerInterface.class);

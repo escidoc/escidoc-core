@@ -43,12 +43,10 @@
         <dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>adm</artifactId>
-            <type>ejb</type>
 		</dependency>
         <dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
-            <type>ejb</type>
 		</dependency>
     </dependencies>
     

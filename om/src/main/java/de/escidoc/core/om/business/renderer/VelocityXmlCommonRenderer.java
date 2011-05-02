@@ -39,6 +39,9 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -47,7 +50,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class VelocityXmlCommonRenderer {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * Adds content relations values to the provided map.
@@ -79,14 +87,14 @@ public class VelocityXmlCommonRenderer {
                 final String predicate = relation.get("predicate");
                 entry.put("targetId", targetId);
                 entry.put("predicate", predicate);
-                final String objectType = TripleStoreUtility.getInstance().getObjectType(targetId);
+                final String objectType = this.tripleStoreUtility.getObjectType(targetId);
                 if (objectType.endsWith("Item")) {
                     entry.put("targetHref", XmlUtility.BASE_OM + "item/" + targetId);
                 }
                 else {
                     entry.put("targetHref", XmlUtility.BASE_OM + "container/" + targetId);
                 }
-                final String targetTitle = TripleStoreUtility.getInstance().getTitle(targetId);
+                final String targetTitle = this.tripleStoreUtility.getTitle(targetId);
                 entry.put("targetTitle", targetTitle);
                 entries.add(entry);
             }

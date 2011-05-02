@@ -35,6 +35,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.commons.collections.map.LRUMap;
 import org.apache.xpath.XPathAPI;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -61,6 +62,7 @@ import java.util.regex.Pattern;
 /**
  * @author Roland Werner (Accenture)
  */
+@Service("eSciDoc.core.common.helper.InvocationParser")
 public class InvocationParser {
 
     /**

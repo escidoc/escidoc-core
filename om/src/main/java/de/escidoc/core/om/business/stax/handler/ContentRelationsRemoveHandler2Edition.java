@@ -38,13 +38,21 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Configurable
 public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     private final StaxParser parser;
 
@@ -111,8 +119,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
             final String[] splittedPredicate = splitPredicate(this.predicate);
             final String predicateNs = splittedPredicate[0];
             final String predicateValue = splittedPredicate[1];
-            final String existRelationTarget =
-                TripleStoreUtility.getInstance().getRelation(this.sourceId, this.predicate);
+            final String existRelationTarget = this.tripleStoreUtility.getRelation(this.sourceId, this.predicate);
 
             if (existRelationTarget == null) {
                 throw new ContentRelationNotFoundException("A relation with predicate " + this.predicate

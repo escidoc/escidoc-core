@@ -28,6 +28,9 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.naming.directory.NoSuchAttributeException;
 
@@ -39,7 +42,12 @@ import javax.naming.directory.NoSuchAttributeException;
  *
  * @author Frank Schwichtenberg
  */
+@Configurable
 public class OptimisticLockingHandler extends DefaultHandler {
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
 
     private final String objid;
 
@@ -88,7 +96,7 @@ public class OptimisticLockingHandler extends DefaultHandler {
 
             final String requestedModificationDate = requestedDate.getValue();
             if (this.lastModifiedDate != null) {
-                Utility.getInstance().checkOptimisticLockingCriteria(this.lastModifiedDate, requestedModificationDate,
+                this.utility.checkOptimisticLockingCriteria(this.lastModifiedDate, requestedModificationDate,
                     this.objectType + " with id " + this.objid);
             }
             this.done = true;

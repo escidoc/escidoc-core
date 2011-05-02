@@ -37,6 +37,8 @@ import de.escidoc.core.om.business.indexer.IndexerResourceCache;
 import de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.util.Map;
@@ -44,9 +46,13 @@ import java.util.Map;
 /**
  * @author Michael Hoppe
  */
+@Service("business.FedoraRestDeviationHandler")
 public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FedoraRestDeviationHandler.class);
+
+    @Autowired
+    private IndexerResourceCache indexerResourceCache;
 
     /**
      * @param pid        unused.
@@ -67,8 +73,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
         // Try to get EscidocBinaryContent from IndexerResourceCache/////////////////
         EscidocBinaryContent escidocBinaryContent = null;
         try {
-            final MIMETypedStream mimeTypedStream =
-                (MIMETypedStream) IndexerResourceCache.getInstance().getResource(dsID);
+            final MIMETypedStream mimeTypedStream = (MIMETypedStream) this.indexerResourceCache.getResource(dsID);
             if (mimeTypedStream != null && mimeTypedStream.getStream() != null) {
                 escidocBinaryContent = new EscidocBinaryContent();
                 escidocBinaryContent.setMimeType(mimeTypedStream.getMIMEType());
@@ -110,7 +115,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
 
         // Try to get xml from IndexerResourceCache/////////////////
         try {
-            xml = (String) IndexerResourceCache.getInstance().getResource(pid);
+            xml = (String) this.indexerResourceCache.getResource(pid);
         }
         catch (final Exception e) {
             LOGGER.error(e.toString());
@@ -131,7 +136,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      */
     @Override
     public void cache(final String pid, final String xml) throws SystemException, TripleStoreSystemException {
-        IndexerResourceCache.getInstance().setResource(pid, xml);
+        this.indexerResourceCache.setResource(pid, xml);
     }
 
     /**
@@ -141,7 +146,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      */
     @Override
     public void removeFromCache(final String pid) throws SystemException, TripleStoreSystemException {
-        IndexerResourceCache.getInstance().deleteResource(pid);
+        this.indexerResourceCache.deleteResource(pid);
     }
 
     /**
@@ -152,7 +157,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      */
     @Override
     public void replaceInCache(final String pid, final String xml) throws SystemException, TripleStoreSystemException {
-        IndexerResourceCache.getInstance().replaceResource(pid, xml);
+        this.indexerResourceCache.replaceResource(pid, xml);
     }
 
 }

@@ -35,14 +35,22 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.PreprocessingHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 /**
  * A statistic data resource handler.
  *
  * @author Michael Hoppe
  */
+@Service("service.PreprocessingHandler")
 public class PreprocessingHandler implements PreprocessingHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.PreprocessingHandler")
     private de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface handler;
 
     /**

@@ -272,16 +272,4 @@ public class LockHandler extends JdbcDaoSupport {
             throw new WebserverSystemException("Could not find lock status for object '" + objid + '!', e);
         }
     }
-
-    /**
-     * Returns a LockHandler instance.
-     * 
-     * @return The LockHandler instance.
-     */
-    public static LockHandler getInstance() {
-
-        final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
-        final BeanFactory factory = beanFactoryLocator.useBeanFactory("Om.spring.ejb.context").getFactory();
-        return (LockHandler) factory.getBean("business.LockHandler");
-    }
 }

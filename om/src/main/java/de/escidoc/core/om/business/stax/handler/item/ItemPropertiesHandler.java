@@ -53,6 +53,9 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.stream.XMLStreamException;
@@ -64,7 +67,12 @@ import java.util.Collection;
 /**
  * Handle and obtain values from Item Properties section.
  */
+@Configurable
 public class ItemPropertiesHandler extends DefaultHandler {
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
 
     private final StaxParser parser;
 
@@ -164,7 +172,6 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
             // String id = properties.get(TripleStoreUtility.PROP_CONTEXT_ID);
             String id = this.properties.getObjectProperties().getContextId();
-            final Utility utility = Utility.getInstance();
             utility.checkIsContext(id);
             id = this.properties.getObjectProperties().getContentModelId();
             utility.checkIsContentModel(id);

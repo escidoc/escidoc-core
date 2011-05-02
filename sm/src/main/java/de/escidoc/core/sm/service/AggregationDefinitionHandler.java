@@ -38,6 +38,9 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -46,8 +49,11 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
+@Service("service.AggregationDefinitionHandler")
 public class AggregationDefinitionHandler implements AggregationDefinitionHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.AggregationDefinitionHandler")
     private de.escidoc.core.sm.business.interfaces.AggregationDefinitionHandlerInterface handler;
 
     /**

@@ -85,7 +85,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
             }
         }
         try {
-            Utility.getInstance().checkIsOrganizationalUnit(result);
+            this.getUtility().checkIsOrganizationalUnit(result);
         }
         catch (final OrganizationalUnitNotFoundException e) {
             throw new OrganizationalUnitNotFoundException("Reference to parent organizational-unit is not valid! "

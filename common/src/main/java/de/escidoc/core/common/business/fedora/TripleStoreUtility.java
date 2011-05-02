@@ -26,7 +26,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.service.BeanLocator;
+import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.nsdl.mptstore.query.QueryException;
@@ -812,21 +812,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         boolean targetIsSubject, final String predicateId, final String expectedValue, final String targetResourceType,
         final String contentModelTitleId, final String contentModelTitle) throws TripleStoreSystemException;
 
-    /**
-     * Gets the triple store utility spring bean.<br> Note: This method should only be used to get the bean if spring's
-     * dependency injection is not possible.
-     *
-     * @return Returns the spring bean with id "business.TripleStoreUtility".
-     * @throws WebserverSystemException If getting TripleStore Bean failed.
-     */
-    public static TripleStoreUtility getInstance() throws WebserverSystemException {
-
-        if (mptu == null) {
-            mptu = BeanLocator.locateTripleStoreUtility();
-        }
-        return mptu;
-    }
-
     // FIXME don't use triplestore?
     public List<String> getMethodNames(final String id) throws TripleStoreSystemException {
         final List<String> methodNames = new ArrayList<String>();
@@ -873,4 +858,83 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         final Iterator<String> it = results.iterator();
         return it.hasNext();
     }
+
+    /**
+     * Get the href to the object with the specified type and id.
+     *
+     * @param objectType The type of the object. This must be one of <ul> <li>container</li> <li>content-model</li>
+     *                   <li>context</li> <li>item</li> <li>component</li> <li>content-relation</li>
+     *                   <li>organizational-unit</li> <li>role</li> <li>scope</li> <li>user-account</li> </ul>
+     *                   Otherwise, <code>null</code> is returned.
+     * @param objectId   The id of the object.
+     * @return Returns the href to the specified object or <code>null</code>.
+     */
+    public String getHref(final String objectType, final String objectId) {
+        String type = null;
+        if (objectType != null) {
+            type =
+                XmlUtility.PATTERN_RESOURCE_OBJECT_TYPE.matcher(objectType).find() ? objectType : Constants.RESOURCES_NS_URI
+                    + StringUtility.convertToUpperCaseLetterFormat(objectType);
+        }
+
+        String objectHref = null;
+        if (Constants.CONTAINER_OBJECT_TYPE.equals(type)) {
+            objectHref = XmlUtility.getContainerHref(objectId);
+        }
+        else if (Constants.CONTENT_MODEL_OBJECT_TYPE.equals(type)) {
+            objectHref = XmlUtility.getContentModelHref(objectId);
+        }
+        else if (Constants.CONTEXT_OBJECT_TYPE.equals(type)) {
+            objectHref = XmlUtility.getContextHref(objectId);
+        }
+        else if (Constants.ITEM_OBJECT_TYPE.equals(type)) {
+            objectHref = XmlUtility.getItemHref(objectId);
+        }
+        else if (Constants.COMPONENT_OBJECT_TYPE.equals(type)) {
+            objectHref = getComponentHref(objectId);
+        }
+        else if (Constants.CONTENT_RELATION2_OBJECT_TYPE.equals(type)) {
+            objectHref = XmlUtility.getContentRelationHref(objectId);
+        }
+        else if (Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE.equals(type)) {
+            objectHref = XmlUtility.getOrganizationalUnitHref(objectId);
+        }
+        else if (Constants.ROLE_OBJECT_TYPE.equals(type)) {
+            objectHref = XmlUtility.getRoleHref(objectId);
+        }
+        else if (Constants.SCOPE_OBJECT_TYPE.equals(type)) {
+            objectHref = XmlUtility.getScopeHref(objectId);
+        }
+        else if (Constants.USER_ACCOUNT_OBJECT_TYPE.equals(type)) {
+            objectHref = XmlUtility.getUserAccountHref(objectId);
+        }
+        else if (Constants.USER_GROUP_OBJECT_TYPE.equals(type)) {
+            objectHref = XmlUtility.getUserGroupHref(objectId);
+        }
+        return objectHref;
+    }
+
+    /**
+     * Gets the component href for the provided component id.
+     *
+     * @param componentId The id of the component.
+     * @return Returns the href for the provided component id.
+     */
+    public String getComponentHref(final String componentId) {
+        final String itemId;
+        try {
+            itemId = getItemForComponent(componentId);
+        }
+        catch (final TripleStoreSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on accessing triple store.");
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on accessing triple store.", e);
+            }
+            return null;
+        }
+        return Constants.ITEM_URL_BASE + itemId + Constants.COMPONENT_URL_PART + componentId;
+    }
+
 }

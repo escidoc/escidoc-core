@@ -31,14 +31,20 @@ package de.escidoc.core.aa.service;
 import de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * The User management wrapper in service layer.
  *
  * @author Torsten Tetteroo
  */
+@Service("service.UserManagementWrapper")
 public class UserManagementWrapper implements UserManagementWrapperInterface {
 
+    @Autowired
+    @Qualifier("business.UserManagementWrapper")
     private de.escidoc.core.aa.business.interfaces.UserManagementWrapperInterface business;
 
     /**

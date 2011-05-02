@@ -46,7 +46,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.oum.business.fedora.resources.interfaces.OrganizationalUnitInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
 
+import javax.annotation.PostConstruct;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +65,7 @@ import java.util.Set;
  *
  * @author Michael Schneider
  */
+@Configurable
 public class OrganizationalUnit extends GenericResource implements OrganizationalUnitInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationalUnit.class);
@@ -103,12 +106,16 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      */
     public OrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
-
         super(id);
-        if (id != null) {
-            Utility.getInstance().checkIsOrganizationalUnit(id);
+    }
+
+    @PostConstruct
+    protected void init() throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
+        if (this.getId() != null) {
+            this.getUtility().checkIsOrganizationalUnit(this.getId());
         }
-        setHref(Constants.ORGANIZATIONAL_UNIT_URL_BASE + id);
+        setHref(Constants.ORGANIZATIONAL_UNIT_URL_BASE + this.getId());
         getSomeValuesFromFedora();
     }
 
@@ -122,8 +129,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      */
     private String getPropertyFromTriplestore(final String property) throws TripleStoreSystemException,
         WebserverSystemException {
-
-        return TripleStoreUtility.getInstance().getPropertiesElements(getId(), property);
+        return getTripleStoreUtility().getPropertiesElements(getId(), property);
     }
 
     /**
@@ -146,10 +152,10 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
         this.modifiedByTitle = getPropertyFromTriplestore(TripleStoreUtility.PROP_MODIFIED_BY_TITLE);
         this.publicStatus = getPropertyFromTriplestore(TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-        this.hasChildren = !TripleStoreUtility.getInstance().getChildren(getId()).isEmpty();
-        this.name = TripleStoreUtility.getInstance().getTitle(getId());
-        this.description = TripleStoreUtility.getInstance().getDescription(getId());
-        this.parents = TripleStoreUtility.getInstance().getParents(getId());
+        this.hasChildren = !getTripleStoreUtility().getChildren(getId()).isEmpty();
+        this.name = getTripleStoreUtility().getTitle(getId());
+        this.description = getTripleStoreUtility().getDescription(getId());
+        this.parents = getTripleStoreUtility().getParents(getId());
         this.predecessors = getPredecessors(getId());
 
     }
@@ -162,49 +168,40 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @throws TripleStoreSystemException Thrown if request TripleStore failed.
      */
     public List<Predecessor> getPredecessors(final String ouId) throws TripleStoreSystemException {
-
         final List<Predecessor> predecessors = new ArrayList<Predecessor>();
-
-        try {
-            // collect affiliations
-            List<String> pred =
-                TripleStoreUtility.getInstance().executeQueryId(ouId, false, Constants.PREDECESSOR_AFFILIATION);
-            Iterator<String> it = pred.iterator();
-            while (it.hasNext()) {
-                predecessors.add(new Predecessor(it.next(), PredecessorForm.AFFILIATION));
-            }
-
-            // collect fusion
-            pred = TripleStoreUtility.getInstance().executeQueryId(ouId, false, Constants.PREDECESSOR_FUSION);
-            it = pred.iterator();
-            while (it.hasNext()) {
-                predecessors.add(new Predecessor(it.next(), PredecessorForm.FUSION));
-            }
-
-            // collect replacement
-            pred = TripleStoreUtility.getInstance().executeQueryId(ouId, false, Constants.PREDECESSOR_REPLACEMENT);
-            it = pred.iterator();
-            while (it.hasNext()) {
-                predecessors.add(new Predecessor(it.next(), PredecessorForm.REPLACEMENT));
-            }
-
-            // collect spin-off
-            pred = TripleStoreUtility.getInstance().executeQueryId(ouId, false, Constants.PREDECESSOR_SPIN_OFF);
-            it = pred.iterator();
-            while (it.hasNext()) {
-                predecessors.add(new Predecessor(it.next(), PredecessorForm.SPIN_OFF));
-            }
-
-            // collect splitting
-            pred = TripleStoreUtility.getInstance().executeQueryId(ouId, false, Constants.PREDECESSOR_SPLITTING);
-            it = pred.iterator();
-            while (it.hasNext()) {
-                predecessors.add(new Predecessor(it.next(), PredecessorForm.SPLITTING));
-            }
-
+        // collect affiliations
+        List<String> pred = getTripleStoreUtility().executeQueryId(ouId, false, Constants.PREDECESSOR_AFFILIATION);
+        Iterator<String> it = pred.iterator();
+        while (it.hasNext()) {
+            predecessors.add(new Predecessor(it.next(), PredecessorForm.AFFILIATION));
         }
-        catch (final WebserverSystemException wse) {
-            throw new TripleStoreSystemException(wse);
+
+        // collect fusion
+        pred = getTripleStoreUtility().executeQueryId(ouId, false, Constants.PREDECESSOR_FUSION);
+        it = pred.iterator();
+        while (it.hasNext()) {
+            predecessors.add(new Predecessor(it.next(), PredecessorForm.FUSION));
+        }
+
+        // collect replacement
+        pred = getTripleStoreUtility().executeQueryId(ouId, false, Constants.PREDECESSOR_REPLACEMENT);
+        it = pred.iterator();
+        while (it.hasNext()) {
+            predecessors.add(new Predecessor(it.next(), PredecessorForm.REPLACEMENT));
+        }
+
+        // collect spin-off
+        pred = getTripleStoreUtility().executeQueryId(ouId, false, Constants.PREDECESSOR_SPIN_OFF);
+        it = pred.iterator();
+        while (it.hasNext()) {
+            predecessors.add(new Predecessor(it.next(), PredecessorForm.SPIN_OFF));
+        }
+
+        // collect splitting
+        pred = getTripleStoreUtility().executeQueryId(ouId, false, Constants.PREDECESSOR_SPLITTING);
+        it = pred.iterator();
+        while (it.hasNext()) {
+            predecessors.add(new Predecessor(it.next(), PredecessorForm.SPLITTING));
         }
         return predecessors;
     }
@@ -217,51 +214,42 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @throws TripleStoreSystemException Thrown if request TripleStore failed.
      */
     public List<Predecessor> getSuccessors(final String ouId) throws TripleStoreSystemException {
-
         final List<Predecessor> successors = new ArrayList<Predecessor>();
         final Collection<String> ids = new ArrayList<String>();
         ids.add(ouId);
-
-        try {
-            // collect affiliations
-            List<String> pred =
-                TripleStoreUtility.getInstance().executeQueryForList(ids, true, Constants.PREDECESSOR_AFFILIATION);
-            Iterator<String> it = pred.iterator();
-            while (it.hasNext()) {
-                successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.AFFILIATION));
-            }
-
-            // collect fusion
-            pred = TripleStoreUtility.getInstance().executeQueryForList(ids, true, Constants.PREDECESSOR_FUSION);
-            it = pred.iterator();
-            while (it.hasNext()) {
-                successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.FUSION));
-            }
-
-            // collect replacement
-            pred = TripleStoreUtility.getInstance().executeQueryForList(ids, true, Constants.PREDECESSOR_REPLACEMENT);
-            it = pred.iterator();
-            while (it.hasNext()) {
-                successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.REPLACEMENT));
-            }
-
-            // collect spin-off
-            pred = TripleStoreUtility.getInstance().executeQueryForList(ids, true, Constants.PREDECESSOR_SPIN_OFF);
-            it = pred.iterator();
-            while (it.hasNext()) {
-                successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.SPIN_OFF));
-            }
-
-            // collect splitting
-            pred = TripleStoreUtility.getInstance().executeQueryForList(ids, true, Constants.PREDECESSOR_SPLITTING);
-            it = pred.iterator();
-            while (it.hasNext()) {
-                successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.SPLITTING));
-            }
-
+        // collect affiliations
+        List<String> pred = getTripleStoreUtility().executeQueryForList(ids, true, Constants.PREDECESSOR_AFFILIATION);
+        Iterator<String> it = pred.iterator();
+        while (it.hasNext()) {
+            successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.AFFILIATION));
         }
-        catch (final WebserverSystemException wse) {
-            throw new TripleStoreSystemException(wse);
+
+        // collect fusion
+        pred = getTripleStoreUtility().executeQueryForList(ids, true, Constants.PREDECESSOR_FUSION);
+        it = pred.iterator();
+        while (it.hasNext()) {
+            successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.FUSION));
+        }
+
+        // collect replacement
+        pred = getTripleStoreUtility().executeQueryForList(ids, true, Constants.PREDECESSOR_REPLACEMENT);
+        it = pred.iterator();
+        while (it.hasNext()) {
+            successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.REPLACEMENT));
+        }
+
+        // collect spin-off
+        pred = getTripleStoreUtility().executeQueryForList(ids, true, Constants.PREDECESSOR_SPIN_OFF);
+        it = pred.iterator();
+        while (it.hasNext()) {
+            successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.SPIN_OFF));
+        }
+
+        // collect splitting
+        pred = getTripleStoreUtility().executeQueryForList(ids, true, Constants.PREDECESSOR_SPLITTING);
+        it = pred.iterator();
+        while (it.hasNext()) {
+            successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.SPLITTING));
         }
         return successors;
     }
@@ -295,8 +283,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public List<String> getChildrenIds() throws TripleStoreSystemException, WebserverSystemException {
-
-        return TripleStoreUtility.getInstance().getChildren(getId());
+        return getTripleStoreUtility().getChildren(getId());
     }
 
     /**

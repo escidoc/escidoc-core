@@ -47,6 +47,9 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,6 +63,7 @@ import java.util.Map;
  *
  * @author Michael Schneider
  */
+@Service
 public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnitRendererInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VelocityXmlOrganizationalUnitRenderer.class);
@@ -67,6 +71,10 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
     private static final int THREE = 3;
 
     private static final int PREDECESSOR_SET_SIZE = 4;
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     /*
      * See Interface for functional description.
@@ -283,14 +291,14 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private static List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
+    private List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
         throws TripleStoreSystemException, WebserverSystemException {
         final List<Map<String, String>> entries = new ArrayList<Map<String, String>>(ids.size());
         for (final String id : ids) {
             final Map<String, String> entry = new HashMap<String, String>(THREE);
             entry.put("id", id);
             entry.put("href", XmlUtility.getOrganizationalUnitHref(id));
-            entry.put("title", TripleStoreUtility.getInstance().getTitle(id));
+            entry.put("title", this.tripleStoreUtility.getTitle(id));
             entries.add(entry);
         }
         return entries;
@@ -565,7 +573,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private static void addParentsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
+    private void addParentsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws TripleStoreSystemException, WebserverSystemException {
         values.put("parentsHref", XmlUtility.getOrganizationalUnitParentsHref(organizationalUnit.getId()));
         values.put("parentsTitle", "Parents");
@@ -577,7 +585,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
             final String id = idIter.next();
             entry.put("id", id);
             entry.put("href", XmlUtility.getOrganizationalUnitHref(id));
-            entry.put("title", TripleStoreUtility.getInstance().getTitle(id));
+            entry.put("title", this.tripleStoreUtility.getTitle(id));
 
             entries.add(entry);
         }
@@ -594,8 +602,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private static void addPredecessorsValues(
-        final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
+    private void addPredecessorsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws TripleStoreSystemException, WebserverSystemException {
 
         values.put(XmlTemplateProvider.PREDECESSORS_HREF, XmlUtility
@@ -613,7 +620,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
             final Predecessor pred = idIter.next();
             entry.put(XmlTemplateProvider.OBJID, pred.getObjid());
             entry.put(XmlTemplateProvider.HREF, XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
-            entry.put(XmlTemplateProvider.TITLE, TripleStoreUtility.getInstance().getTitle(pred.getObjid()));
+            entry.put(XmlTemplateProvider.TITLE, this.tripleStoreUtility.getTitle(pred.getObjid()));
             entry.put(XmlTemplateProvider.PREDECESSOR_FORM, pred.getForm().getLabel());
 
             entries.add(entry);
@@ -631,8 +638,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private static void addSuccessorsValues(
-        final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
+    private void addSuccessorsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws TripleStoreSystemException, WebserverSystemException {
 
         values.put(XmlTemplateProvider.SUCCESSORS_HREF, XmlUtility
@@ -653,7 +659,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
             final Predecessor pred = idIter.next();
             entry.put(XmlTemplateProvider.OBJID, pred.getObjid());
             entry.put(XmlTemplateProvider.HREF, XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
-            entry.put(XmlTemplateProvider.TITLE, TripleStoreUtility.getInstance().getTitle(pred.getObjid()));
+            entry.put(XmlTemplateProvider.TITLE, this.tripleStoreUtility.getTitle(pred.getObjid()));
             entry.put(XmlTemplateProvider.SUCCESSOR_FORM, pred.getForm().getLabel());
 
             entries.add(entry);

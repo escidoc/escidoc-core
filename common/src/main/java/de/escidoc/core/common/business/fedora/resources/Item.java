@@ -56,7 +56,9 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
 
+import javax.annotation.PostConstruct;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -75,6 +77,7 @@ import java.util.Set;
  * 
  * @author Frank Schwichtenberg
  */
+@Configurable
 public class Item extends GenericVersionableResourcePid implements ItemInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Item.class);
@@ -124,13 +127,15 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
 
         this.mdRecords = new HashMap<String, Datastream>();
         this.contentStreams = new HashMap<String, Datastream>();
+    }
 
+    @PostConstruct
+    protected void init() throws WebserverSystemException, FedoraSystemException, IntegritySystemException,
+        StreamNotFoundException, TripleStoreSystemException, ItemNotFoundException, ComponentNotFoundException {
         initDatastreams(getDatastreamInfos());
-
         if (!checkResourceType(ResourceType.ITEM)) {
-            throw new ItemNotFoundException("Item with the provided objid '" + id + "' does not exit.");
+            throw new ItemNotFoundException("Item with the provided objid '" + this.getId() + "' does not exit.");
         }
-
         setTitle(getProperty("title"));
         try {
             initComponents();
@@ -138,7 +143,6 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         catch (final SystemException e) {
             throw new WebserverSystemException(e);
         }
-
     }
 
     /**
@@ -333,7 +337,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
 
         if (this.components == null) {
             if (isLatestVersion()) {
-                componentIds = TripleStoreUtility.getInstance().getComponents(getId());
+                componentIds = getTripleStoreUtility().getComponents(getId());
             }
             else {
                 final List<String> predicates = new ArrayList<String>();

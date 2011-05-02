@@ -59,6 +59,9 @@ import de.escidoc.core.common.util.list.ListSorting;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,6 +104,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.UserAccountAttributeFinderModule")
 public class UserAccountAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
@@ -196,10 +200,16 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     public static final Pattern ATTR_USER_ROLE_SCOPE =
         Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "role-grant:(.*?):assigned-on");
 
+    @Autowired
+    @Qualifier("resource.PoliciesCacheProxy")
     private PoliciesCacheProxy policiesCacheProxy;
 
+    @Autowired
+    @Qualifier("persistence.UserAccountDao")
     private UserAccountDaoInterface userAccountDao;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
 
     /**

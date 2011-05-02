@@ -42,6 +42,7 @@ import de.escidoc.core.common.util.xml.factory.UserGroupXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,6 +56,7 @@ import java.util.Map;
  *
  * @author André Schenk
  */
+@Service("eSciDoc.core.aa.business.renderer.VelocityXmlUserGroupRenderer")
 public final class VelocityXmlUserGroupRenderer extends AbstractRenderer implements UserGroupRendererInterface {
 
     /**

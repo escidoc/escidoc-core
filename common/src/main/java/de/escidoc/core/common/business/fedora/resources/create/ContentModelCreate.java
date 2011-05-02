@@ -36,6 +36,9 @@ import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.joda.time.DateTime;
 import org.joda.time.ReadableInstant;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -51,7 +54,12 @@ import java.util.Map;
  *
  * @author Frank Schwichtenberg
  */
+@Configurable
 public class ContentModelCreate extends GenericResourceCreate {
+
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
+    private FedoraUtility fedoraUtility;
 
     private ContentModelProperties properties;
 
@@ -155,15 +163,15 @@ public class ContentModelCreate extends GenericResourceCreate {
             if (this.resourceDefinitions != null) {
                 for (final ResourceDefinitionCreate resourceDefinitionCreate : this.resourceDefinitions.values()) {
                     final String sdefFoxml = getSDefFoXML(resourceDefinitionCreate);
-                    FedoraUtility.getInstance().storeObjectInFedora(sdefFoxml, false);
+                    this.fedoraUtility.storeObjectInFedora(sdefFoxml, false);
                     final String sdepFoxml = getSDepFoXML(resourceDefinitionCreate);
-                    FedoraUtility.getInstance().storeObjectInFedora(sdepFoxml, false);
+                    this.fedoraUtility.storeObjectInFedora(sdepFoxml, false);
                 }
             }
 
             // serialize object without RELS-EXT and WOV to FOXML
             final String foxml = getMinimalFoXML();
-            FedoraUtility.getInstance().storeObjectInFedora(foxml, false);
+            this.fedoraUtility.storeObjectInFedora(foxml, false);
 
             // take timestamp and prepare RELS-EXT
             final String lmd = getLastModificationDateByWorkaround(getObjid());
@@ -173,18 +181,16 @@ public class ContentModelCreate extends GenericResourceCreate {
             if (this.properties.getLatestReleasedVersion() != null) {
                 this.properties.getLatestReleasedVersion().setDate(lmd);
             }
-
-            FedoraUtility.getInstance().addDatastream(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY,
-                new String[] {}, "whole object versioning datastream", false,
-                getWov().getBytes(XmlUtility.CHARACTER_ENCODING), false);
+            this.fedoraUtility.addDatastream(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY, new String[] {},
+                "whole object versioning datastream", false, getWov().getBytes(XmlUtility.CHARACTER_ENCODING), false);
 
             // update RELS-EXT with timestamp
             final String relsExt = renderRelsExt();
-            FedoraUtility.getInstance().modifyDatastream(getObjid(), Datastream.RELS_EXT_DATASTREAM,
-                "RELS_EXT DATASTREAM", relsExt.getBytes(XmlUtility.CHARACTER_ENCODING), false);
+            this.fedoraUtility.modifyDatastream(getObjid(), Datastream.RELS_EXT_DATASTREAM, "RELS_EXT DATASTREAM",
+                relsExt.getBytes(XmlUtility.CHARACTER_ENCODING), false);
 
             if (forceSync) {
-                FedoraUtility.getInstance().sync();
+                this.fedoraUtility.sync();
             }
 
         }
@@ -484,12 +490,12 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @return LastModificationDate of the Object (with workaround for Fedora bug).
      * @throws FedoraSystemException Thrown if request to Fedora failed.
      */
-    private static String getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
+    private String getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
 
         // Work around for Fedora30 bug APIM.getDatastreams()
         String lastModificationDate = null;
         final org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
-            FedoraUtility.getInstance().getDatastreamsInformation(objid, null);
+            this.fedoraUtility.getDatastreamsInformation(objid, null);
         for (final org.fcrepo.server.types.gen.Datastream aRelsExtInfo : relsExtInfo) {
             final String createdDate = aRelsExtInfo.getCreateDate();
 

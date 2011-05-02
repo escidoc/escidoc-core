@@ -34,6 +34,8 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,8 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
     /**
      * The policy decision point used to check access privileges.
      */
+    @Autowired
+    @Qualifier("service.PolicyDecisionPoint")
     private PolicyDecisionPointInterface pdp;
 
     /**

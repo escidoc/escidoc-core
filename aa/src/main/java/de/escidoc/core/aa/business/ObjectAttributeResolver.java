@@ -21,6 +21,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,18 +33,29 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
+@Service("eSciDoc.core.aa.ObjectAttributeResolver")
 public class ObjectAttributeResolver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectAttributeResolver.class);
 
+    @Autowired
+    @Qualifier("persistence.UserAccountDao")
     private UserAccountDaoInterface userAccountDao;
 
+    @Autowired
+    @Qualifier("persistence.UserGroupDao")
     private UserGroupDaoInterface userGroupDao;
 
+    @Autowired
+    @Qualifier("persistence.EscidocRoleDao")
     private EscidocRoleDaoInterface roleDao;
 
+    @Autowired
+    @Qualifier("service.ScopeHandler")
     private ScopeHandlerInterface scopeHandler;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tsu;
 
     public static final String ATTR_OBJECT_TYPE = "objectType";

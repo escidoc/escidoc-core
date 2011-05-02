@@ -56,6 +56,11 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.StaxParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.BufferedInputStream;
@@ -71,6 +76,8 @@ import java.util.Map;
  *
  * @author André Schenk
  */
+@Service("convert.XacmlParser")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class XacmlParser {
 
     /**
@@ -78,13 +85,19 @@ public class XacmlParser {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(XacmlParser.class);
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.XacmlFunctionRoleIsGranted")
     private XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted;
 
+    @Autowired
+    @Qualifier("convert.PolicyParser")
     private PolicyParser pol;
 
-    private EscidocRole role;
-
+    @Autowired
+    @Qualifier("filter.Values")
     private Values values;
+
+    private EscidocRole role;
 
     private final EscidocRoleDaoInterface roleDao = new EscidocRoleDaoInterface() {
         @Override

@@ -40,6 +40,7 @@ import de.escidoc.core.oai.business.persistence.SetDefinition;
 import de.escidoc.core.oai.business.renderer.interfaces.SetDefinitionRendererInterface;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,6 +53,7 @@ import java.util.Map;
  *
  * @author Rozita Friedman
  */
+@Service("eSciDoc.core.om.business.renderer.VelocityXmlSetDefinitionRenderer")
 public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer implements SetDefinitionRendererInterface {
 
     /**

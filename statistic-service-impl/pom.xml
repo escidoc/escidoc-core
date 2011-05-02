@@ -45,7 +45,6 @@
         <dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>sm</artifactId>
-            <type>ejb</type>
 		</dependency>
     </dependencies>
 

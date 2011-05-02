@@ -152,7 +152,7 @@ public class Resource extends XMLBase {
         if (this.serviceName == null) {
             this.serviceName = this.name + "Handler";
         }
-        this.beanId = "service." + this.serviceName + "Bean";
+        this.beanId = "service." + this.serviceName;
 
         this.descriptors = new HashMap<String, Node>();
 

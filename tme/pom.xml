@@ -11,7 +11,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>tme</artifactId>
-    <packaging>ejb</packaging>
 	<name>eSciDoc Core - Technical Metadata Extraction Service</name>
 	<version>trunk-SNAPSHOT</version>
 
@@ -63,8 +62,6 @@
                             <groupId>org.springframework</groupId>
                             <artifactId>spring-aspects</artifactId>
                         </aspectLibrary>
-                    </aspectLibraries>
-                    <aspectLibraries>
                         <aspectLibrary>
                             <groupId>org.escidoc.core</groupId>
                             <artifactId>common</artifactId>
@@ -79,6 +76,7 @@
                     <execution>
                         <goals>
                             <goal>compile</goal>
+                            <goal>test-compile</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -110,12 +108,10 @@
         <dependency>
             <groupId>org.escidoc.core</groupId>
             <artifactId>common</artifactId>
-            <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>org.escidoc.core</groupId>
             <artifactId>aa</artifactId>
-            <type>ejb</type>
         </dependency>
 		<dependency>
 			<groupId>JhoveApp</groupId>

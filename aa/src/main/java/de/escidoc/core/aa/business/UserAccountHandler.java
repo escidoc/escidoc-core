@@ -60,6 +60,7 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
+import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -92,7 +93,6 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.stax.handler.filter.FilterHandler;
@@ -106,7 +106,10 @@ import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -130,6 +133,7 @@ import java.util.regex.Pattern;
  *
  * @author Michael Schneider
  */
+@Service("business.UserAccountHandler")
 public class UserAccountHandler implements UserAccountHandlerInterface {
 
     /**
@@ -172,23 +176,49 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
     private static final int MAX_FIELD_LENGTH = 245;
 
+    @Autowired
+    @Qualifier("persistence.UserAccountDao")
     private UserAccountDaoInterface dao;
 
+    @Autowired
+    @Qualifier("persistence.UserGroupDao")
     private UserGroupDaoInterface userGroupDao;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.ObjectAttributeResolver")
     private ObjectAttributeResolver objectAttributeResolver;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.business.renderer.VelocityXmlUserAccountRenderer")
     private UserAccountRendererInterface renderer;
 
+    @Autowired
+    @Qualifier("persistence.EscidocRoleDao")
     private EscidocRoleDaoInterface roleDao;
 
+    @Autowired
+    @Qualifier("business.PolicyDecisionPoint")
     private PolicyDecisionPointInterface pdp;
 
+    @Autowired
+    @Qualifier("business.UserGroupHandler")
     private UserGroupHandlerInterface userGroupHandler;
 
+    @Autowired
+    @Qualifier("filter.PermissionsQuery")
     private PermissionsQuery permissionsQuery;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
+
+    @Autowired
+    @Qualifier("common.business.indexing.IndexingHandler")
+    private IndexingHandler indexingHandler;
 
     /**
      * See Interface for functional description.
@@ -897,7 +927,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
             }
 
             // get the href of the object.
-            final String objectHref = XmlUtility.getHref(objectType, objectId);
+            final String objectHref = tripleStoreUtility.getHref(objectType, objectId);
 
             // In case of REST it has to be checked if the provided href points
             // to the correct href.
@@ -2293,21 +2323,15 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public String retrievePermissionFilterQuery(final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException, WebserverSystemException {
-        final Utility utility = Utility.getInstance();
         final Set<ResourceType> resourceTypes = EnumSet.noneOf(ResourceType.class);
         final String[] types = parameters.get("index");
-
         if (types != null) {
             final Collection<String> hashedTypes = new HashSet<String>();
-
             hashedTypes.addAll(Arrays.asList(types));
-
             final Map<String, Map<String, Map<String, Object>>> objectTypeParameters =
-                BeanLocator.locateIndexingHandler().getObjectTypeParameters();
-
+                this.indexingHandler.getObjectTypeParameters();
             for (final Entry<String, Map<String, Map<String, Object>>> entry : objectTypeParameters.entrySet()) {
                 final Map<String, Map<String, Object>> index = entry.getValue();
-
                 for (final String indexName : index.keySet()) {
                     if (hashedTypes.contains(indexName)) {
                         resourceTypes.add(ResourceType.getResourceTypeFromUri(entry.getKey()));
@@ -2317,7 +2341,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         }
         // noinspection RedundantCast
         return Utility.prepareReturnXml(null, "<filter>"
-            + permissionsQuery.getFilterQuery(resourceTypes, utility.getCurrentUserId(), new FilterInterface() {
+            + permissionsQuery.getFilterQuery(resourceTypes, this.utility.getCurrentUserId(), new FilterInterface() {
                 @Override
                 public String getRoleId() {
                     final String[] parameter = parameters.get("role");

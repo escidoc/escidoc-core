@@ -45,6 +45,9 @@ import com.sun.xacml.ctx.Result;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.Values;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -60,6 +63,7 @@ import java.util.regex.Pattern;
  *
  * @author André Schenk
  */
+@Service("convert.PolicyParser")
 public class PolicyParser {
 
     private static final String ACTION_ID = "urn:oasis:names:tc:xacml:1.0:action:action-id";
@@ -77,8 +81,12 @@ public class PolicyParser {
         MATCHES.add(MATCH_PREFIX + ResourceType.OU.getLabel());
     }
 
+    @Autowired
+    @Qualifier("convert.ConditionParser")
     private ConditionParser con;
 
+    @Autowired
+    @Qualifier("filter.Values")
     private Values values;
 
     /**

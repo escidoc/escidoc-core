@@ -76,7 +76,10 @@ import java.util.regex.Pattern;
  * @author Roland Werner (Accenture)
  */
 @Aspect
-@DeclarePrecedence("de.escidoc.core.common.util.aop.StatisticInterceptor, de.escidoc.core.aa.security.aop.AuthenticationInterceptor, de.escidoc.core.common.util.aop.ParameterCheckInterceptor, de.escidoc.core.common.util.aop.XmlValidationInterceptor,*")
+@DeclarePrecedence("de.escidoc.core.common.util.aop.StatisticInterceptor, "
+    + "de.escidoc.core.aa.security.aop.AuthenticationInterceptor, "
+    + "de.escidoc.core.common.util.aop.ParameterCheckInterceptor, "
+    + "de.escidoc.core.common.util.aop.XmlValidationInterceptor,*")
 public class SecurityInterceptor implements Ordered {
 
     /**
@@ -147,13 +150,15 @@ public class SecurityInterceptor implements Ordered {
      */
     //    @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
     //        + " && within(de.escidoc.core.*.ejb.*Bean)")
-    @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
+    @Around("execution(public * de.escidoc.core.*.service.*.*(..))"
+        + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
+        + " && !within(de.escidoc.core.common.util.aop..*)")
     public Object authorize(final ProceedingJoinPoint joinPoint) throws Throwable, MissingAttributeValueException,
         AuthorizationException, ResourceNotFoundException, MissingElementValueException, InvalidXmlException,
         MissingMethodParameterException, WebserverSystemException {
         final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         final Method calledMethod = methodSignature.getMethod();
-        final String target = methodSignature.getDeclaringTypeName();
+        final String target = getTargetInterface(joinPoint, calledMethod);
         final String methodName = calledMethod.getName();
         final String handle = UserContext.getHandle();
 
@@ -223,6 +228,21 @@ public class SecurityInterceptor implements Ordered {
                 throw e;
             }
         }
+    }
+
+    private String getTargetInterface(final ProceedingJoinPoint joinPoint, final Method calledMethod) {
+        String target = null;
+        Class[] interfaces = joinPoint.getTarget().getClass().getInterfaces();
+        for (Class interfaze : interfaces) {
+            Method[] methods = interfaze.getMethods();
+            for (Method method : methods) {
+                if (method.getName().equals(calledMethod.getName())
+                    && method.getReturnType().equals(calledMethod.getReturnType())) {
+                    target = interfaze.getName();
+                }
+            }
+        }
+        return target;
     }
 
     /**

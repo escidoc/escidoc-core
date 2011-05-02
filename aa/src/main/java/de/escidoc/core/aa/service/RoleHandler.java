@@ -41,6 +41,9 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.RoleInUseViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -49,11 +52,14 @@ import java.util.Map;
  *
  * @author Torsten Tetteroo
  */
+@Service("service.RoleHandler")
 public class RoleHandler implements RoleHandlerInterface {
 
     /**
      * The business layer implementation bean.
      */
+    @Autowired
+    @Qualifier("business.RoleHandler")
     private de.escidoc.core.aa.business.interfaces.RoleHandlerInterface business;
 
     /**

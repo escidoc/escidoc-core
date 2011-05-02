@@ -32,6 +32,9 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,7 +45,12 @@ import java.util.Stack;
  *
  * @author Michael Schneider
  */
+@Configurable
 public class OumUtility {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     private final Stack<String> open;
 
@@ -101,7 +109,7 @@ public class OumUtility {
      */
     private void expand(final String currentOuId) throws TripleStoreSystemException, WebserverSystemException {
 
-        final Collection<String> children = TripleStoreUtility.getInstance().getChildren(currentOuId);
+        final Collection<String> children = this.tripleStoreUtility.getChildren(currentOuId);
         if (children != null) {
             for (final String childId : children) {
                 if (!this.closed.contains(childId)) {

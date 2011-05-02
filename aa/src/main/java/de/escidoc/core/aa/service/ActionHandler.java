@@ -35,14 +35,20 @@ import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundExc
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * Service layer implementation of a handler that manages eSciDoc actions.
  *
  * @author Torsten Tetteroo
  */
+@Service("service.ActionHandler")
 public class ActionHandler implements ActionHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.ActionHandler")
     private ActionHandlerInterface business;
 
     /**

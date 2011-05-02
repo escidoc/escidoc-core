@@ -43,15 +43,18 @@ import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
+import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
@@ -176,20 +179,14 @@ public class Login extends HttpServlet {
      */
     @Override
     public void init() throws ServletException {
-
         super.init();
-
+        this.dao = (UserAccountDaoInterface) this.getServletContext().getAttribute("persistence.UserAccountDao");
         try {
-            this.dao =
-                (UserAccountDaoInterface) BeanLocator.getBean(BeanLocator.AA_FACTORY_ID, "persistence.UserAccountDao");
             initFileContent(AUTHENTICATED_FILENAME);
             initFileContent(AUTHENTICATED_REDIRECT_FILENAME);
             initFileContent(LOGOUT_FILENAME);
             initFileContent(LOGOUT_REDIRECT_FILENAME);
             initFileContent(DEACTIVATED_USER_ACCOUNT_PAGE_FILENAME);
-        }
-        catch (final WebserverSystemException e) {
-            throw new ServletException(e.getMessage(), e);
         }
         catch (final IOException e) {
             throw new ServletException(e.getMessage(), e);

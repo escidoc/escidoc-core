@@ -20,6 +20,8 @@
 
 package de.escidoc.core.common.business.fedora.resources;
 
+import org.springframework.stereotype.Service;
+
 import java.text.MessageFormat;
 import java.util.regex.Pattern;
 
@@ -28,6 +30,7 @@ import java.util.regex.Pattern;
  *
  * @author Andr&eacute; Schenk
  */
+@Service("filter.Values")
 public final class LuceneValues extends Values {
 
     // The following place holders may be used:

@@ -42,6 +42,9 @@ import de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundE
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,6 +62,7 @@ import java.util.regex.Pattern;
  *
  * @author Michael Hoppe
  */
+@Service("eSciDoc.core.aa.UserGroupAttributeFinderModule")
 public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private static final String ATTR_CREATED_BY = "created-by";
@@ -79,6 +83,8 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
         Pattern.compile("((" + AttributeIds.USER_GROUP_ATTR_PREFIX + ")(" + RESOLVABLE_USER_GROUP_ATTRS
             + "))(-new){0,1}(:(.*)){0,1}");
 
+    @Autowired
+    @Qualifier("persistence.UserGroupDao")
     private UserGroupDaoInterface userGroupDao;
 
     /**

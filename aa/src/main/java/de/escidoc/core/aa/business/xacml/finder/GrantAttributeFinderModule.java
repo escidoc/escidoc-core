@@ -50,6 +50,9 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -80,6 +83,7 @@ import java.util.regex.Pattern;
  *
  * @author Michael Hoppe
  */
+@Service("eSciDoc.core.aa.GrantAttributeFinderModule")
 public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private static final String ATTR_ASSIGNED_ON = "assigned-on";
@@ -97,10 +101,16 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         Pattern.compile("((" + AttributeIds.USER_ACCOUNT_GRANT_ATTR_PREFIX + '|'
             + AttributeIds.USER_GROUP_GRANT_ATTR_PREFIX + ")(" + RESOLVABLE_GRANT_ATTRS + "))(-new){0,1}(:(.*)){0,1}");
 
+    @Autowired
+    @Qualifier("persistence.UserAccountDao")
     private UserAccountDaoInterface userAccountDao;
 
+    @Autowired
+    @Qualifier("persistence.UserGroupDao")
     private UserGroupDaoInterface userGroupDao;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tsu;
 
     /**

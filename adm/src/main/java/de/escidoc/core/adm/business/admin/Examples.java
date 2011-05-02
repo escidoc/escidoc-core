@@ -63,13 +63,15 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationE
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -92,6 +94,7 @@ import java.util.Date;
  *
  * @author André Schenk
  */
+@Service("admin.Examples")
 public class Examples {
 
     private static final String EXAMPLE_CONTAINER = "container.xml";
@@ -104,7 +107,29 @@ public class Examples {
 
     private static final String EXAMPLE_OU = "organizational-unit.xml";
 
+    @Autowired
+    @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
     private ConnectionUtility connectionUtility;
+
+    @Autowired
+    @Qualifier("service.ContentModelHandler")
+    private ContentModelHandlerInterface contentModelHandler;
+
+    @Autowired
+    @Qualifier("service.ContextHandler")
+    private ContextHandlerInterface contextHandler;
+
+    @Autowired
+    @Qualifier("service.ContainerHandler")
+    private ContainerHandlerInterface containerHandler;
+
+    @Autowired
+    @Qualifier("service.ItemHandler")
+    private ItemHandlerInterface itemHandler;
+
+    @Autowired
+    @Qualifier("service.OrganizationalUnitHandler")
+    private OrganizationalUnitHandlerInterface organizationalUnitHandler;
 
     /**
      * Create an XML snippet for a message that can be displayed on the Web page.
@@ -332,7 +357,7 @@ public class Examples {
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      */
-    private static String loadContainer(final String xml, final String contextId, final String contentModelId)
+    private String loadContainer(final String xml, final String contextId, final String contentModelId)
         throws XmlSchemaValidationException, MissingAttributeValueException, SystemException,
         RelationPredicateNotFoundException, IOException, AuthorizationException, InvalidStatusException, SAXException,
         XPathExpressionException, MissingElementValueException, ParserConfigurationException, WebserverSystemException,
@@ -340,13 +365,8 @@ public class Examples {
         MissingMdRecordException, ReferencedResourceNotFoundException, ContextNotFoundException,
         MissingMethodParameterException, UnsupportedEncodingException {
         String result = null;
-        final ContainerHandlerInterface handler = BeanLocator.locateContainerHandler();
-
-        if (handler != null) {
-            final String createXml = handler.create(MessageFormat.format(xml, contextId, contentModelId));
-
-            result = getObjectId(createXml, ResourceType.CONTAINER);
-        }
+        final String createXml = this.containerHandler.create(MessageFormat.format(xml, contextId, contentModelId));
+        result = getObjectId(createXml, ResourceType.CONTAINER);
         return result;
     }
 
@@ -370,19 +390,13 @@ public class Examples {
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
-    private static String loadContentModel(final String xml) throws MissingAttributeValueException, SystemException,
+    private String loadContentModel(final String xml) throws MissingAttributeValueException, SystemException,
         XmlSchemaValidationException, AuthorizationException, IOException, SAXException, XPathExpressionException,
         WebserverSystemException, ParserConfigurationException, InvalidContentException, XmlCorruptedException,
         AuthenticationException, MissingMethodParameterException, UnsupportedEncodingException {
         String result = null;
-        final ContentModelHandlerInterface handler = BeanLocator.locateContentModelHandler();
-
-        if (handler != null) {
-            final String createXml = handler.create(xml);
-
-            result = getObjectId(createXml, ResourceType.CONTENT_MODEL);
-        }
-        return result;
+        final String createXml = this.contentModelHandler.create(xml);
+        return getObjectId(createXml, ResourceType.CONTENT_MODEL);
     }
 
     /**
@@ -418,7 +432,7 @@ public class Examples {
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
-    private static String loadContext(final String xml, final String ouId) throws XmlSchemaValidationException,
+    private String loadContext(final String xml, final String ouId) throws XmlSchemaValidationException,
         OptimisticLockingException, AuthorizationException, IOException, SAXException, WebserverSystemException,
         InvalidContentException, XmlCorruptedException, StreamNotFoundException, AuthenticationException,
         InvalidXmlException, ContextNotFoundException, SystemException, MissingAttributeValueException,
@@ -427,14 +441,9 @@ public class Examples {
         ContentModelNotFoundException, OrganizationalUnitNotFoundException, ContextNameNotUniqueException,
         ReadonlyAttributeViolationException, MissingMethodParameterException, UnsupportedEncodingException {
         String result = null;
-        final ContextHandlerInterface handler = BeanLocator.locateContextHandler();
-
-        if (handler != null) {
-            final String createXml = handler.create(MessageFormat.format(xml, new Date().getTime(), ouId));
-
-            result = getObjectId(createXml, ResourceType.CONTEXT);
-            handler.open(result, createTaskParam(getLastModificationDate(createXml, ResourceType.CONTEXT)));
-        }
+        final String createXml = this.contextHandler.create(MessageFormat.format(xml, new Date().getTime(), ouId));
+        result = getObjectId(createXml, ResourceType.CONTEXT);
+        this.contextHandler.open(result, createTaskParam(getLastModificationDate(createXml, ResourceType.CONTEXT)));
         return result;
     }
 
@@ -492,7 +501,7 @@ public class Examples {
      * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
      */
-    private static String loadItem(
+    private String loadItem(
         final String xml, final String contextId, final String contentModelId, final String containerId)
         throws OptimisticLockingException, RelationPredicateNotFoundException, AuthorizationException, IOException,
         SAXException, WebserverSystemException, InvalidContentException, XmlCorruptedException,
@@ -504,24 +513,16 @@ public class Examples {
         ItemNotFoundException, ReadonlyAttributeViolationException, MissingMdRecordException,
         ReferencedResourceNotFoundException, MissingMethodParameterException, UnsupportedEncodingException {
         String result = null;
-        final ContainerHandlerInterface containerHandler = BeanLocator.locateContainerHandler();
-        final ItemHandlerInterface itemHandler = BeanLocator.locateItemHandler();
-
-        if (containerHandler != null && itemHandler != null) {
-            final String createXml =
-                containerHandler.createItem(containerId, MessageFormat.format(xml, contextId, contentModelId));
-
-            result = getObjectId(createXml, ResourceType.ITEM);
-
-            final String submitXml =
-                itemHandler.submit(result, createTaskParam(getLastModificationDate(createXml, ResourceType.ITEM)));
-            final String objectPidXml =
-                itemHandler.assignObjectPid(result, createTaskParam(getLastModificationDate(submitXml)));
-            final String versionPidXml =
-                itemHandler.assignVersionPid(result, createTaskParam(getLastModificationDate(objectPidXml)));
-
-            itemHandler.release(result, createTaskParam(getLastModificationDate(versionPidXml)));
-        }
+        final String createXml =
+            this.containerHandler.createItem(containerId, MessageFormat.format(xml, contextId, contentModelId));
+        result = getObjectId(createXml, ResourceType.ITEM);
+        final String submitXml =
+            this.itemHandler.submit(result, createTaskParam(getLastModificationDate(createXml, ResourceType.ITEM)));
+        final String objectPidXml =
+            this.itemHandler.assignObjectPid(result, createTaskParam(getLastModificationDate(submitXml)));
+        final String versionPidXml =
+            this.itemHandler.assignVersionPid(result, createTaskParam(getLastModificationDate(objectPidXml)));
+        this.itemHandler.release(result, createTaskParam(getLastModificationDate(versionPidXml)));
         return result;
     }
 
@@ -550,21 +551,17 @@ public class Examples {
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
-    private static String loadOrganizationalUnit(final String xml) throws OptimisticLockingException,
+    private String loadOrganizationalUnit(final String xml) throws OptimisticLockingException,
         MissingAttributeValueException, SystemException, XmlSchemaValidationException, IOException,
         AuthorizationException, InvalidStatusException, SAXException, MissingElementValueException,
         XPathExpressionException, ParserConfigurationException, WebserverSystemException, XmlCorruptedException,
         OrganizationalUnitNotFoundException, AuthenticationException, MissingMdRecordException, InvalidXmlException,
         MissingMethodParameterException, UnsupportedEncodingException {
         String result = null;
-        final OrganizationalUnitHandlerInterface handler = BeanLocator.locateOrganizationalUnitHandler();
-
-        if (handler != null) {
-            final String createXml = handler.create(xml);
-
-            result = getObjectId(createXml, ResourceType.OU);
-            handler.open(result, createTaskParam(getLastModificationDate(createXml, ResourceType.OU)));
-        }
+        final String createXml = this.organizationalUnitHandler.create(xml);
+        result = getObjectId(createXml, ResourceType.OU);
+        this.organizationalUnitHandler.open(result,
+            createTaskParam(getLastModificationDate(createXml, ResourceType.OU)));
         return result;
     }
 

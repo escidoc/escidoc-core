@@ -58,11 +58,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -78,9 +80,14 @@ import java.util.regex.Pattern;
  *
  * @author Steffen Wagner
  */
+@Service("escidoc.core.common.util.service.ConnectionUtility")
 public class ConnectionUtility {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile(":");
+
+    private static final int DEFAULT_CONNECTION_TIMEOUT = 1000 * 60; // 60 seconds
+
+    private static final int DEFAULT_SO_TIMEOUT = 1000 * 60; // 60 seconds
 
     private static final int HTTP_MAX_CONNECTIONS_PER_HOST = 30;
 
@@ -512,6 +519,16 @@ public class ConnectionUtility {
         if (this.httpClient == null) {
 
             final HttpParams params = new BasicHttpParams();
+            if (this.timeout != -1) {
+                // TODO: Maybe separate Connection and SO timeout...
+                HttpConnectionParams.setConnectionTimeout(params, this.timeout);
+                HttpConnectionParams.setSoTimeout(params, this.timeout);
+            }
+            else {
+                HttpConnectionParams.setConnectionTimeout(params, DEFAULT_CONNECTION_TIMEOUT);
+                HttpConnectionParams.setSoTimeout(params, DEFAULT_SO_TIMEOUT);
+            }
+
             ConnManagerParams.setMaxTotalConnections(params, HTTP_MAX_TOTAL_CONNECTIONS_FACTOR);
 
             final ConnPerRoute connPerRoute = new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
@@ -532,11 +549,6 @@ public class ConnectionUtility {
             final ClientConnectionManager cm = new ThreadSafeClientConnManager(params, sr);
 
             this.httpClient = new DefaultHttpClient(cm, params);
-
-            if (this.timeout != -1) {
-                // TODO timeout testen
-                ConnManagerParams.setTimeout(params, (long) this.timeout);
-            }
         }
         if (getProxyHost() != null && url != null) {
             setProxy(url);

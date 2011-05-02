@@ -32,6 +32,9 @@ import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.Values;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -49,6 +52,7 @@ import java.util.Set;
  *
  * @author André Schenk
  */
+@Service("resource.AccessRights")
 public class AccessRights {
 
     /**
@@ -159,6 +163,8 @@ public class AccessRights {
      */
     private final RightsMap[] rightsMap = new RightsMap[ResourceType.values().length];
 
+    @Autowired
+    @Qualifier("filter.Values")
     private Values values;
 
     /**

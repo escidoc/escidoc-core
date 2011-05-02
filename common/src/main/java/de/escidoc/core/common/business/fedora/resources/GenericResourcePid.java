@@ -36,6 +36,7 @@ import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import javax.xml.stream.XMLStreamException;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ import java.util.TreeMap;
  *
  * @author Steffen Wagner
  */
+@Configurable
 public class GenericResourcePid extends GenericResource {
 
     private String objectPid;

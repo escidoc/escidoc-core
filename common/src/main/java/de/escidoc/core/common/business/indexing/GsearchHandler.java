@@ -31,6 +31,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -38,6 +41,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -46,6 +50,7 @@ import java.util.regex.Pattern;
 /**
  * Execute http-request to fedoragsearch. Update with requestIndexing, delete with requestDeletion.
  */
+@Service("common.business.indexing.GsearchHandler")
 public class GsearchHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GsearchHandler.class);
@@ -60,6 +65,8 @@ public class GsearchHandler {
 
     private static final int MAX_ERROR_RETRIES = 15;
 
+    @Autowired
+    @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
     private ConnectionUtility connectionUtility;
 
     /**
@@ -282,7 +289,7 @@ public class GsearchHandler {
      *          e
      */
     private Map<String, Map<String, String>> requestIndexConfiguration() throws ApplicationServerSystemException {
-        try {
+        /*try {
             final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
             final String response =
@@ -301,7 +308,8 @@ public class GsearchHandler {
         }
         catch (final Exception e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
-        }
+        }*/
+        return new HashMap();
     }
 
     /**

@@ -20,14 +20,24 @@
 
 package de.escidoc.core.common.business.queue.errorprocessing;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
 /**
  * Gets traces out of logfile and sends them via email to the queue.error.administrator.email.
  *
  * @author Michael Hoppe
  */
+@Service("business.ErrorQueueProcessor")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ErrorQueueProcessor {
 
     // A setter exists. Consider removing from Spring.
+    @Autowired
+    @Qualifier("common.ErrorMessageHandler")
     private ErrorMessageHandler errorMessageHandler;
 
     /**

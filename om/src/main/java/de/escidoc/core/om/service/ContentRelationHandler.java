@@ -47,6 +47,11 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -55,8 +60,12 @@ import java.util.Map;
  *
  * @author Steffen Wagner
  */
+@Service("service.ContentRelationHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ContentRelationHandler implements ContentRelationHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.FedoraContentRelationHandler")
     private de.escidoc.core.om.business.interfaces.ContentRelationHandlerInterface handler;
 
     /**

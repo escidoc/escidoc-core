@@ -38,6 +38,9 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -53,6 +56,7 @@ import java.util.Set;
  *
  * @author Andr&eacute; Schenk
  */
+@Service("filter.PermissionsQuery")
 public class PermissionsQuery {
 
     private static final String HIERARCHICAL_CONTAINERS_PLACEHOLDER = "{5}";
@@ -64,10 +68,16 @@ public class PermissionsQuery {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(PermissionsQuery.class);
 
+    @Autowired
+    @Qualifier("resource.AccessRights")
     private AccessRights accessRights;
 
+    @Autowired
+    @Qualifier("resource.PoliciesCacheProxy")
     private PoliciesCacheProxy policiesCacheProxy;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
 
     /**

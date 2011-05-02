@@ -40,6 +40,9 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.application.violated.ScopeContextViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -48,8 +51,11 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
+@Service("service.ReportDefinitionHandler")
 public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.ReportDefinitionHandler")
     private de.escidoc.core.sm.business.interfaces.ReportDefinitionHandlerInterface handler;
 
     /**

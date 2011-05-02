@@ -22,6 +22,7 @@ package de.escidoc.core.common.business.queue.errorprocessing;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -29,6 +30,7 @@ import java.util.Map.Entry;
 /**
  * @author Michael Hoppe
  */
+@Service("common.ErrorMessageHandler")
 public class ErrorMessageHandler {
 
     private static final String DELIMITER =

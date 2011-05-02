@@ -62,6 +62,7 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -81,6 +82,9 @@ import java.util.Set;
 public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRendererInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandlerRetrieve.class);
+
+    @Autowired
+    private VelocityXmlCommonRenderer velocityXmlCommonRenderer;
 
     /*
      * (non-Javadoc)
@@ -1125,7 +1129,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         return values;
     }
 
-    private static Map<String, Object> getRelationValues(final Item item) throws FedoraSystemException,
+    private Map<String, Object> getRelationValues(final Item item) throws FedoraSystemException,
         IntegritySystemException, XmlParserSystemException, WebserverSystemException, TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -1133,8 +1137,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
             de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NAMESPACE_PREFIX);
         values.put("contentRelationsNamespace",
             de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NAMESPACE_URI);
-        final VelocityXmlCommonRenderer renderer = new VelocityXmlCommonRenderer();
-        renderer.addRelationsValues(item.getRelations(), item.getHref(), values);
+        this.velocityXmlCommonRenderer.addRelationsValues(item.getRelations(), item.getHref(), values);
         values.put("contentRelationsTitle", "Relations of Item");
 
         return values;

@@ -120,6 +120,11 @@ import de.escidoc.core.om.business.stax.handler.item.ItemHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayInputStream;
@@ -152,10 +157,14 @@ import java.util.TreeMap;
  *
  * @author Frank Schwichtenberg
  */
+@Service("business.FedoraItemHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FedoraItemHandler.class);
 
+    @Autowired
+    @Qualifier("business.FedoraContentRelationHandler")
     private FedoraContentRelationHandler contentRelationHandler;
 
     private static final String NO_UPDATE_ALLOWED_MSG = "No update allowed.";
@@ -165,30 +174,17 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     private PolicyDecisionPointInterface pdp;
 
-    /**
-     * SRU request.
-     */
+    @Autowired
+    @Qualifier("de.escidoc.core.common.business.filter.SRURequest")
     private SRURequest sruRequest;
 
-    /**
-     * Gets the {@link PolicyDecisionPointInterface} implementation.
-     *
-     * @return PolicyDecisionPointInterface
-     */
-    PolicyDecisionPointInterface getPdp() {
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
 
-        return this.pdp;
-    }
-
-    /**
-     * Injects the {@link PolicyDecisionPointInterface} implementation.
-     *
-     * @param pdp the {@link PolicyDecisionPointInterface} to be injected.
-     */
-    public void setPdp(final PolicyDecisionPointInterface pdp) {
-
-        this.pdp = pdp;
-    }
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
+    private FedoraUtility fedoraUtility;
 
     @Override
     public String retrieve(final String id) throws ItemNotFoundException, MissingMethodParameterException,
@@ -1005,7 +1001,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final String contentModelId = getItem().getProperty(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID);
         final byte[] bytes;
         try {
-            bytes = FedoraUtility.getInstance().getDissemination(id, contentModelId, resourceName);
+            bytes = this.fedoraUtility.getDissemination(id, contentModelId, resourceName);
         }
         catch (final FedoraSystemException e) {
             throw new OperationNotFoundException(e);
@@ -1348,7 +1344,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         // we want special exceptions if already withdrawn, so check something
         // before setItem()
-        Utility.getInstance().checkIsItem(id);
+        this.utility.checkIsItem(id);
 
         final String curStatus =
             getTripleStoreUtility().getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
@@ -1666,7 +1662,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public String retrieveParents(final String id) throws ItemNotFoundException, SystemException,
         TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
-        Utility.getInstance().checkIsItem(id);
+        this.utility.checkIsItem(id);
         return renderParents(id);
     }
 
@@ -2321,7 +2317,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         final List<String> ids;
         try {
-            ids = getPdp().evaluateRetrieve("item", id);
+            ids = this.pdp.evaluateRetrieve("item", id);
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);

@@ -59,7 +59,6 @@ import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintVi
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -68,6 +67,9 @@ import de.escidoc.core.common.util.xml.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
@@ -82,6 +84,7 @@ import java.util.Map;
  *
  * @author Torsten Tetteroo
  */
+@Service("business.RoleHandler")
 public class RoleHandler implements RoleHandlerInterface {
 
     /**
@@ -96,16 +99,28 @@ public class RoleHandler implements RoleHandlerInterface {
 
     public static final String FORBIDDEN_ROLE_NAME = "Default-User";
 
+    @Autowired
+    @Qualifier("resource.AccessRights")
     private AccessRights accessRights;
 
+    @Autowired
+    @Qualifier("persistence.EscidocRoleDao")
     private EscidocRoleDaoInterface roleDao;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.business.renderer.VelocityXmlRoleRenderer")
     private RoleRendererInterface renderer;
 
+    @Autowired
+    @Qualifier("business.PolicyDecisionPoint")
     private PolicyDecisionPointInterface pdp;
 
+    @Autowired
+    @Qualifier("persistence.UserAccountDao")
     private UserAccountDaoInterface userAccountDao;
 
+    @Autowired
+    @Qualifier("convert.XacmlParser")
     private XacmlParser xacmlParser;
 
     /**
@@ -464,18 +479,6 @@ public class RoleHandler implements RoleHandlerInterface {
     }
 
     /**
-     * Get the {@link XacmlParser}.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @return
-     */
-    private XacmlParser getXacmlParser() throws WebserverSystemException {
-        if (this.xacmlParser == null) {
-            this.xacmlParser = (XacmlParser) BeanLocator.getBean(BeanLocator.AA_FACTORY_ID, "convert.XacmlParser");
-        }
-        return this.xacmlParser;
-    }
-
-    /**
      * Injects the access rights object.
      *
      * @param accessRights access rights from Spring
@@ -532,7 +535,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @throws WebserverSystemException   Thrown in case of an internal error.
      */
     private void updateRole(final EscidocRole role) throws SqlDatabaseSystemException, WebserverSystemException {
-        getXacmlParser().parse(role);
+        this.xacmlParser.parse(role);
         for (final ResourceType resourceType : ResourceType.values()) {
             // ensure the role is written to database
             roleDao.flush();

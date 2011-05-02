@@ -30,6 +30,7 @@ package de.escidoc.core.sm.business.preprocessing;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.StatisticPreprocessingSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
@@ -47,6 +48,12 @@ import de.escidoc.core.sm.business.vo.database.select.RootWhereGroupVo;
 import de.escidoc.core.sm.business.vo.database.select.SelectFieldVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.InputSource;
 
 import javax.xml.datatype.DatatypeFactory;
@@ -73,12 +80,18 @@ import java.util.Set;
  *
  * @author Michael Hoppe
  */
+@Service("business.AggregationPreprocessor")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class AggregationPreprocessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AggregationPreprocessor.class);
 
+    @Autowired
+    @Qualifier("sm.persistence.DirectDatabaseAccessor")
     private DirectDatabaseAccessorInterface dbAccessor;
 
+    @Autowired
+    @Qualifier("persistence.SmPreprocessingLogsDao")
     private SmPreprocessingLogsDaoInterface preprocessingLogsDao;
 
     private XPathFactory xpathFactory;
@@ -483,6 +496,7 @@ public class AggregationPreprocessor {
      * @param date                      processing-date
      * @throws SqlDatabaseSystemException e
      */
+    @Transactional(rollbackFor = { SystemException.class, RuntimeException.class })
     public void persistAggregation(
         final AggregationPreprocessorVo aggregationPreprocessorVo, final String aggregationDefinitionId, final Date date)
         throws SqlDatabaseSystemException {

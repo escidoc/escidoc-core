@@ -40,6 +40,9 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * Administration tool that rebuilds the search index, rebuilds the resource cache and deletes objects physically from
@@ -47,8 +50,11 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
  *
  * @author André Schenk
  */
+@Service("service.AdminHandler")
 public class AdminHandler implements AdminHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.AdminHandler")
     private de.escidoc.core.adm.business.admin.AdminHandler business;
 
     /**

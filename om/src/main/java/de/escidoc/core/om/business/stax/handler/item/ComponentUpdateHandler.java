@@ -37,10 +37,18 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
+@Configurable
 public class ComponentUpdateHandler extends DefaultHandler {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     private final StaxParser parser;
 
@@ -71,7 +79,7 @@ public class ComponentUpdateHandler extends DefaultHandler {
                 if (componentId.length() > 0) {
                     // check if component exists
                     boolean componentExists = false;
-                    final List<String> existingComponents = TripleStoreUtility.getInstance().getComponents(this.itemId);
+                    final List<String> existingComponents = this.tripleStoreUtility.getComponents(this.itemId);
                     for (final String existingComponent : existingComponents) {
                         if (existingComponent.equals(componentId)) {
                             componentExists = true;

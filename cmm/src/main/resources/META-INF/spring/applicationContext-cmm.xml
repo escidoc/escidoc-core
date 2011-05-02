@@ -16,28 +16,5 @@ http://www.springframework.org/schema/lang http://www.springframework.org/schema
 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
-       default-autowire="no" default-lazy-init="true">
-    <bean id="service.ContentModelHandler" class="de.escidoc.core.cmm.service.ContentModelHandler" scope="prototype">
-        <property name="business">
-            <ref bean="business.FedoraContentModelHandler"/>
-        </property>
-    </bean>
-    <bean id="business.FedoraContentModelHandler" class="de.escidoc.core.cmm.business.fedora.FedoraContentModelHandler"
-          scope="prototype">
-        <property name="indexingHandler">
-            <ref bean="common.business.indexing.IndexingHandler"/>
-        </property>
-        <property name="sruRequest">
-            <ref bean="de.escidoc.core.common.business.filter.SRURequest"/>
-        </property>
-        <property name="fedoraUtility">
-            <ref bean="escidoc.core.business.FedoraUtility"/>
-        </property>
-        <property name="idProvider">
-            <ref bean="escidoc.core.business.EscidocIdProvider"/>
-        </property>
-        <property name="tripleStoreUtility">
-            <ref bean="business.TripleStoreUtility"/>
-        </property>
-    </bean>
+       default-lazy-init="false">
 </beans>

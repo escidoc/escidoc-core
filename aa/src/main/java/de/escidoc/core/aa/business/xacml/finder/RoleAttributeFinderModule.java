@@ -42,6 +42,9 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,6 +64,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.RoleAttributeFinderModule")
 public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
@@ -92,6 +96,8 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
      */
     public static final String ATTR_ROLE_NAME = AttributeIds.ROLE_ATTR_PREFIX + "name";
 
+    @Autowired
+    @Qualifier("persistence.EscidocRoleDao")
     private EscidocRoleDaoInterface roleDao;
 
     /**

@@ -37,6 +37,9 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.RelsExtRefListExtractor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +49,12 @@ import java.util.List;
  *
  * @author Steffen Wagner
  */
+@Configurable
 public class UserFilter {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * Get the list of the member (structural relation) of the Container.
@@ -64,7 +72,7 @@ public class UserFilter {
         final List<String> memberRefs;
 
         if (container.getVersionNumber() == null) {
-            memberRefs = TripleStoreUtility.getInstance().getContainerMemberList(container.getId(), null, null);
+            memberRefs = this.tripleStoreUtility.getContainerMemberList(container.getId(), null, null);
         }
         else {
             // A work around until Fedora makes restrictions on the FOXML-size:

@@ -45,6 +45,9 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.StaxParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 
@@ -53,18 +56,19 @@ import java.io.ByteArrayInputStream;
  *
  * @author Torsten Tetteroo
  */
+@Service("business.ActionHandler")
 public class ActionHandler implements ActionHandlerInterface {
 
-    /**
-     * The data access object to access action data.
-     */
+    @Autowired
+    @Qualifier("persistence.ActionDao")
     private ActionDaoInterface actionDao;
 
-    /**
-     * The renderer.
-     */
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.business.renderer.VelocityXmlActionRenderer")
     private ActionRendererInterface renderer;
 
+    @Autowired
+    @Qualifier("business.Utility")
     private Utility utility;
 
     /**
@@ -115,15 +119,14 @@ public class ActionHandler implements ActionHandlerInterface {
     @Override
     public void deleteUnsecuredActions(final String contextId) throws ContextNotFoundException, SystemException,
         TripleStoreSystemException, IntegritySystemException, SqlDatabaseSystemException, WebserverSystemException {
-
-        Utility.getInstance().checkIsContext(contextId);
+        this.utility.checkIsContext(contextId);
         final UnsecuredActionList unsecuredActionList = actionDao.retrieveUnsecuredActionList(contextId);
 
         if (unsecuredActionList == null) {
             // FIXME: UnsecureActionsNotFoundException needed
             throw new SystemException("Nothing to delete");
         }
-        actionDao.delete(unsecuredActionList);
+        this.actionDao.delete(unsecuredActionList);
     }
 
     /**
@@ -134,13 +137,12 @@ public class ActionHandler implements ActionHandlerInterface {
     @Override
     public String retrieveUnsecuredActions(final String contextId) throws ContextNotFoundException,
         TripleStoreSystemException, IntegritySystemException, SqlDatabaseSystemException, WebserverSystemException {
-
-        Utility.getInstance().checkIsContext(contextId);
+        this.utility.checkIsContext(contextId);
         UnsecuredActionList unsecuredActionList = actionDao.retrieveUnsecuredActionList(contextId);
         if (unsecuredActionList == null) {
             unsecuredActionList = new UnsecuredActionList(contextId, null);
         }
-        return renderer.renderUnsecuredActionList(unsecuredActionList);
+        return this.renderer.renderUnsecuredActionList(unsecuredActionList);
 
     }
 

@@ -33,17 +33,27 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.common.util.xml.stax.interfaces.DefaultHandlerStackInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * Base class for stax handlers.
  *
  * @author Michael Schneider
  */
+@Configurable
 public class HandlerBase extends DefaultHandler {
 
     private StaxParser parser;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
 
     /**
      * @param parser The stax parser.
@@ -94,6 +104,6 @@ public class HandlerBase extends DefaultHandler {
      */
     public Utility getUtility() {
 
-        return Utility.getInstance();
+        return this.utility;
     }
 }

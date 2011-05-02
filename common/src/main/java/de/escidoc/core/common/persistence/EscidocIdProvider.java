@@ -37,8 +37,6 @@ import java.util.List;
  */
 public class EscidocIdProvider {
 
-    public static final String SPRING_BEAN_ID = "escidoc.core.business.EscidocIdProvider";
-
     private int numberPrefetchedIds;
 
     private ResourceIdentifierDao resourceIdentifierDao;

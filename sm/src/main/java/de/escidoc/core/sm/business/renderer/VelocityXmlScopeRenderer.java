@@ -39,6 +39,7 @@ import de.escidoc.core.sm.business.persistence.hibernate.Scope;
 import de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,6 +52,7 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
+@Service("eSciDoc.core.aa.business.renderer.VelocityXmlScopeRenderer")
 public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
 
     /**

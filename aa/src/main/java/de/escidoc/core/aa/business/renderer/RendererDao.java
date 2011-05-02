@@ -33,12 +33,16 @@ import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnit
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * DAO implementation used by the renderer to get needed data.
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.business.renderer.RendererDao")
 public class RendererDao {
 
     /**
@@ -46,6 +50,8 @@ public class RendererDao {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(RendererDao.class);
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tsu;
 
     /**

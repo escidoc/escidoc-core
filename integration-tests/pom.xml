@@ -605,7 +605,6 @@
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<!-- Spring Framework -->
 		<dependency>

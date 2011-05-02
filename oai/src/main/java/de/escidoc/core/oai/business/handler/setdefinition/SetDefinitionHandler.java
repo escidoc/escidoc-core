@@ -15,7 +15,6 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.string.StringUtility;
@@ -33,6 +32,11 @@ import de.escidoc.core.oai.business.stax.handler.set_definition.SetDefinitionCre
 import de.escidoc.core.oai.business.stax.handler.set_definition.SetDefinitionUpdateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.sql.Timestamp;
@@ -44,14 +48,20 @@ import java.util.Map;
 /**
  * @author Rozita Friedman
  */
+@Service("business.SetDefinitionHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
+    @Autowired
+    @Qualifier("persistence.SetDefinitionDao")
     private SetDefinitionDaoInterface setDefinitionDao;
 
+    @Autowired
     private SetDefinitionRendererInterface renderer;
 
     private static final String MSG_SET_DEFINITION_NOT_FOUND_BY_ID = "Set definition with provided id does not exist.";
 
+    @Autowired
     private PolicyDecisionPointInterface pdp;
 
     /**
@@ -87,7 +97,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         setCreationValues(setDefinition, sdch.getSetProperties());
         this.setDefinitionDao.save(setDefinition);
 
-        return getRenderer().render(setDefinition);
+        return this.renderer.render(setDefinition);
 
     }
 
@@ -184,7 +194,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             throw new ResourceNotFoundException(StringUtility.format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
                 setDefinitionId));
         }
-        return getRenderer().render(setDefinition);
+        return this.renderer.render(setDefinition);
 
     }
 
@@ -228,7 +238,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         if (setModificationValues(setDefinition, sduh.getSetProperties())) {
             setDefinitionDao.save(setDefinition);
         }
-        return getRenderer().render(setDefinition);
+        return this.renderer.render(setDefinition);
     }
 
     /**
@@ -294,7 +304,6 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                 for (final SetDefinition setDefinition : tmpSetDefinitions) {
                     ids.add(setDefinition.getId());
                 }
-                setPdpHandler();
                 try {
                     final List<String> tmpPermitted = pdp.evaluateRetrieve(XmlUtility.NAME_SET_DEFINITION, ids);
                     final int numberPermitted = tmpPermitted.size();
@@ -338,7 +347,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             else {
                 offsetSetDefinitions = new ArrayList<SetDefinition>(0);
             }
-            result = getRenderer().renderSetDefinitions(offsetSetDefinitions, parameters.getRecordPacking());
+            result = renderer.renderSetDefinitions(offsetSetDefinitions, parameters.getRecordPacking());
         }
         return result;
     }
@@ -353,27 +362,6 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             LOGGER.debug(StringUtility.format("setDefinitionDao", setDefinitionDao));
         }
         this.setDefinitionDao = setDefinitionDao;
-    }
-
-    /**
-     * Set Policy decision point handler.
-     *
-     * @throws WebserverSystemException e
-     */
-    public void setPdpHandler() throws WebserverSystemException {
-        if (this.pdp == null) {
-            this.pdp = BeanLocator.locatePolicyDecisionPoint();
-        }
-    }
-
-    /**
-     * @return the renderer
-     */
-    public SetDefinitionRendererInterface getRenderer() {
-        if (this.renderer == null) {
-            this.renderer = new VelocityXmlSetDefinitionRenderer();
-        }
-        return this.renderer;
     }
 
 }

@@ -32,6 +32,9 @@ import com.sun.xacml.attr.AttributeDesignator;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.Apply;
 import de.escidoc.core.common.business.fedora.resources.Values;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -41,10 +44,13 @@ import java.util.regex.Pattern;
  *
  * @author André Schenk
  */
+@Service("convert.ConditionParser")
 public class ConditionParser {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile(" ");
 
+    @Autowired
+    @Qualifier("filter.Values")
     private Values values;
 
     /**

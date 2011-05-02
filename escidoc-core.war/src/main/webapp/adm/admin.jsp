@@ -31,8 +31,10 @@
 
 <%@ page import="de.escidoc.core.common.servlet.EscidocServlet"%>
 <%@ page import="de.escidoc.core.common.util.configuration.EscidocConfiguration"%>
-<%@ page import="de.escidoc.core.common.util.service.BeanLocator"%>
 <%@ page import="de.escidoc.core.common.util.string.StringUtility"%>
+<%@ page import="de.escidoc.core.common.util.string.StringUtility"%>
+<%@ page import="de.escidoc.core.common.business.indexing.GsearchHandler"%>
+<%@ page import="de.escidoc.core.common.business.indexing.IndexingHandler"%>
 
 <%@ page import="java.net.MalformedURLException"%>
 <%@ page import="java.net.URL"%>
@@ -41,21 +43,15 @@
 <%@ page import="java.util.Set"%>
 
 <%!
-  private static Map<String, Map<String, String>> INDEX_CONFIGURATIONS = null;
-  private static Map<String, Map<String, Map<String, Object>>> OBJECT_TYPE_PARAMETERS = null;
 
-  private static Map<String, Map<String, String>> getIndexConfigurations() throws Exception {
-      if (INDEX_CONFIGURATIONS == null) {
-          INDEX_CONFIGURATIONS = BeanLocator.locateGsearchHandler().getIndexConfigurations();
-      }
-      return INDEX_CONFIGURATIONS;
+  private Map<String, Map<String, String>> getIndexConfigurations() throws Exception {
+      return ((GsearchHandler)this.getServletContext().getAttribute("common.business.indexing.GsearchHandler"))
+      .getIndexConfigurations();
   }
 
-  private static Map<String, Map<String, Map<String, Object>>> getObjectTypeParameters() throws Exception {
-      if (OBJECT_TYPE_PARAMETERS == null) {
-          OBJECT_TYPE_PARAMETERS = BeanLocator.locateIndexingHandler().getObjectTypeParameters();
-      }
-      return OBJECT_TYPE_PARAMETERS;
+  private Map<String, Map<String, Map<String, Object>>> getObjectTypeParameters() throws Exception {
+      return ((IndexingHandler)this.getServletContext().getAttribute("common.business.indexing.IndexingHandler"))
+        .getObjectTypeParameters();
   }
 %>
 

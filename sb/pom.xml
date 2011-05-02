@@ -5,7 +5,6 @@
 
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>sb</artifactId>
-	<packaging>ejb</packaging>
 	<name>eSciDoc Core - Search and Browse Unit Service</name>
 	<version>trunk-SNAPSHOT</version>
 
@@ -58,13 +57,11 @@
 					<complianceLevel>${java.target.version}</complianceLevel>
 					<outxml>true</outxml>
 					<showWeaveInfo>false</showWeaveInfo>
-					<aspectLibraries>
-						<aspectLibrary>
+ 					<aspectLibraries>
+                         <aspectLibrary>
 							<groupId>org.springframework</groupId>
 							<artifactId>spring-aspects</artifactId>
 						</aspectLibrary>
-					</aspectLibraries>
- 					<aspectLibraries>
                         <aspectLibrary>
                             <groupId>org.escidoc.core</groupId>
                             <artifactId>common</artifactId>
@@ -79,6 +76,7 @@
 					<execution>
 						<goals>
 							<goal>compile</goal>
+                            <goal>test-compile</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -110,12 +108,10 @@
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
-            <type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>aa</artifactId>
-            <type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>

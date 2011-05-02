@@ -42,6 +42,11 @@ import de.escidoc.core.sm.business.renderer.interfaces.ReportRendererInterface;
 import de.escidoc.core.sm.business.stax.handler.ParameterVo;
 import de.escidoc.core.sm.business.stax.handler.ReportParametersStaxHandler;
 import de.escidoc.core.sm.business.stax.handler.ReportParametersVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
@@ -52,12 +57,20 @@ import java.util.regex.Matcher;
  *
  * @author Michael Hoppe
  */
+@Service("business.ReportHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ReportHandler implements ReportHandlerInterface {
 
+    @Autowired
+    @Qualifier("persistence.SmReportDefinitionsDao")
     private SmReportDefinitionsDaoInterface dao;
 
+    @Autowired
+    @Qualifier("sm.persistence.DirectDatabaseAccessor")
     private DirectDatabaseAccessorInterface dbAccessor;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.business.renderer.VelocityXmlReportRenderer")
     private ReportRendererInterface renderer;
 
     /**

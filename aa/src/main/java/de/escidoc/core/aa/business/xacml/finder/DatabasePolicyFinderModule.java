@@ -57,6 +57,9 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -74,6 +77,7 @@ import java.util.regex.Pattern;
  *
  * @author Roland Werner (Accenture)
  */
+@Service("eSciDoc.core.aa.DatabasePolicyFinderModule")
 public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
     /**
@@ -94,17 +98,22 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
     public static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
 
+    @Autowired
+    @Qualifier("business.UserAccountHandler")
     private UserAccountHandlerInterface userAccountHandler;
 
+    @Autowired
+    @Qualifier("business.UserGroupHandler")
     private UserGroupHandlerInterface userGroupHandler;
 
-    /**
-     * The data access object to retrieve escidoc roles from.
-     */
+    @Autowired
+    @Qualifier("persistence.EscidocRoleDao")
     private EscidocRoleDaoInterface roleDao;
 
     private AbstractPolicy defaultPolicies;
 
+    @Autowired
+    @Qualifier("resource.PoliciesCacheProxy")
     private PoliciesCacheProxy policiesCacheProxy;
 
     private PolicyFinder policyFinder;

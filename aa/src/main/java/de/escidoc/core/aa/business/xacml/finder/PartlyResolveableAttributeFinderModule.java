@@ -36,6 +36,7 @@ import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.missing.MissingParameterException;
 import de.escidoc.core.common.util.string.StringUtility;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -55,6 +56,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.PartlyResolveableAttributeFinderModule")
 public class PartlyResolveableAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**

@@ -4,22 +4,26 @@ import de.escidoc.core.adm.business.admin.PurgeStatus;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.purge.PurgeRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Default implementation of {@link PurgeService}.
  */
-public class PurgeServiceImpl implements InitializingBean {
+@Service("de.escidoc.core.purge.internal.PurgeServiceImpl")
+public class PurgeServiceImpl {
 
     private static final Log LOGGER = LogFactory.getLog(PurgeServiceImpl.class);
 
+    @Autowired
     private FedoraUtility fedoraUtility;
 
+    @Autowired
     private TripleStoreUtility tripleStoreUtility;
 
     public void purge(final PurgeRequest purgeRequest) {
@@ -56,22 +60,6 @@ public class PurgeServiceImpl implements InitializingBean {
         }
         finally {
             PurgeStatus.getInstance().dec();
-        }
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        try {
-            // TODO: Dependency Auflösung mit Spring wird hier umgangen. Spring
-            // kann somit rekursive Abhängigkeiten nicht auflösen. BeanLocator
-            // muss entfernt werden!
-            this.fedoraUtility =
-                (FedoraUtility) BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID,
-                    "escidoc.core.business.FedoraUtility");
-            this.tripleStoreUtility = BeanLocator.locateTripleStoreUtility();
-        }
-        catch (final WebserverSystemException e) {
-            LOGGER.error("could not localize bean", e);
         }
     }
 }

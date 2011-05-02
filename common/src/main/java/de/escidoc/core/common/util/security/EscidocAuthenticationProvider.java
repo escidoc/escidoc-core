@@ -21,6 +21,8 @@
 package de.escidoc.core.common.util.security;
 
 import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.Authentication;
 import org.springframework.security.AuthenticationException;
 import org.springframework.security.GrantedAuthority;
@@ -29,12 +31,16 @@ import org.springframework.security.providers.AuthenticationProvider;
 import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
 import org.springframework.security.providers.anonymous.AnonymousAuthenticationToken;
 import org.springframework.security.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.common.security.EscidocAuthenticationProvider")
 public class EscidocAuthenticationProvider implements AuthenticationProvider {
 
+    @Autowired
+    @Qualifier("eSciDoc.core.common.security.EscidocUserDetailsService")
     private EscidocUserDetailsServiceInterface escidocUserDetailsService;
 
     /**

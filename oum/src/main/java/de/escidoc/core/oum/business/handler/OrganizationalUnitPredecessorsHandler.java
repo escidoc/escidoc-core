@@ -116,7 +116,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
                     + Elements.PREDECESSOR_ATTRIBUTE_FORM + "' has to be set! ", e);
             }
 
-            Utility.getInstance().checkIsOrganizationalUnit(objid);
+            this.getUtility().checkIsOrganizationalUnit(objid);
 
             final PredecessorForm predecessorType = getPredecessorForm(type);
 

@@ -22,10 +22,13 @@ package de.escidoc.core.common.persistence;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.service.BeanLocator;
+import de.escidoc.core.common.util.SpringApplicationContextHolder;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.id.IdentifierGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.Serializable;
 
@@ -39,37 +42,20 @@ public class EscidocIdGenerator implements IdentifierGenerator {
 
     public static final String ID_PREFIX = "escidoc:";
 
-    private EscidocIdProvider idProvider;
-
     /**
      * See Interface for functional description.
      */
     @Override
     public Serializable generate(final SessionImplementor sessionImplementor, final Object arg1) {
-
         try {
-            return getIdProvider().getNextPid();
+            final EscidocIdProvider idProvider =
+                (EscidocIdProvider) SpringApplicationContextHolder.getContext().getBean(
+                    "escidoc.core.business.EscidocIdProvider");
+            return idProvider.getNextPid();
         }
         catch (final SystemException e) {
             throw new HibernateException("Failed to generate an id. ", e);
         }
-
-    }
-
-    /**
-     * Gets (an initializes if needed) the {@link EscidocIdProvider}.
-     *
-     * @return Returns the  object.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    public EscidocIdProvider getIdProvider() throws WebserverSystemException {
-
-        if (this.idProvider == null) {
-            this.idProvider =
-                (EscidocIdProvider) BeanLocator
-                    .getBean(BeanLocator.COMMON_FACTORY_ID, EscidocIdProvider.SPRING_BEAN_ID);
-        }
-        return this.idProvider;
     }
 
 }

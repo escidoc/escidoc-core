@@ -53,7 +53,10 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -62,8 +65,11 @@ import java.util.Map;
  *
  * @author Michael Schneider
  */
+@Service("service.UserAccountHandler")
 public class UserAccountHandler implements UserAccountHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.UserAccountHandler")
     private de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface business;
 
     /**

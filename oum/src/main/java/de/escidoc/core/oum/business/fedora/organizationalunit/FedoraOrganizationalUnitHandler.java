@@ -63,7 +63,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor2;
@@ -77,7 +76,13 @@ import de.escidoc.core.oum.business.handler.OrganizationalUnitParentsHandler;
 import de.escidoc.core.oum.business.handler.OrganizationalUnitPredecessorsHandler;
 import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.oum.business.utility.OumUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
@@ -91,26 +96,28 @@ import java.util.Map;
 /**
  * @author Frank Schwichtenberg
  */
+@Service("business.FedoraOrganizationalUnitHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUpdate
     implements OrganizationalUnitHandlerInterface {
 
-    /**
-     * SRU request.
-     */
+    @Autowired
+    @Qualifier("de.escidoc.core.common.business.filter.SRURequest")
     private SRURequest sruRequest;
 
     private final Collection<ResourceListener> ouListeners = new ArrayList<ResourceListener>();
 
-    private final ContentRelationHandlerInterface contentRelationHandler;
+    @Autowired
+    @Qualifier("service.ContentRelationHandler")
+    private ContentRelationHandlerInterface contentRelationHandler;
 
-    /**
-     * Construct a new FedoraOrganizationalUnitHandler. Get a reference to the ContentRelationHandler object.
-     *
-     * @throws WebserverSystemException getting the ContentRelationHandler failed
-     */
-    public FedoraOrganizationalUnitHandler() throws WebserverSystemException {
-        this.contentRelationHandler = BeanLocator.locateContentRelationHandler();
-    }
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
+
+    @Autowired
+    @Qualifier("common.business.indexing.IndexingHandler")
+    private ResourceListener indexingHandler;
 
     /**
      * Register an ou listener.
@@ -868,8 +875,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
     public String retrieveChildObjects(final String id) throws OrganizationalUnitNotFoundException,
         TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
         final StringWriter result = new StringWriter();
-
-        Utility.getInstance().checkIsOrganizationalUnit(id);
+        this.utility.checkIsOrganizationalUnit(id);
         sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.OU }, "\"/parents/parent/id\"=" + id,
             LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS, LuceneRequestParameters.DEFAULT_START_RECORD, null, null);
         return result.toString();
@@ -888,7 +894,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
         final StringWriter result = new StringWriter();
 
-        Utility.getInstance().checkIsOrganizationalUnit(id);
+        this.utility.checkIsOrganizationalUnit(id);
         setOrganizationalUnit(id);
 
         final StringBuilder filter = new StringBuilder();
@@ -1042,13 +1048,9 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         this.sruRequest = sruRequest;
     }
 
-    /**
-     * Injects the indexing handler.
-     *
-     * @param indexingHandler The indexing handler.
-     */
-    public void setIndexingHandler(final ResourceListener indexingHandler) {
-        addOuListener(indexingHandler);
+    @PostConstruct
+    private void init() {
+        addOuListener(this.indexingHandler);
     }
 
     /**
@@ -1095,7 +1097,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
                 // check if predecessor exists and is OU (its not required to
                 // check if it does not point to itself, because itself does not
                 // exists yet.)
-                Utility.getInstance().checkIsOrganizationalUnit(predecessor.getObjid());
+                this.utility.checkIsOrganizationalUnit(predecessor.getObjid());
                 if (oUobjid != null && predecessor.getObjid().equals(oUobjid)) {
 
                     throw new InvalidStatusException("Organizational Unit points to itself as predecessor.");

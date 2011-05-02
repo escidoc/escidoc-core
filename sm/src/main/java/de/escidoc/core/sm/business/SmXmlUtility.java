@@ -29,6 +29,7 @@
 package de.escidoc.core.sm.business;
 
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,6 +39,7 @@ import java.util.Collection;
  *
  * @author Michael Hoppe
  */
+@Service("business.sm.XmlUtility")
 public class SmXmlUtility {
 
     /**

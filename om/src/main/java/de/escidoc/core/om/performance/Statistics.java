@@ -32,6 +32,7 @@ import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +44,7 @@ import java.util.Map;
  *
  * @author Kai Strnad
  */
-// CHECKSTYLE:OFF
+@Service("performance.statistics")
 @ManagedResource(objectName = "eSciDocCore:name=PerformanceStatistics", description = "Obtains and stores method execution times of desired operations.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class Statistics {
 
@@ -124,4 +125,3 @@ public class Statistics {
         this.statisticsMap = new HashMap<String, SummaryStatistics>();
     }
 }
-// CHECKSTYLE:ON

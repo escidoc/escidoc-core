@@ -33,9 +33,12 @@ import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler
 import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedOperationParameter;
 import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -47,12 +50,11 @@ import java.util.Map;
  *
  * @author Michael Hoppe, Torsten Tetteroo
  */
+@Service("mbean.StatisticPreprocessorService")
 @ManagedResource(objectName = "eSciDocCore:name=StatisticPreprocessorService", description = "Preprocesses the raw statistic data into aggregation-tables.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class SpringStatisticPreprocessorService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringStatisticPreprocessorService.class);
-
-    private StatisticPreprocessor preprocessor;
 
     private static final int HOURS_PER_DAY = 24;
 
@@ -65,6 +67,12 @@ public class SpringStatisticPreprocessorService {
     private static final int MILLISECONDS_PER_DAY =
         HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE * MILLISECONDS_PER_SECOND;
 
+    @Autowired
+    @Qualifier("business.StatisticPreprocessor")
+    private StatisticPreprocessor preprocessor;
+
+    @Autowired
+    @Qualifier("common.ErrorMessageHandler")
     private ErrorMessageHandler errorMessageHandler;
 
     /**

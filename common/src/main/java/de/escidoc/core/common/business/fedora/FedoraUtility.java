@@ -26,7 +26,6 @@ import de.escidoc.core.common.exceptions.system.FileSystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.axis.types.NonNegativeInteger;
 import org.apache.commons.pool.BasePoolableObjectFactory;
@@ -71,6 +70,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.NotWritablePropertyException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
@@ -143,6 +144,10 @@ public class FedoraUtility implements InitializingBean {
     private DefaultHttpClient httpClient;
 
     private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
 
     // The methods exposed via jmx
 
@@ -816,7 +821,7 @@ public class FedoraUtility implements InitializingBean {
         final String tempURI;
         try {
             tempURI =
-                Utility.getInstance().upload(stream, pid + name,
+                this.utility.upload(stream, pid + name,
                     de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML);
         }
         catch (final FileSystemException e) {
@@ -864,7 +869,7 @@ public class FedoraUtility implements InitializingBean {
         final String tempURI;
         try {
             tempURI =
-                Utility.getInstance().upload(stream, pid + name,
+                this.utility.upload(stream, pid + name,
                     de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML);
         }
         catch (final FileSystemException e) {
@@ -1523,24 +1528,6 @@ public class FedoraUtility implements InitializingBean {
      */
     public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
         this.tripleStoreUtility = tripleStoreUtility;
-    }
-
-    /**
-     * Get FedoraUtility instance.
-     * 
-     * @return Instance of FedoraUtilitiy.
-     * @throws FedoraSystemException
-     *             Thrown if instantiation failed.
-     */
-    public static FedoraUtility getInstance() throws FedoraSystemException {
-
-        try {
-            return (FedoraUtility) BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID,
-                "escidoc.core.business.FedoraUtility");
-        }
-        catch (final WebserverSystemException e) {
-            throw new FedoraSystemException("FedoraUtility creation failed", e);
-        }
     }
 
     /**

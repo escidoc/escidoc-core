@@ -34,11 +34,19 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Configurable
 public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHandler {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     private String methodName;
 
@@ -67,7 +75,7 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
         final String localName = element.getLocalName();
 
         if ("id".equals(localName)) {
-            if (!TripleStoreUtility.getInstance().exists(objid)) {
+            if (!this.tripleStoreUtility.exists(objid)) {
                 if ("add".equals(this.methodName)) {
                     throw new InvalidContentException("Object with id " + objid
                         + " does not exist and can not be added to members of " + this.parentId + '.');
@@ -77,7 +85,7 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
                         + " does not exist and can not be removed from members of " + this.parentId + '.');
                 }
             }
-            if (TripleStoreUtility.getInstance().isMemberOf(this.parentId, objid)) {
+            if (this.tripleStoreUtility.isMemberOf(this.parentId, objid)) {
                 memberIdsToRemove.add(objid);
             }
             else {

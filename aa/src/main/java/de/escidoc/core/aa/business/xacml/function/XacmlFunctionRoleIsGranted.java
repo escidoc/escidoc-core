@@ -44,6 +44,9 @@ import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.aa.business.persistence.ScopeDef;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.util.Collection;
@@ -63,6 +66,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.XacmlFunctionRoleIsGranted")
 public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile("/");
@@ -88,8 +92,12 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      */
     public static final String NAME = AttributeIds.FUNCTION_PREFIX + "role-is-granted";
 
+    @Autowired
+    @Qualifier("resource.PoliciesCacheProxy")
     private PoliciesCacheProxy policiesCacheProxy;
 
+    @Autowired
+    @Qualifier("persistence.EscidocRoleDao")
     private EscidocRoleDaoInterface roleDao;
 
     /**

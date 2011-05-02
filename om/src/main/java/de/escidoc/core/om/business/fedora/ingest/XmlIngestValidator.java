@@ -35,12 +35,14 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidation
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.IngestValidator;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation of IngestValidator. This class knows how to validate a given resource agains XML Schemas.
  *
  * @author Kai Strnad
  */
+@Service("business.ingestValidator")
 public class XmlIngestValidator implements IngestValidator {
 
     /**

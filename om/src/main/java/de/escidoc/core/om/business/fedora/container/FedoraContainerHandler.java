@@ -92,7 +92,6 @@ import de.escidoc.core.common.servlet.invocation.BeanMethod;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.date.Iso8601Util;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
@@ -119,6 +118,12 @@ import de.escidoc.core.om.business.stax.handler.container.ContainerPropertiesHan
 import de.escidoc.core.om.business.stax.handler.container.StructMapCreateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayInputStream;
@@ -152,7 +157,9 @@ import java.util.TreeMap;
  *
  * @author Rozita Friedman
  */
-public class FedoraContainerHandler extends ContainerHandlerPid implements ContainerHandlerInterface {
+@Service("business.FedoraContainerHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+public class FedoraContainerHandler extends ContainerHandlerPid implements ContainerHandlerInterface, InitializingBean {
 
     /*
      * Attention: The spring/beans setter methods has to be defined in this and
@@ -164,19 +171,36 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     private static final String COLLECTION = "collection";
 
+    @Autowired
+    @Qualifier("business.FedoraItemHandler")
     private FedoraItemHandler itemHandler;
 
+    @Autowired
     private FedoraContentRelationHandler contentRelationHandler;
 
-    /**
-     * The policy decision point used to check access privileges.
-     */
+    @Autowired
+    @Qualifier("common.CommonMethodMapper")
+    private MethodMapper methodMapper;
+
+    @Autowired
+    @Qualifier("common.business.indexing.IndexingHandler")
+    private IndexingHandler indexingHandler;
+
+    @Autowired
+    @Qualifier("service.PolicyDecisionPoint")
     private PolicyDecisionPointInterface pdp;
 
-    /**
-     * SRU request.
-     */
+    @Autowired
+    @Qualifier("de.escidoc.core.common.business.filter.SRURequest")
     private SRURequest sruRequest;
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
+
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
+    private FedoraUtility fedoraUtility;
 
     /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
@@ -196,16 +220,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
         this.pdp = pdp;
-    }
-
-    /**
-     * Injects the indexing handler.
-     *
-     * @param indexingHandler The indexing handler.
-     */
-    public void setIndexingHandler(final IndexingHandler indexingHandler) {
-        addContainerListener(indexingHandler);
-        addContainerMemberListener(indexingHandler);
     }
 
     /**
@@ -403,8 +417,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         getFedoraUtility().storeObjectInFedora(foxml, true);
         try {
             final String escidocRelsExtWithWrongLmd =
-                getFoxmlRenderer().renderRelsExt(properties, structMapEntries, containerId, "bla", relationsData,
-                    createComment, propertiesAsReferences);
+                getFoxmlContainerRenderer().renderRelsExt(properties, structMapEntries, containerId, "bla",
+                    relationsData, createComment, propertiesAsReferences);
 
             getFedoraUtility().addDatastream(containerId, "ESCIDOC_RELS_EXT", new String[0],
                 "ESCIDOC_RELS_EXT Datastream", true,
@@ -415,7 +429,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         }
         String lastModifiedDate = null;
         final org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
-            FedoraUtility.getInstance().getDatastreamsInformation(containerId, null);
+            this.fedoraUtility.getDatastreamsInformation(containerId, null);
         for (final org.fcrepo.server.types.gen.Datastream aRelsExtInfo : relsExtInfo) {
             final String createdDate = aRelsExtInfo.getCreateDate();
             if (lastModifiedDate == null) {
@@ -435,8 +449,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         // End of the work around
         final String wov =
-            getFoxmlRenderer().renderWov(containerId, "Version 1", "1", lastModifiedDate, Constants.STATUS_PENDING,
-                createComment);
+            getFoxmlContainerRenderer().renderWov(containerId, "Version 1", "1", lastModifiedDate,
+                Constants.STATUS_PENDING, createComment);
         try {
             getFedoraUtility().addDatastream(containerId, "version-history", new String[0],
                 "whole object versioning datastream", false, wov.getBytes(XmlUtility.CHARACTER_ENCODING), "M", false);
@@ -449,7 +463,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         // data stream ESCIDOC_RELS_EXT with a managed Control Group
         // with the same content as RELS-EXT
         final String relsExtNew =
-            getFoxmlRenderer().renderRelsExt(properties, structMapEntries, containerId, lastModifiedDate,
+            getFoxmlContainerRenderer().renderRelsExt(properties, structMapEntries, containerId, lastModifiedDate,
                 relationsData, createComment, propertiesAsReferences);
         try {
             getFedoraUtility().modifyDatastream(containerId, Datastream.RELS_EXT_DATASTREAM, "RELS_EXT Datastream",
@@ -522,9 +536,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 final String param =
                     "<param last-modification-date=\"" + container.getLastModificationDate() + "\"><id>"
                         + getContainer().getId() + "</id></param>";
-
-                final MethodMapper methodMapper =
-                    (MethodMapper) BeanLocator.getBean("Common.spring.ejb.context", "common.CommonMethodMapper");
                 final BeanMethod method =
                     methodMapper.getMethod("/ir/container/" + parent + "/members/remove", null, null, "POST", param);
                 method.invokeWithProtocol(UserContext.getHandle(),
@@ -797,7 +808,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         WebserverSystemException {
         final StringWriter result = new StringWriter();
 
-        Utility.getInstance().checkIsContainer(id);
+        this.utility.checkIsContainer(id);
         if (parameters.isExplain()) {
             // Items and containers are in the same index.
             sruRequest.explain(result, ResourceType.ITEM);
@@ -830,7 +841,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         WebserverSystemException {
         final StringWriter result = new StringWriter();
 
-        Utility.getInstance().checkIsContainer(id);
+        this.utility.checkIsContainer(id);
         if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.ITEM);
         }
@@ -1206,7 +1217,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final String contentModelId = getContainer().getProperty(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID);
         final byte[] bytes;
         try {
-            bytes = FedoraUtility.getInstance().getDissemination(id, contentModelId, resourceName);
+            bytes = this.fedoraUtility.getDissemination(id, contentModelId, resourceName);
         }
         catch (final FedoraSystemException e) {
             throw new OperationNotFoundException(e);
@@ -1353,8 +1364,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
                 final String param = "<param last-modification-date=\"" + container.getLastModificationDate() + "\"/>";
                 try {
-                    BeanLocator.locateContainerHandler().release(memberId, param);
-                    // release(memberId, param);
+                    release(memberId, param);
                 }
                 catch (final InvalidStatusException e) {
                     // do next member
@@ -1630,8 +1640,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                         + withdrawComment + "</withdraw-comment></param>";
 
                 try {
-                    BeanLocator.locateContainerHandler().withdraw(memberId, param);
-                    // withdraw(memberId, param);
+                    withdraw(memberId, param);
                 }
                 catch (final InvalidStatusException e) {
                     if (LOGGER.isWarnEnabled()) {
@@ -1820,8 +1829,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Override
     public String retrieveParents(final String id) throws ContainerNotFoundException, SystemException,
         TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
-        Utility.getInstance().checkIsContainer(id);
-        return getRenderer().renderParents(id);
+        this.utility.checkIsContainer(id);
+        return getContainerRenderer().renderParents(id);
     }
 
     /**
@@ -1864,7 +1873,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         AuthorizationException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
         IntegritySystemException, XmlParserSystemException, XmlCorruptedException, EncodingSystemException {
 
-        Utility.getInstance().checkSameContext(containerId, xmlData);
+        this.utility.checkSameContext(containerId, xmlData);
         // checkContextStatus(contextId, Constants.STATUS_CONTEXT_OPENED);
 
         setContainer(containerId);
@@ -1934,13 +1943,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         TripleStoreSystemException, XmlParserSystemException, WebserverSystemException, XmlSchemaValidationException,
         XmlCorruptedException, EncodingSystemException {
 
-        Utility.getInstance().checkSameContext(containerId, xmlData);
+        this.utility.checkSameContext(containerId, xmlData);
         // checkContextStatus(contextId, Constants.STATUS_CONTEXT_OPENED);
 
         setContainer(containerId);
         checkLocked();
 
-        final String containerXml = BeanLocator.locateContainerHandler().create(xmlData);
+        final String containerXml = create(xmlData);
 
         final String objid = XmlUtility.getIdFromXml(containerXml);
 
@@ -2027,7 +2036,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // check for same context
             final List<String> memberIds = bremeftph.getMemberIds();
             for (final String memberId : memberIds) {
-                if (!Utility.getInstance().hasSameContext(memberId, getContainer().getId())) {
+                if (!this.utility.hasSameContext(memberId, getContainer().getId())) {
                     throw new InvalidContextException("Member has not the same context as container.");
                 }
             }
@@ -2609,5 +2618,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        addContainerListener(indexingHandler);
+        addContainerMemberListener(indexingHandler);
     }
 }

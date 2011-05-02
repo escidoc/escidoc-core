@@ -22,6 +22,9 @@ package de.escidoc.core.common.business.indexing;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
@@ -30,8 +33,11 @@ import java.util.HashMap;
  *
  * @author Michael Hoppe
  */
+@Service("common.business.indexing.IndexingCacheHandler")
 public class IndexingCacheHandler {
 
+    @Autowired
+    @Qualifier("service.FedoraRestDeviationHandler")
     private FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler;
 
     /**

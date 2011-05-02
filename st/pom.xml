@@ -11,7 +11,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>st</artifactId>
-	<packaging>ejb</packaging>
 	<version>trunk-SNAPSHOT</version>
 	
 	<build>
@@ -118,8 +117,6 @@
                             <groupId>org.springframework</groupId>
                             <artifactId>spring-aspects</artifactId>
                         </aspectLibrary>
-                    </aspectLibraries>
-                    <aspectLibraries>
                         <aspectLibrary>
                             <groupId>org.escidoc.core</groupId>
                             <artifactId>common</artifactId>
@@ -134,6 +131,7 @@
                     <execution>
                         <goals>
                             <goal>compile</goal>
+                            <goal>test-compile</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -165,12 +163,10 @@
         <dependency>
             <groupId>org.escidoc.core</groupId>
             <artifactId>common</artifactId>
-            <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>org.escidoc.core</groupId>
             <artifactId>aa</artifactId>
-            <type>ejb</type>
         </dependency>
 	</dependencies>
     

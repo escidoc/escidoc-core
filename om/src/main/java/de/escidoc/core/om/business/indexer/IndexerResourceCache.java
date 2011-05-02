@@ -38,7 +38,6 @@ import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -46,13 +45,22 @@ import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.om.business.fedora.deviation.Constants;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.ehcache.EhCacheFactoryBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -65,80 +73,37 @@ import java.util.Collection;
  *         <p/>
  *         Singleton for caching Resources (items, container, fulltexts) For indexing by fedoragsearch
  */
-public final class IndexerResourceCache {
-
-    /**
-     * Fall back value if reading property {@link <code>EscidocConfiguration.INDEXER_CACHE_SIZE</code>} fails.
-     */
-    private static final int INDEXER_CACHE_SIZE_FALL_BACK = 30;
-
-    private int indexerCacheSize;
-
-    private static final int BUFFER_SIZE = 0xFFFF;
-
-    /**
-     * Holds identifier and object.
-     */
-    private final Cache resources;
-
-    private MethodMapper methodMapper;
-
-    private TripleStoreUtility tripleStoreUtility;
-
-    private ConnectionUtility connectionUtility;
+@Service
+public class IndexerResourceCache implements ApplicationContextAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexerResourceCache.class);
 
-    private static final IndexerResourceCache instance = new IndexerResourceCache();
+    private static final int BUFFER_SIZE = 0xFFFF;
 
-    /**
-     * private Constructor for Singleton.
-     */
-    private IndexerResourceCache() {
-        try {
-            this.methodMapper =
-                (MethodMapper) BeanLocator.getBean("Common.spring.ejb.context", "common.CommonMethodMapper");
-            this.connectionUtility =
-                (ConnectionUtility) BeanLocator.getBean("Common.spring.ejb.context",
-                    "escidoc.core.common.util.service.ConnectionUtility");
-            this.tripleStoreUtility = TripleStoreUtility.getInstance();
+    private ApplicationContext applicationContext;
 
-            //initialize map that holds cached Objects for indexing
-            try {
-                this.indexerCacheSize =
-                    Integer.parseInt(EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_INDEXER_CACHE_SIZE));
-            }
-            catch (final Exception e) {
-                if (LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Error on parsing indexer resource cache size.");
-                }
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error on parsing indexer resource cache size.", e);
-                }
-                this.indexerCacheSize = INDEXER_CACHE_SIZE_FALL_BACK;
-            }
-        }
-        catch (final Exception e) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on initializing indexer resource cache.");
-            }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on initializing indexer resource cache.", e);
-            }
-        }
-        final CacheManager cacheManager = CacheManager.create();
-        this.resources = new Cache(new CacheConfiguration("resourcesCache", this.indexerCacheSize));
-        cacheManager.addCache(this.resources);
+    @Autowired
+    @Qualifier("common.CommonMethodMapper")
+    private MethodMapper methodMapper;
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
+    private ConnectionUtility connectionUtility;
+
+    private Cache resourcesCache;
+
+    @Override
+    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 
-    /**
-     * Only initialize Object once. Check for old objects in cache.
-     *
-     * @return IndexerResourceCache IndexerResourceCache
-     */
-    public static IndexerResourceCache getInstance() {
-        return instance;
+    @PostConstruct
+    protected void init() {
+        this.resourcesCache = (Cache) applicationContext.getBean("resourcesCache");
     }
 
     /**
@@ -174,7 +139,7 @@ public final class IndexerResourceCache {
         TripleStoreSystemException {
         final String href = getHref(identifier);
         final Element element = new Element(href, resource);
-        resources.put(element);
+        resourcesCache.put(element);
     }
 
     /**
@@ -185,7 +150,7 @@ public final class IndexerResourceCache {
      * @throws SystemException e
      */
     private Object getResourceWithInternalKey(final String identifier) throws SystemException {
-        final Element element = resources.get(identifier);
+        final Element element = resourcesCache.get(identifier);
         return element != null ? element.getObjectValue() : null;
     }
 
@@ -199,14 +164,14 @@ public final class IndexerResourceCache {
     public void deleteResource(final String identifier) throws SystemException, TripleStoreSystemException {
         final String href = getHref(identifier);
         final Collection<String> keys = new ArrayList<String>();
-        for (final Object key : resources.getKeys()) {
+        for (final Object key : resourcesCache.getKeys()) {
             final String keyAsString = (String) key;
             if (keyAsString.startsWith(href)) {
                 keys.add(keyAsString);
             }
         }
         for (final String key : keys) {
-            resources.remove(key);
+            resourcesCache.remove(key);
         }
     }
 
@@ -222,17 +187,17 @@ public final class IndexerResourceCache {
         TripleStoreSystemException {
         final String href = getHref(identifier);
         final Collection<String> keys = new ArrayList<String>();
-        for (final Object key : resources.getKeys()) {
+        for (final Object key : resourcesCache.getKeys()) {
             final String keyAsString = (String) key;
             if (keyAsString.startsWith(href)) {
                 keys.add(keyAsString);
             }
         }
         for (final String key : keys) {
-            resources.remove(key);
+            resourcesCache.remove(key);
         }
         final Element element = new Element(href, resource);
-        resources.put(element);
+        resourcesCache.put(element);
     }
 
     /**
@@ -357,9 +322,8 @@ public final class IndexerResourceCache {
                 throw new SystemException("couldnt get objectType for object " + href);
             }
 
-            href = XmlUtility.getHref(objectType, identifier);
+            href = this.tripleStoreUtility.getHref(objectType, identifier);
         }
         return href;
     }
-
 }

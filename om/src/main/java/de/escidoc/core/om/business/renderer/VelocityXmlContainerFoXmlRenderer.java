@@ -9,6 +9,7 @@ import de.escidoc.core.common.util.xml.factory.ContainerFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlCommonFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.Map;
 /**
  * Render Container FoXMl.
  */
+@Service
 public class VelocityXmlContainerFoXmlRenderer implements ContainerFoXmlRendererInterface {
 
     private final VelocityXmlCommonFoXmlRenderer commonRenderer = new VelocityXmlCommonFoXmlRenderer();

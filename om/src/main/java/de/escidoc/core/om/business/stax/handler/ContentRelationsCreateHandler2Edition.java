@@ -45,6 +45,9 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,9 +55,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Configurable
 public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
     public static final String CONTAINER = "/container";
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     private final StaxParser parser;
 
@@ -173,9 +181,9 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                 + "identifier like 'escidoc:123' to reference a target");
         }
 
-        final String targetObjectType = TripleStoreUtility.getInstance().getObjectType(this.targetId);
+        final String targetObjectType = this.tripleStoreUtility.getObjectType(this.targetId);
 
-        if (!TripleStoreUtility.getInstance().exists(this.targetId)) {
+        if (!this.tripleStoreUtility.exists(this.targetId)) {
             throw new ReferencedResourceNotFoundException("Related " + targetObjectType + " with id " + this.targetId
                 + " does not exist.");
         }

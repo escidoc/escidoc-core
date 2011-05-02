@@ -36,6 +36,9 @@ import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundEx
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -45,8 +48,11 @@ import java.util.Map;
  *
  * @author Rozita Friedman
  */
+@Service("service.PolicyDecisionPoint")
 public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
+    @Autowired
+    @Qualifier("business.PolicyDecisionPoint")
     private de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface business;
 
     /**

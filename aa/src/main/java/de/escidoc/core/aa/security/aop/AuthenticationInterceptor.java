@@ -49,8 +49,8 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
 /**
  * Interceptor used to authenticate the current user.<br>
  * <p/>
- * This Interceptor is invoked every time an EJB calls one of its service classes.<br> It must be the first Interceptor
- * after the StatisticInterceptor, i.e. it has to be the second interceptor in the chain.
+ * It must be the first Interceptor after the StatisticInterceptor, i.e. it has to be the second interceptor in the
+ * chain.
  *
  * @author Torsten Tetteroo
  */
@@ -96,7 +96,9 @@ public class AuthenticationInterceptor implements Ordered {
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.application.security.AuthenticationException
      */
-    @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
+    @Before("execution(public * de.escidoc.core.*.service.*.*(..))"
+        + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
+        + " && !within(de.escidoc.core.common.util.aop..*)")
     public void authenticate(final JoinPoint joinPoint) throws AuthenticationException, WebserverSystemException {
 
         if (LOGGER.isDebugEnabled()) {
@@ -118,7 +120,7 @@ public class AuthenticationInterceptor implements Ordered {
      * string and the real name to "Anonymous".<br>
      * <p/>
      * Otherwise it retrieves the eSciDoc user handle from the UserContext and calls method <code>retrieve</code> from
-     * EJB UserAccountHandlerBean using this key and extracts the internal user id and the real name of the user. <br>
+     * UserAccountHandler using this key and extracts the internal user id and the real name of the user. <br>
      * This method stores the user id and the user's real name in the <code>UserContext</code>. <br>
      *
      * @throws AuthenticationException  Thrown if no user is found for the handle

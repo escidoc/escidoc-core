@@ -43,6 +43,7 @@ import de.escidoc.core.common.util.xml.factory.UserAccountXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,6 +58,7 @@ import java.util.Set;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.business.renderer.VelocityXmlUserAccountRenderer")
 public final class VelocityXmlUserAccountRenderer extends AbstractRenderer implements UserAccountRendererInterface {
 
     private static final String USER_ACCOUNT_ID = "userAccountId";

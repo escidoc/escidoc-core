@@ -47,6 +47,9 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.naming.directory.NoSuchAttributeException;
 import java.util.ArrayList;
@@ -61,7 +64,16 @@ import java.util.Map;
  * the framework and in the REST case whether REST-URLs of a context and content-model are correct. Fetches values of
  * the elements <code>description</code> and <code>pid</code> and stores they in a Map.
  */
+@Configurable
 public class ContainerPropertiesHandler extends DefaultHandler {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
 
     public static final String PROPERTIES_PATH = "/container/properties";
 
@@ -226,10 +238,8 @@ public class ContainerPropertiesHandler extends DefaultHandler {
             }
 
             String id = properties.get(Elements.ELEMENT_CONTEXT);
-
-            final Utility utility = Utility.getInstance();
             utility.checkIsContext(id);
-            String title = TripleStoreUtility.getInstance().getTitle(id);
+            String title = this.tripleStoreUtility.getTitle(id);
             if (title != null) {
                 properties.put(Elements.ELEMENT_CONTEXT + "-title", title);
             }
@@ -240,7 +250,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
 
             id = properties.get(Elements.ELEMENT_CONTENT_MODEL);
             utility.checkIsContentModel(id);
-            title = TripleStoreUtility.getInstance().getTitle(id);
+            title = this.tripleStoreUtility.getTitle(id);
             if (title != null) {
                 properties.put(Elements.ELEMENT_CONTENT_MODEL + "-title", title);
             }

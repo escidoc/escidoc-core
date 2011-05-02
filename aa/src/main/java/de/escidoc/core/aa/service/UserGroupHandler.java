@@ -53,6 +53,9 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UserGroupHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -61,8 +64,11 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
+@Service("service.UserGroupHandler")
 public class UserGroupHandler implements UserGroupHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.UserGroupHandler")
     private de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface business;
 
     /**

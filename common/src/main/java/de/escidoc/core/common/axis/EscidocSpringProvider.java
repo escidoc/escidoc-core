@@ -22,7 +22,6 @@ package de.escidoc.core.common.axis;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.apache.axis.AxisFault;
@@ -37,6 +36,10 @@ import org.apache.ws.security.handler.WSHandlerConstants;
 import org.apache.ws.security.handler.WSHandlerResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -48,7 +51,8 @@ import java.util.List;
  *
  * @author Torsten Tetteroo
  */
-public class EscidocSpringProvider extends RPCProvider {
+@Configurable
+public class EscidocSpringProvider extends RPCProvider implements ApplicationContextAware {
 
     /**
      * The serial version uid.
@@ -63,6 +67,13 @@ public class EscidocSpringProvider extends RPCProvider {
     protected static final String MISSING_MANDATORY_PARAMETER = "Missing mandatory parameter in deployment descriptor";
 
     protected static final String OPTION_SPRING_BEAN = "springBean";
+
+    private ApplicationContext applicationContext;
+
+    @Override
+    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 
     /**
      * See Interface for functional description.<br> Realizes spring bean lookup and security context initialization.
@@ -97,29 +108,16 @@ public class EscidocSpringProvider extends RPCProvider {
     /**
      * See Interface for functional description.
      *
-     * @see JavaProvider #getServiceClass(java.lang.String, org.apache.axis.handlers.soap.SOAPService,
-     *      org.apache.axis.MessageContext)
-     */
-    @Override
-    protected Class getServiceClass(
-        final String className, final SOAPService service, final MessageContext messageContext) throws AxisFault {
-        try {
-            return BeanLocator.getBeanType(BeanLocator.COMMON_FACTORY_ID, getSpringBeanId(service));
-        }
-        catch (final WebserverSystemException e) {
-            throw new AxisFault(StringUtility.format("Spring bean type lookup failed", getSpringBeanId(service)), e);
-        }
-    }
-
-    /**
-     * See Interface for functional description.
-     *
      * @see JavaProvider #getServiceClassNameOptionName()
      */
     @Override
     protected String getServiceClassNameOptionName() {
 
         return OPTION_SPRING_BEAN;
+    }
+
+    protected Class getServiceClass(String clsName, SOAPService service, MessageContext msgContext) {
+        return this.applicationContext.getType(clsName);
     }
 
     /**
@@ -179,16 +177,8 @@ public class EscidocSpringProvider extends RPCProvider {
      * @throws AxisFault Thrown if bean lookup fails.
      */
     private Object lookupSpringBean(final Handler service) throws AxisFault {
-
         final String springBeanId = getSpringBeanId(service);
-        final Object springBean;
-        try {
-            springBean = BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID, springBeanId);
-        }
-        catch (final WebserverSystemException e) {
-            throw new AxisFault(StringUtility.format("Spring bean lookup failed", springBeanId), e);
-        }
-        return springBean;
+        return this.applicationContext.getBean(springBeanId);
     }
 
     /**

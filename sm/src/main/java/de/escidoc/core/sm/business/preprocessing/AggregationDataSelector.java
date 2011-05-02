@@ -31,6 +31,7 @@ package de.escidoc.core.sm.business.preprocessing;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.StatisticPreprocessingSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
@@ -43,6 +44,11 @@ import de.escidoc.core.sm.business.vo.database.select.DatabaseSelectVo;
 import de.escidoc.core.sm.business.vo.database.select.RootWhereFieldVo;
 import de.escidoc.core.sm.business.vo.database.select.RootWhereGroupVo;
 import de.escidoc.core.sm.business.vo.database.select.SelectFieldVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,10 +61,17 @@ import java.util.List;
  *
  * @author Michael Hoppe
  */
+@Service("business.AggregationDataSelector")
+@org.springframework.context.annotation.Scope(BeanDefinition.SCOPE_PROTOTYPE)
+@Transactional(rollbackFor = { SystemException.class, RuntimeException.class })
 public class AggregationDataSelector {
 
+    @Autowired
+    @Qualifier("persistence.SmScopesDao")
     private DirectDatabaseAccessorInterface dbAccessor;
 
+    @Autowired
+    @Qualifier("sm.persistence.DirectDatabaseAccessor")
     private SmScopesDaoInterface scopesDao;
 
     public List getDataForAggregation(final AggregationDefinition aggregationDefinition, final Date date)

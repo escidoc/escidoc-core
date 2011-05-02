@@ -41,18 +41,28 @@ import de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface;
 import de.escidoc.core.sm.business.persistence.SmStatisticDataDaoInterface;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * An statistic data resource handler.
  *
  * @author Michael Hoppe
  */
+@Service("business.StatisticDataHandler")
 public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
+    @Autowired
+    @Qualifier("persistence.SmStatisticDataDao")
     private SmStatisticDataDaoInterface dao;
 
+    @Autowired
+    @Qualifier("business.sm.XmlUtility")
     private SmXmlUtility xmlUtility;
 
+    @Autowired
+    @Qualifier("statisticServiceSpecCamelContext")
     private CamelContext camelContext;
 
     /**

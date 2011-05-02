@@ -29,6 +29,11 @@
 package de.escidoc.core.om.service;
 
 import de.escidoc.core.om.service.interfaces.FedoraDescribeDeviationHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -40,8 +45,12 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
+@Service("service.FedoraDescribeDeviationHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.FedoraDescribeDeviationHandler")
     private de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface handler;
 
     /**

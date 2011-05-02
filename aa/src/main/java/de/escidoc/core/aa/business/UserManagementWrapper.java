@@ -38,17 +38,23 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation of a wrapper of an external user management.
  *
  * @author Torsten Tetteroo
  */
+@Service("business.UserManagementWrapper")
 public class UserManagementWrapper implements UserManagementWrapperInterface {
 
     private static final String ERROR_MSG_LOGOUT_HANDLE_NULL =
         "Handle of current user not initialized, logout cannot be performed.";
 
+    @Autowired
+    @Qualifier("persistence.UserAccountDao")
     private UserAccountDaoInterface dao;
 
     /**

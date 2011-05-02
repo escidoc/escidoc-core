@@ -30,9 +30,12 @@ package de.escidoc.core.st.mbean;
 
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.st.business.StagingCleaner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
@@ -41,9 +44,12 @@ import java.io.IOException;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.st.mbean.StagingManager")
 @ManagedResource(objectName = "eSciDocCore:name=StagingManager", description = "Manager of the staging file area.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class StagingManager {
 
+    @Autowired
+    @Qualifier("st.StagingCleaner")
     private StagingCleaner stagingCleaner;
 
     /**

@@ -84,7 +84,11 @@ import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -106,7 +110,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo, Roland Werner
  */
-
+@Service("business.PolicyDecisionPoint")
 public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
     /**
@@ -146,20 +150,36 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      */
     private static final Pattern TRIM_PATTERN = Pattern.compile("[\\n\\r\\s]*([<>]+)[\\n\\r\\s]*");
 
+    @Autowired
+    @Qualifier("resource.AccessRights")
     private AccessRights accessRights;
 
+    @Autowired
+    @Qualifier("authorisation.CustomPdp")
     private CustomPdp customPdp;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.common.SecurityInterceptorCache")
     private SecurityInterceptorCache cache;
 
+    @Autowired
+    @Qualifier("persistence.HibernateRequestMappingDao")
     private RequestMappingDaoInterface requestMappingDao;
 
+    @Autowired
+    @Qualifier("persistence.EscidocRoleDao")
     private EscidocRoleDaoInterface roleDao;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.common.helper.InvocationParser")
     private InvocationParser invocationParser;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.TripleStoreAttributeFinderModule")
     private TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule;
 
+    @Autowired
+    @Qualifier("convert.XacmlParser")
     private XacmlParser xacmlParser;
 
     private final Map<String, String> handlerClassNames = new HashMap<String, String>();
@@ -183,6 +203,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @throws SqlDatabaseSystemException thrown if an error occurred when accessing the database
      * @throws WebserverSystemException   thrown in case of an internal error
      */
+    @PostConstruct
     public void init() throws SqlDatabaseSystemException, WebserverSystemException {
         accessRights.deleteAccessRights();
 

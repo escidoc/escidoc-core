@@ -59,7 +59,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      */
     protected String getContainerXml(final Container container) throws SystemException, WebserverSystemException {
 
-        return getRenderer().render(container);
+        return this.getContainerRenderer().render(container);
     }
 
     /**
@@ -96,7 +96,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      */
     protected String getRelationsXml(final Container container) throws WebserverSystemException, SystemException {
 
-        return getRenderer().renderRelations(container);
+        return this.getContainerRenderer().renderRelations(container);
     }
 
     /**
@@ -114,7 +114,8 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
 
         try {
             final Datastream mdRecord = getContainer().getMdRecord(mdRecordId);
-            final String metadataRecord = getRenderer().renderMetadataRecord(getContainer(), mdRecord, true);
+            final String metadataRecord =
+                this.getContainerRenderer().renderMetadataRecord(getContainer(), mdRecord, true);
             if (metadataRecord.length() == 0) {
                 throw new MdRecordNotFoundException("Md-record with a name  " + mdRecordId
                     + " does not exist in the Container with Id " + getContainer().getId());
@@ -141,7 +142,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
     protected String getMetadataRecordsXml() throws EncodingSystemException, FedoraSystemException,
         WebserverSystemException, IntegritySystemException {
         final Container container = getContainer();
-        return getRenderer().renderMetadataRecords(container);
+        return this.getContainerRenderer().renderMetadataRecords(container);
 
     }
 
@@ -173,7 +174,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      */
     protected String getPropertiesXml(final Container container) throws WebserverSystemException, SystemException {
 
-        return getRenderer().renderProperties(container);
+        return this.getContainerRenderer().renderProperties(container);
     }
 
     /**
@@ -184,7 +185,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      */
     protected String getResourcesXml() throws WebserverSystemException {
 
-        return getRenderer().renderResources(getContainer());
+        return this.getContainerRenderer().renderResources(getContainer());
     }
 
     /**
@@ -197,6 +198,6 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      */
     protected String getStructMapXml(final Container container) throws WebserverSystemException, SystemException {
 
-        return getRenderer().renderStructMap(container);
+        return this.getContainerRenderer().renderStructMap(container);
     }
 }

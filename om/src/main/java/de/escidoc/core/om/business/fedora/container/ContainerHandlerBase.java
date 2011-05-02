@@ -56,6 +56,8 @@ import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInt
 import de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -77,11 +79,23 @@ public class ContainerHandlerBase extends HandlerBase {
 
     private GenericResource item;
 
+    @Autowired
+    @Qualifier("business.Utility")
     private Utility utility;
 
-    private ContainerRendererInterface renderer;
+    @Autowired
+    private ContainerRendererInterface containerRenderer;
 
-    private ContainerFoXmlRendererInterface foxmlRenderer;
+    @Autowired
+    private ContainerFoXmlRendererInterface foxmlContainerRenderer;
+
+    protected ContainerRendererInterface getContainerRenderer() {
+        return containerRenderer;
+    }
+
+    protected ContainerFoXmlRendererInterface getFoxmlContainerRenderer() {
+        return foxmlContainerRenderer;
+    }
 
     /**
      * @return the container
@@ -393,32 +407,7 @@ public class ContainerHandlerBase extends HandlerBase {
      */
     @Override
     protected Utility getUtility() {
-        if (this.utility == null) {
-            this.utility = Utility.getInstance();
-        }
         return this.utility;
-    }
-
-    /**
-     * @return The foxml renderer.
-     */
-    public ContainerFoXmlRendererInterface getFoxmlRenderer() {
-
-        if (this.foxmlRenderer == null) {
-            this.foxmlRenderer = new VelocityXmlContainerFoXmlRenderer();
-        }
-        return this.foxmlRenderer;
-    }
-
-    /**
-     * @return the renderer
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    public ContainerRendererInterface getRenderer() throws WebserverSystemException {
-        if (this.renderer == null) {
-            this.renderer = new VelocityXmlContainerRenderer();
-        }
-        return this.renderer;
     }
 
     /**

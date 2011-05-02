@@ -37,14 +37,20 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.ReportHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * An statistic Report resource handler.
  *
  * @author Michael Hoppe
  */
+@Service("service.ReportHandler")
 public class ReportHandler implements ReportHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.ReportHandler")
     private de.escidoc.core.sm.business.interfaces.ReportHandlerInterface handler;
 
     /**

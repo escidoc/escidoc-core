@@ -105,7 +105,7 @@ public class ItemHandlerBase extends HandlerBase {
         final String uploadUrl;
         try {
             final byte[] streamContent = Base64.decodeBase64(content.getBytes());
-            uploadUrl = Utility.getInstance().upload(streamContent, fileName, mimeType);
+            uploadUrl = this.getUtility().upload(streamContent, fileName, mimeType);
         }
         catch (final FileSystemException e) {
             throw new WebserverSystemException("Error while uploading of content to the staging area. ", e);

@@ -8,14 +8,20 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation for the Jhove Service layer of the TME component.
  *
  * @author Michael Schneider
  */
+@Service("service.JhoveHandler")
 public class JhoveHandler implements de.escidoc.core.tme.service.interfaces.JhoveHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.JhoveHandler")
     private JhoveHandlerInterface business;
 
     /**

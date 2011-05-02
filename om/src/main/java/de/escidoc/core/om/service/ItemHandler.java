@@ -72,6 +72,11 @@ import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -80,8 +85,12 @@ import java.util.Map;
  *
  * @author Torsten Tetteroo
  */
+@Service("service.ItemHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ItemHandler implements ItemHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.FedoraItemHandler")
     private de.escidoc.core.om.business.interfaces.ItemHandlerInterface handler;
 
     /**

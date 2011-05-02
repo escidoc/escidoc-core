@@ -82,7 +82,13 @@ import de.escidoc.core.om.business.stax.handler.item.ContentRelationHandler;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -97,20 +103,37 @@ import java.util.List;
  *
  * @author Steffen Wagner
  */
+@Service("business.FedoraContentRelationHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class FedoraContentRelationHandler extends HandlerBase implements ContentRelationHandlerInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FedoraContentRelationHandler.class);
 
     private final Collection<ResourceListener> contentRelationListeners = new ArrayList<ResourceListener>();
 
+    @Autowired
+    private ContentRelationXmlProvider contentRelationXmlProvider;
+
+    @Autowired
+    @Qualifier("de.escidoc.core.common.business.filter.SRURequest")
+    private SRURequest sruRequest;
+
+    @Autowired
+    @Qualifier("common.business.indexing.IndexingHandler")
+    private ResourceListener indexingHandler;
+
+    @Autowired
+    @Qualifier("business.LockHandler")
+    private LockHandler lockHandler;
+
     private PIDSystemFactory pidGenFactory;
 
     private PIDSystem pidGen;
 
-    /**
-     * SRU request.
-     */
-    private SRURequest sruRequest;
+    @PostConstruct
+    public void init() {
+        addContentRelationListener(indexingHandler);
+    }
 
     /**
      * Create Content Relation.
@@ -145,7 +168,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         cr.setIdProvider(getIdProvider());
         cr.persist(true);
 
-        final String resultCR = ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
+        final String resultCR = this.contentRelationXmlProvider.getContentRelationXml(cr);
 
         fireContentRelationCreated(cr, resultCR);
         return resultCR;
@@ -167,7 +190,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
 
         final ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
-        return ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
+        return this.contentRelationXmlProvider.getContentRelationXml(cr);
     }
 
     /**
@@ -203,7 +226,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         WebserverSystemException, TripleStoreSystemException, IntegritySystemException, FedoraSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
-        return ContentRelationXmlProvider.getInstance().getContentRelationPropertiesXml(cr);
+        return this.contentRelationXmlProvider.getContentRelationPropertiesXml(cr);
     }
 
     /**
@@ -222,7 +245,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
 
         final ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
-        return ContentRelationXmlProvider.getInstance().getContentRelationMdRecords(cr);
+        return this.contentRelationXmlProvider.getContentRelationMdRecords(cr);
     }
 
     /**
@@ -247,7 +270,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         if (mdRecords != null) {
             for (final MdRecordCreate mr : mdRecords) {
                 if (mr.getName().equals(name)) {
-                    return ContentRelationXmlProvider.getInstance().getContentRelationMdRecord(cr, mr);
+                    return this.contentRelationXmlProvider.getContentRelationMdRecord(cr, mr);
                 }
             }
         }
@@ -301,7 +324,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
             cr.persist();
             resourceChanged = true;
         }
-        final String result = ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
+        final String result = this.contentRelationXmlProvider.getContentRelationXml(cr);
 
         if (resourceChanged) {
             fireContentRelationModified(cr, result);
@@ -343,15 +366,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     public String ingest(final String xmlData) throws WebserverSystemException {
 
         throw new WebserverSystemException("Missing implementation");
-    }
-
-    /**
-     * Injects the indexing handler.
-     *
-     * @param indexingHandler The indexing handler.
-     */
-    public void setIndexingHandler(final ResourceListener indexingHandler) {
-        addContentRelationListener(indexingHandler);
     }
 
     /**
@@ -408,7 +422,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
 
         // load metadata content to resource
         enrichWithMetadataContent(cr);
-        fireContentRelationModified(cr, ContentRelationXmlProvider.getInstance().getContentRelationXml(cr));
+        fireContentRelationModified(cr, this.contentRelationXmlProvider.getContentRelationXml(cr));
 
         return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
@@ -467,7 +481,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
 
         // load metadata content to resource
         enrichWithMetadataContent(cr);
-        fireContentRelationModified(cr, ContentRelationXmlProvider.getInstance().getContentRelationXml(cr));
+        fireContentRelationModified(cr, this.contentRelationXmlProvider.getContentRelationXml(cr));
 
         return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
@@ -518,7 +532,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
 
         // load metadata content to resource
         enrichWithMetadataContent(cr);
-        fireContentRelationModified(cr, ContentRelationXmlProvider.getInstance().getContentRelationXml(cr));
+        fireContentRelationModified(cr, this.contentRelationXmlProvider.getContentRelationXml(cr));
 
         return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
@@ -552,9 +566,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
             .getLastModificationDate()), "Content relation " + id);
-
-        // lock resource
-        final LockHandler lockHandler = LockHandler.getInstance();
         if (!cr.getProperties().isLocked()) {
             lockHandler.lock(cr.getObjid(), Utility.getCurrentUser());
 
@@ -564,7 +575,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
             cr.getProperties().setLockDate(cr.getProperties().getLastModificationDate());
         }
 
-        fireContentRelationModified(cr, ContentRelationXmlProvider.getInstance().getContentRelationXml(cr));
+        fireContentRelationModified(cr, this.contentRelationXmlProvider.getContentRelationXml(cr));
 
         // timestamp
         return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
@@ -598,9 +609,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
 
         Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
             .getLastModificationDate()), "Content relation " + id);
-
-        // lock resource
-        final LockHandler lockHandler = LockHandler.getInstance();
         if (cr.getProperties().isLocked()) {
             lockHandler.unlock(cr.getObjid());
 
@@ -610,7 +618,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
             cr.getProperties().setLockDate((DateTime) null);
         }
 
-        fireContentRelationModified(cr, ContentRelationXmlProvider.getInstance().getContentRelationXml(cr));
+        fireContentRelationModified(cr, this.contentRelationXmlProvider.getContentRelationXml(cr));
 
         return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
@@ -713,7 +721,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         WebserverSystemException, TripleStoreSystemException, IntegritySystemException, FedoraSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
-        return ContentRelationXmlProvider.getInstance().getContentRelationResourcesXml(cr);
+        return this.contentRelationXmlProvider.getContentRelationResourcesXml(cr);
     }
 
     /**
@@ -743,7 +751,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         setMetadata(cr);
 
         // set further values (obtained from other sources)
-        final LockHandler lockHandler = LockHandler.getInstance();
         if (lockHandler.isLocked(id)) {
             try {
                 cr.getProperties().setLockStatus(LockStatus.LOCKED);
@@ -1239,19 +1246,18 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException An internal error occurred.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    private static String getAlternateForm(final ContentRelationCreate cr) throws SystemException,
-        WebserverSystemException {
+    private String getAlternateForm(final ContentRelationCreate cr) throws SystemException, WebserverSystemException {
         String result = null;
         final boolean isRestAccess = UserContext.isRestAccess();
 
         try {
             if (isRestAccess) {
                 UserContext.setRestAccess(false);
-                result = ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
+                result = this.contentRelationXmlProvider.getContentRelationXml(cr);
             }
             else {
                 UserContext.setRestAccess(true);
-                result = ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
+                result = this.contentRelationXmlProvider.getContentRelationXml(cr);
             }
         }
         catch (final WebserverSystemException e) {

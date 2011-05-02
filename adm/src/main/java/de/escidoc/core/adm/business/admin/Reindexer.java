@@ -41,6 +41,9 @@ import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexRequestBuilder;
 import de.escidoc.core.index.IndexService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,6 +59,7 @@ import java.util.Set;
  *
  * @author André Schenk
  */
+@Service("admin.Reindexer")
 public class Reindexer {
 
     /**
@@ -100,10 +104,16 @@ public class Reindexer {
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
             + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.OU.getUri() + "%3e";
 
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
     private FedoraUtility fedoraUtility;
 
+    @Autowired
+    @Qualifier("de.escidoc.core.index.IndexService")
     private IndexService indexService;
 
+    @Autowired
+    @Qualifier("common.business.indexing.IndexingHandler")
     private IndexingHandler indexingHandler;
 
     // Indexer configuration

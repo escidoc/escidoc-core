@@ -106,7 +106,7 @@
     </xsl:element>
     <xsl:element name="parameter">
       <xsl:attribute name="name">springBean</xsl:attribute>
-      <xsl:attribute name="value">service.<xsl:value-of select="$handlerName"/>Bean</xsl:attribute>
+      <xsl:attribute name="value">service.<xsl:value-of select="$handlerName"/></xsl:attribute>
     </xsl:element>
     <xsl:element name="parameter">
       <xsl:attribute name="name">homeInterfaceName</xsl:attribute>

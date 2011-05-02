@@ -66,6 +66,11 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementVio
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -74,8 +79,12 @@ import java.util.Map;
  *
  * @author Torsten Tetteroo
  */
+@Service("service.ContainerHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ContainerHandler implements ContainerHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.FedoraContainerHandler")
     private de.escidoc.core.om.business.interfaces.ContainerHandlerInterface handler;
 
     /**

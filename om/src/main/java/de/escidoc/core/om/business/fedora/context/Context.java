@@ -50,7 +50,9 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -64,6 +66,7 @@ import java.util.TreeMap;
  * 
  * @author Steffen Wagner
  */
+@Configurable
 public class Context extends GenericResource implements ContextInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Context.class);
@@ -77,6 +80,9 @@ public class Context extends GenericResource implements ContextInterface {
     private final Map<String, Datastream> adminDescriptors = new HashMap<String, Datastream>();
 
     private boolean ouUpdated;
+
+    public Context() {
+    }
 
     /**
      * Instantiates the Context with the specified id. The datastreams are instantiated and retrieved if the related
@@ -92,11 +98,14 @@ public class Context extends GenericResource implements ContextInterface {
      */
     public Context(final String id) throws ContextNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
-
         super(id);
+    }
+
+    @PostConstruct
+    protected void init() throws ContextNotFoundException, TripleStoreSystemException, IntegritySystemException,
+        WebserverSystemException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
-
         checkContextExist();
     }
 
@@ -459,8 +468,8 @@ public class Context extends GenericResource implements ContextInterface {
      *             If anything fails.
      */
     public List<String> getOrganizationalUnitObjids() throws TripleStoreSystemException, WebserverSystemException {
-        return TripleStoreUtility.getInstance().getPropertiesElementsVector(getId(),
-            TripleStoreUtility.PROP_ORGANIZATIONAL_UNIT);
+        return getTripleStoreUtility()
+            .getPropertiesElementsVector(getId(), TripleStoreUtility.PROP_ORGANIZATIONAL_UNIT);
     }
 
     /**
@@ -491,11 +500,11 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    private void checkContextExist() throws ContextNotFoundException, TripleStoreSystemException,
+    protected void checkContextExist() throws ContextNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
 
         try {
-            Utility.getInstance().checkIsContext(getId());
+            this.getUtility().checkIsContext(getId());
         }
         catch (final ResourceNotFoundException e) {
             throw new ContextNotFoundException(e.getMessage(), e);

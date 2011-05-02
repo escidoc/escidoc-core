@@ -51,6 +51,9 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -59,9 +62,11 @@ import java.util.Map;
  *
  * @author Michael Schneider
  */
-
+@Service("service.ContentModelHandler")
 public class ContentModelHandler implements de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.FedoraContentModelHandler")
     private ContentModelHandlerInterface business;
 
     /**

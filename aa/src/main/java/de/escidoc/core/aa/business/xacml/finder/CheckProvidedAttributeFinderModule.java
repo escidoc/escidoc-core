@@ -42,6 +42,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Constructor;
 import java.net.URI;
@@ -63,6 +64,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.CheckProvidedAttributeFinderModule")
 public class CheckProvidedAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckProvidedAttributeFinderModule.class);

@@ -47,10 +47,7 @@ xmlns="http://www.springframework.org/schema/beans"
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd"
-
-  default-autowire="no"
-  default-lazy-init="true"
->
+default-lazy-init="false">
  
     <!--######FORM-BASED-LOGIN#####################################################################################################################-->
     <!-- Uncomment this to enable form-based login using the internal 

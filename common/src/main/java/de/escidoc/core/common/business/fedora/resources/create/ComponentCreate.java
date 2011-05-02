@@ -36,6 +36,9 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,6 +54,7 @@ import java.util.concurrent.Callable;
  *
  * @author Steffen Wagner
  */
+@Configurable
 public class ComponentCreate extends GenericResourceCreate implements Callable<String> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ComponentCreate.class);
@@ -64,6 +68,14 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
     private String dcXml;
 
     private ComponentProperties properties;
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
+
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
+    private FedoraUtility fedoraUtility;
 
     /**
      * Set ItemProperties.
@@ -215,7 +227,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
 
         validate();
         final String foxml = getFOXML();
-        return FedoraUtility.getInstance().storeObjectInFedora(foxml, forceSync);
+        return this.fedoraUtility.storeObjectInFedora(foxml, forceSync);
     }
 
     /**
@@ -347,12 +359,12 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @return The url to the staging area where the resulting file is accessible.
      * @throws WebserverSystemException In case of an internal error during decoding or storing the content.
      */
-    private static String uploadBase64EncodedContent(
-        final String contentAsString, final String fileName, final String mimeType) throws WebserverSystemException {
+    private String uploadBase64EncodedContent(final String contentAsString, final String fileName, final String mimeType)
+        throws WebserverSystemException {
         final String uploadUrl;
         try {
             final byte[] streamContent = Base64.decodeBase64(contentAsString.getBytes());
-            uploadUrl = Utility.getInstance().upload(streamContent, fileName, mimeType);
+            uploadUrl = this.utility.upload(streamContent, fileName, mimeType);
         }
         catch (final FileSystemException e) {
             throw new WebserverSystemException("Error while uploading of content to the staging area. ", e);

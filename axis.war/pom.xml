@@ -20,7 +20,6 @@
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
-			<type>ejb</type>
 			<scope>provided</scope>
 			<exclusions>
 				<exclusion>

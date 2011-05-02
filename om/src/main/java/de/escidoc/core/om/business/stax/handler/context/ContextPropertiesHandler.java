@@ -48,6 +48,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.naming.directory.NoSuchAttributeException;
 import java.util.ArrayList;
@@ -61,7 +64,16 @@ import java.util.Map;
  * context XML. These elements must contain <code>xlink:href</code> attribute in the REST case and <code>objid</code>
  * attribute in the SOAP case.
  */
+@Configurable
 public class ContextPropertiesHandler extends DefaultHandler {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
 
     private final Map<String, Object> propertiesMap = new HashMap<String, Object>();
 
@@ -70,15 +82,6 @@ public class ContextPropertiesHandler extends DefaultHandler {
     private String propertiesPath = "/context/properties";
 
     private final List<String> orgunits = new ArrayList<String>();
-
-    /**
-     * @param propertiesPath XPath to properties.
-     * @param parser         StaxParser
-     */
-    public ContextPropertiesHandler(final String propertiesPath, final StaxParser parser) {
-        this.propertiesPath = propertiesPath;
-        this.parser = parser;
-    }
 
     /**
      * @param parser StaxParser
@@ -128,11 +131,10 @@ public class ContextPropertiesHandler extends DefaultHandler {
                         id = element.getAttributeValue(null, "objid");
                     }
 
-                    Utility.getInstance().checkIsOrganizationalUnit(id);
+                    this.utility.checkIsOrganizationalUnit(id);
 
                     final String orgUnitStatus =
-                        TripleStoreUtility.getInstance().getPropertiesElements(id,
-                            TripleStoreUtility.PROP_PUBLIC_STATUS);
+                        this.tripleStoreUtility.getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
 
                     if (!orgUnitStatus.equals(Constants.STATUS_OU_OPENED)) {
                         throw new InvalidStatusException("organizational-unit with id " + id + " should be in status "

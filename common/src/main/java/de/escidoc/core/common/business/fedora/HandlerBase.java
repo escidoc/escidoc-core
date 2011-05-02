@@ -24,6 +24,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -43,12 +45,20 @@ import java.net.URL;
  */
 public abstract class HandlerBase {
 
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
     private FedoraUtility fedoraUtility;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
 
+    @Autowired
+    @Qualifier("escidoc.core.business.EscidocIdProvider")
     private EscidocIdProvider idProvider;
 
+    @Autowired
+    @Qualifier("business.Utility")
     private Utility utility;
 
     protected String transformSearchResponse2relations(final String searchResponse) throws SystemException {
@@ -142,9 +152,6 @@ public abstract class HandlerBase {
      * @return Returns the utility.
      */
     protected Utility getUtility() {
-        if (this.utility == null) {
-            this.utility = Utility.getInstance();
-        }
         return this.utility;
     }
 }

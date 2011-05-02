@@ -41,6 +41,7 @@ import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.RoleXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,6 +56,7 @@ import java.util.Map;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.business.renderer.VelocityXmlRoleRenderer")
 public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRendererInterface {
 
     /**

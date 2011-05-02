@@ -51,6 +51,9 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
@@ -69,6 +72,7 @@ import java.util.regex.Pattern;
  *
  * @author Steffen Wagner
  */
+@Configurable
 public class ItemCreate extends GenericResourceCreate {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemCreate.class);
@@ -231,13 +235,13 @@ public class ItemCreate extends GenericResourceCreate {
             }
 
             getProperties().getObjectProperties().setContextTitle(
-                TripleStoreUtility.getInstance().getTitle(this.properties.getObjectProperties().getContextId()));
+                getTripleStoreUtility().getTitle(this.properties.getObjectProperties().getContextId()));
             getProperties().getObjectProperties().setContentModelTitle(
-                TripleStoreUtility.getInstance().getTitle(this.properties.getObjectProperties().getContentModelId()));
+                getTripleStoreUtility().getTitle(this.properties.getObjectProperties().getContentModelId()));
 
             // serialize object without RELS-EXT and WOV to FOXML
             final String foxml = getMinimalFoXML();
-            FedoraUtility.getInstance().storeObjectInFedora(foxml, false);
+            getFedoraUtility().storeObjectInFedora(foxml, false);
 
             // take timestamp and prepare RELS-EXT
             // String lmd =
@@ -249,18 +253,15 @@ public class ItemCreate extends GenericResourceCreate {
             if (this.properties.getLatestReleasedVersion() != null) {
                 this.properties.getLatestReleasedVersion().setDate(lmd);
             }
-
-            FedoraUtility.getInstance().addDatastream(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY,
-                new String[] {}, "whole object versioning datastream", false,
-                getWov().getBytes(XmlUtility.CHARACTER_ENCODING), false);
+            getFedoraUtility().addDatastream(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY, new String[] {},
+                "whole object versioning datastream", false, getWov().getBytes(XmlUtility.CHARACTER_ENCODING), false);
 
             // update RELS-EXT with timestamp
             final String relsExt = renderRelsExt();
-            FedoraUtility.getInstance().modifyDatastream(getObjid(), Datastream.RELS_EXT_DATASTREAM,
+            getFedoraUtility().modifyDatastream(getObjid(), Datastream.RELS_EXT_DATASTREAM,
                 Datastream.RELS_EXT_DATASTREAM_LABEL, relsExt.getBytes(XmlUtility.CHARACTER_ENCODING), false);
-
             if (forceSync) {
-                FedoraUtility.getInstance().sync();
+                getFedoraUtility().sync();
             }
 
         }
@@ -392,7 +393,7 @@ public class ItemCreate extends GenericResourceCreate {
         if (comp != null) {
             for (int i = 0; i < comp.size(); i++) {
                 try {
-                    FedoraUtility.getInstance().deleteObject(getComponents().get(i).getObjid(), true);
+                    getFedoraUtility().deleteObject(getComponents().get(i).getObjid(), true);
                 }
                 catch (final Exception e2) {
                     if (LOGGER.isWarnEnabled()) {
@@ -406,7 +407,7 @@ public class ItemCreate extends GenericResourceCreate {
         }
         // now the object it self (maybe it doesn't exists)
         try {
-            FedoraUtility.getInstance().deleteObject(getObjid(), true);
+            getFedoraUtility().deleteObject(getObjid(), true);
         }
         catch (final Exception e2) {
             if (LOGGER.isWarnEnabled()) {
@@ -416,7 +417,6 @@ public class ItemCreate extends GenericResourceCreate {
                 LOGGER.debug("Error on deleting object.", e2);
             }
         }
-
     }
 
     /**
@@ -730,12 +730,11 @@ public class ItemCreate extends GenericResourceCreate {
      *
      * @param componentIds Fedora objid of resources which are to purge.
      */
-    private static void rollbackCreate(final Iterable<String> componentIds) {
-
+    private void rollbackCreate(final Iterable<String> componentIds) {
         for (final String componentId : componentIds) {
             LOGGER.debug("Rollback Component create (" + componentId + ").");
             try {
-                FedoraUtility.getInstance().deleteObject(componentId, false);
+                getFedoraUtility().deleteObject(componentId, false);
             }
             catch (final Exception e2) {
                 if (LOGGER.isWarnEnabled()) {
@@ -757,12 +756,10 @@ public class ItemCreate extends GenericResourceCreate {
      * @return LastModificationDate of the Object (with workaround for Fedora bug).
      * @throws FedoraSystemException Thrown if request to Fedora failed.
      */
-    private static String getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
-
+    private String getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
         // Work around for Fedora30 bug APIM.getDatastreams()
         final org.fcrepo.server.types.gen.Datastream relsExtInfo =
-            FedoraUtility.getInstance().getDatastreamInformation(objid, Datastream.RELS_EXT_DATASTREAM, null);
-
+            getFedoraUtility().getDatastreamInformation(objid, Datastream.RELS_EXT_DATASTREAM, null);
         return relsExtInfo.getCreateDate();
     }
 

@@ -41,6 +41,7 @@ import de.escidoc.core.sm.business.renderer.interfaces.ReportDefinitionRendererI
 import de.escidoc.core.sm.business.util.comparator.ReportDefinitionRoleComparator;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,6 +55,7 @@ import java.util.TreeSet;
  *
  * @author Michael Hoppe
  */
+@Service("eSciDoc.core.aa.business.renderer.VelocityXmlReportDefinitionRenderer")
 public final class VelocityXmlReportDefinitionRenderer implements ReportDefinitionRendererInterface {
 
     /**

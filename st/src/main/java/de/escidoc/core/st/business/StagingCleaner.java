@@ -33,6 +33,9 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
@@ -43,6 +46,7 @@ import de.escidoc.core.st.business.persistence.StagingFileDao;
  *
  * @author Torsten Tetteroo
  */
+@Service("st.StagingCleaner")
 public class StagingCleaner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StagingCleaner.class);
@@ -56,6 +60,8 @@ public class StagingCleaner {
     /**
      * The staging file data access object used in this cleaner.
      */
+    @Autowired
+    @Qualifier("persistence.StagingFileDao")
     private StagingFileDao stagingFileDao;
 
     /**

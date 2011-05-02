@@ -2,12 +2,18 @@ package de.escidoc.core.statistic.internal;
 
 import de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface;
 import de.escidoc.core.statistic.StatisticServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * Default implementation of {@link StatisticService}.
  */
+@Service("de.escidoc.core.statistic.internal.StatisticServiceImpl")
 public class StatisticServiceImpl {
 
+    @Autowired
+    @Qualifier("business.StatisticDataHandler")
     private StatisticDataHandlerInterface statisticDataHandler;
 
     /**

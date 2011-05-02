@@ -63,7 +63,11 @@ import de.escidoc.core.aa.business.xacml.function.XacmlFunctionOneAttributeInBot
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleInList;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -79,44 +83,77 @@ import java.util.Set;
  *
  * @author Roland Werner (Accenture)
  */
+@Service("authorisation.CustomPdp")
 public class CustomPdp {
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.CheckProvidedAttributeFinderModule")
+    private CheckProvidedAttributeFinderModule checkProvidedAttrFinder;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.ResourceNotFoundAttributeFinderModule")
+    private ResourceNotFoundAttributeFinderModule resourceNotFoundAttrFinder;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.PartlyResolveableAttributeFinderModule")
+    private PartlyResolveableAttributeFinderModule partlyResolveableAttrFinder;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.ObjectTypeAttributeFinderModule")
+    private ObjectTypeAttributeFinderModule objectTypeAttrFinder;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.TripleStoreAttributeFinderModule")
+    private TripleStoreAttributeFinderModule tripleStoreAttrFinder;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.UserAccountAttributeFinderModule")
+    private UserAccountAttributeFinderModule userAccountAttrFinder;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.UserGroupAttributeFinderModule")
+    private UserGroupAttributeFinderModule userGroupAttrFinder;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.GrantAttributeFinderModule")
+    private GrantAttributeFinderModule grantAttrFinder;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.ResourceAttributeFinderModule")
+    private ResourceAttributeFinderModule resourceAttrFinder;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.RoleAttributeFinderModule")
+    private RoleAttributeFinderModule roleAttrFinder;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.SmAttributesFinderModule")
+    private SmAttributesFinderModule smAttributesFinderModule;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.LockOwnerAttributeFinderModule")
+    private LockOwnerAttributeFinderModule lockOwnerAttributeFinderModule;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.NewOuParentsAttributeFinderModule")
+    private NewOuParentsAttributeFinderModule newOuParentsAttributeFinderModule;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.ResourceIdentifierAttributeFinderModule")
+    private ResourceIdentifierAttributeFinderModule resourceIdAttrFinderModule;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.DatabasePolicyFinderModule")
+    private DatabasePolicyFinderModule databasePolicyFinder;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.XacmlFunctionRoleIsGranted")
+    private XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted;
 
     // this is the actual PDP object we'll use for evaluation
     private PDP pdp;
 
-    private CheckProvidedAttributeFinderModule checkProvidedAttrFinder;
-
-    private ResourceNotFoundAttributeFinderModule resourceNotFoundAttrFinder;
-
-    private PartlyResolveableAttributeFinderModule partlyResolveableAttrFinder;
-
-    private ObjectTypeAttributeFinderModule objectTypeAttrFinder;
-
-    private TripleStoreAttributeFinderModule tripleStoreAttrFinder;
-
-    private UserAccountAttributeFinderModule userAccountAttrFinder;
-
-    private UserGroupAttributeFinderModule userGroupAttrFinder;
-
-    private GrantAttributeFinderModule grantAttrFinder;
-
-    private ResourceAttributeFinderModule resourceAttrFinder;
-
-    private RoleAttributeFinderModule roleAttrFinder;
-
-    private SmAttributesFinderModule smAttributesFinderModule;
-
-    private LockOwnerAttributeFinderModule lockOwnerAttributeFinderModule;
-
-    private NewOuParentsAttributeFinderModule newOuParentsAttributeFinderModule;
-
-    private ResourceIdentifierAttributeFinderModule resourceIdAttrFinderModule;
-
     private PDPConfig pdpConfig;
-
-    private DatabasePolicyFinderModule databasePolicyFinder;
-
-    private XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted;
 
     /**
      * Default constructor. This creates a CustomPdp programmatically. <p/>
@@ -140,6 +177,7 @@ public class CustomPdp {
      *
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
+    @PostConstruct
     private void init() throws WebserverSystemException {
 
         // setup the PolicyFinder that this PDP will use
@@ -208,11 +246,6 @@ public class CustomPdp {
      */
     public ResponseCtx evaluate(final String requestFile) throws ParsingException, WebserverSystemException,
         FileNotFoundException {
-
-        if (this.pdp == null) {
-            init();
-        }
-
         // setup the request based on the file
         final RequestCtx request = RequestCtx.getInstance(new FileInputStream(requestFile));
 
@@ -230,11 +263,6 @@ public class CustomPdp {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public ResponseCtx evaluate(final RequestCtx request) throws WebserverSystemException {
-
-        if (this.pdp == null) {
-            init();
-        }
-
         // evaluate the request
         return pdp.evaluate(request);
     }
@@ -354,10 +382,6 @@ public class CustomPdp {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public PDPConfig getPdpConfig() throws WebserverSystemException {
-
-        if (this.pdpConfig == null) {
-            init();
-        }
         return this.pdpConfig;
     }
 

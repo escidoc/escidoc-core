@@ -33,6 +33,7 @@ import de.escidoc.core.aa.business.renderer.interfaces.ActionRendererInterface;
 import de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.factory.ActionXmlProvider;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,6 +47,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.business.renderer.VelocityXmlActionRenderer")
 public class VelocityXmlActionRenderer extends AbstractRenderer implements ActionRendererInterface {
 
     /**

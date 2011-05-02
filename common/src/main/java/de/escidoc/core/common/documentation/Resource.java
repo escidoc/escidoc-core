@@ -826,7 +826,7 @@ public class Resource extends XMLBase {
      */
     final Class getInstance() {
 
-        final String beanName = "service." + this.name + "HandlerBean";
+        final String beanName = "service." + this.name + "Handler";
         return getConfiguredClass(beanName);
     }
 

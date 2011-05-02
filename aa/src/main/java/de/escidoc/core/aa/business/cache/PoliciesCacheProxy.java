@@ -33,6 +33,9 @@ import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -43,12 +46,17 @@ import java.util.Set;
  *
  * @author André Schenk
  */
+@Service("resource.PoliciesCacheProxy")
 public class PoliciesCacheProxy {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PoliciesCacheProxy.class);
 
+    @Autowired
+    @Qualifier("business.UserAccountHandler")
     private UserAccountHandlerInterface userAccountHandler;
 
+    @Autowired
+    @Qualifier("business.UserGroupHandler")
     private UserGroupHandlerInterface userGroupHandler;
 
     /**

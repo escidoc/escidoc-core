@@ -53,6 +53,10 @@ import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
 import de.escidoc.core.sm.business.persistence.hibernate.Scope;
 import de.escidoc.core.sm.business.renderer.interfaces.ReportDefinitionRendererInterface;
 import de.escidoc.core.sm.business.stax.handler.ReportDefinitionStaxHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -66,20 +70,36 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
+@Service("business.ReportDefinitionHandler")
+@org.springframework.context.annotation.Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface {
 
+    @Autowired
+    @Qualifier("persistence.SmReportDefinitionsDao")
     private SmReportDefinitionsDaoInterface dao;
 
+    @Autowired
+    @Qualifier("persistence.SmScopesDao")
     private SmScopesDaoInterface scopesDao;
 
+    @Autowired
+    @Qualifier("persistence.SmAggregationDefinitionsDao")
     private SmAggregationDefinitionsDaoInterface aggregationDefinitionsDao;
 
+    @Autowired
+    @Qualifier("sm.persistence.DirectDatabaseAccessor")
     private DirectDatabaseAccessorInterface dbAccessor;
 
+    @Autowired
+    @Qualifier("business.sm.XmlUtility")
     private SmXmlUtility xmlUtility;
 
+    @Autowired
+    @Qualifier("business.sm.FilterUtility")
     private SmFilterUtility filterUtility;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.business.renderer.VelocityXmlReportDefinitionRenderer")
     private ReportDefinitionRendererInterface renderer;
 
     /**

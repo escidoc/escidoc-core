@@ -26,7 +26,6 @@
 
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>common</artifactId>
-	<packaging>ejb</packaging>
 	<name>eSciDoc Core - Common</name>
 	<version>trunk-SNAPSHOT</version>
 	<description>Common package of eSciDoc Core</description>
@@ -122,8 +121,8 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>compile</goal>       <!-- use this goal to weave all your main classes -->
-							<!-- <goal>test-compile</goal> -->  <!-- use this goal to weave all your test classes -->
+							<goal>compile</goal>
+							<goal>test-compile</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -221,6 +220,10 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 
 		<!-- Apache Camel -->

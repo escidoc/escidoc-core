@@ -22,14 +22,20 @@ package de.escidoc.core.common.business.fedora;
 
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.persistence.interfaces.ResourceIdentifierDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * {@link ResourceIdentifierDao} implementation using the Fedora repository.
  *
  * @author Torsten Tetteroo
  */
+@Service("escidoc.core.business.FedoraResourceIdentifierDao")
 public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
 
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
     private FedoraUtility fedoraUtility;
 
     /**

@@ -33,57 +33,46 @@
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>cmm</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>aa</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>om</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>oum</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>adm</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>oai</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>sb</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>sm</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>st</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>tme</artifactId>
-			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
@@ -121,13 +110,6 @@
 			<artifactId>axis</artifactId>
 			<type>war</type>
 		</dependency>
-<!-- 		
-		<dependency>
-			<groupId>de.escidoc.admintool</groupId>
-			<artifactId>AdminTool</artifactId>
-			<type>war</type>
-		</dependency>
- -->		
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>fedoragsearch</artifactId>
@@ -669,72 +651,6 @@
 						</manifest>
 					</archive>
 					<modules>
-						<ejbModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>common</artifactId>
-							<bundleFileName>01_common.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</ejbModule>
-						<ejbModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>aa</artifactId>
-							<bundleFileName>02_aa.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</ejbModule>
-						<ejbModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>oai</artifactId>
-							<bundleFileName>03_oai.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</ejbModule>
-						<ejbModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>adm</artifactId>
-							<bundleFileName>04_adm.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</ejbModule>
-						<ejbModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>cmm</artifactId>
-							<bundleFileName>05_cmm.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</ejbModule>
-						<ejbModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>om</artifactId>
-							<bundleFileName>06_om.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</ejbModule>
-						<ejbModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>oum</artifactId>
-							<bundleFileName>07_oum.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</ejbModule>
-						<ejbModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>sb</artifactId>
-							<bundleFileName>08_sb.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</ejbModule>
-						<ejbModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>sm</artifactId>
-							<bundleFileName>09_sm.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</ejbModule>
-						<ejbModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>st</artifactId>
-							<bundleFileName>10_st.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</ejbModule>
-						<ejbModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>tme</artifactId>
-							<bundleFileName>11_tme.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</ejbModule>
 						<jarModule>
 							<groupId>org.escidoc.core</groupId>
 							<artifactId>common-remote</artifactId>
@@ -743,36 +659,36 @@
 							<includeInApplicationXml>true</includeInApplicationXml>
 						</jarModule>
 						<webModule>
+							<groupId>org.escidoc</groupId>
+							<artifactId>fedoragsearch</artifactId>
+							<bundleFileName>01_fedoragsearch.war</bundleFileName>
+							<bundleDir>/</bundleDir>
+						</webModule>
+						<webModule>
+							<groupId>org.escidoc</groupId>
+							<artifactId>srw</artifactId>
+							<bundleFileName>02_srw.war</bundleFileName>
+							<bundleDir>/</bundleDir>
+						</webModule>
+						<webModule>
+							<groupId>fedora.localservice</groupId>
+							<artifactId>saxon</artifactId>
+							<bundleFileName>03_saxon.war</bundleFileName>
+							<bundleDir>/</bundleDir>
+						</webModule>
+                        <webModule>
 							<groupId>org.escidoc.core</groupId>
 							<artifactId>escidoc-core-war</artifactId>
-							<bundleFileName>13_escidoc-core.war</bundleFileName>
+							<bundleFileName>03_escidoc-core.war</bundleFileName>
 							<bundleDir>/</bundleDir>
 							<contextRoot>/</contextRoot>
 						</webModule>
 						<webModule>
 							<groupId>org.escidoc.core</groupId>
 							<artifactId>axis</artifactId>
-							<bundleFileName>14_axis.war</bundleFileName>
+							<bundleFileName>04_axis.war</bundleFileName>
 							<bundleDir>/</bundleDir>
 							<contextRoot>axis</contextRoot>
-						</webModule>
-						<webModule>
-							<groupId>org.escidoc</groupId>
-							<artifactId>fedoragsearch</artifactId>
-							<bundleFileName>15_fedoragsearch.war</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</webModule>
-						<webModule>
-							<groupId>org.escidoc</groupId>
-							<artifactId>srw</artifactId>
-							<bundleFileName>16_srw.war</bundleFileName>
-							<bundleDir>/</bundleDir>
-						</webModule>
-						<webModule>
-							<groupId>fedora.localservice</groupId>
-							<artifactId>saxon</artifactId>
-							<bundleFileName>17_saxon.war</bundleFileName>
-							<bundleDir>/</bundleDir>
 						</webModule>
 					</modules>
 				</configuration>

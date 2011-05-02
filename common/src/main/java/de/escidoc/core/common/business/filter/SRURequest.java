@@ -43,6 +43,9 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -59,6 +62,7 @@ import java.util.Map.Entry;
  *
  * @author André Schenk
  */
+@Service("de.escidoc.core.common.business.filter.SRURequest")
 public class SRURequest {
 
     /**
@@ -79,6 +83,8 @@ public class SRURequest {
         ADMIN_INDEXES.put(ResourceType.OU, "ou_admin");
     }
 
+    @Autowired
+    @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
     private ConnectionUtility connectionUtility;
 
     /**

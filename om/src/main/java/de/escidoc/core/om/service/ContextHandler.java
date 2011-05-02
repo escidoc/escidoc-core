@@ -55,6 +55,9 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -63,8 +66,11 @@ import java.util.Map;
  *
  * @author Torsten Tetteroo
  */
+@Service("service.ContextHandler")
 public class ContextHandler implements ContextHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.FedoraContextHandler")
     private de.escidoc.core.om.business.interfaces.ContextHandlerInterface handler;
 
     /**

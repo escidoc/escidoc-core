@@ -45,7 +45,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -64,6 +66,7 @@ import java.util.Set;
  *
  * @author Frank Schwichtenberg
  */
+@Configurable
 public class ContentModel extends GenericVersionableResourcePid implements VersionableResource {
 
     public static final String DATASTREAM_DS_COMPOSITE_MODEL = "DS-COMPOSITE-MODEL";
@@ -99,17 +102,19 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         IntegritySystemException, FedoraSystemException, StreamNotFoundException, ResourceNotFoundException,
         ContentModelNotFoundException {
         super(id);
+        this.contentStreams = new HashMap<String, Datastream>();
+        this.otherStreams = new HashMap<String, Datastream>();
+    }
+
+    @PostConstruct
+    protected void init() throws TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
+        FedoraSystemException, StreamNotFoundException, ResourceNotFoundException, ContentModelNotFoundException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
-
-        Utility.getInstance().checkIsContentModel(id);
-
+        this.getUtility().checkIsContentModel(this.getId());
         setHref(Constants.CONTENT_MODEL_URL_BASE + getId());
         setTitle(getProperty(TripleStoreUtility.PROP_DC_TITLE));
         setDescription(getProperty(TripleStoreUtility.PROP_DC_DESCRIPTION));
-
-        this.contentStreams = new HashMap<String, Datastream>();
-        this.otherStreams = new HashMap<String, Datastream>();
         initDatastreams(getDatastreamInfos());
     }
 

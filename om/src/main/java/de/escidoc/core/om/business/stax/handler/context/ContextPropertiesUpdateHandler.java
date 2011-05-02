@@ -48,6 +48,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +60,16 @@ import java.util.Map;
 /**
  * @author Steffen Wagner
  */
+@Configurable
 public class ContextPropertiesUpdateHandler extends DefaultHandler {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
 
     private final StaxParser parser;
 
@@ -114,10 +126,10 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
         if (ORGANIZATIONAL_UNIT_PATH.equals(currentPath)) {
             final String id = XmlUtility.getIdFromStartElement(element);
 
-            Utility.getInstance().checkIsOrganizationalUnit(id);
+            this.utility.checkIsOrganizationalUnit(id);
 
             final String orgUnitStatus =
-                TripleStoreUtility.getInstance().getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
+                this.tripleStoreUtility.getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
 
             if (!orgUnitStatus.equals(Constants.STATUS_OU_OPENED)) {
                 throw new InvalidStatusException("Organizational unit with id " + id + " should be in status "
@@ -163,8 +175,8 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
             // description
             else if (curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_DESCRIPTION)) {
                 deletableValues.remove(Elements.ELEMENT_DESCRIPTION);
-                if (TripleStoreUtility.getInstance().getPropertiesElements(this.contextId,
-                    Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION) == null) {
+                if (this.tripleStoreUtility.getPropertiesElements(this.contextId, Constants.DC_NS_URI
+                    + Elements.ELEMENT_DESCRIPTION) == null) {
                     valuesToAdd.put(Elements.ELEMENT_DESCRIPTION, data);
                 }
                 else {
@@ -215,10 +227,10 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
         WebserverSystemException {
 
         final String repositoryValue =
-            key.equals(Elements.ELEMENT_DESCRIPTION) ? TripleStoreUtility.getInstance().getPropertiesElements(
-                this.contextId, Constants.DC_NS_URI + key) : key.equals(Elements.ELEMENT_NAME) ? TripleStoreUtility
-                .getInstance().getTitle(this.contextId) : TripleStoreUtility.getInstance().getPropertiesElements(
-                this.contextId, Constants.PROPERTIES_NS_URI + key);
+            key.equals(Elements.ELEMENT_DESCRIPTION) ? this.tripleStoreUtility.getPropertiesElements(this.contextId,
+                Constants.DC_NS_URI + key) : key.equals(Elements.ELEMENT_NAME) ? this.tripleStoreUtility
+                .getTitle(this.contextId) : this.tripleStoreUtility.getPropertiesElements(this.contextId,
+                Constants.PROPERTIES_NS_URI + key);
 
         boolean changed = false;
         if (!XmlUtility.escapeForbiddenXmlCharacters(value).equals(repositoryValue)) {

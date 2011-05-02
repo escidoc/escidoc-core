@@ -30,8 +30,11 @@ package de.escidoc.sb.gsearch.mbean;
 
 import de.escidoc.core.common.business.indexing.Constants;
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorQueueProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.stereotype.Service;
 
 /**
  * IndexingErrorProcessor. Reads the messages that were written into the IndexingError Logfile and sends them via email
@@ -39,9 +42,12 @@ import org.springframework.jmx.export.annotation.ManagedResource;
  *
  * @author Michael Hoppe, Torsten Tetteroo
  */
+@Service("mbean.IndexingErrorProcessorService")
 @ManagedResource(objectName = "eSciDocCore:name=IndexingErrorProcessorService", description = "Reads the messages that were written into the IndexingError Logfile and sends them via email to the sb.administrator.email.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class SpringIndexingErrorProcessorService {
 
+    @Autowired
+    @Qualifier("business.ErrorQueueProcessor")
     private ErrorQueueProcessor processor;
 
     /**

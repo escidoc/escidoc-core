@@ -28,6 +28,9 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -46,6 +49,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
+@Configurable
 public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile(";");
@@ -67,6 +71,10 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
     private static final String CONTENT_MODEL_XSLT_DC_DATASTREAM = "DC-MAPPING";
 
     private String defaultXsltUrl = "http://localhost:8080" + XSL_MAPPING_UNKNOWN_TO_DC;
+
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
+    private FedoraUtility fedoraUtility;
 
     /**
      * The default constructor.<br/> The default style sheet uri is set to the value of the constant
@@ -150,7 +158,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
             // create link to content of DC-MAPPING in content model object
             final String dcMappingXsltFedoraUrl = "/get/" + contentModelId + '/' + CONTENT_MODEL_XSLT_DC_DATASTREAM;
             try {
-                xslt = FedoraUtility.getInstance().requestFedoraURL(dcMappingXsltFedoraUrl);
+                xslt = this.fedoraUtility.requestFedoraURL(dcMappingXsltFedoraUrl);
 
             }
             catch (final WebserverSystemException e) {

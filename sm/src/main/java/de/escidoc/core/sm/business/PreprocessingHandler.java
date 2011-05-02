@@ -35,14 +35,23 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface;
 import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;
 import de.escidoc.core.sm.business.stax.handler.PreprocessingInformationStaxHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 /**
  * An Preprocessing resource handler.
  *
  * @author Michael Hoppe
  */
+@Service("business.PreprocessingHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class PreprocessingHandler implements PreprocessingHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.StatisticPreprocessor")
     private StatisticPreprocessor preprocessor;
 
     /**

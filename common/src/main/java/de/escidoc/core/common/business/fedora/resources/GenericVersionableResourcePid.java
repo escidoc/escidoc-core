@@ -47,6 +47,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayInputStream;
@@ -68,6 +69,7 @@ import java.util.regex.Pattern;
  *
  * @author Steffen Wagner
  */
+@Configurable
 public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     private static final Pattern SPLIT_PATTERN_PREDICATE = Pattern.compile("#");

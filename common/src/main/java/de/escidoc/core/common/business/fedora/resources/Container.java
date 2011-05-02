@@ -43,6 +43,7 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
@@ -62,6 +63,7 @@ import java.util.Set;
  *
  * @author Frank Schwichtenberg
  */
+@Configurable
 public class Container extends GenericVersionableResourcePid implements ContainerInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Container.class);
@@ -100,7 +102,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
 
-        Utility.getInstance().checkIsContainer(getId());
+        this.getUtility().checkIsContainer(getId());
 
         setHref(Constants.CONTAINER_URL_BASE + getId());
         getVersionData();
@@ -686,7 +688,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
         if (this.contextId == null) {
             try {
                 this.contextId =
-                    TripleStoreUtility.getInstance().getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_ID);
+                    getTripleStoreUtility().getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_ID);
             }
             catch (final TripleStoreSystemException e) {
                 throw new WebserverSystemException(e);
@@ -719,7 +721,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
         try {
             contextTitle =
-                TripleStoreUtility.getInstance().getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_TITLE);
+                getTripleStoreUtility().getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_TITLE);
         }
         catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);

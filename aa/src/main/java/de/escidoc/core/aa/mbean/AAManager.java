@@ -31,9 +31,12 @@ package de.escidoc.core.aa.mbean;
 import de.escidoc.core.aa.business.UserHandleCleaner;
 import de.escidoc.core.aa.business.cache.PoliciesCache;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
@@ -42,12 +45,15 @@ import java.io.IOException;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.mbean.AAManager")
 @ManagedResource(objectName = "eSciDocCore:name=AAManager", description = "Manager of the authentication and authorization component.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class AAManager {
 
     /**
      * The worker to clean up the eSciDoc user handles.
      */
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.UserHandleCleaner")
     private UserHandleCleaner userHandleCleaner;
 
     /**

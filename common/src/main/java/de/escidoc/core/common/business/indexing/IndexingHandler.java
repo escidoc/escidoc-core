@@ -50,6 +50,9 @@ import org.apache.http.util.EntityUtils;
 import org.apache.xpath.XPathAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -78,19 +81,28 @@ import java.util.regex.Pattern;
  *
  * @author Michael Hoppe
  */
+@Service("common.business.indexing.IndexingHandler")
 public class IndexingHandler implements ResourceListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexingHandler.class);
 
+    @Autowired
+    @Qualifier("common.business.indexing.GsearchHandler")
     private GsearchHandler gsearchHandler;
 
+    @Autowired
+    @Qualifier("common.business.indexing.IndexingCacheHandler")
     private IndexingCacheHandler indexingCacheHandler;
 
-    private final DocumentBuilder docBuilder;
-
+    @Autowired
+    @Qualifier("de.escidoc.core.index.IndexService")
     private IndexService indexService;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
+
+    private final DocumentBuilder docBuilder;
 
     private boolean notifyIndexerEnabled = true;
 

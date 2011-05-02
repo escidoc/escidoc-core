@@ -40,6 +40,9 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -55,6 +58,7 @@ import java.util.regex.Pattern;
  *
  * @author Michael Hoppe
  */
+@Service("eSciDoc.core.aa.NewOuParentsAttributeFinderModule")
 public class NewOuParentsAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile("\\s+");
@@ -66,6 +70,8 @@ public class NewOuParentsAttributeFinderModule extends AbstractAttributeFinderMo
 
     private static final Pattern PATTERN_VALID_ATTRIBUTE_ID = Pattern.compile(ATTR_HIERARCHICAL_PARENTS_NEW);
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.TripleStoreAttributeFinderModule")
     private TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule;
 
     private final MapResult hierarchicalParentMapResult =

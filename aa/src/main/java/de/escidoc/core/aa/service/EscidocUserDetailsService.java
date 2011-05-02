@@ -36,9 +36,12 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation of an Acegi UserDetailsService.
@@ -46,6 +49,7 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
  * @author Torsten Tetteroo
  * @see UserDetailsService
  */
+@Service("eSciDoc.core.common.security.EscidocUserDetailsService")
 public class EscidocUserDetailsService implements EscidocUserDetailsServiceInterface {
 
     /**
@@ -56,6 +60,8 @@ public class EscidocUserDetailsService implements EscidocUserDetailsServiceInter
     private static final String FAILED_TO_AUTHENTICATE_USER_BY_HANDLE =
         "Failed to authenticate user with provided information";
 
+    @Autowired
+    @Qualifier("service.UserAccountHandler")
     private UserAccountHandlerInterface userAccountHandler;
 
     /**
@@ -116,7 +122,7 @@ public class EscidocUserDetailsService implements EscidocUserDetailsServiceInter
     }
 
     /**
-     * Injects the user account handler EJB.
+     * Injects the user account handler.
      *
      * @param userAccountHandler The {@link UserAccountHandlerInterface} implementation to be injected.
      */

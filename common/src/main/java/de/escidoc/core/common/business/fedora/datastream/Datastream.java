@@ -39,8 +39,12 @@ import org.fcrepo.server.types.gen.MIMETypedStream;
 import org.joda.time.ReadableDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.xml.sax.SAXException;
 
+import javax.annotation.PostConstruct;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -56,6 +60,7 @@ import java.util.Map;
  *
  * @author Frank Schwichtenberg
  */
+@Configurable
 public class Datastream {
 
     /**
@@ -99,8 +104,6 @@ public class Datastream {
 
     private String controlGroupValue = "X";
 
-    private FedoraUtility fu;
-
     private Map<String, String> properties;
 
     private String location;
@@ -110,6 +113,14 @@ public class Datastream {
     private String checksum;
 
     private static final boolean VERSIONABLE = true;
+
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
+    private FedoraUtility fedoraUtility;
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
 
     /**
      * Indicating the URL should not be sent when storing this in Fedora.
@@ -131,7 +142,6 @@ public class Datastream {
         this.name = name;
         this.parentId = parentId;
         this.timestamp = timestamp;
-        init();
     }
 
     /**
@@ -306,11 +316,12 @@ public class Datastream {
      * @throws StreamNotFoundException If the datastream could not be retrieved from Fedora.
      * @throws FedoraSystemException   Thrown in case of an internal system error caused by failed fedora access.
      */
-    private void init() throws StreamNotFoundException, FedoraSystemException {
+    @PostConstruct
+    protected void init() throws StreamNotFoundException, FedoraSystemException {
 
         final org.fcrepo.server.types.gen.Datastream fedoraDatastream;
         try {
-            fedoraDatastream = getFedoraUtility().getDatastreamInformation(this.parentId, this.name, this.timestamp);
+            fedoraDatastream = this.fedoraUtility.getDatastreamInformation(this.parentId, this.name, this.timestamp);
         }
         catch (final FedoraSystemException e1) {
             throw new StreamNotFoundException("Fedora datastream '" + this.name + "' not found.", e1);
@@ -371,7 +382,7 @@ public class Datastream {
                 throw new WebserverSystemException(e);
             }
             try {
-                getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
+                this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
                     this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false);
             }
             catch (final FedoraSystemException e) {
@@ -381,9 +392,9 @@ public class Datastream {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on modifing datastream.", e);
                 }
-                getFedoraUtility().setDatastreamState(this.parentId, this.name, "A");
+                this.fedoraUtility.setDatastreamState(this.parentId, this.name, "A");
                 this.timestamp =
-                    getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
+                    this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
                         this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false);
             }
         }
@@ -391,14 +402,14 @@ public class Datastream {
             if ("X".equals(this.getControlGroup())) {
                 try {
                     this.timestamp =
-                        getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
+                        this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
                             this.alternateIDs.toArray(new String[alternateIDs.size()]), this.getStream(), false);
                 }
                 catch (final FedoraSystemException e) {
                     LOGGER.debug("Error on modifing datastream.", e);
-                    getFedoraUtility().setDatastreamState(this.parentId, this.name, "A");
+                    this.fedoraUtility.setDatastreamState(this.parentId, this.name, "A");
                     this.timestamp =
-                        getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
+                        this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
                             this.alternateIDs.toArray(new String[alternateIDs.size()]), this.getStream(), false);
                 }
             }
@@ -406,9 +417,7 @@ public class Datastream {
                 String tempURI = null;
                 try {
                     try {
-                        tempURI =
-                            Utility.getInstance().upload(this.getStream(), this.parentId + this.name,
-                                MIME_TYPE_TEXT_XML);
+                        tempURI = this.utility.upload(this.getStream(), this.parentId + this.name, MIME_TYPE_TEXT_XML);
                     }
                     catch (final FileSystemException e) {
                         throw new WebserverSystemException("Error while uploading of content of datastream '"
@@ -416,14 +425,14 @@ public class Datastream {
                             + "' to the staging area. ", e);
                     }
                     this.timestamp =
-                        getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
+                        this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
                             this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI, false);
                 }
                 catch (final FedoraSystemException e) {
                     LOGGER.debug("Error on modifing datastream.", e);
-                    getFedoraUtility().setDatastreamState(this.parentId, this.name, "A");
+                    this.fedoraUtility.setDatastreamState(this.parentId, this.name, "A");
                     this.timestamp =
-                        getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
+                        this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
                             this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI, false);
                 }
 
@@ -444,15 +453,14 @@ public class Datastream {
 
         if (this.getStream() == null && this.location != null) {
             this.timestamp =
-                getFedoraUtility().addDatastream(this.parentId, this.name,
-                    this.alternateIDs.toArray(new String[alternateIDs.size()]), this.label, this.location,
-                    this.mimeType, this.controlGroupValue, sync);
+                this.fedoraUtility.addDatastream(this.parentId, this.name, this.alternateIDs
+                    .toArray(new String[alternateIDs.size()]), this.label, this.location, this.mimeType,
+                    this.controlGroupValue, sync);
         }
         else if (this.getStream() != null) {
             this.timestamp =
-                getFedoraUtility().addDatastream(this.parentId, this.name,
-                    this.alternateIDs.toArray(new String[alternateIDs.size()]), this.label, VERSIONABLE,
-                    this.getStream(), sync);
+                this.fedoraUtility.addDatastream(this.parentId, this.name, this.alternateIDs
+                    .toArray(new String[alternateIDs.size()]), this.label, VERSIONABLE, this.getStream(), sync);
         }
 
         return this.timestamp;
@@ -470,9 +478,9 @@ public class Datastream {
             // TODO: check of the 'concurrent' flag have to be done too
             if (MIME_TYPE_TEXT_XML.equals(this.mimeType)) {
 
-                getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, Constants.MIME_TYPE_DELETED,
+                this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, Constants.MIME_TYPE_DELETED,
                     this.alternateIDs.toArray(new String[alternateIDs.size()]), this.getStream(), false);
-                getFedoraUtility()
+                this.fedoraUtility
                     .setDatastreamState(this.parentId, this.name, FedoraUtility.DATASTREAM_STATUS_DELETED);
 
                 init();
@@ -572,7 +580,7 @@ public class Datastream {
         if (this.theStream == null && ("X".equals(this.controlGroupValue) || "M".equals(this.controlGroupValue))) {
             final MIMETypedStream datastream;
             try {
-                datastream = getFedoraUtility().getDatastreamWithMimeType(this.name, this.parentId, this.timestamp);
+                datastream = this.fedoraUtility.getDatastreamWithMimeType(this.name, this.parentId, this.timestamp);
             }
             catch (final FedoraSystemException e) {
                 throw new WebserverSystemException(StringUtility.format("Content of datastream could not be retrieved "
@@ -827,20 +835,6 @@ public class Datastream {
      */
     public String getLocation() {
         return this.location;
-    }
-
-    /**
-     * Gets the {@link FedoraUtility}.
-     *
-     * @return Returns the {@link FedoraUtility} object.
-     * @throws FedoraSystemException Thrown if getting the object failed.
-     */
-    protected FedoraUtility getFedoraUtility() throws FedoraSystemException {
-
-        if (this.fu == null) {
-            this.fu = FedoraUtility.getInstance();
-        }
-        return this.fu;
     }
 
     /**

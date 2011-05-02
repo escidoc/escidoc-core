@@ -34,6 +34,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.AdminXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,6 +48,7 @@ import java.util.Set;
  *
  * @author Michael Hoppe
  */
+@Service("eSciDoc.core.adm.business.renderer.VelocityXmlAdminRenderer")
 public class VelocityXmlAdminRenderer implements AdminRendererInterface {
 
     /**

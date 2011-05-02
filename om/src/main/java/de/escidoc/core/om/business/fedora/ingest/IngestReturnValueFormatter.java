@@ -2,6 +2,7 @@ package de.escidoc.core.om.business.fedora.ingest;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.om.business.interfaces.ValueFormatter;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import java.util.Map;
  *
  * @author Kai Strnad
  */
+@Service("business.ingestReturnValueFormatter")
 public class IngestReturnValueFormatter implements ValueFormatter {
 
     /**

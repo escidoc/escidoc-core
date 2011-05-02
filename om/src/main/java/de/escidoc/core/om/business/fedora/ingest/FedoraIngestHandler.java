@@ -31,15 +31,23 @@ package de.escidoc.core.om.business.fedora.ingest;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.om.business.interfaces.IngestFacade;
 import de.escidoc.core.om.business.interfaces.IngestHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 /**
  * Fedora Ingest Handler. Takes any resource, automatically determines its type and tries to ingest.
  *
  * @author Steffen Wagner,KST
  */
-
+@Service("business.FedoraIngestHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class FedoraIngestHandler implements IngestHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.IngestFacade")
     private IngestFacade ingestFacade;
 
     /**

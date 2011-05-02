@@ -50,6 +50,10 @@ import de.escidoc.core.sm.business.vo.database.select.RootWhereGroupVo;
 import de.escidoc.core.sm.business.vo.database.select.SelectFieldVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,22 +72,38 @@ import java.util.List;
  *
  * @author Michael Hoppe
  */
+@Service("business.StatisticPreprocessor")
+@org.springframework.context.annotation.Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class StatisticPreprocessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticPreprocessor.class);
 
+    @Autowired
+    @Qualifier("persistence.SmAggregationDefinitionsDao")
     private SmAggregationDefinitionsDaoInterface dao;
 
+    @Autowired
+    @Qualifier("persistence.SmScopesDao")
     private SmScopesDaoInterface scopesDao;
 
+    @Autowired
+    @Qualifier("persistence.SmStatisticDataDao")
     private SmStatisticDataDaoInterface statisticDataDao;
 
+    @Autowired
+    @Qualifier("persistence.SmPreprocessingLogsDao")
     private SmPreprocessingLogsDaoInterface preprocessingLogsDao;
 
+    @Autowired
+    @Qualifier("sm.persistence.DirectDatabaseAccessor")
     private DirectDatabaseAccessorInterface dbAccessor;
 
+    @Autowired
+    @Qualifier("business.AggregationPreprocessor")
     private AggregationPreprocessor aggregationPreprocessor;
 
+    @Autowired
+    @Qualifier("common.ErrorMessageHandler")
     private ErrorMessageHandler errorMessageHandler;
 
     /**

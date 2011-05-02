@@ -10,7 +10,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>installer</artifactId>
-	<packaging>jar</packaging>
 	<name>Installer</name>
 	<version>trunk-SNAPSHOT</version>
 	<description>Installer of eSciDoc Infrastructure</description>

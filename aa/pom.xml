@@ -11,7 +11,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>aa</artifactId>
-	<packaging>ejb</packaging>
 	<version>trunk-SNAPSHOT</version>
 
 	<build>
@@ -121,13 +120,11 @@
 					<complianceLevel>${java.target.version}</complianceLevel>
 					<outxml>true</outxml>
                     <showWeaveInfo>false</showWeaveInfo>
-					<aspectLibraries>
-                  		<aspectLibrary>
+                    <aspectLibraries>
+                        <aspectLibrary>
                     		<groupId>org.springframework</groupId>
                     		<artifactId>spring-aspects</artifactId>
                   		</aspectLibrary>
-                	</aspectLibraries>
-                    <aspectLibraries>
                         <aspectLibrary>
                             <groupId>org.escidoc.core</groupId>
                             <artifactId>common</artifactId>
@@ -137,8 +134,8 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>compile</goal>       <!-- use this goal to weave all your main classes -->
-							<goal>test-compile</goal>  <!-- use this goal to weave all your test classes -->
+							<goal>compile</goal>
+							<goal>test-compile</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -170,7 +167,6 @@
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
-            <type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>sun-xacml</groupId>

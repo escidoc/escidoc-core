@@ -67,6 +67,8 @@ import de.escidoc.core.oum.business.renderer.VelocityXmlOrganizationalUnitFoXmlR
 import de.escidoc.core.oum.business.renderer.VelocityXmlOrganizationalUnitRenderer;
 import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitFoXmlRendererInterface;
 import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.xml.stream.XMLStreamException;
 import java.util.ArrayList;
@@ -84,10 +86,13 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
 
     private Stack<List<String>> pathes;
 
+    @Autowired
+    @Qualifier("business.Utility")
     private Utility utility;
 
     private OrganizationalUnit organizationalUnit;
 
+    @Autowired
     private OrganizationalUnitRendererInterface renderer;
 
     private OrganizationalUnitFoXmlRendererInterface foxmlRenderer;
@@ -134,9 +139,6 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      */
     @Override
     protected Utility getUtility() {
-        if (this.utility == null) {
-            this.utility = Utility.getInstance();
-        }
         return this.utility;
     }
 
@@ -385,10 +387,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     /**
      * @return the renderer
      */
-    public OrganizationalUnitRendererInterface getRenderer() {
-        if (this.renderer == null) {
-            this.renderer = new VelocityXmlOrganizationalUnitRenderer();
-        }
+    protected OrganizationalUnitRendererInterface getRenderer() {
         return this.renderer;
     }
 }

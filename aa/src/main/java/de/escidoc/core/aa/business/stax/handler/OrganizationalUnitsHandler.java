@@ -41,6 +41,9 @@ import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.handler.LinkCollectionStaxHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * Stax handler that manages the organizational-units of a user account.<br> This handler is a specialization of {@link
@@ -49,6 +52,7 @@ import de.escidoc.core.common.util.xml.stax.handler.LinkCollectionStaxHandler;
  *
  * @author Torsten Tetteroo
  */
+@Configurable
 public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
 
     private static final String ERR_MSG_OU_NOT_OPENED =
@@ -56,18 +60,17 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
 
     public static final int UNINITIALIZED = -1;
 
-    private final TripleStoreUtility tsu;
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
 
-    /**
-     * The constructor.
-     *
-     * @param tsu The triple store utility to retrieve organizational units properties.
-     */
-    public OrganizationalUnitsHandler(final TripleStoreUtility tsu) {
+    @Autowired
+    @Qualifier("business.Utility")
+    private TripleStoreUtility tripleStoreUtility;
 
+    public OrganizationalUnitsHandler() {
         super(XmlUtility.XPATH_USER_ACCOUNT_ORGANIZATIONAL_UNIT, XmlUtility.BASE_ORGANIZATIONAL_UNIT,
             OrganizationalUnitNotFoundException.class);
-        this.tsu = tsu;
     }
 
     /**
@@ -78,9 +81,8 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
     @Override
     public EndElement endLinkElement(final EndElement element) throws EscidocException, TripleStoreSystemException,
         IntegritySystemException, InvalidStatusException, OrganizationalUnitNotFoundException, WebserverSystemException {
-
-        Utility.getInstance().checkIsOrganizationalUnit(getObjid());
-        if (!Constants.STATUS_OU_OPENED.equals(tsu.getPublicStatus(getObjid()))) {
+        this.utility.checkIsOrganizationalUnit(getObjid());
+        if (!Constants.STATUS_OU_OPENED.equals(tripleStoreUtility.getPublicStatus(getObjid()))) {
             throw new InvalidStatusException(StringUtility.format(ERR_MSG_OU_NOT_OPENED, getObjid()));
         }
         return super.endLinkElement(element);

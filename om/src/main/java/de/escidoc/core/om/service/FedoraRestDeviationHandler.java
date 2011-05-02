@@ -30,6 +30,11 @@ package de.escidoc.core.om.service;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -43,8 +48,12 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
+@Service("service.FedoraRestDeviationHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.FedoraRestDeviationHandler")
     private de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface handler;
 
     /**

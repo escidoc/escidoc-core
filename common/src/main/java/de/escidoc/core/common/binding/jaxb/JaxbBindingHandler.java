@@ -23,6 +23,7 @@ package de.escidoc.core.common.binding.jaxb;
 import de.escidoc.core.common.binding.BindingHandlerInterface;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -35,6 +36,7 @@ import java.util.Map;
 /**
  * @author Michael Hoppe
  */
+@Service("common.binding.JaxbBindingHandler")
 public class JaxbBindingHandler implements BindingHandlerInterface {
 
     private final Map<String, JAXBContext> storedContexts = new HashMap<String, JAXBContext>();

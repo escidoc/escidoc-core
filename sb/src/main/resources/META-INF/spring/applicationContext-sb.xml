@@ -16,21 +16,7 @@ http://www.springframework.org/schema/lang http://www.springframework.org/schema
 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
-       default-autowire="no" default-lazy-init="true">
-    <bean id="mbean.IndexOptimizerService" class="de.escidoc.sb.gsearch.mbean.IndexOptimizerService">
-        <property name="gsearchHandler">
-            <ref bean="common.business.indexing.GsearchHandler"/>
-        </property>
-        <property name="errorMessageHandler">
-            <ref bean="common.ErrorMessageHandler"/>
-        </property>
-    </bean>
-    <bean id="mbean.IndexingErrorProcessorService"
-          class="de.escidoc.sb.gsearch.mbean.SpringIndexingErrorProcessorService">
-        <property name="processor">
-            <ref bean="business.ErrorQueueProcessor"/>
-        </property>
-    </bean>
+       default-lazy-init="false">
     <!-- cron job with spring -->
     <bean id="escidoc.core.sb.IndexOptimizerJob"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">

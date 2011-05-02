@@ -32,6 +32,9 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.joda.time.DateTimeZone;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +45,7 @@ import java.util.Map;
  *
  * @author Steffen Wagner
  */
+@Service
 public final class ContentRelationXmlProvider extends InfrastructureXmlProvider {
 
     private static final String CONTENT_RELATION_PATH = "/content-relation";
@@ -66,22 +70,9 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
     public static final String MD_RECORD_PATH = COMMON_PATH;
 
-    private static final ContentRelationXmlProvider PROVIDER = new ContentRelationXmlProvider();
-
-    /**
-     * Private constructor to prevent initialization.
-     */
-    private ContentRelationXmlProvider() {
-    }
-
-    /**
-     * Gets the XML PROVIDER.
-     *
-     * @return Returns the <code>ContentRelationXmlProvider</code> object.
-     */
-    public static ContentRelationXmlProvider getInstance() {
-        return PROVIDER;
-    }
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * Render XML representation of Content Relation.
@@ -341,8 +332,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws WebserverSystemException   Thrown if values extracting failed.
      * @throws TripleStoreSystemException Thrown if obtaining resource type failed.
      */
-    private static Map<String, String> getRelationValues(final ContentRelationCreate cr)
-        throws WebserverSystemException, TripleStoreSystemException {
+    private Map<String, String> getRelationValues(final ContentRelationCreate cr) throws WebserverSystemException,
+        TripleStoreSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -357,14 +348,13 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
             subjectId = subjectId + ':' + version;
         }
         values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_ID, subjectId);
-        final String subjectType = TripleStoreUtility.getInstance().getObjectType(objid);
-        String subHref = XmlUtility.getHref(subjectType, subjectId);
+        final String subjectType = this.tripleStoreUtility.getObjectType(objid);
+        String subHref = this.tripleStoreUtility.getHref(subjectType, subjectId);
         values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_HREF, subHref);
         // TODO: the title of an old version in the case of a fixed reference
         // to the old subject version
         // WRONG!!!!!
-        values
-            .put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_TITLE, TripleStoreUtility.getInstance().getTitle(objid));
+        values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_TITLE, this.tripleStoreUtility.getTitle(objid));
 
         // object -----------------
         objid = cr.getObject();
@@ -374,13 +364,13 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
             objectId = objectId + ':' + version;
         }
         values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_ID, objectId);
-        final String objectType = TripleStoreUtility.getInstance().getObjectType(objid);
-        subHref = XmlUtility.getHref(objectType, objectId);
+        final String objectType = this.tripleStoreUtility.getObjectType(objid);
+        subHref = this.tripleStoreUtility.getHref(objectType, objectId);
         values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_HREF, subHref);
         // TODO: the title of an old version in the case of a fixed reference
         // to the old subject version
         // WRONG!!!!!
-        values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_TITLE, TripleStoreUtility.getInstance().getTitle(objid));
+        values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_TITLE, this.tripleStoreUtility.getTitle(objid));
 
         return values;
     }

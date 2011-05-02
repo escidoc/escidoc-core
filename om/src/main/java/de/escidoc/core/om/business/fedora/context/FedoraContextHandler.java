@@ -66,7 +66,13 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -78,21 +84,31 @@ import java.util.Map;
 /**
  * @author Frank Schwichtenberg
  */
+@Service("business.FedoraContextHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class FedoraContextHandler extends ContextHandlerUpdate implements ContextHandlerInterface {
 
     private final Collection<ResourceListener> contextListeners = new ArrayList<ResourceListener>();
 
+    @Autowired
+    @Qualifier("business.FedoraContentRelationHandler")
     private FedoraContentRelationHandler contentRelationHandler;
 
-    /**
-     * The policy decision point used to check access privileges.
-     */
+    @Autowired
+    @Qualifier("service.PolicyDecisionPoint")
     private PolicyDecisionPointInterface pdp;
 
-    /**
-     * SRU request.
-     */
+    @Autowired
+    @Qualifier("de.escidoc.core.common.business.filter.SRURequest")
     private SRURequest sruRequest;
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
+
+    @Autowired
+    @Qualifier("common.business.indexing.IndexingHandler")
+    private ResourceListener indexingHandler;
 
     /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
@@ -102,16 +118,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
     protected PolicyDecisionPointInterface getPdp() {
 
         return this.pdp;
-    }
-
-    /**
-     * Injects the {@link PolicyDecisionPointInterface} implementation.
-     *
-     * @param pdp the {@link PolicyDecisionPointInterface} to be injected.
-     */
-    public void setPdp(final PolicyDecisionPointInterface pdp) {
-
-        this.pdp = pdp;
     }
 
     /**
@@ -295,7 +301,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
         throws ContextNotFoundException, TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
         final StringWriter result = new StringWriter();
 
-        Utility.getInstance().checkIsContext(id);
+        utility.checkIsContext(id);
         if (parameters.isExplain()) {
             // Items and containers are in the same index.
             sruRequest.explain(result, ResourceType.ITEM);
@@ -325,7 +331,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
         IntegritySystemException, TripleStoreSystemException {
 
         setContext(id);
-        return getRenderer().renderAdminDescriptor(this, name, getContext().getAdminDescriptor(name), true);
+        return getContextRenderer().renderAdminDescriptor(this, name, getContext().getAdminDescriptor(name), true);
     }
 
     /*
@@ -588,13 +594,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
         this.sruRequest = sruRequest;
     }
 
-    /**
-     * Injects the indexing handler.
-     *
-     * @param indexingHandler The indexing handler.
-     */
-    public void setIndexingHandler(final ResourceListener indexingHandler) {
-        addContextListener(indexingHandler);
+    @PostConstruct
+    public void init() {
+        addContextListener(this.indexingHandler);
     }
 
     /**

@@ -37,8 +37,9 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.om.business.renderer.VelocityXmlContextRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * Contains base functionality to handle Fedora Context.
@@ -47,11 +48,18 @@ import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
  */
 public class ContextHandlerBase extends HandlerBase {
 
+    @Autowired
+    private ContextRendererInterface contextRenderer;
+
     private Context context;
 
+    @Autowired
+    @Qualifier("business.Utility")
     private Utility utility;
 
-    private ContextRendererInterface renderer;
+    public ContextRendererInterface getContextRenderer() {
+        return contextRenderer;
+    }
 
     /**
      * @return Return the Context.
@@ -76,25 +84,10 @@ public class ContextHandlerBase extends HandlerBase {
     }
 
     /**
-     * Get the Context XML Renderer.
-     *
-     * @return renderer
-     */
-    public ContextRendererInterface getRenderer() {
-        if (this.renderer == null) {
-            this.renderer = new VelocityXmlContextRenderer();
-        }
-        return this.renderer;
-    }
-
-    /**
      * @return Returns the utility.
      */
     @Override
     public Utility getUtility() {
-        if (this.utility == null) {
-            this.utility = Utility.getInstance();
-        }
         return this.utility;
     }
 

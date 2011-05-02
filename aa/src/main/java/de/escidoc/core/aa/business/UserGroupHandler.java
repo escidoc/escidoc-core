@@ -91,6 +91,10 @@ import de.escidoc.core.common.util.xml.stax.handler.LinkStaxHandler;
 import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -112,6 +116,7 @@ import java.util.regex.Pattern;
  *
  * @author André Schenk
  */
+@Service("business.UserGroupHandler")
 public class UserGroupHandler implements UserGroupHandlerInterface {
 
     /**
@@ -127,18 +132,32 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
     private static final int MAX_FIELD_LENGTH = 245;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.business.renderer.VelocityXmlUserGroupRenderer")
     private UserGroupRendererInterface renderer;
 
+    @Autowired
+    @Qualifier("persistence.EscidocRoleDao")
     private EscidocRoleDaoInterface roleDao;
 
-    private TripleStoreUtility tsu;
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.ObjectAttributeResolver")
     private ObjectAttributeResolver objectAttributeResolver;
 
+    @Autowired
+    @Qualifier("persistence.UserAccountDao")
     private UserAccountDaoInterface userAccountDao;
 
+    @Autowired
+    @Qualifier("persistence.UserGroupDao")
     private UserGroupDaoInterface userGroupDao;
 
+    @Autowired
+    @Qualifier("business.PolicyDecisionPoint")
     private PolicyDecisionPointInterface pdp;
 
     private static final String MSG_UNEXPECTED_EXCEPTION = "Unexpected exception in ";
@@ -493,7 +512,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             }
 
             // get the href of the object.
-            final String objectHref = XmlUtility.getHref(objectType, objectId);
+            final String objectHref = tripleStoreUtility.getHref(objectType, objectId);
 
             // In case of REST it has to be checked if the provided href points
             // to the correct href.
@@ -528,6 +547,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * See Interface for functional description.
      */
     @Override
+    @Transactional(rollbackFor = { SystemException.class, RuntimeException.class })
     public String addSelectors(final String groupId, final String taskParam)
         throws OrganizationalUnitNotFoundException, UserAccountNotFoundException, UserGroupNotFoundException,
         InvalidContentException, MissingMethodParameterException, SystemException, AuthenticationException,
@@ -625,6 +645,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * See Interface for functional description.
      */
     @Override
+    @Transactional(rollbackFor = { SystemException.class, RuntimeException.class })
     public String removeSelectors(final String groupId, final String taskParam) throws XmlCorruptedException,
         AuthenticationException, AuthorizationException, SystemException, UserGroupNotFoundException,
         OptimisticLockingException, MissingMethodParameterException, UserAccountNotFoundException,
@@ -1142,7 +1163,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         throws SystemException, TripleStoreSystemException {
 
         List<String> addableList = totalList;
-        final List<String> orgUnitIds = tsu.getParents(orgUnitId);
+        final List<String> orgUnitIds = this.tripleStoreUtility.getParents(orgUnitId);
         if (orgUnitIds != null && !orgUnitIds.isEmpty()) {
             addableList.addAll(orgUnitIds);
             for (final String parentOrgUnitId : orgUnitIds) {
@@ -1401,6 +1422,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      java.lang.String)
      */
     @Override
+    @Transactional(rollbackFor = { SystemException.class, RuntimeException.class })
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR")
     public void revokeGrants(final String groupId, final String filterXML) throws UserGroupNotFoundException,
         GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
@@ -1634,51 +1656,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     }
 
     /**
-     * Injects the user group renderer.
-     *
-     * @param renderer The user group renderer to inject.
-     */
-    public void setRenderer(final UserGroupRendererInterface renderer) {
-        this.renderer = renderer;
-    }
-
-    /**
-     * Injects the role data access object.
-     *
-     * @param roleDao The role data access object.
-     */
-    public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
-        this.roleDao = roleDao;
-    }
-
-    /**
-     * Injects the triple store utility bean.
-     *
-     * @param tsu The {@link TripleStoreUtility}.
-     */
-    public void setTsu(final TripleStoreUtility tsu) {
-        this.tsu = tsu;
-    }
-
-    /**
-     * Injects the user data access object.
-     *
-     * @param userAccountDao The data access object.
-     */
-    public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
-        this.userAccountDao = userAccountDao;
-    }
-
-    /**
-     * Injects the user group data access object.
-     *
-     * @param userGroupDao The data access object.
-     */
-    public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
-        this.userGroupDao = userGroupDao;
-    }
-
-    /**
      * Check if the given label is already used as user group name in the database.
      *
      * @param label user group name
@@ -1687,24 +1664,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     private boolean checkLabelUnique(final String label) throws SqlDatabaseSystemException {
         return userGroupDao.findUsergroupByLabel(label) == null;
-    }
-
-    /**
-     * Injects the policy decision point bean.
-     *
-     * @param pdp The {@link PolicyDecisionPoint}.
-     */
-    public void setPdp(final PolicyDecisionPointInterface pdp) {
-        this.pdp = pdp;
-    }
-
-    /**
-     * Injects the user group data access object.
-     *
-     * @param objectAttributeResolver The objectAttributeResolver.
-     */
-    public void setObjectAttributeResolver(final ObjectAttributeResolver objectAttributeResolver) {
-        this.objectAttributeResolver = objectAttributeResolver;
     }
 
 }

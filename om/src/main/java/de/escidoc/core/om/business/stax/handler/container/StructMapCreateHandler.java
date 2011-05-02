@@ -39,6 +39,9 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +51,12 @@ import java.util.List;
  *
  * @author Frank Schwichtenberg
  */
+@Configurable
 public class StructMapCreateHandler extends DefaultHandler {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     private final StaxParser parser;
 
@@ -146,10 +154,10 @@ public class StructMapCreateHandler extends DefaultHandler {
                     + xlinkPrefix + ":href has to look like: ir/" + elementName + '/' + entryId);
             }
         }
-        if (!TripleStoreUtility.getInstance().exists(entryId)) {
+        if (!this.tripleStoreUtility.exists(entryId)) {
             throw new InvalidContentException("Referenced object in struct-map does not exist.");
         }
-        if (!objectType.equals(TripleStoreUtility.getInstance().getObjectType(entryId))) {
+        if (!objectType.equals(this.tripleStoreUtility.getObjectType(entryId))) {
             throw new InvalidContentException("Referenced object in struct-map is no " + elementName + '.');
         }
         return entryId;

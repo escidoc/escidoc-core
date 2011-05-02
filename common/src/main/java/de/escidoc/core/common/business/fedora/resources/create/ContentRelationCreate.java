@@ -35,6 +35,9 @@ import de.escidoc.core.common.util.xml.factory.ContentRelationFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -54,11 +57,16 @@ import java.util.List;
  *
  * @author Steffen Wagner
  */
+@Configurable
 public class ContentRelationCreate extends GenericResourceCreate implements Cloneable, Serializable {
 
     private static final long serialVersionUID = -2959419814324564197L;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationCreate.class);
+
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
+    private FedoraUtility fedoraUtility;
 
     private final RepositoryIndicator ri = new RepositoryIndicator();
 
@@ -177,11 +185,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
                     updateFedoraResource();
                 }
             }
-
             if (forceSync) {
-                FedoraUtility.getInstance().sync();
+                this.fedoraUtility.sync();
             }
-
         }
         catch (final Exception e) {
             throw new SystemException(e);
@@ -559,10 +565,10 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
         // serialize object without RELS-EXT and WOV to FOXML
         final String foxml = ContentRelationFoXmlProvider.getInstance().getFoXml(this);
-        FedoraUtility.getInstance().storeObjectInFedora(foxml, false);
+        this.fedoraUtility.storeObjectInFedora(foxml, false);
 
         // creation /last-modification date
-        final String lastModificationDate = FedoraUtility.getInstance().getLastModificationDate(getObjid());
+        final String lastModificationDate = this.fedoraUtility.getLastModificationDate(getObjid());
         getProperties().setCreationDate(lastModificationDate);
         getProperties().setLastModificationDate(lastModificationDate);
     }
@@ -617,7 +623,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         final String relsExt = ContentRelationFoXmlProvider.getInstance().getRelsExt(this);
         try {
             final String lmd =
-                FedoraUtility.getInstance().modifyDatastream(getObjid(), Datastream.RELS_EXT_DATASTREAM,
+                this.fedoraUtility.modifyDatastream(getObjid(), Datastream.RELS_EXT_DATASTREAM,
                     Datastream.RELS_EXT_DATASTREAM_LABEL, relsExt.getBytes(XmlUtility.CHARACTER_ENCODING), false);
             getProperties().setLastModificationDate(lmd);
         }
@@ -626,7 +632,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
         }
         if (sync) {
-            FedoraUtility.getInstance().sync();
+            this.fedoraUtility.sync();
         }
     }
 
@@ -637,12 +643,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @throws FedoraSystemException Thrown if Fedora request failed.
      */
     private void deleteDatastream(final MdRecordCreate mdRecord) throws FedoraSystemException {
-
-        // FedoraUtility.getInstance().setDatastreamState(getObjid(),
-        // mdRecord.getName(), FedoraUtility.DATASTREAM_STATUS_DELETED);
-
-        FedoraUtility.getInstance().purgeDatastream(getObjid(), mdRecord.getName(), null, null);
-
+        this.fedoraUtility.purgeDatastream(getObjid(), mdRecord.getName(), null, null);
     }
 
     /**
@@ -663,8 +664,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
         }
-
-        FedoraUtility.getInstance().modifyDatastream(getObjid(), mdRecord.getName(), mdRecord.getLabel(),
+        this.fedoraUtility.modifyDatastream(getObjid(), mdRecord.getName(), mdRecord.getLabel(),
             mdRecord.getMimeType(), altIds, content, false);
         mdRecord.getRepositoryIndicator().setResourceChanged(false);
     }
@@ -688,8 +688,8 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
             throw new WebserverSystemException(e);
         }
 
-        FedoraUtility.getInstance().addDatastream(getObjid(), mdRecord.getName(), altIds, mdRecord.getLabel(), false,
-            content, false);
+        this.fedoraUtility.addDatastream(getObjid(), mdRecord.getName(), altIds, mdRecord.getLabel(), false, content,
+            false);
         mdRecord.getRepositoryIndicator().setResourceChanged(false);
         mdRecord.getRepositoryIndicator().setResourceIsNew(false);
     }

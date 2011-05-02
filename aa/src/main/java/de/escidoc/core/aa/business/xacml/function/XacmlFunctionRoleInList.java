@@ -42,6 +42,7 @@ import de.escidoc.core.aa.business.cache.PoliciesCache;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,6 +58,7 @@ import java.util.List;
  *
  * @author Michael Hoppe
  */
+@Service("eSciDoc.core.aa.XacmlFunctionRoleInList")
 public class XacmlFunctionRoleInList extends FunctionBase {
 
     /**

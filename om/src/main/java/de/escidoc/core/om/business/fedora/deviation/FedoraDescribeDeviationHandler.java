@@ -34,6 +34,9 @@ import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -44,10 +47,13 @@ import java.util.Map.Entry;
 /**
  * @author Michael Hoppe
  */
+@Service("business.FedoraDescribeDeviationHandler")
 public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHandlerInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FedoraDescribeDeviationHandler.class);
 
+    @Autowired
+    @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
     private ConnectionUtility connectionUtility;
 
     /**

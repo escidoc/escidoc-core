@@ -50,6 +50,11 @@ import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnit
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -58,9 +63,13 @@ import java.util.Map;
  *
  * @author Michael Schneider
  */
+@Service("service.OrganizationalUnitHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class OrganizationalUnitHandler
     implements de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.FedoraOrganizationalUnitHandler")
     private OrganizationalUnitHandlerInterface business;
 
     /**

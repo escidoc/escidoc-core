@@ -46,6 +46,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterface;
 import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,6 +68,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.SmAttributesFinderModule")
 public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
 
     private static final String ATTR_SCOPE = "scope";
@@ -109,10 +113,16 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         Pattern.compile("<[^>]*?allowed-role[^>]*?objid=\"(.*?)\"" + "|<[^>]*?allowed-role[^>]*?href=\"[^\"]*/(.*?)\"",
             Pattern.DOTALL + Pattern.MULTILINE);
 
+    @Autowired
+    @Qualifier("service.AggregationDefinitionHandler")
     private AggregationDefinitionHandlerInterface aggregationDefinitionHandler;
 
+    @Autowired
+    @Qualifier("service.ReportDefinitionHandler")
     private ReportDefinitionHandlerInterface reportDefinitionHandler;
 
+    @Autowired
+    @Qualifier("service.ScopeHandler")
     private ScopeHandlerInterface scopeHandler;
 
     /**

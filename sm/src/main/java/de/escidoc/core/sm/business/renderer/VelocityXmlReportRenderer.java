@@ -38,6 +38,7 @@ import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
 import de.escidoc.core.sm.business.renderer.interfaces.ReportRendererInterface;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,6 +56,7 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
+@Service("eSciDoc.core.aa.business.renderer.VelocityXmlReportRenderer")
 public final class VelocityXmlReportRenderer implements ReportRendererInterface {
 
     /**

@@ -10,6 +10,11 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -18,12 +23,15 @@ import java.util.Map;
  *
  * @author Rozita Friedman
  */
+@Service("service.SetDefinitionHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
     /**
      * The logger.
      */
-
+    @Autowired
+    @Qualifier("business.SetDefinitionHandler")
     private de.escidoc.core.oai.business.interfaces.SetDefinitionHandlerInterface handler;
 
     /*

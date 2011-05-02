@@ -30,12 +30,14 @@ import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundEx
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import org.springframework.beans.factory.annotation.Configurable;
 
 /**
  * Implementation of a Fedora Item Object which consist of datastreams managed in Fedora Digital Repository System.
  *
  * @author Frank Schwichtenberg
  */
+@Configurable
 public class Relation extends GenericVersionableResource implements VersionableResource {
 
     /**
@@ -51,9 +53,8 @@ public class Relation extends GenericVersionableResource implements VersionableR
      */
     public Relation(final String id) throws TripleStoreSystemException, WebserverSystemException,
         IntegritySystemException, ResourceNotFoundException, ContentRelationNotFoundException {
-
         super(id);
-        Utility.getInstance().checkIsRelation(id);
+        this.getUtility().checkIsRelation(id);
     }
 
     @Override

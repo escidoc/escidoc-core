@@ -44,6 +44,9 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -129,6 +132,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.TripleStoreAttributeFinderModule")
 public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile(":");
@@ -153,6 +157,8 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
      */
     private Map<String, MapResult> mapping;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tsu;
 
     private final MapResult publicStatusMapResult = new MapResult(TripleStoreUtility.PROP_PUBLIC_STATUS, false);

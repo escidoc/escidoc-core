@@ -169,7 +169,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
             }
         }
 
-        return getFoxmlRenderer().render(values, properties, members, containerId, lastModificationDate,
+        return getFoxmlContainerRenderer().render(values, properties, members, containerId, lastModificationDate,
             contentRelations, comment, propertiesAsReferences);
     }
 }

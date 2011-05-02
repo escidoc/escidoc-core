@@ -34,6 +34,9 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.security.persistence.MethodMappingList;
 import de.escidoc.core.common.util.security.persistence.RequestMappingDaoInterface;
 import de.escidoc.core.common.util.string.StringUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -43,6 +46,7 @@ import java.util.TreeMap;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.common.SecurityInterceptorCache")
 public class SecurityInterceptorCache {
 
     /**
@@ -53,15 +57,9 @@ public class SecurityInterceptorCache {
     /**
      * The data access object to access request mappings.
      */
+    @Autowired
+    @Qualifier("persistence.HibernateRequestMappingDao")
     private RequestMappingDaoInterface requestMappingDao;
-
-    /**
-     * The default constructor.
-     */
-    public SecurityInterceptorCache() {
-
-        clear();
-    }
 
     /**
      * Clears the cache.

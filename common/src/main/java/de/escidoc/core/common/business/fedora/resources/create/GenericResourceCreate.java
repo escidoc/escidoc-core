@@ -20,6 +20,7 @@
 
 package de.escidoc.core.common.business.fedora.resources.create;
 
+import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -28,6 +29,9 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +42,28 @@ import java.util.Map;
  *
  * @author Steffen Wagner
  */
+@Configurable
 public abstract class GenericResourceCreate {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
+    private FedoraUtility fedoraUtility;
 
     private String objid;
 
     private String buildNumber;
+
+    protected TripleStoreUtility getTripleStoreUtility() {
+        return tripleStoreUtility;
+    }
+
+    protected FedoraUtility getFedoraUtility() {
+        return fedoraUtility;
+    }
 
     /**
      * Generate FoXML for all MetadataRecords.
@@ -96,7 +117,7 @@ public abstract class GenericResourceCreate {
                 + "context status.");
         }
         final String curStatus =
-            TripleStoreUtility.getInstance().getPropertiesElements(contextId, TripleStoreUtility.PROP_PUBLIC_STATUS);
+            this.tripleStoreUtility.getPropertiesElements(contextId, TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus == null || curStatus.length() == 0) {
             throw new WebserverSystemException("Can not get status of context " + contextId + '.');
         }

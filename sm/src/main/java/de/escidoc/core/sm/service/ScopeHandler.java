@@ -37,6 +37,11 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -45,8 +50,11 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
+@Service("service.ScopeHandler")
 public class ScopeHandler implements ScopeHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.ScopeHandler")
     private de.escidoc.core.sm.business.interfaces.ScopeHandlerInterface handler;
 
     /**

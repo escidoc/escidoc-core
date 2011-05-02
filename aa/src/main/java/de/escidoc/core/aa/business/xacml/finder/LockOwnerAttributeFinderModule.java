@@ -35,6 +35,9 @@ import de.escidoc.core.common.business.LockHandler;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
 
@@ -47,12 +50,15 @@ import java.util.regex.Pattern;
  *
  * @author Michael Hoppe
  */
+@Service("eSciDoc.core.aa.LockOwnerAttributeFinderModule")
 public class LockOwnerAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private static final Pattern PATTERN_VALID_ATTRIBUTE_ID =
         Pattern.compile(AttributeIds.CONTAINER_ATTR_PREFIX + "lock-owner|" + AttributeIds.ITEM_ATTR_PREFIX
             + "lock-owner");
 
+    @Autowired
+    @Qualifier("business.LockHandler")
     private LockHandler lockHandler;
 
     /**

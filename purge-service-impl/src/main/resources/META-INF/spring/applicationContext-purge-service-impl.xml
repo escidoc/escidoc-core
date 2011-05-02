@@ -64,7 +64,4 @@
 
     </camelContext>
 
-    <bean id="de.escidoc.core.purge.internal.PurgeServiceImpl" class="de.escidoc.core.purge.internal.PurgeServiceImpl">
-    </bean>
-
 </beans>

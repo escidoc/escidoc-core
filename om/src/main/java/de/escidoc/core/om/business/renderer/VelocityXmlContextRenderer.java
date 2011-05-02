@@ -47,7 +47,6 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.date.Iso8601Util;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContextXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -58,6 +57,9 @@ import de.escidoc.core.om.business.fedora.item.FedoraItemHandler;
 import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -71,9 +73,22 @@ import java.util.Set;
 /**
  * @author Steffen Wagner
  */
+@Service
 public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VelocityXmlContextRenderer.class);
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("business.FedoraItemHandler")
+    private FedoraItemHandler itemHandler;
+
+    @Autowired
+    @Qualifier("business.FedoraContainerHandler")
+    private FedoraContainerHandler containerHandler;
 
     /*
      * (non-Javadoc)
@@ -364,9 +379,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         values.put("contextName", context.getTitle());
         final String description =
-        // properties.get(PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
-            TripleStoreUtility
-                .getInstance().getPropertiesElements(context.getId(), Constants.DC_NS_URI + "description");
+            this.tripleStoreUtility.getPropertiesElements(context.getId(), Constants.DC_NS_URI + "description");
         if (description != null) {
             values.put("contextDescription", description);
         }
@@ -422,8 +435,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         final Map<String, String> ouContext = new HashMap<String, String>();
 
         ouContext.put("id", id);
-        ouContext.put("title", TripleStoreUtility.getInstance().getPropertiesElements(id,
-            TripleStoreUtility.PROP_DC_TITLE));
+        ouContext.put("title", this.tripleStoreUtility.getPropertiesElements(id, TripleStoreUtility.PROP_DC_TITLE));
         ouContext.put("href", XmlUtility.getOrganizationalUnitHref(id));
         return ouContext;
     }
@@ -470,11 +482,6 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         throws SystemException, AuthorizationException, TripleStoreSystemException, WebserverSystemException,
         IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
-        final FedoraItemHandler itemHandler =
-            (FedoraItemHandler) BeanLocator.getBean("Om.spring.ejb.context", "business.FedoraItemHandler");
-        final FedoraContainerHandler containerHandler =
-            (FedoraContainerHandler) BeanLocator.getBean("Om.spring.ejb.context", "business.FedoraContainerHandler");
-
         values.put("memberListNamespacePrefix", Constants.MEMBER_LIST_PREFIX);
         values.put("memberListNamespace", Constants.MEMBER_LIST_NAMESPACE_URI);
         values.put("memberListPrefix", Constants.XLINK_PREFIX);
@@ -482,7 +489,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         final StringBuilder sb = new StringBuilder();
 
         for (final String objectId : memberList) {
-            final String objectType = TripleStoreUtility.getInstance().getObjectType(objectId);
+            final String objectType = this.tripleStoreUtility.getObjectType(objectId);
             try {
                 if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
                     sb.append(itemHandler.retrieve(objectId));
@@ -555,7 +562,6 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
             }
 
         }
-
         values.put("memberList", sb.toString());
     }
 
@@ -576,9 +582,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private static String getProperty(final String id, final String property) throws TripleStoreSystemException,
+    private String getProperty(final String id, final String property) throws TripleStoreSystemException,
         WebserverSystemException {
-
-        return TripleStoreUtility.getInstance().getPropertiesElements(id, property);
+        return this.tripleStoreUtility.getPropertiesElements(id, property);
     }
 }

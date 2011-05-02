@@ -36,14 +36,20 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.SemanticStoreHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * A semantic store handler.
  *
  * @author Rozita Friedman
  */
+@Service("service.SemanticStoreHandler")
 public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.FedoraSemanticStoreHandler")
     private de.escidoc.core.om.business.interfaces.SemanticStoreHandlerInterface handler;
 
     /**

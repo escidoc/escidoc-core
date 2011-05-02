@@ -46,6 +46,9 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,7 +56,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Configurable
 public class ContentRelationsAddHandler2Edition extends DefaultHandler {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     private final StaxParser parser;
 
@@ -97,11 +105,11 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
                         + " identifier containing a version number. Use a floating "
                         + "identifier like 'escidoc:123' to reference a target");
                 }
-                if (!TripleStoreUtility.getInstance().exists(this.targetId)) {
+                if (!this.tripleStoreUtility.exists(this.targetId)) {
                     throw new ReferencedResourceNotFoundException("Referenced target resource with id " + this.targetId
                         + " does not exist.");
                 }
-                final String targetObjectType = TripleStoreUtility.getInstance().getObjectType(this.targetId);
+                final String targetObjectType = this.tripleStoreUtility.getObjectType(this.targetId);
 
                 if (!Constants.ITEM_OBJECT_TYPE.equals(targetObjectType)
                     && !Constants.CONTAINER_OBJECT_TYPE.equals(targetObjectType)) {
@@ -142,8 +150,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
             final String[] splittedPredicate = splitPredicate(this.predicate);
             final String predicateNs = splittedPredicate[0];
             final String predicateValue = splittedPredicate[1];
-            final String existRelationTarget =
-                TripleStoreUtility.getInstance().getRelation(this.sourceId, this.predicate);
+            final String existRelationTarget = this.tripleStoreUtility.getRelation(this.sourceId, this.predicate);
             if (existRelationTarget != null && existRelationTarget.equals(this.targetId)) {
                 throw new AlreadyExistsException("A relation with predicate " + this.predicate
                     + " between resources with ids " + this.sourceId + " and " + this.targetId + " already exists.");

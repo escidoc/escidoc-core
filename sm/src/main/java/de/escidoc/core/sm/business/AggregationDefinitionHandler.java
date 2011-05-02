@@ -62,6 +62,11 @@ import de.escidoc.core.sm.business.vo.database.select.RootWhereGroupVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseIndexVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableFieldVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -75,16 +80,28 @@ import java.util.TreeSet;
  *
  * @author Michael Hoppe
  */
+@Service("business.AggregationDefinitionHandler")
+@org.springframework.context.annotation.Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class AggregationDefinitionHandler implements AggregationDefinitionHandlerInterface {
 
+    @Autowired
+    @Qualifier("persistence.SmAggregationDefinitionsDao")
     private SmAggregationDefinitionsDaoInterface dao;
 
+    @Autowired
+    @Qualifier("persistence.SmScopesDao")
     private SmScopesDaoInterface scopesDao;
 
+    @Autowired
+    @Qualifier("sm.persistence.DirectDatabaseAccessor")
     private DirectDatabaseAccessorInterface dbAccessor;
 
+    @Autowired
+    @Qualifier("business.sm.FilterUtility")
     private SmFilterUtility filterUtility;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.business.renderer.VelocityXmlAggregationDefinitionRenderer")
     private AggregationDefinitionRendererInterface renderer;
 
     /**
@@ -99,6 +116,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
      * @see de.escidoc.core.sm.business.interfaces .AggregationDefinitionHandlerInterface#create(java.lang.String)
      */
     @Override
+    @Transactional(rollbackFor = { SystemException.class, RuntimeException.class })
     public String create(final String xmlData) throws MissingMethodParameterException, ScopeNotFoundException,
         SystemException, SqlDatabaseSystemException, WebserverSystemException {
         if (xmlData == null || xmlData.length() == 0) {
@@ -166,6 +184,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
      * @see de.escidoc.core.sm.business.interfaces .AggregationDefinitionHandlerInterface #delete(java.lang.String)
      */
     @Override
+    @Transactional(rollbackFor = { SystemException.class, RuntimeException.class })
     public void delete(final String id) throws AggregationDefinitionNotFoundException, MissingMethodParameterException,
         SqlDatabaseSystemException {
         if (id == null) {

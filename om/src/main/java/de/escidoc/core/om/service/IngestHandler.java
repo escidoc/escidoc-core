@@ -30,14 +30,23 @@ package de.escidoc.core.om.service;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.om.service.interfaces.IngestHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 /**
  * The resource ingest handler.
  *
  * @author Steffen Wagner
  */
+@Service("service.IngestHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class IngestHandler implements IngestHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.FedoraIngestHandler")
     private de.escidoc.core.om.business.interfaces.IngestHandlerInterface handler;
 
     /**

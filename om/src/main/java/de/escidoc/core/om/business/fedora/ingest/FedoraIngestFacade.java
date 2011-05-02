@@ -34,6 +34,9 @@ import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidResourceException;
 import de.escidoc.core.om.business.interfaces.IngestFacade;
 import de.escidoc.core.om.business.interfaces.ValueFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,42 +47,16 @@ import java.util.Map;
  *
  * @author Kai Strnad
  */
+@Service("business.IngestFacade")
 public class FedoraIngestFacade implements IngestFacade {
 
+    @Autowired
+    @Qualifier("business.resourceMapperDao")
     private ResourceMapperDao resourceMapperDao;
 
+    @Autowired
+    @Qualifier("business.ingestReturnValueFormatter")
     private ValueFormatter formatter;
-
-    /**
-     * @param formatter the formatter to set
-     */
-    public void setFormatter(final ValueFormatter formatter) {
-        this.formatter = formatter;
-    }
-
-    /**
-     * @return the formatter
-     */
-    public ValueFormatter getFormatter() {
-        return this.formatter;
-    }
-
-    /**
-     * Getter for the ResourceMapperDao
-     *
-     * @return the resourceMapperDao
-     */
-    public ResourceMapperDao getResourceMapperDao() {
-        return this.resourceMapperDao;
-    }
-
-    /**
-     * Setter for the ResourceMapperDao
-     * @param resourceMapperDao
-     */
-    public void setResourceMapperDao(final ResourceMapperDao resourceMapperDao) {
-        this.resourceMapperDao = resourceMapperDao;
-    }
 
     /**
      * Ingest a given resource and return the id which has been assigned by the framework. Format the return value
@@ -87,13 +64,11 @@ public class FedoraIngestFacade implements IngestFacade {
      */
     @Override
     public String ingest(final String xmlData) throws EscidocException, InvalidResourceException {
-        final ResourceMapperBean bean = getResourceMapperDao().getIngestableForResource(xmlData);
+        final ResourceMapperBean bean = this.resourceMapperDao.getIngestableForResource(xmlData);
         final String objectId = bean.getResource().ingest(xmlData);
-
         final Map<String, String> values = new HashMap<String, String>();
         values.put(Constants.INGEST_OBJ_ID, objectId);
         values.put(Constants.INGEST_RESOURCE_TYPE, bean.getResourceType().toString());
-
-        return getFormatter().format(values);
+        return this.formatter.format(values);
     }
 }

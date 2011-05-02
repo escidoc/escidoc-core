@@ -43,7 +43,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContainerXmlProvider;
@@ -57,6 +56,11 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -68,32 +72,19 @@ import java.util.Map;
 /**
  * Render XML representations of a Container.
  */
+@Service
 public class VelocityXmlContainerRenderer implements ContainerRendererInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VelocityXmlContainerRenderer.class);
 
     private static final int THREE = 3;
 
-    private final VelocityXmlCommonRenderer commonRenderer = new VelocityXmlCommonRenderer();
+    @Autowired
+    private VelocityXmlCommonRenderer commonRenderer;
 
-    private TripleStoreUtility tsu;
-
-    /**
-     * Injects the triple store utility bean.
-     *
-     * @param tsu The {@link TripleStoreUtility}.
-     */
-    public void setTsu(final TripleStoreUtility tsu) {
-        this.tsu = tsu;
-    }
-
-    /**
-     * Constructor. Initialize Spring Beans.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    public VelocityXmlContainerRenderer() throws WebserverSystemException {
-        this.tsu = BeanLocator.locateTripleStoreUtility();
-    }
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * See Interface for functional description.
@@ -221,14 +212,15 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         throws TripleStoreSystemException {
         values.put("parentsHref", XmlUtility.getContainerParentsHref(XmlUtility.getContainerHref(containerId)));
         values.put("parentsTitle", "parents of container " + containerId);
-        final StringBuffer query = tsu.getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER);
+        final StringBuffer query =
+            this.tripleStoreUtility.getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER);
 
         if (query.length() > 0) {
-            query.append(tsu
-                .getRetrieveWhereClause(true, TripleStoreUtility.PROP_MEMBER, containerId, null, null, null));
+            query.append(this.tripleStoreUtility.getRetrieveWhereClause(true, TripleStoreUtility.PROP_MEMBER,
+                containerId, null, null, null));
             List<String> ids = new ArrayList<String>();
             try {
-                ids = tsu.retrieve(query.toString());
+                ids = this.tripleStoreUtility.retrieve(query.toString());
             }
             catch (final TripleStoreSystemException e) {
                 if (LOGGER.isWarnEnabled()) {
@@ -246,7 +238,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 final String id = idIter.next();
                 entry.put("id", id);
                 entry.put("href", XmlUtility.getContainerHref(id));
-                entry.put("title", tsu.getTitle(id));
+                entry.put("title", this.tripleStoreUtility.getTitle(id));
 
                 entries.add(entry);
             }
@@ -482,9 +474,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private static void addMemberRefs(final Container container, final Map<String, Object> values)
-        throws SystemException, MissingMethodParameterException, TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException {
+    private void addMemberRefs(final Container container, final Map<String, Object> values) throws SystemException,
+        MissingMethodParameterException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
 
         final UserFilter ufilter = new UserFilter();
 
@@ -496,10 +487,10 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         while (idIter.hasNext()) {
             final Map<String, String> entry = new HashMap<String, String>(3);
             final String id = idIter.next();
-            final String objectType = TripleStoreUtility.getInstance().getObjectType(id);
+            final String objectType = this.tripleStoreUtility.getObjectType(id);
             if (Constants.ITEM_OBJECT_TYPE.equals(objectType) || Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
                 entry.put("memberId", id);
-                entry.put("memberTitle", TripleStoreUtility.getInstance().getTitle(id));
+                entry.put("memberTitle", this.tripleStoreUtility.getTitle(id));
                 if (objectType.equals(Constants.ITEM_OBJECT_TYPE)) {
 
                     items.add(entry);
@@ -537,7 +528,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @param values    The map to add values to.
      * @throws WebserverSystemException If an error occurs.
      */
-    private static void addResourcesValues(final FedoraResource container, final Map<String, Object> values)
+    private void addResourcesValues(final FedoraResource container, final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
@@ -551,7 +542,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         // add operations from Fedora service definitions
         // FIXME use container properties instead of triplestore util
         try {
-            values.put("resourceOperationNames", TripleStoreUtility.getInstance().getMethodNames(container.getId()));
+            values.put("resourceOperationNames", this.tripleStoreUtility.getMethodNames(container.getId()));
         }
         catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);

@@ -48,6 +48,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.purge.PurgeRequest;
 import de.escidoc.core.purge.PurgeRequestBuilder;
 import de.escidoc.core.purge.PurgeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -61,23 +64,40 @@ import java.util.Properties;
  *
  * @author André Schenk
  */
+@Service("business.AdminHandler")
 public class AdminHandler {
 
+    @Autowired
+    @Qualifier("admin.Examples")
     private Examples examples;
 
+    @Autowired
+    @Qualifier("admin.FrameworkInfo")
     private FrameworkInfo frameworkInfo;
 
+    @Autowired
+    @Qualifier("admin.Reindexer")
     private Reindexer reindexer;
 
-    private Utility utility;
-
+    @Autowired
+    @Qualifier("common.business.indexing.IndexingHandler")
     private IndexingHandler indexingHandler;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.adm.business.renderer.VelocityXmlAdminRenderer")
     private AdminRendererInterface renderer;
 
+    @Autowired
+    @Qualifier("de.escidoc.core.purge.PurgeService")
     private PurgeService purgeService;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
 
     /**
      * Delete a list of objects given by their object id's from Fedora. In case of items this method will also delete
@@ -135,7 +155,7 @@ public class AdminHandler {
             result.append(purgeStatus);
             result.append("</message>\n");
         }
-        return getUtility().prepareReturnXml(result.toString());
+        return this.utility.prepareReturnXml(result.toString());
     }
 
     /**
@@ -145,7 +165,7 @@ public class AdminHandler {
      * @throws SystemException thrown in case of an internal error
      */
     public String getPurgeStatus() throws SystemException {
-        return getUtility().prepareReturnXml(PurgeStatus.getInstance().toString());
+        return this.utility.prepareReturnXml(PurgeStatus.getInstance().toString());
     }
 
     /**
@@ -155,7 +175,7 @@ public class AdminHandler {
      * @throws SystemException thrown in case of an internal error
      */
     public String getReindexStatus() throws SystemException {
-        return getUtility().prepareReturnXml(reindexer.getStatus());
+        return this.utility.prepareReturnXml(reindexer.getStatus());
     }
 
     /**
@@ -167,16 +187,6 @@ public class AdminHandler {
         if (objectType != null) {
             ReindexStatus.getInstance().dec(ResourceType.getResourceTypeFromUri(objectType));
         }
-    }
-
-    /**
-     * @return Returns the utility.
-     */
-    private Utility getUtility() {
-        if (this.utility == null) {
-            this.utility = Utility.getInstance();
-        }
-        return this.utility;
     }
 
     /**
@@ -194,7 +204,7 @@ public class AdminHandler {
      */
     public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException,
         InvalidSearchQueryException, ApplicationServerSystemException, FedoraSystemException, WebserverSystemException {
-        return getUtility().prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
+        return this.utility.prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
     }
 
     /**
@@ -337,7 +347,7 @@ public class AdminHandler {
             throw new SystemException(e);
         }
 
-        return getUtility().prepareReturnXml(result.toString());
+        return this.utility.prepareReturnXml(result.toString());
     }
 
     /**

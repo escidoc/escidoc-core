@@ -35,14 +35,20 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * A StagingFile handler.
  *
  * @author Torsten Tetteroo
  */
+@Service("service.StagingFileHandler")
 public class StagingFileHandler implements StagingFileHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.StagingFileHandler")
     private de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface handler;
 
     /**

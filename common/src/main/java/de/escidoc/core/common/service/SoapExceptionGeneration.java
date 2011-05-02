@@ -121,10 +121,12 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.service.interfaces.SoapExceptionGenerationInterface;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Michael Hoppe
  */
+@Service("service.SoapExceptionGeneration")
 public class SoapExceptionGeneration implements SoapExceptionGenerationInterface {
 
     /**

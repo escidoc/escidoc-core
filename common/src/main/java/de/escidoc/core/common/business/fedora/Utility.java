@@ -52,7 +52,6 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
@@ -73,6 +72,9 @@ import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.access.BeanFactoryLocator;
 import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -103,11 +105,8 @@ import java.util.regex.Pattern;
  *
  * @author Michael Schneider
  */
+@Service("business.Utility")
 public class Utility {
-
-    private StagingFileHandlerInterface stagingFileHandler;
-
-    private TripleStoreUtility tripleStoreUtility;
 
     private static final String RESOURCE_BASE_URL = "resourceBaseUrl";
 
@@ -115,6 +114,14 @@ public class Utility {
      * The pattern used to extract the redirect base url and path from the staging file XML representation.
      */
     private static final Pattern REDIRECT_URL_PATTERN = Pattern.compile("xml:base=\"(.*?)\".*xlink:href=\"(.*?)\"");
+
+    @Autowired
+    @Qualifier("service.StagingFileHandler")
+    private StagingFileHandlerInterface stagingFileHandler;
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * Splits a Predicate at the last slash (/).
@@ -268,17 +275,6 @@ public class Utility {
         final String context1 = tripleStoreUtility.getContext(id1);
 
         return !(context0 == null || !context0.equals(context1));
-    }
-
-    /**
-     * Returns an Utility instance.
-     *
-     * @return An Utility instance.
-     */
-    public static Utility getInstance() {
-        final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
-        final BeanFactory factory = beanFactoryLocator.useBeanFactory(BeanLocator.COMMON_FACTORY_ID).getFactory();
-        return (Utility) factory.getBean("business.Utility");
     }
 
     /**

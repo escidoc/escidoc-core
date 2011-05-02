@@ -48,6 +48,9 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.OntologyUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.naming.directory.NoSuchAttributeException;
 import java.util.ArrayList;
@@ -58,7 +61,12 @@ import java.util.Map;
 /**
  * @author Rozita Friedman
  */
+@Configurable
 public class ContentRelationsCreateHandler extends DefaultHandler {
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     private final StaxParser parser;
 
@@ -244,7 +252,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             this.targetVersion = targetId.replaceFirst(this.targetIdWithoutVersion, "");
             this.targetVersion = targetVersion.length() > 0 ? targetVersion.substring(1) : null;
 
-            final String targetObjectType = TripleStoreUtility.getInstance().getObjectType(this.targetIdWithoutVersion);
+            final String targetObjectType = this.tripleStoreUtility.getObjectType(this.targetIdWithoutVersion);
             targetExist(targetObjectType);
             if (!xlinkHref.equals("/ir/" + targetObjectType + '/' + this.targetId)) {
                 throw new InvalidContentException("Value of the attribute 'href' is wrong. It must be" + "/ir/"
@@ -275,7 +283,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      */
     private void targetExist(final String targetObjectType) throws ReferencedResourceNotFoundException,
         TripleStoreSystemException, WebserverSystemException {
-        if (!TripleStoreUtility.getInstance().exists(this.targetIdWithoutVersion)) {
+        if (!this.tripleStoreUtility.exists(this.targetIdWithoutVersion)) {
             throw new ReferencedResourceNotFoundException("Referenced target resource with id "
                 + this.targetIdWithoutVersion + " does not exist.");
 
@@ -284,7 +292,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             String targetLatestVersion = null;
             if ("item".equals(targetObjectType) || "container".equals(targetObjectType)) {
                 targetLatestVersion =
-                    TripleStoreUtility.getInstance().getPropertiesElements(this.targetIdWithoutVersion,
+                    this.tripleStoreUtility.getPropertiesElements(this.targetIdWithoutVersion,
                         TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
             }
             if (targetLatestVersion == null

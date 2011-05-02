@@ -33,14 +33,20 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.StatisticDataHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * A statistic data resource handler.
  *
  * @author Michael Hoppe
  */
+@Service("service.StatisticDataHandler")
 public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
+    @Autowired
+    @Qualifier("business.StatisticDataHandler")
     private de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface handler;
 
     /**

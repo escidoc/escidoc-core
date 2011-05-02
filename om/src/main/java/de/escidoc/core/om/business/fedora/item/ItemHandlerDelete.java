@@ -43,10 +43,11 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.servlet.invocation.BeanMethod;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.foxml.ComponentIdsInItemFoxmlHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -58,6 +59,10 @@ import java.util.List;
  * @author Michael Schneider
  */
 public class ItemHandlerDelete extends ItemHandlerCreate {
+
+    @Autowired
+    @Qualifier("common.CommonMethodMapper")
+    private MethodMapper methodMapper;
 
     /**
      * Removes an item from repository.
@@ -97,9 +102,6 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                 final String param =
                     "<param last-modification-date=\"" + container.getLastModificationDate() + "\"><id>"
                         + getItem().getId() + "</id></param>";
-
-                final MethodMapper methodMapper =
-                    (MethodMapper) BeanLocator.getBean("Common.spring.ejb.context", "common.CommonMethodMapper");
                 final BeanMethod method =
                     methodMapper.getMethod("/ir/container/" + parent + "/members/remove", null, null, "POST", param);
                 method.invokeWithProtocol(UserContext.getHandle(),

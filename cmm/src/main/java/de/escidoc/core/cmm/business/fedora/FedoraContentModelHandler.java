@@ -88,7 +88,11 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -104,16 +108,29 @@ import java.util.TreeMap;
 /**
  * @author Frank Schwichtenberg
  */
+@Service("business.FedoraContentModelHandler")
 public class FedoraContentModelHandler extends ContentModelHandlerRetrieve implements ContentModelHandlerInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FedoraContentModelHandler.class);
 
     private final Collection<ResourceListener> contentModelListeners = new ArrayList<ResourceListener>();
 
-    /**
-     * SRU request.
-     */
+    @Autowired
+    @Qualifier("de.escidoc.core.common.business.filter.SRURequest")
     private SRURequest sruRequest;
+
+    @Autowired
+    @Qualifier("common.business.indexing.IndexingHandler")
+    private ResourceListener indexingHandler;
+
+    @Autowired
+    @Qualifier("escidoc.core.business.FedoraUtility")
+    private FedoraUtility fedoraUtility;
+
+    @PostConstruct
+    private void init() {
+        contentModelListeners.add(this.indexingHandler);
+    }
 
     /**
      * See Interface for functional description.
@@ -552,7 +569,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         // services are already added to RELS-EXT
         // TODO delete sdef+sdep
         // create service definitions and deployments or update xslt
-        final FedoraUtility fu = FedoraUtility.getInstance();
 
         for (final ResourceDefinitionCreate resourceDefinition : resourceDefinitions.values()) {
             final String sdefId = sdefIdPrefix + resourceDefinition.getName();
@@ -569,7 +585,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
                 }
                 else {
                     // update xslt
-                    fu.modifyDatastream(sdefId, "xslt", "Transformation instructions for operation '"
+                    fedoraUtility.modifyDatastream(sdefId, "xslt", "Transformation instructions for operation '"
                         + resourceDefinition.getName() + "'.", Datastream.MIME_TYPE_TEXT_XML, new String[0],
                         resourceDefinition.getXsltHref(), false);
                 }
@@ -577,9 +593,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             else {
                 // create
                 final String sdefFoxml = getSDefFoXML(resourceDefinition);
-                fu.storeObjectInFedora(sdefFoxml, false);
+                fedoraUtility.storeObjectInFedora(sdefFoxml, false);
                 final String sdepFoxml = getSDepFoXML(resourceDefinition);
-                fu.storeObjectInFedora(sdepFoxml, false);
+                fedoraUtility.storeObjectInFedora(sdepFoxml, false);
             }
         }
 
@@ -806,15 +822,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             throw new LockingException("Content Model + " + getContentModel().getId() + " is locked by "
                 + getContentModel().getLockOwner() + '.');
         }
-    }
-
-    /**
-     * Injects the indexing handler.
-     *
-     * @param indexingHandler The indexing handler.
-     */
-    public void setIndexingHandler(final ResourceListener indexingHandler) {
-        contentModelListeners.add(indexingHandler);
     }
 
     /**

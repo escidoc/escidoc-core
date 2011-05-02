@@ -47,7 +47,9 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
 
+import javax.annotation.PostConstruct;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +65,7 @@ import java.util.TreeMap;
  *
  * @author Steffen Wagner
  */
+@Configurable
 public class GenericVersionableResource extends GenericResourcePid {
 
     /**
@@ -154,13 +157,48 @@ public class GenericVersionableResource extends GenericResourcePid {
             setLastVersionData();
         }
         catch (final WebserverSystemException e) {
-            if (TripleStoreUtility.getInstance().exists(id)) {
+            if (getTripleStoreUtility().exists(id)) {
                 throw new WebserverSystemException("Unexpected exception during RELS-EXT parsing.", e);
             }
             else {
                 throw new ResourceNotFoundException("Resource with the provided objid '" + id + "' does not exist.", e);
             }
 
+        }
+    }
+
+    @PostConstruct
+    protected void initVersionNumber() throws TripleStoreSystemException, WebserverSystemException,
+        ResourceNotFoundException {
+        // determine version Number (suffix). Depending on latest-version and
+        // status is the versionNumber the suffix or null.
+        this.versionNumber = this.getId().replaceFirst(getId(), "");
+
+        if (this.versionNumber != null && this.versionNumber.length() > 0) {
+
+            this.versionNumber = this.versionNumber.substring(1);
+            final String latestVersionNumber =
+                getTripleStoreUtility().getPropertiesElements(getId(), TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
+            if (latestVersionNumber == null || Integer.valueOf(this.versionId) > Integer.valueOf(latestVersionNumber)) {
+                throw new ResourceNotFoundException("The version " + this.versionNumber + " of the requested resource "
+                    + "does not exist.");
+            }
+            if (this.versionNumber.equals(latestVersionNumber)) {
+                this.versionNumber = null;
+            }
+        }
+        else {
+            if (UserContext.isRetrieveRestrictedToReleased()) {
+                this.versionNumber =
+                    getTripleStoreUtility().getPropertiesElements(getId(),
+                        TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
+                if (this.versionNumber == null) {
+                    throw new ResourceNotFoundException("Latest release not found.");
+                }
+            }
+            else {
+                this.versionNumber = null;
+            }
         }
     }
 
@@ -178,38 +216,6 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         super.setId(id);
         this.versionId = XmlUtility.getVersionNumberFromObjid(id);
-
-        // determine version Number (suffix). Depending on latest-version and
-        // status is the versionNumber the suffix or null.
-        this.versionNumber = id.replaceFirst(getId(), "");
-
-        if (this.versionNumber != null && this.versionNumber.length() > 0) {
-
-            this.versionNumber = this.versionNumber.substring(1);
-            final String latestVersionNumber =
-                TripleStoreUtility.getInstance().getPropertiesElements(getId(),
-                    TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
-            if (latestVersionNumber == null || Integer.valueOf(this.versionId) > Integer.valueOf(latestVersionNumber)) {
-                throw new ResourceNotFoundException("The version " + this.versionNumber + " of the requested resource "
-                    + "does not exist.");
-            }
-            if (this.versionNumber.equals(latestVersionNumber)) {
-                this.versionNumber = null;
-            }
-        }
-        else {
-            if (UserContext.isRetrieveRestrictedToReleased()) {
-                this.versionNumber =
-                    TripleStoreUtility.getInstance().getPropertiesElements(getId(),
-                        TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
-                if (this.versionNumber == null) {
-                    throw new ResourceNotFoundException("Latest release not found.");
-                }
-            }
-            else {
-                this.versionNumber = null;
-            }
-        }
 
     }
 
@@ -444,7 +450,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         if (this.latestReleaseVersionNumber == null) {
             try {
                 this.latestReleaseVersionNumber =
-                    TripleStoreUtility.getInstance().getPropertiesElements(getId(),
+                    getTripleStoreUtility().getPropertiesElements(getId(),
                         TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
             }
             catch (final TripleStoreSystemException tse) {
@@ -483,7 +489,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 // we can take this information from TripleStore (should be
                 // faster)
                 try {
-                    setLastModificationDate(TripleStoreUtility.getInstance().getPropertiesElements(getId(),
+                    setLastModificationDate(getTripleStoreUtility().getPropertiesElements(getId(),
                         TripleStoreUtility.PROP_LATEST_VERSION_DATE));
                 }
                 catch (final TripleStoreSystemException e) {
@@ -752,7 +758,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         setLastVersionData();
         if (getVersionNumber() == null) {
             this.description =
-                TripleStoreUtility.getInstance().getPropertiesElements(getId(),
+                getTripleStoreUtility().getPropertiesElements(getId(),
                     Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION);
         }
     }

@@ -48,6 +48,9 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * Attribute finder module implementation that resolves the object type of the resource addressed by the
@@ -59,10 +62,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.ObjectTypeAttributeFinderModule")
 public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectTypeAttributeFinderModule.class);
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.ObjectAttributeResolver")
     private ObjectAttributeResolver objectAttributeResolver;
 
     /**

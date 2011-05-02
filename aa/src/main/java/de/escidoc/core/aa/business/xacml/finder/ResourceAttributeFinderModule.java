@@ -52,6 +52,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.StaxParser;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.util.regex.Matcher;
@@ -83,6 +86,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.ResourceAttributeFinderModule")
 public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule {
 
     /**
@@ -99,8 +103,12 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     private static final Pattern PATTERN_PARSE_ATTRIBUTE_ID =
         Pattern.compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX + "[^:]+:([^:]+)):{0,1}(.+){0,1}");
 
+    @Autowired
+    @Qualifier("service.ItemHandler")
     private ItemHandlerInterface itemHandler;
 
+    @Autowired
+    @Qualifier("service.ContainerHandler")
     private ContainerHandlerInterface containerHandler;
 
     /**

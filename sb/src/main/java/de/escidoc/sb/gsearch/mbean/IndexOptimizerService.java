@@ -33,8 +33,11 @@ import de.escidoc.core.common.business.indexing.GsearchHandler;
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,13 +47,18 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
+@Service("mbean.IndexOptimizerService")
 @ManagedResource(objectName = "eSciDocCore:name=IndexOptimizerService", description = "sends index-optimize request to gsearch", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class IndexOptimizerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexOptimizerService.class);
 
+    @Autowired
+    @Qualifier("common.business.indexing.GsearchHandler")
     private GsearchHandler gsearchHandler;
 
+    @Autowired
+    @Qualifier("common.ErrorMessageHandler")
     private ErrorMessageHandler errorMessageHandler;
 
     /**

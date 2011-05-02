@@ -30,7 +30,9 @@ package de.escidoc.core.sm.business;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.service.BeanLocator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
@@ -40,8 +42,11 @@ import java.util.List;
  *
  * @author Michael Hoppe
  */
+@Service("business.sm.FilterUtility")
 public class SmFilterUtility {
 
+    @Autowired
+    @Qualifier("business.PolicyDecisionPoint")
     private static PolicyDecisionPointInterface pdp;
 
     /**
@@ -54,10 +59,6 @@ public class SmFilterUtility {
      */
     public Collection<String> filterRetrievePrivilege(final String objectType, final Collection<String> objectIds)
         throws WebserverSystemException {
-
-        if (pdp == null) {
-            locateAa();
-        }
         final List<String> resultIds;
         try {
             resultIds = pdp.evaluateRetrieve(objectType, (List<String>) objectIds);
@@ -66,19 +67,6 @@ public class SmFilterUtility {
             throw new WebserverSystemException(e);
         }
         return resultIds;
-    }
-
-    /**
-     * Locates the policy decision point. This should be called to initialize the static field holding the pdp EJB.
-     *
-     * @return PolicyDecisionPointInterface policyDecisionPointInterface
-     * @throws WebserverSystemException Thrown if the policy decision point bean cannot be retrieved due to an internal
-     *                                  error.
-     */
-    private static PolicyDecisionPointInterface locateAa() throws WebserverSystemException {
-
-        pdp = BeanLocator.locatePolicyDecisionPoint();
-        return pdp;
     }
 
 }

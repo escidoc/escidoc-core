@@ -6,6 +6,9 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
 
@@ -14,6 +17,7 @@ import java.util.Iterator;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.UserHandleCleaner")
 public class UserHandleCleaner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserHandleCleaner.class);
@@ -26,6 +30,8 @@ public class UserHandleCleaner {
     /**
      * The login data DAO.
      */
+    @Autowired
+    @Qualifier("persistence.UserAccountDao")
     private UserAccountDaoInterface userAccountDao;
 
     /**

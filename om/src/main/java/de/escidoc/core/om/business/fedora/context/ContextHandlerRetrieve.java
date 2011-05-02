@@ -53,7 +53,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      */
     protected String getContextXml(final FedoraContextHandler contextHandler) throws SystemException {
 
-        return getRenderer().render(contextHandler);
+        return getContextRenderer().render(contextHandler);
     }
 
     /**
@@ -65,7 +65,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      */
     protected String getPropertiesXml(final FedoraContextHandler contextHandler) throws WebserverSystemException {
 
-        return getRenderer().renderProperties(contextHandler);
+        return getContextRenderer().renderProperties(contextHandler);
     }
 
     /**
@@ -77,7 +77,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      */
     protected String getResourcesXml(final FedoraContextHandler contextHandler) throws WebserverSystemException {
 
-        return getRenderer().renderResources(contextHandler);
+        return getContextRenderer().renderResources(contextHandler);
     }
 
     /**
@@ -94,6 +94,6 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put(IS_ROOT_RESOURCES, true);
 
-        return getRenderer().renderAdminDescriptors(contextHandler, values);
+        return getContextRenderer().renderAdminDescriptors(contextHandler, values);
     }
 }

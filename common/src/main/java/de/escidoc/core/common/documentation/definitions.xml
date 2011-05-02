@@ -20,113 +20,113 @@
   -->
 
 <beans>
-    <bean id="service.SetDefinitionHandlerBean"
+    <bean id="service.SetDefinitionHandler"
                 class="de.escidoc.core.oai.service.SetDefinitionHandler">
         </bean>
 
-    <bean id="service.AdminDescriptorHandlerBean"
+    <bean id="service.AdminDescriptorHandler"
 		class="de.escidoc.core.om.service.AdminDescriptorHandler">
 	</bean>
 
-    <bean id="service.AdminHandlerBean"
+    <bean id="service.AdminHandler"
                 class="de.escidoc.core.adm.service.AdminHandler">
         </bean>
 
-    <bean id="service.ContainerCacheBean"
+    <bean id="service.ContainerCache"
 		class="de.escidoc.core.om.service.ContainerCache">
 	</bean>
     
-    <bean id="service.ContainerHandlerBean"
+    <bean id="service.ContainerHandler"
 		class="de.escidoc.core.om.service.ContainerHandler">
 	</bean>
     
-    <bean id="service.ContextCacheBean"
+    <bean id="service.ContextCache"
 		class="de.escidoc.core.om.service.ContextCache">
 	</bean>
 
-    <bean id="service.ContextHandlerBean"
+    <bean id="service.ContextHandler"
 		class="de.escidoc.core.om.service.ContextHandler">
 	</bean>
 
-    <bean id="service.ContentRelationCacheBean"
+    <bean id="service.ContentRelationCache"
 		class="de.escidoc.core.om.service.ContentRelationCache">
 	</bean>
 
-    <bean id="service.ContentRelationHandlerBean"
+    <bean id="service.ContentRelationHandler"
 		class="de.escidoc.core.om.service.ContentRelationHandler">
 	</bean>
 
-	<bean id="service.ItemCacheBean"
+	<bean id="service.ItemCache"
 		class="de.escidoc.core.om.service.ItemCache">
 	</bean>
 
-	<bean id="service.ItemHandlerBean"
+	<bean id="service.ItemHandler"
 		class="de.escidoc.core.om.service.ItemHandler">
 	</bean>
 
-    <bean id="service.SemanticStoreHandlerBean"
+    <bean id="service.SemanticStoreHandler"
 		class="de.escidoc.core.om.service.SemanticStoreHandler">
 	</bean>
 	
-    <bean id="service.LicenseTypeHandlerBean"
+    <bean id="service.LicenseTypeHandler"
 		class="de.escidoc.core.om.service.LicenseTypeHandler">
 	</bean>
 
-	<bean id="service.RelationHandlerBean"
+	<bean id="service.RelationHandler"
 		class="de.escidoc.core.om.service.RelationHandler">
 	</bean>
     
-    <bean id="service.XmlSchemaHandlerBean"
+    <bean id="service.XmlSchemaHandler"
 		class="de.escidoc.core.om.service.XmlSchemaHandler">
 	</bean>
 	
-	<bean id="service.MdSchemaHandlerBean"
+	<bean id="service.MdSchemaHandler"
 		class="de.escidoc.core.mm.service.MdSchemaHandler">
 	</bean>
 	
-	<bean id="service.UserAccountHandlerBean"
+	<bean id="service.UserAccountHandler"
 		class="de.escidoc.core.aa.service.UserAccountHandler">
 	</bean>
 
-	<bean id="service.OrganizationalUnitCacheBean"
+	<bean id="service.OrganizationalUnitCache"
 		class="de.escidoc.core.oum.service.OrganizationalUnitCache">
 	</bean>
 
-	<bean id="service.OrganizationalUnitHandlerBean"
+	<bean id="service.OrganizationalUnitHandler"
 		class="de.escidoc.core.oum.service.OrganizationalUnitHandler">
 	</bean>
 
-	<bean id="service.ContentModelCacheBean"
+	<bean id="service.ContentModelCache"
 		class="de.escidoc.core.cmm.service.ContentModelCache">
 	</bean>
 
-	<bean id="service.ContentModelHandlerBean"
+	<bean id="service.ContentModelHandler"
 		class="de.escidoc.core.cmm.service.ContentModelHandler">
 	</bean>
 
-    <bean id="service.RoleHandlerBean"
+    <bean id="service.RoleHandler"
 		class="de.escidoc.core.aa.service.RoleHandler">
 	</bean>
-	<bean id="service.PolicyDecisionPointHandlerBean"
+	<bean id="service.PolicyDecisionPointHandler"
 		class="de.escidoc.core.aa.service.PolicyDecisionPoint">
 	</bean>
 
-	<bean id="service.AggregationDefinitionHandlerBean"
+	<bean id="service.AggregationDefinitionHandler"
 		class="de.escidoc.core.sm.service.AggregationDefinitionHandler">
 	</bean>
-	<bean id="service.ReportDefinitionHandlerBean"
+	<bean id="service.ReportDefinitionHandler"
 		class="de.escidoc.core.sm.service.ReportDefinitionHandler">
 	</bean>
-	<bean id="service.ReportHandlerBean"
+	<bean id="service.ReportHandler"
 		class="de.escidoc.core.sm.service.ReportHandler">
 	</bean>
-	<bean id="service.ScopeHandlerBean"
+	<bean id="service.ScopeHandler"
 		class="de.escidoc.core.sm.service.ScopeHandler">
 	</bean>
-	<bean id="service.StatisticDataHandlerBean"
+	<bean id="service.StatisticDataHandler"
 		class="de.escidoc.core.sm.service.StatisticDataHandler">
 	</bean>
-	<bean id="service.StagingFileHandlerBean"
+	<bean id="service.StagingFileHandlern"
 		class="de.escidoc.core.st.service.StagingFileHandler">
 	</bean>
 </beans>
