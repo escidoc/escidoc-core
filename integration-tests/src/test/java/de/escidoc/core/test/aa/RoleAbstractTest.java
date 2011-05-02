@@ -1509,7 +1509,7 @@ public class RoleAbstractTest extends AaTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_NAME + "\"=System-Admin%" });
- 
+
         String retrievedXml = null;
 
         try {
