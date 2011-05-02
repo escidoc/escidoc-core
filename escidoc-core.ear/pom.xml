@@ -233,8 +233,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-snowball</artifactId>
-			<version>${lucene.version}</version>
+			<artifactId>lucene-demos</artifactId>
+			<version>3.0.3</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.lucene</groupId>
@@ -242,11 +242,10 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-<!-- 		
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-demos</artifactId>
-			<version>${lucene.version}</version>
+			<artifactId>lucene-memory</artifactId>
+			<version>3.1.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.lucene</groupId>
@@ -254,8 +253,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
- -->		
-		<dependency>
+ 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-ja</artifactId>
 			<version>${lucene.version}</version>
@@ -621,21 +619,16 @@
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.lucene</groupId>
+			<groupId>org.escidoc</groupId>
 			<artifactId>lucene-highlighter</artifactId>
 			<version>${lucene.version}</version>
+			<classifier>extended</classifier>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.lucene</groupId>
 					<artifactId>lucene-core</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.escidoc</groupId>
-			<artifactId>lucene-fast-vector-highlighter</artifactId>
-			<version>${lucene.version}</version>
-			<classifier>extended</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.z3950.zing</groupId>
