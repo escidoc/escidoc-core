@@ -780,13 +780,14 @@
     <escidoc.installer.config>escidoc-core-installer-config.xml</escidoc.installer.config>
 
     <escidoc.at>@</escidoc.at>
-    <escidoc.url>http://localhost:8080</escidoc.url>
+    <escidoc.port>8080</escidoc.port>
+    <escidoc.url>http://localhost:${escidoc.port}</escidoc.url>
     <fedora.database>fedora3</fedora.database>
     <fedora.database.user>fedoraAdmin</fedora.database.user>
     <fedora.database.password>fedoraAdmin</fedora.database.password>
     <fedora.admin.user>fedoraAdmin</fedora.admin.user>
     <fedora.admin.password>fedoraAdmin</fedora.admin.password>
-    <fedora.host>localhost:8080</fedora.host>
+    <fedora.host>localhost:${escidoc.port}</fedora.host>
     <triplestore.database>riTriples</triplestore.database>
     <escidoc.database.postgresql.url>localhost:5432</escidoc.database.postgresql.url>
     <escidoc.database>escidoc-core</escidoc.database>
