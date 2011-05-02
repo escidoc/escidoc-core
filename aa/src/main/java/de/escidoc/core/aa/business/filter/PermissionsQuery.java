@@ -116,7 +116,7 @@ public class PermissionsQuery {
                         userGrants, userGroupGrants, hierarchicalContainers, hierarchicalOUs);
 
                 if (rights != null && rights.length() > 0) {
-                    LOGGER.info("OR access rights for (" + userId + ',' + roleId + "): " + rights);
+                    LOGGER.debug("OR access rights for (" + userId + ',' + roleId + "): " + rights);
                     statements.add(rights);
                 }
             }
@@ -146,7 +146,7 @@ public class PermissionsQuery {
             result.append('(');
             // add AA filters
             addAccessRights(resourceType, result, userId);
-            LOGGER.info("AA filters: " + result);
+            LOGGER.debug("AA filters: " + result);
 
             // all restricting access rights from another user are ANDed
             if (filter.getUserId() != null) {
@@ -197,7 +197,7 @@ public class PermissionsQuery {
 
                 if (!foreignUserRights.isEmpty()) {
                     rights = accessRights.appendAccessRights(foreignUserRights);
-                    LOGGER.info("AND restricting access rights from " + "another user (1): " + rights);
+                    LOGGER.debug("AND restricting access rights from " + "another user (1): " + rights);
                     result.append(" AND (");
                     result.append(rights);
                     result.append(')');
