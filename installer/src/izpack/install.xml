@@ -455,7 +455,7 @@
 
         <pack name="Migration Tool" parent="Additional Services and Tools" required="yes" condition="upgradeEscidoc">
             <description>Migration Tool for the eSciDoc Infrastructure</description>
-            <file src="packages/migration-tool/migration-tool-${EscidocVersion}.zip" targetdir="$INSTALL_PATH/tools" />
+            <file src="packages/migration-tool/migration-tool-${migration-tool.version}.zip" targetdir="$INSTALL_PATH/tools" />
         </pack>
 
         <!--pack name="Documentation" required="no">
