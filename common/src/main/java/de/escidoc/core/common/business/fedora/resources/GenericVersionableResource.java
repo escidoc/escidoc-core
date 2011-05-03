@@ -153,15 +153,21 @@ public class GenericVersionableResource extends GenericResourcePid {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
         setId(id);
+    }
+
+    @PostConstruct
+    protected void initLastModificationDate() throws TripleStoreSystemException, WebserverSystemException,
+        ResourceNotFoundException {
         try {
             setLastVersionData();
         }
         catch (final WebserverSystemException e) {
-            if (getTripleStoreUtility().exists(id)) {
+            if (getTripleStoreUtility().exists(this.getId())) {
                 throw new WebserverSystemException("Unexpected exception during RELS-EXT parsing.", e);
             }
             else {
-                throw new ResourceNotFoundException("Resource with the provided objid '" + id + "' does not exist.", e);
+                throw new ResourceNotFoundException("Resource with the provided objid '" + this.getId()
+                    + "' does not exist.", e);
             }
 
         }
