@@ -127,9 +127,10 @@ public class StatisticInterceptor implements Ordered {
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      * @throws Exception
      */
-    @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
-        + " && within(de.escidoc.core.*.ejb.*Bean)" + " && !call(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
-        + " && !call(* de.escidoc.core..*.StatisticService*.*(..))" + " && !call(* de.escidoc.core.common..*.*(..))")
+    @Around("execution(public * de.escidoc.core.*.service.*.*(..))"
+        + " && !execution(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
+        + " && !execution(* de.escidoc.core..*.StatisticService*.*(..))"
+        + " && !execution(* de.escidoc.core.common..*.*(..))")
     public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable, SystemException,
         Exception, WebserverSystemException {
         final long invocationStartTime = System.currentTimeMillis();

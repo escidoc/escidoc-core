@@ -65,9 +65,9 @@ public class XmlHeaderInterceptor implements Ordered {
      * @throws Throwable Thrown in case of an error.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    @Around("call(public !static java.lang.String de.escidoc.core.*.service.interfaces.*.*(..))"
-        + " && within(de.escidoc.core.*.ejb.*Bean)" + " && !call(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
-        + " && !call(* de.escidoc.core.common..*.*(..))")
+    @Around("execution(public java.lang.String de.escidoc.core.*.service.*.*(..))"
+        + " && !execution(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
+        + " && !execution(* de.escidoc.core.common..*.*(..))")
     public Object processResult(final ProceedingJoinPoint joinPoint) throws Throwable, WebserverSystemException {
         return post(joinPoint.proceed());
     }

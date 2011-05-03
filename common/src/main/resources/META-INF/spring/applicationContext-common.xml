@@ -71,25 +71,10 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	-->
     <context:component-scan base-package="de.escidoc"/>
 
-    <!--aop:aspectj-autoproxy proxy-target-class="true"/-->
-
-    <!--bean id="common.TraceInterceptor" class="de.escidoc.core.common.util.aop.TraceInterceptor"
-          factory-method="aspectOf" lazy-init="false">
-    </bean-->
-
-    <!--bean id="common.StatisticInterceptor" class="de.escidoc.core.common.util.aop.StatisticInterceptor"
+    <bean id="common.StatisticInterceptor" class="de.escidoc.core.common.util.aop.StatisticInterceptor"
           factory-method="aspectOf" lazy-init="false">
         <property name="statisticService" ref="de.escidoc.core.statistic.StatisticService"/>
-    </bean-->
-
-    <!--bean id="common.ParameterCheckInterceptor" class="de.escidoc.core.common.util.aop.ParameterCheckInterceptor"
-          factory-method="aspectOf" lazy-init="false"></bean-->
-
-    <!--bean id="common.XmlHeaderInterceptor" class="de.escidoc.core.common.util.aop.XmlHeaderInterceptor"
-          factory-method="aspectOf" lazy-init="false"></bean-->
-
-    <!--bean id="common.XmlValidationInterceptor" class="de.escidoc.core.common.util.aop.XmlValidationInterceptor"
-          factory-method="aspectOf" lazy-init="false"></bean-->
+    </bean>
 
     <bean id="business.TripleStoreConnector" class="de.escidoc.core.common.business.TripleStoreConnector">
         <property name="connectionUtility">
@@ -185,15 +170,12 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             </list>
         </property>
     </bean>
-    <!--
-           JMX
-    --><!-- exposing spring beans as MBeans that are annotated
-(using appropriate JAVA5 annotations). If a MBean with the same name
-has been exposed before, the new exposal is skipped (ignoreExisting)  -->
+
+    <!-- Eposing spring beans as MBeans that are annotated (using appropriate JAVA5 annotations). If a MBean with
+    the same name has been exposed before, the new exposal is skipped (ignoreExisting)  -->
     <bean id="eSciDoc.core.common.MBeanExporter"
           class="org.springframework.jmx.export.annotation.AnnotationMBeanExporter" lazy-init="false">
         <property name="autodetect" value="true"/>
         <property name="registrationBehaviorName" value="REGISTRATION_IGNORE_EXISTING"/>
     </bean>
-    <!-- end of JMX -->
 </beans>

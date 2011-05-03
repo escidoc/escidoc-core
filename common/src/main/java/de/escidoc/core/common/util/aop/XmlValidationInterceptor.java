@@ -62,9 +62,7 @@ public class XmlValidationInterceptor implements Ordered {
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      */
-    //    @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
-    //        + " && within(de.escidoc.core.*.ejb.*Bean)")
-    @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
+    @Before("execution(public * de.escidoc.core.*.service.*.*(..))")
     public void validate(final JoinPoint joinPoint) throws XmlParserSystemException, WebserverSystemException,
         XmlSchemaValidationException, XmlCorruptedException {
 

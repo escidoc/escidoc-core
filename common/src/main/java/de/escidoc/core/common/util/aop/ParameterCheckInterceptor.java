@@ -49,13 +49,13 @@ public class ParameterCheckInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_PARAMETER_CHECK_INTERCEPTOR;
     }
 
-    @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
-        + " && !call(* de.escidoc.core..*.PolicyDecisionPoint*.evaluateRoles(..))"
-        + " && !call(* de.escidoc.core..*.PolicyDecisionPoint*.getRoleUserWhereClause(..))"
-        + " && !call(* de.escidoc.core..*.PolicyDecisionPoint*.findAttribute(..))"
-        + " && (!call(* de.escidoc.core..*.*HandlerInterface.retrieve*List(String))"
-        + " || call(* de.escidoc.core.aa..*.*HandlerInterface.retrieve*List(String)))"
-        + " && !call(* de.escidoc.core..*.Fedora*Handler*.*(..))")
+    @Before("execution(public * de.escidoc.core.*.service.*.*(..))"
+        + " && !execution(* de.escidoc.core..*.PolicyDecisionPoint*.evaluateRoles(..))"
+        + " && !execution(* de.escidoc.core..*.PolicyDecisionPoint*.getRoleUserWhereClause(..))"
+        + " && !execution(* de.escidoc.core..*.PolicyDecisionPoint*.findAttribute(..))"
+        + " && (!execution(* de.escidoc.core..*.*HandlerInterface.retrieve*List(String))"
+        + " || execution(* de.escidoc.core.aa..*.*HandlerInterface.retrieve*List(String)))"
+        + " && !execution(* de.escidoc.core..*.Fedora*Handler*.*(..))")
     public void checkParameters(final JoinPoint joinPoint) throws MissingMethodParameterException {
         final Object[] arguments = joinPoint.getArgs();
         final int length = arguments.length;

@@ -148,8 +148,6 @@ public class SecurityInterceptor implements Ordered {
      * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
-    //    @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
-    //        + " && within(de.escidoc.core.*.ejb.*Bean)")
     @Around("execution(public * de.escidoc.core.*.service.*.*(..))"
         + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
         + " && !within(de.escidoc.core.common.util.aop..*)")
