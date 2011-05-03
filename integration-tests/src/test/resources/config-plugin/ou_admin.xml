@@ -1,0 +1,6 @@
+<processor>
+    <modify>
+        <name>Resource.OrganizationalUnit.indexAsynchronous</name>
+        <value>false</value>
+    </modify>
+</processor>

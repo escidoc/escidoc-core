@@ -136,13 +136,38 @@
 					        <transformation>
 						        <type>properties</type>
 							<input>${project.build.directory}/escidoc/jboss/server/default/conf/escidoc-core.custom.properties</input>
-							<config>src/test/resources/pid-settings.xml</config>
+							<config>src/test/resources/config-plugin/pid-settings.xml</config>
+						</transformation>
+					        <transformation>
+						        <type>properties</type>
+							<input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/content_model_admin/index.object-types.properties</input>
+							<config>src/test/resources/config-plugin/content_model_admin.xml</config>
+						</transformation>
+					        <transformation>
+						        <type>properties</type>
+							<input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/content_relation_admin/index.object-types.properties</input>
+							<config>src/test/resources/config-plugin/content_relation_admin.xml</config>
+						</transformation>
+					        <transformation>
+						        <type>properties</type>
+							<input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/context_admin/index.object-types.properties</input>
+							<config>src/test/resources/config-plugin/context_admin.xml</config>
+						</transformation>
+					        <transformation>
+						        <type>properties</type>
+							<input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/item_container_admin/index.object-types.properties</input>
+							<config>src/test/resources/config-plugin/item_container_admin.xml</config>
+						</transformation>
+					        <transformation>
+						        <type>properties</type>
+							<input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/ou_admin/index.object-types.properties</input>
+							<config>src/test/resources/config-plugin/ou_admin.xml</config>
 						</transformation>
 					</transformations>
 				</configuration>
 				<executions>
 				        <execution>
-						<id>change-pid-settings</id>
+						<id>overwrite-configuration</id>
 						<phase>generate-sources</phase>
 				                <goals>
 					                <goal>process</goal>
@@ -852,24 +877,6 @@
 									</resources>
 								</configuration>
 							</execution>
-							<execution>
-								<id>overwrite-configurations</id>
-								<phase>process-sources</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${project.build.directory}/escidoc/jboss
-									</outputDirectory>
-									<resources>
-										<resource>
-											<directory>src/test/resources/configuration/jboss
-											</directory>
-											<filtering>true</filtering>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
 						</executions>
 					</plugin>
 
@@ -1016,24 +1023,6 @@
 										</resource>
 										<resource>
 											<directory>src/test/resources/examples/pubman/foxml1.1
-											</directory>
-											<filtering>true</filtering>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
-							<execution>
-								<id>overwrite-configurations</id>
-								<phase>process-sources</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${project.build.directory}/escidoc/jboss
-									</outputDirectory>
-									<resources>
-										<resource>
-											<directory>src/test/resources/configuration/jboss
 											</directory>
 											<filtering>true</filtering>
 										</resource>

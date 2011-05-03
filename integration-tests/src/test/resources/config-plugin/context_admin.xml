@@ -1,0 +1,6 @@
+<processor>
+    <modify>
+        <name>Resource.Context.indexAsynchronous</name>
+        <value>false</value>
+    </modify>
+</processor>

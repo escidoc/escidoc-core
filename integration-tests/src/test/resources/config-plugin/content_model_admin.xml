@@ -1,0 +1,6 @@
+<processor>
+    <modify>
+        <name>Resource.ContentModel.indexAsynchronous</name>
+        <value>false</value>
+    </modify>
+</processor>
