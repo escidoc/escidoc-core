@@ -45,6 +45,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
 
+import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -97,8 +98,13 @@ public class Container extends GenericVersionableResourcePid implements Containe
     public Container(final String id) throws StreamNotFoundException, SystemException, ResourceNotFoundException,
         ContainerNotFoundException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException,
         WebserverSystemException {
-
         super(id);
+    }
+
+    @PostConstruct
+    protected void init() throws StreamNotFoundException, SystemException, ResourceNotFoundException,
+        ContainerNotFoundException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
 
@@ -111,7 +117,6 @@ public class Container extends GenericVersionableResourcePid implements Containe
             setDcData();
         }
         this.mdRecords = new HashMap<String, Datastream>();
-
     }
 
     /**
