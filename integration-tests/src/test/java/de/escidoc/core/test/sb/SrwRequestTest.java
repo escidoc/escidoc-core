@@ -32,18 +32,22 @@ import gov.loc.www.zing.srw.ExplainRequestType;
 import gov.loc.www.zing.srw.service.ExplainPort;
 import gov.loc.www.zing.srw.service.SRWPort;
 import gov.loc.www.zing.srw.service.SRWSampleServiceLocator;
+
+import java.net.URL;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URL;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
  * @author Rozita Friedman
  */
-public class SrwRequestTest {
+public class SrwRequestTest extends EscidocTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SrwRequestTest.class);
 
@@ -51,7 +55,11 @@ public class SrwRequestTest {
 
     protected ExplainPort explainService;
 
-    private final String location = "http://localhost:8080/srw/search/escidoc_all";
+    private final String location = getFrameworkUrl() + "/srw/search/escidoc_all";
+
+    public SrwRequestTest() throws Exception {
+        super(Constants.TRANSPORT_REST);
+    }
 
     // private String location =
     // "http://beta-tc.fiz-karlsruhe.de/srw/search/tc";
@@ -66,8 +74,9 @@ public class SrwRequestTest {
 
     /**
      * The method tests the Sb service SRW-Search by using http-request.
-     *
-     * @throws Exception any exception
+     * 
+     * @throws Exception
+     *             any exception
      */
     @Ignore("test the Sb service SRW-Search by using http-request")
     @Test
@@ -81,8 +90,9 @@ public class SrwRequestTest {
 
     /**
      * The method tests the SRW-Search by using http-request.
-     *
-     * @throws Exception any exception
+     * 
+     * @throws Exception
+     *             any exception
      */
     @Ignore("test the SRW-Search by using http-request")
     @Test
@@ -100,8 +110,9 @@ public class SrwRequestTest {
 
     /**
      * The method tests the Sb service SRW-Search by using SOAP.
-     *
-     * @throws Exception any exception
+     * 
+     * @throws Exception
+     *             any exception
      */
     @Test
     public void testSearchBySoap() throws Exception {

@@ -159,13 +159,14 @@ public class ContainerTestBase extends OmTestBase {
 
     protected static final String XPATH_CONTAINER_MD_RECORD_XLINK_TITLE = XPATH_CONTAINER_MD_RECORD + PART_XLINK_TITLE;
 
-    private static final String CONTAINER_URL = "http://localhost:8080/ir/container/";
+    private final String containerUrl;
 
     /**
      * @param transport The transport identifier.
      */
     public ContainerTestBase(final int transport) {
         super(transport);
+        containerUrl = getFrameworkUrl() + "/ir/container/";
     }
 
     /**
@@ -401,7 +402,7 @@ public class ContainerTestBase extends OmTestBase {
             Node pid = selectSingleNode(itemDoc, XPATH_CONTAINER_OBJECT_PID);
             if (pid == null) {
                 String itemId = getObjidWithoutVersion(id);
-                String pidParam = getPidParam(id, CONTAINER_URL + itemId);
+                String pidParam = getPidParam(id, containerUrl + itemId);
                 assignObjectPid(id, pidParam);
             }
         }
@@ -417,7 +418,7 @@ public class ContainerTestBase extends OmTestBase {
                 if (versionNumber == null) {
                     versionId = getLatestVersionObjidValue(itemDoc);
                 }
-                String pidParam = getPidParam(versionId, CONTAINER_URL + versionId);
+                String pidParam = getPidParam(versionId, containerUrl + versionId);
                 assignVersionPid(versionId, pidParam);
             }
         }

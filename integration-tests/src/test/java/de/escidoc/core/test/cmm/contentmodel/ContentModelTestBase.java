@@ -289,7 +289,7 @@ public class ContentModelTestBase extends CmmTestBase {
 
                 // check behavior
                 HttpResponse httpRes =
-                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, "http://localhost:8080/ir/item/"
+                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getFrameworkUrl() + "/ir/item/"
                         + getObjidValue(getDocument(itemXml)) + "/resources/trans", null, "text/xml", null);
                 String resultCheckString = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
                 Document resultCheckDoc = getDocument(resultCheckString);
@@ -327,7 +327,7 @@ public class ContentModelTestBase extends CmmTestBase {
 
                 // check behavior
                 HttpResponse httpRes =
-                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, "http://localhost:8080/ir/container/"
+                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getFrameworkUrl() + "/ir/container/"
                         + getObjidValue(getDocument(containerXml)) + "/resources/trans", null, "text/xml", null);
                 String resultCheckString = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
                 Document resultCheckDoc = getDocument(resultCheckString);

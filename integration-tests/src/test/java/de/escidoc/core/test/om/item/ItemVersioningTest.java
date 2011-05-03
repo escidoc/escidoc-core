@@ -121,10 +121,10 @@ public class ItemVersioningTest extends ItemTestBase {
         assertEquals(comment, selectSingleNodeAsserted(getDocument(versionHistory),
             "/version-history/version[1]/comment/text()").getNodeValue());
 
-        assignObjectPid(theItemId, getPidParam(theItemId, "http://localhost:8080/ir/item/" + theItemId));
+        assignObjectPid(theItemId, getPidParam(theItemId, getFrameworkUrl() + "/ir/item/" + theItemId));
 
         String versionId = theItemId + ":1";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/item/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
 
         release(theItemId, getTheLastModificationParam(true, theItemId, comment));
         xml = retrieve(theItemId);
@@ -332,10 +332,10 @@ public class ItemVersioningTest extends ItemTestBase {
         assertXmlExists("version status submitted", xml, "/item/properties/version/status[text() = 'submitted']");
         assertXmlValidItem(xml);
 
-        assignObjectPid(theItemId, getPidParam(theItemId, "http://localhost:8080/ir/item/" + theItemId));
+        assignObjectPid(theItemId, getPidParam(theItemId, getFrameworkUrl() + "/ir/item/" + theItemId));
 
         String versionId = theItemId + ":3";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/item/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
 
         release(theItemId, getTheLastModificationParam(false, theItemId));
         xml = retrieve(theItemId);
@@ -427,7 +427,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
         // release again
         versionId = theItemId + ":5";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/item/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
 
         release(theItemId, getTheLastModificationParam(false, theItemId));
         xml = retrieve(theItemId);
@@ -1273,10 +1273,10 @@ public class ItemVersioningTest extends ItemTestBase {
         assertXmlExists("Missing status submitted within event", versionHistory,
             "/version-history/version[1]/events/event[1]/" + "eventType[text() = 'submitted']");
 
-        assignObjectPid(id, getPidParam(id, "http://localhost:8080/ir/item/" + id));
+        assignObjectPid(id, getPidParam(id, getFrameworkUrl() + "/ir/item/" + id));
 
         String versionId = id + ":1";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/item/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
 
         release(id, getTheLastModificationParam(false, theItemId));
         xml = retrieve(id);
@@ -1457,10 +1457,10 @@ public class ItemVersioningTest extends ItemTestBase {
 
         // ---------------------------------------------------------------
 
-        assignObjectPid(theItemId, getPidParam(theItemId, "http://localhost:8080/ir/item/" + theItemId));
+        assignObjectPid(theItemId, getPidParam(theItemId, getFrameworkUrl() + "/ir/item/" + theItemId));
 
         String versionId = theItemId + ":3";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/item/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
 
         release(theItemId, getTheLastModificationParam(false, theItemId));
         xml = retrieve(theItemId);
@@ -1610,7 +1610,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
         // release again
         versionId = theItemId + ":5";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/item/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
 
         release(theItemId, getTheLastModificationParam(false, theItemId));
         xml = retrieve(theItemId);
@@ -1941,9 +1941,9 @@ public class ItemVersioningTest extends ItemTestBase {
 
         // change status of version 1 ------------------------------------
         submit(objid, getTheLastModificationParam(false, objid, "submit", getLastModificationDateValue(itemDocV1E1)));
-        assignObjectPid(objid, getPidParam(objid, "http://localhost:8080/ir/item/" + objid));
+        assignObjectPid(objid, getPidParam(objid, getFrameworkUrl() + "/ir/item/" + objid));
         String versionId = objid + ":1";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/item/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
         release(objid, getTheLastModificationParam(false, objid));
 
         itemXml = retrieve(objid);
@@ -1993,9 +1993,9 @@ public class ItemVersioningTest extends ItemTestBase {
 
         submit(objid, getTheLastModificationParam(false, objid, "submit",
             getLastModificationDateValue(getDocument(itemV1E1))));
-        assignObjectPid(objid, getPidParam(objid, "http://localhost:8080/ir/item/" + objid));
+        assignObjectPid(objid, getPidParam(objid, getFrameworkUrl() + "/ir/item/" + objid));
         String versionId = objid + ":1";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/item/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
         release(objid, getTheLastModificationParam(false, objid));
 
         itemXml = retrieve(objid);
@@ -2185,9 +2185,9 @@ public class ItemVersioningTest extends ItemTestBase {
 
         submit(objid, getTheLastModificationParam(false, objid, "submit",
             getLastModificationDateValue(getDocument(itemV1E1))));
-        assignObjectPid(objid, getPidParam(objid, "http://localhost:8080/ir/item/" + objid));
+        assignObjectPid(objid, getPidParam(objid, getFrameworkUrl() + "/ir/item/" + objid));
         String versionId = objid + ":1";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/item/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
         release(objid, getTheLastModificationParam(false, objid));
 
         itemXml = retrieve(objid);
@@ -2224,7 +2224,7 @@ public class ItemVersioningTest extends ItemTestBase {
                     "/version-history/version[version-number='1']" + "/events/event[1]/eventDateTime").getTextContent());
 
         String versionId2 = objid + ":2";
-        assignVersionPid(versionId2, getPidParam(versionId2, "http://localhost:8080/ir/item/" + versionId2));
+        assignVersionPid(versionId2, getPidParam(versionId2, getFrameworkUrl() + "/ir/item/" + versionId2));
 
         /*
          * check data structure

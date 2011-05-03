@@ -90,8 +90,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     public static final String RDF_RESOURCE_USER_ACCOUNT = "http://www.escidoc.de/core/01/resources/UserAccount";
 
-    public static final String RDF_USER_ACCOUNT_BASE_URI = "http://localhost:8080" + Constants.USER_ACCOUNT_BASE_URI;
-
     public static final String XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT = XPATH_SRW_RESPONSE_OBJECT + NAME_USER_ACCOUNT;
 
     private static final String SYSTEM_ADMINISTRATOR_USER_ID = "escidoc:testsystemadministrator";
@@ -652,7 +650,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         // Currently, new created user accounts have predefined password
         // PubManR2
         getUserManagementWrapperClient().login(loginName, "PubManR2", false, true,
-            "http%3A%2F%2Flocalhost%3A8080%2Fir%2Fitem%2Fescidoc%3A1", true);
+            getFrameworkUrl() + "/ir/item/escidoc:1", true);
     }
 
     /**

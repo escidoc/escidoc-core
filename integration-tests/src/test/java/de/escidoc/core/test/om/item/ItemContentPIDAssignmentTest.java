@@ -58,13 +58,14 @@ import static org.junit.Assert.fail;
 @RunWith(value = Parameterized.class)
 public class ItemContentPIDAssignmentTest extends ItemTestBase {
 
-    private static final String ITEM_URL = "http://localhost:8080/ir/item/";
+    private final String itemUrl;
 
     /**
      * @param transport The transport identifier.
      */
     public ItemContentPIDAssignmentTest(final int transport) {
         super(transport);
+        itemUrl = getFrameworkUrl() + "/ir/item/";
     }
 
     /**
@@ -85,7 +86,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
         Class<?> ec = InvalidStatusException.class;
 
         try {
-            String pidParam = getPidParam(itemId, ITEM_URL + itemId);
+            String pidParam = getPidParam(itemId, itemUrl + itemId);
 
             assignContentPid(itemId, componentId, pidParam);
             fail("Missing InvalidStatusException");
@@ -107,7 +108,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
         String lmdCreate = getLastModificationDateValue(itemDoc);
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, 1);
-        String pidParam = getPidParam2(new DateTime(lmdCreate, DateTimeZone.UTC), new URL(ITEM_URL + itemId));
+        String pidParam = getPidParam2(new DateTime(lmdCreate, DateTimeZone.UTC), new URL(itemUrl + itemId));
         String pidXML = assignContentPid(itemId, componentId, pidParam);
         Document pidDoc = EscidocRestSoapTestBase.getDocument(pidXML);
         String lmdPid = getLastModificationDateValue(pidDoc);
@@ -152,8 +153,8 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
 
         // release item
         submit(itemId, getTheLastModificationParam(false, itemId));
-        assignObjectPid(itemId, getPidParam(itemId, ITEM_URL + itemId));
-        assignVersionPid(itemId, getPidParam(itemId, ITEM_URL + itemId));
+        assignObjectPid(itemId, getPidParam(itemId, itemUrl + itemId));
+        assignVersionPid(itemId, getPidParam(itemId, itemUrl + itemId));
         release(itemId, getTheLastModificationParam(false, itemId));
 
         // create component
@@ -162,7 +163,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
         final String componentId = getComponentObjidValue(itemDoc, componentNo);
 
         // assign content PID
-        String pidXML = assignContentPid(itemId, componentId, getPidParam(itemId, ITEM_URL + itemId));
+        String pidXML = assignContentPid(itemId, componentId, getPidParam(itemId, itemUrl + itemId));
 
         // check if returned content PID equals RELS-EXT entry
         String itemXml = retrieveComponent(itemId, componentId);
@@ -196,9 +197,9 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
 
         // assign PIDs, release item
         submit(itemId, getTheLastModificationParam(false, itemId));
-        assignObjectPid(itemId, getPidParam(itemId, ITEM_URL + itemId));
-        assignVersionPid(itemId, getPidParam(itemId, ITEM_URL + itemId));
-        assignContentPid(itemId, componentId, getPidParam(itemId, ITEM_URL + itemId));
+        assignObjectPid(itemId, getPidParam(itemId, itemUrl + itemId));
+        assignVersionPid(itemId, getPidParam(itemId, itemUrl + itemId));
+        assignContentPid(itemId, componentId, getPidParam(itemId, itemUrl + itemId));
 
         String contentPid1 =
             selectSingleNode(EscidocRestSoapTestBase.getDocument(retrieveComponent(itemId, componentId)),
@@ -247,7 +248,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
         final String itemId = getObjidValue(itemDoc);
 
         // assign content PID
-        String pidXML = assignContentPid(itemId, componentId, getPidParam(itemId, ITEM_URL + itemId));
+        String pidXML = assignContentPid(itemId, componentId, getPidParam(itemId, itemUrl + itemId));
 
         // check if returned content PID equals RELS-EXT entry
         String itemXml = retrieveComponent(itemId, componentId);
@@ -295,7 +296,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
         Document itemDoc = EscidocRestSoapTestBase.getDocument(createItem());
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, componentNo);
-        String pidParam = getPidParam2(new DateTime(wrongLmd, DateTimeZone.UTC), new URL(ITEM_URL + itemId));
+        String pidParam = getPidParam2(new DateTime(wrongLmd, DateTimeZone.UTC), new URL(itemUrl + itemId));
 
         try {
             assignContentPid(itemId, componentId, pidParam);
@@ -375,7 +376,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
 
         assertNull(itemDoc.getElementById(NAME_PID));
 
-        String pidParam = getPidParam(itemId, ITEM_URL + itemId);
+        String pidParam = getPidParam(itemId, itemUrl + itemId);
         String resultXml = assignContentPid(itemId, componentId, pidParam);
 
         assertXmlValidResult(resultXml);
@@ -400,7 +401,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
      */
     private void assignAndCheckContentPid(final String itemId, final String componentId) throws Exception {
         // assign PID to Component
-        String pidParam = getPidParam(itemId, ITEM_URL + itemId);
+        String pidParam = getPidParam(itemId, itemUrl + itemId);
         String pidXML = assignContentPid(itemId, componentId, pidParam);
 
         // check if returned PID equals RELS-EXT entry

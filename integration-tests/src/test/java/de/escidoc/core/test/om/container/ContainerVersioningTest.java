@@ -198,10 +198,10 @@ public class ContainerVersioningTest extends ContainerTestBase {
         assertXmlExists("Event submitted ", versionHistory,
             "/version-history/version[1]/events/event[1]/eventType[text() = 'submitted']");
 
-        assignObjectPid(theContainerId, getPidParam(theContainerId, "http://localhost:8080/ir/container/"
+        assignObjectPid(theContainerId, getPidParam(theContainerId, getFrameworkUrl() + "/ir/container/"
             + theContainerId));
         String containerId = theContainerId + ":1";
-        assignVersionPid(containerId, getPidParam(containerId, "http://localhost:8080/ir/container/" + containerId));
+        assignVersionPid(containerId, getPidParam(containerId, getFrameworkUrl() + "/ir/container/" + containerId));
 
         release(theContainerId, getTheLastModificationParam(false));
         xml = retrieve(theContainerId);
@@ -408,10 +408,10 @@ public class ContainerVersioningTest extends ContainerTestBase {
         assertXmlExists("version status submitted", xml, "/container/properties/version/status[text() = 'submitted']");
         assertXmlValidContainer(xml);
 
-        assignObjectPid(theContainerId, getPidParam(theContainerId, "http://localhost:8080/ir/container/"
+        assignObjectPid(theContainerId, getPidParam(theContainerId, getFrameworkUrl() + "/ir/container/"
             + theContainerId));
         String containerId = theContainerId + ":3";
-        assignVersionPid(containerId, getPidParam(containerId, "http://localhost:8080/ir/container/" + containerId));
+        assignVersionPid(containerId, getPidParam(containerId, getFrameworkUrl() + "/ir/container/" + containerId));
 
         release(theContainerId, getTheLastModificationParam(false));
         xml = retrieve(theContainerId);
@@ -545,7 +545,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
 
         // release again
         containerId = theContainerId + ":5";
-        assignVersionPid(containerId, getPidParam(containerId, "http://localhost:8080/ir/container/" + containerId));
+        assignVersionPid(containerId, getPidParam(containerId, getFrameworkUrl() + "/ir/container/" + containerId));
 
         release(theContainerId, getTheLastModificationParam(false));
         xml = retrieve(theContainerId);
@@ -719,10 +719,10 @@ public class ContainerVersioningTest extends ContainerTestBase {
             "/version-history/version[1]/events/event[1]/eventType[text() = 'update']");
         assertXmlValidContainer(xml);
 
-        assignObjectPid(theContainerId, getPidParam(theContainerId, "http://localhost:8080/ir/container/"
+        assignObjectPid(theContainerId, getPidParam(theContainerId, getFrameworkUrl() + "/ir/container/"
             + theContainerId));
         String containerId = theContainerId + ":3";
-        assignVersionPid(containerId, getPidParam(containerId, "http://localhost:8080/ir/container/" + containerId));
+        assignVersionPid(containerId, getPidParam(containerId, getFrameworkUrl() + "/ir/container/" + containerId));
 
         release(theContainerId, getTheLastModificationParam(false));
         xml = retrieve(theContainerId);
@@ -1078,11 +1078,11 @@ public class ContainerVersioningTest extends ContainerTestBase {
 
         // ---------------------------------------------------------------
 
-        assignObjectPid(this.theContainerId, getPidParam(this.theContainerId, "http://localhost:8080/ir/container/"
+        assignObjectPid(this.theContainerId, getPidParam(this.theContainerId, getFrameworkUrl() + "/ir/container/"
             + this.theContainerId));
 
         String versionId = this.theContainerId + ":3";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/container/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/container/" + versionId));
 
         release(this.theContainerId, getTheLastModificationParam(false));
         xml = retrieve(this.theContainerId);
@@ -1232,7 +1232,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
 
         // release again
         versionId = this.theContainerId + ":5";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/container/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/container/" + versionId));
 
         release(this.theContainerId, getTheLastModificationParam(false));
         xml = retrieve(this.theContainerId);
@@ -1407,11 +1407,11 @@ public class ContainerVersioningTest extends ContainerTestBase {
 
         // ---------------------------------------------------------------
 
-        assignObjectPid(this.theContainerId, getPidParam(this.theContainerId, "http://localhost:8080/ir/container/"
+        assignObjectPid(this.theContainerId, getPidParam(this.theContainerId, getFrameworkUrl() + "/ir/container/"
             + this.theContainerId));
 
         String versionId = this.theContainerId + ":3";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/container/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/container/" + versionId));
 
         release(this.theContainerId, getTheLastModificationParam(false));
         xml = retrieve(this.theContainerId);
@@ -1461,7 +1461,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
 
         // release again
         versionId = this.theContainerId + ":5";
-        assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/container/" + versionId));
+        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/container/" + versionId));
 
         release(this.theContainerId, getTheLastModificationParam(false));
         xml = retrieve(this.theContainerId);

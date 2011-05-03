@@ -67,13 +67,14 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
 
     private String theItemId;
 
-    private final String containerUrl = "http://localhost:8080/ir/container/";
+    private final String containerUrl;
 
     /**
      * @param transport The transport identifier.
      */
     public ContainerPidAssignmentTest(final int transport) {
         super(transport);
+        containerUrl = getFrameworkUrl() + "/ir/container/";
     }
 
     /**

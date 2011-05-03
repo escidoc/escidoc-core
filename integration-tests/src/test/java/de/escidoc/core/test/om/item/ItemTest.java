@@ -1621,7 +1621,7 @@ public class ItemTest extends ItemTestBase {
         String createdItem = retrieve(itemId);
         Document createdItemDoc = EscidocRestSoapTestBase.getDocument(createdItem);
         createdItemDoc =
-            (Document) substitute(createdItemDoc, "/item/components/component/content/@href", "http://localhost:8080");
+            (Document) substitute(createdItemDoc, "/item/components/component/content/@href", getFrameworkUrl());
         createdItem = toString(createdItemDoc, true);
         final String createdXml = create(createdItem);
 
@@ -1779,7 +1779,7 @@ public class ItemTest extends ItemTestBase {
                 "escidoc_item_198_for_create.xml");
         Node xmlItemDoc = deleteElement(xmlItem, "/item/components/component[not(@href) or position() = 1]");
         // set URL
-        String urlWithParam = "http://localhost:8080?p1=v1&p2=v2";
+        String urlWithParam = getFrameworkUrl() + "?p1=v1&p2=v2";
         xmlItemDoc = substitute(xmlItemDoc, "/item/components/component/content/@href", urlWithParam);
         // set storage
         String storage = "external-url";

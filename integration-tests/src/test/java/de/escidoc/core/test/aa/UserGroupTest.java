@@ -69,8 +69,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
     public static final String RDF_RESOURCE_USER_GROUP = "http://www.escidoc.de/core/01/resources/UserGroup";
 
-    public static final String RDF_USER_GROUP_BASE_URI = "http://localhost:8080" + Constants.USER_GROUP_BASE_URI;
-
     private static UserAttributeTestBase userAttributeTestBase = null;
 
     private static UserAccountTestBase userAccountTestBase = null;

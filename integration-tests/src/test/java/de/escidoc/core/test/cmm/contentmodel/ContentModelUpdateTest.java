@@ -321,7 +321,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         Element mdRecordContent =
             cmDocV1E1.createElementNS("http://www.escidoc.de/schemas/contentmodel/0.1", "escidocContentModel:schema");
         mdRecordContent.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href",
-            "http://localhost:8080/xsd/soap/organizational-unit/0.7/organizational-unit.xsd");
+            getFrameworkUrl() + "/xsd/soap/organizational-unit/0.7/organizational-unit.xsd");
         mdRecord.appendChild(mdRecordContent);
 
         // create MdRecordDefinitions

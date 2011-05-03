@@ -178,7 +178,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         while (compIt.hasNext()) {
             String compo = compIt.next();
             page +=
-                "<img src=\"http://localhost:8080/ir/item/" + itemId + "/components/component/" + compo
+                "<img src=\"" + getFrameworkUrl() + "/ir/item/" + itemId + "/components/component/" + compo
                     + "/content\" alt=\"" + compo + "\" border=\"1\" />\n";
         }
         page += "</body>\n";

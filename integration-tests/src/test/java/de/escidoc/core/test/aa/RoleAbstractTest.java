@@ -70,8 +70,6 @@ import static org.junit.Assert.assertNotNull;
  */
 public class RoleAbstractTest extends AaTestBase {
 
-    public static final String RDF_ROLE_BASE_URI = "http://localhost:8080" + Constants.ROLE_BASE_URI;
-
     public static final String RDF_RESOURCE_ROLE = "http://www.escidoc.de/core/01/resources/Role";
 
     public static final String XPATH_RESOURCES = "/resources";

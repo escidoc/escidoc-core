@@ -56,7 +56,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class ItemTestBase extends OmTestBase {
 
-    private static final String ITEM_URL = "http://localhost:8080/ir/item/";
+    private final String itemUrl;
 
     /**
      * @return Returns the itemClient
@@ -72,6 +72,7 @@ public class ItemTestBase extends OmTestBase {
      */
     public ItemTestBase(final int transport) {
         super(transport);
+        itemUrl = getFrameworkUrl() + "/ir/item/";
     }
 
     /**
@@ -563,7 +564,7 @@ public class ItemTestBase extends OmTestBase {
             Node pid = selectSingleNode(itemDoc, XPATH_ITEM_OBJECT_PID);
             if (pid == null) {
                 String itemId = getObjidWithoutVersion(id);
-                String pidParam = getPidParam2(new DateTime(lmd, DateTimeZone.UTC), new URL(ITEM_URL + itemId));
+                String pidParam = getPidParam2(new DateTime(lmd, DateTimeZone.UTC), new URL(itemUrl + itemId));
                 pidXml = assignObjectPid(id, pidParam);
                 assertXmlValidResult(pidXml);
                 Document pidDoc = EscidocRestSoapTestBase.getDocument(pidXml);
@@ -582,7 +583,7 @@ public class ItemTestBase extends OmTestBase {
                 if (versionNumber == null) {
                     versionId = getLatestVersionObjidValue(itemDoc);
                 }
-                String pidParam = getPidParam2(new DateTime(lmd, DateTimeZone.UTC), new URL(ITEM_URL + versionId));
+                String pidParam = getPidParam2(new DateTime(lmd, DateTimeZone.UTC), new URL(itemUrl + versionId));
                 pidXml = assignVersionPid(versionId, pidParam);
                 assertXmlValidResult(pidXml);
 

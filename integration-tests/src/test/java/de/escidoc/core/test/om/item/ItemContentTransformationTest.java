@@ -84,7 +84,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
 
             submit(itemId, getTheLastModificationParam(false, itemId));
             String versionId = itemId + ":1";
-            assignVersionPid(versionId, getPidParam(versionId, "http://localhost:8080/ir/item/" + versionId));
+            assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
 
             release(itemId, getTheLastModificationParam(false, itemId));
 

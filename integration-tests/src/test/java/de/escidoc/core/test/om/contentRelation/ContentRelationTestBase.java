@@ -321,7 +321,7 @@ public class ContentRelationTestBase extends OmTestBase {
     // String itemId = getObjidWithoutVersion(id);
     // String pidParam =
     // getPidParam(id,
-    // "http://localhost:8080/ir/content-relation/" + itemId);
+    // getFrameworkUrl() + "/ir/content-relation/" + itemId);
     // assignObjectPid(id, pidParam);
     // }
     // }
@@ -340,7 +340,7 @@ public class ContentRelationTestBase extends OmTestBase {
     // }
     // String pidParam =
     // getPidParam(versionId,
-    // "http://localhost:8080/ir/content-relation/"
+    // getFrameworkUrl() + "/ir/content-relation/"
     // + versionId);
     // assignVersionPid(versionId, pidParam);
     // }
