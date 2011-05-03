@@ -797,40 +797,28 @@
 	<escidoc.oracle.host>escidev5</escidoc.oracle.host>
 	<escidoc.oracle.port>1521</escidoc.oracle.port>
 	<escidoc.oracle.database>oraesci01</escidoc.oracle.database>
-	<escidoc.oracle.database.admin.user>oraesci_adm</escidoc.oracle.database.admin.user>
-	<escidoc.oracle.database.admin.password>oraesciadm</escidoc.oracle.database.admin.password>
 	<escidoc.default.tablespace>escidoc</escidoc.default.tablespace>
 	<escidoc.temp.tablespace>TEMP</escidoc.temp.tablespace>
 	<fedora.oracle.database>oraesci01</fedora.oracle.database>
-	<fedora.oracle.database.admin.user>oraesci_adm</fedora.oracle.database.admin.user>
-	<fedora.oracle.database.admin.password>oraesciadm</fedora.oracle.database.admin.password>
 	<fedora.default.tablespace>fedora</fedora.default.tablespace>
 	<fedora.temp.tablespace>TEMP</fedora.temp.tablespace>
 	<triplestore.oracle.database>oraesci01</triplestore.oracle.database>
 	<triplestore.database.user>riTriples</triplestore.database.user>
 	<triplestore.database.password>riTriples</triplestore.database.password>
-	<triplestore.database.admin.user>oraesci_adm</triplestore.database.admin.user>
-	<triplestore.database.admin.password>oraesciadm</triplestore.database.admin.password>
 	<triplestore.default.tablespace>triples</triplestore.default.tablespace>
 	<triplestore.temp.tablespace>TEMP</triplestore.temp.tablespace>
 
 	<!-- escidoc.oracle.host>localhost</escidoc.oracle.host>
 	<escidoc.oracle.port>1521</escidoc.oracle.port>
 	<escidoc.oracle.database>XE</escidoc.oracle.database>
-	<escidoc.oracle.database.admin.user>HR</escidoc.oracle.database.admin.user>
-	<escidoc.oracle.database.admin.password>oracle</escidoc.oracle.database.admin.password>
 	<escidoc.default.tablespace>USERS</escidoc.default.tablespace>
 	<escidoc.temp.tablespace>TEMP</escidoc.temp.tablespace>
 	<fedora.oracle.database>XE</fedora.oracle.database>
-	<fedora.oracle.database.admin.user>HR</fedora.oracle.database.admin.user>
-	<fedora.oracle.database.admin.password>oracle</fedora.oracle.database.admin.password>
 	<fedora.default.tablespace>USERS</fedora.default.tablespace>
 	<fedora.temp.tablespace>TEMP</fedora.temp.tablespace>
 	<triplestore.oracle.database>XE</triplestore.oracle.database>
 	<triplestore.database.user>riTriples</triplestore.database.user>
 	<triplestore.database.password>riTriples</triplestore.database.password>
-	<triplestore.database.admin.user>HR</triplestore.database.admin.user>
-	<triplestore.database.admin.password>oracle</triplestore.database.admin.password>
 	<triplestore.default.tablespace>USERS</triplestore.default.tablespace>
 	<triplestore.temp.tablespace>TEMP</triplestore.temp.tablespace -->
   </properties>
