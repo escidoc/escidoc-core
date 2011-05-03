@@ -90,7 +90,6 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     public static Collection<Object[]> getParameters() {
         Collection<Object[]> parameters = new ArrayList<Object[]>();
         parameters.add(new Object[] { Constants.TRANSPORT_REST });
-        parameters.add(new Object[] { Constants.TRANSPORT_SOAP });
         return parameters;
     }
 
