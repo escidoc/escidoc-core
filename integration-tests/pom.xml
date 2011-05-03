@@ -135,7 +135,7 @@
 					<transformations>
 					        <transformation>
 						        <type>properties</type>
-							<input>src/test/resources/configuration/jboss/server/default/conf/escidoc-core.custom.properties</input>
+							<input>${project.build.directory}/escidoc/jboss/server/default/conf/escidoc-core.custom.properties</input>
 							<config>src/test/resources/pid-settings.xml</config>
 						</transformation>
 					</transformations>
