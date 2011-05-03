@@ -47,6 +47,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -74,6 +76,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      *      #create(de.escidoc.core.om.service.result.EscidocBinaryContent)
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SqlDatabaseSystemException, WebserverSystemException {
 
