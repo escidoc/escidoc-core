@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
+  ~ for the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="aa"
+>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="de.escidoc.core.common.util.security.persistence.InvocationMapping" 
+    table="invocation_mappings"
+    lazy="false"
+>
+    <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
+				<meta attribute
+			="class-description" inherit="false">
+       @hibernate.class
+        table="invocation_mappings"
+       @hibernate.mapping
+        schema="aa"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.id
+            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
+    </id>
+
+    <property
+        name="attributeId"
+        type="java.lang.String"
+        column="attribute_id"
+        not-null="true"
+        length="2147483647"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="attribute_id"
+            length="2147483647"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="path"
+        type="java.lang.String"
+        column="path"
+        not-null="true"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="path"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="position"
+        type="int"
+        column="position"
+        not-null="true"
+        length="2"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="position"
+            length="2"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="attributeType"
+        type="java.lang.String"
+        column="attribute_type"
+        not-null="true"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="attribute_type"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="mappingType"
+        type="int"
+        column="mapping_type"
+        not-null="true"
+        length="2"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="mapping_type"
+            length="2"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="multiValue"
+        type="boolean"
+        column="multi_value"
+        not-null="true"
+        length="1"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="multi_value"
+            length="1"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="value"
+        type="java.lang.String"
+        column="value"
+        length="100"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="value"
+            length="100"
+        </meta>    
+    </property>
+
+    <!-- Associations -->
+  
+    <!-- bi-directional many-to-one association to MethodMapping -->
+    <many-to-one
+        name="methodMapping"
+        class="de.escidoc.core.common.util.security.persistence.MethodMapping"
+        not-null="true"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.many-to-one
+            not-null="true"
+           @hibernate.column name="method_mapping"         
+        </meta>
+        <column name="method_mapping" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

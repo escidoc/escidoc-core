@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="sm"
+>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="de.escidoc.core.sm.business.persistence.hibernate.AggregationStatisticDataSelector" 
+    table="agg_stat_data_selectors"
+    lazy="false"
+>
+    <meta attribute="class-description" inherit="false">
+       @hibernate.class
+        table="agg_stat_data_selectors"
+       @hibernate.mapping
+        schema="sm"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="field-description">
+           @hibernate.id
+            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
+    </id>
+
+    <property
+        name="selectorType"
+        type="java.lang.String"
+        column="selector_type"
+        not-null="true"
+        length="50"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="selector_type"
+            length="50"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="xpath"
+        type="java.lang.String"
+        column="xpath"
+        not-null="true"
+        length="255"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="xpath"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="listIndex"
+        type="int"
+        column="list_index"
+        not-null="true"
+        length="2"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="list_index"
+            length="2"
+            not-null="true"
+        </meta>    
+    </property>
+
+    <!-- Associations -->
+  
+    <!-- bi-directional many-to-one association to AggregationDefinition -->
+    <many-to-one
+        name="aggregationDefinition"
+        class="de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition"
+        not-null="true"
+    >
+        <meta attribute="field-description">
+           @hibernate.many-to-one
+            not-null="true"
+           @hibernate.column name="aggregation_definition_id"         
+        </meta>
+        <column name="aggregation_definition_id" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>
