@@ -76,10 +76,12 @@ import java.util.regex.Pattern;
  * @author Roland Werner (Accenture)
  */
 @Aspect
-@DeclarePrecedence("de.escidoc.core.common.util.aop.StatisticInterceptor, "
+@DeclarePrecedence("de.escidoc.core.common.util.aop.TraceInterceptor, "
     + "de.escidoc.core.aa.security.aop.AuthenticationInterceptor, "
+    + "de.escidoc.core.aa.security.aop.SecurityInterceptor, "
     + "de.escidoc.core.common.util.aop.ParameterCheckInterceptor, "
-    + "de.escidoc.core.common.util.aop.XmlValidationInterceptor,*")
+    + "de.escidoc.core.common.util.aop.XmlValidationInterceptor, "
+    + "de.escidoc.core.common.util.aop.StatisticInterceptor, " + "*")
 public class SecurityInterceptor implements Ordered {
 
     /**
