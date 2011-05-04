@@ -3340,14 +3340,21 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         String fedoraUrl = PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL);
 
         if (fedoraUrl != null && !fedoraTemplateUrl.equals(fedoraUrl)) {
-            template = template.replaceAll(fedoraTemplateUrl, fedoraUrl);
+            template = template.replace(fedoraTemplateUrl, fedoraUrl);
         }
 
         String testdataTemplateUrl = "http://localhost:8082/ir/";
         String testdataUrl = PropertiesProvider.getInstance().getProperty(PropertiesProvider.TESTDATA_URL);
 
         if (testdataUrl != null && !testdataTemplateUrl.equals(testdataUrl)) {
-            template = template.replaceAll(testdataTemplateUrl, testdataUrl + "/testDocuments/ir/");
+            template = template.replace(testdataTemplateUrl, testdataUrl + "/testDocuments/ir/");
+        }
+
+        String framworkTemplateUrl = "http://localhost:8080";
+        String frameworkUrl = getFrameworkUrl();
+
+        if (frameworkUrl != null && !framworkTemplateUrl.equals(frameworkUrl)) {
+            template = template.replace(framworkTemplateUrl, frameworkUrl);
         }
 
         return template;
