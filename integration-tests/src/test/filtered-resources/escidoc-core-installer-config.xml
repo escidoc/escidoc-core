@@ -25,9 +25,9 @@
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.4">
 <userInput>
 <entry key="DatabaseDriverClassPostgres" value="org.postgresql.Driver"/>
-<entry key="DatabaseHost" value="localhost"/>
+<entry key="DatabaseHost" value="${escidoc.database.host}"/>
 <entry key="RootDatabaseName" value="postgres"/>
-<entry key="DatabasePortPostgres" value="5432"/>
+<entry key="DatabasePortPostgres" value="${escidoc.database.port}"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.5">

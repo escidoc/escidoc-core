@@ -896,7 +896,7 @@
 						<!-- common configuration shared by all executions -->
 						<configuration>
 							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
 							</url>
 							<settingsKey>escidoc-core-db-admin</settingsKey>
 						</configuration>
@@ -911,7 +911,7 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+									<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
 									</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP DATABASE IF EXISTS "${escidoc.database}"
@@ -929,7 +929,7 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+									<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
 									</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP ROLE IF EXISTS "${escidoc.database.user}"
@@ -945,7 +945,7 @@
 								</goals>
 								<configuration>
 									<driver>org.postgresql.Driver</driver>
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/${escidoc.database}
+									<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/${escidoc.database}
 									</url>
 									<username>${escidoc.database.user}</username>
 									<password>${escidoc.database.password}</password>
@@ -1136,7 +1136,7 @@
 						<!-- common configuration shared by all executions -->
 						<configuration>
 							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
 							</url>
 							<!-- use your settings.xml to configure username and password -->
 							<settingsKey>escidoc-core-db-admin</settingsKey>
@@ -1150,7 +1150,7 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+									<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
 									</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database}"
@@ -1166,7 +1166,7 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+									<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
 									</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database}"
@@ -1182,7 +1182,7 @@
 								</goals>
 								<configuration>
 									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+									<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
 									</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP ROLE IF EXISTS "${fedora.database.user}"

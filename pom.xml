@@ -789,7 +789,8 @@
     <fedora.admin.password>fedoraAdmin</fedora.admin.password>
     <fedora.host>localhost:${escidoc.server.port}</fedora.host>
     <triplestore.database>riTriples</triplestore.database>
-    <escidoc.database.postgresql.url>localhost:5432</escidoc.database.postgresql.url>
+    <escidoc.database.host>localhost</escidoc.database.host>
+    <escidoc.database.port>5432</escidoc.database.port>
     <escidoc.database>escidoc-core</escidoc.database>
     <escidoc.database.user>escidoc</escidoc.database.user>
     <escidoc.database.password>escidoc</escidoc.database.password>
