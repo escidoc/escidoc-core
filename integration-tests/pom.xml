@@ -212,7 +212,7 @@
 							<cargo.hostname>localhost</cargo.hostname>
 							<cargo.protocol>http</cargo.protocol>
 
-							<cargo.servlet.port>${escidoc.port}</cargo.servlet.port>
+							<cargo.servlet.port>${escidoc.server.port}</cargo.servlet.port>
 							<cargo.rmi.port>1099</cargo.rmi.port>
 							<cargo.logging>medium</cargo.logging>
 							<cargo.jvmargs>-Xmx1024m -Xms312m -XX:MaxPermSize=320m
