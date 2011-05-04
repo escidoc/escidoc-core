@@ -67,7 +67,7 @@ Changes in mavens settings.xml file:
       </activation>
       <properties>
         <database.server.name>localhost</database.server.name>
-        <database.server.name>5432</database.server.name>
+        <database.server.port>5432</database.server.port>
         <escidoc.database.user>escidoc</escidoc.database.user>
         <escidoc.database.password>escidoc</escidoc.database.password>
         <escidoc.database.index.prefix.length>2000</escidoc.database.index.prefix.length>
