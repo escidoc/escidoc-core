@@ -51,7 +51,7 @@ public class WebServiceLocator extends Service {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebServiceLocator.class);
 
-    private String serviceUrl = "http://localhost:8080/axis/services/";
+    private String serviceUrl = null;
 
     private String serviceName = "Service";
 

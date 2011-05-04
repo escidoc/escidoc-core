@@ -28,6 +28,16 @@
  */
 package de.escidoc.core.adm.business.admin;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
+import java.util.Properties;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import de.escidoc.core.adm.business.renderer.interfaces.AdminRendererInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -48,15 +58,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.purge.PurgeRequest;
 import de.escidoc.core.purge.PurgeRequestBuilder;
 import de.escidoc.core.purge.PurgeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
-import java.util.Properties;
 
 /**
  * Administration tool that rebuilds the search index, rebuilds the resource cache and deletes objects physically from
@@ -336,12 +337,7 @@ public class AdminHandler {
         }
 
         try {
-            String selfUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_SELFURL);
-
-            if (!selfUrl.endsWith("/")) {
-                selfUrl += "/";
-            }
-            result.append(examples.load(selfUrl + "examples/escidoc/"));
+            result.append(examples.load(EscidocConfiguration.getInstance().appendToSelfURL("/examples/escidoc/")));
         }
         catch (final Exception e) {
             throw new SystemException(e);

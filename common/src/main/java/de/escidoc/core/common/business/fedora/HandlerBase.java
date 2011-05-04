@@ -67,8 +67,7 @@ public abstract class HandlerBase {
             final TransformerFactory tf = TransformerFactory.newInstance();
 
             final URL xsltUrl =
-                new URL(EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_SELFURL)
-                    + "/xsl/searchResponse2relations.xsl");
+                new URL(EscidocConfiguration.getInstance().appendToSelfURL("/xsl/searchResponse2relations.xsl"));
             final HttpURLConnection conn = (HttpURLConnection) xsltUrl.openConnection();
             final Transformer t = tf.newTransformer(new StreamSource(conn.getInputStream()));
             t.setParameter("XSLT", EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSLT_STD));

@@ -20,15 +20,15 @@
 
 package de.escidoc.core.common.util.xml;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.xerces.dom.DOMInputImpl;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
 
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Helper class to change the base-url of imported schemas.
@@ -58,21 +58,15 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
         if (systemId != null) {
             final Matcher schemaLocationMatcher = PATTERN_SCHEMA_LOCATION_BASE.matcher(systemId);
             try {
-                // FIXME Use XmlUtility.getSchemaBaseUrl() ?
-                if (schemaLocationMatcher.find()
-                    && EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_SELFURL) != null
-                    && EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) != null) {
-                    final String systemIdLocal =
-                        schemaLocationMatcher.replaceAll(EscidocConfiguration.getInstance().get(
-                            EscidocConfiguration.ESCIDOC_CORE_SELFURL)
-                            + EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH));
+                if (schemaLocationMatcher.find()) {
+                    final String systemIdLocal = schemaLocationMatcher.replaceAll(XmlUtility.getSchemaBaseUrl());
                     return new DOMInputImpl(publicId, systemIdLocal, baseURI);
                 }
                 else {
                     return null;
                 }
             }
-            catch (final IOException e) {
+            catch (final WebserverSystemException e) {
                 throw new RuntimeException(e);
             }
         }

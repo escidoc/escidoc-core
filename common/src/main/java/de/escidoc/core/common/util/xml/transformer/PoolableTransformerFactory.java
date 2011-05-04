@@ -70,7 +70,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
 
     private static final String CONTENT_MODEL_XSLT_DC_DATASTREAM = "DC-MAPPING";
 
-    private String defaultXsltUrl = "http://localhost:8080" + XSL_MAPPING_UNKNOWN_TO_DC;
+    private String defaultXsltUrl = null;
 
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")

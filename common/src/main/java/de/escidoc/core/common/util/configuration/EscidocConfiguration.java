@@ -67,7 +67,8 @@ public final class EscidocConfiguration {
 
     public static final String ESCIDOC_CORE_BASEURL = "escidoc-core.baseurl";
 
-    public static final String ESCIDOC_CORE_SELFURL = "escidoc-core.selfurl";
+    // use method appendToSelfURL() to access the self URL
+    private static final String ESCIDOC_CORE_SELFURL = "escidoc-core.selfurl";
 
     public static final String ESCIDOC_CORE_PROXY_HOST = "escidoc-core.proxyHost";
 

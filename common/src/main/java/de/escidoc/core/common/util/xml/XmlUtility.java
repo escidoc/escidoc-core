@@ -1506,11 +1506,11 @@ public final class XmlUtility {
      * @return Returns the base url.
      * @throws WebserverSystemException In case of an error.
      */
-    private static String getSchemaBaseUrl() throws WebserverSystemException {
+    public static String getSchemaBaseUrl() throws WebserverSystemException {
 
         try {
-            return EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_SELFURL)
-                + EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) + '/';
+            return EscidocConfiguration.getInstance().appendToSelfURL(
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) + '/');
         }
         catch (final IOException e) {
             throw new WebserverSystemException("Error accessing Escidoc configuration!", e);

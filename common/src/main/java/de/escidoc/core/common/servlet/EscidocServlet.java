@@ -31,6 +31,7 @@ import de.escidoc.core.common.servlet.invocation.MapperInterface;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.servlet.invocation.XMLBase;
 import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
@@ -558,9 +559,16 @@ public class EscidocServlet extends HttpServlet {
 
         final String message = exception.toXmlString();
         final String redirectLocation =
-            exception.getRedirectLocation() + '?' + PARAM_TARGET + '='
-                + URLEncoder.encode(httpRequest.getRequestURL().toString(), ENCODING) + '&' + PARAM_SHIRE + '='
-                + URLEncoder.encode("https://localhost:8080/shibboleth/acs", ENCODING) + '&' + PARAM_PROVIDER_ID + '='
+            exception.getRedirectLocation()
+                + '?'
+                + PARAM_TARGET
+                + '='
+                + URLEncoder.encode(httpRequest.getRequestURL().toString(), ENCODING)
+                + '&'
+                + PARAM_SHIRE
+                + '='
+                + URLEncoder.encode(EscidocConfiguration.getInstance().appendToSelfURL("/shibboleth/acs").replace(
+                    "http://", "https://"), ENCODING) + '&' + PARAM_PROVIDER_ID + '='
                 + URLEncoder.encode("https://www.escidoc.de/shibboleth", ENCODING);
 
         final int httpStatusCode = exception.getHttpStatusCode();

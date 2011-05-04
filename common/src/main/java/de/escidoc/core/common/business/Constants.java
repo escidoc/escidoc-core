@@ -474,7 +474,7 @@ public final class Constants {
 
     public static final String MD_RECORD_URL_PART = MD_RECORDS_URL_PART + "/md-record";
 
-    public static final String SCHEMA_LOCATION_BASE = "http://www.escidoc.org/schemas";
+    public static final String SCHEMA_LOCATION_BASE = "http://www.escidoc.org/schemas/";
 
     /**
      * Object-types.
