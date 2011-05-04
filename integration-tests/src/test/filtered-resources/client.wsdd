@@ -12,18 +12,18 @@
    </requestFlow >
   </globalConfiguration >
  <service name="MmService">
-  <parameter name="serviceUrl" value="${escidoc.url}/axis/services/"/>
+  <parameter name="serviceUrl" value="${escidoc.server.url}/axis/services/"/>
  </service>
  <service name="OmService">
-  <parameter name="serviceUrl" value="${escidoc.url}/axis/services/"/>
+  <parameter name="serviceUrl" value="${escidoc.server.url}/axis/services/"/>
  </service>
  <service name="OumService">
-  <parameter name="serviceUrl" value="${escidoc.url}/axis/services/"/>
+  <parameter name="serviceUrl" value="${escidoc.server.url}/axis/services/"/>
  </service>
  <service name="UmService">
-  <parameter name="serviceUrl" value="${escidoc.url}/axis/services/"/>
+  <parameter name="serviceUrl" value="${escidoc.server.url}/axis/services/"/>
  </service>
  <service name="SmService">
-  <parameter name="serviceUrl" value="${escidoc.url}/axis/services/"/>
+  <parameter name="serviceUrl" value="${escidoc.server.url}/axis/services/"/>
  </service>
 </deployment>

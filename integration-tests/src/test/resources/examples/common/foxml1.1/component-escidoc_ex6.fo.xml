@@ -33,7 +33,7 @@
   <foxml:datastream CONTROL_GROUP="M" ID="content" STATE="A" VERSIONABLE="true">
     <foxml:datastreamVersion CREATED="2007-11-15T08:36:49.296Z" ID="content.0" LABEL="" MIMETYPE="image/jpeg" SIZE="0">
       <foxml:contentDigest DIGEST="none" TYPE="DISABLED"/>
-      <foxml:contentLocation REF="${escidoc.url}/images/escidoc-logo.jpg" TYPE="URL"/>
+      <foxml:contentLocation REF="${escidoc.server.url}/images/escidoc-logo.jpg" TYPE="URL"/>
     </foxml:datastreamVersion>
   </foxml:datastream>
   <foxml:datastream CONTROL_GROUP="X" ID="DC" STATE="A" VERSIONABLE="true">

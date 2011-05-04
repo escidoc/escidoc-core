@@ -66,8 +66,8 @@ Changes in mavens settings.xml file:
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
-        <database.server.name>localhost</database.server.name>
-        <database.server.port>5432</database.server.port>
+        <escidoc.database.host>localhost</escidoc.database.host>
+        <escidoc.database.port>5432</escidoc.database.port>
         <escidoc.database.user>escidoc</escidoc.database.user>
         <escidoc.database.password>escidoc</escidoc.database.password>
         <escidoc.database.name>escidoc-core</escidoc.database.name>

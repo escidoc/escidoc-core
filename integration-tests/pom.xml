@@ -254,64 +254,64 @@
 					</outputDirectory>
 					<urls>
 						<!-- AA -->
-						<url>${escidoc.url}/axis/services/ActionHandlerService?wsdl</url>
+						<url>${escidoc.server.url}/axis/services/ActionHandlerService?wsdl</url>
 						<!-- wasn't there in 1.2 -->
-						<url>${escidoc.url}/axis/services/AdminService?wsdl</url>
-						<url>${escidoc.url}/axis/services/AdminHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/PolicyDecisionPointService?wsdl
+						<url>${escidoc.server.url}/axis/services/AdminService?wsdl</url>
+						<url>${escidoc.server.url}/axis/services/AdminHandlerService?wsdl</url>
+						<url>${escidoc.server.url}/axis/services/PolicyDecisionPointService?wsdl
 						</url>
-						<url>${escidoc.url}/axis/services/RoleHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/UserAccountHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/RoleHandlerService?wsdl</url>
+						<url>${escidoc.server.url}/axis/services/UserAccountHandlerService?wsdl
 						</url>
-						<url>${escidoc.url}/axis/services/UserGroupHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/UserGroupHandlerService?wsdl
 						</url>
-						<url>${escidoc.url}/axis/services/UserManagementWrapperService?wsdl
+						<url>${escidoc.server.url}/axis/services/UserManagementWrapperService?wsdl
 						</url>
 
 						<!-- common -->
-						<url>${escidoc.url}/axis/services/SoapExceptionGenerationService?wsdl
+						<url>${escidoc.server.url}/axis/services/SoapExceptionGenerationService?wsdl
 						</url>
 
 						<!-- CMM -->
-						<url>${escidoc.url}/axis/services/ContentModelHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/ContentModelHandlerService?wsdl
 						</url>
 
 						<!-- OM -->
-						<url>${escidoc.url}/axis/services/ContainerHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/ContainerHandlerService?wsdl
 						</url>
-						<url>${escidoc.url}/axis/services/ContentRelationHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/ContentRelationHandlerService?wsdl
 						</url>
-						<url>${escidoc.url}/axis/services/ContextHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/ItemHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/IngestHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/SemanticStoreHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/ContextHandlerService?wsdl</url>
+						<url>${escidoc.server.url}/axis/services/ItemHandlerService?wsdl</url>
+						<url>${escidoc.server.url}/axis/services/IngestHandlerService?wsdl</url>
+						<url>${escidoc.server.url}/axis/services/SemanticStoreHandlerService?wsdl
 						</url>
 
 						<!-- OUM -->
-						<url>${escidoc.url}/axis/services/OrganizationalUnitHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/OrganizationalUnitHandlerService?wsdl
 						</url>
 
 						<!-- OAI -->
-						<url>${escidoc.url}/axis/services/SetDefinitionHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/SetDefinitionHandlerService?wsdl
 						</url>
 
 						<!-- SB -->
-						<url>${escidoc.url}/srw/search?wsdl</url>
+						<url>${escidoc.server.url}/srw/search?wsdl</url>
 
 						<!-- SM -->
-						<url>${escidoc.url}/axis/services/StatisticDataHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/StatisticDataHandlerService?wsdl
 						</url>
-						<url>${escidoc.url}/axis/services/AggregationDefinitionHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/AggregationDefinitionHandlerService?wsdl
 						</url>
-						<url>${escidoc.url}/axis/services/PreprocessingHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/PreprocessingHandlerService?wsdl
 						</url>
-						<url>${escidoc.url}/axis/services/ReportDefinitionHandlerService?wsdl
+						<url>${escidoc.server.url}/axis/services/ReportDefinitionHandlerService?wsdl
 						</url>
-						<url>${escidoc.url}/axis/services/ReportHandlerService?wsdl</url>
-						<url>${escidoc.url}/axis/services/ScopeHandlerService?wsdl</url>
+						<url>${escidoc.server.url}/axis/services/ReportHandlerService?wsdl</url>
+						<url>${escidoc.server.url}/axis/services/ScopeHandlerService?wsdl</url>
 
 						<!-- TME -->
-						<url>${escidoc.url}/axis/services/JhoveHandlerService?wsdl</url>
+						<url>${escidoc.server.url}/axis/services/JhoveHandlerService?wsdl</url>
 					</urls>
 					<mappings>
 						<!-- AA -->
@@ -914,7 +914,7 @@
 									<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
 									</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE IF EXISTS "${escidoc.database}"
+									<sqlCommand>DROP DATABASE IF EXISTS "${escidoc.database.name}"
 									</sqlCommand>
 									<onError>continue</onError>
 								</configuration>
@@ -945,7 +945,7 @@
 								</goals>
 								<configuration>
 									<driver>org.postgresql.Driver</driver>
-									<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/${escidoc.database}
+									<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/${escidoc.database.name}
 									</url>
 									<username>${escidoc.database.user}</username>
 									<password>${escidoc.database.password}</password>
@@ -1153,7 +1153,7 @@
 									<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
 									</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database}"
+									<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database.name}"
 									</sqlCommand>
 									<onError>continue</onError>
 								</configuration>
@@ -1330,7 +1330,7 @@
 										<argument>d</argument>
 										<argument>foxml-resources</argument>
 										<argument>info:fedora/fedora-system:FOXML-1.1</argument>
-										<argument>${fedora.host}</argument>
+										<argument>${escidoc.server.host}:${escidoc.server.port}</argument>
 										<argument>${fedora.admin.user}</argument>
 										<argument>${fedora.admin.password}</argument>
 										<argument>http</argument>

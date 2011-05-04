@@ -779,19 +779,22 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <escidoc.installer.config>escidoc-core-installer-config.xml</escidoc.installer.config>
 
-    <escidoc.at>@</escidoc.at>
+    <escidoc.server.host>localhost</escidoc.server.host>
     <escidoc.server.port>8080</escidoc.server.port>
-    <escidoc.url>http://localhost:${escidoc.server.port}</escidoc.url>
-    <fedora.database>fedora3</fedora.database>
+    <escidoc.server.url>http://${escidoc.server.host}:${escidoc.server.port}</escidoc.server.url>
+
+    <fedora.database.name>fedora3</fedora.database.name>
     <fedora.database.user>fedoraAdmin</fedora.database.user>
     <fedora.database.password>fedoraAdmin</fedora.database.password>
+
     <fedora.admin.user>fedoraAdmin</fedora.admin.user>
     <fedora.admin.password>fedoraAdmin</fedora.admin.password>
-    <fedora.host>localhost:${escidoc.server.port}</fedora.host>
+
     <triplestore.database>riTriples</triplestore.database>
+
     <escidoc.database.host>localhost</escidoc.database.host>
     <escidoc.database.port>5432</escidoc.database.port>
-    <escidoc.database>escidoc-core</escidoc.database>
+    <escidoc.database.name>escidoc-core</escidoc.database.name>
     <escidoc.database.user>escidoc</escidoc.database.user>
     <escidoc.database.password>escidoc</escidoc.database.password>
 
