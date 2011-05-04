@@ -29,13 +29,15 @@
 
 package de.escidoc.core.test.common.util.xml;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.xerces.dom.DOMInputImpl;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
  * Helper class to change the base-url of imported schemas.
@@ -48,6 +50,8 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
      * Pattern used to detect base-url of schema-location in imported schemas.
      */
     private static final Pattern PATTERN_SCHEMA_LOCATION_BASE = Pattern.compile(Constants.SCHEMA_LOCATION_BASE);
+
+    private final String schemaLocationReplacement = EscidocTestBase.getFrameworkUrl() + "/xsd";
 
     /**
      * Replaces base-part of system-id.
@@ -63,7 +67,7 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
         if (s3 != null) {
             Matcher schemaLocationMatcher = PATTERN_SCHEMA_LOCATION_BASE.matcher(s3);
             if (schemaLocationMatcher.find()) {
-                return new DOMInputImpl(s2, schemaLocationMatcher.replaceAll(Constants.SCHEMA_LOCATION_REPLACEMENT), s4);
+                return new DOMInputImpl(s2, schemaLocationMatcher.replaceAll(schemaLocationReplacement), s4);
             }
             else {
                 return null;

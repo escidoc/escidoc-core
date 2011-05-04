@@ -537,7 +537,7 @@ public final class HttpHelper {
         client.getCookieStore().clear();
 
         final String loginServletUrl =
-            "http://" + Constants.HOST_PORT + "/aa/login?target="
+            EscidocTestBase.getFrameworkUrl() + "/aa/login?target="
                 + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
         final HttpGet loginMethod = new HttpGet(loginServletUrl);
         httpRes = client.execute(loginMethod);
@@ -558,7 +558,7 @@ public final class HttpHelper {
             .indexOf("<input type=\"password\"") != -1);
 
         // Second step: Send filled login form
-        final HttpPost postMethod = new HttpPost(("http://" + Constants.HOST_PORT + "/aa/j_spring_security_check"));
+        final HttpPost postMethod = new HttpPost((EscidocTestBase.getFrameworkUrl() + "/aa/j_spring_security_check"));
 
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
         formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login));
@@ -580,7 +580,7 @@ public final class HttpHelper {
         if (expectedAuthenticationFailure) {
             // redirect to repeated login page
             assertEquals("Unexpected redirect from spring security after expected" + " failed authentication",
-                "http://" + Constants.HOST_PORT + "/aa/login/login-repeated.html", retrievedRedirectUrl);
+                EscidocTestBase.getFrameworkUrl() + "/aa/login/login-repeated.html", retrievedRedirectUrl);
             return httpRes;
         }
         else {
@@ -651,14 +651,13 @@ public final class HttpHelper {
         try {
 
             // first step: Call the login servlet
-            // FIXME: removed fixed URL
             final String logoutServletUrl;
             if (targetUrl == null) {
-                logoutServletUrl = "http://" + Constants.HOST_PORT + "/aa/logout";
+                logoutServletUrl = EscidocTestBase.getFrameworkUrl() + "/aa/logout";
             }
             else {
                 logoutServletUrl =
-                    "http://" + Constants.HOST_PORT + "/aa/logout?target="
+                    EscidocTestBase.getFrameworkUrl() + "/aa/logout?target="
                         + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
             }
             final HttpGet logoutMethod = new HttpGet((logoutServletUrl));
@@ -668,7 +667,7 @@ public final class HttpHelper {
 
             if (userHandle == null) {
 
-                cookie.setDomain(Constants.HOST);
+                cookie.setDomain(EscidocTestBase.getFrameworkHost());
                 cookie.setPath("/");
 
                 cookie.setSecure(false);
@@ -678,7 +677,7 @@ public final class HttpHelper {
             //String domain, String name, String value, String path, int maxAge, boolean secure
             else {
                 cookie.setValue(userHandle);
-                cookie.setDomain(Constants.HOST);
+                cookie.setDomain(EscidocTestBase.getFrameworkHost());
                 cookie.setPath("/");
 
                 cookie.setSecure(false);

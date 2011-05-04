@@ -28,9 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.sb;
 
-import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import gov.loc.www.zing.srw.ExplainRequestType;
 import gov.loc.www.zing.srw.ExplainResponseType;
 import gov.loc.www.zing.srw.ExtraRequestData;
@@ -40,11 +37,7 @@ import gov.loc.www.zing.srw.SearchRetrieveResponseType;
 import gov.loc.www.zing.srw.service.ExplainPort;
 import gov.loc.www.zing.srw.service.SRWPort;
 import gov.loc.www.zing.srw.service.SRWSampleServiceLocator;
-import org.apache.axis.message.MessageElement;
-import org.apache.axis.types.PositiveInteger;
-import org.apache.axis.types.URI;
 
-import javax.xml.rpc.ServiceException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -54,9 +47,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import javax.xml.rpc.ServiceException;
+
+import org.apache.axis.message.MessageElement;
+import org.apache.axis.types.PositiveInteger;
+import org.apache.axis.types.URI;
+
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.ClientBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+
 /**
  * Offers access methods to the escidoc REST and SOAP interface of the Search resource. (SRW-Server)
- *
+ * 
  * @author Michael Hoppe
  */
 public class SearchClient extends ClientBase {
@@ -66,7 +70,8 @@ public class SearchClient extends ClientBase {
     private ExplainPort explainClient = null;
 
     /**
-     * @param transport The transport identifier.
+     * @param transport
+     *            The transport identifier.
      */
     public SearchClient(final int transport) {
         super(transport);
@@ -75,11 +80,14 @@ public class SearchClient extends ClientBase {
 
     /**
      * Retrieve srw search response.
-     *
-     * @param parameters The http-parameters as HashMap.
-     * @param database   database where search is executed.
+     * 
+     * @param parameters
+     *            The http-parameters as HashMap.
+     * @param database
+     *            database where search is executed.
      * @return The HttpMethod after the service call (REST) or the result object (SOAP).
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object search(final HashMap<String, String> parameters, final String database) throws Exception {
 
@@ -109,11 +117,14 @@ public class SearchClient extends ClientBase {
 
     /**
      * Retrieve srw explain response.
-     *
-     * @param parameters The http-parameters as HashMap.
-     * @param database   database where search is executed.
+     * 
+     * @param parameters
+     *            The http-parameters as HashMap.
+     * @param database
+     *            database where search is executed.
      * @return The HttpMethod after the service call (REST) or the result object (SOAP).
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object explain(final HashMap parameters, final String database) throws Exception {
 
@@ -137,11 +148,14 @@ public class SearchClient extends ClientBase {
 
     /**
      * Retrieve srw scan response.
-     *
-     * @param parameters The http-parameters as HashMap.
-     * @param database   database where scan is executed.
+     * 
+     * @param parameters
+     *            The http-parameters as HashMap.
+     * @param database
+     *            database where scan is executed.
      * @return The HttpMethod after the service call (REST) or the result object (SOAP).
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object scan(final HashMap<String, String> parameters, final String database) throws Exception {
 
@@ -171,9 +185,11 @@ public class SearchClient extends ClientBase {
     }
 
     /**
-     * @param parameters (database, url parameters..)
+     * @param parameters
+     *            (database, url parameters..)
      * @return Returns the soapClient.
-     * @throws ServiceException If the client creation fails.
+     * @throws ServiceException
+     *             If the client creation fails.
      */
     public SRWPort getSearchClient(final HashMap parameters) throws ServiceException {
         searchClient = createSearchClient(parameters);
@@ -182,10 +198,12 @@ public class SearchClient extends ClientBase {
 
     /**
      * Create the soap client.
-     *
-     * @param parameters (database, url parameters..)
+     * 
+     * @param parameters
+     *            (database, url parameters..)
      * @return The soap client.
-     * @throws ServiceException If the client creation fails.
+     * @throws ServiceException
+     *             If the client creation fails.
      */
     private SRWPort createSearchClient(final HashMap parameters) throws ServiceException {
         SRWPort result = null;
@@ -196,10 +214,7 @@ public class SearchClient extends ClientBase {
         SRWSampleServiceLocator service = new SRWSampleServiceLocator(getEngineConfig());
         URL url;
         try {
-            String httpUrl =
-                HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT, "srw/search/"
-                        + parameters.get("database"));
+            String httpUrl = EscidocTestBase.getFrameworkUrl() + "/srw/search/" + parameters.get("database");
 
             url = new URL(httpUrl);
         }
@@ -211,9 +226,11 @@ public class SearchClient extends ClientBase {
     }
 
     /**
-     * @param parameters (database, url parameters..)
+     * @param parameters
+     *            (database, url parameters..)
      * @return Returns the soapClient.
-     * @throws ServiceException If the client creation fails.
+     * @throws ServiceException
+     *             If the client creation fails.
      */
     public ExplainPort getExplainClient(final HashMap parameters) throws ServiceException {
         explainClient = createExplainClient(parameters);
@@ -222,10 +239,12 @@ public class SearchClient extends ClientBase {
 
     /**
      * Create the soap client.
-     *
-     * @param parameters (database, url parameters..)
+     * 
+     * @param parameters
+     *            (database, url parameters..)
      * @return The soap client.
-     * @throws ServiceException If the client creation fails.
+     * @throws ServiceException
+     *             If the client creation fails.
      */
     private ExplainPort createExplainClient(final HashMap parameters) throws ServiceException {
         ExplainPort result = null;
@@ -236,10 +255,7 @@ public class SearchClient extends ClientBase {
         SRWSampleServiceLocator service = new SRWSampleServiceLocator();
         URL url;
         try {
-            String httpUrl =
-                HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT, "srw/search/"
-                        + parameters.get("database"));
+            String httpUrl = EscidocTestBase.getFrameworkUrl() + "/srw/search/" + parameters.get("database");
             url = new URL(httpUrl);
         }
         catch (final MalformedURLException e) {
@@ -251,12 +267,16 @@ public class SearchClient extends ClientBase {
 
     /**
      * Call the soap method on the appropriate soap client.
-     *
-     * @param label      A label for logging purposes.
-     * @param soapMethod The soap method.
-     * @param params     Array of additional parameters.
+     * 
+     * @param label
+     *            A label for logging purposes.
+     * @param soapMethod
+     *            The soap method.
+     * @param params
+     *            Array of additional parameters.
      * @return The result of the soap call.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     protected Object callSoapMethod(final String label, final String soapMethod, final Object[] params)

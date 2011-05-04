@@ -195,8 +195,7 @@ public class StatisticReaderAbstractTest extends GrantTestBase {
         Matcher methodIndexMatcher = METHOD_INDEX_PATTERN.matcher(urlParameters);
         urlParameters = methodIndexMatcher.replaceAll(methodIndex);
 
-        String httpUrl =
-            HttpHelper.createUrl(Constants.PROTOCOL, Constants.HOST_PORT, Constants.ESCIDOC_BASE_URI + urlParameters);
+        String httpUrl = getFrameworkUrl() + Constants.ESCIDOC_BASE_URI + urlParameters;
         long time = System.currentTimeMillis();
         HttpResponse httpRes =
             HttpHelper.executeHttpRequest(null, Constants.HTTP_METHOD_GET, httpUrl, null, null, null);

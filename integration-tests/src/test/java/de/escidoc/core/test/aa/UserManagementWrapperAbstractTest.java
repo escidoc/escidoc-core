@@ -28,16 +28,16 @@
  */
 package de.escidoc.core.test.aa;
 
-import de.escidoc.core.common.exceptions.remote.application.security.AuthenticationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import de.escidoc.core.common.exceptions.remote.application.security.AuthenticationException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test suite for the user management wrapper.
@@ -231,7 +231,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
         assertNotNull(eSciDocUserHandle);
 
         try {
-            logout("http://" + Constants.HOST_PORT, eSciDocUserHandle, true);
+            logout(getFrameworkUrl(), eSciDocUserHandle, true);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
@@ -265,7 +265,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
         assertNotNull(eSciDocUserHandle);
 
         try {
-            logout("http://" + Constants.HOST_PORT, eSciDocUserHandle, false);
+            logout(getFrameworkUrl(), eSciDocUserHandle, false);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
@@ -360,7 +360,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
 
         try {
             PWCallback.setHandle(UNKNOWN_ESCIDOC_USER_HANDLE);
-            logout("http://" + Constants.HOST_PORT);
+            logout(getFrameworkUrl());
         }
         catch (final Exception e) {
             failException(e);
@@ -393,7 +393,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
 
         try {
             PWCallback.setHandle(UNKNOWN_ESCIDOC_USER_HANDLE);
-            logout("http://" + Constants.HOST_PORT);
+            logout(getFrameworkUrl());
         }
         catch (final Exception e) {
             failException(e);

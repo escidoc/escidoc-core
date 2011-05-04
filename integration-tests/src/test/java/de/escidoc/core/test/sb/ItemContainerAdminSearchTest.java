@@ -139,9 +139,8 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
+                + urlParameters;
         HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
             null, null, null);
         // /////////////////////////////////////////////////////////////////////

@@ -338,7 +338,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
         httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
         httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
 
-        String httpUrl = Constants.PROTOCOL + "://" + Constants.HOST_PORT + href;
+        String httpUrl = getFrameworkUrl() + href;
 
         HttpResponse httpRes = HttpHelper.doGet(httpClient, httpUrl, null);
 

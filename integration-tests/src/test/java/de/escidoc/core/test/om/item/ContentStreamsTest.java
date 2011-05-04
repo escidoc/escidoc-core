@@ -52,14 +52,15 @@ import static org.junit.Assert.assertNull;
 
 /**
  * Test the mock implementation of the item resource.
- *
+ * 
  * @author Michael Schneider
  */
 @RunWith(value = Parameterized.class)
 public class ContentStreamsTest extends ItemTestBase {
 
     /**
-     * @param transport The transport identifier.
+     * @param transport
+     *            The transport identifier.
      */
     public ContentStreamsTest(final int transport) {
         super(transport);
@@ -153,7 +154,7 @@ public class ContentStreamsTest extends ItemTestBase {
                 Node hrefNode = nl.item(i);
                 String href = hrefNode.getNodeValue();
                 if (href.startsWith("/")) {
-                    href = Constants.PROTOCOL + "://" + Constants.HOST_PORT + href;
+                    href = getFrameworkUrl() + href;
                 }
                 // System.out.println(i + ": " + href);
                 HttpGet get = new HttpGet(href);
@@ -211,9 +212,7 @@ public class ContentStreamsTest extends ItemTestBase {
             String newTitle = "something";
             substitute(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']/@title", newTitle);
             String newHref =
-                Constants.PROTOCOL
-                    + "://"
-                    + Constants.HOST_PORT
+                getFrameworkUrl()
                     + selectSingleNodeAsserted(itemDoc,
                         "/item/content-streams/content-stream[@name = 'internal_xml']/@href").getNodeValue();
             substitute(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']/@href", newHref);
@@ -337,8 +336,9 @@ public class ContentStreamsTest extends ItemTestBase {
             // retrieve old version of content
 
             String tocHref =
-                HttpHelper.createUrl(Constants.PROTOCOL, Constants.HOST_PORT, Constants.ITEM_BASE_URI, new String[] {
-                    createdItemId + ":1", "/content-streams/content-stream/toc/content" });
+                HttpHelper.createUrl(Constants.PROTOCOL, getFrameworkHost() + ":" + getFrameworkPort(),
+                    Constants.ITEM_BASE_URI, new String[] { createdItemId + ":1",
+                        "/content-streams/content-stream/toc/content" });
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(tocHref);
             httpGet.setHeader("Cookie", "escidocCookie=" + PWCallback.DEFAULT_HANDLE);
@@ -405,8 +405,9 @@ public class ContentStreamsTest extends ItemTestBase {
 
     /**
      * Test successfully creating a minimal Item with three content streams.
-     *
-     * @throws Exception Thrown if content-streams differ from expectations.
+     * 
+     * @throws Exception
+     *             Thrown if content-streams differ from expectations.
      */
     @Test
     public void testContentStreams02() throws Exception {

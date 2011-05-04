@@ -44,12 +44,6 @@ public class Constants {
      */
     public static final String PROTOCOL = "http";
 
-    public static String HOST = "localhost";
-
-    public static int PORT = 8080;
-
-    public static String HOST_PORT = HOST + ":" + PORT;
-
     /*
      * Created user (which are not from ldap or shibboleth) have an default
      * password.
@@ -57,8 +51,6 @@ public class Constants {
     public static String DEFAULT_USER_PASSWORD = "PubManR2";
 
     public static final String SCHEMA_LOCATION_BASE = "http://www.escidoc.org/schemas";
-
-    public static final String SCHEMA_LOCATION_REPLACEMENT = "http://" + HOST_PORT + "/xsd";
 
     public static final String ESCIDOC_BASE_URI = "/";
 

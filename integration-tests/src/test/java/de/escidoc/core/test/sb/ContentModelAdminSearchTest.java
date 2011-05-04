@@ -53,7 +53,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Test the implementation of the admin search for content-models.
- *
+ * 
  * @author Michael Hoppe
  */
 @RunWith(value = Parameterized.class)
@@ -78,8 +78,10 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
     private static String startTime = "";
 
     /**
-     * @param transport The transport identifier.
-     * @throws Exception e
+     * @param transport
+     *            The transport identifier.
+     * @throws Exception
+     *             e
      */
     public ContentModelAdminSearchTest(final int transport) throws Exception {
         super(transport);
@@ -89,26 +91,28 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void initialize() throws Exception {
         if (methodCounter == 0) {
             prepare();
-            //          int c = 11001;
-            //          contentModelIds = new String[4];
-            //          for (int i = 0; i < 4; i++) {
-            //              contentModelIds[i] = "escidoc:" + c;
-            //              c++;
-            //          }
+            // int c = 11001;
+            // contentModelIds = new String[4];
+            // for (int i = 0; i < 4; i++) {
+            // contentModelIds[i] = "escidoc:" + c;
+            // c++;
+            // }
         }
     }
 
     /**
      * Clean up after servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -120,8 +124,9 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
 
     /**
      * insert item(s) into system for the tests.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     private void prepare() throws Exception {
         LOGGER.info("starting SearchTest at "
@@ -130,9 +135,8 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
+                + urlParameters;
         HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
             null, null, null);
         // /////////////////////////////////////////////////////////////////////
@@ -159,8 +163,9 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
 
     /**
      * explain operation without parameters for existing database xyz.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBEX1() throws Exception {
@@ -174,8 +179,9 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as anonymous user.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSearchAsAnonymousUser() throws Exception {
@@ -200,8 +206,9 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Systemadministrator user.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSearchAsSystemadministratorUser() throws Exception {
@@ -228,8 +235,9 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Systeminspector user.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSearchAsSysteminspectorUser() throws Exception {
@@ -256,9 +264,11 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
 
     /**
      * search with roles provided in HashMap.
-     *
-     * @param role parameters
-     * @throws Exception If anything fails.
+     * 
+     * @param role
+     *            parameters
+     * @throws Exception
+     *             If anything fails.
      */
     private void search(final HashMap<String, Object> role) throws Exception {
         StringBuffer errorTrace = new StringBuffer();
@@ -286,7 +296,7 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
                 textContent = n.getTextContent();
             }
             assertEquals(errorTrace.toString() + "diagnostics: " + textContent, null, n);
-            //            assertEquals(true, checkHighlighting(response));
+            // assertEquals(true, checkHighlighting(response));
             assertEquals(errorTrace.toString() + "hits not as expected: expected: " + role.get("expectedHits")
                 + ", but was " + getNumberOfHits(response) + " for ", role.get("expectedHits"),
                 getNumberOfHits(response));
@@ -328,12 +338,16 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
 
     /**
      * prepare context for tests.
-     *
-     * @param creatorHandle handle of creator
-     * @param templateName  template for item to create
-     * @param status        status of item to create
+     * 
+     * @param creatorHandle
+     *            handle of creator
+     * @param templateName
+     *            template for item to create
+     * @param status
+     *            status of item to create
      * @return String id of created context
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     private String prepareContentModel(final String creatorHandle, final String templateName, final String status)
         throws Exception {
@@ -365,12 +379,12 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
     private ArrayList<String> getContentModelXpathList(final int i) {
         ArrayList<String> xpaths = new ArrayList<String>();
         if (i == 0) {
-            //created
+            // created
             xpaths.add("properties/version/status=pending");
             xpaths.add("properties/latest-version/number=1");
         }
         else if (i == 1) {
-            //updated
+            // updated
             xpaths.add("properties/version/status=pending");
             xpaths.add("properties/latest-version/number=2");
         }

@@ -181,8 +181,7 @@ public class ReportTest extends ReportTestBase {
         Matcher methodIndexMatcher = METHOD_INDEX_PATTERN.matcher(urlParameters);
         urlParameters = methodIndexMatcher.replaceAll(methodIndex);
 
-        String httpUrl =
-            HttpHelper.createUrl(Constants.PROTOCOL, Constants.HOST_PORT, Constants.ESCIDOC_BASE_URI + urlParameters);
+        String httpUrl = getFrameworkUrl() + Constants.ESCIDOC_BASE_URI + urlParameters;
         long time = System.currentTimeMillis();
         HttpResponse result = HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, "", null);
         String response = EntityUtils.toString(result.getEntity(), HTTP.UTF_8);

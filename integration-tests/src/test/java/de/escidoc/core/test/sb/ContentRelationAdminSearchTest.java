@@ -53,7 +53,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Test the implementation of the admin search for content-relations.
- *
+ * 
  * @author Michael Hoppe
  */
 @RunWith(value = Parameterized.class)
@@ -80,8 +80,10 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
     private static String startTime = "";
 
     /**
-     * @param transport The transport identifier.
-     * @throws Exception e
+     * @param transport
+     *            The transport identifier.
+     * @throws Exception
+     *             e
      */
     public ContentRelationAdminSearchTest(final int transport) throws Exception {
         super(transport);
@@ -92,33 +94,35 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void initialize() throws Exception {
         if (methodCounter == 0) {
             prepare();
-            //          int c = 8324;
-            //          itemIds = new String[10];
-            //          for (int i = 0; i < 10; i++) {
-            //              itemIds[i] = "escidoc:" + c;
-            //              c += 3;
-            //          }
-            //          c -= 2;
+            // int c = 8324;
+            // itemIds = new String[10];
+            // for (int i = 0; i < 10; i++) {
+            // itemIds[i] = "escidoc:" + c;
+            // c += 3;
+            // }
+            // c -= 2;
             //
-            //          contentRelationIds = new String[5];
-            //          for (int i = 0; i < 5; i++) {
-            //              contentRelationIds[i] = "escidoc:" + c;
-            //              c++;
-            //          }
+            // contentRelationIds = new String[5];
+            // for (int i = 0; i < 5; i++) {
+            // contentRelationIds[i] = "escidoc:" + c;
+            // c++;
+            // }
         }
     }
 
     /**
      * Clean up after servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -130,8 +134,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * insert content-relation(s) into system for the tests.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     private void prepare() throws Exception {
         LOGGER.info("starting SearchTest at "
@@ -140,9 +145,8 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
+                + urlParameters;
         HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
             null, null, null);
         // /////////////////////////////////////////////////////////////////////
@@ -185,8 +189,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * explain operation without parameters for existing database xyz.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBEX1() throws Exception {
@@ -200,8 +205,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as anonymous user.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSearchAsAnonymousUser() throws Exception {
@@ -225,8 +231,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Systemadministrator user.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSearchAsSystemadministratorUser() throws Exception {
@@ -256,8 +263,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as Systeminspector user.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSearchAsSysteminspectorUser() throws Exception {
@@ -287,8 +295,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as ContentRelationManager user.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSearchAsContentRelationManagerUser() throws Exception {
@@ -313,8 +322,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * Test searching as ContentRelationModifier user.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSearchAsContentRelationModifierUser() throws Exception {
@@ -343,9 +353,11 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * search with roles provided in HashMap.
-     *
-     * @param role parameters
-     * @throws Exception If anything fails.
+     * 
+     * @param role
+     *            parameters
+     * @throws Exception
+     *             If anything fails.
      */
     private void search(final HashMap<String, Object> role) throws Exception {
         StringBuffer errorTrace = new StringBuffer();
@@ -373,7 +385,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 textContent = n.getTextContent();
             }
             assertEquals(errorTrace.toString() + "diagnostics: " + textContent, null, n);
-            //            assertEquals(true, checkHighlighting(response));
+            // assertEquals(true, checkHighlighting(response));
             assertEquals(errorTrace.toString() + "hits not as expected: expected: " + role.get("expectedHits")
                 + ", but was " + getNumberOfHits(response) + " for ", role.get("expectedHits"),
                 getNumberOfHits(response));
@@ -415,14 +427,20 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * prepare item for tests.
-     *
-     * @param creatorHandle handle of creator
-     * @param contextId     id of context to create item in
-     * @param containerIds  ids of container to create item in
-     * @param templateName  template for item to create
-     * @param status        status of item to create
+     * 
+     * @param creatorHandle
+     *            handle of creator
+     * @param contextId
+     *            id of context to create item in
+     * @param containerIds
+     *            ids of container to create item in
+     * @param templateName
+     *            template for item to create
+     * @param status
+     *            status of item to create
      * @return HashMap id of created item + componentIds
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     private HashMap<String, String> prepareItem(
         final String creatorHandle, final String contextId, final String[] containerIds, final String templateName,
@@ -529,14 +547,20 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     /**
      * /** prepare content-relation for tests.
-     *
-     * @param creatorHandle handle of creator
-     * @param subjectId     id of subject
-     * @param objectId      id of object
-     * @param templateName  template for content-relation to create
-     * @param status        status of content-relation to create
+     * 
+     * @param creatorHandle
+     *            handle of creator
+     * @param subjectId
+     *            id of subject
+     * @param objectId
+     *            id of object
+     * @param templateName
+     *            template for content-relation to create
+     * @param status
+     *            status of content-relation to create
      * @return String id of created content-relation
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     private String prepareContentRelation(
         final String creatorHandle, final String subjectId, final String objectId, final String templateName,
@@ -605,23 +629,23 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
             xpaths.add("properties/version/status=" + postreleasedStatus);
         }
         if (i % 6 == 0) {
-            //pending
+            // pending
             xpaths.add("properties/public-status=pending");
         }
         else if (i % 6 == 1) {
-            //submitted
+            // submitted
             xpaths.add("properties/public-status=submitted");
         }
         else if (i % 6 == 2) {
-            //released
+            // released
             xpaths.add("properties/public-status=released");
         }
         else if (i % 6 == 3) {
-            //in-revision
+            // in-revision
             xpaths.add("properties/public-status=in-revision");
         }
         else if (i % 6 == 4) {
-            //pending
+            // pending
             xpaths.add("properties/public-status=pending");
         }
         return xpaths;

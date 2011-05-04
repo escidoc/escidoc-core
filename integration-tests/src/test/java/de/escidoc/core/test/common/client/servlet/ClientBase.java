@@ -97,7 +97,7 @@ import static junit.framework.Assert.assertTrue;
 
 /**
  * Base class for access to the escidoc REST interface.
- *
+ * 
  * @author Michael Schneider
  */
 public abstract class ClientBase {
@@ -231,20 +231,17 @@ public abstract class ClientBase {
     public static final String METHOD_RETRIEVE_ROLES = "retrieveRoles";
 
     /*
-     * Sub-resource method for retrieving the relations of a particular resource
-     * (item, container ...).
+     * Sub-resource method for retrieving the relations of a particular resource (item, container ...).
      */
     public static final String METHOD_RETRIEVE_RELATIONS = "retrieveRelations";
 
     /*
-     * Filter-method of ContentModelHandler for retrieving list of content
-     * models.
+     * Filter-method of ContentModelHandler for retrieving list of content models.
      */
     public static final String METHOD_RETRIEVE_CONTENT_MODELS = "retrieveContentModels";
 
     /*
-     * Filter-method of ContentRelationHandler for retrieving list of content
-     * relations.
+     * Filter-method of ContentRelationHandler for retrieving list of content relations.
      */
     public static final String METHOD_RETRIEVE_CONTENT_RELATIONS = "retrieveContentRelations";
 
@@ -463,8 +460,9 @@ public abstract class ClientBase {
 
     /**
      * Constructor for client base class.
-     *
-     * @param transport Decides if this client is a REST or SOAP client.
+     * 
+     * @param transport
+     *            Decides if this client is a REST or SOAP client.
      */
     public ClientBase(final int transport) {
         this.transport = transport;
@@ -484,10 +482,8 @@ public abstract class ClientBase {
         this.httpClient = new DefaultHttpClient(clientConnectionManager, httpParams);
         // disable cookies
         /*
-         * this.httpClient.removeRequestInterceptorByClass(RequestAddCookies.class
-         * );
-         * this.httpClient.removeResponseInterceptorByClass(ResponseProcessCookies
-         * .class);
+         * this.httpClient.removeRequestInterceptorByClass(RequestAddCookies.class );
+         * this.httpClient.removeResponseInterceptorByClass(ResponseProcessCookies .class);
          */
         // disable redirects
         this.httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
@@ -498,12 +494,6 @@ public abstract class ClientBase {
     private HttpHost getHttpHost() {
         HttpHost httpHost = null;
         try {
-            if (PropertiesProvider.getInstance().getProperty("server.name") != null
-                && PropertiesProvider.getInstance().getProperty("server.port") != null) {
-                Constants.HOST = PropertiesProvider.getInstance().getProperty("server.name");
-                Constants.HOST_PORT =
-                    Constants.HOST + ":" + PropertiesProvider.getInstance().getProperty("server.port");
-            }
             if (PropertiesProvider.getInstance().getProperty("http.proxyHost") != null
                 && PropertiesProvider.getInstance().getProperty("http.proxyPort") != null) {
                 httpHost =
@@ -519,12 +509,15 @@ public abstract class ClientBase {
     }
 
     /**
-     * Gets the soap client to use.<br> This method is called by the (default) implementation of the method
-     * callSoapMethod to determine the soap client to use.<br> This default implementation throws an exception
-     * indicating further implementation is needed in the concrete test class.
-     *
+     * Gets the soap client to use.<br>
+     * This method is called by the (default) implementation of the method callSoapMethod to determine the soap client
+     * to use.<br>
+     * This default implementation throws an exception indicating further implementation is needed in the concrete test
+     * class.
+     * 
      * @return Returns the soapClient.
-     * @throws ServiceException If the client creation fails.
+     * @throws ServiceException
+     *             If the client creation fails.
      */
     public Remote getSoapClient() throws ServiceException {
 
@@ -533,18 +526,24 @@ public abstract class ClientBase {
     }
 
     /**
-     * Call the soap method on the appropriate soap client.<br> This default implementation calls getSoapClient() that
-     * has to be implemented by the concrete test class to determine the soap client to use. The soap client's method
-     * that has to be called is determined via reflection from the provided soapMethod parameter.<br> This may be
-     * overriden by the concrete test implementation.
-     *
-     * @param label      A label for logging purposes.
-     * @param soapMethod The soap method.
-     * @param params     The parameters used for the method call.<br> In case of methods that expect xml data or another
-     *                   object, the last entry in params contains the object or the xml representation of an object to
-     *                   create or update. Could be the resource itself or a sub resource.
+     * Call the soap method on the appropriate soap client.<br>
+     * This default implementation calls getSoapClient() that has to be implemented by the concrete test class to
+     * determine the soap client to use. The soap client's method that has to be called is determined via reflection
+     * from the provided soapMethod parameter.<br>
+     * This may be overriden by the concrete test implementation.
+     * 
+     * @param label
+     *            A label for logging purposes.
+     * @param soapMethod
+     *            The soap method.
+     * @param params
+     *            The parameters used for the method call.<br>
+     *            In case of methods that expect xml data or another object, the last entry in params contains the
+     *            object or the xml representation of an object to create or update. Could be the resource itself or a
+     *            sub resource.
      * @return The result of the soap call.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected Object callSoapMethod(final String label, final String soapMethod, final Object[] params)
         throws Exception {
@@ -576,18 +575,31 @@ public abstract class ClientBase {
     /**
      * Make a service call to the escidoc framework for methods without sending an xml representation of a resource.
      * Whether REST or SOAP is taken depends on the transport attribute.
-     *
-     * @param label        A label for logging purposes.
-     * @param soapMethod   The soap method.
-     * @param HttpResponse The http method.
-     * @param httpBaseUri  The base uri.
-     * @param pathElements The <code>String[]</code> array containing the elements describing the path of the addressed
-     *                     (sub) resource: <ul> <li>pathElements[0] = resourceId</li> <li>pathElements[1] =
-     *                     subResourceName</li> <li>pathElements[2] = subResourceId</li> <li>pathElements[3] =
-     *                     subSubResourceName</li> <li>pathElements[4] = subSubResourceId</li> <li>...</li> </ul>
-     * @param parameters   The parameters for an HTTP GET request.
+     * 
+     * @param label
+     *            A label for logging purposes.
+     * @param soapMethod
+     *            The soap method.
+     * @param HttpResponse
+     *            The http method.
+     * @param httpBaseUri
+     *            The base uri.
+     * @param pathElements
+     *            The <code>String[]</code> array containing the elements describing the path of the addressed (sub)
+     *            resource:
+     *            <ul>
+     *            <li>pathElements[0] = resourceId</li>
+     *            <li>pathElements[1] = subResourceName</li>
+     *            <li>pathElements[2] = subResourceId</li>
+     *            <li>pathElements[3] = subSubResourceName</li>
+     *            <li>pathElements[4] = subSubResourceId</li>
+     *            <li>...</li>
+     *            </ul>
+     * @param parameters
+     *            The parameters for an HTTP GET request.
      * @return The HttpResponse after the service call (REST) or the result object (SOAP).
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     protected Object callEsciDoc(
         final String label, final String soapMethod, final String HttpResponse, final String httpBaseUri,
@@ -599,17 +611,29 @@ public abstract class ClientBase {
     /**
      * Make a service call to the escidoc framework for methods without sending an xml representation of a resource.
      * Whether REST or SOAP is taken depends on the transport attribute.
-     *
-     * @param label        A label for logging purposes.
-     * @param soapMethod   The soap method.
-     * @param HttpResponse The http method.
-     * @param httpBaseUri  The base uri.
-     * @param pathElements The <code>String[]</code> array containing the elements describing the path of the addressed
-     *                     (sub) resource: <ul> <li>pathElements[0] = resourceId</li> <li>pathElements[1] =
-     *                     subResourceName</li> <li>pathElements[2] = subResourceId</li> <li>pathElements[3] =
-     *                     subSubResourceName</li> <li>pathElements[4] = subSubResourceId</li> <li>...</li> </ul>
+     * 
+     * @param label
+     *            A label for logging purposes.
+     * @param soapMethod
+     *            The soap method.
+     * @param HttpResponse
+     *            The http method.
+     * @param httpBaseUri
+     *            The base uri.
+     * @param pathElements
+     *            The <code>String[]</code> array containing the elements describing the path of the addressed (sub)
+     *            resource:
+     *            <ul>
+     *            <li>pathElements[0] = resourceId</li>
+     *            <li>pathElements[1] = subResourceName</li>
+     *            <li>pathElements[2] = subResourceId</li>
+     *            <li>pathElements[3] = subSubResourceName</li>
+     *            <li>pathElements[4] = subSubResourceId</li>
+     *            <li>...</li>
+     *            </ul>
      * @return The HttpResponse after the service call (REST) or the result object (SOAP).
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     protected Object callEsciDoc(
         final String label, final String soapMethod, final String HttpResponse, final String httpBaseUri,
@@ -620,17 +644,29 @@ public abstract class ClientBase {
 
     /**
      * Make a service call to the escidoc framework. Whether REST or SOAP is taken depends on the transport attribute.
-     *
-     * @param label        A label for logging purposes.
-     * @param soapMethod   The soap method. The http method.
-     * @param httpBaseUri  The base uri.
-     * @param pathElements The <code>String[]</code> array containing the elements describing the path of the addressed
-     *                     (sub) resource: <ul> <li>pathElements[0] = resourceId</li> <li>pathElements[1] =
-     *                     subResourceName</li> <li>pathElements[2] = subResourceId</li> <li>pathElements[3] =
-     *                     subSubResourceName</li> <li>pathElements[4] = subSubResourceId</li> <li>...</li> </ul>
-     * @param xml          The xml representaion of a new or updated framework object.
+     * 
+     * @param label
+     *            A label for logging purposes.
+     * @param soapMethod
+     *            The soap method. The http method.
+     * @param httpBaseUri
+     *            The base uri.
+     * @param pathElements
+     *            The <code>String[]</code> array containing the elements describing the path of the addressed (sub)
+     *            resource:
+     *            <ul>
+     *            <li>pathElements[0] = resourceId</li>
+     *            <li>pathElements[1] = subResourceName</li>
+     *            <li>pathElements[2] = subResourceId</li>
+     *            <li>pathElements[3] = subSubResourceName</li>
+     *            <li>pathElements[4] = subSubResourceId</li>
+     *            <li>...</li>
+     *            </ul>
+     * @param xml
+     *            The xml representaion of a new or updated framework object.
      * @return The HttpResponse after the service call (REST) or the result object (SOAP).
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     protected Object callEsciDoc(
         final String label, final String soapMethod, final String httpMethod, final String httpBaseUri,
@@ -641,17 +677,29 @@ public abstract class ClientBase {
 
     /**
      * Call eSciDoc with parameter string, without XML.
-     *
-     * @param label        A label for logging purposes.
-     * @param soapMethod   The soap method.
-     * @param HttpResponse The http method.
-     * @param httpBaseUri  The base uri.
-     * @param pathElements The <code>String[]</code> array containing the elements describing the path of the addressed
-     *                     (sub) resource: <ul> <li>pathElements[0] = resourceId</li> <li>pathElements[1] =
-     *                     subResourceName</li> <li>pathElements[2] = subResourceId</li> <li>pathElements[3] =
-     *                     subSubResourceName</li> <li>pathElements[4] = subSubResourceId</li> <li>...</li> </ul>
+     * 
+     * @param label
+     *            A label for logging purposes.
+     * @param soapMethod
+     *            The soap method.
+     * @param HttpResponse
+     *            The http method.
+     * @param httpBaseUri
+     *            The base uri.
+     * @param pathElements
+     *            The <code>String[]</code> array containing the elements describing the path of the addressed (sub)
+     *            resource:
+     *            <ul>
+     *            <li>pathElements[0] = resourceId</li>
+     *            <li>pathElements[1] = subResourceName</li>
+     *            <li>pathElements[2] = subResourceId</li>
+     *            <li>pathElements[3] = subSubResourceName</li>
+     *            <li>pathElements[4] = subSubResourceId</li>
+     *            <li>...</li>
+     *            </ul>
      * @return The HttpResponse after the service call (REST) or the result object (SOAP).
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     protected Object callEsciDoc(
         final String label, final String soapMethod, final String HttpResponse, final String httpBaseUri,
@@ -663,20 +711,35 @@ public abstract class ClientBase {
 
     /**
      * Make a service call to the escidoc framework. Whether REST or SOAP is taken depends on the transport attribute.
-     *
-     * @param label         A label for logging purposes.
-     * @param soapMethod    The soap method.
-     * @param HttpResponse  The http method.
-     * @param httpBaseUri   The base uri.
-     * @param pathElements  TThe <code>String[]</code> array containing the elements describing the path of the
-     *                      addressed (sub) resource: <ul> <li>pathElements[0] = resourceId</li> <li>pathElements[1] =
-     *                      subResourceName</li> <li>pathElements[2] = subResourceId</li> <li>pathElements[3] =
-     *                      subSubResourceName</li> <li>pathElements[4] = subSubResourceId</li> <li>...</li> </ul>
-     * @param binaryContent The binary content of the body.
-     * @param mimeType      The mime type of the data.
-     * @param filename      The name of the file.
+     * 
+     * @param label
+     *            A label for logging purposes.
+     * @param soapMethod
+     *            The soap method.
+     * @param HttpResponse
+     *            The http method.
+     * @param httpBaseUri
+     *            The base uri.
+     * @param pathElements
+     *            TThe <code>String[]</code> array containing the elements describing the path of the addressed (sub)
+     *            resource:
+     *            <ul>
+     *            <li>pathElements[0] = resourceId</li>
+     *            <li>pathElements[1] = subResourceName</li>
+     *            <li>pathElements[2] = subResourceId</li>
+     *            <li>pathElements[3] = subSubResourceName</li>
+     *            <li>pathElements[4] = subSubResourceId</li>
+     *            <li>...</li>
+     *            </ul>
+     * @param binaryContent
+     *            The binary content of the body.
+     * @param mimeType
+     *            The mime type of the data.
+     * @param filename
+     *            The name of the file.
      * @return The HttpResponse after the service call (REST) or the result object (SOAP).
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     protected Object callEsciDocWithBinaryContent(
         final String label, final String soapMethod, final String HttpResponse, final String httpBaseUri,
@@ -689,19 +752,27 @@ public abstract class ClientBase {
 
     /**
      * Worker method wrapper to call eSciDoc. This is called by one of the callEsciDoc methods.
-     *
-     * @param label        A label for logging purposes.
-     * @param soapMethod   The soap method. The http method.
-     * @param httpBaseUri  The base URI (REST).
-     * @param pathElements The elements describing the path to the (sub) resource: id, subresourceName1, subresourceId2,
-     *                     ...
-     * @param body         An <code>Object</code> holding the content of the body. Currently, String and InputStream are
-     *                     supported.
-     * @param mimeType     The mime type of the data, in case of binary content.
-     * @param filename     The name of the file, in case of binary content.
-     * @param parameters   The request parameters for HTTP GET.
+     * 
+     * @param label
+     *            A label for logging purposes.
+     * @param soapMethod
+     *            The soap method. The http method.
+     * @param httpBaseUri
+     *            The base URI (REST).
+     * @param pathElements
+     *            The elements describing the path to the (sub) resource: id, subresourceName1, subresourceId2, ...
+     * @param body
+     *            An <code>Object</code> holding the content of the body. Currently, String and InputStream are
+     *            supported.
+     * @param mimeType
+     *            The mime type of the data, in case of binary content.
+     * @param filename
+     *            The name of the file, in case of binary content.
+     * @param parameters
+     *            The request parameters for HTTP GET.
      * @return The HttpResponse after the service call (REST) or the result object (SOAP).
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     private Object doCallEscidoc(
         final String label, final String soapMethod, final String httpMethod, final String httpBaseUri,
@@ -714,20 +785,29 @@ public abstract class ClientBase {
 
     /**
      * Worker method to call eSciDoc. This is called by one of the callEsciDoc methods.
-     *
-     * @param label        A label for logging purposes.
-     * @param soapMethod   The soap method. The http method.
-     * @param httpBaseUri  The base URI (REST).
-     * @param pathElements The elements describing the path to the (sub) resource: id, subresourceName1, subresourceId2,
-     *                     ...
-     * @param parameter    The HTTP parameter (GET)
-     * @param body         An <code>Object</code> holding the content of the body. Currently, String and InputStream are
-     *                     supported.
-     * @param mimeType     The mime type of the data, in case of binary content.
-     * @param filename     The name of the file, in case of binary content.
-     * @param parameters   The request parameters for HTTP GET.
+     * 
+     * @param label
+     *            A label for logging purposes.
+     * @param soapMethod
+     *            The soap method. The http method.
+     * @param httpBaseUri
+     *            The base URI (REST).
+     * @param pathElements
+     *            The elements describing the path to the (sub) resource: id, subresourceName1, subresourceId2, ...
+     * @param parameter
+     *            The HTTP parameter (GET)
+     * @param body
+     *            An <code>Object</code> holding the content of the body. Currently, String and InputStream are
+     *            supported.
+     * @param mimeType
+     *            The mime type of the data, in case of binary content.
+     * @param filename
+     *            The name of the file, in case of binary content.
+     * @param parameters
+     *            The request parameters for HTTP GET.
      * @return The HttpResponse after the service call (REST) or the result object (SOAP).
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     private Object doCallEscidoc(
         final String label, final String soapMethod, final String httpMethod, final String httpBaseUri,
@@ -738,8 +818,8 @@ public abstract class ClientBase {
         switch (getTransport()) {
             case Constants.TRANSPORT_REST:
                 String httpUrl =
-                    HttpHelper.createUrl(Constants.PROTOCOL, Constants.HOST_PORT, httpBaseUri, pathElements, parameter,
-                        false);
+                    HttpHelper.createUrl(Constants.PROTOCOL, EscidocTestBase.getFrameworkHost() + ":"
+                        + EscidocTestBase.getFrameworkPort(), httpBaseUri, pathElements, parameter, false);
                 logRestServiceCall(label, httpMethod, httpUrl, body);
                 if (NOXML.equals(body)) {
                     result =
@@ -789,11 +869,14 @@ public abstract class ClientBase {
     }
 
     /**
-     * This method handles a detected error contained in the provided result. <br> This method examines the error
-     * response of the body of the result and constructs the corresponding remote exception.
-     *
-     * @param result The http result object describing the error.
-     * @throws Exception In any case.
+     * This method handles a detected error contained in the provided result. <br>
+     * This method examines the error response of the body of the result and constructs the corresponding remote
+     * exception.
+     * 
+     * @param result
+     *            The http result object describing the error.
+     * @throws Exception
+     *             In any case.
      */
     private void throwCorrespondingException(final HttpResponse result) throws Exception {
 
@@ -862,9 +945,11 @@ public abstract class ClientBase {
      * Initializes the value of an <code>EscidocException</code> from the provided data.
      * <p/>
      * The http method object holding the data of the request and response.
-     *
-     * @param exceptionXML     The XML representation of the exception.
-     * @param escidocException The <code>EscidocException</code> object that shall be initialized
+     * 
+     * @param exceptionXML
+     *            The XML representation of the exception.
+     * @param escidocException
+     *            The <code>EscidocException</code> object that shall be initialized
      */
     private void initializeEscidocException(
         final HttpResponse httpRes, final String exceptionXML, EscidocException escidocException) {
@@ -910,11 +995,15 @@ public abstract class ClientBase {
 
     /**
      * Log the execution of an rest service call.
-     *
-     * @param method       The executed resource method.
-     * @param HttpResponse The executed http method.
-     * @param url          The url.
-     * @param body         The body (if the http method (POST or PUT) permits a body).
+     * 
+     * @param method
+     *            The executed resource method.
+     * @param HttpResponse
+     *            The executed http method.
+     * @param url
+     *            The url.
+     * @param body
+     *            The body (if the http method (POST or PUT) permits a body).
      */
     protected void logRestServiceCall(
         final String method, final String HttpResponse, final String url, final Object body) {
@@ -930,9 +1019,11 @@ public abstract class ClientBase {
 
     /**
      * Log the execution of an soap service call.
-     *
-     * @param method The executed resource method.
-     * @param params The parameter values.
+     * 
+     * @param method
+     *            The executed resource method.
+     * @param params
+     *            The parameter values.
      * @deprecated
      */
     @Deprecated
@@ -944,9 +1035,11 @@ public abstract class ClientBase {
 
     /**
      * Log the execution of an soap service call.
-     *
-     * @param method The executed resource method.
-     * @param params The parameter values.
+     * 
+     * @param method
+     *            The executed resource method.
+     * @param params
+     *            The parameter values.
      */
     protected void logSoapServiceCall(final String method, final Object[] params) {
 
@@ -970,9 +1063,11 @@ public abstract class ClientBase {
 
     /**
      * Creates and adds a new bean mapping for the provided class to the provided mapping vector.
-     *
-     * @param clazz    The class for which the mapping shall be created.
-     * @param mappings The mapping vector.
+     * 
+     * @param clazz
+     *            The class for which the mapping shall be created.
+     * @param mappings
+     *            The mapping vector.
      */
     protected void addBeanMapping(final Class<?> clazz, final Vector<Object> mappings) {
 
@@ -985,10 +1080,12 @@ public abstract class ClientBase {
 
     /**
      * Make a String from the input.
-     *
-     * @param input The input (maybe an InputStream or a String)
+     * 
+     * @param input
+     *            The input (maybe an InputStream or a String)
      * @return The input as String.
-     * @throws IOException If reading from InputStream fails.
+     * @throws IOException
+     *             If reading from InputStream fails.
      */
     protected String changeToString(final Object input) throws IOException {
 
@@ -1004,10 +1101,12 @@ public abstract class ClientBase {
 
     /**
      * Gets the last-modification-date attribute of the root element from the document.
-     *
-     * @param document The document to retrieve the value from.
+     * 
+     * @param document
+     *            The document to retrieve the value from.
      * @return Returns the attribute value.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String getLastModificationDateValue(final Document document) throws Exception {
 
@@ -1016,8 +1115,9 @@ public abstract class ClientBase {
 
     /**
      * Retrieves the namespace from the given class.
-     *
-     * @param clazz The class.
+     * 
+     * @param clazz
+     *            The class.
      * @return Returns the namespace
      */
     public static String getNamespace(final Class<?> clazz) {
@@ -1027,10 +1127,12 @@ public abstract class ClientBase {
     }
 
     /**
-     * Retrieves the namespace URI from the given class.<br> The URI is generated using the package name. If the class
-     * is a remote application exception, the "remote" part is removed from the package name.
-     *
-     * @param clazz The class.
+     * Retrieves the namespace URI from the given class.<br>
+     * The URI is generated using the package name. If the class is a remote application exception, the "remote" part is
+     * removed from the package name.
+     * 
+     * @param clazz
+     *            The class.
      * @return Returns the namespace uRI retrieved from the name of the package of the class.
      */
     public static String getNamespaceUri(final Class<?> clazz) {
@@ -1053,17 +1155,18 @@ public abstract class ClientBase {
      * Check the given service address if it's base (server_host:port) is the same as the constant
      * <code>Constants.HOST_PORT</code>. If not (server_host:port) is changed to the value configured in constant
      * <code>Constants.HOST_PORT</code>.
-     *
-     * @param serviceAddress The original address.
+     * 
+     * @param serviceAddress
+     *            The original address.
      * @return The resulting address.
      */
     protected String checkSoapAddress(final String serviceAddress) {
         String result = serviceAddress;
-        if (!serviceAddress.startsWith("http://" + Constants.HOST_PORT)) {
+        if (!serviceAddress.startsWith(EscidocTestBase.getFrameworkUrl())) {
             String tmp = serviceAddress.substring(7);
             if (tmp.indexOf(":") != -1) {
                 tmp = tmp.substring(tmp.indexOf(":") + 5);
-                result = "http://" + Constants.HOST_PORT + tmp;
+                result = EscidocTestBase.getFrameworkUrl() + tmp;
             }
         }
         return result;
@@ -1114,9 +1217,11 @@ public abstract class ClientBase {
 
     /**
      * Deliver configured values for PID behavior.
-     *
-     * @param var      name of properties parameter.
-     * @param defValue Default value if the parameter is not set.
+     * 
+     * @param var
+     *            name of properties parameter.
+     * @param defValue
+     *            Default value if the parameter is not set.
      * @return The boolean expression if the property parameter is set to true or the parameter is missing and the
      *         default values is set to true. False otherwise.
      */
@@ -1127,11 +1232,14 @@ public abstract class ClientBase {
     /**
      * Create a Param structure for PID assignments. The last-modification-date is retrieved from the by id selected
      * object.
-     *
-     * @param id  The object Id
-     * @param url URL of the resource (not checked)
+     * 
+     * @param id
+     *            The object Id
+     * @param url
+     *            URL of the resource (not checked)
      * @return param XML snippet.
-     * @throws Exception Thrown if getTheLastModificationDate() fails.
+     * @throws Exception
+     *             Thrown if getTheLastModificationDate() fails.
      */
     protected final String getPidParam(final String id, final String url) throws Exception {
 
@@ -1142,9 +1250,11 @@ public abstract class ClientBase {
 
     /**
      * Create a Param structure for PID assignments.
-     *
-     * @param lstModDate The last-modification-date.
-     * @param url        URL of the resource (not checked)
+     * 
+     * @param lstModDate
+     *            The last-modification-date.
+     * @param url
+     *            URL of the resource (not checked)
      * @return param XML snippet.
      */
     protected final String getPidParam2(final String lstModDate, final String url) {
@@ -1154,10 +1264,12 @@ public abstract class ClientBase {
 
     /**
      * Returns the xml data of the provided result.
-     *
-     * @param result The object holding the result.
+     * 
+     * @param result
+     *            The object holding the result.
      * @return Returns the xml string.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String handleXmlResult(final Object result) throws Exception {
 
@@ -1176,8 +1288,9 @@ public abstract class ClientBase {
 
     /**
      * Assert that the http request was successful.
-     *
-     * @param message The message printed if assertion fails.
+     * 
+     * @param message
+     *            The message printed if assertion fails.
      */
     public static void assertHttpStatusOfMethod(final String message, final HttpResponse httpRes) {
 
@@ -1194,9 +1307,11 @@ public abstract class ClientBase {
 
     /**
      * Assert that the http response has the expected status.
-     *
-     * @param message        The message printed if assertion fails.
-     * @param expectedStatus The expected status.
+     * 
+     * @param message
+     *            The message printed if assertion fails.
+     * @param expectedStatus
+     *            The expected status.
      */
     public static void assertHttpStatus(final String message, final int expectedStatus, final HttpResponse httpRes) {
         assertEquals(message + " Wrong response status!", expectedStatus, httpRes.getStatusLine().getStatusCode());
@@ -1204,8 +1319,9 @@ public abstract class ClientBase {
 
     /**
      * Assert that the http request was successful.
-     *
-     * @param message The message printed if assertion fails.
+     * 
+     * @param message
+     *            The message printed if assertion fails.
      */
     public static void assertContentTypeTextXmlUTF8OfMethod(final String message, final HttpResponse httpRes) {
         assertContentType(message, "text/xml", "utf-8", httpRes);
@@ -1230,10 +1346,12 @@ public abstract class ClientBase {
 
     /**
      * Get the response body as an String encoded with UTF-8.
-     *
+     * 
      * @return The response body.
-     * @throws UnsupportedEncodingException If UTF-8 is not supported.
-     * @throws IOException                  If the response body is not valid.
+     * @throws UnsupportedEncodingException
+     *             If UTF-8 is not supported.
+     * @throws IOException
+     *             If the response body is not valid.
      */
     protected String getResponseBodyAsUTF8(final HttpResponse httpRes) throws UnsupportedEncodingException, IOException {
 
@@ -1242,11 +1360,14 @@ public abstract class ClientBase {
 
     /**
      * Return the child of the node selected by the xPath.
-     *
-     * @param node  The node.
-     * @param xPath The xPath.
+     * 
+     * @param node
+     *            The node.
+     * @param xPath
+     *            The xPath.
      * @return The child of the node selected by the xPath.
-     * @throws TransformerException If anything fails.
+     * @throws TransformerException
+     *             If anything fails.
      */
     public static Node selectSingleNode(final Node node, final String xPath) throws TransformerException {
 
@@ -1256,8 +1377,9 @@ public abstract class ClientBase {
 
     /**
      * Remove version informaion from given objid.
-     *
-     * @param objid The objid.
+     * 
+     * @param objid
+     *            The objid.
      * @return The objid without version information.
      */
     public static String getObjidWithoutVersion(final String objid) {
@@ -1272,8 +1394,9 @@ public abstract class ClientBase {
 
     /**
      * Select the Version Number from the object Identifier.
-     *
-     * @param objid The object Id.
+     * 
+     * @param objid
+     *            The object Id.
      * @return The version number as String or null if no number could be recognized.
      */
     public String getVersionNumber(final String objid) {
@@ -1287,8 +1410,9 @@ public abstract class ClientBase {
 
     /**
      * Extract ID from href.
-     *
-     * @param val href
+     * 
+     * @param val
+     *            href
      * @return id
      */
     public String getIdFromHrefValue(final String val) {
@@ -1303,10 +1427,12 @@ public abstract class ClientBase {
 
     /**
      * Gets the last modification date from the Resource.
-     *
-     * @param id The id of the Resource.
+     * 
+     * @param id
+     *            The id of the Resource.
      * @return last-modification-date
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String getTheLastModificationDate(final String id) throws Exception {
         Document resource = EscidocRestSoapTestBase.getDocument(handleXmlResult(retrieve(id)));
@@ -1319,10 +1445,12 @@ public abstract class ClientBase {
 
     /**
      * Get id of latest version of object (item, container).
-     *
-     * @param document The item or container document.
+     * 
+     * @param document
+     *            The item or container document.
      * @return The latest version objid.
-     * @throws Exception Thrown if parsing fails.
+     * @throws Exception
+     *             Thrown if parsing fails.
      */
     public String getLatestVersionObjidValue(final Document document) throws Exception {
         String id = null;
@@ -1339,10 +1467,12 @@ public abstract class ClientBase {
 
     /**
      * Handles the result of a base service access.
-     *
-     * @param result The result to handle.
+     * 
+     * @param result
+     *            The result to handle.
      * @return Returns the xml response.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String handleResult(final Object result) throws Exception {
 
@@ -1360,10 +1490,12 @@ public abstract class ClientBase {
 
     /**
      * Handles the binary result of a base service access.
-     *
-     * @param result The result to handle.
+     * 
+     * @param result
+     *            The result to handle.
      * @return Returns response InputStream.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public InputStream handleBinaryResult(final Object result) throws Exception {
 
@@ -1377,10 +1509,12 @@ public abstract class ClientBase {
 
     /**
      * Gets the root element of the provided document.
-     *
-     * @param doc The document to get the root element from.
+     * 
+     * @param doc
+     *            The document to get the root element from.
      * @return Returns the first child of the document htat is an element node.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static Element getRootElement(final Document doc) throws Exception {
 
@@ -1396,11 +1530,15 @@ public abstract class ClientBase {
 
     /**
      * Assert that the Element/Attribute selected by the xPath exists.
-     *
-     * @param message The message printed if assertion fails.
-     * @param node    The Node.
-     * @param xPath   The xPath.
-     * @throws Exception If anything fails.
+     * 
+     * @param message
+     *            The message printed if assertion fails.
+     * @param node
+     *            The Node.
+     * @param xPath
+     *            The xPath.
+     * @throws Exception
+     *             If anything fails.
      */
     public static void assertXmlExists(final String message, final Node node, final String xPath) throws Exception {
 
@@ -1410,11 +1548,14 @@ public abstract class ClientBase {
 
     /**
      * Gets the value of the specified attribute of the root element from the document.
-     *
-     * @param document      The document to retrieve the value from.
-     * @param attributeName The name of the attribute whose value shall be retrieved.
+     * 
+     * @param document
+     *            The document to retrieve the value from.
+     * @param attributeName
+     *            The name of the attribute whose value shall be retrieved.
      * @return Returns the attribute value.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String getRootElementAttributeValue(final Document document, final String attributeName)
         throws Exception {
@@ -1438,10 +1579,12 @@ public abstract class ClientBase {
 
     /**
      * Get the task param including the last-modification-date.
-     *
-     * @param timestamp If not null the last-modification-date is set to timestamp.
+     * 
+     * @param timestamp
+     *            If not null the last-modification-date is set to timestamp.
      * @return The task param.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String getTaskParam(final String timestamp) throws Exception {
         String result = null;
@@ -1462,11 +1605,14 @@ public abstract class ClientBase {
 
     /**
      * Serialize the given Dom Object to a String.
-     *
-     * @param xml                The Xml Node to serialize.
-     * @param omitXMLDeclaration Indicates if XML declaration will be omitted.
+     * 
+     * @param xml
+     *            The Xml Node to serialize.
+     * @param omitXMLDeclaration
+     *            Indicates if XML declaration will be omitted.
      * @return The String representation of the Xml Node.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String toString(final Node xml, final boolean omitXMLDeclaration) throws Exception {
 
@@ -1512,10 +1658,12 @@ public abstract class ClientBase {
 
     /**
      * Serialize the given InputStream to a String.
-     *
-     * @param inputStream intutStream
+     * 
+     * @param inputStream
+     *            intutStream
      * @return The String representation of the InputStream.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String toString(final InputStream inputStream) throws Exception {
 
@@ -1554,10 +1702,12 @@ public abstract class ClientBase {
 
     /**
      * Serialize the given InputStream to a byte[].
-     *
-     * @param inputStream inputStream
+     * 
+     * @param inputStream
+     *            inputStream
      * @return The byte[] representation of the InputStream.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static byte[] toByteArray(final InputStream inputStream) throws Exception {
 
@@ -1596,12 +1746,16 @@ public abstract class ClientBase {
 
     /**
      * Substitute the element selected by the xPath in the given node with the new value.
-     *
-     * @param node     The node.
-     * @param xPath    The xPath.
-     * @param newValue The newValue.
+     * 
+     * @param node
+     *            The node.
+     * @param xPath
+     *            The xPath.
+     * @param newValue
+     *            The newValue.
      * @return The resulting node after the substitution.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static Node substitute(final Node node, final String xPath, final String newValue) throws Exception {
         Node result = node;

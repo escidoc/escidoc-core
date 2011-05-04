@@ -28,23 +28,26 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
+import java.net.URL;
+
 import com.yourmediashelf.fedora.client.FedoraCredentials;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
+
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
-import java.net.URL;
-
 /**
  * Offers access methods to the escidoc interfaces.
- *
+ * 
  * @author Michael Hoppe
  */
 public class DeviationClient extends ClientBase {
 
     /**
-     * @param transport The transport identifier.
+     * @param transport
+     *            The transport identifier.
      */
     public DeviationClient(final int transport) {
         super(transport);
@@ -52,10 +55,12 @@ public class DeviationClient extends ClientBase {
 
     /**
      * get a resource xml.
-     *
-     * @param id the id of the resource.
+     * 
+     * @param id
+     *            the id of the resource.
      * @return The FOXML as String.
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public String export(final String id) throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
@@ -72,11 +77,14 @@ public class DeviationClient extends ClientBase {
 
     /**
      * get a binary datastream as String.
-     *
-     * @param id          the id of the resource.
-     * @param componentId the id of the component.
+     * 
+     * @param id
+     *            the id of the resource.
+     * @param componentId
+     *            the id of the component.
      * @return The Datastream as String.
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public String getDatastreamDissimination(final String id, final String componentId) throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
@@ -94,9 +102,10 @@ public class DeviationClient extends ClientBase {
 
     /**
      * get the fedora describe xml.
-     *
+     * 
      * @return The HttpMethod after the service call (REST) or the result object (SOAP).
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public String describeFedora() throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
@@ -112,14 +121,16 @@ public class DeviationClient extends ClientBase {
 
     /**
      * get the fedora API A.
-     *
+     * 
      * @return FedoraAPIA
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     private static com.yourmediashelf.fedora.client.FedoraClient getFedoraRestClient() throws Exception {
         com.yourmediashelf.fedora.client.FedoraClient restClient =
-            new com.yourmediashelf.fedora.client.FedoraClient(new FedoraCredentials(new URL(Constants.PROTOCOL + "://"
-                + Constants.HOST_PORT + "/fedoradeviation"), "", PWCallback.DEFAULT_HANDLE));
+            new com.yourmediashelf.fedora.client.FedoraClient(new FedoraCredentials(new URL(EscidocTestBase
+                .getFrameworkUrl()
+                + "/fedoradeviation"), "", PWCallback.DEFAULT_HANDLE));
         return restClient;
     }
 

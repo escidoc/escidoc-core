@@ -60,7 +60,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Base class for search tests.
- *
+ * 
  * @author Michael Hoppe
  */
 public class SearchTestBase extends SbTestBase {
@@ -82,7 +82,8 @@ public class SearchTestBase extends SbTestBase {
     protected GrantHelper grant = null;
 
     /**
-     * @param transport The transport identifier.
+     * @param transport
+     *            The transport identifier.
      */
     public SearchTestBase(final int transport) {
         super(transport);
@@ -90,8 +91,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Wait until the indexer has (hopefully :) run the next time.
-     *
-     * @throws InterruptedException If sleep fails.
+     * 
+     * @throws InterruptedException
+     *             If sleep fails.
      */
     protected void waitForIndexer() throws InterruptedException {
 
@@ -100,10 +102,13 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Wait until the given id exists in the given index.
-     *
-     * @param id        resource id
-     * @param indexName name of the index
-     * @throws Exception Thrown if the connection to the indexer failed.
+     * 
+     * @param id
+     *            resource id
+     * @param indexName
+     *            name of the index
+     * @throws Exception
+     *             Thrown if the connection to the indexer failed.
      */
     protected void waitForIndexerToAppear(final String id, final String indexName) throws Exception {
         waitForIndexer(id, indexName, true, MAX_TIME_TO_WAIT_FOR_INDEXER);
@@ -111,10 +116,13 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Wait until the given id doesn't exist in the given index.
-     *
-     * @param id        resource id
-     * @param indexName name of the index
-     * @throws Exception Thrown if the connection to the indexer failed.
+     * 
+     * @param id
+     *            resource id
+     * @param indexName
+     *            name of the index
+     * @throws Exception
+     *             Thrown if the connection to the indexer failed.
      */
     protected void waitForIndexerToDisappear(final String id, final String indexName) throws Exception {
         waitForIndexer(id, indexName, false, MAX_TIME_TO_WAIT_FOR_INDEXER);
@@ -122,22 +130,25 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Wait until the given id exists in the given index.
-     *
-     * @param id            resource id
-     * @param indexName     name of the index
-     * @param checkExists   true for existence check, false for nonexistence
-     * @param maxTimeToWait maximum time to wait in milliseconds
-     * @throws Exception Thrown if the connection to the indexer failed.
+     * 
+     * @param id
+     *            resource id
+     * @param indexName
+     *            name of the index
+     * @param checkExists
+     *            true for existence check, false for nonexistence
+     * @param maxTimeToWait
+     *            maximum time to wait in milliseconds
+     * @throws Exception
+     *             Thrown if the connection to the indexer failed.
      */
     private void waitForIndexer(
         final String id, final String indexName, final boolean checkExists, final long maxTimeToWait) throws Exception {
         long time = System.currentTimeMillis();
         String query = "PID=" + id + " or distinction.rootPid=" + id;
         String httpUrl =
-            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                de.escidoc.core.test.common.client.servlet.Constants.SEARCH_BASE_URI + "/" + indexName + "?query="
-                    + URLEncoder.encode(query, DEFAULT_CHARSET));
+            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.SEARCH_BASE_URI + "/" + indexName
+                + "?query=" + URLEncoder.encode(query, DEFAULT_CHARSET);
 
         for (;;) {
             HttpResponse httpRes =
@@ -166,11 +177,14 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Test retrieving an search result from the framework.
-     *
-     * @param parameters The http-parameters as hashMap.
-     * @param database   database where search is executed.
+     * 
+     * @param parameters
+     *            The http-parameters as hashMap.
+     * @param database
+     *            database where search is executed.
      * @return The retrieved search-result.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String search(final HashMap<String, String> parameters, final String database) throws Exception {
 
@@ -189,11 +203,14 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Test retrieving an explain plan from the framework.
-     *
-     * @param parameters The http-parameters as hashMap.
-     * @param database   database where explain is executed.
+     * 
+     * @param parameters
+     *            The http-parameters as hashMap.
+     * @param database
+     *            database where explain is executed.
      * @return The retrieved explain plan.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String explain(final HashMap<String, String> parameters, final String database) throws Exception {
 
@@ -215,11 +232,14 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Test retrieving an scan response from the framework.
-     *
-     * @param parameters The http-parameters as hashMap.
-     * @param database   database where explain is executed.
+     * 
+     * @param parameters
+     *            The http-parameters as hashMap.
+     * @param database
+     *            database where explain is executed.
      * @return The retrieved explain plan.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String scan(final HashMap parameters, final String database) throws Exception {
 
@@ -238,10 +258,12 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Converts SOAP-return object to xml.
-     *
-     * @param result The SOAP response object.
+     * 
+     * @param result
+     *            The SOAP response object.
      * @return The xml-representation of the soap object.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String makeSearchResponseXml(final SearchRetrieveResponseType result) throws Exception {
         StringBuffer soapXmlResult = new StringBuffer("");
@@ -356,10 +378,12 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Converts SOAP-return object to xml.
-     *
-     * @param result The SOAP response object.
+     * 
+     * @param result
+     *            The SOAP response object.
      * @return The xml-representation of the soap object.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String makeScanResponseXml(final ScanResponseType result) throws Exception {
         StringBuffer soapXmlResult =
@@ -435,8 +459,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * extract id out of item-xml.
-     *
-     * @param xml String xml
+     * 
+     * @param xml
+     *            String xml
      * @return String id
      */
     protected String getId(final String xml) {
@@ -459,10 +484,12 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get last-modification-date from xml String.
-     *
-     * @param xml String xml
+     * 
+     * @param xml
+     *            String xml
      * @return String last-modification-date
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String getLastModificationDate(final String xml) throws Exception {
 
@@ -471,10 +498,12 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get creation-date from xml String.
-     *
-     * @param xml String xml
+     * 
+     * @param xml
+     *            String xml
      * @return String creation-date
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String getCreationDate(final String xml) throws Exception {
 
@@ -483,8 +512,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get number of hits from xml String.
-     *
-     * @param searchResult String searchResult
+     * 
+     * @param searchResult
+     *            String searchResult
      * @return String number of hits
      */
     protected String getNumberOfHits(final String searchResult) {
@@ -499,8 +529,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get number of scan hits from xml String.
-     *
-     * @param scanResult String scanResult
+     * 
+     * @param scanResult
+     *            String scanResult
      * @return String number of hits
      */
     protected String getNumberOfScanHits(final String scanResult) throws Exception {
@@ -511,8 +542,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get first record from xml String.
-     *
-     * @param searchResult String searchResult
+     * 
+     * @param searchResult
+     *            String searchResult
      * @return String first record
      */
     protected String getFirstRecord(final String searchResult) {
@@ -527,8 +559,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get first record from xml String.
-     *
-     * @param searchResult String searchResult
+     * 
+     * @param searchResult
+     *            String searchResult
      * @return String first record
      */
     protected String getNextRecordPosition(final String searchResult) {
@@ -543,8 +576,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get name of the database from explain plan.
-     *
-     * @param explainPlan String explainPlan
+     * 
+     * @param explainPlan
+     *            String explainPlan
      * @return String number of hits
      */
     protected String getDatabase(final String explainPlan) {
@@ -559,8 +593,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get number of index-fields from explain plan.
-     *
-     * @param explainPlan String explainPlan
+     * 
+     * @param explainPlan
+     *            String explainPlan
      * @return String number of index-fields
      */
     protected int getIndexFieldCount(final String explainPlan) {
@@ -573,8 +608,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get number of sort-fields from explain plan.
-     *
-     * @param explainPlan String explainPlan
+     * 
+     * @param explainPlan
+     *            String explainPlan
      * @return String number of sort-fields
      */
     protected int getSortFieldCount(final String explainPlan) {
@@ -587,8 +623,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * get diagnostic details from xml String.
-     *
-     * @param searchResult String searchResult
+     * 
+     * @param searchResult
+     *            String searchResult
      * @return String diagnostic details
      */
     protected String getDiagnostics(final String searchResult) {
@@ -606,8 +643,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * check if highlighting-element is there.
-     *
-     * @param searchResult String searchResult
+     * 
+     * @param searchResult
+     *            String searchResult
      * @return boolean
      */
     protected boolean checkHighlighting(final String searchResult) {
@@ -619,10 +657,13 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * check if public-status, version-number and latest-version-numer are as expected.
-     *
-     * @param xml             String searchResult
-     * @param versionCheckMap HashMap with objectIds + expected version info.
-     * @throws Exception e
+     * 
+     * @param xml
+     *            String searchResult
+     * @param versionCheckMap
+     *            HashMap with objectIds + expected version info.
+     * @throws Exception
+     *             e
      */
     protected void checkVersions(final String xml, final Map<String, HashMap<String, String>> versionCheckMap)
         throws Exception {
@@ -666,19 +707,17 @@ public class SearchTestBase extends SbTestBase {
     /**
      * Create a Param structure for PID assignments. The last-modification-date is retrieved from the by id selected
      * object.
-     *
-     * @param itemId itemId
+     * 
+     * @param itemId
+     *            itemId
      * @return param XML snippet.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     protected final String getItemPidParam(final String itemId) throws Exception {
         String xml = item.retrieve(itemId);
         String lastModDate = getLastModificationDate(xml);
-        String url =
-            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI)
-                + itemId;
+        String url = getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + itemId;
         String param = "<param last-modification-date=\"" + lastModDate + "\"><url>" + url + "</url></param>";
         return (param);
     }
@@ -686,27 +725,27 @@ public class SearchTestBase extends SbTestBase {
     /**
      * Create a Param structure for PID assignments. The last-modification-date is retrieved from the by id selected
      * object.
-     *
-     * @param containerId containerId
+     * 
+     * @param containerId
+     *            containerId
      * @return param XML snippet.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     protected final String getContainerPidParam(final String containerId) throws Exception {
         String xml = container.retrieve(containerId);
         String lastModDate = getLastModificationDate(xml);
         String url =
-            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI)
-                + containerId;
+            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + containerId;
         String param = "<param last-modification-date=\"" + lastModDate + "\"><url>" + url + "</url></param>";
         return (param);
     }
 
     /**
      * Replaces special Characters..
-     *
-     * @param text String text to replace
+     * 
+     * @param text
+     *            String text to replace
      * @return String Replaced String
      */
     private String decodeCharacters(String text) {
@@ -720,8 +759,9 @@ public class SearchTestBase extends SbTestBase {
 
     /**
      * Replaces special Characters..
-     *
-     * @param text String text to replace
+     * 
+     * @param text
+     *            String text to replace
      * @return String Replaced String
      */
     private String encodeCharacters(String text) {

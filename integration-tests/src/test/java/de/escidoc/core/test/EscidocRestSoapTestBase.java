@@ -81,7 +81,7 @@ import static org.junit.Assert.fail;
 
 /**
  * Base class for tests that are used to test the REST and SOAP interfaces of the eSciDoc core services.
- *
+ * 
  * @author Torsten Tetteroo
  */
 public class EscidocRestSoapTestBase extends EscidocTestBase {
@@ -586,9 +586,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * The constructor.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      */
     public EscidocRestSoapTestBase(final int transport) {
 
@@ -597,21 +598,30 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Creates a new element node for the provided document. The created element is an element that refers to another
-     * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/> This method takes
-     * the set transport definition for this class to decide which attributes have to be sent.<br> This method delegates
-     * to <code>createReferencingElementNode(doc, namespaceUri, prefix, tagName, xlinkPrefix, title, href,
+     * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/>
+     * This method takes the set transport definition for this class to decide which attributes have to be sent.<br>
+     * This method delegates to
+     * <code>createReferencingElementNode(doc, namespaceUri, prefix, tagName, xlinkPrefix, title, href,
      * false)</code>. I.e., in case of rest access, the read only values of the referencing node are not created.
-     *
-     * @param doc          The document for that the node shall be created.
-     * @param namespaceUri The name space uri of the node to create. This may be null.
-     * @param prefix       The prefix to use.
-     * @param tagName      The tag name of the node.
-     * @param xlinkPrefix  The prefix to use for the xlink attributes.
-     * @param title        The title of the referencing element (=xlink:title)
-     * @param href         The href of the referencing element (=xlink:href). The objid attribute value is extracted
-     *                     from this href.
+     * 
+     * @param doc
+     *            The document for that the node shall be created.
+     * @param namespaceUri
+     *            The name space uri of the node to create. This may be null.
+     * @param prefix
+     *            The prefix to use.
+     * @param tagName
+     *            The tag name of the node.
+     * @param xlinkPrefix
+     *            The prefix to use for the xlink attributes.
+     * @param title
+     *            The title of the referencing element (=xlink:title)
+     * @param href
+     *            The href of the referencing element (=xlink:href). The objid attribute value is extracted from this
+     *            href.
      * @return Returns the created node.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     @Override
     public Element createReferencingElementNode(
@@ -623,21 +633,29 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Creates a new element node for the provided document. The created element is an element that refers to another
-     * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/> This method takes
-     * the set transport definition for this class to decide which attributes have to be sent.
-     *
-     * @param doc              The document for that the node shall be created.
-     * @param namespaceUri     The name space uri of the node to create. This may be null.
-     * @param prefix           The prefix to use.
-     * @param tagName          The tag name of the node.
-     * @param xlinkPrefix      The prefix to use for the xlink attributes.
-     * @param title            The title of the referencing element (=xlink:title)
-     * @param href             The href of the referencing element (=xlink:href). The objid attribute value is extracted
-     *                         from this href.
-     * @param withRestReadOnly Flag indicating if the parent-ous element shall contain the REST specific read only
-     *                         attributes.
+     * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/>
+     * This method takes the set transport definition for this class to decide which attributes have to be sent.
+     * 
+     * @param doc
+     *            The document for that the node shall be created.
+     * @param namespaceUri
+     *            The name space uri of the node to create. This may be null.
+     * @param prefix
+     *            The prefix to use.
+     * @param tagName
+     *            The tag name of the node.
+     * @param xlinkPrefix
+     *            The prefix to use for the xlink attributes.
+     * @param title
+     *            The title of the referencing element (=xlink:title)
+     * @param href
+     *            The href of the referencing element (=xlink:href). The objid attribute value is extracted from this
+     *            href.
+     * @param withRestReadOnly
+     *            Flag indicating if the parent-ous element shall contain the REST specific read only attributes.
      * @return Returns the created node.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public Element createReferencingElementNode(
         final Document doc, final String namespaceUri, final String prefix, final String tagName,
@@ -650,23 +668,32 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Creates a new element node for the provided document. The created element is an element that refers to another
-     * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/> This method takes
-     * the provided transport definition to decide which attributes have to be sent.
-     *
-     * @param transport        Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                         Constants.TRANSPORT_SOAP}.
-     * @param doc              The document for that the node shall be created.
-     * @param namespaceUri     The name space uri of the node to create. This may be null.
-     * @param prefix           The prefix to use.
-     * @param tagName          The tag name of the node.
-     * @param xlinkPrefix      The prefix to use for the xlink attributes.
-     * @param title            The title of the referencing element (=xlink:title)
-     * @param href             The href of the referencing element (=xlink:href). The objid attribute value is extracted
-     *                         from this href.
-     * @param withRestReadOnly Flag indicating if the parent-ous element shall contain the REST specific read only
-     *                         attributes.
+     * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/>
+     * This method takes the provided transport definition to decide which attributes have to be sent.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param doc
+     *            The document for that the node shall be created.
+     * @param namespaceUri
+     *            The name space uri of the node to create. This may be null.
+     * @param prefix
+     *            The prefix to use.
+     * @param tagName
+     *            The tag name of the node.
+     * @param xlinkPrefix
+     *            The prefix to use for the xlink attributes.
+     * @param title
+     *            The title of the referencing element (=xlink:title)
+     * @param href
+     *            The href of the referencing element (=xlink:href). The objid attribute value is extracted from this
+     *            href.
+     * @param withRestReadOnly
+     *            Flag indicating if the parent-ous element shall contain the REST specific read only attributes.
      * @return Returns the created node.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public static Element createReferencingElementNode(
         final int transport, final Document doc, final String namespaceUri, final String prefix, final String tagName,
@@ -693,18 +720,27 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Creates a new element node for the provided document. The created element is an element that that has xlink
      * attributes, but does not have an objid attribute.
-     *
-     * @param doc              The document for that the node shall be created.
-     * @param namespaceUri     The name space uri of the node to create. This may be null.
-     * @param prefix           The prefix to use.
-     * @param tagName          The tag name of the node.
-     * @param xlinkPrefix      The prefix to use for the xlink attributes.
-     * @param title            The title of the referencing element (=xlink:title)
-     * @param href             The href of the referencing element (=xlink:href).
-     * @param withRestReadOnly Flag indicating if the parent-ous element shall contain the REST specific read only
-     *                         attributes (type and title).
+     * 
+     * @param doc
+     *            The document for that the node shall be created.
+     * @param namespaceUri
+     *            The name space uri of the node to create. This may be null.
+     * @param prefix
+     *            The prefix to use.
+     * @param tagName
+     *            The tag name of the node.
+     * @param xlinkPrefix
+     *            The prefix to use for the xlink attributes.
+     * @param title
+     *            The title of the referencing element (=xlink:title)
+     * @param href
+     *            The href of the referencing element (=xlink:href).
+     * @param withRestReadOnly
+     *            Flag indicating if the parent-ous element shall contain the REST specific read only attributes (type
+     *            and title).
      * @return Returns the created node.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public static Element createElementNodeWithXlink(
         final Document doc, final String namespaceUri, final String prefix, final String tagName,
@@ -725,12 +761,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid for grants schema.<br/> This method takes the set transport
-     * definition for this instance to decide if the provided xml data has to be validated using the REST schema or the
-     * SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid for grants schema.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidGrants(final String xmlData) throws Exception {
 
@@ -738,13 +776,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid for grants schema.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid for grants schema.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidGrants(final int transport, final String xmlData) throws Exception {
 
@@ -753,12 +795,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid for preferences schema.<br/> This method takes the set transport
-     * definition for this instance to decide if the provided xml data has to be validated using the REST schema or the
-     * SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid for preferences schema.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidPreferences(final String xmlData) throws Exception {
 
@@ -766,14 +810,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid for preferences schema.<br/> This method takes the provided
-     * transport definition to decide if the provided xml data has to be validated using the REST schema or the SOAP
-     * schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid for preferences schema.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidPreferences(final int transport, final String xmlData) throws Exception {
 
@@ -782,12 +829,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid for attributes schema.<br/> This method takes the set transport
-     * definition for this instance to decide if the provided xml data has to be validated using the REST schema or the
-     * SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid for attributes schema.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidAttributes(final String xmlData) throws Exception {
 
@@ -795,14 +844,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid for attributes schema.<br/> This method takes the provided
-     * transport definition to decide if the provided xml data has to be validated using the REST schema or the SOAP
-     * schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid for attributes schema.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidAttributes(final int transport, final String xmlData) throws Exception {
 
@@ -812,9 +864,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Checks if the provided transport is valid.
-     *
-     * @param transport Specifies the transport to be asserted, must be one of {@link Constants.TRANSPORT_REST} or
-     *                  {@link Constants.TRANSPORT_SOAP}. Otherwise, the assertion fails.
+     * 
+     * @param transport
+     *            Specifies the transport to be asserted, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}. Otherwise, the assertion fails.
      */
     public static void assertTransport(final int transport) {
 
@@ -853,12 +906,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid content model.<br/> This method takes the set transport definition
-     * for this instance to decide if the provided xml data has to be validated using the REST schema or the SOAP
-     * schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid content model.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidContentModel(final String xmlData) throws Exception {
 
@@ -866,13 +921,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid organizational unit.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidContentModel(final int transport, final String xmlData) throws Exception {
 
@@ -880,12 +939,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/> This method takes the set transport
-     * definition for this instance to decide if the provided xml data has to be validated using the REST schema or the
-     * SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid organizational unit.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidOrganizationalUnit(final String xmlData) throws Exception {
 
@@ -893,13 +954,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid organizational unit.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidOrganizationalUnit(final int transport, final String xmlData) throws Exception {
 
@@ -909,9 +974,11 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts that the provided xml data is valid for authorization requests.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidRequests(final String xmlData) throws Exception {
 
@@ -919,13 +986,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid role.<br/> This method takes the provided transport definition to
-     * decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid role.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidRequests(final int transport, final String xmlData) throws Exception {
 
@@ -935,9 +1006,11 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts that the provided xml data is valid for authorization responses.
-     *
-     * @param toBeAsserted The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * 
+     * @param toBeAsserted
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidResults(final String toBeAsserted) throws Exception {
 
@@ -946,11 +1019,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts that the provided xml data is valid for authorization responses.
-     *
-     * @param transport    Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                     Constants.TRANSPORT_SOAP}.
-     * @param toBeAsserted The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param toBeAsserted
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidResults(final int transport, final String toBeAsserted) throws Exception {
 
@@ -959,11 +1035,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid role.<br/> This method takes the set transport definition for this
-     * instance to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid role.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidRole(final String xmlData) throws Exception {
 
@@ -971,13 +1050,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid role.<br/> This method takes the provided transport definition to
-     * decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid role.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidRole(final int transport, final String xmlData) throws Exception {
 
@@ -986,12 +1069,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of roles.<br/> This method takes the set transport definition
-     * for this instance to decide if the provided xml data has to be validated using the REST schema or the SOAP
-     * schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid list of roles.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidRoleList(final String xmlData) throws Exception {
 
@@ -999,13 +1084,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of roles.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid list of roles.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidRoleList(final int transport, final String xmlData) throws Exception {
 
@@ -1014,12 +1103,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid user account.<br/> This method takes the set transport definition
-     * for this instance to decide if the provided xml data has to be validated using the REST schema or the SOAP
-     * schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid user account.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidUserAccount(final String xmlData) throws Exception {
 
@@ -1027,12 +1118,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid user attribute.<br/> This method takes the set transport definition
-     * for this instance to decide if the provided xml data has to be validated using the REST schema or the SOAP
-     * schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid user attribute.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidUserAttribute(final String xmlData) throws Exception {
 
@@ -1040,12 +1133,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of user accounts.<br/> This method takes the set transport
-     * definition for this instance to decide if the provided xml data has to be validated using the REST schema or the
-     * SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid list of user accounts.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidUserAccountList(final String xmlData) throws Exception {
 
@@ -1053,12 +1148,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid user account.<br/> This method takes the set transport definition
-     * for this instance to decide if the provided xml data has to be validated using the REST schema or the SOAP
-     * schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid user account.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidUserGroup(final String xmlData) throws Exception {
 
@@ -1066,12 +1163,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of user groups.<br/> This method takes the set transport
-     * definition for this instance to decide if the provided xml data has to be validated using the REST schema or the
-     * SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid list of user groups.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidUserGroupList(final String xmlData) throws Exception {
 
@@ -1079,12 +1178,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of grants.<br/> This method takes the set transport definition
-     * for this instance to decide if the provided xml data has to be validated using the REST schema or the SOAP
-     * schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid list of grants.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidGrantList(final String xmlData) throws Exception {
 
@@ -1092,12 +1193,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid index configuration.<br/> This method takes the set transport
-     * definition for this instance to decide if the provided xml data has to be validated using the REST schema or the
-     * SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid index configuration.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidIndexConfiguration(final String xmlData) throws Exception {
 
@@ -1105,13 +1208,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid index configuration.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid index configuration.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidIndexConfiguration(final int transport, final String xmlData) throws Exception {
 
@@ -1120,11 +1227,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid container.<br/> This method takes the set transport definition for
-     * this instance to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid container.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidContainer(final String xmlData) throws Exception {
 
@@ -1162,13 +1272,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid user account.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid user account.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidUserAccount(final int transport, final String xmlData) throws Exception {
 
@@ -1177,13 +1291,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid user account.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid user account.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidUserAttribute(final int transport, final String xmlData) throws Exception {
 
@@ -1192,14 +1310,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of user accounts.<br/> This method takes the provided
-     * transport definition to decide if the provided xml data has to be validated using the REST schema or the SOAP
-     * schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid list of user accounts.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidUserAccountList(final int transport, final String xmlData) throws Exception {
 
@@ -1208,13 +1329,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid user group.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid user group.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidUserGroup(final int transport, final String xmlData) throws Exception {
 
@@ -1223,13 +1348,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of user groups.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid list of user groups.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidUserGroupList(final int transport, final String xmlData) throws Exception {
 
@@ -1238,13 +1367,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of grants.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid list of grants.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidGrantList(final int transport, final String xmlData) throws Exception {
 
@@ -1301,12 +1434,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit pathlist.<br/> This method takes the set
-     * transport definition for this class to decide if the provided xml data has to be validated using the REST schema
-     * or the SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid organizational unit pathlist.<br/>
+     * This method takes the set transport definition for this class to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidOrganizationalUnitPathList(final String xmlData) throws Exception {
 
@@ -1315,14 +1450,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit pathlist.<br/> This method takes the provided
-     * transport definition to decide if the provided xml data has to be validated using the REST schema or the SOAP
-     * schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid organizational unit pathlist.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidOrganizationalUnitPathList(final int transport, final String xmlData) throws Exception {
 
@@ -1333,12 +1471,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/> This method takes the set transport
-     * definition for this instance to decide if the provided xml data has to be validated using the REST schema or the
-     * SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid organizational unit.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidOrganizationalUnits(final String xmlData) throws Exception {
 
@@ -1346,13 +1486,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid organizational unit.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidOrganizationalUnits(final int transport, final String xmlData) throws Exception {
 
@@ -1362,12 +1506,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/> This method takes the set transport
-     * definition for this instance to decide if the provided xml data has to be validated using the REST schema or the
-     * SOAP schema.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid organizational unit.<br/>
+     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
+     * validated using the REST schema or the SOAP schema.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidOrganizationalUnitsRefs(final String xmlData) throws Exception {
 
@@ -1376,13 +1522,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/> This method takes the provided transport
-     * definition to decide if the provided xml data has to be validated using the REST schema or the SOAP schema.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param xmlData   The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * Asserts that the provided xml data is a valid organizational unit.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertXmlValidOrganizationalUnitsRefs(final int transport, final String xmlData) throws Exception {
 
@@ -1393,9 +1543,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for the schemas depending on the provided transport definition.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the transport specific schema location base.
      */
     protected String getSchemaLocationBase(final int transport) {
@@ -1412,7 +1563,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Get location of Schema. Schema are delived with framework and therefore the schema location based on the
      * framework location. Schemas are currently not pulled from www.escidoc.org wven if they could.
-     *
+     * 
      * @return schema location
      */
     protected String getSchemaLocationBase() {
@@ -1456,9 +1607,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to organizational units.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the base url for all schema locations related to organizational units.
      */
     protected String getOrganizationalUnitSchemaBase(final int transport, final String version) {
@@ -1468,9 +1620,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to organizational units.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the base url for all schema locations related to organizational units.
      */
     protected String getContentModelSchemaBase(final int transport, final String version) {
@@ -1481,11 +1634,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Create a Param structure for PID assignments. The last-modification-date is retrieved from the by id selected
      * object.
-     *
-     * @param id  The object Id
-     * @param url URL of the resource (not checked)
+     * 
+     * @param id
+     *            The object Id
+     * @param url
+     *            URL of the resource (not checked)
      * @return param XML snippet.
-     * @throws Exception Thrown if getTheLastModificationDate() fails.
+     * @throws Exception
+     *             Thrown if getTheLastModificationDate() fails.
      */
     public final String getPidParam(final String id, final String url) throws Exception {
 
@@ -1503,9 +1659,11 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Create a Param structure for PID assignments.
-     *
-     * @param lstModDate The last-modification-date.
-     * @param url        URL of the resource (not checked)
+     * 
+     * @param lstModDate
+     *            The last-modification-date.
+     * @param url
+     *            URL of the resource (not checked)
      * @return param XML snippet.
      */
     protected final String getPidParam2(final DateTime lstModDate, final URL url) {
@@ -1524,9 +1682,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to PDP requests.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the base url for all schema locations related to PDP requests.
      */
     protected String getRequestsSchemaBase(final int transport) {
@@ -1536,9 +1695,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to PDP results.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the base url for all schema locations related to PDP results.
      */
     protected String getResultsSchemaBase(final int transport) {
@@ -1548,9 +1708,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to roles.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the base url for all schema locations related to roles.
      */
     protected String getRoleSchemaBase(final int transport) {
@@ -1560,9 +1721,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to list of roles.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the base url for all schema locations related to list of roles.
      */
     protected String getRoleListSchemaBase(final int transport) {
@@ -1572,9 +1734,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the schema locations for grants grants.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the grants schema location.
      */
     protected String getGrantsSchemaLocation(final int transport) {
@@ -1584,9 +1747,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the schema locations for preferences.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the preferences schema location.
      */
     protected String getPreferencesSchemaLocation(final int transport) {
@@ -1596,9 +1760,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the schema locations for attributes.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the attributes schema location.
      */
     protected String getAttributesSchemaLocation(final int transport) {
@@ -1608,9 +1773,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to user accounts.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the base url for all schema locations related to user accounts.
      */
     protected String getUserAccountSchemaBase(final int transport) {
@@ -1620,9 +1786,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to list of user accounts.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the base url for all schema locations related to list of user accounts.
      */
     protected String getUserAccountListSchemaBase(final int transport) {
@@ -1632,9 +1799,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to user groups.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the base url for all schema locations related to user groups.
      */
     protected String getUserGroupSchemaBase(final int transport) {
@@ -1645,11 +1813,13 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Gets the name of a resource. The name is fetched from the name element with in the properties element of the
      * resource.
-     *
-     * @param document The document to retrieve the value from.
+     * 
+     * @param document
+     *            The document to retrieve the value from.
      * @return Returns the value of the element selected by xpath '//properties/name'. If this value does not exist, an
      *         assertion fails.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String getNameValue(final Document document) throws Exception {
 
@@ -1661,9 +1831,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to list of user groups.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the base url for all schema locations related to list of user groups.
      */
     protected String getUserGroupListSchemaBase(final int transport) {
@@ -1673,9 +1844,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to admin.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
      * @return Returns the base url for all schema locations related to user accounts.
      */
     protected String getAdminSchemaBase(final int transport) {
@@ -1684,13 +1856,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the title value of the root element from the document.<br/> This method takes the provided transport
-     * definition to decide if the title value has to be extracted from the title attribute of the root element (REST)
-     * or if <code>null</code> has to be returned as no title exists (SOAP).
-     *
-     * @param document The document to retrieve the value from.
+     * Gets the title value of the root element from the document.<br/>
+     * This method takes the provided transport definition to decide if the title value has to be extracted from the
+     * title attribute of the root element (REST) or if <code>null</code> has to be returned as no title exists (SOAP).
+     * 
+     * @param document
+     *            The document to retrieve the value from.
      * @return Returns the attribute value or <code>null</code>.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String getTitleValue(final Document document) throws Exception {
 
@@ -1698,15 +1872,19 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the title value of the root element from the document.<br/> This method takes the provided transport
-     * definition to decide to decide if the title value has to be extracted from the title attribute of the root
-     * element (REST) or if <code>null</code> has to be returned as no title exists (SOAP).
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param document  The document to retrieve the value from.
+     * Gets the title value of the root element from the document.<br/>
+     * This method takes the provided transport definition to decide to decide if the title value has to be extracted
+     * from the title attribute of the root element (REST) or if <code>null</code> has to be returned as no title exists
+     * (SOAP).
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param document
+     *            The document to retrieve the value from.
      * @return Returns the attribute value or <code>null</code>.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String getTitleValue(final int transport, final Document document) throws Exception {
 
@@ -1721,13 +1899,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the root element from the document.<br/> This method takes set transport definition of
-     * this instance to decide if the objid value has to be extracted from the href attribute of the root element (REST)
-     * or can be taken from the objid attribute of the root element (SOAP)
-     *
-     * @param xmlData The xml data to retrieve the value from.
+     * Gets the objid value of the root element from the document.<br/>
+     * This method takes set transport definition of this instance to decide if the objid value has to be extracted from
+     * the href attribute of the root element (REST) or can be taken from the objid attribute of the root element (SOAP)
+     * 
+     * @param xmlData
+     *            The xml data to retrieve the value from.
      * @return Returns the attribute value.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     public String getObjidValue(final String xmlData) throws Exception {
@@ -1736,13 +1916,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the root element from the document.<br/> This method takes set transport definition of
-     * this instance to decide if the objid value has to be extracted from the href attribute of the root element (REST)
-     * or can be taken from the objid attribute of the root element (SOAP)
-     *
-     * @param document The document to retrieve the value from.
+     * Gets the objid value of the root element from the document.<br/>
+     * This method takes set transport definition of this instance to decide if the objid value has to be extracted from
+     * the href attribute of the root element (REST) or can be taken from the objid attribute of the root element (SOAP)
+     * 
+     * @param document
+     *            The document to retrieve the value from.
      * @return Returns the attribute value.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     public String getObjidValue(final Document document) throws Exception {
@@ -1752,10 +1934,12 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Get id of latest version of object (item, container).
-     *
-     * @param document The item or container document.
+     * 
+     * @param document
+     *            The item or container document.
      * @return The latest version objid.
-     * @throws Exception Thrown if parsing fails.
+     * @throws Exception
+     *             Thrown if parsing fails.
      */
     public String getLatestVersionObjidValue(final Document document) throws Exception {
         String id = null;
@@ -1775,15 +1959,21 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * Asserts that the selected element is an element that contains xlink attributes in case of REST access. In case of
      * SOAP, this element may or may not contain an objid attribute, and in case of REST the xlink:href attribute may or
      * may not end with an object id.
-     *
-     * @param message  The assertion failed message.
-     * @param node     The node in that the element shall be selected and asserted.
-     * @param xpath    The Xpath to the element that shall be asserted.
-     * @param hrefBase The base value the href value. It is checked if the href attribute starts with this value in case
-     *                 of REST.<br/> If this value is <code>null</code>, this assertion is skipped.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param node
+     *            The node in that the element shall be selected and asserted.
+     * @param xpath
+     *            The Xpath to the element that shall be asserted.
+     * @param hrefBase
+     *            The base value the href value. It is checked if the href attribute starts with this value in case of
+     *            REST.<br/>
+     *            If this value is <code>null</code>, this assertion is skipped.
      * @return Returns an array containing the found href and title values. In case of SOAP, the returned href and title
      *         value are <code>null</code>.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String[] assertXlinkElement(final String message, final Node node, final String xpath, final String hrefBase)
         throws Exception {
@@ -1831,16 +2021,23 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Asserts that the selected element is an element that contains xlink attributes in case of REST access. In case of
      * SOAP, this element may or may not contain an objid attribute, and in case of REST the xlink:href attribute may or
-     * may not end with an object id.<br/> It is also asserted, that the attributes matches the expected values.
-     *
-     * @param message       The assertion failed message.
-     * @param expectedHref  The expected href that has to be asserted.
-     * @param expectedTitle The expected title that has to be asserted.
-     * @param node          The node in that the element shall be selected and asserted.
-     * @param xpath         The Xpath to the element that shall be asserted.
+     * may not end with an object id.<br/>
+     * It is also asserted, that the attributes matches the expected values.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param expectedHref
+     *            The expected href that has to be asserted.
+     * @param expectedTitle
+     *            The expected title that has to be asserted.
+     * @param node
+     *            The node in that the element shall be selected and asserted.
+     * @param xpath
+     *            The Xpath to the element that shall be asserted.
      * @return Returns an array containing the found href and title values. In case of SOAP, the returned href and title
      *         value are <code>null</code>.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String[] assertXlinkElement(
         final String message, final String expectedHref, final String expectedTitle, final Node node, final String xpath)
@@ -1862,15 +2059,21 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Asserts that the selected element is an element that contains xlink attributes in case of REST access, but does
      * not contain an objid attribute in case of SOAP.
-     *
-     * @param message  The assertion failed message.
-     * @param node     The node in that the element shall be selected and asserted.
-     * @param xpath    The Xpath to the element that shall be asserted.
-     * @param hrefBase The base value the href value. It is checked if the href attribute starts with this value in case
-     *                 of REST.<br/> If this value is <code>null</code>, this assertion is skipped.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param node
+     *            The node in that the element shall be selected and asserted.
+     * @param xpath
+     *            The Xpath to the element that shall be asserted.
+     * @param hrefBase
+     *            The base value the href value. It is checked if the href attribute starts with this value in case of
+     *            REST.<br/>
+     *            If this value is <code>null</code>, this assertion is skipped.
      * @return Returns an array containing the found href and title values. In case of SOAP, the returned href and title
      *         value are <code>null</code>.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String[] assertXlinkElementWithoutObjid(
         final String message, final Node node, final String xpath, final String hrefBase) throws Exception {
@@ -1887,18 +2090,25 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts that the selected element is an element that contains xlink attributes in case of REST access, but does
-     * not contain an objid attribute in case of SOAP.<br/> It is also asserted, that the attributes matches the
-     * expected values.
-     *
-     * @param message       The assertion failed message.
-     * @param expectedHref  The expected href that has to be asserted.
-     * @param expectedTitle The expected title that has to be asserted.
-     * @param node          The node in that the element shall be selected and asserted.
-     * @param hrefBase      TODO
-     * @param xpath         The Xpath to the element that shall be asserted.
+     * not contain an objid attribute in case of SOAP.<br/>
+     * It is also asserted, that the attributes matches the expected values.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param expectedHref
+     *            The expected href that has to be asserted.
+     * @param expectedTitle
+     *            The expected title that has to be asserted.
+     * @param node
+     *            The node in that the element shall be selected and asserted.
+     * @param hrefBase
+     *            TODO
+     * @param xpath
+     *            The Xpath to the element that shall be asserted.
      * @return Returns an array containing the found href and title values. In case of SOAP, the returned href and title
      *         value are <code>null</code>.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String[] assertXlinkElementWithoutObjid(
         final String message, final String expectedHref, final String expectedTitle, final Node node,
@@ -1917,16 +2127,21 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * Asserts that the selected element is a valid referencing element. This is an element that contains xlink
      * attributes (REST) or an objid attribute (SOAP). In case of Rest, the xlink:href ends with the object id of the
      * referenced attribute.
-     *
-     * @param message  The assertion failed message.
-     * @param node     The node in that the element shall be selected and asserted.
-     * @param xpath    The Xpath to the element that shall be asserted.
-     * @param hrefBase The base value the href value. This value together with the object id must match the value of the
-     *                 href attribute in case of REST.<br/> If this value is <code>null</code>, this assertion is
-     *                 skipped.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param node
+     *            The node in that the element shall be selected and asserted.
+     * @param xpath
+     *            The Xpath to the element that shall be asserted.
+     * @param hrefBase
+     *            The base value the href value. This value together with the object id must match the value of the href
+     *            attribute in case of REST.<br/>
+     *            If this value is <code>null</code>, this assertion is skipped.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
      *         element. In case of SOAP, the returned href and title values are <code>null</code>.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String[] assertReferencingElement(
         final String message, final Node node, final String xpath, final String hrefBase) throws Exception {
@@ -1965,18 +2180,25 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * Asserts that the selected element is a valid referencing element. This is an element that contains xlink
      * attributes (REST) or an objid attribute (SOAP). In case of Rest, the xlink:href ends with the object id of the
      * referenced attribute.
-     *
-     * @param message          The assertion failed message.
-     * @param expectedObjid    The expected object id of the referenced object.
-     * @param expectedTitle    The expected title of the referenced object.
-     * @param toBeAssertedNode The node in that the element shall be selected and asserted.
-     * @param xpath            The Xpath to the element that shall be asserted.
-     * @param hrefBase         The base value the href value. This value together with the object id must match the
-     *                         value of the href attribute in case of REST.<br/> If this value is <code>null</code>,
-     *                         this assertion is skipped.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param expectedObjid
+     *            The expected object id of the referenced object.
+     * @param expectedTitle
+     *            The expected title of the referenced object.
+     * @param toBeAssertedNode
+     *            The node in that the element shall be selected and asserted.
+     * @param xpath
+     *            The Xpath to the element that shall be asserted.
+     * @param hrefBase
+     *            The base value the href value. This value together with the object id must match the value of the href
+     *            attribute in case of REST.<br/>
+     *            If this value is <code>null</code>, this assertion is skipped.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
      *         element. In case of SOAP, the returned href and title values are <code>null</code>.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String[] assertReferencingElement(
         final String message, final String expectedObjid, final String expectedTitle, final Node toBeAssertedNode,
@@ -1997,21 +2219,27 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Asserts that the selected element is a valid referencing element. This is an element that contains xlink
      * attributes (REST) or an objid attribute (SOAP). In case of Rest, the xlink:href ends with the object id of the
-     * referenced attribute.<br/> Additionally it is checked whether the values from the selected element matches the
-     * respective values from the node containing the expected values. Hereby, the title only is asserted, if the
-     * expected node contains one, as this value is optional.
-     *
-     * @param message          The assertion failed message.
-     * @param expectedNode     The node in that the element shall be selected and used to check it against the
-     *                         toBeAsserted node.
-     * @param toBeAssertedNode The node in that the element shall be selected and asserted.
-     * @param xpath            The Xpath to the element that shall be asserted.
-     * @param hrefBase         The base value the href value. This value together with the object id must match the
-     *                         value of the href attribute in case of REST.<br/> If this value is <code>null</code>,
-     *                         this assertion is skipped.
+     * referenced attribute.<br/>
+     * Additionally it is checked whether the values from the selected element matches the respective values from the
+     * node containing the expected values. Hereby, the title only is asserted, if the expected node contains one, as
+     * this value is optional.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param expectedNode
+     *            The node in that the element shall be selected and used to check it against the toBeAsserted node.
+     * @param toBeAssertedNode
+     *            The node in that the element shall be selected and asserted.
+     * @param xpath
+     *            The Xpath to the element that shall be asserted.
+     * @param hrefBase
+     *            The base value the href value. This value together with the object id must match the value of the href
+     *            attribute in case of REST.<br/>
+     *            If this value is <code>null</code>, this assertion is skipped.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
      *         element. In case of SOAP, the returned href and title values are <code>null</code>.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String[] assertReferencingElement(
         final String message, final Node expectedNode, final Node toBeAssertedNode, final String xpath,
@@ -2048,22 +2276,29 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Asserts that the selected element is a valid referencing element. This is an element that contains xlink
      * attributes (REST) or an objid attribute (SOAP). In case of Rest, the xlink:href ends with the object id of the
-     * referenced attribute.<br/> Additionally it is checked whether the values from the selected element matches the
-     * respective values from the node containing the expected values. In comparing to assertReferencingElement(String,
-     * Node, Node, String, String); is the order of the compared element nodes free.
-     *
-     * @param message          The assertion failed message.
-     * @param expectedNode     The node in that the element shall be selected and used to check it against the
-     *                         toBeAsserted node.
-     * @param toBeAssertedNode The node in that the element shall be selected and asserted.
-     * @param xpathElement     The Xpath to the element that shall be asserted.
-     * @param xpathGroup       The Xpath to the group of the elements that shall be asserted.
-     * @param hrefBase         The base value the href value. This value together with the object id must match the
-     *                         value of the href attribute in case of REST.<br/> If this value is <code>null</code>,
-     *                         this assertion is skipped.
+     * referenced attribute.<br/>
+     * Additionally it is checked whether the values from the selected element matches the respective values from the
+     * node containing the expected values. In comparing to assertReferencingElement(String, Node, Node, String,
+     * String); is the order of the compared element nodes free.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param expectedNode
+     *            The node in that the element shall be selected and used to check it against the toBeAsserted node.
+     * @param toBeAssertedNode
+     *            The node in that the element shall be selected and asserted.
+     * @param xpathElement
+     *            The Xpath to the element that shall be asserted.
+     * @param xpathGroup
+     *            The Xpath to the group of the elements that shall be asserted.
+     * @param hrefBase
+     *            The base value the href value. This value together with the object id must match the value of the href
+     *            attribute in case of REST.<br/>
+     *            If this value is <code>null</code>, this assertion is skipped.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
      *         element. In case of SOAP, the returned href and title values are <code>null</code>.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String[] assertReferencingGroupElements(
         final String message, final Node expectedNode, final Node toBeAssertedNode, final String xpathElement,
@@ -2110,16 +2345,22 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts that the selected element is a valid root element.
-     *
-     * @param message                The assertion failed message.
-     * @param node                   The node in that the element shall be selected and asserted.
-     * @param xpath                  The Xpath to the element that shall be asserted.
-     * @param hrefBase               The base value the href value. This value together with the object id must match
-     *                               the value of the href attribute in case of REST. It must not be <code>null</code>.
-     * @param timestampBeforeLastMod A Timestamp that must be before the reported last modification date. If this is
-     *                               <code>null</code>, this assertion is skipped.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param node
+     *            The node in that the element shall be selected and asserted.
+     * @param xpath
+     *            The Xpath to the element that shall be asserted.
+     * @param hrefBase
+     *            The base value the href value. This value together with the object id must match the value of the href
+     *            attribute in case of REST. It must not be <code>null</code>.
+     * @param timestampBeforeLastMod
+     *            A Timestamp that must be before the reported last modification date. If this is <code>null</code>,
+     *            this assertion is skipped.
      * @return Returns an array containing the object id and the last modification date of the referenced element.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String[] assertRootElement(
         final String message, final Node node, final String xpath, final String hrefBase,
@@ -2137,13 +2378,18 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Checks last modification date.
-     *
-     * @param msg                    The message.
-     * @param node                   Document to be checked.
-     * @param xpath                  XPath to element to be checked.
-     * @param timestampBeforeLastMod The timestamp before last modification.
+     * 
+     * @param msg
+     *            The message.
+     * @param node
+     *            Document to be checked.
+     * @param xpath
+     *            XPath to element to be checked.
+     * @param timestampBeforeLastMod
+     *            The timestamp before last modification.
      * @return The current timestamp.
-     * @throws Exception If an error occures.
+     * @throws Exception
+     *             If an error occures.
      */
     public String assertLastModificationDate(
         final String msg, final Node node, final String xpath, final String timestampBeforeLastMod) throws Exception {
@@ -2159,18 +2405,23 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the selected element is a valid properties element of a resource. <br/> The resource may or may not
-     * be under version control, as this method only checks creation-date and created-by elements. This method asserts
-     * the commonly used property elements created-by and modified-by. Further checks have to be implemented by the
-     * subclasses.
-     *
-     * @param message                 The assertion failed message.
-     * @param node                    The node in that the element shall be selected and asserted.
-     * @param xpath                   The Xpath to the element that shall be asserted.
-     * @param timestampBeforeCreation A Timestamp that must be before the reported creation date. If this is
-     *                                <code>null</code>, this assertion is skipped.
+     * Asserts that the selected element is a valid properties element of a resource. <br/>
+     * The resource may or may not be under version control, as this method only checks creation-date and created-by
+     * elements. This method asserts the commonly used property elements created-by and modified-by. Further checks have
+     * to be implemented by the subclasses.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param node
+     *            The node in that the element shall be selected and asserted.
+     * @param xpath
+     *            The Xpath to the element that shall be asserted.
+     * @param timestampBeforeCreation
+     *            A Timestamp that must be before the reported creation date. If this is <code>null</code>, this
+     *            assertion is skipped.
      * @return Returns an array containing the creation date and the objid of the created-by element.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String[] assertPropertiesElement(
         final String message, final Node node, final String xpath, final String timestampBeforeCreation)
@@ -2197,18 +2448,23 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the selected element is a valid properties element of a resource that is not under version
-     * control.<br/> In addition to the method <code>assertPropertiesElement</code>, this method checks the modified-by
-     * element and additionally returns the modified-by objid.
-     *
-     * @param message                 The assertion failed message.
-     * @param node                    The node in that the element shall be selected and asserted.
-     * @param xpath                   The Xpath to the element that shall be asserted.
-     * @param timestampBeforeCreation A Timestamp that must be before the reported creation date. If this is
-     *                                <code>null</code>, this assertion is skipped.
+     * Asserts that the selected element is a valid properties element of a resource that is not under version control.<br/>
+     * In addition to the method <code>assertPropertiesElement</code>, this method checks the modified-by element and
+     * additionally returns the modified-by objid.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param node
+     *            The node in that the element shall be selected and asserted.
+     * @param xpath
+     *            The Xpath to the element that shall be asserted.
+     * @param timestampBeforeCreation
+     *            A Timestamp that must be before the reported creation date. If this is <code>null</code>, this
+     *            assertion is skipped.
      * @return Returns an array containing the creation date, the objid of the created-by element, and the objid of the
      *         modified-by element.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String[] assertPropertiesElementUnversioned(
         final String message, final Node node, final String xpath, final String timestampBeforeCreation)
@@ -2227,16 +2483,21 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the selected element is a valid properties element of a resource. <br/> The resource may or may not
-     * be under version control, as this method only checks creation-date and created-by elements. This method asserts
-     * the commonly used property elements created-by and modified-by. Further checks have to be implemented by the
-     * subclasses.
-     *
-     * @param message              The assertion failed message.
-     * @param node                 The node in that the element shall be selected and asserted.
-     * @param xpath                The Xpath to the element that shall be asserted.
-     * @param expectedElementValue expectedElementValue.
-     * @throws Exception Thrown if anything fails.
+     * Asserts that the selected element is a valid properties element of a resource. <br/>
+     * The resource may or may not be under version control, as this method only checks creation-date and created-by
+     * elements. This method asserts the commonly used property elements created-by and modified-by. Further checks have
+     * to be implemented by the subclasses.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param node
+     *            The node in that the element shall be selected and asserted.
+     * @param xpath
+     *            The Xpath to the element that shall be asserted.
+     * @param expectedElementValue
+     *            expectedElementValue.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public void assertElementEquals(
         final String message, final Node node, final String xpath, final String expectedElementValue) throws Exception {
@@ -2251,15 +2512,18 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the root element from the document.<br/> This method takes the provided transport
-     * definition to decide if the objid value has to be extracted from the href attribute of the root element (REST) or
-     * can be taken from the objid attribute of the root element (SOAP).
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param document  The document to retrieve the value from.
+     * Gets the objid value of the root element from the document.<br/>
+     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
+     * href attribute of the root element (REST) or can be taken from the objid attribute of the root element (SOAP).
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param document
+     *            The document to retrieve the value from.
      * @return Returns the attribute value.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String getObjidValue(final int transport, final Document document) throws Exception {
 
@@ -2274,14 +2538,18 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the element selected in the provided node.<br/> This method takes the set transport
-     * definition for this instance to decide if the objid value has to be extracted from the href attribute of the
-     * selected element (REST) or can be taken from the objid attribute of the selected element (SOAP).
-     *
-     * @param node  The node to select an element from.
-     * @param xpath The xpath to select the element in the provided node.
+     * Gets the objid value of the element selected in the provided node.<br/>
+     * This method takes the set transport definition for this instance to decide if the objid value has to be extracted
+     * from the href attribute of the selected element (REST) or can be taken from the objid attribute of the selected
+     * element (SOAP).
+     * 
+     * @param node
+     *            The node to select an element from.
+     * @param xpath
+     *            The xpath to select the element in the provided node.
      * @return Returns the attribute value.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     public String getObjidValue(final Node node, final String xpath) throws Exception {
@@ -2290,14 +2558,18 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid values of the elements selected in the provided node.<br/> This method takes the set transport
-     * definition for this instance to decide if the objid value has to be extracted from the href attribute of the
-     * selected element (REST) or can be taken from the objid attribute of the selected element (SOAP).
-     *
-     * @param node  The node to select an element from.
-     * @param xpath The xpath to select the element in the provided node.
+     * Gets the objid values of the elements selected in the provided node.<br/>
+     * This method takes the set transport definition for this instance to decide if the objid value has to be extracted
+     * from the href attribute of the selected element (REST) or can be taken from the objid attribute of the selected
+     * element (SOAP).
+     * 
+     * @param node
+     *            The node to select an element from.
+     * @param xpath
+     *            The xpath to select the element in the provided node.
      * @return Returns the attribute values as String[].
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String[] getObjidValues(final Node node, final String xpath) throws Exception {
 
@@ -2305,16 +2577,21 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the element selected in the provided node.<br/> This method takes the provided transport
-     * definition to decide if the objid value has to be extracted from the href attribute of the selected element
-     * (REST) or can be taken from the objid attribute of the selected element (SOAP).
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param node      The node to select an element from.
-     * @param xpath     The xpath to select the element in the provided node.
+     * Gets the objid value of the element selected in the provided node.<br/>
+     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
+     * href attribute of the selected element (REST) or can be taken from the objid attribute of the selected element
+     * (SOAP).
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param node
+     *            The node to select an element from.
+     * @param xpath
+     *            The xpath to select the element in the provided node.
      * @return Returns the attribute value.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String getObjidValue(final int transport, final Node node, final String xpath) throws Exception {
 
@@ -2339,16 +2616,21 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid values of the elements selected in the provided node.<br/> This method takes the provided
-     * transport definition to decide if the objid value has to be extracted from the href attribute of the selected
-     * element (REST) or can be taken from the objid attribute of the selected element (SOAP).
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param node      The node to select an element from.
-     * @param xpath     The xpath to select the element in the provided node.
+     * Gets the objid values of the elements selected in the provided node.<br/>
+     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
+     * href attribute of the selected element (REST) or can be taken from the objid attribute of the selected element
+     * (SOAP).
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param node
+     *            The node to select an element from.
+     * @param xpath
+     *            The xpath to select the element in the provided node.
      * @return Returns the attribute values as String[].
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String[] getObjidValues(final int transport, final Node node, final String xpath) throws Exception {
 
@@ -2385,13 +2667,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts the created-by element.
-     *
-     * @param message          The assertion failed message.
-     * @param expectedNode     The node that shall be used to check the toBeAssertedNode.
-     * @param toBeAssertedNode The node that shall be asserted.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param expectedNode
+     *            The node that shall be used to check the toBeAssertedNode.
+     * @param toBeAssertedNode
+     *            The node that shall be asserted.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
      *         element. In case of SOAP, the returned href and title values are <code>null</code>.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String[] assertCreatedBy(final String message, final Node expectedNode, final Node toBeAssertedNode)
         throws Exception {
@@ -2404,13 +2690,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts the modified-by element.
-     *
-     * @param message          The assertion failed message.
-     * @param expectedNode     The node that shall be used to check the toBeAssertedNode.
-     * @param toBeAssertedNode The node that shall be asserted.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param expectedNode
+     *            The node that shall be used to check the toBeAssertedNode.
+     * @param toBeAssertedNode
+     *            The node that shall be asserted.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
      *         element. In case of SOAP, the returned href and title values are <code>null</code>.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String[] assertModifiedBy(final String message, final Node expectedNode, final Node toBeAssertedNode)
         throws Exception {
@@ -2422,13 +2712,16 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the created-by element.<br/> This method takes the set transport definition for this
-     * instance to decide if the objid value has to be extracted from the href attribute of the created-by element
-     * (REST) or can be taken from the objid attribute of the created-by element (SOAP).
-     *
-     * @param node The node to select an element from.
+     * Gets the objid value of the created-by element.<br/>
+     * This method takes the set transport definition for this instance to decide if the objid value has to be extracted
+     * from the href attribute of the created-by element (REST) or can be taken from the objid attribute of the
+     * created-by element (SOAP).
+     * 
+     * @param node
+     *            The node to select an element from.
      * @return Returns the objid value.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String getCreatedByObjidValue(final Node node) throws Exception {
 
@@ -2436,15 +2729,19 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the created-by element.<br/> This method takes the provided transport definition to
-     * decide if the objid value has to be extracted from the href attribute of the created-by element (REST) or can be
-     * taken from the objid attribute of the created-by element (SOAP).
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param node      The node to select an element from.
+     * Gets the objid value of the created-by element.<br/>
+     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
+     * href attribute of the created-by element (REST) or can be taken from the objid attribute of the created-by
+     * element (SOAP).
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param node
+     *            The node to select an element from.
      * @return Returns the objid value.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String getCreatedByObjidValue(final int transport, final Node node) throws Exception {
 
@@ -2452,13 +2749,16 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the modified-by element.<br/> This method takes the set transport definition for this
-     * instance to decide if the objid value has to be extracted from the href attribute of the modified-by element
-     * (REST) or can be taken from the objid attribute of the modified-by element (SOAP).
-     *
-     * @param node The node to select an element from.
+     * Gets the objid value of the modified-by element.<br/>
+     * This method takes the set transport definition for this instance to decide if the objid value has to be extracted
+     * from the href attribute of the modified-by element (REST) or can be taken from the objid attribute of the
+     * modified-by element (SOAP).
+     * 
+     * @param node
+     *            The node to select an element from.
      * @return Returns the objid value.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String getModifiedByObjidValue(final Node node) throws Exception {
 
@@ -2466,15 +2766,19 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the modified-by element.<br/> This method takes the provided transport definition to
-     * decide if the objid value has to be extracted from the href attribute of the modified element (REST) or can be
-     * taken from the objid attribute of the modified element (SOAP).
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param node      The node to select an element from.
+     * Gets the objid value of the modified-by element.<br/>
+     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
+     * href attribute of the modified element (REST) or can be taken from the objid attribute of the modified element
+     * (SOAP).
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param node
+     *            The node to select an element from.
      * @return Returns the objid value.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String getModifiedByObjidValue(final int transport, final Node node) throws Exception {
 
@@ -2482,14 +2786,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Fixes the attributes of the selected "link" nodes for usage with the SOAP interface. <br/> This method takes the
-     * set transport definition for this instance to decide if nothing has to be done (REST) or if the xlink attributes
-     * have to be removed and an appropriate objid attribute has to be added (SOAP).
-     *
-     * @param document The document from which the nodes shall be selected and fixed.
-     * @param xpath    The xpath expression to select the nodes that shall be fixed.
+     * Fixes the attributes of the selected "link" nodes for usage with the SOAP interface. <br/>
+     * This method takes the set transport definition for this instance to decide if nothing has to be done (REST) or if
+     * the xlink attributes have to be removed and an appropriate objid attribute has to be added (SOAP).
+     * 
+     * @param document
+     *            The document from which the nodes shall be selected and fixed.
+     * @param xpath
+     *            The xpath expression to select the nodes that shall be fixed.
      * @return Returns the provided document.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public Document fixLinkAttributes(final Document document, final String xpath) throws Exception {
 
@@ -2497,14 +2804,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Fixes the attributes of the selected "namespace" nodes for usage with the SOAP interface. <br/> This method takes
-     * the set transport definition for this instance to decide if nothing has to be done (REST) or if the xlink
-     * namespace and xml:base have to be removed.
-     *
-     * @param document The document from which the nodes shall be selected and fixed.
-     * @param xpath    The xpath expression to select the nodes that shall be fixed.
+     * Fixes the attributes of the selected "namespace" nodes for usage with the SOAP interface. <br/>
+     * This method takes the set transport definition for this instance to decide if nothing has to be done (REST) or if
+     * the xlink namespace and xml:base have to be removed.
+     * 
+     * @param document
+     *            The document from which the nodes shall be selected and fixed.
+     * @param xpath
+     *            The xpath expression to select the nodes that shall be fixed.
      * @return Returns the provided document.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public Document fixNamespaceAttributes(final Document document, final String xpath) throws Exception {
 
@@ -2512,16 +2822,20 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Fixes the attributes of the selected "link" nodes for usage with the SOAP interface. <br/> This method takes the
-     * provided transport definition to decide if nothing has to be done (REST) or if the xlink attributes have to be
-     * removed and an appropriate objid attribute has to be added (SOAP).
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param document  The document from which the nodes shall be selected and fixed.
-     * @param xpath     The xpath expression to select the nodes that shall be fixed.
+     * Fixes the attributes of the selected "link" nodes for usage with the SOAP interface. <br/>
+     * This method takes the provided transport definition to decide if nothing has to be done (REST) or if the xlink
+     * attributes have to be removed and an appropriate objid attribute has to be added (SOAP).
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param document
+     *            The document from which the nodes shall be selected and fixed.
+     * @param xpath
+     *            The xpath expression to select the nodes that shall be fixed.
      * @return Returns the provided document.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public static Document fixSoapLinkAttributes(final int transport, final Document document, final String xpath)
         throws Exception {
@@ -2548,16 +2862,20 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Fixes the attributes of the selected "namespace" nodes for usage with the SOAP interface. <br/> This method takes
-     * the provided transport definition to decide if nothing has to be done (REST) or if the xlink namespace and
-     * xml:base have to be removed.
-     *
-     * @param transport Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or {@link
-     *                  Constants.TRANSPORT_SOAP}.
-     * @param document  The document from which the nodes shall be selected and fixed.
-     * @param xpath     The xpath expression to select the nodes that shall be fixed.
+     * Fixes the attributes of the selected "namespace" nodes for usage with the SOAP interface. <br/>
+     * This method takes the provided transport definition to decide if nothing has to be done (REST) or if the xlink
+     * namespace and xml:base have to be removed.
+     * 
+     * @param transport
+     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
+     *            {@link Constants.TRANSPORT_SOAP}.
+     * @param document
+     *            The document from which the nodes shall be selected and fixed.
+     * @param xpath
+     *            The xpath expression to select the nodes that shall be fixed.
      * @return Returns the provided document.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public static Document fixSoapNamespaceAttributes(final int transport, final Document document, final String xpath)
         throws Exception {
@@ -2607,31 +2925,38 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts that a container holding a list of references is as expected.
-     *
-     * @param message                The assertion failed message.
-     * @param expected               The node in that the element shall be selected and used to check it against the
-     *                               toBeAsserted node. This parameetr may be <code>null</code>. In this case, it is
-     *                               only asserted that the container holds valid references.
-     * @param toBeAsserted           The node in that the element shall be selected and asserted.
-     * @param xpath                  The xpath to the container holding the references in the provided nodes, e.g.
-     *                               /organizational-unit/parent-ous in case of a document holding an OU
-     *                               representation.
-     * @param childrenName           The name of the referencing elements in the container, e.g. parent-ou.
-     * @param hrefBaseOfContainer    The href base of the containier holding the references. If this is
-     *                               <code>null</code>, the container's xlink attributes (in case of REST) are not
-     *                               checked.
-     * @param isRoot                 The flag indicating if the container element is a root element (<code>true</code>)
-     *                               or not. If it is expected to be a root element, it is asserted using the
-     *                               <code>assertRootElement</code> method. If it is not a root element, only xlink
-     *                               attributes are asserted, if the parameter <code>hrefBaseOfContainer</code> is
-     *                               provided.
-     * @param timestampBeforeLastMod A timestap before the last modification, used to assert the root element in case of
-     *                               <code>isRoot</code> is <code>true</code>.
-     * @param hrefBaseOfReferenced   The href base of the references objects, e.g. /oum/organizational-unit if the
-     *                               container holds references to organizational units.
-     * @param sorted                 The flag indicating if the list is expected to be sorted ( <code>true</code>) or
-     *                               not.
-     * @throws Exception Thrown if anything fails.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param expected
+     *            The node in that the element shall be selected and used to check it against the toBeAsserted node.
+     *            This parameetr may be <code>null</code>. In this case, it is only asserted that the container holds
+     *            valid references.
+     * @param toBeAsserted
+     *            The node in that the element shall be selected and asserted.
+     * @param xpath
+     *            The xpath to the container holding the references in the provided nodes, e.g.
+     *            /organizational-unit/parent-ous in case of a document holding an OU representation.
+     * @param childrenName
+     *            The name of the referencing elements in the container, e.g. parent-ou.
+     * @param hrefBaseOfContainer
+     *            The href base of the containier holding the references. If this is <code>null</code>, the container's
+     *            xlink attributes (in case of REST) are not checked.
+     * @param isRoot
+     *            The flag indicating if the container element is a root element (<code>true</code>) or not. If it is
+     *            expected to be a root element, it is asserted using the <code>assertRootElement</code> method. If it
+     *            is not a root element, only xlink attributes are asserted, if the parameter
+     *            <code>hrefBaseOfContainer</code> is provided.
+     * @param timestampBeforeLastMod
+     *            A timestap before the last modification, used to assert the root element in case of
+     *            <code>isRoot</code> is <code>true</code>.
+     * @param hrefBaseOfReferenced
+     *            The href base of the references objects, e.g. /oum/organizational-unit if the container holds
+     *            references to organizational units.
+     * @param sorted
+     *            The flag indicating if the list is expected to be sorted ( <code>true</code>) or not.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public void assertListOfReferences(
         final String message, final Node expected, final Node toBeAsserted, final String xpath,
@@ -2714,17 +3039,21 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Asserts that the node selected from the provided node by the provided xpath is an RDF Description element as
      * expected.
-     *
-     * @param msg                     The error message.
-     * @param toBeAsserted            The node to be asserted.
-     * @param xPath                   The xpath to select the RDF Description Element to be asserted.
-     * @param expectedRdfResource     The expected rdf resource. If this is <code>null</code>, asserting the resource
-     *                                value is skipped.
-     * @param expectedRdfAboutBaseUri The expected base of the rdf about. If this is <code>null</code>, asserting the
-     *                                base value is skipped.
-     * @param expectedRdfAbout        The expected rdf about. If this is <code>null</code>, asserting the about value is
-     *                                skipped.
-     * @throws Exception Thrown if anything fails.
+     * 
+     * @param msg
+     *            The error message.
+     * @param toBeAsserted
+     *            The node to be asserted.
+     * @param xPath
+     *            The xpath to select the RDF Description Element to be asserted.
+     * @param expectedRdfResource
+     *            The expected rdf resource. If this is <code>null</code>, asserting the resource value is skipped.
+     * @param expectedRdfAboutBaseUri
+     *            The expected base of the rdf about. If this is <code>null</code>, asserting the base value is skipped.
+     * @param expectedRdfAbout
+     *            The expected rdf about. If this is <code>null</code>, asserting the about value is skipped.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public void assertRDFDescription(
         final String msg, final Node toBeAsserted, final String xPath, final String expectedRdfResource,
@@ -2753,9 +3082,11 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Asserts the description nodes of the provided document. The description node of the provided node are selected
      * using the XPATH_RDF_DESCRIPTION.
-     *
-     * @param toBeAssertedNode    The Node to be asserted.
-     * @param expectedRdfResource The expected rdf resource. If this is null, asserting the resource value is skipped.
+     * 
+     * @param toBeAssertedNode
+     *            The Node to be asserted.
+     * @param expectedRdfResource
+     *            The expected rdf resource. If this is null, asserting the resource value is skipped.
      */
     public void assertRdfDescriptions(final Node toBeAssertedNode, final String expectedRdfResource) throws Exception,
         TransformerException {
@@ -2777,12 +3108,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts if only the values provided in the set occur in the elements defined by the xpath-expression.
-     *
-     * @param xml            xml.
-     * @param xpath          xpath-expression
-     * @param values         the values that may occur
-     * @param getIdAttribute if true: get the id-attribute of the element dependent of the transport
-     * @throws Exception e
+     * 
+     * @param xml
+     *            xml.
+     * @param xpath
+     *            xpath-expression
+     * @param values
+     *            the values that may occur
+     * @param getIdAttribute
+     *            if true: get the id-attribute of the element dependent of the transport
+     * @throws Exception
+     *             e
      */
     public void assertAllowedXpathValues(
         final String xml, final String xpath, final List<String> values, final boolean getIdAttribute) throws Exception {
@@ -2814,13 +3150,19 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts if the elements requested by the xPath are sorted correctly.
-     *
-     * @param xml               xml.
-     * @param xpath             xpath-expression
-     * @param prerequisiteXpath prerequisite xpath-expression
-     * @param isAscending       if sort-order is ascending
-     * @param getIdAttribute    if true: get the id-attribute of the element dependent of the transport
-     * @throws Exception e
+     * 
+     * @param xml
+     *            xml.
+     * @param xpath
+     *            xpath-expression
+     * @param prerequisiteXpath
+     *            prerequisite xpath-expression
+     * @param isAscending
+     *            if sort-order is ascending
+     * @param getIdAttribute
+     *            if true: get the id-attribute of the element dependent of the transport
+     * @throws Exception
+     *             e
      */
     public void assertSorted(
         final String xml, final String xpath, final String prerequisiteXpath, final boolean isAscending,
@@ -2876,11 +3218,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts the number of nodesreturned by the given xpath-expression .
-     *
-     * @param xml   xml.
-     * @param xpath xpath-expression
-     * @param count expected nodeCount
-     * @throws Exception e
+     * 
+     * @param xml
+     *            xml.
+     * @param xpath
+     *            xpath-expression
+     * @param count
+     *            expected nodeCount
+     * @throws Exception
+     *             e
      */
     public void assertNodeCount(final String xml, final String xpath, final int count) throws Exception {
 
@@ -2890,8 +3236,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Retrieve the stack trace from the provided exception and returns it in a <code>String</code>.
-     *
-     * @param e The exception to retrieve the stack trace from.
+     * 
+     * @param e
+     *            The exception to retrieve the stack trace from.
      * @return Returns the stack trace in a <code>String</code>.
      */
     public static String getStackTrace(final Exception e) {
@@ -2904,26 +3251,29 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts that the provided xml data is valid for a staging file.
-     *
-     * @param toBeAsserted The xml data to be asserted.
-     * @throws Exception If anything fails.
+     * 
+     * @param toBeAsserted
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
      */
     public static void assertXmlValidStagingFile(final String toBeAsserted) throws Exception {
 
         if (EscidocTestBase.stagingFileSchema == null) {
             EscidocTestBase.stagingFileSchema =
-                EscidocTestBase.getSchema("http://" + Constants.HOST_PORT
-                    + "/xsd/rest/staging-file/0.3/staging-file.xsd");
+                EscidocTestBase.getSchema(getFrameworkUrl() + "/xsd/rest/staging-file/0.3/staging-file.xsd");
         }
         EscidocTestBase.assertXmlValid(toBeAsserted, EscidocTestBase.stagingFileSchema);
     }
 
     /**
      * Retrieve a Template as a String.
-     *
-     * @param path The Path of the Template.
+     * 
+     * @param path
+     *            The Path of the Template.
      * @return The String representation of the Template.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String getTemplateAsString(final URL path) throws Exception {
         InputStream is = null;
@@ -2951,11 +3301,13 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Loading template from example directory.
-     *
-     * @param filename The name of the file.
+     * 
+     * @param filename
+     *            The name of the file.
      * @return The file content as String.
-     * @throws IOException Thrown if the file with the provided name was not found under the location of example files
-     *                     or if reading the file content to String failed.
+     * @throws IOException
+     *             Thrown if the file with the provided name was not found under the location of example files or if
+     *             reading the file content to String failed.
      */
     public String getExampleTemplate(final String filename) throws Exception {
 
@@ -2966,11 +3318,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Retrieve a Template as a String.
-     *
-     * @param path         The Path of the Template.
-     * @param templateName The name of the template.
+     * 
+     * @param path
+     *            The Path of the Template.
+     * @param templateName
+     *            The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static String getTemplateAsString(final String path, final String templateName) throws Exception {
 
@@ -3000,9 +3355,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Obtain the real path to template/file.
-     *
+     * 
      * @return File handler
-     * @throws Exception Thrown if file is not readable.
+     * @throws Exception
+     *             Thrown if file is not readable.
      */
     private static File getTemplatePath(final String path, final String templateName) throws Exception {
 
@@ -3021,11 +3377,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Retrieve a Template as a Document.<br> The used parser is NOT namespace aware!
-     *
-     * @param path The Path of the Template.
+     * Retrieve a Template as a Document.<br>
+     * The used parser is NOT namespace aware!
+     * 
+     * @param path
+     *            The Path of the Template.
      * @return The String representation of the Template.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static Document getTemplateAsDocument(final URL path) throws Exception {
 
@@ -3033,12 +3392,16 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Retrieve a Template as a Document.<br> The used parser is NOT namespace aware!
-     *
-     * @param path         The Path of the Template.
-     * @param templateName The name of the template.
+     * Retrieve a Template as a Document.<br>
+     * The used parser is NOT namespace aware!
+     * 
+     * @param path
+     *            The Path of the Template.
+     * @param templateName
+     *            The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static Document getTemplateAsDocument(final String path, final String templateName) throws Exception {
 
@@ -3046,11 +3409,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Parse the given xml InputStream into a Document.<br> This is NOT done namespace aware!
-     *
-     * @param xml The xml String.
+     * Parse the given xml InputStream into a Document.<br>
+     * This is NOT done namespace aware!
+     * 
+     * @param xml
+     *            The xml String.
      * @return The Document.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static Document getDocument(final InputStream xml) throws Exception {
 
@@ -3064,11 +3430,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Parse the given xml String into a Document.<br> This is NOT done namespace aware!
-     *
-     * @param xml The xml String.
+     * Parse the given xml String into a Document.<br>
+     * This is NOT done namespace aware!
+     * 
+     * @param xml
+     *            The xml String.
      * @return The Document.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static Document getDocument(final String xml) throws Exception {
 
@@ -3076,13 +3445,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Parse the given xml String into a Document.<br> This is NOT done namespace aware!
-     *
-     * @param xml              The xml String.
-     * @param failOnParseError A flag indicating if method shall fail in case of a parse error (<code>true</code>) or if
-     *                         the parse exception shall be thrown (<code>false</code>).
+     * Parse the given xml String into a Document.<br>
+     * This is NOT done namespace aware!
+     * 
+     * @param xml
+     *            The xml String.
+     * @param failOnParseError
+     *            A flag indicating if method shall fail in case of a parse error (<code>true</code>) or if the parse
+     *            exception shall be thrown (<code>false</code>).
      * @return The Document.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public static Document getDocument(final String xml, final boolean failOnParseError) throws Exception {
 
@@ -3118,8 +3491,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Fails due to an unexpected exception.
-     *
-     * @param e The unexpected exception.
+     * 
+     * @param e
+     *            The unexpected exception.
      */
     public static void failException(final Exception e) {
         failException("Unexpected exception. ", e);
@@ -3127,9 +3501,11 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Fails due to an unexpected exception.
-     *
-     * @param message The message.
-     * @param e       The unexpected exception.
+     * 
+     * @param message
+     *            The message.
+     * @param e
+     *            The unexpected exception.
      */
     public static void failException(final String message, final Exception e) {
         LOGGER.error("test failed due to an unexpected exception: " + e);
@@ -3143,8 +3519,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Fails due to a missing exception.
-     *
-     * @param exceptionClass The expected exception type.
+     * 
+     * @param exceptionClass
+     *            The expected exception type.
      */
     public static void failMissingException(final Class exceptionClass) {
         failMissingException("Missing exception. ", exceptionClass);
@@ -3152,9 +3529,11 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Fails due to a missing exception.
-     *
-     * @param message        The message.
-     * @param exceptionClass The expected exception type.
+     * 
+     * @param message
+     *            The message.
+     * @param exceptionClass
+     *            The expected exception type.
      */
     public static void failMissingException(final String message, final Class exceptionClass) {
 
@@ -3165,12 +3544,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the exception is of expected type<br> This method compares the provided ecpected class with the
-     * class of the provided exception.
-     *
-     * @param message       The message printed in case of failed assertion.
-     * @param expectedClass The expected type.
-     * @param e             The exception to be asserted.
+     * Asserts that the exception is of expected type<br>
+     * This method compares the provided ecpected class with the class of the provided exception.
+     * 
+     * @param message
+     *            The message printed in case of failed assertion.
+     * @param expectedClass
+     *            The expected type.
+     * @param e
+     *            The exception to be asserted.
      */
     public static void assertExceptionType(final String message, final Class expectedClass, final Exception e) {
 
@@ -3187,11 +3569,13 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the exception is of expected type<br> This method compares the provided ecpected class with the
-     * class of the provided exception.
-     *
-     * @param expectedClass The expected type.
-     * @param e             The exception to be asserted.
+     * Asserts that the exception is of expected type<br>
+     * This method compares the provided ecpected class with the class of the provided exception.
+     * 
+     * @param expectedClass
+     *            The expected type.
+     * @param e
+     *            The exception to be asserted.
      */
     public static void assertExceptionType(final Class expectedClass, final Exception e) {
 
@@ -3200,9 +3584,11 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Adds the stack trace to the provided string buffer, if debug logging level is enabled.
-     *
-     * @param msg The StringBuffer to append the stack trace to.
-     * @param e   The exception for that the stack trace shall be appended.
+     * 
+     * @param msg
+     *            The StringBuffer to append the stack trace to.
+     * @param e
+     *            The exception for that the stack trace shall be appended.
      */
     private static void appendStackTrace(final StringBuffer msg, final Exception e) {
 
@@ -3214,9 +3600,11 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the xml representation of a filter criteria with the specified name and value.
-     *
-     * @param filterName  The name of the filter.
-     * @param filterValue The value of the filter. if this is <code>null</code>, an empty filter element is returned.
+     * 
+     * @param filterName
+     *            The name of the filter.
+     * @param filterValue
+     *            The value of the filter. if this is <code>null</code>, an empty filter element is returned.
      * @return Returns the filter element.
      */
     public static String getFilter(final String filterName, final String filterValue) {
@@ -3231,10 +3619,12 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the xml representation of a order-by specification with the specified name and sorting.
-     *
-     * @param orderByPredicate The name of the predicate used for ordering.
-     * @param ascending        Flag indicating if ascending (<code>true</code>) or descendinf (<code>false</code>)
-     *                         sorting shall be performed.
+     * 
+     * @param orderByPredicate
+     *            The name of the predicate used for ordering.
+     * @param ascending
+     *            Flag indicating if ascending (<code>true</code>) or descendinf (<code>false</code>) sorting shall be
+     *            performed.
      * @return Returns the order-by element.
      */
     public static String getOrderBy(final String orderByPredicate, final boolean ascending) {
@@ -3249,8 +3639,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the xml representation of an offset specification with the specified value.
-     *
-     * @param offset The offset value.
+     * 
+     * @param offset
+     *            The offset value.
      * @return Returns the offset element.
      */
     public static String getOffset(final int offset) {
@@ -3260,8 +3651,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the xml representation of a limit specification with the specified value.
-     *
-     * @param limit The limit value.
+     * 
+     * @param limit
+     *            The limit value.
      * @return Returns the limit element.
      */
     public static String getLimit(final int limit) {
@@ -3271,10 +3663,12 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Get the status of the Object (Item/Container).
-     *
-     * @param objid The object Id.
+     * 
+     * @param objid
+     *            The object Id.
      * @return Status of the Object.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String getObjectStatus(final String objid) throws Exception {
 
@@ -3289,8 +3683,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Select the Version Number from the object Identifier.
-     *
-     * @param objid The object Id.
+     * 
+     * @param objid
+     *            The object Id.
      * @return The version number as String or null if no number could be recognized.
      */
     public String getVersionNumber(final String objid) {
@@ -3304,9 +3699,11 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * replaces the id of the root-element from given xml with given primKey.
-     *
-     * @param xml     String xml
-     * @param primKey String primKey
+     * 
+     * @param xml
+     *            String xml
+     * @param primKey
+     *            String primKey
      * @return Returns the replacedXml.
      */
     public String replacePrimKey(final String xml, final String primKey) {
@@ -3322,13 +3719,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Test logging in an user.
-     *
-     * @param loginName              The login name of the user.
-     * @param password               The password of the user.
-     * @param encodeTargetUrlSlashes Flag indicating that the slashes contained in the targetUrl shall be encoded
-     *                               (<code>true</code>) or shall not be encoded ( <code>false</code>).
+     * 
+     * @param loginName
+     *            The login name of the user.
+     * @param password
+     *            The password of the user.
+     * @param encodeTargetUrlSlashes
+     *            Flag indicating that the slashes contained in the targetUrl shall be encoded (<code>true</code>) or
+     *            shall not be encoded ( <code>false</code>).
      * @return The eSciDoc user handle.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String login(final String loginName, final String password, final boolean encodeTargetUrlSlashes)
         throws Exception {
@@ -3370,8 +3771,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Download file an save as temp.
-     *
-     * @param url URL to file
+     * 
+     * @param url
+     *            URL to file
      * @return File handler for temporary file.
      */
     public File downloadTempFile(final URL url) throws IOException, FileNotFoundException {

@@ -3753,8 +3753,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
             //Check status-code when requesting resource with invalid handle
             String httpUrl =
-                Constants.PROTOCOL + "://" + Constants.HOST_PORT + Constants.ROLE_BASE_URI + "/"
-                    + getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR);
+                getFrameworkUrl() + Constants.ROLE_BASE_URI + "/" + getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR);
 
             int statusCode = getStatusCode(httpUrl);
             if (statusCode != HttpServletResponse.SC_FOUND) {

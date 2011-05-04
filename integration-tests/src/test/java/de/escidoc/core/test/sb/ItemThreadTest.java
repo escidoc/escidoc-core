@@ -101,8 +101,7 @@ public class ItemThreadTest extends SearchTestBase {
      */
     @Test
     public void testServlet() throws Exception {
-        HttpRequester requester =
-            new HttpRequester(Constants.PROTOCOL + "://" + Constants.HOST_PORT + "/fedoradeviation/describe", "mih:mih");
+        HttpRequester requester = new HttpRequester(getFrameworkUrl() + "/fedoradeviation/describe", "mih:mih");
         String response = requester.doGet("");
     }
 

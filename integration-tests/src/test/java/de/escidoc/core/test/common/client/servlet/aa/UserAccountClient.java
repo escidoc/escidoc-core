@@ -30,6 +30,7 @@ package de.escidoc.core.test.common.client.servlet.aa;
 
 import de.escidoc.core.aa.UserAccountHandler;
 import de.escidoc.core.aa.UserAccountHandlerServiceLocator;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -298,7 +299,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      */
     public HttpResponse login(final String login, final String password) throws Exception {
         HttpResponse result = null;
-        String url = HttpHelper.createUrl(Constants.PROTOCOL, Constants.HOST_PORT, Constants.UM_LOGIN_BASE_URI, "");
+        String url = EscidocTestBase.getFrameworkUrl() + Constants.UM_LOGIN_BASE_URI;
         NameValuePair[] param = new NameValuePair[THREE];
         NameValuePair loginParam = new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login);
 

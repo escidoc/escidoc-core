@@ -55,7 +55,7 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the search resource.
- *
+ * 
  * @author Michael Hoppe
  */
 @RunWith(value = Parameterized.class)
@@ -77,7 +77,8 @@ public class SearchTest extends SearchTestBase {
     private static String startTime = "";
 
     /**
-     * @param transport The transport identifier.
+     * @param transport
+     *            The transport identifier.
      */
     public SearchTest(final int transport) {
         super(transport);
@@ -87,8 +88,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -99,8 +101,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Clean up after servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -114,8 +117,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * insert item(s) into system for the tests.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     private void prepare() throws Exception {
         LOGGER.info("starting SearchTest at "
@@ -124,9 +128,8 @@ public class SearchTest extends SearchTestBase {
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
+                + urlParameters;
         HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
             null, null, null);
         // /////////////////////////////////////////////////////////////////////
@@ -279,17 +282,17 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * insert item(s) into system for the tests.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     private void prepareZip() throws Exception {
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-            HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
-                de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters);
+            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
+                + urlParameters;
         HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
             null, null, null);
         // /////////////////////////////////////////////////////////////////////
@@ -412,8 +415,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * explain operation without parameters for existing database xyz.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBEX1() throws Exception {
@@ -427,8 +431,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * explain operation where operation=explain for existing database xyz is explicitly given.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBEX2() throws Exception {
@@ -443,8 +448,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * explain operation with operation=explain for a not existing database zzz.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBEX3() throws Exception {
@@ -462,8 +468,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for a single term.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR1() throws Exception {
@@ -479,8 +486,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for a single term without Highlighting.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR1_1() throws Exception {
@@ -497,8 +505,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Database not existing.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR2() throws Exception {
@@ -515,8 +524,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter startRecord \u2013 (1).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR6() throws Exception {
@@ -531,8 +541,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter startrecord \u2013 (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR7() throws Exception {
@@ -551,8 +562,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter maximumRecords \u2013 (1).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR8() throws Exception {
@@ -568,8 +580,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter maximumRecords \u2013 (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR9() throws Exception {
@@ -591,8 +604,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter maximumRecords \u2013 (3).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR10() throws Exception {
@@ -610,8 +624,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordPacking \u2013 (1).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR11() throws Exception {
@@ -626,8 +641,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordPacking \u2013 (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR12() throws Exception {
@@ -641,8 +657,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordPacking \u2013 (3).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR13() throws Exception {
@@ -656,8 +673,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordSchema \u2013 (1).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR14() throws Exception {
@@ -672,8 +690,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter recordSchema \u2013 (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR15() throws Exception {
@@ -687,8 +706,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (1).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR16() throws Exception {
@@ -714,8 +734,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR17() throws Exception {
@@ -747,8 +768,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR171() throws Exception {
@@ -780,8 +802,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR172() throws Exception {
@@ -812,8 +835,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR173() throws Exception {
@@ -871,8 +895,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (3).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR18() throws Exception {
@@ -886,8 +911,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (4).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR19() throws Exception {
@@ -915,8 +941,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter sortKeys \u2013 (4).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR20() throws Exception {
@@ -944,8 +971,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Request parameter stylesheet \u2013 (1).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR21() throws Exception {
@@ -960,8 +988,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Request parameter stylesheet \u2013 (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR22() throws Exception {
@@ -976,8 +1005,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Boolean Operator AND.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR23() throws Exception {
@@ -995,8 +1025,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Boolean Operator OR .
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR24() throws Exception {
@@ -1014,8 +1045,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of * as Wildcard (1).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR25() throws Exception {
@@ -1024,8 +1056,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of * as Wildcard (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR26() throws Exception {
@@ -1039,8 +1072,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of * as Wildcard (3).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR27() throws Exception {
@@ -1054,8 +1088,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of ? as Wildcard (1).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR28() throws Exception {
@@ -1064,8 +1099,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of ? as Wildcard (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR29() throws Exception {
@@ -1079,8 +1115,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Use of ? as Wildcard (3) .
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR30() throws Exception {
@@ -1094,8 +1131,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Fuzzy Search.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR31() throws Exception {
@@ -1109,8 +1147,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Umlaut as request-parameter .
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR32() throws Exception {
@@ -1125,8 +1164,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : UTF-8 characters in fulltext as request-parameter .
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR33() throws Exception {
@@ -1141,8 +1181,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : UTF-8 characters as request-parameter .
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR34() throws Exception {
@@ -1158,8 +1199,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Availability of userdefined indexes for items.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR35() throws Exception {
@@ -1180,8 +1222,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Availability of userdefined indexes for container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR36() throws Exception {
@@ -1200,8 +1243,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Availability of properties indexes for item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR37() throws Exception {
@@ -1220,8 +1264,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Availability of properties indexes for container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR38() throws Exception {
@@ -1240,8 +1285,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Availability of component indexes for item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR39() throws Exception {
@@ -1260,8 +1306,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for a single term and check availability of version pids, see issue 370.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR40() throws Exception {
@@ -1292,8 +1339,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for all containers.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR41() throws Exception {
@@ -1306,8 +1354,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for all items.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR42() throws Exception {
@@ -1320,8 +1369,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.metadata 1.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR43() throws Exception {
@@ -1334,8 +1384,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.metadata 2.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR44() throws Exception {
@@ -1348,8 +1399,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.metadata 3.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR45() throws Exception {
@@ -1362,8 +1414,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.any-identifier 1.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR46() throws Exception {
@@ -1376,8 +1429,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.any-identifier 2.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR47() throws Exception {
@@ -1390,8 +1444,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for ISSN in escidoc.any-identifier 3.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR48() throws Exception {
@@ -1404,8 +1459,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for component-properties.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR49() throws Exception {
@@ -1418,8 +1474,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for component-properties.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR50() throws Exception {
@@ -1432,8 +1489,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for component-metadata.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR51() throws Exception {
@@ -1446,8 +1504,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for component-metadata.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR52() throws Exception {
@@ -1460,8 +1519,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Test searching for escidoc.most-recent-date.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR53() throws Exception {
@@ -1474,8 +1534,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Test searching for special signs.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR54() throws Exception {
@@ -1494,8 +1555,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Test searching for special signs.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR55() throws Exception {
@@ -1509,8 +1571,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Test searching for dates.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR56() throws Exception {
@@ -1524,8 +1587,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Test searching for phrase.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR57() throws Exception {
@@ -1538,8 +1602,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * : Test searching for phrase over field boundary.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSR58() throws Exception {
@@ -1552,8 +1617,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation without optional parameters.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSC1() throws Exception {
@@ -1567,8 +1633,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parameterresponse position (1).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSC2() throws Exception {
@@ -1588,8 +1655,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parameterresponse position (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSC3() throws Exception {
@@ -1605,8 +1673,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parameterresponse position (3).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSC4() throws Exception {
@@ -1625,8 +1694,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parametermaximum terms (1).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSC5() throws Exception {
@@ -1642,8 +1712,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parametermaximum terms (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSC6() throws Exception {
@@ -1662,8 +1733,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parameter stylesheet (1).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSC7() throws Exception {
@@ -1678,8 +1750,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * Operation with parameter stylesheet (2).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSBSC8() throws Exception {
@@ -1694,8 +1767,9 @@ public class SearchTest extends SearchTestBase {
 
     /**
      * withdraw items to delete from index.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     private void deprepare() throws Exception {
         // Withdraw
