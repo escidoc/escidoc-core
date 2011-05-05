@@ -271,6 +271,12 @@
       <variable name="ShibbolethOut" value="" condition="authMethodIsShibboleth" />
       <variable name="UpgradeEscidoc" value="true" condition="upgradeEscidoc" />
       <variable name="DatabaseIsOracle" value="true" condition="databaseIsOracle" />
+      <!-- static texts dependent on install/upgrade for user input panels -->
+      <variable name="EscidocDatabaseUserText" value="The datebase user specified here will be created by the installer and will be used at runtime for eSciDoc. This user should not have administrative privileges. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!" condition="installEscidoc" />
+      <variable name="EscidocDatabaseUserText" value="The datebase user specified here will be used at runtime for eSciDoc. This user should not have administrative privileges." condition="upgradeEscidoc" />
+      <variable name="SystemInspectorText" value="The System Inspector user is a read-only user, who may access all resources in the system. The System Inspector user is needed for infrastructure-internal purposes like indexing." condition="installEscidoc" />
+      <variable name="SystemInspectorText" value="Please enter the credentials of the System Inspector user." condition="upgradeEscidoc" />
+
     </dynamicvariables>
     
     <conditions>
@@ -335,10 +341,10 @@
         <panel classname="UserInputPanel" id="UserInputPanel.3" condition="installEscidoc+databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.4" condition="databaseIsPostgres" />
         <panel classname="UserInputPanel" id="UserInputPanel.5" condition="databaseIsOracle" />
-        <panel classname="UserInputPanel" id="UserInputPanel.6" condition="databaseIsPostgres">
+        <panel classname="UserInputPanel" id="UserInputPanel.6" condition="installEscidoc+databaseIsPostgres">
           <validator classname="JDBCValidator" />
         </panel>
-        <panel classname="UserInputPanel" id="UserInputPanel.7" condition="databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.7" condition="installEscidoc+databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.8" condition="databaseIsPostgres" />
         <panel classname="UserInputPanel" id="UserInputPanel.9" condition="databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.10" condition="databaseIsPostgres" />

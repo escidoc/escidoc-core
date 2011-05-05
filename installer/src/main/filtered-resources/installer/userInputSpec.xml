@@ -10,7 +10,7 @@
         <description align="left" txt="Would you like to install a new eSciDoc Infrastructure or rather upgrade an existing one?" />
         <spec>
           <choice txt="Install new eSciDoc infrastructure" value="install" set="true" />
-          <choice txt="Upgrade existing eSciDoc infrastructure (currently unsupported)" value="upgrade" />
+          <choice txt="Upgrade existing eSciDoc infrastructure" value="upgrade" />
         </spec>
       </field>
       <field type="space"/>
@@ -191,7 +191,7 @@
         <createForPack name="eSciDoc" />
         <field type="title" txt="eSciDoc Database User" bold="true" size="1" />
         <field type="divider" align="top"/>
-        <field type="staticText" align="left" txt="The datebase user specified here will be created by the installer and will be used at runtime for eSciDoc. This user should not have administrative privileges. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!" />
+        <field type="staticText" align="left" txt="$EscidocDatabaseUserText" />
         <field type="space"/>
         <!-- Username -->
         <field type="text" align="left" variable="DatabaseUsername">
@@ -216,7 +216,7 @@
         <createForPack name="eSciDoc" />
         <field type="title" txt="eSciDoc Database User" bold="true" size="1" />
         <field type="divider" align="top"/>
-        <field type="staticText" align="left" txt="The datebase user specified here will be created by the installer and will be used at runtime for eSciDoc. This user should not have administrative privileges. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!" />
+        <field type="staticText" align="left" txt="$EscidocDatabaseUserText" />
         <field type="space"/>
         <!-- Username -->
         <field type="text" align="left" variable="DatabaseUsername">
@@ -255,7 +255,7 @@
         <field type="divider" align="top"/>
         <field type="staticText" align="left" txt="The Fedora Administration User will be used to directly log on to Fedora and as an additional database user for Fedora-specific tables." />
         <field type="space"/>
-        <field type="staticText" align="left" txt="Typically, you will never need this user. The Fedora Administration User is mainly used within the eSciDoc Infrastructure. The email address may be used by Fedora to send error messages. It is not required." />
+        <field type="staticText" align="left" txt="Typically, you will never need this user. The Fedora Administration User is mainly used within the eSciDoc Infrastructure. The email address may be used by Fedora to send error messages." />
         <field type="space"/>
         <!-- Username -->
         <field type="text" align="left" variable="FedoraUsername">
@@ -418,7 +418,7 @@
         <field type="title" txt="User Credentials for System Inspector User" bold="true" size="1" />
         <field type="divider" align="top"/>
         <!-- Username -->
-        <field type="staticText" align="left" txt="The System Inspector user is a read-only user, who may access all resources in the system. The System Inspector user is needed for infrastructure-internal purposes like indexing." />
+        <field type="staticText" align="left" txt="$SystemInspectorText" />
         <field type="space"/>
         <field type="text" align="left" variable="InspectorUsername">
           <spec txt="System Inspector Username:" size="25" set="" />
