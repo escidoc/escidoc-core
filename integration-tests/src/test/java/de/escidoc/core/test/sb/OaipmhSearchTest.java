@@ -577,7 +577,7 @@ public class OaipmhSearchTest extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
             + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, "http://escidev5:8080/srw/searchRetrieveResponse.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/searchRetrieveResponse.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("3", getNumberOfHits(response));
@@ -593,7 +593,7 @@ public class OaipmhSearchTest extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
             + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, "http://escidev5:8080/srw/xyz.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/xyz.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("3", getNumberOfHits(response));
