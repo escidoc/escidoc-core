@@ -789,17 +789,17 @@
     <escidoc.database.name>escidoc-core</escidoc.database.name>
     <escidoc.database.user>escidoc</escidoc.database.user>
     <escidoc.database.password>escidoc</escidoc.database.password>
-    <escidoc.database.temp.tablespace>TEMP</escidoc.temp.tablespace>
+    <escidoc.database.temp.tablespace>TEMP</escidoc.database.temp.tablespace>
 
     <fedora.database.name>fedora3</fedora.database.name>
     <fedora.database.user>fedoraAdmin</fedora.database.user>
     <fedora.database.password>fedoraAdmin</fedora.database.password>
-    <fedora.database.temp.tablespace>TEMP</fedora.temp.tablespace>
+    <fedora.database.temp.tablespace>TEMP</fedora.database.temp.tablespace>
 
     <triplestore.database.name>riTriples</triplestore.database.name>
     <triplestore.database.user>riTriples</triplestore.database.user>
     <triplestore.database.password>riTriples</triplestore.database.password>
-    <triplestore.database.temp.tablespace>TEMP</triplestore.temp.tablespace>
+    <triplestore.database.temp.tablespace>TEMP</triplestore.database.temp.tablespace>
 
     <fedora.admin.user>fedoraAdmin</fedora.admin.user>
     <fedora.admin.password>fedoraAdmin</fedora.admin.password>
@@ -807,20 +807,20 @@
 	<escidoc.oracle.host>escidev5</escidoc.oracle.host>
 	<escidoc.oracle.port>1521</escidoc.oracle.port>
 	<escidoc.oracle.database>oraesci01</escidoc.oracle.database>
-	<escidoc.database.default.tablespace>escidoc</escidoc.default.tablespace>
+	<escidoc.database.default.tablespace>escidoc</escidoc.database.default.tablespace>
 	<fedora.oracle.database>oraesci01</fedora.oracle.database>
-	<fedora.database.default.tablespace>fedora</fedora.default.tablespace>
+	<fedora.database.default.tablespace>fedora</fedora.database.default.tablespace>
 	<triplestore.oracle.database>oraesci01</triplestore.oracle.database>
-	<triplestore.database.default.tablespace>triples</triplestore.default.tablespace>
+	<triplestore.database.default.tablespace>triples</triplestore.database.default.tablespace>
 
 	<!-- escidoc.oracle.host>localhost</escidoc.oracle.host>
 	<escidoc.oracle.port>1521</escidoc.oracle.port>
 	<escidoc.oracle.database>XE</escidoc.oracle.database>
-	<escidoc.database.default.tablespace>USERS</escidoc.default.tablespace>
+	<escidoc.database.default.tablespace>USERS</escidoc.database.default.tablespace>
 	<fedora.oracle.database>XE</fedora.oracle.database>
-	<fedora.database.default.tablespace>USERS</fedora.default.tablespace>
+	<fedora.database.default.tablespace>USERS</fedora.database.default.tablespace>
 	<triplestore.oracle.database>XE</triplestore.oracle.database>
-	<triplestore.database.default.tablespace>USERS</triplestore.default.tablespace -->
+	<triplestore.database.default.tablespace>USERS</triplestore.database.default.tablespace -->
   </properties>
 
   <dependencies>
