@@ -89,7 +89,6 @@
 				</xs:element>
 			</xs:sequence>
             <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
-            <xs:attributeGroup ref="common-types:eSciDocRootElementReadOnlyAttributes"/>
 		</xs:complexType>
 	</xs:element>
 
