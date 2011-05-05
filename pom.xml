@@ -784,46 +784,43 @@
     <escidoc.server.port>8080</escidoc.server.port>
     <escidoc.server.url>http://${escidoc.server.host}:${escidoc.server.port}</escidoc.server.url>
 
-    <fedora.database.name>fedora3</fedora.database.name>
-    <fedora.database.user>fedoraAdmin</fedora.database.user>
-    <fedora.database.password>fedoraAdmin</fedora.database.password>
-
-    <fedora.admin.user>fedoraAdmin</fedora.admin.user>
-    <fedora.admin.password>fedoraAdmin</fedora.admin.password>
-
-    <triplestore.database.name>riTriples</triplestore.database.name>
-    <triplestore.database.user>riTriples</triplestore.database.user>
-    <triplestore.database.password>riTriples</triplestore.database.password>
-
     <escidoc.database.host>localhost</escidoc.database.host>
     <escidoc.database.port>5432</escidoc.database.port>
     <escidoc.database.name>escidoc-core</escidoc.database.name>
     <escidoc.database.user>escidoc</escidoc.database.user>
     <escidoc.database.password>escidoc</escidoc.database.password>
+    <escidoc.database.temp.tablespace>TEMP</escidoc.temp.tablespace>
+
+    <fedora.database.name>fedora3</fedora.database.name>
+    <fedora.database.user>fedoraAdmin</fedora.database.user>
+    <fedora.database.password>fedoraAdmin</fedora.database.password>
+    <fedora.database.temp.tablespace>TEMP</fedora.temp.tablespace>
+
+    <triplestore.database.name>riTriples</triplestore.database.name>
+    <triplestore.database.user>riTriples</triplestore.database.user>
+    <triplestore.database.password>riTriples</triplestore.database.password>
+    <triplestore.database.temp.tablespace>TEMP</triplestore.temp.tablespace>
+
+    <fedora.admin.user>fedoraAdmin</fedora.admin.user>
+    <fedora.admin.password>fedoraAdmin</fedora.admin.password>
 
 	<escidoc.oracle.host>escidev5</escidoc.oracle.host>
 	<escidoc.oracle.port>1521</escidoc.oracle.port>
 	<escidoc.oracle.database>oraesci01</escidoc.oracle.database>
-	<escidoc.default.tablespace>escidoc</escidoc.default.tablespace>
-	<escidoc.temp.tablespace>TEMP</escidoc.temp.tablespace>
+	<escidoc.database.default.tablespace>escidoc</escidoc.default.tablespace>
 	<fedora.oracle.database>oraesci01</fedora.oracle.database>
-	<fedora.default.tablespace>fedora</fedora.default.tablespace>
-	<fedora.temp.tablespace>TEMP</fedora.temp.tablespace>
+	<fedora.database.default.tablespace>fedora</fedora.default.tablespace>
 	<triplestore.oracle.database>oraesci01</triplestore.oracle.database>
-	<triplestore.default.tablespace>triples</triplestore.default.tablespace>
-	<triplestore.temp.tablespace>TEMP</triplestore.temp.tablespace>
+	<triplestore.database.default.tablespace>triples</triplestore.default.tablespace>
 
 	<!-- escidoc.oracle.host>localhost</escidoc.oracle.host>
 	<escidoc.oracle.port>1521</escidoc.oracle.port>
 	<escidoc.oracle.database>XE</escidoc.oracle.database>
-	<escidoc.default.tablespace>USERS</escidoc.default.tablespace>
-	<escidoc.temp.tablespace>TEMP</escidoc.temp.tablespace>
+	<escidoc.database.default.tablespace>USERS</escidoc.default.tablespace>
 	<fedora.oracle.database>XE</fedora.oracle.database>
-	<fedora.default.tablespace>USERS</fedora.default.tablespace>
-	<fedora.temp.tablespace>TEMP</fedora.temp.tablespace>
+	<fedora.database.default.tablespace>USERS</fedora.default.tablespace>
 	<triplestore.oracle.database>XE</triplestore.oracle.database>
-	<triplestore.default.tablespace>USERS</triplestore.default.tablespace>
-	<triplestore.temp.tablespace>TEMP</triplestore.temp.tablespace -->
+	<triplestore.database.default.tablespace>USERS</triplestore.default.tablespace -->
   </properties>
 
   <dependencies>

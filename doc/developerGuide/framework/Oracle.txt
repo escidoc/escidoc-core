@@ -8,8 +8,8 @@
 	escidoc.database.password
 	escidoc.oracle.database.admin.user
 	escidoc.oracle.database.admin.password
-	escidoc.default.tablespace
-	escidoc.temp.tablespace
+	escidoc.database.default.tablespace
+	escidoc.database.temp.tablespace
 	
 -add escidoc-core.custom.properties to jboss-conf directory, containing configuration for oracle db.
 

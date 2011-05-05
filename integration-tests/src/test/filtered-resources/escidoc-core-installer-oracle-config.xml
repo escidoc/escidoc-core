@@ -48,9 +48,9 @@
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.9">
 <userInput>
-<entry key="DatabaseDefaultTablespace" value="${escidoc.default.tablespace}"/>
+<entry key="DatabaseDefaultTablespace" value="${escidoc.database.default.tablespace}"/>
 <entry key="DatabasePassword" value="${escidoc.database.password}"/>
-<entry key="DatabaseTempTablespace" value="${escidoc.temp.tablespace}"/>
+<entry key="DatabaseTempTablespace" value="${escidoc.database.temp.tablespace}"/>
 <entry key="DatabaseUsername" value="${escidoc.database.user}"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
@@ -59,18 +59,18 @@
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.11">
 <userInput>
-<entry key="FedoraDefaultTablespace" value="${fedora.default.tablespace}"/>
+<entry key="FedoraDefaultTablespace" value="${fedora.database.default.tablespace}"/>
 <entry key="FedoraPassword" value="${fedora.database.password}"/>
 <entry key="FedoraUsername" value="${fedora.database.user}"/>
 <entry key="FedoraAdminMailAddress" value="steffen.wagner@fiz-karlsruhe.de"/>
-<entry key="FedoraTempTablespace" value="${fedora.temp.tablespace}"/>
+<entry key="FedoraTempTablespace" value="${fedora.database.temp.tablespace}"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.12">
 <userInput>
-<entry key="TriplestoreTempTablespace" value="${triplestore.temp.tablespace}"/>
+<entry key="TriplestoreTempTablespace" value="${triplestore.database.temp.tablespace}"/>
 <entry key="TriplestorePassword" value="${triplestore.database.password}"/>
-<entry key="TriplestoreDefaultTablespace" value="${triplestore.default.tablespace}"/>
+<entry key="TriplestoreDefaultTablespace" value="${triplestore.database.default.tablespace}"/>
 <entry key="TriplestoreUsername" value="${triplestore.database.user}"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
