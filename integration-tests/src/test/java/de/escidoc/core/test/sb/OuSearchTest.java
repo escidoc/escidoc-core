@@ -516,7 +516,7 @@ public class OuSearchTest extends SearchTestBase {
     public void testSBOUSR16() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, "http://escidev5:8080/srw/searchRetrieveResponse.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/searchRetrieveResponse.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
@@ -532,7 +532,7 @@ public class OuSearchTest extends SearchTestBase {
     public void testSBOUSR17() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, "http://escidev5:8080/srw/xyz.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/xyz.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
@@ -1009,7 +1009,7 @@ public class OuSearchTest extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, "http://escidev5:8080/srw/scanResponse.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/scanResponse.xsl");
         String response = scan(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals(null, getDiagnostics(response));
@@ -1025,7 +1025,7 @@ public class OuSearchTest extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, "http://escidev5:8080/srw/yxr.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/yxr.xsl");
         String response = scan(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals(null, getDiagnostics(response));
