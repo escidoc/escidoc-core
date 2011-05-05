@@ -28,22 +28,18 @@
  */
 package de.escidoc.core.test.st;
 
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
-import de.escidoc.core.test.common.resources.ResourceProvider;
-import org.apache.http.HttpResponse;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.http.HttpResponse;
+
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
+import de.escidoc.core.test.common.resources.ResourceProvider;
 
 /**
  * Base class for testing the implementation of the StagingFile.
@@ -53,21 +49,6 @@ import static junit.framework.Assert.fail;
 public abstract class StagingFileTestBase extends EscidocTestBase {
 
     private StagingFileClient stagingFileClient = null;
-
-    // Data for access to postgres database
-    private static Connection dbConnetion = null;
-
-    private static String dbDriver = "org.postgresql.Driver";
-
-    private static String dbHost = "localhost";
-
-    private static String dbPort = "5432";
-
-    private static String dbName = "escidoc-core";
-
-    private static String dbUser = "postgres";
-
-    private static String dbPassword = "postgres";
 
     /**
      * @param transport The transport identifier.
@@ -126,138 +107,6 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
             return null;
         }
 
-    }
-
-    /**
-     * Gets a database connection.
-     *
-     * @return Returns a database connection.
-     * @throws Exception Thrown if anything fails.
-     */
-    private static Connection getDbConnection() throws Exception {
-        if (dbConnetion == null) {
-
-            Class.forName(dbDriver);
-            String jdbcUrl = "jdbc:postgresql://" + dbHost + ":" + dbPort + "/" + dbName;
-            dbConnetion = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
-
-        }
-        return dbConnetion;
-    }
-
-    /**
-     * Get the staging file for token from the database.
-     *
-     * @param token The token.
-     * @return The staging file.
-     * @throws Exception Thrown if anything fails.
-     */
-    public static StagingFile retrieveStagingFileFromDatabase(final String token) throws Exception {
-        StagingFile result = null;
-        Connection db = getDbConnection();
-        if (db != null) {
-            Statement sql = db.createStatement();
-            String select = "select * from st.staging_file where token='" + token + "';";
-            ResultSet resultSet;
-
-            resultSet = sql.executeQuery(select);
-
-            if ((resultSet != null) && (resultSet.next())) {
-                result =
-                    new StagingFile(resultSet.getLong("expiry_ts"), resultSet.getString("reference"), resultSet
-                        .getString("mime_type"), resultSet.getBoolean("upload"));
-                result.setToken(token);
-            }
-            sql.close();
-        }
-        return result;
-    }
-
-    /**
-     * Update the given staging file in the database.
-     *
-     * @param stagingFile The staging file.
-     * @throws Exception Thrown if anything fails.
-     */
-    public static void updateStagingFile(final StagingFile stagingFile) throws Exception {
-        Connection db = getDbConnection();
-        if (db != null) {
-            db.setAutoCommit(true);
-            Statement sql = db.createStatement();
-            String uploadValue = "true";
-            if (!stagingFile.isUpload()) {
-                uploadValue = "false";
-            }
-            String update =
-                "update st.staging_file set expiry_ts=" + stagingFile.getExpiryTs() + ", reference='"
-                    + stagingFile.getReference() + "', mime_type='" + stagingFile.getMimeType() + "', upload="
-                    + uploadValue + " where token='" + stagingFile.getToken() + "';";
-
-            sql.executeUpdate(update);
-
-            sql.close();
-        }
-    }
-
-    /**
-     * Delete the staging file from the database.
-     *
-     * @param stagingFile The staging file.
-     * @throws Exception Thrown if anything fails.
-     */
-    public static void deleteStagingFile(final StagingFile stagingFile) throws Exception {
-        deleteStagingFile(stagingFile.getToken());
-    }
-
-    /**
-     * Delete the staging file for token from the database.
-     *
-     * @param token The token.
-     * @throws Exception Thrown if anything fails.
-     */
-    public static void deleteStagingFile(final String token) throws Exception {
-        Connection db = getDbConnection();
-        if (db != null) {
-            db.setAutoCommit(true);
-            Statement sql = db.createStatement();
-            String delete = "delete from st.staging_file where token='" + token + "';";
-            sql.executeUpdate(delete);
-            sql.close();
-        }
-    }
-
-    /**
-     * Delete the file identified by the token from the file system without updating persistent information.<br> This
-     * method can be used to simulate manually deleting a staging area file, e.g. by an administrator.
-     *
-     * @param token The token identifying the file.
-     * @throws Exception Thrown if anything fails.
-     */
-    public static void deletePhysicalFile(final String token) throws Exception {
-
-        StagingFile stagingFile = retrieveStagingFileFromDatabase(token);
-        if (stagingFile != null) {
-            if (stagingFile.getReference() != null) {
-                File file = new File(stagingFile.getReference());
-                file.delete();
-            }
-        }
-
-    }
-
-    /**
-     * Set token as expired by changing its expiry timestamp to a time previous to the current time.
-     *
-     * @param token The token to set as expired.
-     * @throws Exception Thrown if anything fails.
-     */
-    public static void setExpired(final String token) throws Exception {
-
-        StagingFile stagingFile = retrieveStagingFileFromDatabase(token);
-        if (stagingFile != null) {
-            stagingFile.setExpiryTs(System.currentTimeMillis() - 1);
-            updateStagingFile(stagingFile);
-        }
     }
 
     /**
