@@ -1169,7 +1169,7 @@
 									<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
 									</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database}"
+									<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database.name}"
 									</sqlCommand>
 									<onError>continue</onError>
 								</configuration>
