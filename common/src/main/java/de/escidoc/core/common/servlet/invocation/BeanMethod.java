@@ -55,8 +55,6 @@ public class BeanMethod implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
-    private static final Map<String, Object> RESOURCE_POOL = Collections.synchronizedMap(new HashMap<String, Object>());
-
     private final String beanId;
 
     private String method;
@@ -141,8 +139,9 @@ public class BeanMethod implements ApplicationContextAware {
                     }
                 }
             }
-            final Method execute = getBean().getClass().getMethod(getMethod(), parameterTypes);
-            result = execute.invoke(getBean(), getParameters());
+            final Object bean = this.applicationContext.getBean(this.beanId);
+            final Method execute = bean.getClass().getMethod(getMethod(), parameterTypes);
+            result = execute.invoke(bean, getParameters());
         }
         catch (final SecurityException e) {
             throw new WebserverSystemException(
@@ -178,24 +177,7 @@ public class BeanMethod implements ApplicationContextAware {
         return '[' + getBeanId() + '.' + getMethod() + ']';
     }
 
-    /**
-     * Get a bean for this bean method.
-     *
-     * @return The bean instance.
-     * @throws WebserverSystemException If the bean cannot be instantiated.
-     */
-    private Object getBean() throws WebserverSystemException {
 
-        Object result = RESOURCE_POOL.get(getBeanId());
-        if (result == null && getBeanId() != null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(StringUtility.format("Create Bean", getBeanId()));
-            }
-            result = this.applicationContext.getBean(this.beanId);
-            RESOURCE_POOL.put(getBeanId(), result);
-        }
-        return result;
-    }
 
     /**
      * @return Returns the method name.
