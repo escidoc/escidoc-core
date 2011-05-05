@@ -39,7 +39,7 @@
     <property name="escidoc.core.zip" value="escidoc-core-${EscidocVersion}-bin.zip"/>
     <property name="escidoc.examples.zip" value="escidoc-examples-${EscidocVersion}.zip"/>
     <property name="escidoc.sources.zip" value="escidoc-core-${EscidocVersion}-src.zip"/>
-    <property name="escidoc.admin.zip" value="migration-tool-${EscidocVersion}.zip"/>
+    <property name="escidoc.admin.zip" value="migration-tool-${migration-tool.version}.zip"/>
     <property name="digilib.server.war" value="DigilibServer.war"/>
     <property name="digilib.client.war" value="DigilibClient.war"/>
   </target>
@@ -221,7 +221,7 @@
       <param name="target.dir" value="${install.dir}"/>
     </antcall>
     <antcall target="rename">
-      <param name="source" value="${install.dir}/escidoc-core-admin-${EscidocVersion}"/>
+      <param name="source" value="${install.dir}/escidoc-core-admin-${migration-tool.version}"/>
       <param name="target" value="${install.dir}/tools/migration/"/>
     </antcall>
     <delete file="${install.dir}/tools/${escidoc.admin.zip}"/>
