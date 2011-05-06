@@ -77,7 +77,7 @@ import java.util.Set;
  * 
  * @author Frank Schwichtenberg
  */
-@Configurable
+@Configurable(preConstruction = true)
 public class Item extends GenericVersionableResourcePid implements ItemInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Item.class);
@@ -129,8 +129,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         this.contentStreams = new HashMap<String, Datastream>();
     }
 
-    @PostConstruct
-    protected void init() throws WebserverSystemException, FedoraSystemException, IntegritySystemException,
+    private void init() throws WebserverSystemException, FedoraSystemException, IntegritySystemException,
         StreamNotFoundException, TripleStoreSystemException, ItemNotFoundException, ComponentNotFoundException {
         initDatastreams(getDatastreamInfos());
         if (!checkResourceType(ResourceType.ITEM)) {

@@ -71,7 +71,7 @@ import java.util.Set;
  *
  * @author Frank Schwichtenberg
  */
-@Configurable
+@Configurable(preConstruction = true)
 public class Component extends GenericResourcePid implements ComponentInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Component.class);
@@ -110,9 +110,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         this.parent = parentId;
         this.parentVersionDate = timestamp;
         setHref(Constants.COMPONENT_URL_PART + id);
+        init();
     }
 
-    @PostConstruct
     protected void init() throws ResourceNotFoundException, ItemNotFoundException, IntegritySystemException,
         FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
         initDatastreams();

@@ -64,7 +64,7 @@ import java.util.Set;
  *
  * @author Frank Schwichtenberg
  */
-@Configurable
+@Configurable(preConstruction = true)
 public class Container extends GenericVersionableResourcePid implements ContainerInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Container.class);
@@ -99,10 +99,10 @@ public class Container extends GenericVersionableResourcePid implements Containe
         ContainerNotFoundException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException,
         WebserverSystemException {
         super(id);
+        init();
     }
 
-    @PostConstruct
-    protected void init() throws StreamNotFoundException, SystemException, ResourceNotFoundException,
+    private void init() throws StreamNotFoundException, SystemException, ResourceNotFoundException,
         ContainerNotFoundException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException,
         WebserverSystemException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),

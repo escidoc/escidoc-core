@@ -69,7 +69,7 @@ import java.util.regex.Pattern;
  *
  * @author Steffen Wagner
  */
-@Configurable
+@Configurable(preConstruction = true)
 public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     private static final Pattern SPLIT_PATTERN_PREDICATE = Pattern.compile("#");
@@ -95,7 +95,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      */
     public GenericVersionableResourcePid(final String id) throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
-
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));

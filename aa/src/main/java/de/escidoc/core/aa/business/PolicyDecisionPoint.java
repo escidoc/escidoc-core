@@ -203,7 +203,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @throws SqlDatabaseSystemException thrown if an error occurred when accessing the database
      * @throws WebserverSystemException   thrown in case of an internal error
      */
-    @PostConstruct
     public void init() throws SqlDatabaseSystemException, WebserverSystemException {
         accessRights.deleteAccessRights();
 

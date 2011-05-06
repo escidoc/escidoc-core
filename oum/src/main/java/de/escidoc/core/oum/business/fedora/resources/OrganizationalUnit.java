@@ -65,7 +65,7 @@ import java.util.Set;
  *
  * @author Michael Schneider
  */
-@Configurable
+@Configurable(preConstruction = true)
 public class OrganizationalUnit extends GenericResource implements OrganizationalUnitInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationalUnit.class);
@@ -107,10 +107,10 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     public OrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
         super(id);
+        init();
     }
 
-    @PostConstruct
-    protected void init() throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
+    private void init() throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
         if (this.getId() != null) {
             this.getUtility().checkIsOrganizationalUnit(this.getId());

@@ -66,7 +66,7 @@ import java.util.Set;
  *
  * @author Frank Schwichtenberg
  */
-@Configurable
+@Configurable(preConstruction = true)
 public class ContentModel extends GenericVersionableResourcePid implements VersionableResource {
 
     public static final String DATASTREAM_DS_COMPOSITE_MODEL = "DS-COMPOSITE-MODEL";
@@ -104,10 +104,10 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         super(id);
         this.contentStreams = new HashMap<String, Datastream>();
         this.otherStreams = new HashMap<String, Datastream>();
+        init();
     }
 
-    @PostConstruct
-    protected void init() throws TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
+    private void init() throws TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
         FedoraSystemException, StreamNotFoundException, ResourceNotFoundException, ContentModelNotFoundException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));

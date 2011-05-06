@@ -90,6 +90,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -109,6 +111,7 @@ import java.util.TreeMap;
  * @author Frank Schwichtenberg
  */
 @Service("business.FedoraContentModelHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class FedoraContentModelHandler extends ContentModelHandlerRetrieve implements ContentModelHandlerInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FedoraContentModelHandler.class);

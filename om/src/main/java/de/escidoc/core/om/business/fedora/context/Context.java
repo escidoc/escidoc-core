@@ -66,7 +66,7 @@ import java.util.TreeMap;
  * 
  * @author Steffen Wagner
  */
-@Configurable
+@Configurable(preConstruction = true)
 public class Context extends GenericResource implements ContextInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Context.class);
@@ -99,10 +99,10 @@ public class Context extends GenericResource implements ContextInterface {
     public Context(final String id) throws ContextNotFoundException, TripleStoreSystemException,
         IntegritySystemException, WebserverSystemException {
         super(id);
+        init();
     }
 
-    @PostConstruct
-    protected void init() throws ContextNotFoundException, TripleStoreSystemException, IntegritySystemException,
+    private void init() throws ContextNotFoundException, TripleStoreSystemException, IntegritySystemException,
         WebserverSystemException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));

@@ -65,7 +65,7 @@ import java.util.TreeMap;
  *
  * @author Steffen Wagner
  */
-@Configurable
+@Configurable(preConstruction = true)
 public class GenericVersionableResource extends GenericResourcePid {
 
     /**
@@ -153,28 +153,10 @@ public class GenericVersionableResource extends GenericResourcePid {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
         setId(id);
+        this.initLastModificationDate();
     }
 
-    @PostConstruct
-    protected void initLastModificationDate() throws TripleStoreSystemException, WebserverSystemException,
-        ResourceNotFoundException {
-        try {
-            setLastVersionData();
-        }
-        catch (final WebserverSystemException e) {
-            if (getTripleStoreUtility().exists(this.getId())) {
-                throw new WebserverSystemException("Unexpected exception during RELS-EXT parsing.", e);
-            }
-            else {
-                throw new ResourceNotFoundException("Resource with the provided objid '" + this.getId()
-                    + "' does not exist.", e);
-            }
-
-        }
-    }
-
-    @PostConstruct
-    protected void initVersionNumber() throws TripleStoreSystemException, WebserverSystemException,
+    private void initVersionNumber() throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
         // determine version Number (suffix). Depending on latest-version and
         // status is the versionNumber the suffix or null.
@@ -208,6 +190,23 @@ public class GenericVersionableResource extends GenericResourcePid {
         }
     }
 
+    private void initLastModificationDate() throws TripleStoreSystemException, WebserverSystemException,
+        ResourceNotFoundException {
+        try {
+            setLastVersionData();
+        }
+        catch (final WebserverSystemException e) {
+            if (getTripleStoreUtility().exists(this.getId())) {
+                throw new WebserverSystemException("Unexpected exception during RELS-EXT parsing.", e);
+            }
+            else {
+                throw new ResourceNotFoundException("Resource with the provided objid '" + this.getId()
+                    + "' does not exist.", e);
+            }
+
+        }
+    }
+
     /**
      * Set the Id of the versionable Resource.
      *
@@ -219,10 +218,9 @@ public class GenericVersionableResource extends GenericResourcePid {
     @Override
     public final void setId(final String id) throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
-
         super.setId(id);
         this.versionId = XmlUtility.getVersionNumberFromObjid(id);
-
+        this.initVersionNumber();
     }
 
     /**

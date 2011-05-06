@@ -60,7 +60,7 @@ import java.util.Map;
  *
  * @author Frank Schwichtenberg
  */
-@Configurable
+@Configurable(preConstruction = true)
 public class Datastream {
 
     /**
@@ -127,8 +127,6 @@ public class Datastream {
      */
     private boolean contentUnchanged;
 
-    private boolean initialized = true;
-
     /**
      * Constructs the Datastream identified by name and parentId. The version of the stream identified by timestamp is
      * retrieved from Fedora. If timestamp is <code>null</code> the latest version is retrieved.
@@ -144,7 +142,7 @@ public class Datastream {
         this.name = name;
         this.parentId = parentId;
         this.timestamp = timestamp;
-        this.initialized = false;
+        init();
     }
 
     /**
@@ -319,40 +317,31 @@ public class Datastream {
      * @throws StreamNotFoundException If the datastream could not be retrieved from Fedora.
      * @throws FedoraSystemException   Thrown in case of an internal system error caused by failed fedora access.
      */
-    @PostConstruct
     private void init() throws StreamNotFoundException, FedoraSystemException {
-        if (!this.initialized) {
-            final org.fcrepo.server.types.gen.Datastream fedoraDatastream;
-            try {
-                fedoraDatastream =
-                    this.fedoraUtility.getDatastreamInformation(this.parentId, this.name, this.timestamp);
-            }
-            catch (final FedoraSystemException e1) {
-                throw new StreamNotFoundException("Fedora datastream '" + this.name + "' not found.", e1);
-            }
-            if (fedoraDatastream == null) {
-                throw new StreamNotFoundException("Datastream informations are 'null' after retrieving "
-                    + "datastream from Fedora without exception.");
-            }
-            this.label = fedoraDatastream.getLabel();
-            final DatastreamControlGroup controlGroup = fedoraDatastream.getControlGroup();
-            this.controlGroupValue = controlGroup.getValue();
-            final String[] altIDs = fedoraDatastream.getAltIDs();
-            this.alternateIDs.addAll(Arrays.asList(altIDs));
-            this.mimeType = fedoraDatastream.getMIMEType();
-            this.location = fedoraDatastream.getLocation();
-            final String checksumMethodTmp = fedoraDatastream.getChecksumType();
-            if (!"disabled".equalsIgnoreCase(checksumMethodTmp)) {
-                this.checksumMethod = checksumMethodTmp;
-                this.checksum = fedoraDatastream.getChecksum();
-            }
-            this.md5Hash = null;
+        final org.fcrepo.server.types.gen.Datastream fedoraDatastream;
+        try {
+            fedoraDatastream = this.fedoraUtility.getDatastreamInformation(this.parentId, this.name, this.timestamp);
         }
-    }
-
-    private void reinit() throws StreamNotFoundException, FedoraSystemException {
-        this.initialized = false;
-        init();
+        catch (final FedoraSystemException e1) {
+            throw new StreamNotFoundException("Fedora datastream '" + this.name + "' not found.", e1);
+        }
+        if (fedoraDatastream == null) {
+            throw new StreamNotFoundException("Datastream informations are 'null' after retrieving "
+                + "datastream from Fedora without exception.");
+        }
+        this.label = fedoraDatastream.getLabel();
+        final DatastreamControlGroup controlGroup = fedoraDatastream.getControlGroup();
+        this.controlGroupValue = controlGroup.getValue();
+        final String[] altIDs = fedoraDatastream.getAltIDs();
+        this.alternateIDs.addAll(Arrays.asList(altIDs));
+        this.mimeType = fedoraDatastream.getMIMEType();
+        this.location = fedoraDatastream.getLocation();
+        final String checksumMethodTmp = fedoraDatastream.getChecksumType();
+        if (!"disabled".equalsIgnoreCase(checksumMethodTmp)) {
+            this.checksumMethod = checksumMethodTmp;
+            this.checksum = fedoraDatastream.getChecksum();
+        }
+        this.md5Hash = null;
     }
 
     /**
@@ -485,7 +474,7 @@ public class Datastream {
                     this.alternateIDs.toArray(new String[alternateIDs.size()]), this.getStream(), false);
                 this.fedoraUtility
                     .setDatastreamState(this.parentId, this.name, FedoraUtility.DATASTREAM_STATUS_DELETED);
-                reinit();
+                init();
             }
         }
         catch (final StreamNotFoundException e) {

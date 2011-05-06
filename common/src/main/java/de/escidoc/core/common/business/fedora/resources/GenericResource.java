@@ -68,7 +68,7 @@ import java.util.Map.Entry;
  *
  * @author Steffen Wagner
  */
-@Configurable
+@Configurable(preConstruction = true)
 public class GenericResource implements FedoraResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericResource.class);
@@ -122,17 +122,17 @@ public class GenericResource implements FedoraResource {
 
     private String createdBy;
 
-    private Collection<String> propertiesNames;
+    private Collection<String> propertiesNames = new ArrayList<String>();
 
     /**
      * Mapping from the TripleStore or WOV keys to the internal keys.
      */
-    private Map<String, String> propertiesNamesMapping;
+    private Map<String, String> propertiesNamesMapping = new HashMap<String, String>();
 
     /**
      * Properties value map. Should contain all properties values of the resource.
      */
-    private Map<String, String> propertiesMap;
+    private Map<String, String> propertiesMap = new HashMap<String, String>();
 
     // -----------------------
 
@@ -140,7 +140,6 @@ public class GenericResource implements FedoraResource {
      * Constructor.
      */
     public GenericResource() {
-
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
     }
@@ -163,7 +162,6 @@ public class GenericResource implements FedoraResource {
      * @param objid The id of the object in the repository.
      */
     public GenericResource(final String objid) {
-
         this.id = objid;
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
@@ -678,7 +676,6 @@ public class GenericResource implements FedoraResource {
      * @return list of RELS-EXT properties names.
      */
     protected final Collection<String> getPropertiesNames() {
-
         return this.propertiesNames;
     }
 
@@ -688,7 +685,6 @@ public class GenericResource implements FedoraResource {
      * @return list of RELS-EXT properties names.
      */
     protected final Map<String, String> getPropertiesNamesMapping() {
-
         return this.propertiesNamesMapping;
     }
 
@@ -701,7 +697,6 @@ public class GenericResource implements FedoraResource {
      */
     protected final void setPropertiesNames(
         final Collection<String> propertiesNames, final Map<String, String> propertiesNamesMapping) {
-
         this.propertiesNames = propertiesNames;
         this.propertiesNamesMapping = propertiesNamesMapping;
         this.propertiesMap = null;

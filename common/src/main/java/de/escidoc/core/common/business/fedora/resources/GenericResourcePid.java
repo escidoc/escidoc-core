@@ -52,7 +52,7 @@ import java.util.TreeMap;
  *
  * @author Steffen Wagner
  */
-@Configurable
+@Configurable(preConstruction = true)
 public class GenericResourcePid extends GenericResource {
 
     private String objectPid;
@@ -61,7 +61,6 @@ public class GenericResourcePid extends GenericResource {
      * Constructor.
      */
     public GenericResourcePid() {
-
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
     }

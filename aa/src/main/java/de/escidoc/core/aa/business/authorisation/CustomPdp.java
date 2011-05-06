@@ -169,7 +169,6 @@ public class CustomPdp {
      * @see DatabasePolicyFinderModule
      */
     public CustomPdp() throws Exception {
-
     }
 
     /**
