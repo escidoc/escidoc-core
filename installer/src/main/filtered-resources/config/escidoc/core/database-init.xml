@@ -3,8 +3,9 @@
 
   <property name="install.dir" location="${INSTALL_PATH}" />
 	<property name="root.jdbc.url" value="${DatabaseURL}${root.database.name}" />
-	<property name="escidoc.jdbc.url" value="${DatabaseURL}${escidoc.database.name}" />
-  <property name="sql.dir" location="${install.dir}/core/sql" description="The directory holding the sql scripts" />
+        <!-- FIXME: remove "xxx" if the variables for Postgres and Oracle have identical names -->
+	<property name="escidoc.jdbc.url" value="${DatabaseURL}${escidoc.database.namexxx}" />
+	<property name="sql.dir" location="${install.dir}/core/sql" description="The directory holding the sql scripts" />
 
         <basename property="DatabaseDriverFile" file="${DatabaseDriver}" />
 	<path id="database.classpath">
