@@ -177,8 +177,6 @@ public class BeanMethod implements ApplicationContextAware {
         return '[' + getBeanId() + '.' + getMethod() + ']';
     }
 
-
-
     /**
      * @return Returns the method name.
      */
