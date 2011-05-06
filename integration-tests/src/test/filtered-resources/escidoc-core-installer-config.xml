@@ -44,8 +44,8 @@
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.8">
 <userInput>
-<entry key="DatabasePassword" value="${escidoc.database.password}"/>
-<entry key="DatabaseUsername" value="${escidoc.database.user}"/>
+<entry key="DatabasePassword" value="escidoc"/>
+<entry key="DatabaseUsername" value="escidoc"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.9">
@@ -53,8 +53,8 @@
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.10">
 <userInput>
-<entry key="FedoraPassword" value="${fedora.database.password}"/>
-<entry key="FedoraUsername" value="${fedora.database.user}"/>
+<entry key="FedoraPassword" value="fedoraAdmin"/>
+<entry key="FedoraUsername" value="fedoraAdmin"/>
 <entry key="FedoraAdminMailAddress" value="steffen.wagner@fiz-karlsruhe.de"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
