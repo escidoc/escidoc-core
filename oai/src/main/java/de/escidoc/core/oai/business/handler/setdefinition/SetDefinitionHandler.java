@@ -62,6 +62,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     private static final String MSG_SET_DEFINITION_NOT_FOUND_BY_ID = "Set definition with provided id does not exist.";
 
     @Autowired
+    @Qualifier("business.PolicyDecisionPoint")
     private PolicyDecisionPointInterface pdp;
 
     /**
