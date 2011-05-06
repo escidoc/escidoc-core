@@ -2457,6 +2457,44 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     }
 
     /**
+     * Test if an update of an Item with one of it older version is possible.
+     * 
+     * See issue INFR-951
+     * 
+     * @throws Exception
+     *             If update is not handled like expected.
+     */
+    @Test
+    public void testRestoreAndAccessOlderVersions() throws Exception {
+
+        String xmlData =
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_1_component.xml");
+
+        final String item1Xml = create(xmlData);
+        final String itemId = getObjidValue(item1Xml);
+
+        // create new versions by adding further components
+        final String item2Xml = update(itemId, addComponent(item1Xml));
+        final String item3Xml = update(itemId, addComponent(item2Xml));
+
+        // update 
+        String lmd = getLastModificationDateValue(getDocument(item3Xml));
+        final String restoreItem1Xml =
+            update(itemId, toString(substitute(getDocument(item1Xml), "/item/@last-modification-date", lmd), false));
+        lmd = getLastModificationDateValue(getDocument(restoreItem1Xml));
+
+        // update last-modification-date
+        // remove objid/href from components
+        Document item3Doc = getDocument(item3Xml);
+        substitute(item3Doc, "/item/@last-modification-date", lmd);
+        deleteNodes(item3Doc, "/item/components/component/@objid");
+        deleteNodes(item3Doc, "/item/components/component/@href");
+
+        final String restoreItem3Xml = update(itemId, toString(item3Doc, false));
+    }
+
+    /**
      * Obatins Component Ids from Item.
      *
      * @return Vector with objids of Component.
