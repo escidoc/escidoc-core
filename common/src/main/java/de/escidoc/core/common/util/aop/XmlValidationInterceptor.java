@@ -27,6 +27,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -62,18 +63,32 @@ public class XmlValidationInterceptor implements Ordered {
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      */
-    @Before("@annotation(de.escidoc.core.common.annotation.Validate)"
-        + " && !within(de.escidoc.core.common.util.aop..*)")
+    @Before("execution(public * de.escidoc.core.*.service.*.*(..))" + " && !within(de.escidoc.core.common.util.aop..*)")
     public void validate(final JoinPoint joinPoint) throws XmlParserSystemException, WebserverSystemException,
         XmlSchemaValidationException, XmlCorruptedException {
-
-        final Method calledMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
-        final Annotation annotation = calledMethod.getAnnotation(Validate.class);
+        final Method targetMethod = getTargetInterfaceMethod(joinPoint);
+        final Annotation annotation = targetMethod.getAnnotation(Validate.class);
         if (annotation != null) {
             final Object[] arguments = joinPoint.getArgs();
             validate((String) arguments[((Validate) annotation).param()], ((Validate) annotation).resolver(),
                 ((Validate) annotation).root());
         }
+    }
+
+    private Method getTargetInterfaceMethod(final JoinPoint joinPoint) {
+        Method targetMethod = null;
+        final Method calledMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
+        Class[] interfaces = joinPoint.getTarget().getClass().getInterfaces();
+        for (Class interfaze : interfaces) {
+            Method[] methods = interfaze.getMethods();
+            for (Method method : methods) {
+                if (method.getName().equals(calledMethod.getName())
+                    && method.getReturnType().equals(calledMethod.getReturnType())) {
+                    targetMethod = method;
+                }
+            }
+        }
+        return targetMethod;
     }
 
     /**

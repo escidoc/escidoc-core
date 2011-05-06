@@ -158,7 +158,7 @@ public class SecurityInterceptor implements Ordered {
         MissingMethodParameterException, WebserverSystemException {
         final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         final Method calledMethod = methodSignature.getMethod();
-        final String target = getTargetInterface(joinPoint, calledMethod);
+        final String target = getTargetInterface(joinPoint);
         final String methodName = calledMethod.getName();
         final String handle = UserContext.getHandle();
 
@@ -230,8 +230,9 @@ public class SecurityInterceptor implements Ordered {
         }
     }
 
-    private String getTargetInterface(final ProceedingJoinPoint joinPoint, final Method calledMethod) {
+    private String getTargetInterface(final ProceedingJoinPoint joinPoint) {
         String target = null;
+        final Method calledMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
         Class[] interfaces = joinPoint.getTarget().getClass().getInterfaces();
         for (Class interfaze : interfaces) {
             Method[] methods = interfaze.getMethods();
