@@ -35,7 +35,7 @@
 <html>
 <head profile="http://purl.org/NET/erdf/profile">
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <title>eSciDoc-Framework</title>
+  <title>eSciDoc Framework</title>
   <link rel="stylesheet" type="text/css" href="css/default.css">
   <link rel="schema.es" href="http://escidoc.de/core/01/system/" />
   <meta name="es.version" content="${project.version}" />
@@ -44,7 +44,6 @@
 
 <body>
 <div id="head"></div>
-<div id="head_text">eSciDoc Framework</div>
 <div id="menu">
   <ul class="menu_bg">
     <li>Applications
