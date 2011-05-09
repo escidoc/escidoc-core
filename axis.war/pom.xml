@@ -169,7 +169,7 @@
 							<classOfPortType>de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface</classOfPortType>
 							<excludes>
 								<exclude>
-									retrieveContentStreamContent,retrieveResources,retrieveMdRecordDefinitionSchemaContent,retrieveResourceDefinitionXsltContent
+									ingest,retrieveContentStreamContent,retrieveResources,retrieveMdRecordDefinitionSchemaContent,retrieveResourceDefinitionXsltContent
 								</exclude>
 							</excludes>
 							<filename>ContentModelHandlerService.wsdl</filename>
