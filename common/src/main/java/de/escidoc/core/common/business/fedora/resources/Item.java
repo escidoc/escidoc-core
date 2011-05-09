@@ -84,11 +84,11 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
 
     private Datastream cts;
 
-    private final Map<String, Datastream> mdRecords;
+    private final Map<String, Datastream> mdRecords = new HashMap<String, Datastream>();
 
-    private final Map<String, Datastream> contentStreams;
+    private final Map<String, Datastream> contentStreams = new HashMap<String, Datastream>();
 
-    private Map<String, Component> components;
+    private Map<String, Component> components = new HashMap<String, Component>();
 
     private Map<String, Component> componentsByLocalName = new HashMap<String, Component>();
 
@@ -124,9 +124,6 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
 
         setHref(Constants.ITEM_URL_BASE + getId());
-
-        this.mdRecords = new HashMap<String, Datastream>();
-        this.contentStreams = new HashMap<String, Datastream>();
     }
 
     private void init() throws WebserverSystemException, FedoraSystemException, IntegritySystemException,
