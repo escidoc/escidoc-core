@@ -73,41 +73,7 @@
 	<property name="interface.rest"   value="Rest" />
 	<property name="interface.soap"   value="Soap" />
 
-
-  <!-- !!! Thou shalt not touch anything below this or the entire build may break beyond repair !!! -->
-	<target name="define-label">
-		<if>
-			<not>
-				<isset property="build.version" />
-			</not>
-			<then>
-				<if>
-					<isset property="RELEASE_LABEL" />
-					<then>
-						<echo>Using ${RELEASE_LABEL} as label</echo>
-						<property name="build.version" value="${RELEASE_LABEL}" />
-					</then>
-					<else>
-						<if>
-							<isset property="env.BUILD_NUMBER" />
-							<then>
-								<echo>Using ${env.BUILD_NUMBER} as build number</echo>
-								<property name="label-suffix" value="-build${env.BUILD_NUMBER}" />
-							</then>
-							<else>
-								<echo>Using HEAD as build number</echo>
-								<property name="label-suffix" value="-buildHEAD" />
-							</else>
-						</if>
-						<property name="build.version" value="${version}${label-suffix}" />
-					</else>
-				</if>
-			</then>
-		</if>
-	</target>
-
-
-	<target name="build-all" depends="define-label">
+	<target name="build-all">
     <!-- create necessary directories --> 
 		<mkdir dir="${documentation.dist.basedir}" />
 		<mkdir dir="${documentation.dist.basedir.docbook}" />
@@ -677,7 +643,6 @@
 			<param name="checkVisibility" value="${checkVisibility}" />
 			<param name="document" value="${interface}${document}" />
 			<param name="prefix" value="${prefix}" />
-			<param name="version" value="${build.version}" />
 		</antcall>
 	</target>
 
@@ -759,7 +724,7 @@
 		<if>
 			<isset property="foIsAvail" />
 			<then>
-				<replace file="${documentation.dist.basedir.fo}/${document}.fo" token="{BUILD.VERSION}" value="${build.version}" />
+				<replace file="${documentation.dist.basedir.fo}/${document}.fo" token="{BUILD.VERSION}" value="${version}" />
 				<replace file="${documentation.dist.basedir.fo}/${document}.fo" token="{BUILD.DATE}" value="${build.date}" />
 			</then>
 		</if>
