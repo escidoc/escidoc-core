@@ -11,6 +11,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>assembly</artifactId>
+	<packaging>pom</packaging>
 	<version>trunk-SNAPSHOT</version>
 	<name>ZIP, etc. Assembly</name>
 
