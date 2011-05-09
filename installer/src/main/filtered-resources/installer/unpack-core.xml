@@ -60,7 +60,6 @@
       <param name="source" value="${install.dir}/${jboss}"/>
       <param name="target" value="${install.dir}/jboss"/>
     </antcall>
-    <chmod dir="${install.dir}/jboss/bin" perm="ugo+rx" includes="*.sh"/>
   </target>
 
   <target name="jboss-oracle" depends="copy-oracle-jdbc-jar" if="databaseIsOracle">
@@ -107,6 +106,7 @@
     </antcall>
     <delete file="${install.dir}/install.tmp/${jboss.patch.zip}"/>
     <delete dir="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}"/>
+    <chmod dir="${install.dir}/jboss/bin" perm="ugo+rx" includes="*.sh"/>
   </target>
 
   <target name="fedora" depends="init, copy-oracle-jdbc-jar" description="Installs Fedora Commons Repository">
