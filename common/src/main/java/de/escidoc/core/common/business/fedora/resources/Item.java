@@ -88,7 +88,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
 
     private final Map<String, Datastream> contentStreams = new HashMap<String, Datastream>();
 
-    private Map<String, Component> components = new HashMap<String, Component>();
+    private Map<String, Component> components;
 
     private Map<String, Component> componentsByLocalName = new HashMap<String, Component>();
 
@@ -118,12 +118,11 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     public Item(final String id) throws StreamNotFoundException, TripleStoreSystemException, WebserverSystemException,
         XmlParserSystemException, IntegritySystemException, ResourceNotFoundException, FedoraSystemException,
         ComponentNotFoundException, ItemNotFoundException {
-
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
-
         setHref(Constants.ITEM_URL_BASE + getId());
+        init();
     }
 
     private void init() throws WebserverSystemException, FedoraSystemException, IntegritySystemException,
