@@ -553,7 +553,7 @@
 						<transformationSet>
 							<dir>${project.build.directory}/generated-sources/axistools/admin</dir>
 							<stylesheet>src/main/stylesheet.xsl</stylesheet>
-							<outputDir>${project.build.directory}/axis-1.3-RC1/WEB-INF</outputDir>
+							<outputDir>${project.build.directory}/axis-${project.version}/WEB-INF</outputDir>
 						</transformationSet>
 					</transformationSets>
 				</configuration>
