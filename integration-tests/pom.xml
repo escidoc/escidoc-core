@@ -46,35 +46,6 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.2</version>
-				<executions>
-					<execution>
-						<id>download-installer</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.escidoc.core</groupId>
-									<artifactId>installer</artifactId>
-									<version>${project.version}</version>
-									<classifier>standard</classifier>
-									<type>jar</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}</outputDirectory>
-									<destFileName>escidoc-installer-standard.jar</destFileName>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.4.3</version>
 				<executions>
@@ -114,7 +85,7 @@
 							<arguments>
 								<argument>-Dskip.validation=true</argument>
 								<argument>-jar</argument>
-								<argument>${project.build.directory}/escidoc-installer-standard.jar
+								<argument>${project.basedir}/../installer/target/installer-${project.version}-standard.jar
 								</argument>
 								<argument>${project.build.directory}/${escidoc.installer.config}
 								</argument>
