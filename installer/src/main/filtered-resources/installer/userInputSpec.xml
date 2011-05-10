@@ -22,8 +22,8 @@
         <field type="title" txt="eSciDoc host name and port number" bold="true" size="1" />
         <field type="divider" align="top"/>
         <!-- Hostname of the system onto which eSciDoc will be installed -->
-        <field type="staticText" align="left" txt="The host name of the server you are about to install the eSciDoc Infrastructure onto. You may optionally append the domain name. Please make sure not to append a port." />
-        <field type="staticText" align="left" txt="Alternativly, you may provide the IP address instead of hostname and domain name. Keeping the default value 'localhost' will prohibit access from remote hosts." />
+        <field type="staticText" align="left" txt="The host name of the server you are about to install the eSciDoc Infrastructure onto. You may use a fully qualified host name. Please make sure not to append a port." />
+        <field type="staticText" align="left" txt="Alternativly, you may provide the IP address instead of host name and domain name. Keeping the default value 'localhost' will prohibit access from remote hosts." />
         <field type="text" align="left" variable="EscidocHost">
           <spec txt="Host name:" size="25" set=""/>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Host name must not be empty string."/>
