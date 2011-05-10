@@ -234,6 +234,7 @@
       <entry key="fedora.url" value="http://localhost:${EscidocPort}/fedora" />
       <entry key="fedora.user" value="${FedoraUsername}" />
       <entry key="fedora.password" value="${FedoraPassword}" />
+      <entry key="creator_id" value="${CreatorUserid}" />
     </propertyfile>
   </target>
 
