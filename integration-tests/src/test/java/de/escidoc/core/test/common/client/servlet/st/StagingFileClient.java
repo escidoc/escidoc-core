@@ -79,17 +79,4 @@ public class StagingFileClient extends ClientBase {
             Constants.STAGING_FILE_BASE_URI, new String[] { id }, null);
     }
 
-    /**
-     * See Interface for functional description.
-     *
-     * @see de.escidoc.core.test.common.client.servlet.ClientBase #callSoapMethod(java.lang.String, java.lang.String,
-     *      java.lang.String, java.lang.String, java.lang.String, java.lang.Object)
-     */
-    @Override
-    protected Object callSoapMethod(final String label, final String soapMethod, final Object[] params)
-        throws Exception {
-
-        throw new UnsupportedOperationException("SOAP not supported");
-    }
-
 }

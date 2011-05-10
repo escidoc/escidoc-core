@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.aa;
 
-import de.escidoc.core.aa.UserAccountHandler;
-import de.escidoc.core.aa.UserAccountHandlerServiceLocator;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
@@ -56,8 +54,6 @@ import static junit.framework.Assert.assertTrue;
 public class UserAccountClient extends GrantClient implements ResourceHandlerClientInterface {
 
     private static final int THREE = 3;
-
-    private UserAccountHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -340,22 +336,6 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
             result = handleCookie.getValue();
         }
         return result;
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If the client creation fails.
-     */
-    @Override
-    public UserAccountHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            UserAccountHandlerServiceLocator serviceLocator = new UserAccountHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setUserAccountHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getUserAccountHandlerServiceAddress()));
-            soapClient = serviceLocator.getUserAccountHandlerService();
-        }
-        return soapClient;
     }
 
     /**

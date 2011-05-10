@@ -153,12 +153,7 @@ public class GrantAbstractTest extends GrantTestBase {
 
         // create context
         String path = TEMPLATE_CONTEXT_PATH;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            path += "/rest";
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            path += "/soap";
-        }
+        path += "/rest";
         Document toBeCreatedContextDocument = EscidocRestSoapTestBase.getTemplateAsDocument(path, "context_create.xml");
         substitute(toBeCreatedContextDocument, "/context/properties/name", getUniqueName("PubMan Context "));
         String createdContextXml = null;

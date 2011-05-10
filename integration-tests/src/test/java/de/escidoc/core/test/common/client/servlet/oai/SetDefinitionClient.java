@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.oai;
 
-import de.escidoc.core.oai.SetDefinitionHandler;
-import de.escidoc.core.oai.SetDefinitionHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -43,8 +41,6 @@ import java.util.Map;
  * @author Rozita Friedman
  */
 public class SetDefinitionClient extends ClientBase implements ResourceHandlerClientInterface {
-
-    private SetDefinitionHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -126,22 +122,6 @@ public class SetDefinitionClient extends ClientBase implements ResourceHandlerCl
      */
     public Object retrieveResources(final String id) throws Exception {
         return null;
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    public SetDefinitionHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            SetDefinitionHandlerServiceLocator serviceLocator =
-                new SetDefinitionHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setSetDefinitionHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getSetDefinitionHandlerServiceAddress()));
-            soapClient = serviceLocator.getSetDefinitionHandlerService();
-        }
-        return soapClient;
     }
 
 }

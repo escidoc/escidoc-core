@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
-import de.escidoc.core.om.ContainerHandler;
-import de.escidoc.core.om.ContainerHandlerServiceLocator;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -49,8 +47,6 @@ import java.util.Map;
  */
 public class ContainerClient extends ClientBase
     implements SubmitReleaseReviseWithdrawClientInterface, ResourceHandlerClientInterface {
-
-    private ContainerHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -318,7 +314,7 @@ public class ContainerClient extends ClientBase
      * Delete a Toc from a Container.
      *
      * @param id    The id of the container.
-     * @param tocId The id of the toc.
+     * @param id The id of the toc.
      * @return The HttpMethod after the service call (REST) or the result object (SOAP).
      * @throws Exception If the service call fails.
      */
@@ -346,7 +342,6 @@ public class ContainerClient extends ClientBase
      * Update a Toc of a Container.
      *
      * @param id     The id of the container.
-     * @param tocId  The id of the toc.
      * @param tocXml The xml representation of the container.
      * @return The HttpMethod after the service call (REST) or the result object (SOAP).
      * @throws Exception If the service call fails.
@@ -458,7 +453,6 @@ public class ContainerClient extends ClientBase
      * Release a Container with indirect PID assignment to fulfill the required PIDs for the release.
      *
      * @param containerId       The id of the Container.
-     * @param param             The timestamp of the last modification of the Container.
      * @param creatorUserHandle The user handle of the creator. The PID assignment will be done with higher rights and
      *                          set afterward back to the creatorUserHandle.
      * @return The HttpMethod after the service call (REST) or the result object (SOAP).
@@ -641,23 +635,6 @@ public class ContainerClient extends ClientBase
 
         return callEsciDoc("Container.assignVersionPid", METHOD_ASSIGN_VERSION_PID, Constants.HTTP_METHOD_POST,
             Constants.CONTAINER_BASE_URI, new String[] { containerId, Constants.SUB_ASSIGN_VERSION_PID }, param);
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    @Override
-    public ContainerHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-
-            ContainerHandlerServiceLocator serviceLocator = new ContainerHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setContainerHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getContainerHandlerServiceAddress()));
-            soapClient = serviceLocator.getContainerHandlerService();
-        }
-        return soapClient;
     }
 
 }

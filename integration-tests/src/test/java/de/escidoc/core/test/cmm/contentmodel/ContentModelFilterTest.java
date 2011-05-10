@@ -132,13 +132,8 @@ public class ContentModelFilterTest extends ContentModelTestBase {
         Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
         NodeList nl;
 
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            selectSingleNodeAsserted(resultDoc, XPATH_SRW_MODEL_LIST_MODEL + "[@objid = '" + modelId + "']");
-        }
-        else {
-            selectSingleNodeAsserted(resultDoc, XPATH_SRW_MODEL_LIST_MODEL + "[@href = '"
-                + Constants.CONTENT_MODEL_BASE_URI + "/" + modelId + "']");
-        }
+        selectSingleNodeAsserted(resultDoc, XPATH_SRW_MODEL_LIST_MODEL + "[@href = '"
+            + Constants.CONTENT_MODEL_BASE_URI + "/" + modelId + "']");
         nl = selectNodeList(resultDoc, XPATH_SRW_MODEL_LIST_MODEL);
         assertEquals("Only one content model should be retrieved.", nl.getLength(), 1);
 

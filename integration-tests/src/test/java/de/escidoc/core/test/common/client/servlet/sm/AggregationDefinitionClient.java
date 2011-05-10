@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.sm;
 
-import de.escidoc.core.sm.AggregationDefinitionHandler;
-import de.escidoc.core.sm.AggregationDefinitionHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -42,8 +40,6 @@ import java.util.Map;
  * @author Michael Hoppe
  */
 public class AggregationDefinitionClient extends ClientBase {
-
-    private AggregationDefinitionHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -107,23 +103,6 @@ public class AggregationDefinitionClient extends ClientBase {
         return callEsciDoc("AggregationDefinition.retrieveAggregationDefinitions",
             METHOD_RETRIEVE_AGGREGATION_DEFINITIONS, Constants.HTTP_METHOD_GET,
             Constants.STATISTIC_AGGREGATION_DEFINITIONS_BASE_URI, new String[] {}, filter);
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    @Override
-    public AggregationDefinitionHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            AggregationDefinitionHandlerServiceLocator serviceLocator =
-                new AggregationDefinitionHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setAggregationDefinitionHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getAggregationDefinitionHandlerServiceAddress()));
-            soapClient = serviceLocator.getAggregationDefinitionHandlerService();
-        }
-        return soapClient;
     }
 
 }

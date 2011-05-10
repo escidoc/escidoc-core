@@ -1714,20 +1714,10 @@ public class ItemTest extends ItemTestBase {
 
         String itemId = getObjidValue(itemDoc);
 
-        String componentId = null;
-        String componentHref = null;
-
-        // get component id
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            Node componentObjiId = selectSingleNode(itemDoc, "/item/components/component/@objid");
-            componentId = componentObjiId.getTextContent();
-        }
-        else {
-            Node componentObjiId = selectSingleNode(itemDoc, "/item/components/component/@href");
-
-            componentHref = componentObjiId.getTextContent();
-            componentId = getObjidFromHref(componentHref);
-        }
+        Node componentObjiId = selectSingleNode(itemDoc, "/item/components/component/@href");
+        String componentHref = componentObjiId.getTextContent();
+        String componentId = getObjidFromHref(componentHref);
+        ;
 
         deleteComponent(itemId, componentId);
 
@@ -1735,14 +1725,8 @@ public class ItemTest extends ItemTestBase {
         itemXml = retrieve(itemId);
         itemDoc = getDocument(itemXml);
 
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            assertXmlNotExists("Component not deleted", itemDoc, "/item/components/component[@objid='" + componentId
-                + "']");
-        }
-        else {
-            assertXmlNotExists("Component not deleted", itemDoc, "/item/components/component[@href='" + componentHref
-                + "']");
-        }
+        assertXmlNotExists("Component not deleted", itemDoc, "/item/components/component[@href='" + componentHref
+            + "']");
     }
 
     /**

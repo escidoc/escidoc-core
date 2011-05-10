@@ -30,18 +30,6 @@ package de.escidoc.core.test.sb;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import gov.loc.www.zing.cql.xcql.SearchClauseType;
-import gov.loc.www.zing.srw.DiagnosticsType;
-import gov.loc.www.zing.srw.EchoedScanRequestType;
-import gov.loc.www.zing.srw.EchoedSearchRetrieveRequestType;
-import gov.loc.www.zing.srw.ExplainResponseType;
-import gov.loc.www.zing.srw.RecordType;
-import gov.loc.www.zing.srw.RecordsType;
-import gov.loc.www.zing.srw.ScanResponseType;
-import gov.loc.www.zing.srw.SearchRetrieveResponseType;
-import gov.loc.www.zing.srw.TermType;
-import gov.loc.www.zing.srw.TermsType;
-import gov.loc.www.zing.srw.diagnostic.DiagnosticType;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
@@ -187,18 +175,10 @@ public class SearchTestBase extends SbTestBase {
      *             If anything fails.
      */
     protected String search(final HashMap<String, String> parameters, final String database) throws Exception {
-
         Object result = getSearchClient().search(parameters, database);
-        String xmlResult = null;
-        if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
-            assertHttpStatusOfMethod("", httpRes);
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-        }
-        else if (result instanceof SearchRetrieveResponseType) {
-            xmlResult = makeSearchResponseXml((SearchRetrieveResponseType) result);
-        }
-        return xmlResult;
+        HttpResponse httpRes = (HttpResponse) result;
+        assertHttpStatusOfMethod("", httpRes);
+        return EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
     }
 
     /**
@@ -212,22 +192,11 @@ public class SearchTestBase extends SbTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected String explain(final HashMap<String, String> parameters, final String database) throws Exception {
-
+    protected String explain(final HashMap<String, String[]> parameters, final String database) throws Exception {
         Object result = getSearchClient().explain(parameters, database);
-        String xmlResult = null;
-        if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
-            assertHttpStatusOfMethod("", httpRes);
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-
-        }
-        else if (result instanceof ExplainResponseType) {
-            xmlResult = ((ExplainResponseType) result).getRecord().getRecordData().get_any()[0].getAsString();
-            xmlResult = xmlResult.replaceAll("&gt;", ">");
-            xmlResult = xmlResult.replaceAll("&lt;", "<");
-        }
-        return xmlResult;
+        HttpResponse httpRes = (HttpResponse) result;
+        assertHttpStatusOfMethod("", httpRes);
+        return EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
     }
 
     /**
@@ -244,217 +213,9 @@ public class SearchTestBase extends SbTestBase {
     protected String scan(final HashMap parameters, final String database) throws Exception {
 
         Object result = getSearchClient().scan(parameters, database);
-        String xmlResult = null;
-        if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
-            assertHttpStatusOfMethod("", httpRes);
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-        }
-        else if (result instanceof ScanResponseType) {
-            xmlResult = makeScanResponseXml((ScanResponseType) result);
-        }
-        return xmlResult;
-    }
-
-    /**
-     * Converts SOAP-return object to xml.
-     * 
-     * @param result
-     *            The SOAP response object.
-     * @return The xml-representation of the soap object.
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected String makeSearchResponseXml(final SearchRetrieveResponseType result) throws Exception {
-        StringBuffer soapXmlResult = new StringBuffer("");
-        soapXmlResult.append("<searchRetrieveResponse  ").append("xmlns=\"http://www.loc.gov/zing/srw/\">");
-        soapXmlResult.append("<version>").append(result.getVersion()).append("</version>");
-        // get number of records////////////////////////////////////////////
-        if (result.getNumberOfRecords() != null) {
-            soapXmlResult.append("<numberOfRecords>").append((result).getNumberOfRecords().toString()).append(
-                "</numberOfRecords>");
-        }
-        // /////////////////////////////////////////////////////////////////
-
-        // Get record-data//////////////////////////////////////////////////
-        RecordsType recordsType = result.getRecords();
-        RecordType[] records = null;
-        if (recordsType != null) {
-            records = recordsType.getRecord();
-        }
-        if (records != null) {
-            soapXmlResult.append("<records>");
-            for (int i = 0; i < records.length; i++) {
-                soapXmlResult.append("<record>");
-                RecordType record = records[i];
-                soapXmlResult.append("<recordSchema>").append(record.getRecordSchema()).append("</recordSchema>");
-                soapXmlResult.append("<recordPacking>").append(record.getRecordPacking()).append("</recordPacking>");
-                String recordData = decodeCharacters(record.getRecordData().get_any()[0].getAsString());
-                soapXmlResult.append("<recordData>").append(recordData).append("</recordData>");
-                soapXmlResult.append("<recordPosition>").append(record.getRecordPosition()).append("</recordPosition>");
-                soapXmlResult.append("</record>");
-            }
-            soapXmlResult.append("</records>");
-        }
-        // /////////////////////////////////////////////////////////////////
-        // get nextRecordPosition////////////////////////////////////////////
-        if (result.getNextRecordPosition() != null) {
-            soapXmlResult.append("<nextRecordPosition>").append(result.getNextRecordPosition().toString()).append(
-                "</nextRecordPosition>");
-        }
-        // /////////////////////////////////////////////////////////////////
-        // get echoed searchRetrieveRequest/////////////////////////////////
-        if (result.getEchoedSearchRetrieveRequest() != null) {
-            EchoedSearchRetrieveRequestType echoedSearchRequest = result.getEchoedSearchRetrieveRequest();
-            soapXmlResult.append("<echoedSearchRetrieveRequest>");
-            if (echoedSearchRequest.getVersion() != null) {
-                soapXmlResult.append("<version>").append(echoedSearchRequest.getVersion()).append("</version>");
-            }
-            if (echoedSearchRequest.getQuery() != null) {
-                soapXmlResult.append("<query>").append(encodeCharacters(echoedSearchRequest.getQuery())).append(
-                    "</query>");
-            }
-            if (echoedSearchRequest.getXQuery() != null) {
-                SearchClauseType searchClause = echoedSearchRequest.getXQuery().getSearchClause();
-                if (searchClause == null) {
-                    searchClause = echoedSearchRequest.getXQuery().getTriple().getLeftOperand().getSearchClause();
-                }
-                if (searchClause == null) {
-                    searchClause =
-                        echoedSearchRequest
-                            .getXQuery().getTriple().getLeftOperand().getTriple().getLeftOperand().getSearchClause();
-                }
-                soapXmlResult.append("<xQuery><ns3:searchClause  ").append(
-                    "xmlns:ns3=\"http://www.loc.gov/zing/cql/xcql/\">");
-                if (searchClause.getIndex() != null) {
-                    soapXmlResult.append("<ns3:index>").append(searchClause.getIndex()).append("</ns3:index>");
-                }
-                if (searchClause.getRelation() != null && searchClause.getRelation().getValue() != null) {
-                    soapXmlResult.append("<ns3:relation><ns3:value>").append(
-                        encodeCharacters(searchClause.getRelation().getValue())).append("</ns3:value></ns3:relation>");
-                }
-                if (searchClause.getTerm() != null) {
-                    soapXmlResult.append("<ns3:term>").append(encodeCharacters(searchClause.getTerm())).append(
-                        "</ns3:term>");
-                }
-                soapXmlResult.append("</ns3:searchClause></xQuery>");
-            }
-            if (echoedSearchRequest.getMaximumRecords() != null) {
-                soapXmlResult.append("<maximumRecords>").append(echoedSearchRequest.getMaximumRecords()).append(
-                    "</maximumRecords>");
-            }
-            if (echoedSearchRequest.getRecordPacking() != null) {
-                soapXmlResult.append("<recordPacking>").append(echoedSearchRequest.getRecordPacking()).append(
-                    "</recordPacking>");
-            }
-            if (echoedSearchRequest.getRecordSchema() != null) {
-                soapXmlResult.append("<recordSchema>").append(echoedSearchRequest.getRecordSchema()).append(
-                    "</recordSchema>");
-            }
-            soapXmlResult.append("</echoedSearchRetrieveRequest>");
-        }
-        // /////////////////////////////////////////////////////////////////
-        // get Diagnostics//////////////////////////////////////////////////
-        DiagnosticsType diagnosticsType = result.getDiagnostics();
-        DiagnosticType[] diagnostics = null;
-        if (diagnosticsType != null) {
-            diagnostics = diagnosticsType.getDiagnostic();
-        }
-        if (diagnostics != null) {
-            soapXmlResult.append("<diagnostics>");
-            for (int i = 0; i < diagnostics.length; i++) {
-                soapXmlResult.append("<ns4:diagnostic xmlns:ns4=\"http://www.loc.gov/zing/srw/diagnostic/\">");
-                DiagnosticType diagnostic = diagnostics[i];
-                soapXmlResult.append("<ns4:uri>").append(diagnostic.getUri().getPath()).append("</ns4:uri>");
-                soapXmlResult.append("<ns4:details>").append(diagnostic.getDetails()).append("</ns4:details>");
-                soapXmlResult.append("</ns4:diagnostic>");
-            }
-            soapXmlResult.append("</diagnostics>");
-        }
-        // /////////////////////////////////////////////////////////////////
-        soapXmlResult.append("</searchRetrieveResponse>");
-        return soapXmlResult.toString();
-    }
-
-    /**
-     * Converts SOAP-return object to xml.
-     * 
-     * @param result
-     *            The SOAP response object.
-     * @return The xml-representation of the soap object.
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected String makeScanResponseXml(final ScanResponseType result) throws Exception {
-        StringBuffer soapXmlResult =
-            new StringBuffer("<scanResponse xmlns=\"http://www.loc.gov/zing/srw/\">").append("<version>1.1</version>");
-
-        // Get terms//////////////////////////////////////////////////
-        TermsType termsType = result.getTerms();
-        TermType[] terms = null;
-        if (termsType != null) {
-            terms = termsType.getTerm();
-        }
-        if (terms != null) {
-            soapXmlResult.append("<terms xmlns:ns1=\"http://www.loc.gov/zing/srw/\">");
-            for (int i = 0; i < terms.length; i++) {
-                soapXmlResult.append("<term>");
-                TermType term = terms[i];
-                soapXmlResult.append("<value>").append(term.getValue()).append("</value>");
-                soapXmlResult
-                    .append("<numberOfRecords>").append(term.getNumberOfRecords()).append("</numberOfRecords>");
-                soapXmlResult.append("</term>");
-            }
-            soapXmlResult.append("</terms>");
-        }
-        // /////////////////////////////////////////////////////////////////
-        // get Echoed Scan Request/////////////////////////////////////////////
-        EchoedScanRequestType echoedScanRequest = (result).getEchoedScanRequest();
-        if (echoedScanRequest != null) {
-            soapXmlResult.append("<echoedScanRequest xmlns:ns2=\"http://www.loc.gov/zing/srw/\">").append(
-                "<version>1.1</version>");
-            soapXmlResult.append("<scanClause>").append(echoedScanRequest.getScanClause()).append("</scanClause>");
-            SearchClauseType xScanClause = echoedScanRequest.getXScanClause();
-            if (xScanClause != null) {
-                soapXmlResult.append("<xScanClause>");
-                if (xScanClause.getIndex() != null) {
-                    soapXmlResult.append("<ns3:index xmlns:ns3=\"http://www.loc.gov/zing/cql/xcql/\">");
-                    soapXmlResult.append(xScanClause.getIndex()).append("</ns3:index>");
-                }
-                if (xScanClause.getRelation() != null && xScanClause.getRelation().getValue() != null) {
-                    soapXmlResult.append("<ns4:relation xmlns:ns4=\"http://www.loc.gov/zing/cql/xcql/\"><ns4:value>");
-                    soapXmlResult.append(xScanClause.getRelation().getValue()).append("</ns4:value></ns4:relation>");
-                }
-                if (xScanClause.getTerm() != null) {
-                    soapXmlResult.append("<ns5:term xmlns:ns5=\"http://www.loc.gov/zing/cql/xcql/\">");
-                    soapXmlResult.append(xScanClause.getTerm()).append("</ns5:term>");
-                }
-                soapXmlResult.append("</xScanClause>");
-            }
-            soapXmlResult.append("</echoedScanRequest>");
-        }
-        // get Diagnostics//////////////////////////////////////////////////
-        DiagnosticsType diagnosticsType = result.getDiagnostics();
-        DiagnosticType[] diagnostics = null;
-        if (diagnosticsType != null) {
-            diagnostics = diagnosticsType.getDiagnostic();
-        }
-        if (diagnostics != null) {
-            soapXmlResult.append("<diagnostics>");
-            for (int i = 0; i < diagnostics.length; i++) {
-                soapXmlResult.append("<ns4:diagnostic xmlns:ns4=\"http://www.loc.gov/zing/srw/diagnostic/\">");
-                DiagnosticType diagnostic = diagnostics[i];
-                soapXmlResult.append("<ns4:uri>").append(diagnostic.getUri().getPath()).append("</ns4:uri>");
-                soapXmlResult.append("<ns4:details>").append(diagnostic.getDetails()).append("</ns4:details>");
-                soapXmlResult.append("</ns4:diagnostic>");
-            }
-            soapXmlResult.append("</diagnostics>");
-        }
-        soapXmlResult.append("</scanResponse>");
-        // /////////////////////////////////////////////////////////////////
-        // /////////////////////////////////////////////////////////////////
-
-        return soapXmlResult.toString();
+        HttpResponse httpRes = (HttpResponse) result;
+        assertHttpStatusOfMethod("", httpRes);
+        return EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
     }
 
     /**

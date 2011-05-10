@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.aa;
 
-import de.escidoc.core.aa.PolicyDecisionPoint;
-import de.escidoc.core.aa.PolicyDecisionPointServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -42,8 +40,6 @@ import javax.xml.rpc.ServiceException;
  */
 public class PolicyDecisionPointClient extends ClientBase {
 
-    private PolicyDecisionPoint soapClient = null;
-
     /**
      * @param transport The transport identifier.
      */
@@ -52,20 +48,6 @@ public class PolicyDecisionPointClient extends ClientBase {
     }
 
     /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If the client creation fails.
-     */
-    @Override
-    public PolicyDecisionPoint getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            PolicyDecisionPointServiceLocator serviceLocator = new PolicyDecisionPointServiceLocator(getEngineConfig());
-            serviceLocator.setPolicyDecisionPointServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getPolicyDecisionPointServiceAddress()));
-            soapClient = serviceLocator.getPolicyDecisionPointService();
-        }
-        return soapClient;
-    }
 
     /**
      * Evaluates the provided authorization requests.

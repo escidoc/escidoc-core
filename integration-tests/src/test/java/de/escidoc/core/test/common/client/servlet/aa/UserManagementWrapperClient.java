@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.aa;
 
-import de.escidoc.core.aa.UserManagementWrapper;
-import de.escidoc.core.aa.UserManagementWrapperServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
@@ -42,8 +40,6 @@ import javax.xml.rpc.ServiceException;
  * @author Torsten Tetteroo
  */
 public class UserManagementWrapperClient extends ClientBase {
-
-    private UserManagementWrapper soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -103,23 +99,6 @@ public class UserManagementWrapperClient extends ClientBase {
         throws Exception {
 
         return HttpHelper.performLogout(getHttpClient(), redirectUrl, userHandle, encodeRedirectUrlSlashes);
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If the client creation fails.
-     */
-    @Override
-    public UserManagementWrapper getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            UserManagementWrapperServiceLocator serviceLocator =
-                new UserManagementWrapperServiceLocator(getEngineConfig());
-            serviceLocator.setUserManagementWrapperServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getUserManagementWrapperServiceAddress()));
-            soapClient = serviceLocator.getUserManagementWrapperService();
-        }
-        return soapClient;
     }
 
 }

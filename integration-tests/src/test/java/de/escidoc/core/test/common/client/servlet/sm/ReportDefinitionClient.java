@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.sm;
 
-import de.escidoc.core.sm.ReportDefinitionHandler;
-import de.escidoc.core.sm.ReportDefinitionHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -42,8 +40,6 @@ import java.util.Map;
  * @author Michael Hoppe
  */
 public class ReportDefinitionClient extends ClientBase {
-
-    private ReportDefinitionHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -121,23 +117,6 @@ public class ReportDefinitionClient extends ClientBase {
 
         return callEsciDoc("ReportDefinition.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
             Constants.STATISTIC_REPORT_DEFINITION_BASE_URI, new String[] { id }, changeToString(itemXml));
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    @Override
-    public ReportDefinitionHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            ReportDefinitionHandlerServiceLocator serviceLocator =
-                new ReportDefinitionHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setReportDefinitionHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getReportDefinitionHandlerServiceAddress()));
-            soapClient = serviceLocator.getReportDefinitionHandlerService();
-        }
-        return soapClient;
     }
 
 }

@@ -143,13 +143,8 @@ public class ItemFilterTest extends ItemTestBase {
         Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
 
         NodeList nl;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            selectSingleNodeAsserted(resultDoc, XPATH_SRW_ITEM_LIST_ITEM + "[@objid = '" + theItemId + "']");
-        }
-        else {
-            selectSingleNodeAsserted(resultDoc, XPATH_SRW_ITEM_LIST_ITEM + "[@href = '" + Constants.ITEM_BASE_URI + "/"
-                + theItemId + "']");
-        }
+        selectSingleNodeAsserted(resultDoc, XPATH_SRW_ITEM_LIST_ITEM + "[@href = '" + Constants.ITEM_BASE_URI + "/"
+            + theItemId + "']");
         nl = selectNodeList(resultDoc, XPATH_SRW_ITEM_LIST_ITEM);
         assertEquals("Only one item should be retrieved.", nl.getLength(), 1);
 
@@ -529,24 +524,11 @@ public class ItemFilterTest extends ItemTestBase {
         list = retrieveItems(filterParams);
         assertXmlValidSrwResponse(list);
 
-        NodeList nodes = null;
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@href");
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
-        }
+        NodeList nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@href");
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
             Node node = nodes.item(count);
-            String nodeValue = null;
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                nodeValue = getIdFromHrefValue(node.getNodeValue());
-            }
-            else {
-                nodeValue = node.getNodeValue();
-            }
+            String nodeValue = getIdFromHrefValue(node.getNodeValue());
 
             try {
                 String item = retrieve(nodeValue);
@@ -575,44 +557,16 @@ public class ItemFilterTest extends ItemTestBase {
         list = retrieveItems(filterParams);
         assertXmlValidSrwResponse(list);
 
-        NodeList nodes = null;
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@href");
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
-        }
+        NodeList nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@href");
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
             Node node = nodes.item(count);
-            String nodeValue = null;
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                nodeValue = getObjidFromHref(node.getNodeValue());
-            }
-            else {
-                nodeValue = node.getNodeValue();
-            }
-
-            try {
-                String item = retrieve(nodeValue);
-                String itemCT = null;
-
-                if (getTransport() == Constants.TRANSPORT_REST) {
-                    itemCT =
-                        selectSingleNode(EscidocRestSoapTestBase.getDocument(item),
-                            "/item/properties/content-model/@href").getNodeValue();
-                    assertEquals(Constants.CONTENT_MODEL_BASE_URI + "/" + reqCT, itemCT);
-                }
-                else if (getTransport() == Constants.TRANSPORT_SOAP) {
-                    itemCT =
-                        selectSingleNode(EscidocRestSoapTestBase.getDocument(item),
-                            "/item/properties/content-model/@objid").getNodeValue();
-                    assertEquals(reqCT, itemCT);
-                }
-            }
-            catch (final ItemNotFoundException e) {
-            }
+            String nodeValue = getObjidFromHref(node.getNodeValue());
+            String item = retrieve(nodeValue);
+            String itemCT =
+                selectSingleNode(EscidocRestSoapTestBase.getDocument(item), "/item/properties/content-model/@href")
+                    .getNodeValue();
+            assertEquals(Constants.CONTENT_MODEL_BASE_URI + "/" + reqCT, itemCT);
         }
     }
 
@@ -629,14 +583,7 @@ public class ItemFilterTest extends ItemTestBase {
         list = retrieveItems(filterParams);
         assertXmlValidSrwResponse(list);
 
-        NodeList nodes = null;
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@href");
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
-        }
+        NodeList nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_ITEM_LIST_ITEM + "/@href");
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
             Node node = nodes.item(count);
@@ -802,18 +749,11 @@ public class ItemFilterTest extends ItemTestBase {
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_URI_USER + "\"=" + userId });
 
             String groupXml = handleXmlResult(userGroupClient.retrieveUserGroups(filterParams));
-            NodeList userGroups = null;
+            NodeList userGroups =
+                selectNodeList(EscidocRestSoapTestBase.getDocument(groupXml), XPATH_SRW_USER_GROUP_LIST_USER_GROUP
+                    + "/@href");
+            ;
 
-            if (getTransport() == Constants.TRANSPORT_SOAP) {
-                userGroups =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(groupXml), XPATH_SRW_USER_GROUP_LIST_USER_GROUP
-                        + "/@objid");
-            }
-            else {
-                userGroups =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(groupXml), XPATH_SRW_USER_GROUP_LIST_USER_GROUP
-                        + "/@href");
-            }
             for (int index = 0; index < userGroups.getLength(); index++) {
                 Node userGroup = userGroups.item(index);
                 String groupId = getObjidFromHref(userGroup.getNodeValue());

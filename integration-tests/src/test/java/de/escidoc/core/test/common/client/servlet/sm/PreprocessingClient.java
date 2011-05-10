@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.sm;
 
-import de.escidoc.core.sm.PreprocessingHandler;
-import de.escidoc.core.sm.PreprocessingHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -41,8 +39,6 @@ import javax.xml.rpc.ServiceException;
  * @author Michael Hoppe
  */
 public class PreprocessingClient extends ClientBase {
-
-    private PreprocessingHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -65,23 +61,6 @@ public class PreprocessingClient extends ClientBase {
         return callEsciDoc("Preprocessing.preprocess", METHOD_PREPROCESS_STATISTICS, Constants.HTTP_METHOD_POST,
             Constants.STATISTIC_PREPROCESSING_BASE_URI, new String[] { id },
             changeToString(preprocessingInformationXml));
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    @Override
-    public PreprocessingHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            PreprocessingHandlerServiceLocator serviceLocator =
-                new PreprocessingHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setPreprocessingHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getPreprocessingHandlerServiceAddress()));
-            soapClient = serviceLocator.getPreprocessingHandlerService();
-        }
-        return soapClient;
     }
 
 }

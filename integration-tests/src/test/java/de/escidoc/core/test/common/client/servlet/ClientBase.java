@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
-import de.escidoc.core.common.exceptions.remote.EscidocException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
@@ -526,53 +525,6 @@ public abstract class ClientBase {
     }
 
     /**
-     * Call the soap method on the appropriate soap client.<br>
-     * This default implementation calls getSoapClient() that has to be implemented by the concrete test class to
-     * determine the soap client to use. The soap client's method that has to be called is determined via reflection
-     * from the provided soapMethod parameter.<br>
-     * This may be overriden by the concrete test implementation.
-     * 
-     * @param label
-     *            A label for logging purposes.
-     * @param soapMethod
-     *            The soap method.
-     * @param params
-     *            The parameters used for the method call.<br>
-     *            In case of methods that expect xml data or another object, the last entry in params contains the
-     *            object or the xml representation of an object to create or update. Could be the resource itself or a
-     *            sub resource.
-     * @return The result of the soap call.
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected Object callSoapMethod(final String label, final String soapMethod, final Object[] params)
-        throws Exception {
-
-        logSoapServiceCall(label, params);
-        Remote soapClient = getSoapClient();
-        Class<?>[] parameterTypes = new Class[params.length];
-        for (int i = 0; i < params.length; i++) {
-            if (params[i] != null) {
-                parameterTypes[i] = params[i].getClass();
-            }
-            else {
-                parameterTypes[i] = String.class;
-            }
-        }
-        Method method = soapClient.getClass().getMethod(soapMethod, parameterTypes);
-        try {
-            return method.invoke(soapClient, params);
-        }
-        catch (final InvocationTargetException e) {
-            Throwable targetException = e.getTargetException();
-            if (targetException instanceof Exception) {
-                throw (Exception) targetException;
-            }
-            throw e;
-        }
-    }
-
-    /**
      * Make a service call to the escidoc framework for methods without sending an xml representation of a resource.
      * Whether REST or SOAP is taken depends on the transport attribute.
      * 
@@ -813,57 +765,19 @@ public abstract class ClientBase {
         final String label, final String soapMethod, final String httpMethod, final String httpBaseUri,
         final String[] pathElements, final String parameter, final Object body, final String mimeType,
         final String filename, final Map<String, String[]> parameters) throws Exception {
-
         Object result = null;
-        switch (getTransport()) {
-            case Constants.TRANSPORT_REST:
-                String httpUrl =
-                    HttpHelper.createUrl(Constants.PROTOCOL, EscidocTestBase.getFrameworkHost() + ":"
-                        + EscidocTestBase.getFrameworkPort(), httpBaseUri, pathElements, parameter, false);
-                logRestServiceCall(label, httpMethod, httpUrl, body);
-                if (NOXML.equals(body)) {
-                    result =
-                        HttpHelper.executeHttpRequest(getHttpClient(), httpMethod, httpUrl, null, mimeType, parameters);
-                }
-                else {
-                    result =
-                        HttpHelper.executeHttpRequest(getHttpClient(), httpMethod, httpUrl, body, mimeType, parameters);
-                }
-                if (((HttpResponse) result).getStatusLine().getStatusCode() >= HttpServletResponse.SC_MULTIPLE_CHOICES) {
-                    throwCorrespondingException((HttpResponse) result);
-                }
-
-                break;
-            case Constants.TRANSPORT_SOAP:
-                Object[] params;
-                if (NOXML.equals(body)) {
-                    int length = (pathElements.length + 1) / 2;
-                    params = new Object[length];
-                    for (int i = 0; i < length; i++) {
-                        params[i] = pathElements[2 * i];
-                    }
-                    if (parameters != null) {
-                        Vector<Object> paramVector = new Vector<Object>();
-
-                        for (Object param : params) {
-                            paramVector.add(param);
-                        }
-                        paramVector.add(parameters);
-                        params = paramVector.toArray();
-                    }
-                }
-                else {
-                    int length = (pathElements.length + 1) / 2;
-                    params = new Object[length + 1];
-                    for (int i = 0; i < length; i++) {
-                        params[i] = pathElements[2 * i];
-                    }
-                    params[length] = body;
-                }
-                result = callSoapMethod(label, soapMethod, params);
-                break;
-            default:
-                result = null;
+        String httpUrl =
+            HttpHelper.createUrl(Constants.PROTOCOL, EscidocTestBase.getFrameworkHost() + ":"
+                + EscidocTestBase.getFrameworkPort(), httpBaseUri, pathElements, parameter, false);
+        logRestServiceCall(label, httpMethod, httpUrl, body);
+        if (NOXML.equals(body)) {
+            result = HttpHelper.executeHttpRequest(getHttpClient(), httpMethod, httpUrl, null, mimeType, parameters);
+        }
+        else {
+            result = HttpHelper.executeHttpRequest(getHttpClient(), httpMethod, httpUrl, body, mimeType, parameters);
+        }
+        if (((HttpResponse) result).getStatusLine().getStatusCode() >= HttpServletResponse.SC_MULTIPLE_CHOICES) {
+            throwCorrespondingException((HttpResponse) result);
         }
         return result;
     }
@@ -933,64 +847,7 @@ public abstract class ClientBase {
                     + exceptionObject + "\n Body:\n" + exceptionXML);
             }
         }
-
-        if (exceptionObject instanceof EscidocException) {
-            initializeEscidocException(result, exceptionXML, (EscidocException) exceptionObject);
-        }
-
         throw (Exception) exceptionObject;
-    }
-
-    /**
-     * Initializes the value of an <code>EscidocException</code> from the provided data.
-     * <p/>
-     * The http method object holding the data of the request and response.
-     * 
-     * @param exceptionXML
-     *            The XML representation of the exception.
-     * @param escidocException
-     *            The <code>EscidocException</code> object that shall be initialized
-     */
-    private void initializeEscidocException(
-        final HttpResponse httpRes, final String exceptionXML, EscidocException escidocException) {
-
-        escidocException.setHttpStatusCode(httpRes.getStatusLine().getStatusCode());
-        escidocException.setHttpStatusMsg(httpRes.getStatusLine().getReasonPhrase());
-        escidocException.setHttpStatusLine(httpRes.getStatusLine().getReasonPhrase());
-        escidocException.setFaultString(exceptionXML);
-        // (exceptionXML,
-        // httpRes.getStatusLine().getStatusCode(),
-        // httpRes.getStatusLine().getReasonPhrase());
-
-        // m = PATTERN_EXCEPTION_TITLE.matcher(exceptionXML);
-        // String faultString = null;
-        // if (m.find()) {
-        // faultString = m.group(1);
-        // }
-        // m = PATTERN_EXCEPTION_MESSAGE.matcher(exceptionXML);
-        // if (m.find()) {
-        // faultString = faultString + "\n" + m.group(1);
-        // }
-        // if (faultString != null) {
-        // escidocException.setFaultString(faultString);
-        // }
-        //
-        // m = PATTERN_EXCEPTION_CAUSE.matcher(exceptionXML);
-        // String exceptionCause = null;
-        // if (m.find()) {
-        // exceptionCause = m.group(1);
-        // }
-        // if (exceptionCause != null && !exceptionCause.equals("")) {
-        // escidocException.setFaultDetailString(exceptionCause);
-        // }
-
-        // if (escidocException instanceof SecurityException) {
-        // Header locationHeader = HttpResponse.getResponseHeader("Location");
-        // if (locationHeader != null) {
-        // ((SecurityException) escidocException)
-        // .setRedirectLocation(locationHeader.getValue());
-        // }
-        // }
     }
 
     /**

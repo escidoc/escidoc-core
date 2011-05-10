@@ -246,7 +246,7 @@ public class OaipmhSearchTest extends SearchTestBase {
      */
     @Test
     public void testSBOAIPMHEX1() throws Exception {
-        HashMap<String, String> parameters = new HashMap<String, String>();
+        HashMap<String, String[]> parameters = new HashMap<String, String[]>();
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
@@ -261,8 +261,8 @@ public class OaipmhSearchTest extends SearchTestBase {
      */
     @Test
     public void testSBOAIPMHEX2() throws Exception {
-        HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_EXPLAIN);
+        HashMap<String, String[]> parameters = new HashMap<String, String[]>();
+        parameters.put(FILTER_PARAMETER_OPERATION, new String[]{FILTER_PARAMETER_EXPLAIN});
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
@@ -277,8 +277,8 @@ public class OaipmhSearchTest extends SearchTestBase {
      */
     @Test
     public void testSBOAIPMHEX3() throws Exception {
-        HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_EXPLAIN);
+        HashMap<String, String[]> parameters = new HashMap<String, String[]>();
+        parameters.put(FILTER_PARAMETER_OPERATION, new String[]{FILTER_PARAMETER_EXPLAIN});
         try {
             explain(parameters, "zzz");
             fail("No exception occurred on explain in non-existing database.");

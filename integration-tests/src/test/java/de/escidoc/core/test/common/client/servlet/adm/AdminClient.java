@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.adm;
 
-import de.escidoc.core.adm.AdminHandler;
-import de.escidoc.core.adm.AdminHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.adm.interfaces.AdminClientInterface;
@@ -42,8 +40,6 @@ import javax.xml.rpc.ServiceException;
  * @author Steffen Wagner
  */
 public class AdminClient extends ClientBase implements AdminClientInterface {
-
-    private AdminHandler soapClient = null;
 
     /**
      * Admin Client.
@@ -101,24 +97,6 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
 
         return callEsciDoc("Admin.getIndexConfiguration", METHOD_GET_INDEX_CONFIGURATION, Constants.HTTP_METHOD_GET,
             Constants.INDEX_CONFIGURATION_BASE_URI, new String[] {});
-    }
-
-    /**
-     * Return the SOAP client.
-     *
-     * @return the SOAP client
-     * @throws ServiceException If the client creation fails.
-     */
-    @Override
-    public AdminHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            AdminHandlerServiceLocator serviceLocator = new AdminHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setAdminHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getAdminHandlerServiceAddress()));
-            soapClient = serviceLocator.getAdminHandlerService();
-        }
-        return soapClient;
     }
 
     /**

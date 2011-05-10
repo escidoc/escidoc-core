@@ -191,12 +191,7 @@ public class AdministratorAbstractTest extends GrantTestBase {
         PWCallback.resetHandle();
 
         String path = TEMPLATE_CONTEXT_PATH;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            path += "/rest";
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            path += "/soap";
-        }
+        path += "/rest";
         final Document toBeCreatedDocument = getTemplateAsDocument(path, "context_create.xml");
         substitute(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_NAME, getUniqueName("Some Context "));
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);

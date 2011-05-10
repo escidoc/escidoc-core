@@ -282,14 +282,7 @@ public class UpdateTest extends ContextTestBase {
         assertXmlValidContext(created);
         Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
         String id = getObjidValue(createdDoc);
-        Node update = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            // substitute href
-            update = substitute(createdDoc, "context/@href", "/ir/context/" + id + "1/admin-descriptor");
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            update = substitute(createdDoc, "context/@objid", id + "1");
-        }
+        Node update = substitute(createdDoc, "context/@href", "/ir/context/" + id + "1/admin-descriptor");
         update(id, toString(update, false));
     }
 
@@ -316,14 +309,8 @@ public class UpdateTest extends ContextTestBase {
         String id = getObjidValue(createdDoc);
         String toBeChanged = null;
         Node update = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            toBeChanged = getAttributeValue(createdDoc, "/context", XLINK_HREF_ESCIDOC);
-            update = substitute(createdDoc, "/context/@href", toBeChanged + "12");
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            getAttributeValue(createdDoc, "/context", "objid");
-            update = substitute(createdDoc, "/context/@objid", toBeChanged + "12");
-        }
+        toBeChanged = getAttributeValue(createdDoc, "/context", XLINK_HREF_ESCIDOC);
+        update = substitute(createdDoc, "/context/@href", toBeChanged + "12");
         update(id, toString(update, false));
     }
 

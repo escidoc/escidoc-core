@@ -30,8 +30,6 @@ package de.escidoc.core.test.common.client.servlet.tme;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.tme.JhoveHandler;
-import de.escidoc.core.tme.JhoveHandlerServiceLocator;
 
 import javax.xml.rpc.ServiceException;
 
@@ -41,8 +39,6 @@ import javax.xml.rpc.ServiceException;
  * @author Michael Schneider
  */
 public class JhoveClient extends ClientBase {
-
-    private JhoveHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -62,22 +58,6 @@ public class JhoveClient extends ClientBase {
 
         return callEsciDoc("Jhove.extract", METHOD_EXTRACT, Constants.HTTP_METHOD_POST, Constants.JHOVE_BASE_URI,
             new String[] {}, param);
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    @Override
-    public JhoveHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            JhoveHandlerServiceLocator serviceLocator = new JhoveHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setJhoveHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getJhoveHandlerServiceAddress()));
-            soapClient = serviceLocator.getJhoveHandlerService();
-        }
-        return soapClient;
     }
 
 }

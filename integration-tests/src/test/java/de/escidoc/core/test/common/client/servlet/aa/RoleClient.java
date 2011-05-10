@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.aa;
 
-import de.escidoc.core.aa.RoleHandler;
-import de.escidoc.core.aa.RoleHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -44,29 +42,11 @@ import java.util.Map;
  */
 public class RoleClient extends ClientBase implements ResourceHandlerClientInterface {
 
-    private RoleHandler soapClient = null;
-
     /**
      * @param transport The transport identifier.
      */
     public RoleClient(final int transport) {
         super(transport);
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If the client creation fails.
-     */
-    @Override
-    public RoleHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            RoleHandlerServiceLocator serviceLocator = new RoleHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setRoleHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getRoleHandlerServiceAddress()));
-            soapClient = serviceLocator.getRoleHandlerService();
-        }
-        return soapClient;
     }
 
     /**

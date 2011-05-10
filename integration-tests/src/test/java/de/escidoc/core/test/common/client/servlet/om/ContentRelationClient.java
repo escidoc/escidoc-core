@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
-import de.escidoc.core.om.ContentRelationHandler;
-import de.escidoc.core.om.ContentRelationHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ContentRelationHandlerClientInterface;
@@ -43,8 +41,6 @@ import java.util.Map;
  * @author Steffen Wagner
  */
 public class ContentRelationClient extends ClientBase implements ContentRelationHandlerClientInterface {
-
-    private ContentRelationHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -247,23 +243,6 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
     public Object retrieveMdRecord(final String id, final String name) throws Exception {
         return callEsciDoc("ContentRelation.retrieveMdRecord", METHOD_RETRIEVE_MD_RECORD, Constants.HTTP_METHOD_GET,
             Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_MD_RECORD, name });
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    @Override
-    public ContentRelationHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            ContentRelationHandlerServiceLocator serviceLocator =
-                new ContentRelationHandlerServiceLocator(getEngineConfig());
-            String ep = checkSoapAddress(serviceLocator.getContentRelationHandlerServiceAddress());
-            serviceLocator.setContentRelationHandlerServiceEndpointAddress(ep);
-            soapClient = serviceLocator.getContentRelationHandlerService();
-        }
-        return soapClient;
     }
 
 }

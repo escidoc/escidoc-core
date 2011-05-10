@@ -80,14 +80,8 @@ public class ItemLockTest extends ItemTestBase {
         assertXmlEquals("Item lock status not as expected", itemDoc, "/item/properties/lock-status", "locked");
         assertXmlNotNull("lock-date", itemDoc, "/item/properties/lock-date");
 
-        String lockOwner = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            lockOwner =
-                getObjidFromHref(selectSingleNode(itemDoc, "/item/properties/lock-owner/@href").getTextContent());
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            lockOwner = selectSingleNode(itemDoc, "/item/properties/lock-owner/@objid").getTextContent();
-        }
+        String lockOwner =
+            getObjidFromHref(selectSingleNode(itemDoc, "/item/properties/lock-owner/@href").getTextContent());
         assertNotNull(lockOwner);
         assertXmlValidItem(itemXml);
 
@@ -116,14 +110,8 @@ public class ItemLockTest extends ItemTestBase {
         assertXmlEquals("Container lock status not as expected", containerDoc, "/item/properties/lock-status", "locked");
         assertXmlNotNull("lock-date", containerDoc, "/item/properties/lock-date");
 
-        String lockOwner = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            lockOwner =
-                getObjidFromHref(selectSingleNode(containerDoc, "/item/properties/lock-owner/@href").getTextContent());
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            lockOwner = selectSingleNode(containerDoc, "/item/properties/lock-owner/@objid").getTextContent();
-        }
+        String lockOwner =
+            getObjidFromHref(selectSingleNode(containerDoc, "/item/properties/lock-owner/@href").getTextContent());
         assertNotNull(lockOwner);
 
         assertXmlValidItem(containerXml);

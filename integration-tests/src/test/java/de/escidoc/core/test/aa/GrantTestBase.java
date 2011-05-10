@@ -460,12 +460,6 @@ public class GrantTestBase extends UserAccountTestBase {
         int numberOfGrants = getGrantCount(id);
         String replacedRole = role;
         String replacedScope = scope;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replacedRole = replacedRole.replaceFirst(".*\\/", "");
-            if (replacedScope != null) {
-                replacedScope = replacedScope.replaceFirst(".*\\/", "");
-            }
-        }
         String grantXml =
             getTemplateAsFixedGrantString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_replaceable_grant_for_create.xml");
         grantXml = grantXml.replaceAll("\\$\\{rolehref\\}", replacedRole);

@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.aa;
 
-import de.escidoc.core.aa.UserGroupHandler;
-import de.escidoc.core.aa.UserGroupHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 
@@ -42,8 +40,6 @@ import java.util.Map;
  * @author Michael Hoppe
  */
 public class UserGroupClient extends GrantClient implements ResourceHandlerClientInterface {
-
-    private UserGroupHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -264,22 +260,6 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
         String[] pathElements = new String[] { id, "resources/grants/grant", grantId, "revoke-grant" };
         return callEsciDoc("UserGroup.revokeGrant", METHOD_REVOKE_GRANT, Constants.HTTP_METHOD_POST,
             Constants.USER_GROUP_BASE_URI, pathElements, changeToString(taskParamXml));
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If the client creation fails.
-     */
-    @Override
-    public UserGroupHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            UserGroupHandlerServiceLocator serviceLocator = new UserGroupHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setUserGroupHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getUserGroupHandlerServiceAddress()));
-            soapClient = serviceLocator.getUserGroupHandlerService();
-        }
-        return soapClient;
     }
 
 }

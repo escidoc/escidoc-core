@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
-import de.escidoc.core.om.SemanticStoreHandler;
-import de.escidoc.core.om.SemanticStoreHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -41,8 +39,6 @@ import javax.xml.rpc.ServiceException;
  * @author Michael Schneider
  */
 public class SemanticStoreClient extends ClientBase {
-
-    private SemanticStoreHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -62,22 +58,6 @@ public class SemanticStoreClient extends ClientBase {
 
         return callEsciDoc("SemanticStore.spo", METHOD_SPO, Constants.HTTP_METHOD_POST,
             Constants.SEMANTIC_STORE_BASE_URI + Constants.SPO, new String[] {}, queryParam);
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    public SemanticStoreHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            SemanticStoreHandlerServiceLocator serviceLocator =
-                new SemanticStoreHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setSemanticStoreHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getSemanticStoreHandlerServiceAddress()));
-            soapClient = serviceLocator.getSemanticStoreHandlerService();
-        }
-        return soapClient;
     }
 
 }

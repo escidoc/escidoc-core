@@ -204,7 +204,7 @@ public class OuSearchTest extends SearchTestBase {
      */
     @Test
     public void testSBOUEX1() throws Exception {
-        HashMap<String, String> parameters = new HashMap<String, String>();
+        HashMap<String, String[]> parameters = new HashMap<String, String[]>();
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/escidocou_all", getDatabase(response));
@@ -219,8 +219,8 @@ public class OuSearchTest extends SearchTestBase {
      */
     @Test
     public void testSBOUEX2() throws Exception {
-        HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_EXPLAIN);
+        HashMap<String, String[]> parameters = new HashMap<String, String[]>();
+        parameters.put(FILTER_PARAMETER_OPERATION, new String[]{FILTER_PARAMETER_EXPLAIN});
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/escidocou_all", getDatabase(response));

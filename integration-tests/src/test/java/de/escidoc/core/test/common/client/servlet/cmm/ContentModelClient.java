@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.cmm;
 
-import de.escidoc.core.cmm.ContentModelHandler;
-import de.escidoc.core.cmm.ContentModelHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -43,29 +41,11 @@ import java.util.Map;
  */
 public class ContentModelClient extends ClientBase {
 
-    private ContentModelHandler soapClient = null;
-
     /**
      * @param transport The transport identifier.
      */
     public ContentModelClient(final int transport) {
         super(transport);
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    @Override
-    public ContentModelHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            ContentModelHandlerServiceLocator serviceLocator = new ContentModelHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setContentModelHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getContentModelHandlerServiceAddress()));
-            soapClient = serviceLocator.getContentModelHandlerService();
-        }
-        return soapClient;
     }
 
     /**

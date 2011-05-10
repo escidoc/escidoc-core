@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
-import de.escidoc.core.om.ItemHandler;
-import de.escidoc.core.om.ItemHandlerServiceLocator;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -49,8 +47,6 @@ import java.util.Map;
  */
 public class ItemClient extends ClientBase
     implements SubmitReleaseReviseWithdrawClientInterface, ResourceHandlerClientInterface {
-
-    private ItemHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -494,7 +490,7 @@ public class ItemClient extends ClientBase
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.test.common.client.servlet.om.interfaces. SubmitReleaseReviseWithdrawClientInterface
+     * @see de.escidoc.core.test.common.client.servlet.om.interfaces.SubmitReleaseReviseWithdrawClientInterface
      *      #release(java.lang.String, java.lang.String)
      */
     public Object release(final String itemId, final String param) throws Exception {
@@ -586,7 +582,7 @@ public class ItemClient extends ClientBase
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.test.common.client.servlet.om.interfaces. SubmitReleaseReviseWithdrawClientInterface
+     * @see de.escidoc.core.test.common.client.servlet.om.interfaces.SubmitReleaseReviseWithdrawClientInterface
      *      #submit(java.lang.String, java.lang.String)
      */
     public Object revise(final String itemId, final String param) throws Exception {
@@ -598,7 +594,7 @@ public class ItemClient extends ClientBase
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.test.common.client.servlet.om.interfaces. SubmitReleaseReviseWithdrawClientInterface
+     * @see de.escidoc.core.test.common.client.servlet.om.interfaces.SubmitReleaseReviseWithdrawClientInterface
      *      #submit(java.lang.String, java.lang.String)
      */
     public Object submit(final String itemId, final String param) throws Exception {
@@ -610,7 +606,7 @@ public class ItemClient extends ClientBase
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.test.common.client.servlet.om.interfaces. SubmitReleaseReviseWithdrawClientInterface
+     * @see de.escidoc.core.test.common.client.servlet.om.interfaces.SubmitReleaseReviseWithdrawClientInterface
      *      #withdraw(java.lang.String, java.lang.String)
      */
     public Object withdraw(final String itemId, final String param) throws Exception {
@@ -659,22 +655,6 @@ public class ItemClient extends ClientBase
 
         return callEsciDoc("Item.moveToContext", METHOD_MOVE_TO_CONTEXT, Constants.HTTP_METHOD_POST,
             Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_MOVE_TO_CONTEXT }, param);
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    @Override
-    public ItemHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            ItemHandlerServiceLocator serviceLocator = new ItemHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setItemHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getItemHandlerServiceAddress()));
-            soapClient = serviceLocator.getItemHandlerService();
-        }
-        return soapClient;
     }
 
 }

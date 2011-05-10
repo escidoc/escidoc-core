@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.sm;
 
-import de.escidoc.core.sm.StatisticDataHandler;
-import de.escidoc.core.sm.StatisticDataHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -43,8 +41,6 @@ import java.rmi.Remote;
  */
 public class StatisticDataClient extends ClientBase {
 
-    private StatisticDataHandler soapClient = null;
-
     /**
      * @param transport The transport identifier.
      */
@@ -56,30 +52,13 @@ public class StatisticDataClient extends ClientBase {
     /**
      * Create an item in the escidoc framework.
      *
-     * @param aggregationXml The xml representation of the aggregation.
+     * @param statisticDataXml The xml representation of the aggregation.
      * @return The HttpMethod after the service call (REST) or the result object (SOAP).
      * @throws Exception If the service call fails.
      */
     public Object create(final Object statisticDataXml) throws Exception {
-
         return callEsciDoc("StatisticData.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
             Constants.STATISTIC_DATA_BASE_URI, new String[] {}, changeToString(statisticDataXml));
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    public Remote getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            StatisticDataHandlerServiceLocator serviceLocator =
-                new StatisticDataHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setStatisticDataHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getStatisticDataHandlerServiceAddress()));
-            soapClient = serviceLocator.getStatisticDataHandlerService();
-        }
-        return soapClient;
     }
 
 }

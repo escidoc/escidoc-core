@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.aa;
 
-import de.escidoc.core.aa.ActionHandler;
-import de.escidoc.core.aa.ActionHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -43,29 +41,11 @@ import javax.xml.rpc.ServiceException;
  */
 public class ActionClient extends ClientBase implements ResourceHandlerClientInterface {
 
-    private ActionHandler soapClient = null;
-
     /**
      * @param transport The transport identifier.
      */
     public ActionClient(final int transport) {
         super(transport);
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If the client creation fails.
-     */
-    @Override
-    public ActionHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            ActionHandlerServiceLocator serviceLocator = new ActionHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setActionHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getActionHandlerServiceAddress()));
-            soapClient = serviceLocator.getActionHandlerService();
-        }
-        return soapClient;
     }
 
     /**

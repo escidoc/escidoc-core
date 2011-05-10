@@ -63,7 +63,6 @@
 		<module>sm</module>
 		<module>st</module>
 		<module>tme</module>
-		<module>axis.war</module>
 		<module>escidoc-core.war</module>
 		<module>common-remote</module>
 		<module>escidoc-core.ear</module>
@@ -235,44 +234,6 @@
           <maxmemory>512m</maxmemory>
           <additionalJOption>-J-XX:MaxPermSize=512m</additionalJOption>
 
-          <!-- TODO: Once XDoclet is gone, these must be removed -->
-          <tags>
-            <tag><name>om</name><placement>X</placement></tag>
-            <tag><name>spring.bean</name><placement>X</placement></tag>
-            <tag><name>spring.property</name><placement>X</placement></tag>
-            <tag><name>aa</name><placement>X</placement></tag>
-            <tag><name>axis.exclude</name><placement>X</placement></tag>
-            <tag><name>common</name><placement>X</placement></tag>
-            <tag><name>escidoc_core.warning</name><placement>X</placement></tag>
-            <tag><name>interface</name><placement>X</placement></tag>
-            <tag><name>oum</name><placement>X</placement></tag>
-            <tag><name>service</name><placement>X</placement></tag>
-            <tag><name>service.exclude</name><placement>X</placement></tag>
-            <tag><name>um</name><placement>X</placement></tag>
-            <tag><name>binding</name><placement>X</placement></tag>
-            <tag><name>cmm</name><placement>X</placement></tag>
-            <tag><name>ctm</name><placement>X</placement></tag>
-            <tag><name>escidoc_core.available</name><placement>X</placement></tag>
-            <tag><name>escidoc_core.visible</name><placement>X</placement></tag>
-            <tag><name>hibernate.bag</name><placement>X</placement></tag>
-            <tag><name>hibernate.class</name><placement>X</placement></tag>
-            <tag><name>hibernate.collection-key</name><placement>X</placement></tag>
-            <tag><name>hibernate.collection-one-to-many</name><placement>X</placement></tag>
-            <tag><name>hibernate.column</name><placement>X</placement></tag>
-            <tag><name>hibernate.generator-param</name><placement>X</placement></tag>
-            <tag><name>hibernate.id</name><placement>X</placement></tag>
-            <tag><name>hibernate.many-to-one</name><placement>X</placement></tag>
-            <tag><name>hibernate.mapping</name><placement>X</placement></tag>
-            <tag><name>hibernate.property</name><placement>X</placement></tag>
-            <tag><name>hibernate.set</name><placement>X</placement></tag>
-            <tag><name>oai</name><placement>X</placement></tag>
-            <tag><name>sb</name><placement>X</placement></tag>
-            <tag><name>sm</name><placement>X</placement></tag>
-            <tag><name>st</name><placement>X</placement></tag>
-            <tag><name>tme</name><placement>X</placement></tag>
-            <tag><name>tx</name><placement>X</placement></tag>
-            <tag><name>wm</name><placement>X</placement></tag>
-          </tags>
         </configuration>
         <executions>
           <execution>
@@ -1661,12 +1622,6 @@
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>escidoc-core-war</artifactId>
-        <type>war</type>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.escidoc.core</groupId>
-        <artifactId>axis</artifactId>
         <type>war</type>
         <version>${project.version}</version>
       </dependency>

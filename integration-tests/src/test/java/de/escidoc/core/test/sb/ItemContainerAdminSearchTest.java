@@ -345,7 +345,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      */
     @Test(timeout = 240000)
     public void testSBEX1() throws Exception {
-        HashMap<String, String> parameters = new HashMap<String, String>();
+        HashMap<String, String[]> parameters = new HashMap<String, String[]>();
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));

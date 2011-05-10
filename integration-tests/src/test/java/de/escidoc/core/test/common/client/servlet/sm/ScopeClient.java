@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.sm;
 
-import de.escidoc.core.sm.ScopeHandler;
-import de.escidoc.core.sm.ScopeHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -42,8 +40,6 @@ import java.util.Map;
  * @author Michael Hoppe
  */
 public class ScopeClient extends ClientBase {
-
-    private ScopeHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -121,22 +117,6 @@ public class ScopeClient extends ClientBase {
 
         return callEsciDoc("Scope.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
             Constants.STATISTIC_SCOPE_BASE_URI, new String[] { id }, changeToString(scopeXml));
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    @Override
-    public ScopeHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            ScopeHandlerServiceLocator serviceLocator = new ScopeHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setScopeHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getScopeHandlerServiceAddress()));
-            soapClient = serviceLocator.getScopeHandlerService();
-        }
-        return soapClient;
     }
 
 }

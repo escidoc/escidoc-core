@@ -106,11 +106,6 @@
 			<type>war</type>
 		</dependency>
 		<dependency>
-			<groupId>org.escidoc.core</groupId>
-			<artifactId>axis</artifactId>
-			<type>war</type>
-		</dependency>
-		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>fedoragsearch</artifactId>
 			<type>war</type>
@@ -686,13 +681,6 @@
 							<bundleFileName>03_escidoc-core.war</bundleFileName>
 							<bundleDir>/</bundleDir>
 							<contextRoot>/</contextRoot>
-						</webModule>
-						<webModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>axis</artifactId>
-							<bundleFileName>04_axis.war</bundleFileName>
-							<bundleDir>/</bundleDir>
-							<contextRoot>axis</contextRoot>
 						</webModule>
 					</modules>
 				</configuration>

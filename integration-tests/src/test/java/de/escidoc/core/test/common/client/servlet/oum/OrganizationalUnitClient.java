@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.oum;
 
-import de.escidoc.core.oum.OrganizationalUnitHandler;
-import de.escidoc.core.oum.OrganizationalUnitHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -42,8 +40,6 @@ import java.util.Map;
  * @author Michael Schneider
  */
 public class OrganizationalUnitClient extends ClientBase {
-
-    private OrganizationalUnitHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -291,23 +287,6 @@ public class OrganizationalUnitClient extends ClientBase {
         return callEsciDoc("OrganizationalUnit.retrieveSuccessors", METHOD_RETRIEVE_ORGANIZATIONAL_UNIT_SUCCESSORS,
             Constants.HTTP_METHOD_GET, Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { objid,
                 Constants.SUB_SUCCESSORS });
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If the client creation fails.
-     */
-    @Override
-    public OrganizationalUnitHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            OrganizationalUnitHandlerServiceLocator serviceLocator =
-                new OrganizationalUnitHandlerServiceLocator(getEngineConfig());
-            serviceLocator.setOrganizationalUnitHandlerServiceEndpointAddress(checkSoapAddress(serviceLocator
-                .getOrganizationalUnitHandlerServiceAddress()));
-            soapClient = serviceLocator.getOrganizationalUnitHandlerService();
-        }
-        return soapClient;
     }
 
 }

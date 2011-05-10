@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
-import de.escidoc.core.om.ContextHandler;
-import de.escidoc.core.om.ContextHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ContextHandlerClientInterface;
@@ -43,8 +41,6 @@ import java.util.Map;
  * @author Michael Schneider
  */
 public class ContextClient extends ClientBase implements ContextHandlerClientInterface {
-
-    private ContextHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -218,22 +214,6 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
 
         return callEsciDoc("Context.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE, Constants.CONTEXT_BASE_URI,
             new String[] { id });
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    @Override
-    public ContextHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            ContextHandlerServiceLocator serviceLocator = new ContextHandlerServiceLocator(getEngineConfig());
-            String ep = checkSoapAddress(serviceLocator.getContextHandlerServiceAddress());
-            serviceLocator.setContextHandlerServiceEndpointAddress(ep);
-            soapClient = serviceLocator.getContextHandlerService();
-        }
-        return soapClient;
     }
 
 }

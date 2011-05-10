@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
-import de.escidoc.core.om.IngestHandler;
-import de.escidoc.core.om.IngestHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -42,8 +40,6 @@ import javax.xml.rpc.ServiceException;
  * @author Michael Schneider
  */
 public class IngestClient extends ClientBase implements ResourceHandlerClientInterface {
-
-    private IngestHandler soapClient = null;
 
     /**
      * @param transport The transport identifier.
@@ -63,22 +59,6 @@ public class IngestClient extends ClientBase implements ResourceHandlerClientInt
         return callEsciDoc("Ingest.ingest", "ingest", Constants.HTTP_METHOD_PUT, Constants.INGEST_BASE_URI,
             new String[] {}, changeToString(xmlData));
 
-    }
-
-    /**
-     * @return Returns the soapClient.
-     * @throws ServiceException If service instantiation fails.
-     */
-    @Override
-    public IngestHandler getSoapClient() throws ServiceException {
-
-        if (soapClient == null) {
-            IngestHandlerServiceLocator serviceLocator = new IngestHandlerServiceLocator(getEngineConfig());
-            String ep = checkSoapAddress(serviceLocator.getIngestHandlerServiceAddress());
-            serviceLocator.setIngestHandlerServiceEndpointAddress(ep);
-            soapClient = serviceLocator.getIngestHandlerService();
-        }
-        return soapClient;
     }
 
     /**
