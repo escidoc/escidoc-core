@@ -55,7 +55,7 @@
     		out.println("<li><a href=\"" + adminToolUrl + "\">Admin Tool</a></li>");
     	}
    %>
-        
+     <li><a href="/adm/">Admin Tool (old)</a></li>   
    <%
     	String escidocBrowserUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_BROWSER_URL);
     	if(escidocBrowserUrl != null) {
