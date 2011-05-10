@@ -121,13 +121,6 @@
 			<artifactId>axis</artifactId>
 			<type>war</type>
 		</dependency>
-<!-- 		
-		<dependency>
-			<groupId>de.escidoc.admintool</groupId>
-			<artifactId>AdminTool</artifactId>
-			<type>war</type>
-		</dependency>
- -->		
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>fedoragsearch</artifactId>
