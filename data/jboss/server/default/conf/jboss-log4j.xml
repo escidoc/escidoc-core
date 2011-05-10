@@ -64,21 +64,6 @@
       </layout>
    </appender>
 
-   <!-- ============================== -->
-   <!-- Append messages to the console -->
-   <!-- ============================== -->
-
-   <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
-      <errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
-      <param name="Target" value="System.out"/>
-      <param name="Threshold" value="INFO"/>
-
-      <layout class="org.apache.log4j.PatternLayout">
-         <!-- The default pattern: Date Priority [Category] Message\n -->
-         <param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
-      </layout>
-   </appender>
-  
    <!-- ============================================================ -->
    <!-- Appenders and Loggers used by the eSciDoc-Core Infrastructure -->
    <!-- ============================================================ -->
@@ -187,7 +172,6 @@
     <logger name="de.escidoc" additivity="false">
         <appender-ref ref="FILEOUT"/>
         <appender-ref ref="FILE"/>
-        <appender-ref ref="CONSOLE"/>
     </logger>
 
     <logger name="de.escidoc.core.index.IndexService" additivity="false">
@@ -214,7 +198,6 @@
    <!-- Setup the Root category -->
    <!-- ======================= -->
    <root>
-      <appender-ref ref="CONSOLE"/>
       <appender-ref ref="FILE"/>
    </root>
 
