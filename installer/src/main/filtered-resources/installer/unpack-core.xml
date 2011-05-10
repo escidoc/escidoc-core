@@ -322,12 +322,11 @@
         <fileset dir="${sourceDir}" />
       </path>
       <sequential>
-
-        <!-- replace Windows path separators -->
-        <propertyregex property="unixSourceFile" input="@{sourceFile}" regexp="\\" replace="/" override="true" defaultValue="@{sourceFile}" />
-        <propertyregex property="unixSourceDir"  input="${sourceDir}"  regexp="\\" replace="/" override="true" defaultValue="${sourceDir}" />
-
-        <propertyregex property="relativePath" input="${unixSourceFile}" regexp="${unixSourceDir}/(.*)" select="\1" casesensitive="false" override="true" />
+        <var name="relativePath" unset="true"/>
+        <pathconvert property="relativePath">
+          <path location="@{sourceFile}"/>
+          <map from="${sourceDir}" to=""/>
+        </pathconvert>
         <antcall target="move-file-with-save">
           <param name="source" value="@{sourceFile}" />
           <param name="target" value="${targetDir}/${relativePath}" />
