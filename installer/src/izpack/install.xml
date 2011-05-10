@@ -92,6 +92,7 @@
         <res id="AntActionsSpec.xml" src="installer/EscidocAntActionSpec.xml" />
         <res id="CustomLangpack.xml_eng" src="installer/CustomLangpack_eng.xml"/>
         <res id="ProcessPanel.Spec.xml" src="installer/EscidocProcessPanelSpec.xml" />
+        <res id="TargetPanel.dir.windows" src="installer/TargetDir.windows" />
     </resources>
 
     <variables>
