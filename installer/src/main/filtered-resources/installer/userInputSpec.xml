@@ -489,6 +489,13 @@
           <spec txt="Run the database migration now." size="25" true="true" false="false" set="false"/>
         </field>
         <field type="space"/>
+        <field type="staticText" align="left" txt="The database scripts contain a placeholder for the id of the creator's user account."/>
+        <field type="space"/>
+        <field type="text" align="left" variable="CreatorUserid">
+          <spec txt="Creator Userid:" size="25" set="" />
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Creator userid must not be an empty string."/>
+        </field>
+        <field type="space"/>
         <field type="divider" align="bottom"/>
     </panel>
 

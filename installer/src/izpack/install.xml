@@ -183,6 +183,8 @@
       <!-- Infrastructure depositor user -->
       <variable name="DepositorUsername" value="depositor" />
       <variable name="DepositorPassword" value="" />
+      <!-- Creator Id used in migration SQL scripts -->
+      <variable name="CreatorUserid" value="escidoc:exuser1" />
     </variables>
     
     <dynamicvariables>
