@@ -289,7 +289,7 @@ public class GsearchHandler {
      *          e
      */
     private Map<String, Map<String, String>> requestIndexConfiguration() throws ApplicationServerSystemException {
-        /*try {
+        try {
             final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
             final String response =
@@ -308,8 +308,7 @@ public class GsearchHandler {
         }
         catch (final Exception e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
-        }*/
-        return new HashMap();
+        }
     }
 
     /**
