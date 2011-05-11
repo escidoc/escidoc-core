@@ -47,7 +47,7 @@ public class SmFilterUtility {
 
     @Autowired
     @Qualifier("business.PolicyDecisionPoint")
-    private static PolicyDecisionPointInterface pdp;
+    private PolicyDecisionPointInterface pdp;
 
     /**
      * Filters the provided list of object ids by evaluating the retrieve privilege for the current user.
