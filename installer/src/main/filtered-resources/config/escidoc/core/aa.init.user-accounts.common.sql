@@ -17,12 +17,6 @@ INSERT INTO aa.user_account
     'escidoc:exuser1',
     CURRENT_TIMESTAMP);
     
-INSERT INTO aa.user_attribute
-    (id, user_id, name, value, internal)
-     VALUES
-    ('escidoc:exuser1ouattribute', 'escidoc:exuser1', 'o', 'escidoc:ex3', '${SqlTrue}');
-
-
     /*
      * System Inspector user (Read only super user).
      */
@@ -38,11 +32,6 @@ INSERT INTO aa.user_account
     CURRENT_TIMESTAMP,
     'escidoc:exuser1',
     CURRENT_TIMESTAMP);
-    
-INSERT INTO aa.user_attribute
-    (id, user_id, name, value, internal)
-     VALUES
-    ('escidoc:exuser2ouattribute', 'escidoc:exuser2', 'o', 'escidoc:ex3', '${SqlTrue}');
     
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -68,10 +57,3 @@ INSERT INTO aa.user_account
     CURRENT_TIMESTAMP,
     'escidoc:exuser1',
     CURRENT_TIMESTAMP);
-    
-INSERT INTO aa.user_attribute
-    (id, user_id, name, value, internal)
-     VALUES
-    ('escidoc:exuser4ouattribute', 'escidoc:exuser4','o', 'escidoc:ex3', '${SqlTrue}');
-
-   	  

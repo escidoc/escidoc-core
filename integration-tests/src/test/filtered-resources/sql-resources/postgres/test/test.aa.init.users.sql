@@ -802,3 +802,40 @@ INSERT INTO aa.user_login_data
      VALUES
     ('escidoc:test1', 'escidoc:test1', 'test1', 1999999999999);
 
+INSERT INTO aa.user_attribute
+    (id, user_id, name, value, internal)
+     VALUES
+    ('${escidoc.creator.user}ouattribute', '${escidoc.creator.user}','o', 'escidoc:ex3', 'TRUE');
+
+INSERT INTO aa.user_attribute
+    (id, user_id, name, value, internal)
+     VALUES
+    ('escidoc:exuser2ouattribute', 'escidoc:exuser2','o', 'escidoc:ex3', 'TRUE');
+
+INSERT INTO aa.user_attribute
+    (id, user_id, name, value, internal)
+     VALUES
+    ('escidoc:exuser4ouattribute', 'escidoc:exuser4','o', 'escidoc:ex3', 'TRUE');
+
+/**
+ * Role Grant initialization.
+ */
+    
+        /**
+         * The Depositor user gets the roles administrator, depositor, moderator.
+         */
+INSERT INTO aa.role_grant
+    (id, user_id, role_id, creator_id, creation_date, object_id, object_title, object_href) 
+    values
+    ('escidoc:grant41', '${escidoc.creator.user}', 'escidoc:role-administrator', '${escidoc.creator.user}', CURRENT_TIMESTAMP, 'escidoc:ex1', 'A simple Context', '/ir/context/escidoc:ex1');    	    			
+    
+INSERT INTO aa.role_grant
+    (id, user_id, role_id, creator_id, creation_date, object_id, object_title, object_href) 
+    values
+    ('escidoc:grant42', '${escidoc.creator.user}', 'escidoc:role-depositor', '${escidoc.creator.user}', CURRENT_TIMESTAMP, 'escidoc:ex1', 'A simple Context', '/ir/context/escidoc:ex1');   
+    
+// This has been added as temporarily fix for the problem of issue #172
+INSERT INTO aa.role_grant
+    (id, user_id, role_id, creator_id, creation_date, object_id, object_title, object_href) 
+    values
+    ('escidoc:grant43', '${escidoc.creator.user}', 'escidoc:role-moderator', '${escidoc.creator.user}', CURRENT_TIMESTAMP, 'escidoc:ex1', 'A simple Context', '/ir/context/escidoc:ex1');   
