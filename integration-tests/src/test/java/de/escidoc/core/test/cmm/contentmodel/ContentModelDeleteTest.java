@@ -65,9 +65,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
         String contentModelId;
 
         // minimal Content Model
-        cmXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
-                "content-model-minimal-for-create.xml");
+        cmXml = getExampleTemplate("content-model-minimal-for-create.xml");
         createdXML = create(cmXml);
         contentModelId = getObjidValue(createdXML);
         retrieve(contentModelId);
@@ -97,9 +95,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
         String contentModelId;
 
         // minimal Content Model
-        cmXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
-                "content-model-minimal-for-create.xml");
+        cmXml = getExampleTemplate("content-model-minimal-for-create.xml");
         createdXML = create(cmXml);
         contentModelId = getObjidValue(createdXML);
         retrieve(contentModelId);

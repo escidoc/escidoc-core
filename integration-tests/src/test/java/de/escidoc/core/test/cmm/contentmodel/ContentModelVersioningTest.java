@@ -63,9 +63,7 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
     @Test
     public void testContentModelTimestamps01() throws Exception {
 
-        String contentModelXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
-                "content-model-minimal-for-create.xml");
+        String contentModelXml = getExampleTemplate("content-model-minimal-for-create.xml");
         String cmV1E1 = create(contentModelXml);
 
         Document cmDocV1E1 = getDocument(cmV1E1);
@@ -129,9 +127,7 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
     public void testContentModelTimestamps03() throws Exception {
 
         // version 1
-        String contentModelXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
-                "content-model-minimal-for-create.xml");
+        String contentModelXml = getExampleTemplate("content-model-minimal-for-create.xml");
         String cmV1E1 = create(contentModelXml);
 
         Document cmDocV1E1 = getDocument(cmV1E1);

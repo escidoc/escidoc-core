@@ -270,8 +270,8 @@
 				<xs:element minOccurs="0" ref="prop:description">
 					<xs:annotation>
 						<xs:documentation>
-							<create>required</create>
-							<update>required</update>
+							<create>optional</create>
+							<update>optional</update>
 						</xs:documentation>
 					</xs:annotation>
 				</xs:element>

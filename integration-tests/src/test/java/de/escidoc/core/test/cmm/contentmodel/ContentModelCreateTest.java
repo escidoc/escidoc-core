@@ -64,12 +64,9 @@ public class ContentModelCreateTest extends ContentModelTestBase {
      */
     @Test
     public void testCmCreateMinimal() throws Exception {
-        Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
-                "content-model-minimal-for-create.xml");
-
-        String cmXml = toString(contentModel, false);
+        String cmXml = getExampleTemplate("content-model-minimal-for-create.xml");
         String createdXML = create(cmXml);
+        Document contentModel = getDocument(cmXml);
 
         validateContentModel(createdXML, getContentModelTitle(contentModel), getContentModelDescription(contentModel),
             getContentModelMdRecordDefinitions(contentModel), getContentModelResourceDefinitions(contentModel),
@@ -203,11 +200,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
      * @throws Exception If anything fails.
      */
     public void contentModelVersionHistory() throws Exception {
-        Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
-                "content-model-minimal-for-create.xml");
-
-        String cmXml = toString(contentModel, false);
+        String cmXml = getExampleTemplate("content-model-minimal-for-create.xml");
         String createdXML = create(cmXml);
         String cmId = getObjidValue(createdXML);
 
