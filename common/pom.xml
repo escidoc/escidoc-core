@@ -416,6 +416,23 @@
 		           <groupId>gnu.getopt</groupId>
  		           <artifactId>java-getopt</artifactId>
  				</exclusion>
+				<exclusion>
+		           <groupId>org.codehaus.jackson</groupId>
+ 		           <artifactId>jackson-mapper-asl</artifactId>
+ 				</exclusion>
+				<exclusion>
+		           <groupId>org.fcrepo</groupId>
+ 		           <artifactId>jai_codec</artifactId>
+ 				</exclusion>
+				<exclusion>
+		           <groupId>javax.mail</groupId>
+ 		           <artifactId>mail</artifactId>
+ 				</exclusion>
+				<exclusion>
+		           <groupId>org.apache.ws.commons.axiom</groupId>
+ 		           <artifactId>axiom</artifactId>
+ 				</exclusion>
+ 				
 			</exclusions>
 		</dependency>
 		<dependency>
