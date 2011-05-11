@@ -425,8 +425,10 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
+        String description = getContentModel().getDescription() != null ? getContentModel().getDescription() : "";
+
         if (!getContentModel().getTitle().equals(cmph.getProperties().getObjectProperties().getTitle())
-            || !getContentModel().getDescription().equals(cmph.getProperties().getObjectProperties().getDescription())) {
+            || !description.equals(cmph.getProperties().getObjectProperties().getDescription())) {
             // update DC (title, description)
             final Datastream dc = getContentModel().getDc();
             final ByteArrayInputStream dcIs = new ByteArrayInputStream(dc.getStream());
