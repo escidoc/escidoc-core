@@ -1072,6 +1072,64 @@ public class FedoraUtility implements InitializingBean {
      *             Thrown if TripleStore initialization failed.
      */
     public void sync() throws FedoraSystemException, WebserverSystemException {
+        /*
+         * TODO The call to Fedora sync is handled multiple time to get a successful result. A single request should
+         * help, but the return value of the sync method is not always HTTP.200.
+         */
+        int i = 0;
+        while (i < SYNC_RETRIES) {
+            try {
+                callSync();
+                break;
+            }
+            catch (final IOException e) {
+                logExcetionAndWait(e, i);
+            }
+            catch (final TripleStoreSystemException e) {
+                logExcetionAndWait(e, i);
+            }
+            i++;
+            if (i >= SYNC_RETRIES) {
+                throw new FedoraSystemException("TripleStore sync failed.");
+            }
+        }
+    }
+
+    private static void logExcetionAndWait(final Exception e, final int i) throws FedoraSystemException {
+        if (LOGGER.isWarnEnabled()) {
+            LOGGER.warn("Error syncing with TripleStore.");
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Error syncing with TripleStore.", e);
+        }
+        try {
+            Thread.sleep((long) (i + 1000));
+        }
+        catch (final InterruptedException e1) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on waiting for Fedora.");
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on waiting for Fedora.", e);
+            }
+        }
+    }
+
+    /**
+     * Send a risearch request to fedora repository with flag flush set to true. Call reinialize() in order to reset a
+     * Table Manager for the Triple Store.
+     * 
+     * @throws TripleStoreSystemException
+     *             Thrown resetting of a Table Manager failed.
+     * @throws FedoraSystemException
+     *             Thrown if TripleStore synchronization failed.
+     * @throws WebserverSystemException
+     *             Thrown if TripleStore initialization failed.
+     * @throws IOException
+     *             Thrown from FedoraClient
+     */
+    private void callSync() throws FedoraSystemException, IOException, TripleStoreSystemException,
+        WebserverSystemException {
 
         FedoraClient fc = null;
         try {
@@ -1081,12 +1139,6 @@ public class FedoraUtility implements InitializingBean {
                 throw new FedoraSystemException("Triplestore sync failed.");
             }
             tripleStoreUtility.reinitialize();
-        }
-        catch (TripleStoreSystemException tse) {
-            throw new WebserverSystemException(tse);
-        }
-        catch (IOException e) {
-            throw new WebserverSystemException(e);
         }
         finally {
             returnFedoraClient(fc);
@@ -1148,6 +1200,7 @@ public class FedoraUtility implements InitializingBean {
      *             Thrown if the GET request to Fedora failed.
      */
     public HttpInputStream query(final String queryString) throws FedoraSystemException, IOException {
+
         HttpInputStream result = null;
         FedoraClient fc = null;
 
