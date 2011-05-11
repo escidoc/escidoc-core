@@ -34,7 +34,6 @@
 	<classpathentry excluding="**" kind="src" output="st/target/classes" path="st/src/main/resources"/>
 	<classpathentry kind="src" output="tme/target/classes" path="tme/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="tme/target/classes" path="tme/src/main/resources"/>
-	<classpathentry kind="src" output="axis.war/target/classes" path="axis.war/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="common-remote/target/classes" path="common-remote/src/main/resources"/>
 	<classpathentry excluding="**" kind="src" output="escidoc-core.ear/target/classes" path="escidoc-core.ear/src/main/resources"/>
 	<classpathentry kind="src" output="integration-tests/target/test-classes" path="integration-tests/src/test/java"/>
