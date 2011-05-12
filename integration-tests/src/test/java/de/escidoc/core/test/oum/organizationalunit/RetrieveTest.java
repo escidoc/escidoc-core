@@ -30,7 +30,9 @@ package de.escidoc.core.test.oum.organizationalunit;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
+import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -216,6 +218,107 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
         }
         assertNotNull("No org. unit. data retrieved. ", retrievedXml);
         assertXmlValidOrganizationalUnit(retrievedXml);
+
+    }
+
+    /**
+     * Test retrieving the list of virtual resources of an organizational unit.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testOumRvr1() throws Exception {
+
+        final String createdXml = createSuccessfully("escidoc_ou_create.xml");
+        final String objid = getObjidValue(getDocument(createdXml));
+
+        String retrievedXml = null;
+        try {
+            retrievedXml = retrieveResources(objid);
+        }
+        catch (final Exception e) {
+            failException("Retrieving list of resources of existing OU failed.", e);
+        }
+        assertXmlValidOrganizationalUnit(retrievedXml);
+        Document retrievedDocument = getDocument(retrievedXml);
+
+        assertXlinkElementWithoutObjid("Invalid resources element.", retrievedDocument, "/resources",
+            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + objid + "/resources");
+        assertXlinkElementWithoutObjid("Invalid resources/parent-objects element.", retrievedDocument,
+            "/resources/parent-objects", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + objid
+                + "/resources/parent-objects");
+        assertXlinkElementWithoutObjid("Invalid resources/child-objects element.", retrievedDocument,
+            "/resources/child-objects", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + objid
+                + "/resources/child-objects");
+        assertXlinkElementWithoutObjid("Invalid resources/path-list element.", retrievedDocument,
+            "/resources/path-list", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + objid + "/resources/path-list");
+        assertXlinkElementWithoutObjid("Invalid resources/successor-objects element.", retrievedDocument,
+            "/resources/successor-objects", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + objid
+                + "/resources/successors");
+        assertXlinkElementWithoutObjid("Invalid resources/relations element.", retrievedDocument,
+            "/resources/relations", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + objid + "/resources/relations");
+
+        assertXmlNotExists("Unexpected 6th virtual resource element.", retrievedDocument, "/resources/*[6]");
+    }
+
+    /**
+     * Test declining retrieving resources of organizational unit with providing unknown id.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testOumRvr2() throws Exception {
+
+        Class<?> ec = OrganizationalUnitNotFoundException.class;
+        try {
+            retrieveResources(UNKNOWN_ID);
+            failMissingException("Retrieving of resources of OU with providing unknown id" + " has not been declined.",
+                ec);
+        }
+        catch (final Exception e) {
+            assertExceptionType("Retrieving of resources of OU with providing unknown id"
+                + " has not been declined, correctly.", ec, e);
+        }
+    }
+
+    /**
+     * Test declining retrieving resources of organizational unit with providing id of existing resource of another
+     * resource type.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testOumRvr2_2() throws Exception {
+
+        Class<?> ec = OrganizationalUnitNotFoundException.class;
+        try {
+            retrieveResources(CONTEXT_ID);
+            failMissingException("Retrieving of resources of OU with providing id"
+                + " of resource of another resource type" + " has not been declined.", ec);
+        }
+        catch (final Exception e) {
+            assertExceptionType("Retrieving of resources of OU with providing id"
+                + " of resource of another resource type" + " has not been declined, correctly.", ec, e);
+        }
+    }
+
+    /**
+     * Test declining retrieving resources of organizational unit without providing id.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testOumRvr3() throws Exception {
+
+        Class<?> ec = MissingMethodParameterException.class;
+        try {
+            retrieveResources(null);
+            failMissingException("Retrieving of resources of OU without providing id" + " has not been declined.", ec);
+        }
+        catch (final Exception e) {
+            assertExceptionType("Retrieving of resources of OU without providing id"
+                + " has not been declined, correctly.", ec, e);
+        }
 
     }
 

@@ -76,110 +76,23 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
             failException("Updating OU failed with exception. ", e);
         }
         assertEscidocMdRecord(id, getDocument(updatedXml), createdDocument, beforeUpdateTimestamp);
-        // assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-        // beforeUpdateTimestamp);
     }
 
     private Document changeMdRecordsValues(
         final String xpathToEscidocMdRecord, final Document document, final String uniqueNamePart) throws Exception {
-
-        // substitute(document, xpathToDetails + "/" + NAME_ABBREVIATION,
-        // "NewAbbr");
-
         substitute(document, xpathToEscidocMdRecord + "/" + NAME_TITLE, selectSingleNode(document,
             xpathToEscidocMdRecord + "/" + NAME_TITLE).getTextContent()
             + "_" + uniqueNamePart);
-        // substitute(document, xpathToEscidocMdRecord + "/" + NAME_URI,
-        // "http://new.uri");
         substitute(document, xpathToEscidocMdRecord + "/" + NAME_ORGANIZATION_TYPE, "NewType");
         substitute(document, xpathToEscidocMdRecord + "/" + NAME_DESCRIPTION, "NewDescription");
-        // // external-id must not be changed
-        // // postcode
-        // substitute(document, xpathToEscidocMdRecord + "/" + NAME_POSTCODE,
-        // "NewPostCode");
         substitute(document, xpathToEscidocMdRecord + "/" + NAME_COUNTRY, "NC");
-        // // region
-        // substitute(document, xpathToEscidocMdRecord + "/" + NAME_REGION,
-        // "NewRegion");
-        // // address
-        // substitute(document, xpathToEscidocMdRecord + "/" + NAME_START_DATE,
-        // "NewAddress");
-        // city
         substitute(document, xpathToEscidocMdRecord + "/" + NAME_CITY, "New City");
-        // telephone
-        // substitute(document, xpathToEscidocMdRecord + "/" + NAME_TELEPHONE,
-        // "424242");
-        // // fax
-        // substitute(document, xpathToEscidocMdRecord + "/" + NAME_FAX,
-        // "424242");
-
         // start-date
         substitute(document, xpathToEscidocMdRecord + "/" + NAME_START_DATE, startTimestamp);
         // end-date
         substitute(document, xpathToEscidocMdRecord + "/" + NAME_END_DATE, getNowAsTimestamp());
-        // // longitude
-        // substitute(document, xpathToEscidocMdRecord + "/" +
-        // NAME_GEO_COORDINATE
-        // + "/" + NAME_LOCATION_LONGITUDE, "1111");
-        // // latitude
-        // substitute(document, xpathToEscidocMdRecord + "/" +
-        // NAME_GEO_COORDINATE
-        // + "/" + NAME_LOCATION_LATITUDE, "1111");
         return document;
     }
-
-    // /**
-    // * Tests successfully updating the organization-details sub resource of an
-    // * organizational unit with setting an external id that has not been set
-    // * before.
-    // *
-    // * @test.name Update Organizational Details - New External Id
-    // * @test.id OUM_UMS-1-2
-    // * @test.input Organizational Details XML representation with set
-    // * external-id (new)
-    // * @test.expected: Exception
-    // * @test.status Revoked - no more requirements for external id handling at
-    // * the moment
-    // *
-    // * @throws Exception
-    // */
-    // public void testOumUms1_2() throws Exception {
-    //
-    // final String createdXml = createSuccessfully("escidoc_ou_create.xml");
-    // final String id = getObjidValue(createdXml);
-    // final String organizationDetails = retrieveOrganizationDetails(id);
-    // final Document toBeUpdatedDocument = getDocument(organizationDetails);
-    //
-    // final String externalId = "12345";
-    // // insert external-id
-    // addAfter(toBeUpdatedDocument, XPATH_MD_RECORDS_ESCIDOC_MD_RECORD + "/"
-    // + NAME_DESCRIPTION, createElementNode(toBeUpdatedDocument,
-    // ORGANIZATIONAL_UNIT_NS_URI, ORGANIZATIONAL_UNIT_PREFIX_ESCIDOC,
-    // NAME_IDENTIFIER, externalId));
-    //
-    // final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-    //
-    // String beforeUpdateTimestamp = getNowAsTimestamp();
-    // String updatedXml = null;
-    // try {
-    // updatedXml = updateOrganizationDetails(id, toBeUpdatedXml);
-    // }
-    // catch (final Exception e) {
-    // failException(
-    // "Updating Organization Details with set new external id failed with
-    // exception. ",
-    // e);
-    // }
-    // Document createdDocument = getDocument(createdXml);
-    // addAfter(
-    // createdDocument,
-    // XPATH_ORGANIZATIONAL_UNIT_DESCRIPTION,
-    // createElementNode(createdDocument, ORGANIZATIONAL_UNIT_NS_URI,
-    // ORGANIZATIONAL_UNIT_PREFIX_ESCIDOC, NAME_IDENTIFIER, externalId));
-    // assertEscidocMdRecord(id, getDocument(updatedXml),
-    // getDocument(toString(createdDocument, false)),
-    // beforeUpdateTimestamp);
-    // }
 
     /**
      * Tests successfully updating the organization-details sub resource of an organizational unit with setting a new
@@ -426,105 +339,6 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
         }
     }
 
-    // /**
-    // * Test declining updating a top level organizational unit with setting a
-    // * non unique name.
-    // *
-    // * @test.name Update Organizational Details - Duplicate Name of Top Level
-    // OU
-    // * @test.id OUM_UMS-6-a
-    // * @test.input Organizational Details XML representation of a top level
-    // * Organizational unit containing a name of an organizational
-    // * unit that just exists for another top level ou.
-    // * @test.expected: OrganizationalUnitNameNotUniqueException
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // public void testOumUms6a() throws Exception {
-    //
-    // final Class<OrganizationalUnitNameNotUniqueException> ec =
-    // OrganizationalUnitNameNotUniqueException.class;
-    //
-    // // create first top level ou
-    // final String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
-    // final String ou1Name =
-    // selectSingleNodeAsserted(getDocument(ou1Xml),
-    // XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
-    //
-    // // create second top level ou
-    // final String ou2Xml = createSuccessfully("escidoc_ou_create.xml");
-    //
-    // // update name of second top level ou to name of first top level ou
-    //
-    // final String ou2Id = getObjidValue(getDocument(ou2Xml));
-    //
-    // final String toBeUpdatedMdRecord = retrieveMdRecords(ou2Id);
-    // final Document toBeUpdatedDocument = getDocument(toBeUpdatedMdRecord);
-    // substitute(toBeUpdatedDocument, XPATH_MD_RECORDS_ESCIDOC_MD_RECORD
-    // + "/" + NAME_TITLE, ou1Name);
-    //
-    // final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-    //
-    // try {
-    // updateMdRecords(ou2Id, toBeUpdatedXml);
-    // failMissingException(ec);
-    // }
-    // catch (final Exception e) {
-    // assertExceptionType(ec, e);
-    // }
-    //
-    // }
-
-    // /**
-    // * Test declining updating an organizational unit with setting a non
-    // unique
-    // * name in the scope of the parents.
-    // *
-    // * @test.name Update Md Records - Duplicate Name in Scope of Parents
-    // * @test.id OUM_UMS-6-b
-    // * @test.input Organizational Details XML representation containing a name
-    // * of an organizational unit that just exists in the scope of
-    // * the parents.
-    // * @test.expected: OrganizationalUnitNameNotUniqueException
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // public void testOumUms6b() throws Exception {
-    //
-    // final Class<OrganizationalUnitNameNotUniqueException> ec =
-    // OrganizationalUnitNameNotUniqueException.class;
-    //
-    // createOuHierarchie();
-    //
-    // final String createdChild2Xml =
-    // createSuccessfully("escidoc_ou_create.xml");
-    //
-    // // add created ou to ouIdTop using update. ouIdTop has ouId1 as child.
-    // Document toBeUpdatedDocument = getDocument(createdChild2Xml);
-    // final String objid = getObjidValue(toBeUpdatedDocument);
-    // insertParentsElement((Document) deleteElement(toBeUpdatedDocument,
-    // XPATH_ORGANIZATIONAL_UNIT_PARENTS),
-    // XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS,
-    // new String[] { ouTop1Id, null }, false);
-    // update(objid, toString(toBeUpdatedDocument, false).replaceAll(
-    // "prefix-srel", "srel"));
-    //
-    // toBeUpdatedDocument = getDocument(retrieveMdRecords(objid));
-    // substitute(toBeUpdatedDocument, XPATH_MD_RECORDS_ESCIDOC_MD_RECORD
-    // + "/" + NAME_TITLE, ouChild1ParentName);
-    // try {
-    // updateMdRecords(objid, toString(toBeUpdatedDocument, false));
-    // failMissingException(ec);
-    // }
-    // catch (final Exception e) {
-    // assertExceptionType(ec, e);
-    // }
-    // }
-
     /**
      * Test sucessfully updating an organizational unit with a name of an existing organizational unit in another scope
      * of the parents.
@@ -566,25 +380,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
 
         assertEscidocMdRecord(child2Id, getDocument(updatedXml), substitute(getDocument(child2Xml),
             XPATH_ORGANIZATIONAL_UNIT_TITLE, child1Name), beforeUpdateTimestamp);
-        // assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-        // beforeUpdateTimestamp);
     }
-
-    // ==============================================================================================
-    /**
-     * Test declining updating an organizational unit setting confusing data in
-     * reference to a parent.
-     *
-     * @test.name Organizational Unit - With Parents
-     * @test.id UpdateParentOusWithConfusingData
-     * @test.input Organizational Details XML representation with confusing
-     *             data.
-     * @test.expected: InvalidContentExcetion
-     * @test.status Rejected
-     *
-     * @throws Exception
-     *             If anything fails.
-     */
 
     /**
      * Test declining updating a top level organizational unit with setting an empty name.
@@ -688,4 +484,75 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
         delete(id);
     }
 
+
+    /**
+     * Test successfully updating the organization-details sub resource of an REST.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testOumUms1aRest() throws Exception {
+
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
+
+        final String createdXml =
+            createSuccessfullyChild("escidoc_ou_create.xml", new String[] { parentValues[0], parentValues[1] });
+        final Document createdDocument = getDocument(createdXml);
+        final String objid = getObjidValue(createdDocument);
+        final String organizationDetails = retrieveMdRecords(objid);
+        final Document toBeUpdatedDocument = getDocument(organizationDetails);
+
+        // organization details xlink
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_HREF, "Some Href");
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_TITLE, "Some Title");
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_TYPE, "none");
+
+        final String toBeUpdatedXml = toString(toBeUpdatedDocument, true);
+
+        String updatedXml = null;
+        try {
+            updatedXml = updateMdRecords(objid, toBeUpdatedXml);
+        }
+        catch (final Exception e) {
+            failException("Updating OU with changed read only values failed. ", e);
+        }
+        assertEscidocMdRecord(objid, getDocument(updatedXml), createdDocument, startTimestamp);
+
+    }
+
+    /**
+     * Test successfully updating an organizational unit without read only attributes and elements via REST.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testOumUms1bRest() throws Exception {
+
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
+
+        final String createdXml =
+            createSuccessfullyChild("escidoc_ou_create.xml", new String[] { parentValues[0], parentValues[1] });
+        final Document createdDocument = getDocument(createdXml);
+        final String objid = getObjidValue(createdDocument);
+        final String organizationDetails = retrieveMdRecords(objid);
+        final Document toBeUpdatedDocument = getDocument(organizationDetails);
+
+        // root attributes
+
+        // organization details xlink
+        deleteAttribute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_HREF);
+        deleteAttribute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_TITLE);
+        deleteAttribute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_TYPE);
+
+        final String toBeUpdatedXml = toString(toBeUpdatedDocument, true);
+
+        String updatedXml = null;
+        try {
+            updatedXml = updateMdRecords(objid, toBeUpdatedXml);
+        }
+        catch (final Exception e) {
+            failException("Updating OU without read only values failed. ", e);
+        }
+        assertEscidocMdRecord(objid, getDocument(updatedXml), createdDocument, startTimestamp);
+    }
 }

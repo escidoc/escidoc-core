@@ -354,399 +354,75 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         }
     }
 
-    // ========================================================================
-    // /**
-    // * Test declining updating an organizational unit setting confusing data
-    // in
-    // * reference to a parent.
-    // *
-    // * @test.name Organizational Unit - With Parents
-    // * @test.id UpdateParentOusWithConfusingData
-    // * @test.input Parent Ous XML representation with confusing
-    // * data.
-    // * @test.expected: InvalidContentExcetion
-    // * @test.status Rejected
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    //
-    // /**
-    // * Tests successfully updating an organizational unit with set but
-    // unchanged
-    // * external id.
-    // *
-    // * @test.name Update Parent Ous - Unchanged External Id
-    // * @test.id OUM-UOU-2-2
-    // * @test.input Parent Ous XML representation with changed pid
-    // * @test.expected: Parent Ous XML representation with set
-    // * external-id
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // */
-    // public void notest_OUM_UPOU_2_2() throws Exception {
-    //
-    // // create ou with set external id
-    // final String createdXml =
-    // createSuccessfully("escidoc_ou_create_with_external_id.xml");
-    // final Document toBeUpdatedDocument = getDocument(createdXml);
-    // final String id = getObjidValue(toBeUpdatedDocument);
-    //
-    // // change something to really update it, but do not change external id
-    // substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_ABBREVIATION,
-    // "http://new.uri");
-    //
-    // final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-    //
-    // String beforeUpdateTimestamp = getNowAsTimestamp();
-    // String updatedXml = null;
-    // try {
-    // updatedXml = updateParentOus(id, toBeUpdatedXml);
-    // }
-    // catch (final Exception e) {
-    // failException("Updating OU with set but unchanged external id"
-    // + " failed. ", e);
-    // }
-    // assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-    // beforeUpdateTimestamp);
-    // }
-    //
-    // // /**
-    // // * Tests declining updating the external id.
-    // // *
-    // // * @test.name Update Parent Ous - Changed External Id
-    // // * @test.id OUM-UOU-2-3
-    // // * @test.input Parent Ous XML representation with changed
-    // pid
-    // // * @test.expected: ReadonlyElementViolationException
-    // // * @test.status Implemented
-    // // *
-    // // * @throws Exception
-    // // */
-    // // public void notest_OUM_UPOU_2_3() throws Exception {
-    // //
-    // // final Class ec = PidAlreadyAssignedException.class;
-    // //
-    // // final String createdXml =
-    // // createSuccessfully("escidoc_ou_create_with_external_id.xml");
-    // // final Document toBeUpdatedDocument = getDocument(createdXml);
-    // // final String id = getObjidValue(toBeUpdatedDocument);
-    // //
-    // // // change external id (by making it unique)
-    // // setUniqueValue(toBeUpdatedDocument,
-    // // XPATH_ORGANIZATIONAL_UNIT_EXTERNAL_ID);
-    // //
-    // // try {
-    // // final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-    // // updateParentOus(id, toBeUpdatedXml);
-    // // failMissingException(ec);
-    // // }
-    // // catch (final Exception e) {
-    // // assertExceptionType(ec, e);
-    // // }
-    // // }
-    //
-    // // /**
-    // // * Tests declining updating the external id twice.
-    // // *
-    // // * @test.name Update Parent Ous - Changed External Id
-    // // * @test.id OUM-UOU-2-4
-    // // * @test.input Parent Ous XML representation with changed
-    // pid
-    // // * @test.expected: ReadonlyElementViolationException
-    // // * @test.status Implemented
-    // // *
-    // // * @throws Exception
-    // // */
-    // // public void notest_OUM_UPOU_2_4() throws Exception {
-    // //
-    // // final Class ec = PidAlreadyAssignedException.class;
-    // //
-    // // // create ou without set external id
-    // // final String createdXml = createSuccessfully("escidoc_ou_create.xml");
-    // // final Document toBeUpdatedDocument = getDocument(createdXml);
-    // // final String id = getObjidValue(toBeUpdatedDocument);
-    // //
-    // // // insert external-id
-    // // addAfter(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_DESCRIPTION,
-    // // createElementNode(toBeUpdatedDocument, ORGANIZATIONAL_UNIT_NS_URI,
-    // // ORGANIZATIONAL_UNIT_PREFIX_ESCIDOC, NAME_EXTERNAL_ID, "12345"));
-    // //
-    // // final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-    // //
-    // // String updatedXml = null;
-    // // try {
-    // // updatedXml = updateParentOus(id, toBeUpdatedXml);
-    // // }
-    // // catch (final Exception e) {
-    // // failException("Updating ou with setting external-id failed.", e);
-    // // }
-    // //
-    // // final Document toBeUpdatedDocument2 = getDocument(updatedXml);
-    // //
-    // // // change external id (by making it unique)
-    // // setUniqueValue(toBeUpdatedDocument2,
-    // // XPATH_ORGANIZATIONAL_UNIT_EXTERNAL_ID);
-    // //
-    // // final String toBeUpdatedXml2 = toString(toBeUpdatedDocument2, false);
-    // //
-    // // try {
-    // // updateParentOus(id, toBeUpdatedXml2);
-    // // failMissingException(ec);
-    // // }
-    // // catch (final Exception e) {
-    // // assertExceptionType(ec, e);
-    // // }
-    // // }
-    //
-    // /**
-    // * Test declining updating a top level organizational unit with setting a
-    // * non unique name.
-    // *
-    // * @test.name Update Parent Ous - Duplicate Name of Top Level
-    // OU
-    // * @test.id OUM_UOD-5-1
-    // * @test.input Parent Ous XML representation of a top level
-    // * Organizational unit containing a name of an organizational
-    // * unit that just exists for another top level ou.
-    // * @test.expected: OrganizationalUnitNameNotUniqueException
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // public void notest_OUM_UPOU_5_1() throws Exception {
-    //
-    // final Class ec = OrganizationalUnitNameNotUniqueException.class;
-    //
-    // // create first top level ou
-    // final String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
-    // final String ou1Name =
-    // selectSingleNodeAsserted(getDocument(ou1Xml),
-    // XPATH_ORGANIZATIONAL_UNIT_NAME).getTextContent();
-    //
-    // // create second top level ou
-    // final String ou2Xml = createSuccessfully("escidoc_ou_create.xml");
-    //
-    // // update name of second top level ou to name of first top level ou
-    // final Document toBeUpdatedDocument = getDocument(ou2Xml);
-    // final String ou2Id = getObjidValue(toBeUpdatedDocument);
-    // substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_NAME, ou1Name);
-    //
-    // final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-    //
-    // try {
-    // updateParentOus(ou2Id, toBeUpdatedXml);
-    // failMissingException(ec);
-    // }
-    // catch (final Exception e) {
-    // assertExceptionType(ec, e);
-    // }
-    //
-    // }
-    //
-    // /**
-    // * Test declining updating a top level organizational unit with setting an
-    // * empty name.
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // public void notest_OUM_UPOU_5_1a() throws Exception {
-    //
-    // final Class ec = MissingElementValueException.class;
-    //
-    // // create first top level ou
-    // final String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
-    // final Document toBeUpdatedDocument = getDocument(ou1Xml);
-    // final String ou1Id = getObjidValue(toBeUpdatedDocument);
-    // substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_NAME, "");
-    //
-    // final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-    //
-    // try {
-    // updateParentOus(ou1Id, toBeUpdatedXml);
-    // failMissingException(ec);
-    // }
-    // catch (final Exception e) {
-    // assertExceptionType(ec, e);
-    // }
-    // }
-    //
-    // /**
-    // * Successfully update of OU name.
-    // *
-    // * @throws Exception
-    // */
-    // public void notest_OUM_UPOU_5_1b() throws Exception {
-    //
-    // // create first top level ou
-    // final String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
-    // final Document toBeUpdatedDocument = getDocument(ou1Xml);
-    // final String ou1Id = getObjidValue(toBeUpdatedDocument);
-    // final String ou1Name =
-    // selectSingleNodeAsserted(getDocument(ou1Xml),
-    // XPATH_ORGANIZATIONAL_UNIT_NAME).getTextContent();
-    //
-    // final String newOuName = ou1Name + "-1";
-    // substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_NAME,
-    // newOuName);
-    //
-    // final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-    //
-    // String ou = updateParentOus(ou1Id, toBeUpdatedXml);
-    //
-    // // check if ou contains new name
-    // final String ouName =
-    // selectSingleNodeAsserted(getDocument(ou),
-    // XPATH_ORGANIZATIONAL_UNIT_NAME).getTextContent();
-    // assertEquals(newOuName, ouName);
-    //
-    // // check if name and title was also changed in RELS-EXT
-    // TripleStoreTestBase tripleStore = new TripleStoreTestBase();
-    // String result =
-    // tripleStore.requestMPT("<info:fedora/" + ou1Id + "> "
-    // + "<http://www.escidoc.de/schemas/organizationalunit/0.3/name>"
-    // + " *", "RDF/XML");
-    //
-    // String resultName =
-    // selectSingleNodeAsserted(getDocument(result),
-    // XPATH_TRIPLE_STORE_OU_NAME).getTextContent();
-    //
-    // assertEquals(newOuName, resultName);
-    //
-    // // check if changing name leads to changing title to (in DS
-    // // ou-description and RELS-EXT)
-    // result =
-    // tripleStore.requestMPT(
-    // "<info:fedora/" + ou1Id + "> "
-    // + "<http://www.nsdl.org/ontologies/relationships/title>"
-    // + " *", "RDF/XML");
-    //
-    // resultName =
-    // selectSingleNodeAsserted(getDocument(result),
-    // XPATH_TRIPLE_STORE_OU_TITLE).getTextContent();
-    //
-    // assertEquals(newOuName, resultName);
-    // }
-    //
-    // /**
-    // * Test declining updating an organizational unit with setting a non
-    // unique
-    // * name in the scope of the parents.
-    // *
-    // * @test.name Update Parent Ous - Update Name with Duplicate
-    // * Name in Scope of Parents
-    // * @test.id OUM_UOD-5-2
-    // * @test.input Parent Ous XML representation with updating the
-    // * name to the value of the name of an organizational unit that
-    // * just exists in the scope of the parents.
-    // * @test.expected: OrganizationalUnitNameNotUniqueException
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // public void notest_OUM_UPOU_5_2() throws Exception {
-    //
-    // Class ec = OrganizationalUnitNameNotUniqueException.class;
-    //
-    // // create parent
-    // final String topLevelId =
-    // createSuccessfully("escidoc_ou_create.xml", 1)[0];
-    //
-    // // create first child
-    // final String child1Xml =
-    // createSuccessfullyChild("escidoc_ou_create.xml",
-    // new String[] { topLevelId });
-    // final String child1Name =
-    // selectSingleNodeAsserted(getDocument(child1Xml),
-    // XPATH_ORGANIZATIONAL_UNIT_NAME).getTextContent();
-    //
-    // // create second child
-    // final String child2Xml =
-    // createSuccessfullyChild("escidoc_ou_create.xml",
-    // new String[] { topLevelId });
-    //
-    // // update name of second child ou to name of first child ou
-    // final Document toBeUpdatedDocument = getDocument(child2Xml);
-    // final String child2Id = getObjidValue(toBeUpdatedDocument);
-    // substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_NAME,
-    // child1Name);
-    //
-    // final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-    //
-    // try {
-    // updateParentOus(child2Id, toBeUpdatedXml);
-    // failMissingException(ec);
-    // }
-    // catch (final Exception e) {
-    // assertExceptionType(ec, e);
-    // }
-    // }
-    //
-    // /**
-    // * Test sucessfully updating an organizational unit with a name of an
-    // * existing organizational unit in another scope of the parents.
-    // *
-    // * @test.name Update Parent Ous - Update Name with Duplicate
-    // * Name in different Scopes of Parents
-    // * @test.id OUM_UOD-5-3
-    // * @test.input Parent Ous XML representation containing a name
-    // * of an organizational unit that just exists, but that is not
-    // * in the scope of the parents of the organizational unit to be
-    // * created.
-    // * @test.expected: The expected result is the XML representation of the
-    // * created OrganizationalUnit, corresponding to XML-schema
-    // * "organizational unit.xsd" including generated id, creator
-    // * and creation date
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // public void notest_OUM_UPOU_5_3() throws Exception {
-    //
-    // // create two parent ous
-    // String[] parentIds = createSuccessfully("escidoc_ou_create.xml", 2);
-    // final String parent1Id = parentIds[0];
-    // final String parent2Id = parentIds[1];
-    //
-    // // create child of first parent ou
-    // final String child1Xml =
-    // createSuccessfullyChild("escidoc_ou_create.xml",
-    // new String[] { parent1Id });
-    // final String child1Name =
-    // selectSingleNodeAsserted(getDocument(child1Xml),
-    // XPATH_ORGANIZATIONAL_UNIT_NAME).getTextContent();
-    //
-    // // create child of second parent ou
-    // final String child2Xml =
-    // createSuccessfullyChild("escidoc_ou_create.xml",
-    // new String[] { parent2Id });
-    // final String child2Name =
-    // selectSingleNodeAsserted(getDocument(child1Xml),
-    // XPATH_ORGANIZATIONAL_UNIT_NAME).getTextContent();
-    //
-    // // update name of second child ou to name of first child ou
-    // final Document toBeUpdatedDocument = getDocument(child2Xml);
-    // final String child2Id = getObjidValue(toBeUpdatedDocument);
-    // substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_NAME,
-    // child1Name);
-    //
-    // final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-    // final String beforeUpdateTimestamp = getNowAsTimestamp();
-    // String updatedXml = null;
-    // try {
-    // updatedXml = updateParentOus(child2Id, toBeUpdatedXml);
-    // }
-    // catch (final Exception e) {
-    // failException(
-    // "Updating OU with name of ou in another scope failed.", e);
-    // }
-    // assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-    // beforeUpdateTimestamp);
-    // }
+    /**
+     * Test successfully updating the organization-details sub resource of an REST.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void test_OUM_UOD_1_1_REST() throws Exception {
+
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
+
+        final String createdXml =
+            createSuccessfullyChild("escidoc_ou_create.xml", new String[] { parentValues[0], parentValues[1] });
+        final Document createdDocument = getDocument(createdXml);
+        final String objid = getObjidValue(createdDocument);
+        final String organizationDetails = retrieveMdRecords(objid);
+        final Document toBeUpdatedDocument = getDocument(organizationDetails);
+
+        // organization details xlink
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_HREF, "Some Href");
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_TITLE, "Some Title");
+        substitute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_TYPE, "none");
+
+        final String toBeUpdatedXml = toString(toBeUpdatedDocument, true);
+
+        String updatedXml = null;
+        try {
+            updatedXml = updateMdRecords(objid, toBeUpdatedXml);
+        }
+        catch (final Exception e) {
+            failException("Updating OU with changed read only values failed. ", e);
+        }
+        assertEscidocMdRecord(objid, getDocument(updatedXml), createdDocument, startTimestamp);
+
+    }
+
+    /**
+     * Test successfully updating an organizational unit without read only attributes and elements via REST.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void test_OUM_UOD_1_2_REST() throws Exception {
+
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
+
+        final String createdXml =
+            createSuccessfullyChild("escidoc_ou_create.xml", new String[] { parentValues[0], parentValues[1] });
+        final Document createdDocument = getDocument(createdXml);
+        final String objid = getObjidValue(createdDocument);
+        final String organizationDetails = retrieveMdRecords(objid);
+        final Document toBeUpdatedDocument = getDocument(organizationDetails);
+
+        // root attributes
+
+        // organization details xlink
+        deleteAttribute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_HREF);
+        deleteAttribute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_TITLE);
+        deleteAttribute(toBeUpdatedDocument, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_TYPE);
+
+        final String toBeUpdatedXml = toString(toBeUpdatedDocument, true);
+
+        String updatedXml = null;
+        try {
+            updatedXml = updateMdRecords(objid, toBeUpdatedXml);
+        }
+        catch (final Exception e) {
+            failException("Updating OU without read only values failed. ", e);
+        }
+        assertEscidocMdRecord(objid, getDocument(updatedXml), createdDocument, startTimestamp);
+    }
 
 }
