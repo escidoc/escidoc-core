@@ -874,19 +874,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      */
     private void fireContentModelModified(final String id, final String xmlData) throws SystemException,
         WebserverSystemException {
-        final String restXml;
-        final String soapXml;
-
-        if (UserContext.isRestAccess()) {
-            restXml = xmlData;
-            soapXml = getAlternateForm();
-        }
-        else {
-            restXml = getAlternateForm();
-            soapXml = xmlData;
-        }
         for (final ResourceListener contentModelListener : this.contentModelListeners) {
-            contentModelListener.resourceModified(id, restXml, soapXml);
+            contentModelListener.resourceModified(id, xmlData);
         }
     }
 
@@ -900,19 +889,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      */
     private void fireContentModelCreated(final String id, final String xmlData) throws SystemException,
         WebserverSystemException {
-        final String restXml;
-        final String soapXml;
-
-        if (UserContext.isRestAccess()) {
-            restXml = xmlData;
-            soapXml = getAlternateForm();
-        }
-        else {
-            restXml = getAlternateForm();
-            soapXml = xmlData;
-        }
         for (final ResourceListener contentModelListener : this.contentModelListeners) {
-            contentModelListener.resourceCreated(id, restXml, soapXml);
+            contentModelListener.resourceCreated(id, xmlData);
         }
     }
 
@@ -926,30 +904,5 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         for (final ResourceListener contentModelListener : this.contentModelListeners) {
             contentModelListener.resourceDeleted(id);
         }
-    }
-
-    /**
-     * Get the alternate form of a Content Model representation. If the current request came in via REST, then the SOAP
-     * form will be returned here and vice versa.
-     *
-     * @return alternate form of the Content Model
-     * @throws SystemException Thrown if an internal error occurred.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    private String getAlternateForm() throws SystemException, WebserverSystemException {
-        String result = null;
-        final boolean isRestAccess = UserContext.isRestAccess();
-
-        try {
-            UserContext.setRestAccess(!isRestAccess);
-            result = render();
-        }
-        catch (final Exception e) {
-            throw new SystemException(e);
-        }
-        finally {
-            UserContext.setRestAccess(isRestAccess);
-        }
-        return result;
     }
 }

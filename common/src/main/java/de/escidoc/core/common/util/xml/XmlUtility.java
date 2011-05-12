@@ -1545,22 +1545,11 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getAdminDescriptorSchemaLocation() throws WebserverSystemException {
-
-        final String result;
         final String subPath = "context/0.4/context.xsd";
-        if (UserContext.isRestAccess()) {
             if (contextRestSchemaLocation == null) {
                 contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + subPath;
             }
-            result = contextRestSchemaLocation;
-        }
-        else {
-            if (contextSoapSchemaLocation == null) {
-                contextSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + subPath;
-            }
-            result = contextSoapSchemaLocation;
-        }
-        return result;
+            return contextRestSchemaLocation;
     }
 
     /**
@@ -2111,25 +2100,12 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getAggregationDefinitionSchemaLocation() throws WebserverSystemException {
-        final String result;
-        if (UserContext.isRestAccess()) {
             if (aggregationDefinitionRestSchemaLocation == null) {
                 aggregationDefinitionRestSchemaLocation =
                     getSchemaBaseUrl() + "rest/aggregation-definition"
                         + Constants.AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION + "/aggregation-definition.xsd";
             }
-            result = aggregationDefinitionRestSchemaLocation;
-        }
-        else {
-            if (aggregationDefinitionSoapSchemaLocation == null) {
-                aggregationDefinitionSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/aggregation-definition"
-                        + Constants.AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION + "/aggregation-definition.xsd";
-            }
-            result = aggregationDefinitionSoapSchemaLocation;
-        }
-
-        return result;
+            return aggregationDefinitionRestSchemaLocation;
     }
 
     /**
@@ -2137,25 +2113,12 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getReportDefinitionSchemaLocation() throws WebserverSystemException {
-        final String result;
-        if (UserContext.isRestAccess()) {
             if (reportDefinitionRestSchemaLocation == null) {
                 reportDefinitionRestSchemaLocation =
                     getSchemaBaseUrl() + "rest/report-definition" + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION
                         + "/report-definition.xsd";
             }
-            result = reportDefinitionRestSchemaLocation;
-        }
-        else {
-            if (reportDefinitionSoapSchemaLocation == null) {
-                reportDefinitionSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/report-definition" + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION
-                        + "/report-definition.xsd";
-            }
-            result = reportDefinitionSoapSchemaLocation;
-        }
-
-        return result;
+            return reportDefinitionRestSchemaLocation;
     }
 
     /**
@@ -2163,23 +2126,11 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getScopeSchemaLocation() throws WebserverSystemException {
-        final String result;
-        if (UserContext.isRestAccess()) {
             if (scopeRestSchemaLocation == null) {
                 scopeRestSchemaLocation =
                     getSchemaBaseUrl() + "rest/scope" + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
             }
-            result = scopeRestSchemaLocation;
-        }
-        else {
-            if (scopeSoapSchemaLocation == null) {
-                scopeSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/scope" + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
-            }
-            result = scopeSoapSchemaLocation;
-        }
-
-        return result;
+            return scopeRestSchemaLocation;
     }
 
     /**

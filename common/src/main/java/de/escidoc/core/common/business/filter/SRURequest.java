@@ -239,9 +239,7 @@ public class SRURequest {
             if (recordPacking != null) {
                 url += '&' + Constants.SRU_PARAMETER_RECORD_PACKING + '=' + recordPacking.getType();
             }
-            if (!UserContext.isRestAccess()) {
-                url += '&' + Constants.SRU_PARAMETER_RECORD_SCHEMA + "=eSciDocSoap";
-            }
+            url += '&' + Constants.SRU_PARAMETER_RECORD_SCHEMA + "=eSciDocSoap";
             LOGGER.info("SRW URL: " + url);
 
             final Cookie cookie = new BasicClientCookie(EscidocServlet.COOKIE_LOGIN, UserContext.getHandle());

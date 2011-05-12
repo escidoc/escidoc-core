@@ -460,19 +460,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      */
     private void fireContextModified(final String id, final String xmlData) throws SystemException,
         WebserverSystemException {
-        final String restXml;
-        final String soapXml;
-
-        if (UserContext.isRestAccess()) {
-            restXml = xmlData;
-            soapXml = getAlternateForm();
-        }
-        else {
-            restXml = getAlternateForm();
-            soapXml = xmlData;
-        }
         for (final ResourceListener contextListener : this.contextListeners) {
-            contextListener.resourceModified(id, restXml, soapXml);
+            contextListener.resourceModified(id, xmlData);
         }
     }
 
@@ -486,19 +475,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      */
     private void fireContextCreated(final String id, final String xmlData) throws SystemException,
         WebserverSystemException {
-        final String restXml;
-        final String soapXml;
-
-        if (UserContext.isRestAccess()) {
-            restXml = xmlData;
-            soapXml = getAlternateForm();
-        }
-        else {
-            restXml = getAlternateForm();
-            soapXml = xmlData;
-        }
         for (final ResourceListener contextListener : this.contextListeners) {
-            contextListener.resourceCreated(id, restXml, soapXml);
+            contextListener.resourceCreated(id, xmlData);
         }
     }
 

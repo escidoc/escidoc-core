@@ -150,10 +150,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                         if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Error on getting attribute value.", e1);
                         }
-                        String att = Elements.ATTRIBUTE_XLINK_OBJID;
-                        if (UserContext.isRestAccess()) {
-                            att = Elements.ATTRIBUTE_XLINK_HREF;
-                        }
+                        String att = Elements.ATTRIBUTE_XLINK_HREF;
                         final String refType = Elements.ELEMENT_CONTEXT;
                         final String objType = "container";
                         throw new MissingAttributeValueException("The attribute " + att + " of " + refType
@@ -193,10 +190,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                         if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Error on getting attribute value.", e1);
                         }
-                        String att = Elements.ATTRIBUTE_XLINK_OBJID;
-                        if (UserContext.isRestAccess()) {
-                            att = Elements.ATTRIBUTE_XLINK_HREF;
-                        }
+                        String att = Elements.ATTRIBUTE_XLINK_HREF;
                         final String refType = Elements.ELEMENT_CONTENT_MODEL;
                         final String objType = "container";
                         throw new MissingAttributeValueException("The attribute " + att + " of " + refType

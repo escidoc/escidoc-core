@@ -116,7 +116,6 @@ public class ContextPropertiesHandler extends DefaultHandler {
 
                 try {
                     final String id;
-                    if (UserContext.isRestAccess()) {
                         final String xlinkHref = element.getAttribute(Constants.XLINK_URI, "href").getValue();
                         id = XmlUtility.getIdFromURI(xlinkHref);
 
@@ -125,12 +124,6 @@ public class ContextPropertiesHandler extends DefaultHandler {
                                 "The 'organizational-unit' element has a wrong " + "url. the url have to look like: "
                                     + "/oum/organizational-unit/id");
                         }
-                    }
-                    else {
-                        // SOAP access
-                        id = element.getAttributeValue(null, "objid");
-                    }
-
                     this.utility.checkIsOrganizationalUnit(id);
 
                     final String orgUnitStatus =

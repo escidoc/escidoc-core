@@ -33,11 +33,9 @@ public interface ResourceListener {
      * A resource was created.
      *
      * @param id      resource id
-     * @param restXml complete resource as REST XML
-     * @param soapXml complete resource as SOAP XML
      * @throws SystemException The listener object threw an exception.
      */
-    void resourceCreated(String id, String restXml, String soapXml) throws SystemException;
+    void resourceCreated(String id, String xml) throws SystemException;
 
     /**
      * A resource was deleted.
@@ -51,9 +49,7 @@ public interface ResourceListener {
      * A resource was modified.
      *
      * @param id      resource id
-     * @param restXml complete resource as REST XML
-     * @param soapXml complete resource as SOAP XML
      * @throws SystemException The listener object threw an exception.
      */
-    void resourceModified(String id, String restXml, String soapXml) throws SystemException;
+    void resourceModified(String id, String xml) throws SystemException;
 }

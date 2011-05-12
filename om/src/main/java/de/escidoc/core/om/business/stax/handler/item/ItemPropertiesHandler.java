@@ -249,11 +249,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 href = element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
             }
             catch (final NoSuchAttributeException e1) {
-                String att = Elements.ATTRIBUTE_XLINK_OBJID;
-                if (UserContext.isRestAccess()) {
-                    att = Elements.ATTRIBUTE_XLINK_HREF;
-                }
-                throw new MissingAttributeValueException("The attribute " + att + " of " + Elements.ELEMENT_CONTEXT
+                throw new MissingAttributeValueException("The attribute " + Elements.ATTRIBUTE_XLINK_HREF + " of " + Elements.ELEMENT_CONTEXT
                     + " is missing in item for create.", e);
             }
             final int indexOfLastSlash = href.lastIndexOf('/');
@@ -293,13 +289,9 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 href = element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
             }
             catch (final NoSuchAttributeException e1) {
-                String att = Elements.ATTRIBUTE_XLINK_OBJID;
-                if (UserContext.isRestAccess()) {
-                    att = Elements.ATTRIBUTE_XLINK_HREF;
-                }
                 final String refType = Elements.ELEMENT_CONTENT_MODEL;
                 final String objType = "item";
-                throw new MissingAttributeValueException("The attribute " + att + " of " + refType + " is missing in "
+                throw new MissingAttributeValueException("The attribute " + Elements.ATTRIBUTE_XLINK_HREF + " of " + refType + " is missing in "
                     + objType + " for create.", e);
             }
             final int indexOfLastSlash = href.lastIndexOf('/');
@@ -339,13 +331,9 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 href = element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
             }
             catch (final NoSuchAttributeException e1) {
-                String att = Elements.ATTRIBUTE_XLINK_OBJID;
-                if (UserContext.isRestAccess()) {
-                    att = Elements.ATTRIBUTE_XLINK_HREF;
-                }
                 final String refType = Elements.ELEMENT_ORIGIN;
                 final String objType = "item";
-                throw new MissingAttributeValueException("The attribute " + att + " of " + refType + " is missing in "
+                throw new MissingAttributeValueException("The attribute " + Elements.ATTRIBUTE_XLINK_HREF + " of " + refType + " is missing in "
                     + objType + " for create.", e);
             }
             final int indexOfLastSlash = href.lastIndexOf('/');

@@ -1159,19 +1159,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      */
     private void fireContentRelationModified(final ContentRelationCreate cr, final String xmlData)
         throws SystemException, WebserverSystemException {
-        final String restXml;
-        final String soapXml;
-
-        if (UserContext.isRestAccess()) {
-            restXml = xmlData;
-            soapXml = getAlternateForm(cr);
-        }
-        else {
-            restXml = getAlternateForm(cr);
-            soapXml = xmlData;
-        }
         for (final ResourceListener contentRelationListener : this.contentRelationListeners) {
-            contentRelationListener.resourceModified(cr.getObjid(), restXml, soapXml);
+            contentRelationListener.resourceModified(cr.getObjid(), xmlData);
         }
     }
 
@@ -1185,19 +1174,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      */
     private void fireContentRelationCreated(final ContentRelationCreate cr, final String xmlData)
         throws SystemException, WebserverSystemException {
-        final String restXml;
-        final String soapXml;
-
-        if (UserContext.isRestAccess()) {
-            restXml = xmlData;
-            soapXml = getAlternateForm(cr);
-        }
-        else {
-            restXml = getAlternateForm(cr);
-            soapXml = xmlData;
-        }
         for (final ResourceListener contentRelationListener : this.contentRelationListeners) {
-            contentRelationListener.resourceCreated(cr.getObjid(), restXml, soapXml);
+            contentRelationListener.resourceCreated(cr.getObjid(), xmlData);
         }
     }
 

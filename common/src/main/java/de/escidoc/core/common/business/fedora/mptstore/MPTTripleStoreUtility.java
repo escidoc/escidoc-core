@@ -1482,19 +1482,16 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         sb.append(prefixedRootElement);
 
         sb.append(namespaceDecl);
-        if (UserContext.isRestAccess()) {
             sb.append(" xlink:title=\"list of ");
             sb.append(objectType);
             sb.append(" references\" xlink:type=\"simple\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
             sb.append(" xml:base=\"");
             sb.append(XmlUtility.getEscidocBaseUrl()).append('\"');
-        }
         sb.append('>');
 
         for (final String id : list) {
             sb.append('<');
             sb.append(prefixedListElement);
-            if (UserContext.isRestAccess()) {
                 sb.append(" xlink:href=\"/");
                 sb.append(absoluteLocalPathFirstPart);
                 sb.append('/');
@@ -1502,12 +1499,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 sb.append('/');
                 sb.append(id);
                 sb.append("\" xlink:type=\"simple\"");
-            }
-            else {
-                sb.append(" objid=\"");
-                sb.append(id);
-                sb.append('\"');
-            }
             sb.append(" />");
         }
         sb.append("</");

@@ -84,18 +84,12 @@ public class XmlHeaderInterceptor implements Ordered {
 
         final CharSequence res = (CharSequence) result;
         if (!XML_DOCUMENT_START_PATTERN.matcher(res).find()) {
-
             final StringBuilder ret = new StringBuilder(XmlUtility.DOCUMENT_START);
-
-            if (UserContext.isRestAccess()) {
-                ret.append(XmlUtility.getStylesheetDefinition());
-            }
-
+            ret.append(XmlUtility.getStylesheetDefinition());
             ret.append(result);
-
             return ret.toString();
         }
-        else if (UserContext.isRestAccess() && !XML_DOCUMENT_START_XSLT_PATTERN.matcher(res).find()) {
+        else if (!XML_DOCUMENT_START_XSLT_PATTERN.matcher(res).find()) {
             return PATTERN_XML_HEADER.matcher(res).replaceFirst(
                 XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition());
         }

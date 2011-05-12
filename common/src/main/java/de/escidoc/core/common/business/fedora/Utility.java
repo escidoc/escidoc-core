@@ -512,19 +512,9 @@ public class Utility {
             final InputStream in = new ByteArrayInputStream(xmlData.getBytes(XmlUtility.CHARACTER_ENCODING));
             final Document result = docBuilder.parse(new InputSource(in));
             result.getDocumentElement().normalize();
-
-            if (UserContext.isRestAccess()) {
                 final Node n = XPathAPI.selectSingleNode(result, "//properties/context/@href");
-
                 final String contextHref = n.getNodeValue();
                 dataContextId = contextHref.substring(contextHref.lastIndexOf('/') + 1);
-            }
-            else {
-                final Node n = XPathAPI.selectSingleNode(result, "//properties/context/@objid");
-
-                dataContextId = n.getNodeValue();
-            }
-
         }
         catch (final ParserConfigurationException e) {
             throw new SystemException(e);

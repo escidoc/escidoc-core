@@ -146,18 +146,9 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getAlternateForm() throws SystemException, WebserverSystemException {
-        String result = null;
-        final boolean isRestAccess = UserContext.isRestAccess();
-
         try {
-            if (isRestAccess) {
                 UserContext.setRestAccess(false);
-                result = getRenderer().render(getOrganizationalUnit());
-            }
-            else {
-                UserContext.setRestAccess(true);
-                result = getRenderer().render(getOrganizationalUnit());
-            }
+                return getRenderer().render(getOrganizationalUnit());
         }
         catch (final WebserverSystemException e) {
             throw new SystemException(e);
@@ -166,10 +157,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
             // should not happen here
             throw new SystemException(e);
         }
-        finally {
-            UserContext.setRestAccess(isRestAccess);
-        }
-        return result;
     }
 
     /**
@@ -181,19 +168,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireOuCreated(final String id, final String xmlData) throws SystemException, WebserverSystemException {
-        final String restXml;
-        final String soapXml;
-
-        if (UserContext.isRestAccess()) {
-            restXml = xmlData;
-            soapXml = getAlternateForm();
-        }
-        else {
-            restXml = getAlternateForm();
-            soapXml = xmlData;
-        }
         for (final ResourceListener ouListener : this.ouListeners) {
-            ouListener.resourceCreated(id, restXml, soapXml);
+            ouListener.resourceCreated(id, xmlData);
         }
     }
 
@@ -218,19 +194,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireOuModified(final String id, final String xmlData) throws SystemException, WebserverSystemException {
-        final String restXml;
-        final String soapXml;
-
-        if (UserContext.isRestAccess()) {
-            restXml = xmlData;
-            soapXml = getAlternateForm();
-        }
-        else {
-            restXml = getAlternateForm();
-            soapXml = xmlData;
-        }
         for (final ResourceListener ouListener : this.ouListeners) {
-            ouListener.resourceModified(id, restXml, soapXml);
+            ouListener.resourceModified(id, xmlData);
         }
     }
 

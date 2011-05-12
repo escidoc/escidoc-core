@@ -121,17 +121,10 @@ public class RelationHandler2 extends DefaultHandler {
 
             String id = null;
             try {
-                // REST
-                if (UserContext.isRestAccess()) {
                     final String href =
                         element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
                     id = Utility.getId(href);
-                }
-                // SOAP
-                else {
-                    id = element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
 
-                }
             }
             catch (final NoSuchAttributeException e) {
                 if (LOGGER.isWarnEnabled()) {

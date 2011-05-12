@@ -139,30 +139,28 @@ public class IndexingHandler implements ResourceListener {
      * Resource was created, so write indexes.
      *
      * @param id      resource id
-     * @param restXml complete resource as REST XML
-     * @param soapXml complete resource as SOAP XML
      * @throws SystemException The resource could not be stored.
      */
     @Override
-    public void resourceCreated(final String id, final String restXml, final String soapXml) throws SystemException,
+    public void resourceCreated(final String id, final String xml) throws SystemException,
         TripleStoreSystemException, WebserverSystemException, ApplicationServerSystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("gsearchindexing STARTING, xml is " + restXml);
+            LOGGER.debug("gsearchindexing STARTING, xml is " + xml);
         }
-        if (restXml != null && restXml.length() > 0) {
+        if (xml != null && xml.length() > 0) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("writing xml in cache");
             }
-            indexingCacheHandler.writeObjectInCache(id, restXml);
+            indexingCacheHandler.writeObjectInCache(id, xml);
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("gsearchindexing caching xml via deviation handler " + " finished.");
             }
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
-        addResource(id, objectType, restXml);
+        addResource(id, objectType, xml);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing whole indexing of resource " + id + " of type " + objectType + " finished");
         }
@@ -193,30 +191,28 @@ public class IndexingHandler implements ResourceListener {
      * Replace a resource in the indexes.
      *
      * @param id      resource id
-     * @param restXml complete resource as REST XML
-     * @param soapXml complete resource as SOAP XML
      * @throws SystemException The resource could not be deleted and newly created.
      */
     @Override
-    public void resourceModified(final String id, final String restXml, final String soapXml) throws SystemException,
+    public void resourceModified(final String id, final String xml) throws SystemException,
         TripleStoreSystemException, WebserverSystemException, ApplicationServerSystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("gsearchindexing STARTING, xml is " + restXml);
+            LOGGER.debug("gsearchindexing STARTING, xml is " + xml);
         }
-        if (restXml != null && restXml.length() > 0) {
+        if (xml != null && xml.length() > 0) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("replacing xml in cache");
             }
-            indexingCacheHandler.replaceObjectInCache(id, restXml);
+            indexingCacheHandler.replaceObjectInCache(id, xml);
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("gsearchindexing caching xml via deviation handler " + " finished");
             }
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
-        addResource(id, objectType, restXml);
+        addResource(id, objectType, xml);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing whole indexing of resource " + id + " of type " + objectType + " finished");
         }

@@ -97,19 +97,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      */
     protected void fireContainerCreated(final String id, final String xmlData) throws SystemException,
         WebserverSystemException {
-        final String restXml;
-        final String soapXml;
-
-        if (UserContext.isRestAccess()) {
-            restXml = xmlData;
-            soapXml = getAlternateForm();
-        }
-        else {
-            restXml = getAlternateForm();
-            soapXml = xmlData;
-        }
         for (final ResourceListener containerListener : this.containerListeners) {
-            containerListener.resourceCreated(id, restXml, soapXml);
+            containerListener.resourceCreated(id, xmlData);
         }
     }
 
@@ -138,20 +127,10 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      */
     protected void fireContainerModified(final String id) throws ContainerNotFoundException, SystemException,
         WebserverSystemException, TripleStoreSystemException, IntegritySystemException, XmlParserSystemException {
-
         setContainer(id);
-        final String soapXml;
-        final String restXml;
-        if (UserContext.isRestAccess()) {
-            restXml = getContainerXml(getContainer());
-            soapXml = getAlternateForm();
-        }
-        else {
-            restXml = getAlternateForm();
-            soapXml = getContainerXml(getContainer());
-        }
+        final String xml = getContainerXml(getContainer());
         for (final ResourceListener containerListener : this.containerListeners) {
-            containerListener.resourceModified(id, restXml, soapXml);
+            containerListener.resourceModified(id, xml);
         }
     }
 
@@ -165,19 +144,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      */
     protected void fireContainerModified(final String id, final String xmlData) throws SystemException,
         WebserverSystemException {
-        final String restXml;
-        final String soapXml;
-
-        if (UserContext.isRestAccess()) {
-            restXml = xmlData;
-            soapXml = getAlternateForm();
-        }
-        else {
-            restXml = getAlternateForm();
-            soapXml = xmlData;
-        }
         for (final ResourceListener containerListener : this.containerListeners) {
-            containerListener.resourceModified(id, restXml, soapXml);
+            containerListener.resourceModified(id, xmlData);
         }
     }
 
@@ -190,7 +158,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
     protected void fireContainerMembersModified(final String id) throws SystemException {
 
         for (final ResourceListener containerMemberListener : this.containerMemberListeners) {
-            containerMemberListener.resourceModified(id, null, null);
+            containerMemberListener.resourceModified(id, null);
         }
     }
 
