@@ -34,14 +34,34 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Test suite for the role Administrator.
  *
  * @author Michael Hoppe
  */
-public class AdministratorAbstractTest extends GrantTestBase {
+@RunWith(Parameterized.class)
+public class AdministratorTest extends GrantTestBase {
+
+    /**
+     * Initializes test-class with data.
+     *
+     * @return Collection with data.
+     */
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{{USER_ACCOUNT_HANDLER_CODE, PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE},
+                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_GROUP_LIST_ID},
+                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_USER_LIST_ID},
+                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_OU_LIST_ID},
+                {USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR}});
+    }
 
     private static final String HANDLE = PWCallback.TEST_HANDLE;
 
@@ -60,7 +80,7 @@ public class AdministratorAbstractTest extends GrantTestBase {
      * @param userOrGroupId userOrGroupId for grantCreation.
      * @throws Exception If anything fails.
      */
-    public AdministratorAbstractTest(final int handlerCode, final String userOrGroupId) throws Exception {
+    public AdministratorTest(final int handlerCode, final String userOrGroupId) throws Exception {
         super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }

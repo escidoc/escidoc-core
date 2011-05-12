@@ -50,7 +50,7 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Hoppe
  */
-public class UserAttributeAbstractTest extends UserAttributeTestBase {
+public class UserAttributeTest extends UserAttributeTestBase {
 
     private static final String USER_TEST = PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE;
 
