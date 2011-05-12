@@ -956,112 +956,13 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     }
 
     /**
-     * Check pid assigment with lower user permissions. Assign in item status "submitted".
-     *
-     * @throws Exception If anything fails.
-     */
-    // @Test
-    public void notestObjectPidAssignmentPermissionB() throws Exception {
-
-        PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
-
-        // String xmlData =
-        // EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
-        // "escidoc_item_198_for_create" + getTransport(true) + ".xml");
-        // theItemXml = create(xmlData);
-        // theItemId =
-        // getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
-        //
-        // Document theItem = EscidocRestSoapTestBase.getDocument(theItemXml);
-        // String pid = null;
-        //
-        // String pidParam = getPidParam(theItemId, this.itemUrl + theItemId);
-        //
-        // Node node = selectSingleNode(theItem, XPATH_ITEM_OBJECT_PID);
-        // assertNull(node);
-        // assertXmlValidItem(theItemXml);
-        //
-        // // release Item and assign PID
-        // ----------------------------------------
-        // try {
-        // submit(theItemId, getTheLastModificationParam(false));
-        // pidParam = getPidParam(theItemId, this.itemUrl + theItemId);
-        // pid = assignObjectPid(theItemId, pidParam);
-        // fail("InvalidStatusException expected. ");
-        // }
-        // catch (final Exception e) {
-        // Class<?> ec = InvalidStatusException.class;
-        // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-        // + " expected.", ec, e);
-        // }
-        //
-        // // check if returned pid equals RELS-EXT entry
-        // theItemXml = retrieve(theItemId);
-        // Node thePid =
-        // selectSingleNode(EscidocRestSoapTestBase.getDocument(theItemXml),
-        // XPATH_ITEM_OBJECT_PID);
-        // assertNotNull(thePid);
-        // Node returnedPid =
-        // selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
-        // XPATH_RESULT_PID);
-        // assertEquals(returnedPid.getTextContent(), thePid.getTextContent());
-        // assertXmlValidItem(theItemXml);
-    }
-
-    /**
      * Check pid assigment with lower user permissions. Assign in item status "released".
      *
      * @throws Exception If anything fails.
      */
     public void notestObjectPidAssignmentPermissionC() throws Exception {
-
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
-
         testAssignObjectPid1();
-
-        // String xmlData =
-        // EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
-        // "escidoc_item_198_for_create" + getTransport(true) + ".xml");
-        // theItemXml = create(xmlData);
-        // theItemId =
-        // getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
-        //
-        // Document theItem = EscidocRestSoapTestBase.getDocument(theItemXml);
-        // String pid = null;
-        //
-        // String pidParam = getPidParam(theItemId, this.itemUrl + theItemId);
-        //
-        // Node node = selectSingleNode(theItem, XPATH_ITEM_OBJECT_PID);
-        // assertNull(node);
-        // assertXmlValidItem(theItemXml);
-        //
-        // // release Item and assign PID
-        // ----------------------------------------
-        // try {
-        // submit(theItemId, getTheLastModificationParam(false));
-        // release(theItemId, getTheLastModificationParam(false));
-        //
-        // pidParam = getPidParam(theItemId, this.itemUrl + theItemId);
-        // pid = assignObjectPid(theItemId, pidParam);
-        // fail("InvalidStatusException expected. ");
-        // }
-        // catch (final Exception e) {
-        // Class<?> ec = InvalidStatusException.class;
-        // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-        // + " expected.", ec, e);
-        // }
-        //
-        // // check if returned pid equals RELS-EXT entry
-        // theItemXml = retrieve(theItemId);
-        // Node thePid =
-        // selectSingleNode(EscidocRestSoapTestBase.getDocument(theItemXml),
-        // XPATH_ITEM_OBJECT_PID);
-        // assertNotNull(thePid);
-        // Node returnedPid =
-        // selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
-        // XPATH_RESULT_PID);
-        // assertEquals(returnedPid.getTextContent(), thePid.getTextContent());
-        // assertXmlValidItem(theItemXml);
     }
 
     /**
@@ -1085,58 +986,6 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         compareItemObjectPid(itemId, pidXML);
 
         assignAndCheckVersionPid(itemId);
-    }
-
-    /**
-     * Check contentPid assignment with user role.
-     *
-     * @throws Exception If anything fails.
-     */
-    public void notestPidPermissionsContent() throws Exception {
-
-        // PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
-        //
-        // String componentXml = theItemXml;
-        // String pid = null;
-        // final int componentNo = 2;
-        //
-        // String itemXml = retrieve(theItemId);
-        // Document item = EscidocRestSoapTestBase.getDocument(itemXml);
-        // String componentId = getComponentObjidValue(item, componentNo);
-        //
-        // // get last-modification-date
-        // String pidParam = getPidParam(theItemId, this.itemUrl + theItemId);
-        // Node node =
-        // selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
-        // XPATH_ITEM_OBJECT_PID);
-        // assertNull(node);
-        // assertXmlValidItem(componentXml);
-        //
-        // // assign PID to Component
-        // --------------------------------------------
-        // try {
-        // pid = assignContentPid(theItemId, componentId, pidParam);
-        // fail("InvalidStatusException expected. ");
-        // }
-        // catch (final Exception e) {
-        // Class<?> ec = InvalidStatusException.class;
-        // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-        // + " expected.", ec, e);
-        // }
-        //
-        // // check if returned pid equals RELS-EXT entry
-        // componentXml = retrieveComponent(theItemId, componentId);
-        // Node componentPid =
-        // selectSingleNode(
-        // EscidocRestSoapTestBase.getDocument(componentXml),
-        // "/component/properties/pid");
-        // assertNotNull(componentPid);
-        // Node returnedPid =
-        // selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
-        // XPATH_RESULT_PID);
-        // assertEquals(returnedPid.getTextContent(), componentPid
-        // .getTextContent());
-        // assertXmlValidItem(componentXml);
     }
 
     /**

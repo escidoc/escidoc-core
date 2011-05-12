@@ -62,7 +62,7 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Hoppe
  */
-public abstract class UserGroupTest extends UserGroupTestBase {
+public class UserGroupTest extends UserGroupTestBase {
 
     public static final String XPATH_RDF_ABOUT = XPATH_USER_GROUP_LIST_USER_GROUP + "/@about";
 

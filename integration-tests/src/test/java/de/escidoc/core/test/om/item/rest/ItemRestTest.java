@@ -38,7 +38,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 /**
- * Item tests with REST transport.
+ * Item tests.
  *
  * @author Michael Schneider
  */

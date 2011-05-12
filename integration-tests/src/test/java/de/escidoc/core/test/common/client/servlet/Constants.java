@@ -35,10 +35,6 @@ package de.escidoc.core.test.common.client.servlet;
  */
 public class Constants {
 
-    public static final int TRANSPORT_REST = 0;
-
-    public static final int TRANSPORT_SOAP = 1;
-
     /*
      * REST specific constants
      */

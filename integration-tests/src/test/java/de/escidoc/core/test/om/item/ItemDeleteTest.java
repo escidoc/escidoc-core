@@ -90,13 +90,6 @@ public class ItemDeleteTest extends ItemTestBase {
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
-
-        // Node itemObjiId = selectSingleNode(getDocument(itemXml),
-        // "/item/@objid");
-        //
-        // String itemId = itemObjiId.getTextContent();
-        // this.theItemId = itemId;
-
         delete(this.theItemId);
         try {
 
@@ -203,13 +196,7 @@ public class ItemDeleteTest extends ItemTestBase {
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
-
-        // Node itemObjiId = selectSingleNode(getDocument(itemXml),
-        // "/item/@objid");
-        // String itemId = itemObjiId.getTextContent();
-        // this.theItemId = itemId;
         String param = getTheLastModificationParam(false);
-
         submit(this.theItemId, param);
         Class<?> ec = InvalidStatusException.class;
         try {
@@ -271,15 +258,6 @@ public class ItemDeleteTest extends ItemTestBase {
 
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
-
-        // Node itemObjiId = selectSingleNode(getDocument(itemXml),
-        // "/item/@objid");
-        // String itemId = itemObjiId.getTextContent();
-        // FIXME
-        // Node componentObjiId = selectSingleNode(getDocument(itemXml),
-        // "/item/components/component/@objid");
-        // String componentId = componentObjiId.getTextContent();
-
         Node component = selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml), "/item/components/component");
         String componentId = getObjidValue(toString(component, true));
 
@@ -292,77 +270,4 @@ public class ItemDeleteTest extends ItemTestBase {
         fail("Not expected exception");
 
     }
-    // Test methods are obsolete, because they test the obsolete
-    // interface methods
-    // /**
-    // * Test successfully deleting items, which are referenced as relations
-    // * targets in the other item. After deletion of referenced items, the item
-    // * has no relations more.
-    // *
-    // *
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // @Test
-    // public void testDeleteWithRelations() throws Exception {
-    // String itemXml1 = create(getTemplateAsString(TEMPLATE_ITEM_PATH,
-    // "escidoc_item_198_for_create" + getTransport(true) + ".xml"));
-    // String itemXml2 = create(getTemplateAsString(TEMPLATE_ITEM_PATH,
-    // "escidoc_item_198_for_create" + getTransport(true) + ".xml"));
-    //
-    // String createdItemId1 = null;
-    // String createdItemId2 = null;
-    // Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
-    // Matcher m1 = PATTERN_OBJID_ATTRIBUTE.matcher(itemXml1);
-    // if (m1.find()) {
-    // createdItemId1 = m1.group(1);
-    // }
-    // Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(itemXml2);
-    // if (m2.find()) {
-    // createdItemId2 = m2.group(1);
-    // }
-    //
-    // String href1 = "/ir/item/" + createdItemId1;
-    // String href2 = "/ir/item/" + createdItemId2;
-    // String itemForCreateWithRelationsXml = getTemplateAsString(
-    // TEMPLATE_ITEM_PATH, "escidoc_item_198_for_createWithRelations" +
-    // getTransport(true) + ".xml");
-    //
-    // itemForCreateWithRelationsXml = itemForCreateWithRelationsXml
-    // .replaceAll("##ITEM_ID1##", createdItemId1);
-    // itemForCreateWithRelationsXml = itemForCreateWithRelationsXml
-    // .replaceAll("##ITEM_ID2##", createdItemId2);
-    // itemForCreateWithRelationsXml = itemForCreateWithRelationsXml
-    // .replaceAll("##ITEM_HREF1##", href1);
-    // itemForCreateWithRelationsXml = itemForCreateWithRelationsXml
-    // .replaceAll("##ITEM_HREF2##", href2);
-    // Document itemForCreateWithRelations =
-    // getDocument(itemForCreateWithRelationsXml);
-    // Node xmlItemWithoutComponents = deleteElement(
-    // itemForCreateWithRelations, "/item/components");
-    // String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
-    //       
-    // String xml = create(itemWithoutComponents);
-    // NodeList relations = selectNodeList(getDocument(itemWithoutComponents),
-    // "/item/relations/relation");
-    //
-    //        
-    // assertEquals("item relations number is wrong", relations.getLength(), 2);
-    //
-    // Node itemObjiId = selectSingleNode(getDocument(xml), "/item/@objid");
-    //
-    // String itemId = itemObjiId.getTextContent();
-    //
-    // delete(createdItemId1);
-    // delete(createdItemId2);
-    // String itemAfterDeleteOfrelations = retrieve(itemId);
-    //        
-    // NodeList relationsOfitemAfterDeleteOfRelations = selectNodeList(
-    // getDocument(itemAfterDeleteOfrelations), "/item/relations/relation");
-    // assertEquals("item relations number is wrong",
-    // relationsOfitemAfterDeleteOfRelations.getLength(), 0);
-    //
-    // }
 }

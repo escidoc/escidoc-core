@@ -977,35 +977,6 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         }
     }
 
-    // /**
-    // * No ItemID provided
-    // *
-    // * @test.name No Content Item ID provided
-    // * @test.id OM_UCI_9
-    // * @test.input XML item with attribute objid set empty
-    // * @test.expected Error message
-    // * de.escidoc.core.common.exceptions.application
-    // * .notfound.MissingMethodParameterException
-    // *
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // @Test
-    // public void testOM_UCI_9() throws Exception {
-    // if (getTransport() == Constants.TRANSPORT_SOAP) {
-    // try {
-    // update(null, theItemXml);
-    // }
-    // catch (final MissingMethodParameterException e) {
-    //
-    // return;
-    // }
-    // fail("Not expected exception");
-    // }
-    // }
-
     /**
      * Incorrect Component: Inline File(s) too big
      *

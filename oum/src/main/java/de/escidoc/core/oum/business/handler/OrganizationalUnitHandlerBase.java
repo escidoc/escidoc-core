@@ -61,7 +61,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *
      * @param element The element.
      * @return The id of the referenced organizational unit.
-     * @throws MissingAttributeValueException If neither href (REST transport) nor objid (SOAP transport) is found.
+     * @throws MissingAttributeValueException If the href is not found.
      * @throws OrganizationalUnitNotFoundException
      *                                        If the id does not point to an organizational unit.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException

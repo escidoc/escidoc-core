@@ -76,8 +76,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
     }
 
     /**
-     * Get the xml representation of an organizational unit in REST or SOAP format. Whether REST or SOAP format is
-     * delivered is dependent on the transport of the original request.
+     * Get the xml representation of an organizational.
      *
      * @return The xml representation of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
@@ -88,8 +87,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
     }
 
     /**
-     * Get the xml representation of the properties of an organizational unit in REST or SOAP format. Whether REST or
-     * SOAP format is delivered is dependent on the transport of the original request.
+     * Get the xml representation of the properties of an organizational unit.
      *
      * @return The xml representation of the properties of an organizational unit.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
@@ -111,8 +109,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
     }
 
     /**
-     * Get the xml representation of the md-records of an md-records in REST or SOAP format. Whether REST or SOAP format
-     * is delivered is dependent on the transport of the original request.
+     * Get the xml representation of the md-records.
      *
      * @return The xml representation of the md-records of an organizational unit.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
@@ -123,8 +120,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
     }
 
     /**
-     * Get the xml representation of a single md-record in REST or SOAP format. Whether REST or SOAP format is delivered
-     * is dependent on the transport of the original request.
+     * Get the xml representation of a single md-record.
      *
      * @param name The name of teh md-record.
      * @return The xml representation of the md-record of an organizational unit.
@@ -136,8 +132,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
     }
 
     /**
-     * Get the xml representation of the parent ous of an organizational unit in REST or SOAP format. Whether REST or
-     * SOAP format is delivered is dependent on the transport of the original request.
+     * Get the xml representation of the parent ous of an organizational unit.
      *
      * @return The xml representation of the organization details of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
@@ -148,8 +143,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
     }
 
     /**
-     * Get the xml representation of the children of an organizational unit in REST or SOAP format. Whether REST or SOAP
-     * format is delivered is dependent on the transport of the original request.
+     * Get the xml representation of the children of an organizational unit.
      *
      * @return The xml representation of the parents of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
@@ -184,8 +178,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
     }
 
     /**
-     * Get the xml representation of the parents of an organizational unit in REST or SOAP format. Whether REST or SOAP
-     * format is delivered is dependent on the transport of the original request.
+     * Get the xml representation of the parents of an organizational unit.
      *
      * @return The xml representation of the children of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
@@ -221,8 +214,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
     }
 
     /**
-     * Compute the path list of an organizational and return the xml representation of the path list in REST or SOAP
-     * format. Whether REST or SOAP format is delivered is dependent on the transport of the original request.
+     * Compute the path list of an organizational and return the xml representation of the path list.
      *
      * @return The xml representation of the path list of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.

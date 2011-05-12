@@ -904,9 +904,6 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ReadonlyAttributeViolationException.class;
-            // if(getTransport() == Constants.TRANSPORT_SOAP){
-            // ec = InvalidStatusException.class;
-            // }
             EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }

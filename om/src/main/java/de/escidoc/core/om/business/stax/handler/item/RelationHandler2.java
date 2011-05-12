@@ -84,8 +84,8 @@ public class RelationHandler2 extends DefaultHandler {
     /**
      * @param element StAX StartElement.
      * @return StAX StartElement.
-     * @throws InvalidContentException  Thrown if the content relation attribute for predicate has wrong structure.
-     * @throws WebserverSystemException Thrown if check of transport protocol failed.
+     * @throws InvalidContentException  thrown if the content relation attribute for predicate has wrong structure
+     * @throws WebserverSystemException
      */
     @Override
     public StartElement startElement(final StartElement element) throws InvalidContentException,

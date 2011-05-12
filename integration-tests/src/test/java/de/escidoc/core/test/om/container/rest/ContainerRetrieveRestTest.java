@@ -33,7 +33,7 @@ import de.escidoc.core.test.om.container.ContainerTestBase;
 import org.junit.Test;
 
 /**
- * Container tests with REST transport.
+ * Container tests.
  *
  * @author Michael Schneider
  */

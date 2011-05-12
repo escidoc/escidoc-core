@@ -34,7 +34,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 /**
- * Organizational Unit tests with REST transport.
+ * Organizational Unit tests.
  *
  * @author Michael Schneider
  */

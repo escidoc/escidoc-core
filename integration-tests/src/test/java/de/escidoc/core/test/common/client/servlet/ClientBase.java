@@ -494,7 +494,6 @@ public abstract class ClientBase {
 
     /**
      * Make a service call to the escidoc framework for methods without sending an xml representation of a resource.
-     * Whether REST or SOAP is taken depends on the transport attribute.
      * 
      * @param label
      *            A label for logging purposes.
@@ -530,7 +529,6 @@ public abstract class ClientBase {
 
     /**
      * Make a service call to the escidoc framework for methods without sending an xml representation of a resource.
-     * Whether REST or SOAP is taken depends on the transport attribute.
      * 
      * @param label
      *            A label for logging purposes.
@@ -563,7 +561,7 @@ public abstract class ClientBase {
     }
 
     /**
-     * Make a service call to the escidoc framework. Whether REST or SOAP is taken depends on the transport attribute.
+     * Make a service call to the escidoc framework.
      * 
      * @param label
      *            A label for logging purposes.
@@ -630,7 +628,7 @@ public abstract class ClientBase {
     }
 
     /**
-     * Make a service call to the escidoc framework. Whether REST or SOAP is taken depends on the transport attribute.
+     * Make a service call to the escidoc framework.
      * 
      * @param label
      *            A label for logging purposes.

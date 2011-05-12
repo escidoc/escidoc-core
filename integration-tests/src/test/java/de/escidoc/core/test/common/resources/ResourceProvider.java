@@ -88,28 +88,6 @@ public class ResourceProvider {
     /**
      * Save the content to the file described by path and filename.
      *
-     * @param transport TODO
-     * @param path      The path.
-     * @param filename  The filename. This should end with '.xml'. If this is not the case, '.xml' is added to the
-     *                  filename. Depending on the provided transport, '-rest' or '-soap' is inserted into the name of
-     *                  the created file before '.xml'
-     * @param content   The content.
-     * @throws IOException If anything fails.
-     */
-    public static void saveToFile(final int transport, final String path, final String filename, final String content)
-        throws IOException {
-
-        String fName = filename;
-        if (!fName.endsWith(".xml")) {
-            fName += ".xml";
-        }
-        fName = fName.replaceAll("\\.xml", "-rest.xml");
-        saveToFile(path, fName, content);
-    }
-
-    /**
-     * Save the content to the file described by path and filename.
-     *
      * @param path     The path.
      * @param filename The filename.
      * @param content  The content.

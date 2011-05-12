@@ -291,48 +291,6 @@ public class ItemContentRelationsTest extends ItemTestBase {
         }
     }
 
-    // Test method is obsolete, because it tests the obsolete
-    // interface methods
-    // /**
-    // * Tets successfully adding an existing "inactive" relation to the item.
-    // * @throws Exception
-    // */
-    //     @Test
-    // public void testAddExistingInvalidRelation() throws Exception {
-    // Document xmlItem = getTemplateAsDocument(TEMPLATE_ITEM_PATH,
-    // "escidoc_item_198_for_create" + getTransport(true) + ".xml");
-    // Node xmlItemWithoutComponents = deleteElement(xmlItem,
-    // "/item/components");
-    // String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
-    //
-    // String xml = create(itemWithoutComponents);
-    //
-    // String targetId = selectSingleNode(getDocument(xml),
-    // "/item/@objid").getTextContent();
-    //        
-    // Vector targets = new Vector();
-    // targets.add(targetId);
-    // String lastModDate = getTheLastModificationParam(this.itemId);
-    // String taskParam = getTaskParametrForAddRelations(lastModDate, targets);
-    // String addedRelations = addContentRelations(this.itemId, taskParam);
-    // String relationId = selectSingleNode(getDocument(addedRelations),
-    // "/param/relation[1]/@objid").getTextContent();
-    // String xmlWithRelation = retrieve(this.itemId);
-    // Document item = getDocument(xmlWithRelation);
-    // Node xmlItemWithoutFirstRelations = deleteElement(item,
-    // "/item/relations");
-    // String updatedXml = update(this.itemId, toString(
-    // xmlItemWithoutFirstRelations, true));
-    // lastModDate = getTheLastModificationParam(this.itemId);
-    // taskParam = getTaskParametrForAddRelations(lastModDate, targets);
-    // addedRelations = addContentRelations(this.itemId, taskParam);
-    // String itemXml = retrieve(this.itemId);
-    // String retrivedRelationId = selectSingleNode(getDocument(itemXml),
-    // "/item/relations/relation[1]/@objid").getTextContent();
-    // assertEquals("relation ids are not equal", relationId,
-    // retrivedRelationId);
-    // }
-
     /**
      * Test declining adding of an existing relation to the item.
      *

@@ -118,144 +118,16 @@ public class ContextTestBase extends OmTestBase {
         assertXmlValidContext(toBeAssertedXml);
         Document document = EscidocRestSoapTestBase.getDocument(toBeAssertedXml);
 
-        // String[] rootValues = assertRootElement("Invalid Context root
-        // element. ",
-        // document, XPATH_CONTEXT,
-        // Constants.CONTEXT_BASE_URI, timestampBeforeCreation);
-        // final String id = rootValues[0];
-
-        // TODO enable if pid generation is supported by the framework
-        // assertXMLExist("OU error: pid was not
-        // set!",
-        // created, "/organizational-unit/pid");
-
-        // assert resources (in case of REST)
-        // if (getTransport() == Constants.TRANSPORT_REST) {
-        // assertReferencingElement("Assert of resources failed. ",
-        // document,
-        // XPATH_ORGANIZATIONAL_UNIT_RESOURCES, null);
-        // assertReferencingElement("Assert of resource children failed. ",
-        // document, XPATH_ORGANIZATIONAL_UNIT_RESOURCES + "/"
-        // + "children[@href=\"/oum/organizational-unit/" + id
-        // + "/resources/children\"]", null);
-        // assertReferencingElement("Assert of resource parents failed. ",
-        // document, XPATH_ORGANIZATIONAL_UNIT_RESOURCES + "/"
-        // + "parents[@href=\"/oum/organizational-unit/" + id
-        // + "/resources/parents\"]", null);
-        // assertReferencingElement("Assert of resource path-list failed. ",
-        // document, XPATH_ORGANIZATIONAL_UNIT_RESOURCES + "/"
-        // + "path-list[@href=\"/oum/organizational-unit/" + id
-        // + "/resources/path-list\"]", null);
-        // }
-
-        // assert properties
-        // assertPropertiesElementUnversioned("Asserting OU properties failed.
-        // ",
-        // document, XPATH_ORGANIZATIONAL_UNIT_PROPERTIES,
-        // timestampBeforeCreation);
-
-        // public-status
-        // assertXmlExists("OU error: status was not set!", document,
-        // XPATH_ORGANIZATIONAL_UNIT_PUBLIC_STATUS);
-        // assertXmlEquals("OU error: status was not set!", document,
-        // XPATH_ORGANIZATIONAL_UNIT_PUBLIC_STATUS,
-        // ORGANIZATIONAL_UNIT_STATUS_OPENED);
-
-        // has-children
-        // assertXmlExists("OU error: " + " Missing has-children", document,
-        // XPATH_ORGANIZATIONAL_UNIT_HAS_CHILDREN);
-
         if (originalXml != null) {
             Document originalDocument = EscidocRestSoapTestBase.getDocument(originalXml);
 
             if (assertCreationDate) {
                 final String expectedCreationDate = getCreationDateValue(originalDocument);
                 if (expectedCreationDate != null) {
-
-                    // creation-date
-                    // assertXmlEquals("OU error: " + "creation date mismatch,
-                    // ",
-                    // document, XPATH_ORGANIZATIONAL_UNIT_CREATION_DATE,
-                    // expectedCreationDate);
-
                     // created-by
                     assertCreatedBy("OU error: " + "created-by invalid", originalDocument, document);
                 }
             }
-
-            // abbreviation
-            // assertXmlEquals("OU error: " + "abbreviation mismatch, ",
-            // originalDocument, document,
-            // XPATH_ORGANIZATIONAL_UNIT_ABBREVIATION);
-
-            // name
-            // assertXmlEquals("OU error: " + "name mismatch, ",
-            // originalDocument,
-            // document, XPATH_ORGANIZATIONAL_UNIT_NAME);
-
-            // uri
-            // assertXmlEquals("OU error: " + "uri mismatch, ",
-            // originalDocument,
-            // document, XPATH_ORGANIZATIONAL_UNIT_URI);
-
-            // type
-            // assertXmlEquals("OU error: " + "type mismatch, ",
-            // originalDocument,
-            // document, XPATH_ORGANIZATIONAL_UNIT_ORGANIZATION_TYPE);
-
-            // description
-            // assertXmlEquals("OU error: " + "description mismatch, ",
-            // originalDocument, document,
-            // XPATH_ORGANIZATIONAL_UNIT_DESCRIPTION);
-
-            // external id
-            // assertXmlEquals("OU error: " + "external-id mismatch, ",
-            // originalDocument, document,
-            // XPATH_ORGANIZATIONAL_UNIT_EXTERNAL_ID);
-
-            // postcode
-            // assertXmlEquals("OU error: " + "postcode mismatch, ",
-            // originalDocument, document, XPATH_ORGANIZATIONAL_UNIT_POSTCODE);
-
-            // country
-            // assertXmlEquals("OU error: " + "country mismatch, ",
-            // originalDocument, document, XPATH_ORGANIZATIONAL_UNIT_COUNTRY);
-
-            // region
-            // assertXmlEquals("OU error: " + "region mismatch, ",
-            // originalDocument, document, XPATH_ORGANIZATIONAL_UNIT_REGION);
-
-            // address
-            // assertXmlEquals("OU error: " + "address mismatch, ",
-            // originalDocument, document, XPATH_ORGANIZATIONAL_UNIT_ADDRESS);
-
-            // city
-            // assertXmlEquals("OU error: " + "city mismatch, ",
-            // originalDocument,
-            // document, XPATH_ORGANIZATIONAL_UNIT_CITY);
-
-            // telephone
-            // assertXmlEquals("OU error: " + "telephone mismatch, ",
-            // originalDocument, document, XPATH_ORGANIZATIONAL_UNIT_TELEPHONE);
-
-            // fax
-            // assertXmlEquals("OU error: " + "fax mismatch, ",
-            // originalDocument,
-            // document, XPATH_ORGANIZATIONAL_UNIT_FAX);
-
-            // email
-            // assertXmlEquals("OU error: " + "email mismatch, ",
-            // originalDocument, document, XPATH_ORGANIZATIONAL_UNIT_EMAIL);
-
-            // longitude
-            // assertXmlEquals("OU error: " + "location-longitude mismatch, ",
-            // originalDocument, document,
-            // XPATH_ORGANIZATIONAL_UNIT_GEO_COORDINATE_LONGITUDE);
-
-            // latitude
-            // assertXmlEquals("OU error: " + "location-latitude mismatch, ",
-            // originalDocument, document,
-            // XPATH_ORGANIZATIONAL_UNIT_GEO_COORDINATE_LATITUDE);
         }
 
         return document;

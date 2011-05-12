@@ -55,7 +55,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 /**
- * Container tests with REST transport.
+ * Container tests.
  *
  * @author Michael Schneider
  */

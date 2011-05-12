@@ -33,7 +33,7 @@ import de.escidoc.core.test.om.item.ItemTestBase;
 import org.junit.Test;
 
 /**
- * Item tests with REST transport.
+ * Item tests.
  *
  * @author Michael Schneider
  */

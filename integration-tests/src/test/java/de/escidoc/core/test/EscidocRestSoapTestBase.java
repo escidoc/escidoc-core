@@ -579,10 +579,6 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Creates a new element node for the provided document. The created element is an element that refers to another
      * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/>
-     * This method takes the set transport definition for this class to decide which attributes have to be sent.<br>
-     * This method delegates to
-     * <code>createReferencingElementNode(doc, namespaceUri, prefix, tagName, xlinkPrefix, title, href,
-     * false)</code>. I.e., in case of rest access, the read only values of the referencing node are not created.
      * 
      * @param doc
      *            The document for that the node shall be created.
@@ -614,7 +610,6 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Creates a new element node for the provided document. The created element is an element that refers to another
      * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/>
-     * This method takes the provided transport definition to decide which attributes have to be sent.
      *
      * @param doc
      *            The document for that the node shall be created.
@@ -691,9 +686,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid for grants schema.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid for grants schema.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -708,8 +701,6 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts that the provided xml data is a valid for preferences schema.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -723,9 +714,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid for attributes schema.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid for attributes schema.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -744,20 +733,18 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidContextsList(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidContextsList(final String xmlData) throws Exception {
         assertXmlValid(xmlData, new URL(getContextSchemaBase() + "context-list.xsd"));
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidContextRefsList(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidContextRefsList(final String xmlData) throws Exception {
         assertXmlValid(xmlData, new URL(getContextSchemaBase() + "context-ref-list.xsd"));
         assertAllPlaceholderResolved(xmlData);
     }
 
     /**
      * Asserts that the provided xml data is a valid organizational unit.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -770,9 +757,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid organizational unit.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -786,9 +771,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid role.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid role.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -815,9 +798,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid role.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid role.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -831,9 +812,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of roles.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid list of roles.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -847,9 +826,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid index configuration.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid index configuration.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -863,9 +840,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid user account.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid user account.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -879,9 +854,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid user account.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid user account.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -895,9 +868,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of user accounts.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid list of user accounts.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -911,9 +882,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid user group.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid user group.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -927,9 +896,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of user groups.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid list of user groups.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -943,9 +910,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of grants.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid list of grants.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -1006,9 +971,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit pathlist.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid organizational unit pathlist.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -1023,9 +986,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid organizational unit.
      *
      * @param xmlData
      *            The xml data to be asserted.
@@ -1039,32 +1000,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidOrganizationalUnitsRefs(final String xmlData) throws Exception {
-        assertXmlValidOrganizationalUnitsRefs(xmlData);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
+     * Asserts that the provided xml data is a valid organizational unit.
      *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
      *             If anything fails.
      */
-    public void assertXmlValidOrganizationalUnitsRefs(final int transport, final String xmlData) throws Exception {
-
+    public void assertXmlValidOrganizationalUnitsRefs(final String xmlData) throws Exception {
         assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase("0.4") + ORGANIZATIONAL_UNIT_REF_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
@@ -1323,9 +1266,6 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the title value of the root element from the document.<br/>
-     * This method takes the provided transport definition to decide to decide if the title value has to be extracted
-     * from the title attribute of the root element (REST) or if <code>null</code> has to be returned as no title exists
-     * (SOAP).
      *
      * @param document
      *            The document to retrieve the value from.
@@ -1338,9 +1278,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the root element from the document.<br/>
-     * This method takes set transport definition of this instance to decide if the objid value has to be extracted from
-     * the href attribute of the root element (REST) or can be taken from the objid attribute of the root element (SOAP)
+     * Gets the objid value of the root element from the document.
      * 
      * @param xmlData
      *            The xml data to retrieve the value from.
@@ -1905,9 +1843,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the root element from the document.<br/>
-     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
-     * href attribute of the root element (REST) or can be taken from the objid attribute of the root element (SOAP).
+     * Gets the objid value of the root element from the document.
      *
      * @param document
      *            The document to retrieve the value from.
@@ -1920,9 +1856,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the element selected in the provided node.<br/>
-     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
-     * href attribute of the selected element (REST) or can be taken from the objid attribute of the selected element
+     * Gets the objid value of the element selected in the provided node.
      * (SOAP).
      *
      * @param node
@@ -1948,9 +1882,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid values of the elements selected in the provided node.<br/>
-     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
-     * href attribute of the selected element (REST) or can be taken from the objid attribute of the selected element
+     * Gets the objid values of the elements selected in the provided node.
      * (SOAP).
      *
      * @param node
@@ -2029,9 +1961,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the created-by element.<br/>
-     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
-     * href attribute of the created-by element (REST) or can be taken from the objid attribute of the created-by
+     * Gets the objid value of the created-by element.
      * element (SOAP).
      *
      * @param node
@@ -2045,10 +1975,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     }
 
     /**
-     * Gets the objid value of the modified-by element.<br/>
-     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
-     * href attribute of the modified element (REST) or can be taken from the objid attribute of the modified element
-     * (SOAP).
+     * Gets the objid value of the modified-by element.
      *
      * @param node
      *            The node to select an element from.
@@ -2253,7 +2180,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * @param values
      *            the values that may occur
      * @param getIdAttribute
-     *            if true: get the id-attribute of the element dependent of the transport
+     *            if true: get the id-attribute of the element
      * @throws Exception
      *             e
      */
@@ -2290,7 +2217,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * @param isAscending
      *            if sort-order is ascending
      * @param getIdAttribute
-     *            if true: get the id-attribute of the element dependent of the transport
+     *            if true: get the id-attribute of the element
      * @throws Exception
      *             e
      */

@@ -39,7 +39,7 @@ import org.w3c.dom.Node;
 import static org.junit.Assert.fail;
 
 /**
- * Item tests with REST transport.
+ * Item tests.
  *
  * @author Michael Schneider
  */

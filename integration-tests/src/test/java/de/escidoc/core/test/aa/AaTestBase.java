@@ -1054,9 +1054,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
      * Prepares the data for a container.
      *
      * @param contextId context to create container in
-     * @return Returns the xml representation of a container. Depending on the current set transport of the class, the
-     *         data is created by either using the template file create_container_WithoutMembers_Restv1.1.xml or by
-     *         using the template file create_container_WithoutMembers_Soapv1.1.xml
+     * @return Returns the xml representation of a container.
      * @throws Exception If anything fails.
      */
     private String prepareContainerData(final String contextId) throws Exception {
@@ -1076,9 +1074,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
      * Prepares the data for an item.
      *
      * @param contextId context to create container in
-     * @return Returns the xml representation of an item. Depending on the current set transport of the class, the data
-     *         is created by either using the template file escidoc_item_198_for_createREST.xml or by using the template
-     *         file escidoc_item_198_for_createSOAP.xml
+     * @return Returns the xml representation of an item.
      * @throws Exception If anything fails.
      */
     protected String prepareItemData(final String contextId) throws Exception {
