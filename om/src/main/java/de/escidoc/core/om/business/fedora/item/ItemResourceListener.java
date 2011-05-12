@@ -41,7 +41,10 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.service.UserContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -50,17 +53,15 @@ import java.util.Collection;
  */
 public class ItemResourceListener extends ItemHandlerRetrieve {
 
+    @Autowired
+    @Qualifier("common.business.indexing.IndexingHandler")
     private IndexingHandler indexingHandler;
 
     private final Collection<ResourceListener> itemListeners = new ArrayList<ResourceListener>();
 
-    /**
-     * Injects the indexing handler.
-     *
-     * @param indexingHandler The indexing handler.
-     */
-    public void setIndexingHandler(final IndexingHandler indexingHandler) {
-        this.indexingHandler = indexingHandler;
+
+    @PostConstruct
+    private void init() {
         addItemListener(indexingHandler);
     }
 

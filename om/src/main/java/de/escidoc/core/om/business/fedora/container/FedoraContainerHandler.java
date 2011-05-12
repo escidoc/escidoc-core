@@ -118,13 +118,13 @@ import de.escidoc.core.om.business.stax.handler.container.ContainerPropertiesHan
 import de.escidoc.core.om.business.stax.handler.container.StructMapCreateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -159,7 +159,7 @@ import java.util.TreeMap;
  */
 @Service("business.FedoraContainerHandler")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class FedoraContainerHandler extends ContainerHandlerPid implements ContainerHandlerInterface, InitializingBean {
+public class FedoraContainerHandler extends ContainerHandlerPid implements ContainerHandlerInterface {
 
     /*
      * Attention: The spring/beans setter methods has to be defined in this and
@@ -2620,8 +2620,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         this.sruRequest = sruRequest;
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    @PostConstruct
+    private void init() throws Exception {
         addContainerListener(indexingHandler);
         addContainerMemberListener(indexingHandler);
     }
