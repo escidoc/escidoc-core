@@ -55,7 +55,7 @@ public class StatisticDataTest extends StatisticDataTestBase {
      */
     @Before
     public void initialize() throws Exception {
-        scope = new ScopeAbstractTest();
+        scope = new ScopeAbstractTest(){};
         if (methodCounter == 0) {
             createScope();
         }

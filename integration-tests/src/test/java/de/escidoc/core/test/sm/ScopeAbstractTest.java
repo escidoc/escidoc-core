@@ -48,7 +48,7 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Hoppe
  */
-public class ScopeAbstractTest extends ScopeTestBase {
+public abstract class ScopeAbstractTest extends ScopeTestBase {
 
     private static Collection<String> primKeys = new ArrayList<String>();
 

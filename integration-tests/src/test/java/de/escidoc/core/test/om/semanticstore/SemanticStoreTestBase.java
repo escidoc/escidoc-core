@@ -40,6 +40,10 @@ public class SemanticStoreTestBase extends OmTestBase {
 
     private SemanticStoreClient semanticStoreClient = null;
 
+    public SemanticStoreTestBase() {
+        this.semanticStoreClient = new SemanticStoreClient();
+    }
+
     /**
      * @return the semanticStoreClient
      */

@@ -67,7 +67,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
      */
     @Before
     public void initialize() throws Exception {
-        scope = new ScopeAbstractTest();
+        scope = new ScopeAbstractTest(){};
         if (methodCounter == 0) {
             primKeys = new ArrayList<String>();
             createScope();
