@@ -28,12 +28,11 @@
  */
 package de.escidoc.core.st.business.persistence.hibernate;
 
-import org.apache.axis.components.uuid.UUIDGen;
-import org.apache.axis.components.uuid.UUIDGenFactory;
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * Generator for unique tokens.<br> This is an implementation of a hibernate id generator.
@@ -44,15 +43,13 @@ public class TokenGenerator implements IdentifierGenerator {
 
     private static final String ID_PREFIX = "escidoctoken:";
 
-    private final UUIDGen uuidGenerator = UUIDGenFactory.getUUIDGen();
-
     /**
      * See Interface for functional description.
      */
     @Override
     public Serializable generate(final SessionImplementor sessionImplementor, final Object arg1) {
 
-        return ID_PREFIX + uuidGenerator.nextUUID();
+        return ID_PREFIX + UUID.randomUUID().toString();
     }
 
 }
