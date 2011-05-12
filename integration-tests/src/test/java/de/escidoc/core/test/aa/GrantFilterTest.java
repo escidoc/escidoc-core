@@ -2448,6 +2448,7 @@ public class GrantFilterTest extends GrantTestBase {
 
             // login to get handle
             final String loginName = selectSingleNode(user, XPATH_USER_ACCOUNT_LOGINNAME).getTextContent();
+            Thread.sleep(1000);
             final String handle = login(loginName, SYSADMIN_PASSWORD, true);
 
             // save userId + handle

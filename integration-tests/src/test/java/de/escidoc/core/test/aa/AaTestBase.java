@@ -3687,6 +3687,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
         String userHandle = null;
         try {
             userHandle = login(loginname, password, true);
+            Thread.sleep(1000);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException("INIT: Log in of the user failed.", e);
