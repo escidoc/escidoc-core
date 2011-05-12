@@ -7,12 +7,12 @@
 	<artifactId>om</artifactId>
 	<packaging>ejb</packaging>
 	<name>eSciDoc Core - Object Service</name>
-	<version>1.3-RC1</version>
+	<version>1.3</version>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>1.3-RC1</version>
+		<version>1.3</version>
 	</parent>
 
 	<description>Object Service package of eSciDoc Core</description>
