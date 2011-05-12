@@ -38,13 +38,6 @@ import de.escidoc.core.test.om.contentRelation.ContentRelationTestBase;
 public class ContentRelationHelper extends ContentRelationTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ContentRelationHelper(final int transport) {
-        super(transport);
-    }
-
-    /**
      * @param xml The Content-Relation as xml.
      * @return String Content-Relation-xml
      * @throws Exception e

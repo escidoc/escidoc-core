@@ -29,7 +29,6 @@
 package de.escidoc.core.test.sm;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.sm.AggregationDefinitionClient;
 import de.escidoc.core.test.common.client.servlet.sm.PreprocessingClient;
 import de.escidoc.core.test.common.client.servlet.sm.ReportClient;
@@ -65,17 +64,13 @@ public class SmTestBase extends EscidocRestSoapTestBase {
 
     private Matcher yearMatcher = yearPattern.matcher("");
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public SmTestBase(final int transport) {
-        super(transport);
-        this.statisticDataClient = new StatisticDataClient(transport);
-        this.aggregationDefinitionClient = new AggregationDefinitionClient(transport);
-        this.reportDefinitionClient = new ReportDefinitionClient(transport);
-        this.reportClient = new ReportClient(transport);
-        this.scopeClient = new ScopeClient(transport);
-        this.preprocessingClient = new PreprocessingClient(transport);
+    public SmTestBase() {
+        this.statisticDataClient = new StatisticDataClient();
+        this.aggregationDefinitionClient = new AggregationDefinitionClient();
+        this.reportDefinitionClient = new ReportDefinitionClient();
+        this.reportClient = new ReportClient();
+        this.scopeClient = new ScopeClient();
+        this.preprocessingClient = new PreprocessingClient();
     }
 
     /**
@@ -129,20 +124,11 @@ public class SmTestBase extends EscidocRestSoapTestBase {
      */
     public String getPrimKey(final String xml) throws Exception {
         String id = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            Pattern objidAttributePattern = Pattern.compile("objid=\"([^\"]*)\"");
-            Matcher m = objidAttributePattern.matcher(xml);
-            if (m.find()) {
-                id = m.group(1);
-            }
-        }
-        else {
-            Pattern hrefPattern = Pattern.compile("xlink:href=\"([^\"]*)\"");
-            Matcher m = hrefPattern.matcher(xml);
-            if (m.find()) {
-                id = m.group(1);
-                id = id.replaceFirst(".*\\/", "");
-            }
+        Pattern hrefPattern = Pattern.compile("xlink:href=\"([^\"]*)\"");
+        Matcher m = hrefPattern.matcher(xml);
+        if (m.find()) {
+            id = m.group(1);
+            id = id.replaceFirst(".*\\/", "");
         }
         return id;
     }
@@ -157,16 +143,8 @@ public class SmTestBase extends EscidocRestSoapTestBase {
      */
     public String replaceElementPrimKey(final String xml, final String elementName, final String objid) {
         String replacedXml = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replacedXml =
-                xml.replaceFirst("(?s)(.*?<[^<]*?" + elementName + ".*?objid=\").*?(\".*?>)", "$1" + objid + "$2");
-        }
-        else {
-            replacedXml =
-                xml
-                    .replaceFirst("(?s)(.*?<[^<]*?" + elementName + ".*?href=\"[^\"]*/).*?(\".*?>)", "$1" + objid
-                        + "$2");
-        }
+        replacedXml =
+            xml.replaceFirst("(?s)(.*?<[^<]*?" + elementName + ".*?href=\"[^\"]*/).*?(\".*?>)", "$1" + objid + "$2");
         return replacedXml;
     }
 
@@ -256,20 +234,6 @@ public class SmTestBase extends EscidocRestSoapTestBase {
     public Document getTemplateAsFixedScopeDocument(final String path, final String templateName) throws Exception {
 
         final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
-        fixScopeDocument(document);
-        return document;
-    }
-
-    /**
-     * Fixes the "link" attributes in case of SOAP.
-     *
-     * @param document The document to fix.
-     * @return Returns the provided (fixed) document.
-     * @throws Exception If anything fails.
-     */
-    public Document fixScopeDocument(final Document document) throws Exception {
-
-        fixLinkAttributes(document, XPATH_SCOPE);
         return document;
     }
 
@@ -302,21 +266,6 @@ public class SmTestBase extends EscidocRestSoapTestBase {
         throws Exception {
 
         final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
-        fixAggregationDefinitionDocument(document);
-        return document;
-    }
-
-    /**
-     * Fixes the "link" attributes in case of SOAP.
-     *
-     * @param document The document to fix.
-     * @return Returns the provided (fixed) document.
-     * @throws Exception If anything fails.
-     */
-    public Document fixAggregationDefinitionDocument(final Document document) throws Exception {
-
-        fixLinkAttributes(document, XPATH_AGGREGATION_DEFINITION);
-        fixLinkAttributes(document, XPATH_AGGREGATION_DEFINITION_SCOPE);
         return document;
     }
 
@@ -349,21 +298,6 @@ public class SmTestBase extends EscidocRestSoapTestBase {
         throws Exception {
 
         final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
-        fixReportDefinitionDocument(document);
-        return document;
-    }
-
-    /**
-     * Fixes the "link" attributes in case of SOAP.
-     *
-     * @param document The document to fix.
-     * @return Returns the provided (fixed) document.
-     * @throws Exception If anything fails.
-     */
-    public Document fixReportDefinitionDocument(final Document document) throws Exception {
-
-        fixLinkAttributes(document, XPATH_REPORT_DEFINITION);
-        fixLinkAttributes(document, XPATH_REPORT_DEFINITION_SCOPE);
         return document;
     }
 
@@ -378,7 +312,6 @@ public class SmTestBase extends EscidocRestSoapTestBase {
      */
     public String getTemplateAsFixedReportParametersString(final String path, final String templateName)
         throws Exception {
-
         final Document document = getTemplateAsFixedReportParametersDocument(path, templateName);
         return toString(document, false);
     }
@@ -394,23 +327,7 @@ public class SmTestBase extends EscidocRestSoapTestBase {
      */
     public Document getTemplateAsFixedReportParametersDocument(final String path, final String templateName)
         throws Exception {
-
-        final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
-        fixReportParametersDocument(document);
-        return document;
-    }
-
-    /**
-     * Fixes the "link" attributes in case of SOAP.
-     *
-     * @param document The document to fix.
-     * @return Returns the provided (fixed) document.
-     * @throws Exception If anything fails.
-     */
-    public Document fixReportParametersDocument(final Document document) throws Exception {
-
-        fixLinkAttributes(document, XPATH_REPORT_PARAMETERS_REPORT_DEFINITION);
-        return document;
+        return EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
     }
 
     /**
@@ -423,7 +340,6 @@ public class SmTestBase extends EscidocRestSoapTestBase {
      * @throws Exception If anything fails.
      */
     public String getTemplateAsFixedReportString(final String path, final String templateName) throws Exception {
-
         final Document document = getTemplateAsFixedReportDocument(path, templateName);
         return toString(document, false);
     }
@@ -438,23 +354,7 @@ public class SmTestBase extends EscidocRestSoapTestBase {
      * @throws Exception If anything fails.
      */
     public Document getTemplateAsFixedReportDocument(final String path, final String templateName) throws Exception {
-
-        final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
-        fixReportDocument(document);
-        return document;
-    }
-
-    /**
-     * Fixes the "link" attributes in case of SOAP.
-     *
-     * @param document The document to fix.
-     * @return Returns the provided (fixed) document.
-     * @throws Exception If anything fails.
-     */
-    public Document fixReportDocument(final Document document) throws Exception {
-
-        fixLinkAttributes(document, XPATH_REPORT_REPORT_DEFINITION);
-        return document;
+        return EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
     }
 
 }

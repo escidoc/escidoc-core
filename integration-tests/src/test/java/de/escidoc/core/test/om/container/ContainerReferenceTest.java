@@ -29,7 +29,6 @@
 package de.escidoc.core.test.om.container;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.protocol.RequestAddCookies;
@@ -39,8 +38,6 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -58,7 +55,6 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ContainerReferenceTest extends ContainerTestBase {
 
     private String theContainerId;
@@ -66,13 +62,6 @@ public class ContainerReferenceTest extends ContainerTestBase {
     private String theContainerXml;
 
     private String theItemId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerReferenceTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -99,13 +88,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
     public void testReferenceProp1() throws Exception {
 
         String objid = getObjidValue(theContainerXml);
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            checkRestPropertiesReferences(theContainerXml, objid);
-        }
-        else {
-            checkSoapPropertiesReferences(theContainerXml, objid);
-        }
-
+        checkRestPropertiesReferences(theContainerXml, objid);
         String objId = getObjidWithoutVersion(objid);
         String versionNumber = getVersionNumber(objid);
         if (versionNumber == null) {
@@ -114,23 +97,13 @@ public class ContainerReferenceTest extends ContainerTestBase {
 
         // now check this for further versions
         int verNo = Integer.valueOf(versionNumber);
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            checkRestPropertiesReferences(theContainerXml, objId + VERSION_SUFFIX_SEPARATOR + verNo);
-        }
-        else {
-            checkSoapPropertiesReferences(theContainerXml, objid);
-        }
+        checkRestPropertiesReferences(theContainerXml, objId + VERSION_SUFFIX_SEPARATOR + verNo);
 
         for (int i = verNo; i < verNo + 4; i++) {
 
             theContainerXml = addCtsElement(theContainerXml);
             theContainerXml = update(theContainerId, theContainerXml);
-            if (Constants.TRANSPORT_REST == getTransport()) {
-                checkRestPropertiesReferences(theContainerXml, objId + VERSION_SUFFIX_SEPARATOR + (i + 1));
-            }
-            else {
-                checkSoapPropertiesReferences(theContainerXml, objid);
-            }
+            checkRestPropertiesReferences(theContainerXml, objId + VERSION_SUFFIX_SEPARATOR + (i + 1));
         }
 
     }
@@ -142,14 +115,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
      */
     @Test
     public void testReferenceCr1() throws Exception {
-
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            checkRestReferences(theContainerXml);
-        }
-        else {
-            checkSoapReferences(theContainerXml);
-        }
-
+        checkRestReferences(theContainerXml);
     }
 
     /**
@@ -163,33 +129,16 @@ public class ContainerReferenceTest extends ContainerTestBase {
         for (int i = 0; i < 4; i++) {
             theContainerXml = addCtsElement(theContainerXml);
             theContainerXml = update(theContainerId, theContainerXml);
-
-            if (Constants.TRANSPORT_REST == getTransport()) {
-                checkRestReferences(theContainerXml);
-            }
-            else {
-                checkSoapReferences(theContainerXml);
-            }
+            checkRestReferences(theContainerXml);
         }
 
         String ltstVrsnId = getLatestVersionId(EscidocRestSoapTestBase.getDocument(theContainerXml));
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            call("/ir/container/" + ltstVrsnId);
-        }
-        else {
-            getContainerClient().retrieve(ltstVrsnId);
-        }
+        call("/ir/container/" + ltstVrsnId);
         int maxVersion = Integer.valueOf(ltstVrsnId.substring(ltstVrsnId.lastIndexOf(':') + 1));
 
         for (int i = 1; i <= maxVersion; i++) {
             String versionId = theContainerId + ":" + i;
-
-            if (Constants.TRANSPORT_REST == getTransport()) {
-                checkRestReferences(retrieve(versionId));
-            }
-            else {
-                checkSoapReferences(retrieve(versionId));
-            }
+            checkRestReferences(retrieve(versionId));
         }
     }
 

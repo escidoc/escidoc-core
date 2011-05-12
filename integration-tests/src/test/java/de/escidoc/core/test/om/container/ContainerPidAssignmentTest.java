@@ -40,8 +40,6 @@ import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -58,7 +56,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider, Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ContainerPidAssignmentTest extends ContainerTestBase {
 
     private String theContainerId;
@@ -69,11 +66,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
 
     private final String containerUrl;
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerPidAssignmentTest(final int transport) {
-        super(transport);
+    public ContainerPidAssignmentTest() {
         containerUrl = getFrameworkUrl() + "/ir/container/";
     }
 

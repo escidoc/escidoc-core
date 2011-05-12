@@ -35,8 +35,6 @@ import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserGroupClient;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -53,7 +51,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ItemFilterTest extends ItemTestBase {
 
     public static final String FILTER_CREATED_BY = STRUCTURAL_RELATIONS_NS_URI + NAME_CREATED_BY;
@@ -61,13 +58,6 @@ public class ItemFilterTest extends ItemTestBase {
     private String theItemXml;
 
     private String theItemId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemFilterTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test successfully retrieving a filtered item-list filtering by created-by.
@@ -311,10 +301,10 @@ public class ItemFilterTest extends ItemTestBase {
 
             // create container and item hierarchy
             String containerXml =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
                     "create_container_WithoutMembers_v1.1.xml");
             String itemXml =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_198_for_create.xml");
             String c1 = createContainer();
 
@@ -338,10 +328,7 @@ public class ItemFilterTest extends ItemTestBase {
 
             Document grantDocument = EscidocRestSoapTestBase.getDocument(grantXml);
 
-            fixLinkAttributes(grantDocument, XPATH_GRANT_ROLE);
-            fixLinkAttributes(grantDocument, XPATH_GRANT_OBJECT);
-
-            UserAccountClient userAccountClient = new UserAccountClient(getTransport());
+            UserAccountClient userAccountClient = new UserAccountClient();
 
             userAccountClient.createGrant(USER_ID, toString(grantDocument, false));
 
@@ -383,7 +370,7 @@ public class ItemFilterTest extends ItemTestBase {
 
             labelNode.setTextContent(labelNode.getTextContent().trim() + System.currentTimeMillis());
 
-            UserGroupClient userGroupClient = new UserGroupClient(getTransport());
+            UserGroupClient userGroupClient = new UserGroupClient();
             String userGroupXml = handleXmlResult(userGroupClient.create(toString(userGroup, false)));
 
             userGroup = EscidocRestSoapTestBase.getDocument(userGroupXml);
@@ -406,8 +393,6 @@ public class ItemFilterTest extends ItemTestBase {
 
             Document grantDocument = EscidocRestSoapTestBase.getDocument(grantXml);
 
-            fixLinkAttributes(grantDocument, XPATH_GRANT_ROLE);
-            fixLinkAttributes(grantDocument, XPATH_GRANT_OBJECT);
             userGroupClient.createGrant(userGroupId, toString(grantDocument, false));
 
             // search for all items
@@ -587,14 +572,7 @@ public class ItemFilterTest extends ItemTestBase {
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
             Node node = nodes.item(count);
-            String nodeValue = null;
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                nodeValue = getObjidFromHref(node.getNodeValue());
-            }
-            else {
-                nodeValue = node.getNodeValue();
-            }
-
+            String nodeValue = getObjidFromHref(node.getNodeValue());
             try {
                 retrieve(nodeValue);
 
@@ -617,7 +595,7 @@ public class ItemFilterTest extends ItemTestBase {
      */
     private String createContainer() throws Exception {
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
                 "create_container_WithoutMembers_v1.1.xml");
         String theContainerXml = handleXmlResult(getContainerClient().create(xmlData));
 
@@ -632,8 +610,8 @@ public class ItemFilterTest extends ItemTestBase {
      */
     private String createItem() throws Exception {
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         return theItemId;
@@ -738,12 +716,12 @@ public class ItemFilterTest extends ItemTestBase {
         try {
             PWCallback.resetHandle();
 
-            UserAccountClient userAccountClient = new UserAccountClient(getTransport());
+            UserAccountClient userAccountClient = new UserAccountClient();
 
             userAccountClient.revokeGrants(userId, "<param><filter/>"
                 + "<revocation-remark>some remark</revocation-remark></param>");
 
-            UserGroupClient userGroupClient = new UserGroupClient(getTransport());
+            UserGroupClient userGroupClient = new UserGroupClient();
             final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_URI_USER + "\"=" + userId });

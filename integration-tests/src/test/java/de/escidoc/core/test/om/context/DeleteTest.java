@@ -34,24 +34,14 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotF
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 /**
  * Test Context delete methods.
  */
-@RunWith(value = Parameterized.class)
 public class DeleteTest extends ContextTestBase {
 
     private String path = TEMPLATE_CONTEXT_PATH;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public DeleteTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -60,7 +50,7 @@ public class DeleteTest extends ContextTestBase {
      */
     @Before
     public void setUp() throws Exception {
-        this.path += "/" + getTransport(false);
+        this.path += "/rest";
     }
 
     /**

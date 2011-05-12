@@ -29,23 +29,13 @@
 package de.escidoc.core.test.oum.organizationalunit;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 /**
  * Test creating the example OrganizationalUnit objects.
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ExamplesTest extends OrganizationalUnitTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ExamplesTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test if the example organizationalUnit for create is still compatible with framework.

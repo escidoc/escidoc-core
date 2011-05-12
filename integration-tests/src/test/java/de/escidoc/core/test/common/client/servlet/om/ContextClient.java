@@ -32,7 +32,6 @@ import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ContextHandlerClientInterface;
 
-import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
@@ -41,13 +40,6 @@ import java.util.Map;
  * @author Michael Schneider
  */
 public class ContextClient extends ClientBase implements ContextHandlerClientInterface {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContextClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Retrieve the xml representation of all contexts matching the filter criteria.

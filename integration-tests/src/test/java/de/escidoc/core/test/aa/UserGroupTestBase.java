@@ -61,15 +61,6 @@ public class UserGroupTestBase extends AaTestBase {
         XPATH_USER_GROUP_CURRENT_GRANTS + PART_XLINK_HREF;
 
     /**
-     * The constructor.
-     *
-     * @param transport The transport identifier.
-     */
-    public UserGroupTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Test activating an UserGroup.
      *
      * @param id           The id of the UserGroup.
@@ -790,9 +781,6 @@ public class UserGroupTestBase extends AaTestBase {
     /**
      * Get the XML taskParam for the method removeSelectors.
      *
-     * @param includeComment       Flag indicating if the comment shall be additionally included.
-     * @param id                   The id of the object.
-     * @param comment              The comment.
      * @param lastModificationDate The timestamp of the resource.
      * @return Returns the created task param xml.
      * @throws Exception Thrown if anything fails.
@@ -810,7 +798,6 @@ public class UserGroupTestBase extends AaTestBase {
 
         }
         param += "</param>";
-        // System.out.println("param " + param);
         return param;
     }
 
@@ -945,14 +932,10 @@ public class UserGroupTestBase extends AaTestBase {
                 Constants.USER_GROUP_BASE_URI, timestampBeforeLastModification);
         final String id = rootValues[0];
 
-        // assert resources (in case of REST)
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertReferencingElement("Assert of resources failed. ", toBeAssertedDocument, XPATH_USER_GROUP_RESOURCES,
-                null);
-            assertReferencingElement("Assert of resource current-grants failed. ", toBeAssertedDocument,
-                XPATH_USER_GROUP_RESOURCES + "/" + "current-grants[@href=\"/aa/user-group/" + id
-                    + "/resources/current-grants\"]", null);
-        }
+        assertReferencingElement("Assert of resources failed. ", toBeAssertedDocument, XPATH_USER_GROUP_RESOURCES, null);
+        assertReferencingElement("Assert of resource current-grants failed. ", toBeAssertedDocument,
+            XPATH_USER_GROUP_RESOURCES + "/" + "current-grants[@href=\"/aa/user-group/" + id
+                + "/resources/current-grants\"]", null);
 
         // assert properties
         assertPropertiesElementUnversioned("Asserting user group properties failed. ", toBeAssertedDocument,

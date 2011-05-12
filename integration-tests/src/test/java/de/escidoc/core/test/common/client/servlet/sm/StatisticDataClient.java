@@ -31,23 +31,12 @@ package de.escidoc.core.test.common.client.servlet.sm;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
-import javax.xml.rpc.ServiceException;
-import java.rmi.Remote;
-
 /**
  * Offers access methods to the escidoc REST and SOAP interface of the Statistic Data resource.
  *
  * @author Michael Hoppe
  */
 public class StatisticDataClient extends ClientBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public StatisticDataClient(final int transport) {
-        super(transport);
-
-    }
 
     /**
      * Create an item in the escidoc framework.

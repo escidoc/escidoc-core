@@ -32,7 +32,6 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.xpath.XPathAPI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -43,15 +42,7 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ContentModelVersioningTest extends ContentModelTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentModelVersioningTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test timestamps of Content Model.

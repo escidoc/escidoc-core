@@ -29,7 +29,6 @@
 package de.escidoc.core.test.aa.rest;
 
 import de.escidoc.core.test.aa.UserGroupTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -41,13 +40,7 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class UserGroupRestTest extends UserGroupTest {
 
-    /**
-     * Constructor.
-     *
-     * @throws Exception If anything fails.
-     */
     public UserGroupRestTest() throws Exception {
-        super(Constants.TRANSPORT_REST);
+        super();
     }
-
 }

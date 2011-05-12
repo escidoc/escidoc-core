@@ -40,13 +40,6 @@ import org.apache.http.util.EntityUtils;
 public class PreprocessingTestBase extends SmTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public PreprocessingTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Test preprocessing raw statistic data.
      *
      * @param dataXml                 The preprocessing-information xml.

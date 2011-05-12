@@ -45,13 +45,6 @@ import java.util.Map;
 public class SetDefinitionTestBase extends OaiTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public SetDefinitionTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Successfully creates an UserGroup.
      *
      * @param templateName The name of the template.

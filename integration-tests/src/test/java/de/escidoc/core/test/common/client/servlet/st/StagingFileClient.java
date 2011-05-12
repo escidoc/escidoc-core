@@ -41,16 +41,6 @@ import java.io.InputStream;
 public class StagingFileClient extends ClientBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public StagingFileClient(final int transport) {
-        super(transport);
-        if (transport != Constants.TRANSPORT_REST) {
-            throw new RuntimeException("Transport not provided [" + transport + "]");
-        }
-    }
-
-    /**
      * Create a StagingFile in the escidoc framework.
      *
      * @param binaryContent The binary content of the staging file.

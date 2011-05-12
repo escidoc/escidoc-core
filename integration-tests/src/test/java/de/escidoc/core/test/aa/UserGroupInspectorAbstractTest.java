@@ -65,16 +65,14 @@ public class UserGroupInspectorAbstractTest extends GrantTestBase {
     /**
      * The constructor.
      *
-     * @param transport     The transport identifier.
      * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
      * @param userOrGroupId userOrGroupId for grantCreation.
      * @throws Exception If anything fails.
      */
-    public UserGroupInspectorAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
-        throws Exception {
-        super(transport, handlerCode);
+    public UserGroupInspectorAbstractTest(final int handlerCode, final String userOrGroupId) throws Exception {
+        super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
-        userGroupTestBase = new UserGroupTestBase(transport);
+        userGroupTestBase = new UserGroupTestBase();
     }
 
     /**

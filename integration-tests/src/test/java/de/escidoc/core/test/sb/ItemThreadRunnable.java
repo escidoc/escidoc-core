@@ -41,13 +41,11 @@ import java.util.regex.Pattern;
  */
 public class ItemThreadRunnable implements Runnable {
 
-    private int transport;
-
     /**
      * runs the Thread.
      */
     public void run() {
-        ItemHelper item = new ItemHelper(transport);
+        ItemHelper item = new ItemHelper();
         try {
             String xml = item.create(item.getTemplateAsString("escidoc_item_198_for_create.xml"));
             String id = getId(xml);
@@ -55,20 +53,6 @@ public class ItemThreadRunnable implements Runnable {
         }
         catch (final Exception e) {
         }
-    }
-
-    /**
-     * @return Returns the transport.
-     */
-    public int getTransport() {
-        return transport;
-    }
-
-    /**
-     * @param transport The transport to set.
-     */
-    public void setTransport(final int transport) {
-        this.transport = transport;
     }
 
     /**

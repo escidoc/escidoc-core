@@ -37,13 +37,6 @@ import de.escidoc.core.test.om.semanticstore.SemanticStoreTestBase;
  */
 public class SpoTestBase extends SemanticStoreTestBase {
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public SpoTestBase(final int transport) {
-        super(transport);
-    }
-
     public String spo(final String queryParam) throws Exception {
         return handleXmlResult(getSemanticStoreClient().spo(queryParam));
     }

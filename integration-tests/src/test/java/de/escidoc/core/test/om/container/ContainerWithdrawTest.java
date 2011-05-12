@@ -40,8 +40,6 @@ import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -53,7 +51,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContainerWithdrawTest extends ContainerTestBase {
 
     private static final String WITHDRAW_COMMENT = "This is a withdraw comment.";
@@ -65,13 +62,6 @@ public class ContainerWithdrawTest extends ContainerTestBase {
     private String theItemId;
 
     private String theSubcontainerId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerWithdrawTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test declining withdraw of container with non existing container id.

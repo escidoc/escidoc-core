@@ -31,7 +31,6 @@ package de.escidoc.core.test.common.client.servlet.cmm;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
-import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
@@ -40,13 +39,6 @@ import java.util.Map;
  * @author Torsten Tetteroo
  */
 public class ContentModelClient extends ClientBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentModelClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Retrieve the xml representation of a content model.

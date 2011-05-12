@@ -33,8 +33,6 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OrganizationalUnitHasChildrenException;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import java.util.HashMap;
@@ -47,15 +45,7 @@ import static org.junit.Assert.assertFalse;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class DeleteTest extends OrganizationalUnitTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public DeleteTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Tests successfully deleting an organizational unit without children.

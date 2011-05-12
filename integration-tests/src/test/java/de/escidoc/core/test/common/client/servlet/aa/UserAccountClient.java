@@ -39,7 +39,6 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.message.BasicNameValuePair;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
@@ -54,13 +53,6 @@ import static junit.framework.Assert.assertTrue;
 public class UserAccountClient extends GrantClient implements ResourceHandlerClientInterface {
 
     private static final int THREE = 3;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public UserAccountClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Create an user.

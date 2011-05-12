@@ -41,13 +41,6 @@ import org.w3c.dom.Document;
 public class RetrieveResourcesRestTest extends OrganizationalUnitTestBase {
 
     /**
-     * Constructor.
-     */
-    public RetrieveResourcesRestTest() {
-        super(Constants.TRANSPORT_REST);
-    }
-
-    /**
      * Test retrieving the list of virtual resources of an organizational unit.
      *
      * @throws Exception If anything fails.

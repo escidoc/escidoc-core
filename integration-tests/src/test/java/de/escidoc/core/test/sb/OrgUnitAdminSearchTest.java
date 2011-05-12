@@ -35,8 +35,6 @@ import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -55,7 +53,6 @@ import static org.junit.Assert.assertTrue;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class OrgUnitAdminSearchTest extends SearchTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrgUnitAdminSearchTest.class);
@@ -77,12 +74,10 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
     private static String startTime = "";
 
     /**
-     * @param transport The transport identifier.
      * @throws Exception e
      */
-    public OrgUnitAdminSearchTest(final int transport) throws Exception {
-        super(transport);
-        grant = new GrantHelper(transport, GrantHelper.getUserAccountHandlerCode());
+    public OrgUnitAdminSearchTest() throws Exception {
+        grant = new GrantHelper(GrantHelper.getUserAccountHandlerCode());
     }
 
     /**
@@ -94,14 +89,6 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
     public void initialize() throws Exception {
         if (methodCounter == 0) {
             prepare();
-            //          int c = 10001;
-            //          ouIds = new String[14];
-            //          for (int i = 0; i < 14; i++) {
-            //              if (i != 4 && i != 6) {
-            //                  ouIds[i] = "escidoc:" + c;
-            //              }
-            //              c++;
-            //          }
         }
     }
 
@@ -485,8 +472,7 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
                 NodeList nodes = selectNodeList(searchResultDoc, xPath);
                 for (int i = 0; i < nodes.getLength(); i++) {
                     Node node = nodes.item(i);
-                    String objId =
-                        getObjidValue(de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST, node, null);
+                    String objId = getObjidValue(node, null);
                     foundIds.add(objId);
                     assertTrue(errorTrace.toString() + "object " + objId + " may not be in searchResult",
                         ((HashMap<String, String>) role.get("searchresultIds")).containsKey(objId));

@@ -37,7 +37,6 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
@@ -47,13 +46,6 @@ import java.util.Map;
  */
 public class ContainerClient extends ClientBase
     implements SubmitReleaseReviseWithdrawClientInterface, ResourceHandlerClientInterface {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Create a container in the escidoc framework.

@@ -30,8 +30,6 @@ package de.escidoc.core.test.oum.organizationalunit;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -43,7 +41,6 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(value = Parameterized.class)
 public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase {
 
     static final String TYPE = "tuples";
@@ -59,13 +56,6 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
     static final String FORMAT_TSV = "TSV";
 
     static final String FLUSH = "true";
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public RetrieveOrganizationalUnitsTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test retrieving a list of organizational units that are top level organizational units.

@@ -71,13 +71,6 @@ public class OrganizationalUnitTestBase extends OumTestBase {
     protected static String ouChild2ParentsId = null;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public OrganizationalUnitTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Successfully creates an organizational unit.
      *
      * @param templateName The name of the template to use.
@@ -941,14 +934,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         final String timestampBeforeLastModification) throws Exception {
 
         String messagePrefix = "OU organization-details error: ";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            Node hrefNode = selectSingleNode(mdRecords, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_HREF);
-            assertNotNull(messagePrefix + " No href found! ", hrefNode);
-            String href = hrefNode.getNodeValue();
-            // String hrefBase = XPATH_ORGANIZATIONAL_UNIT_ORGANIZATION_DETAILS
-            assertEquals(messagePrefix + "href wrong baseurl! ", href, Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
-                + organizationalUnitId + "/" + NAME_MD_RECORDS);
-        }
+        Node hrefNode = selectSingleNode(mdRecords, XPATH_ORGANIZATION_MD_RECORDS + PART_XLINK_HREF);
+        assertNotNull(messagePrefix + " No href found! ", hrefNode);
+        String href = hrefNode.getNodeValue();
+        // String hrefBase = XPATH_ORGANIZATIONAL_UNIT_ORGANIZATION_DETAILS
+        assertEquals(messagePrefix + "href wrong baseurl! ", href, Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
+            + organizationalUnitId + "/" + NAME_MD_RECORDS);
         final String xpathLastModificationDate = XPATH_ORGANIZATION_MD_RECORDS + PART_LAST_MODIFICATION_DATE;
         assertXmlExists(messagePrefix + "Missing last modification date. ", mdRecords, xpathLastModificationDate);
         final String lastModificationDate = selectSingleNode(mdRecords, xpathLastModificationDate).getTextContent();
@@ -1145,20 +1136,13 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                 Constants.ORGANIZATIONAL_UNIT_BASE_URI, timestampBeforeLastModification);
         final String id = rootValues[0];
 
-        // assert resources (in case of REST)
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertReferencingElement("Assert of resources failed. ", document, XPATH_ORGANIZATIONAL_UNIT_RESOURCES,
-                null);
-            assertReferencingElement("Assert of resource children failed. ", document,
-                XPATH_ORGANIZATIONAL_UNIT_RESOURCES + "/" + "child-objects[@href=\"/oum/organizational-unit/" + id
-                    + "/resources/child-objects\"]", null);
-            assertReferencingElement("Assert of resource parents failed. ", document,
-                XPATH_ORGANIZATIONAL_UNIT_RESOURCES + "/" + "parent-objects[@href=\"/oum/organizational-unit/" + id
-                    + "/resources/parent-objects\"]", null);
-            assertReferencingElement("Assert of resource path-list failed. ", document,
-                XPATH_ORGANIZATIONAL_UNIT_RESOURCES + "/" + "path-list[@href=\"/oum/organizational-unit/" + id
-                    + "/resources/path-list\"]", null);
-        }
+        assertReferencingElement("Assert of resources failed. ", document, XPATH_ORGANIZATIONAL_UNIT_RESOURCES, null);
+        assertReferencingElement("Assert of resource children failed. ", document, XPATH_ORGANIZATIONAL_UNIT_RESOURCES
+            + "/" + "child-objects[@href=\"/oum/organizational-unit/" + id + "/resources/child-objects\"]", null);
+        assertReferencingElement("Assert of resource parents failed. ", document, XPATH_ORGANIZATIONAL_UNIT_RESOURCES
+            + "/" + "parent-objects[@href=\"/oum/organizational-unit/" + id + "/resources/parent-objects\"]", null);
+        assertReferencingElement("Assert of resource path-list failed. ", document, XPATH_ORGANIZATIONAL_UNIT_RESOURCES
+            + "/" + "path-list[@href=\"/oum/organizational-unit/" + id + "/resources/path-list\"]", null);
 
         // assert properties
         assertPropertiesElementUnversioned("Asserting OU properties failed. ", document,
@@ -1288,8 +1272,6 @@ public class OrganizationalUnitTestBase extends OumTestBase {
      * retrieved from retrieveParents, retrieveChildren), and contains the expected organizational units.
      *
      * @param message         The assertion failed message.
-     * @param expectedBaseUri The expected base uri in the root element.<br/> If this parameter is <code>null</code>,
-     *                        the root element will not be checked for containing xlink attributes.
      * @param expectedOus     The map from id to xml representation of the expected organizational units.
      * @param toBeAssertedXml The xml data to be asserted.
      * @return Returns the <code>Document</code> for the provided xml data.

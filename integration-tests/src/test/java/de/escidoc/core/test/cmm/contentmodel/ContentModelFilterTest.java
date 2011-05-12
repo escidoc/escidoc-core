@@ -31,8 +31,6 @@ package de.escidoc.core.test.cmm.contentmodel;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -47,18 +45,10 @@ import static org.junit.Assert.assertTrue;
  *
  * @author André Schenk
  */
-@RunWith(value = Parameterized.class)
 public class ContentModelFilterTest extends ContentModelTestBase {
 
     private static final String XPATH_SRW_MODEL_LIST_MODEL =
         XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/" + NAME_CONTENT_MODEL;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentModelFilterTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test successfully retrieving a filtered content model list filtering by created-by.

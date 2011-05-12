@@ -38,8 +38,6 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -54,19 +52,11 @@ import static org.junit.Assert.fail;
  *
  * @author Rozita Friedman
  */
-@RunWith(value = Parameterized.class)
 public class ContentRelationLifecycleTest extends ContentRelationTestBase {
 
     private String relationXml = null;
 
     private String relationId = null;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentRelationLifecycleTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.

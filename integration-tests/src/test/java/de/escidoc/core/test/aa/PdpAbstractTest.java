@@ -51,13 +51,10 @@ public class PdpAbstractTest extends AaTestBase {
     /**
      * The constructor.
      *
-     * @param transport The transport identifier.
      * @throws Exception If anything fails.
      */
-    public PdpAbstractTest(final int transport) throws Exception {
-
-        super(transport);
-        this.policyDecisionPointClient = new PolicyDecisionPointClient(transport);
+    public PdpAbstractTest() throws Exception {
+        this.policyDecisionPointClient = new PolicyDecisionPointClient();
     }
 
     /**

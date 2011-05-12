@@ -29,7 +29,6 @@
 package de.escidoc.core.test.oum;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import org.apache.commons.collections.ListUtils;
 import org.w3c.dom.Document;
@@ -65,12 +64,8 @@ public class OumTestBase extends EscidocRestSoapTestBase {
 
     public static final String XPATH_TRIPLE_STORE_OU_DESCRIPTION = "/RDF/Description/description";
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public OumTestBase(final int transport) {
-        super(transport);
-        this.ouClient = new OrganizationalUnitClient(transport);
+    public OumTestBase() {
+        this.ouClient = new OrganizationalUnitClient();
     }
 
     /**
@@ -90,28 +85,13 @@ public class OumTestBase extends EscidocRestSoapTestBase {
     protected String[] getIdsFromOrganizationalUnitList(final String organizationalUnitList) throws Exception {
         String[] result = null;
         NodeList nodeList = null;
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            nodeList =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(organizationalUnitList),
-                    XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT + "/@href");
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            nodeList =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(organizationalUnitList),
-                    XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT + "/@objid");
-        }
-
+        nodeList =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(organizationalUnitList),
+                XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT + "/@href");
         result = new String[nodeList.getLength()];
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
-
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                result[i] = getObjidFromHref(node.getNodeValue());
-            }
-            else {
-                result[i] = node.getNodeValue();
-            }
+            result[i] = getObjidFromHref(node.getNodeValue());
         }
         return result;
     }
@@ -149,29 +129,15 @@ public class OumTestBase extends EscidocRestSoapTestBase {
         Document createdDoc = getDocument(path);
         NodeList pathList = selectNodeList(createdDoc, "/organizational-unit-path-list/organizational-unit-path");
         result = new String[pathList.getLength()][];
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            for (int i = 0; i < pathList.getLength(); i++) {
-                NodeList pathElements =
-                    selectNodeList(pathList.item(i), "/organizational-unit-path-list/organizational-unit-path["
-                        + (i + 1) + "]/organizational-unit-ref/@href");
-                String[] elements = new String[pathElements.getLength()];
-                for (int j = pathElements.getLength() - 1; j >= 0; j--) {
-                    elements[j] = getObjidFromHref(pathElements.item(j).getNodeValue());
-                }
-                result[i] = elements;
+        for (int i = 0; i < pathList.getLength(); i++) {
+            NodeList pathElements =
+                selectNodeList(pathList.item(i), "/organizational-unit-path-list/organizational-unit-path[" + (i + 1)
+                    + "]/organizational-unit-ref/@href");
+            String[] elements = new String[pathElements.getLength()];
+            for (int j = pathElements.getLength() - 1; j >= 0; j--) {
+                elements[j] = getObjidFromHref(pathElements.item(j).getNodeValue());
             }
-        }
-        else {
-            for (int i = 0; i < pathList.getLength(); i++) {
-                NodeList pathElements =
-                    selectNodeList(pathList.item(i), "/organizational-unit-path-list/organizational-unit-path["
-                        + (i + 1) + "]/organizational-unit-ref/@objid");
-                String[] elements = new String[pathElements.getLength()];
-                for (int j = pathElements.getLength() - 1; j >= 0; j--) {
-                    elements[j] = pathElements.item(j).getNodeValue();
-                }
-                result[i] = elements;
-            }
+            result[i] = elements;
         }
         return result;
     }

@@ -31,7 +31,6 @@ package de.escidoc.core.test.common.client.servlet.sm;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
-import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
@@ -40,14 +39,6 @@ import java.util.Map;
  * @author Michael Hoppe
  */
 public class ReportDefinitionClient extends ClientBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ReportDefinitionClient(final int transport) {
-        super(transport);
-
-    }
 
     /**
      * Create an ReportDefinition in the escidoc framework.

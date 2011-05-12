@@ -32,7 +32,6 @@ import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 
-import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
@@ -41,13 +40,6 @@ import java.util.Map;
  * @author Torsten Tetteroo
  */
 public class RoleClient extends ClientBase implements ResourceHandlerClientInterface {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public RoleClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Create a role.

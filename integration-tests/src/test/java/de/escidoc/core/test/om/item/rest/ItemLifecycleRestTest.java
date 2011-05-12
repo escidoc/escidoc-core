@@ -30,7 +30,6 @@ package de.escidoc.core.test.om.item.rest;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.item.ItemTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
@@ -47,13 +46,6 @@ import static org.junit.Assert.fail;
 public class ItemLifecycleRestTest extends ItemTestBase {
 
     /**
-     * Constructor.
-     */
-    public ItemLifecycleRestTest() {
-        super(Constants.TRANSPORT_REST);
-    }
-
-    /**
      * Test declining retrieving of released item with component visibility "private".
      *
      * @throws Exception If anything fails.
@@ -62,24 +54,16 @@ public class ItemLifecycleRestTest extends ItemTestBase {
     public void testOMRContentVisibilityPrivate() throws Exception {
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node itemChanged = substitute(item, "/item/components/component/properties/visibility", "private");
         String itemXml = toString(itemChanged, false);
         String cretaedItem = create(itemXml);
         Document itemDocument = getDocument(cretaedItem);
-        String componentId = null;
-        if (getTransport(true).equals("REST")) {
-            componentId =
-                selectSingleNode(itemDocument, "/item/components/component" + "[properties/visibility='private']/@href")
-                    .getNodeValue();
-            componentId = getIdFromHrefValue(componentId);
-        }
-        else {
-            componentId =
-                selectSingleNode(itemDocument,
-                    "/item/components/component" + "[properties/visibility='private']/@objid").getNodeValue();
-        }
+        String componentId =
+            selectSingleNode(itemDocument, "/item/components/component" + "[properties/visibility='private']/@href")
+                .getNodeValue();
+        componentId = getIdFromHrefValue(componentId);
         String itemId = getObjidValue(cretaedItem);
         String param = getTheLastModificationParam(false, itemId);
         submit(itemId, param);

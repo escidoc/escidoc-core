@@ -42,13 +42,7 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
 
     private UserAccountClient client = null;
 
-    /**
-     * @param transport   The transport identifier.
-     * @param handlerCode handlerCode.
-     * @throws Exception e
-     */
-    public UserPreferenceTestBase(final int transport) throws Exception {
-        super(transport);
+    public UserPreferenceTestBase() {
         client = (UserAccountClient) getClient();
     }
 
@@ -56,7 +50,6 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
      * Test creating a user preference.
      *
      * @param id       The id of the UserAccount.
-     * @param grantXml The xml representation of the preference.
      * @return The xml representation of the created preference.
      * @throws Exception If anything fails.
      */
@@ -95,7 +88,6 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
      * Test updating user preferences.
      *
      * @param id       The id of the UserAccount.
-     * @param grantXml The xml representation of the preferences.
      * @return The xml representation of the updated preferences.
      * @throws Exception If anything fails.
      */
@@ -117,7 +109,6 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
      * Test updating single user preference.
      *
      * @param id       The id of the UserAccount.
-     * @param grantXml The xml representation of the preference.
      * @return The xml representation of the updated preference.
      * @throws Exception If anything fails.
      */

@@ -32,8 +32,6 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -50,7 +48,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     private ScopeAbstractTest scope = null;
@@ -64,20 +61,13 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
     public static final String XPATH_SRW_AGG_DEF_LIST_AGG_DEF = XPATH_SRW_RESPONSE_OBJECT + NAME_AGG_DEF;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public AggregationDefinitionTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
-        scope = new ScopeAbstractTest(getTransport());
+        scope = new ScopeAbstractTest();
         if (methodCounter == 0) {
             primKeys = new ArrayList<String>();
             createScope();

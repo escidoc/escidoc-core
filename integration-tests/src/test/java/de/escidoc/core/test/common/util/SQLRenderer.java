@@ -125,14 +125,9 @@ public class SQLRenderer implements MeasurementRenderer {
 
                 statement = conn.createStatement();
                 int result = statement.executeUpdate(sqlStatement);
-                if (result != 1) {
-                    System.out.println("Result has failure(s).");
-                }
                 statement.close();
             }
             catch (final SQLException e) {
-                System.out.println(sqlStatement);
-                System.out.println("Measurement not stored in DB. " + e);
             }
 
         }

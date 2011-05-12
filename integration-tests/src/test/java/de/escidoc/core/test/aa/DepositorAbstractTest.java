@@ -70,14 +70,12 @@ public class DepositorAbstractTest extends GrantTestBase {
     /**
      * The constructor.
      *
-     * @param transport     The transport identifier.
      * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
      * @param userOrGroupId userOrGroupId for grantCreation.
      * @throws Exception If anything fails.
      */
-    public DepositorAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
-        throws Exception {
-        super(transport, handlerCode);
+    public DepositorAbstractTest(final int handlerCode, final String userOrGroupId) throws Exception {
+        super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 
@@ -540,7 +538,7 @@ public class DepositorAbstractTest extends GrantTestBase {
     public void testCreateItemIssue333() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         substitute(toBeCreatedDocument, OmTestBase.XPATH_ITEM_CONTEXT, createReferencingElementNode(
             toBeCreatedDocument, SREL_NS_URI, SREL_PREFIX_ESCIDOC, NAME_CONTEXT, XLINK_PREFIX_TEMPLATES, null,
@@ -559,7 +557,7 @@ public class DepositorAbstractTest extends GrantTestBase {
     public void testCreateItemIssue333_2() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         substitute(toBeCreatedDocument, OmTestBase.XPATH_ITEM_CONTEXT, createReferencingElementNode(
             toBeCreatedDocument, SREL_NS_URI, SREL_PREFIX_ESCIDOC, NAME_CONTEXT, XLINK_PREFIX_TEMPLATES, null,
@@ -578,7 +576,7 @@ public class DepositorAbstractTest extends GrantTestBase {
     public void testCreateItemIssue333_3() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         deleteElement(toBeCreatedDocument, OmTestBase.XPATH_ITEM_CONTEXT);
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);
@@ -596,8 +594,7 @@ public class DepositorAbstractTest extends GrantTestBase {
 
         final Class<AuthorizationException> ec = AuthorizationException.class;
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + "/" + getTransport(false),
-                "context_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + "/rest", "context_create.xml");
         substitute(toBeCreatedDocument, "/context/properties/name", getUniqueName("PubMan Context "));
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);
         try {

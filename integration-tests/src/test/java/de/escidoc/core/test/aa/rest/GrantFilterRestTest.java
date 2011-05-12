@@ -29,7 +29,6 @@
 package de.escidoc.core.test.aa.rest;
 
 import de.escidoc.core.test.aa.GrantFilterAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -41,13 +40,7 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class GrantFilterRestTest extends GrantFilterAbstractTest {
 
-    /**
-     * Constructor.
-     *
-     * @throws Exception If anything fails.
-     */
     public GrantFilterRestTest() throws Exception {
-        super(Constants.TRANSPORT_REST);
+        super();
     }
-
 }

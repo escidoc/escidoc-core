@@ -35,13 +35,4 @@ package de.escidoc.core.test.aa;
  */
 public abstract class UserManagementWrapperTestBase extends UserAccountTestBase {
 
-    /**
-     * @param transport The transport identifier.
-     * @throws Exception If anything fails
-     */
-    public UserManagementWrapperTestBase(final int transport) throws Exception {
-
-        super(transport);
-    }
-
 }

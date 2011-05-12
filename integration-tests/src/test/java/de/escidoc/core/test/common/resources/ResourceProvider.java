@@ -29,7 +29,6 @@
 package de.escidoc.core.test.common.resources;
 
 import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,12 +103,7 @@ public class ResourceProvider {
         if (!fName.endsWith(".xml")) {
             fName += ".xml";
         }
-        if (transport == Constants.TRANSPORT_REST) {
-            fName = fName.replaceAll("\\.xml", "-rest.xml");
-        }
-        else if (transport == Constants.TRANSPORT_SOAP) {
-            fName = fName.replaceAll("\\.xml", "-soap.xml");
-        }
+        fName = fName.replaceAll("\\.xml", "-rest.xml");
         saveToFile(path, fName, content);
     }
 

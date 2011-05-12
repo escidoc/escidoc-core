@@ -48,13 +48,6 @@ public class IngestTestBase extends OmTestBase {
     }
 
     /**
-     * @param transport The transport identifier.
-     */
-    public IngestTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Ingest a resource.
      *
      * @param xmlData the String containing the resource

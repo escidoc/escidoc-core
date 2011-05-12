@@ -37,8 +37,6 @@ import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticL
 import de.escidoc.core.common.exceptions.remote.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertEquals;
@@ -57,15 +55,7 @@ import static org.junit.Assert.assertNull;
  *         <li>renamed testUpdateWithNonExistingId to OUM-UOU-6-1</li> <li>renamed testUpdateWithWrongLastModificationDate
  *         to OUM-UOU-7-1</li> <li>added OUM-UOU-7-2</li> <li>added OUM-UOU-6-2</li> </ul> </ul>
  */
-@RunWith(value = Parameterized.class)
 public class UpdateTest extends OrganizationalUnitTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public UpdateTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test successfully deleting one of two md-records.

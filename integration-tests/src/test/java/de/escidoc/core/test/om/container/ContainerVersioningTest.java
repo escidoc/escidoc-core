@@ -37,8 +37,6 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.xpath.XPathAPI;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -54,7 +52,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContainerVersioningTest extends ContainerTestBase {
 
     private String theContainerId;
@@ -62,13 +59,6 @@ public class ContainerVersioningTest extends ContainerTestBase {
     private String theContainerXml;
 
     private String theItemId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerVersioningTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -89,7 +79,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
     @Test
     public void testRetrieveVersionHistory() throws Exception {
         String versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         Node versionHistoryDoc = EscidocRestSoapTestBase.getDocument(versionHistory);
         selectSingleNodeAsserted(versionHistoryDoc, "/version-history");
         selectSingleNodeAsserted(versionHistoryDoc, "/version-history/version");
@@ -134,7 +124,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
             assertXmlExists("New version number does not exist", theContainerXml,
                 "/container/properties/version/number[text() = '" + i + "']");
             versionHistory = retrieveVersionHistory(theContainerId);
-            assertXmlValidVersionHistory(getTransport(), versionHistory);
+            assertXmlValidVersionHistory(versionHistory);
             if (i == 1) {
                 assertXmlExists("Event 'create' ", versionHistory,
                     "/version-history/version[1]/events/event[1]/eventType[text() = 'create']");
@@ -171,7 +161,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
 
         // retrieve versions
         versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         Node versionHistoryDoc = EscidocRestSoapTestBase.getDocument(versionHistory);
         selectSingleNodeAsserted(versionHistoryDoc, "/version-history");
         NodeList versions = selectNodeList(versionHistoryDoc, "/version-history/version");
@@ -194,7 +184,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         assertXmlValidContainer(xml);
 
         versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         assertXmlExists("Event submitted ", versionHistory,
             "/version-history/version[1]/events/event[1]/eventType[text() = 'submitted']");
 
@@ -210,7 +200,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         assertXmlValidContainer(xml);
 
         versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         assertXmlExists("Event released ", versionHistory,
             "/version-history/version[1]/events/event[1]/eventType[text() = 'released']");
 
@@ -224,7 +214,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         assertXmlValidContainer(xml);
 
         versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         assertXmlExists("Event withdrawn ", versionHistory,
             "/version-history/version[1]/events/event[1]/eventType[text() = 'withdrawn']");
     }
@@ -239,39 +229,36 @@ public class ContainerVersioningTest extends ContainerTestBase {
         assertXmlExists("version status pending", xml, "/container/properties/version/status[text() = 'pending']");
 
         // check xlink:hrefs
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            Document contDoc = getDocument(xml);
-            assertEquals("Wrong root xlink:href", "/ir/container/" + theContainerId, XPathAPI.selectSingleNode(contDoc,
-                "/container/@href").getTextContent());
-            assertEquals("Wrong properties xlink:href", "/ir/container/" + theContainerId + "/properties", XPathAPI
-                .selectSingleNode(contDoc, "/container/properties/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI
-                .selectSingleNode(contDoc, "/container/properties/created-by/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/ir/context/escidoc:persistent3", XPathAPI.selectSingleNode(contDoc,
-                "/container/properties/context/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/cmm/content-model/escidoc:persistent6", XPathAPI.selectSingleNode(
-                contDoc, "/container/properties/content-model/@href").getTextContent());
+        Document contDoc3 = getDocument(xml);
+        assertEquals("Wrong root xlink:href", "/ir/container/" + theContainerId, XPathAPI.selectSingleNode(contDoc3,
+            "/container/@href").getTextContent());
+        assertEquals("Wrong properties xlink:href", "/ir/container/" + theContainerId + "/properties", XPathAPI
+            .selectSingleNode(contDoc3, "/container/properties/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI.selectSingleNode(
+            contDoc3, "/container/properties/created-by/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/ir/context/escidoc:persistent3", XPathAPI.selectSingleNode(contDoc3,
+            "/container/properties/context/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/cmm/content-model/escidoc:persistent6", XPathAPI.selectSingleNode(contDoc3,
+            "/container/properties/content-model/@href").getTextContent());
 
-            assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":1", XPathAPI.selectSingleNode(
-                contDoc, "/container/properties/version/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI
-                .selectSingleNode(contDoc, "/container/properties/version/modified-by/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":1", XPathAPI.selectSingleNode(contDoc3,
+            "/container/properties/version/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI.selectSingleNode(
+            contDoc3, "/container/properties/version/modified-by/@href").getTextContent());
 
-            assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":1", XPathAPI.selectSingleNode(
-                contDoc, "/container/properties/latest-version/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":1", XPathAPI.selectSingleNode(contDoc3,
+            "/container/properties/latest-version/@href").getTextContent());
 
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/md-records", XPathAPI
-                .selectSingleNode(contDoc, "/container/md-records/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId
-                + "/md-records/md-record/escidoc", XPathAPI.selectSingleNode(contDoc,
-                "/container/md-records/md-record/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/struct-map", XPathAPI
-                .selectSingleNode(contDoc, "/container/struct-map/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/relations", XPathAPI
-                .selectSingleNode(contDoc, "/container/relations/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/resources", XPathAPI
-                .selectSingleNode(contDoc, "/container/resources/@href").getTextContent());
-        }
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/md-records", XPathAPI
+            .selectSingleNode(contDoc3, "/container/md-records/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/md-records/md-record/escidoc",
+            XPathAPI.selectSingleNode(contDoc3, "/container/md-records/md-record/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/struct-map", XPathAPI
+            .selectSingleNode(contDoc3, "/container/struct-map/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/relations", XPathAPI
+            .selectSingleNode(contDoc3, "/container/relations/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/resources", XPathAPI
+            .selectSingleNode(contDoc3, "/container/resources/@href").getTextContent());
 
         assertXmlValidContainer(xml);
 
@@ -318,39 +305,36 @@ public class ContainerVersioningTest extends ContainerTestBase {
         xml = update(theContainerId, xml);
 
         // check xlink:hrefs
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            Document contDoc = getDocument(xml);
-            assertEquals("Wrong root xlink:href", "/ir/container/" + theContainerId, XPathAPI.selectSingleNode(contDoc,
-                "/container/@href").getTextContent());
-            assertEquals("Wrong properties xlink:href", "/ir/container/" + theContainerId + "/properties", XPathAPI
-                .selectSingleNode(contDoc, "/container/properties/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI
-                .selectSingleNode(contDoc, "/container/properties/created-by/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/ir/context/escidoc:persistent3", XPathAPI.selectSingleNode(contDoc,
-                "/container/properties/context/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/cmm/content-model/escidoc:persistent6", XPathAPI.selectSingleNode(
-                contDoc, "/container/properties/content-model/@href").getTextContent());
+        Document contDoc = getDocument(xml);
+        assertEquals("Wrong root xlink:href", "/ir/container/" + theContainerId, XPathAPI.selectSingleNode(contDoc,
+            "/container/@href").getTextContent());
+        assertEquals("Wrong properties xlink:href", "/ir/container/" + theContainerId + "/properties", XPathAPI
+            .selectSingleNode(contDoc, "/container/properties/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI.selectSingleNode(
+            contDoc, "/container/properties/created-by/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/ir/context/escidoc:persistent3", XPathAPI.selectSingleNode(contDoc,
+            "/container/properties/context/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/cmm/content-model/escidoc:persistent6", XPathAPI.selectSingleNode(contDoc,
+            "/container/properties/content-model/@href").getTextContent());
 
-            assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":2", XPathAPI.selectSingleNode(
-                contDoc, "/container/properties/version/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI
-                .selectSingleNode(contDoc, "/container/properties/version/modified-by/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":2", XPathAPI.selectSingleNode(contDoc,
+            "/container/properties/version/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI.selectSingleNode(
+            contDoc, "/container/properties/version/modified-by/@href").getTextContent());
 
-            assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":2", XPathAPI.selectSingleNode(
-                contDoc, "/container/properties/latest-version/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":2", XPathAPI.selectSingleNode(contDoc,
+            "/container/properties/latest-version/@href").getTextContent());
 
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/md-records", XPathAPI
-                .selectSingleNode(contDoc, "/container/md-records/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId
-                + "/md-records/md-record/escidoc", XPathAPI.selectSingleNode(contDoc,
-                "/container/md-records/md-record/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/struct-map", XPathAPI
-                .selectSingleNode(contDoc, "/container/struct-map/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/relations", XPathAPI
-                .selectSingleNode(contDoc, "/container/relations/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/resources", XPathAPI
-                .selectSingleNode(contDoc, "/container/resources/@href").getTextContent());
-        }
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/md-records", XPathAPI
+            .selectSingleNode(contDoc, "/container/md-records/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/md-records/md-record/escidoc",
+            XPathAPI.selectSingleNode(contDoc, "/container/md-records/md-record/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/struct-map", XPathAPI
+            .selectSingleNode(contDoc, "/container/struct-map/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/relations", XPathAPI
+            .selectSingleNode(contDoc, "/container/relations/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + "/resources", XPathAPI
+            .selectSingleNode(contDoc, "/container/resources/@href").getTextContent());
 
         versionHistory = retrieveVersionHistory(theContainerId);
 
@@ -427,43 +411,40 @@ public class ContainerVersioningTest extends ContainerTestBase {
          * check hrefs for an older version if Container is released
          */
         // check xlink:hrefs
-        if (getTransport() == Constants.TRANSPORT_REST) {
+        Document contDoc2 = getDocument(retrieve(theContainerId + ":1"));
+        assertEquals("Wrong root xlink:href", "/ir/container/" + theContainerId + ":1", XPathAPI.selectSingleNode(
+            contDoc2, "/container/@href").getTextContent());
+        assertEquals("Wrong properties xlink:href", "/ir/container/" + theContainerId + ":1" + "/properties", XPathAPI
+            .selectSingleNode(contDoc2, "/container/properties/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI.selectSingleNode(
+            contDoc2, "/container/properties/created-by/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/ir/context/escidoc:persistent3", XPathAPI.selectSingleNode(contDoc2,
+            "/container/properties/context/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/cmm/content-model/escidoc:persistent6", XPathAPI.selectSingleNode(contDoc2,
+            "/container/properties/content-model/@href").getTextContent());
 
-            Document contDoc = getDocument(retrieve(theContainerId + ":1"));
-            assertEquals("Wrong root xlink:href", "/ir/container/" + theContainerId + ":1", XPathAPI.selectSingleNode(
-                contDoc, "/container/@href").getTextContent());
-            assertEquals("Wrong properties xlink:href", "/ir/container/" + theContainerId + ":1" + "/properties",
-                XPathAPI.selectSingleNode(contDoc, "/container/properties/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI
-                .selectSingleNode(contDoc, "/container/properties/created-by/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/ir/context/escidoc:persistent3", XPathAPI.selectSingleNode(contDoc,
-                "/container/properties/context/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/cmm/content-model/escidoc:persistent6", XPathAPI.selectSingleNode(
-                contDoc, "/container/properties/content-model/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":1", XPathAPI.selectSingleNode(contDoc2,
+            "/container/properties/version/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI.selectSingleNode(
+            contDoc2, "/container/properties/version/modified-by/@href").getTextContent());
 
-            assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":1", XPathAPI.selectSingleNode(
-                contDoc, "/container/properties/version/@href").getTextContent());
-            assertEquals("Wrong xlink:href", "/aa/user-account/escidoc:testsystemadministrator", XPathAPI
-                .selectSingleNode(contDoc, "/container/properties/version/modified-by/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":3", XPathAPI.selectSingleNode(contDoc2,
+            "/container/properties/latest-version/@href").getTextContent());
 
-            assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":3", XPathAPI.selectSingleNode(
-                contDoc, "/container/properties/latest-version/@href").getTextContent());
+        assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":3", XPathAPI.selectSingleNode(contDoc2,
+            "/container/properties/latest-release/@href").getTextContent());
 
-            assertEquals("Wrong xlink:href", "/ir/container/" + theContainerId + ":3", XPathAPI.selectSingleNode(
-                contDoc, "/container/properties/latest-release/@href").getTextContent());
-
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + ":1" + "/md-records",
-                XPathAPI.selectSingleNode(contDoc, "/container/md-records/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + ":1"
-                + "/md-records/md-record/escidoc", XPathAPI.selectSingleNode(contDoc,
-                "/container/md-records/md-record/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + ":1" + "/struct-map",
-                XPathAPI.selectSingleNode(contDoc, "/container/struct-map/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + ":1" + "/relations",
-                XPathAPI.selectSingleNode(contDoc, "/container/relations/@href").getTextContent());
-            assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + ":1" + "/resources",
-                XPathAPI.selectSingleNode(contDoc, "/container/resources/@href").getTextContent());
-        }
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + ":1" + "/md-records", XPathAPI
+            .selectSingleNode(contDoc2, "/container/md-records/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + ":1"
+            + "/md-records/md-record/escidoc", XPathAPI.selectSingleNode(contDoc2,
+            "/container/md-records/md-record/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + ":1" + "/struct-map", XPathAPI
+            .selectSingleNode(contDoc2, "/container/struct-map/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + ":1" + "/relations", XPathAPI
+            .selectSingleNode(contDoc2, "/container/relations/@href").getTextContent());
+        assertEquals("Wrong resources xlink:href", "/ir/container/" + theContainerId + ":1" + "/resources", XPathAPI
+            .selectSingleNode(contDoc2, "/container/resources/@href").getTextContent());
 
         // updates after version status released are now allowed
         xml = addCtsElement(xml);
@@ -669,7 +650,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
 
         assertXmlExists("New version number", xml, "/container/properties/version/number[text() = '1']");
         versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         assertXmlExists("Event 'create' ", versionHistory,
             "/version-history/version[1]/events/event[1]/eventType[text() = 'create']");
         assertXmlValidContainer(xml);
@@ -682,7 +663,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         assertXmlExists("Event 'create' ", versionHistory,
             "/version-history/version[2]/events/event[1]/eventType[text() = 'create']");
         versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         assertXmlExists("Event 'update' ", versionHistory,
             "/version-history/version[1]/events/event[1]/eventType[text() = 'update']");
         assertXmlValidContainer(xml);
@@ -696,7 +677,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         assertXmlExists("Event 'create' ", versionHistory,
             "/version-history/version[2]/events/event[1]/eventType[text() = 'create']");
         versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         assertXmlExists("Event 'update' ", versionHistory,
             "/version-history/version[1]/events/event[2]/eventType[text() = 'update']");
         assertXmlExists("Event 'submitted' ", versionHistory,
@@ -707,7 +688,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         xml = update(theContainerId, xml);
         assertXmlExists("New version number", xml, "/container/properties/version/number[text() = '3']");
         versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         assertXmlExists("Event 'create' ", versionHistory,
             "/version-history/version[3]/events/event[1]/eventType[text() = 'create']");
         versionHistory = retrieveVersionHistory(theContainerId);
@@ -731,13 +712,13 @@ public class ContainerVersioningTest extends ContainerTestBase {
         assertXmlExists("version status released", xml, "/container/properties/version/status[text() = 'released']");
         assertXmlExists("Released container latest-release", xml, "/container/properties/latest-release");
         versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
 
         // version entry 1 (version :3) ----------------------------------------
         assertXmlExists("Event 'create' ", versionHistory,
             "/version-history/version[3]/events/event[1]/eventType[text() = 'create']");
         versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
 
         // version entry 2 (version :2) ----------------------------------------
         assertXmlExists("Event 'update' ", versionHistory,
@@ -787,7 +768,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         assertXmlExists("Further released withdrawn container latest-release", xml,
             "/container/properties/latest-release");
         versionHistory = retrieveVersionHistory(theContainerId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
 
         // version entry 3 (version :1) ----------------------------------------
         assertXmlExists("Event 'create' ", versionHistory,

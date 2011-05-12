@@ -41,13 +41,6 @@ import org.w3c.dom.Node;
 public class OrganizationalUnitHelper extends OrganizationalUnitTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public OrganizationalUnitHelper(final int transport) {
-        super(transport);
-    }
-
-    /**
      * @param xml The org-unit as xml.
      * @return String org-unit-xml
      * @throws Exception e

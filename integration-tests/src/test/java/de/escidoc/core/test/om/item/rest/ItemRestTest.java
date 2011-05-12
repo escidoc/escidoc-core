@@ -45,13 +45,6 @@ import org.w3c.dom.Document;
 public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
 
     /**
-     * Constructor.
-     */
-    public ItemRestTest() {
-        super(Constants.TRANSPORT_REST);
-    }
-
-    /**
      * Test declining creation of Item with providing reference to context with invalid href (substring context not in
      * href).
      *
@@ -63,7 +56,7 @@ public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
         final Class<?> ec = ContextNotFoundException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         String href = selectSingleNodeAsserted(toBeCreatedDocument, XPATH_ITEM_CONTEXT_XLINK_HREF).getTextContent();
@@ -94,7 +87,7 @@ public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
         final Class ec = ContentModelNotFoundException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         String href =

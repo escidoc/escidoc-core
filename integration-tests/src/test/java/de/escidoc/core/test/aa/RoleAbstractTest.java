@@ -189,13 +189,10 @@ public class RoleAbstractTest extends AaTestBase {
     /**
      * The constructor.
      *
-     * @param transport The transport identifier.
      * @throws Exception If anything fails.
      */
-    public RoleAbstractTest(final int transport) throws Exception {
-
-        super(transport);
-        this.roleClient = new RoleClient(transport);
+    public RoleAbstractTest() throws Exception {
+        this.roleClient = new RoleClient();
     }
 
     /**

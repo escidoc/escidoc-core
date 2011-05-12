@@ -1,6 +1,5 @@
 package de.escidoc.core.test.common.util.xml;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,33 +22,25 @@ public class Select {
      * Gets the objid attribute of the root element from the document.
      *
      * @param document  The document to retrieve the value from.
-     * @param transport Set transport protocol (depending on transport is the objid obtained from different
-     *                  attributes).
      * @return Returns the objid of the document.
      * @throws Exception If anything fails.
      */
-    public static String getObjidValue(final Document document, final int transport) throws Exception {
+    public static String getObjidValue(final Document document) throws Exception {
 
-        if (transport == Constants.TRANSPORT_REST) {
-            return getObjidFromHref(getRootElementAttributeValueNS(document,
-                de.escidoc.core.test.Constants.ATTRIBUTE_NAME_HREF, de.escidoc.core.test.Constants.XLINK_NS_URI));
-        }
-
-        return getRootElementAttributeValue(document, de.escidoc.core.test.Constants.ATTRIBUTE_NAME_OBJID);
+        return getObjidFromHref(getRootElementAttributeValueNS(document,
+            de.escidoc.core.test.Constants.ATTRIBUTE_NAME_HREF, de.escidoc.core.test.Constants.XLINK_NS_URI));
     }
 
     /**
      * Remove version informaion from given objid.
      *
      * @param document  The document to retrieve the value from.
-     * @param transport Set transport protocol (depending on transport is the objid obtained from different
-     *                  attributes).
      * @return Returns the objid of the document without version suffix.
      * @throws Exception If anything fails.
      */
-    public static String getObjidValueWithoutVersion(final Document document, final int transport) throws Exception {
+    public static String getObjidValueWithoutVersion(final Document document) throws Exception {
 
-        String result = getObjidValue(document, transport);
+        String result = getObjidValue(document);
         return getObjidValueWithoutVersion(result);
     }
 

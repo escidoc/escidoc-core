@@ -31,11 +31,8 @@ package de.escidoc.core.test.om.context;
 import de.escidoc.core.common.exceptions.remote.application.notfound.AdminDescriptorNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 /**
@@ -43,7 +40,6 @@ import org.w3c.dom.Document;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class AdminDescriptorsTest extends ContextTestBase {
 
     private String path = "";
@@ -52,12 +48,8 @@ public class AdminDescriptorsTest extends ContextTestBase {
 
     private static String contextXml = null;
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public AdminDescriptorsTest(final int transport) {
-        super(transport);
-        this.path += "/" + getTransport(false);
+    public AdminDescriptorsTest() {
+        this.path += "/rest";
     }
 
     /**
@@ -85,15 +77,8 @@ public class AdminDescriptorsTest extends ContextTestBase {
                 getTheLastModificationParam(true, contextId, "comment", lastModificationDate));
 
             String filename = "escidoc_item_198_for_create.xml";
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                createItem(toString(substitute(EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/"
-                    + getTransport(false), filename), "/item/properties/context/@href", "/ir/context/" + contextId),
-                    true));
-            }
-            else {
-                createItem(toString(EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/"
-                    + getTransport(false), filename), true));
-            }
+            createItem(toString(substitute(EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
+                filename), "/item/properties/context/@href", "/ir/context/" + contextId), true));
         }
     }
 

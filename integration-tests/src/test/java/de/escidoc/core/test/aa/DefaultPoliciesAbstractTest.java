@@ -94,12 +94,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
     /**
      * The constructor.
      *
-     * @param transport The transport identifier.
      * @throws Exception If anything fails.
      */
-    public DefaultPoliciesAbstractTest(final int transport) throws Exception {
-        super(transport, USER_ACCOUNT_HANDLER_CODE);
-        userGroupTestBase = new UserGroupTestBase(transport);
+    public DefaultPoliciesAbstractTest() throws Exception {
+        super(USER_ACCOUNT_HANDLER_CODE);
+        userGroupTestBase = new UserGroupTestBase();
     }
 
     /**
@@ -735,7 +734,6 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         final Document parameterDocument =
             EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_REP_PARAMETERS_PATH,
                 "escidoc_report_parameters1.xml");
-        fixLinkAttributes(parameterDocument, XPATH_REPORT_PARAMETERS_REPORT_DEFINITION);
         String parameterXml = toString(parameterDocument, false);
         parameterXml = parameterXml.replaceAll("repdef3", "repdef1");
 
@@ -834,8 +832,6 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         final Document toBeCreatedDoc =
             EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition2.xml");
-        fixLinkAttributes(toBeCreatedDoc, XPATH_AGGREGATION_DEFINITION);
-        fixLinkAttributes(toBeCreatedDoc, XPATH_AGGREGATION_DEFINITION_SCOPE);
         String toBeCreatedXml = toString(toBeCreatedDoc, false);
 
         try {
@@ -860,8 +856,6 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         final Document toBeCreatedDoc =
             EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_REP_DEF_PATH, "escidoc_report_definition1.xml");
-        fixLinkAttributes(toBeCreatedDoc, XPATH_REPORT_DEFINITION);
-        fixLinkAttributes(toBeCreatedDoc, XPATH_REPORT_DEFINITION_SCOPE);
         String toBeCreatedXml = toString(toBeCreatedDoc, false);
 
         try {

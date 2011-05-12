@@ -60,9 +60,8 @@ public class ContentRelationModifierAbstractTest extends GrantTestBase {
      * @param userOrGroupId userOrGroupId for grantCreation.
      * @throws Exception If anything fails.
      */
-    public ContentRelationModifierAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
-        throws Exception {
-        super(transport, handlerCode);
+    public ContentRelationModifierAbstractTest(final int handlerCode, final String userOrGroupId) throws Exception {
+        super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 

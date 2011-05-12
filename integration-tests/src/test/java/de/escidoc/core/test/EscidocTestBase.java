@@ -78,7 +78,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.lang.annotation.Annotation;
@@ -921,9 +920,6 @@ public abstract class EscidocTestBase {
     public static final String ENTITY_REFERENCES =
         "A &lt; &gt; &amp; &quot; &apos; &amp;lt; " + "&amp;gt; &amp;amp; &amp;quot; &amp;apos; Z";
 
-    // set default transport
-    private int transport = Constants.TRANSPORT_REST;
-
     public static final String XLINK_TYPE_VALUE = "simple";
 
     public static final String NAME_ADMIN_DESCRIPTOR = "admin-descriptor";
@@ -940,42 +936,8 @@ public abstract class EscidocTestBase {
 
     private static String frameworkUrl = null;
 
-    /**
-     * @param transport
-     *            The transport identifier.
-     */
-    public EscidocTestBase(final int transport) {
-        this.transport = transport;
-        this.stagingFileClient = new StagingFileClient(Constants.TRANSPORT_REST);
-    }
-
-    /**
-     * @return Returns the transport.
-     */
-    public int getTransport() {
-        return transport;
-    }
-
-    /**
-     * ************************************************************************ Get transport protocol.
-     * 
-     * @param upperCase
-     *            If true than contains the String only capital letters, false only small letters.
-     * @return transport protocol (REST/SOAP)
-     */
-    public String getTransport(final boolean upperCase) {
-        String result = null;
-        if (transport == Constants.TRANSPORT_REST) {
-            result = "rest";
-        }
-        else {
-            result = "soap";
-        }
-
-        if (upperCase) {
-            result = result.toUpperCase();
-        }
-        return result;
+    public EscidocTestBase() {
+        this.stagingFileClient = new StagingFileClient();
     }
 
     /**
@@ -1176,7 +1138,7 @@ public abstract class EscidocTestBase {
      * 
      * @param message
      *            The message printed if assertion fails.
-     * @param method
+     * @param httpRes
      *            The http method.
      */
     public static void assertHttpStatusOK(final String message, final HttpResponse httpRes) {
@@ -1191,7 +1153,7 @@ public abstract class EscidocTestBase {
      * 
      * @param message
      *            The message printed if assertion fails.
-     * @param method
+     * @param httpRes
      *            The http method.
      */
     public static void assertContentTypeTextXmlUTF8OfMethod(final String message, final HttpResponse httpRes) {
@@ -1220,7 +1182,7 @@ public abstract class EscidocTestBase {
      * 
      * @param message
      *            The message printed if assertion fails.
-     * @param method
+     * @param httpRes
      *            The http method.
      */
     public static void assertHttpStatusOfMethod(final String message, final HttpResponse httpRes) {
@@ -1243,7 +1205,7 @@ public abstract class EscidocTestBase {
      *            The message printed if assertion fails.
      * @param expectedStatus
      *            The expected status.
-     * @param method
+     * @param httpRes
      *            The http method.
      */
     public static void assertHttpStatus(final String message, final int expectedStatus, final HttpResponse httpRes) {
@@ -1971,13 +1933,9 @@ public abstract class EscidocTestBase {
         Node result = node;
         Node replace = null;
         String path = "";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            replace = selectSingleNode(result, xPath + "/@href");
-            path = replace.getTextContent().substring(0, replace.getTextContent().lastIndexOf("/") + 1);
-        }
-        else {
-            replace = selectSingleNode(result, xPath + "/@objid");
-        }
+        replace = selectSingleNode(result, xPath + "/@href");
+        path = replace.getTextContent().substring(0, replace.getTextContent().lastIndexOf("/") + 1);
+
         assertNotNull("No node found for specified xpath [" + xPath + "]", replace);
         // if (replace.getNodeType() == Node.ELEMENT_NODE) {
         replace.setTextContent(path + newValue);
@@ -2792,7 +2750,7 @@ public abstract class EscidocTestBase {
      */
     public void assertXmlValidItem(final String xmlData) throws Exception {
 
-        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/item/0.10/item.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/item/0.10/item.xsd");
         assertXmlValid(xmlData, url);
         assertXlinkXmlBaseExists(xmlData);
         assertAllPlaceholderResolved(xmlData);
@@ -2810,8 +2768,7 @@ public abstract class EscidocTestBase {
      */
     public void assertXmlValidContentRelation(final String xmlData) throws Exception {
 
-        URL url =
-            new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/content-relation/0.1/content-relation.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/content-relation/0.1/content-relation.xsd");
         assertXmlValid(xmlData, url);
         assertXlinkXmlBaseExists(xmlData);
         assertAllPlaceholderResolved(xmlData);
@@ -2827,7 +2784,7 @@ public abstract class EscidocTestBase {
      */
     public void assertXmlValidContentModel(final String xmlData) throws Exception {
 
-        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/content-model/0.1/content-model.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/content-model/0.1/content-model" + ".xsd");
         assertXmlValid(xmlData, url);
         assertXlinkXmlBaseExists(xmlData);
         assertAllPlaceholderResolved(xmlData);
@@ -2835,7 +2792,7 @@ public abstract class EscidocTestBase {
 
     public void assertXmlValidSetDefinition(final String xmlData) throws Exception {
 
-        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/set-definition/0.1/set-definition.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/set-definition/0.1/set-definition.xsd");
         assertXmlValid(xmlData, url);
         assertAllPlaceholderResolved(xmlData);
     }
@@ -2848,8 +2805,7 @@ public abstract class EscidocTestBase {
      */
     public void assertXmlValidSetDefinitions(final String xmlData) throws Exception {
 
-        URL url =
-            new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/set-definition/0.1/set-definition-list.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/set-definition/0.1/set-definition-list.xsd");
         assertXmlValid(xmlData, url);
         assertAllPlaceholderResolved(xmlData);
     }
@@ -2909,14 +2865,14 @@ public abstract class EscidocTestBase {
      */
     public void assertXmlValidResult(final String xmlData) throws Exception {
 
-        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/common/0.1/result.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/common/0.1/result.xsd");
         assertXmlValid(xmlData, url);
         assertAllPlaceholderResolved(xmlData);
     }
 
     public void assertXmlValidToc(final String xmlData) throws Exception {
 
-        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/toc/0.7/toc.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/toc/0.7/toc.xsd");
         assertXmlValid(xmlData, url);
         assertAllPlaceholderResolved(xmlData);
     }
@@ -2933,13 +2889,13 @@ public abstract class EscidocTestBase {
     }
 
     public void assertXmlValidItemList(final String xmlData) throws Exception {
-        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/item/0.10/item-list.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/item/0.10/item-list.xsd");
         assertXmlValid(xmlData, url);
         assertAllPlaceholderResolved(xmlData);
     }
 
     public void assertXmlValidItemRefList(final String xmlData) throws Exception {
-        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/item/0.4/item-ref-list.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/item/0.4/item-ref-list.xsd");
         assertXmlValid(xmlData, url);
         assertAllPlaceholderResolved(xmlData);
     }
@@ -2950,7 +2906,7 @@ public abstract class EscidocTestBase {
     }
 
     public void assertXmlValidContextMembersList(final String xmlData) throws Exception {
-        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/common/0.10/member-list.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/common/0.10/member-list.xsd");
         assertXmlValid(xmlData, url);
     }
 
@@ -2984,7 +2940,7 @@ public abstract class EscidocTestBase {
      *             If anything fails.
      */
     public void assertXmlValidScope(final String xmlData) throws Exception {
-        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/scope/0.4/scope.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/scope/0.4/scope.xsd");
         assertAllPlaceholderResolved(xmlData);
         assertXmlValid(xmlData, url);
     }
@@ -2998,7 +2954,7 @@ public abstract class EscidocTestBase {
      *             If anything fails.
      */
     public void assertXmlValidScopeList(final String xmlData) throws Exception {
-        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/scope/0.4/scope-list.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/scope/0.4/scope-list.xsd");
         assertAllPlaceholderResolved(xmlData);
         assertXmlValid(xmlData, url);
     }
@@ -3012,8 +2968,7 @@ public abstract class EscidocTestBase {
      *             If anything fails.
      */
     public void assertXmlValidSrwResponse(final String xmlData) throws Exception {
-        Schema srwListSchema =
-            getSchema(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/common/0.4/srw-types.xsd");
+        Schema srwListSchema = getSchema(getFrameworkUrl() + "/xsd/rest/common/0.4/srw-types.xsd");
 
         assertXmlValid(xmlData, srwListSchema);
         assertAllPlaceholderResolved(xmlData);
@@ -3028,9 +2983,7 @@ public abstract class EscidocTestBase {
      *             If anything fails.
      */
     public void assertXmlValidAggregationDefinition(final String xmlData) throws Exception {
-        URL url =
-            new URL(getFrameworkUrl() + "/xsd/" + getTransport(false)
-                + "/aggregation-definition/0.4/aggregation-definition.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/aggregation-definition/0.4/aggregation-definition.xsd");
         assertAllPlaceholderResolved(xmlData);
         assertXmlValid(xmlData, url);
     }
@@ -3044,9 +2997,7 @@ public abstract class EscidocTestBase {
      *             If anything fails.
      */
     public void assertXmlValidAggregationDefinitionList(final String xmlData) throws Exception {
-        URL url =
-            new URL(getFrameworkUrl() + "/xsd/" + getTransport(false)
-                + "/aggregation-definition/0.4/aggregation-definition-list.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/aggregation-definition/0.4/aggregation-definition-list.xsd");
         assertAllPlaceholderResolved(xmlData);
         assertXmlValid(xmlData, url);
     }
@@ -3060,8 +3011,7 @@ public abstract class EscidocTestBase {
      *             If anything fails.
      */
     public void assertXmlValidReportDefinition(final String xmlData) throws Exception {
-        URL url =
-            new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/report-definition/0.4/report-definition.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/report-definition/0.4/report-definition.xsd");
         assertAllPlaceholderResolved(xmlData);
         assertXmlValid(xmlData, url);
     }
@@ -3075,9 +3025,7 @@ public abstract class EscidocTestBase {
      *             If anything fails.
      */
     public void assertXmlValidReportDefinitionList(final String xmlData) throws Exception {
-        URL url =
-            new URL(getFrameworkUrl() + "/xsd/" + getTransport(false)
-                + "/report-definition/0.4/report-definition-list.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/report-definition/0.4/report-definition-list.xsd");
         assertAllPlaceholderResolved(xmlData);
         assertXmlValid(xmlData, url);
     }
@@ -3091,7 +3039,7 @@ public abstract class EscidocTestBase {
      *             If anything fails.
      */
     public void assertXmlValidReport(final String xmlData) throws Exception {
-        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/report/0.4/report.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/report/0.4/report.xsd");
         assertAllPlaceholderResolved(xmlData);
         assertXmlValid(xmlData, url);
     }
@@ -3233,7 +3181,7 @@ public abstract class EscidocTestBase {
         final String objid;
         final String objidFromHref;
         if (xPath == null) {
-            objid = getObjidValue(document);
+            objid = getRootElementAttributeValue(document, NAME_OBJID);
             objidFromHref = getObjidFromHref(getRootElementHrefValue(document));
             assertEquals("Href and objid are inconsistent in root element", objidFromHref, objid);
         }
@@ -3374,14 +3322,8 @@ public abstract class EscidocTestBase {
     public String getIdFromRootElement(final String xml) {
         String result = null;
         // FIXME PATTERN_OBJID_ATTRIBUTE is static field !
-        Pattern pATTERNoBJIDaTTRIBUTEjUSTfORtHISmETHOD = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            pATTERNoBJIDaTTRIBUTEjUSTfORtHISmETHOD = PATTERN_OBJID_ATTRIBUTE;
-        }
-        else {
-            // FIXME this pattern does not work for componentId
-            pATTERNoBJIDaTTRIBUTEjUSTfORtHISmETHOD = Pattern.compile("href=\"/ir/[^/]+/([^\"]*)\"");
-        }
+        // FIXME this pattern does not work for componentId
+        Pattern pATTERNoBJIDaTTRIBUTEjUSTfORtHISmETHOD = Pattern.compile("href=\"/ir/[^/]+/([^\"]*)\"");
         Matcher m1 = pATTERNoBJIDaTTRIBUTEjUSTfORtHISmETHOD.matcher(xml);
         if (m1.find()) {
             result = m1.group(1);
@@ -3415,20 +3357,6 @@ public abstract class EscidocTestBase {
     public static String getRootElementHrefValue(final Document document) throws Exception {
 
         return getRootElementAttributeValueNS(document, NAME_HREF, XLINK_NS_URI);
-    }
-
-    /**
-     * Gets the objid attribute of the root element from the document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public String getObjidValue(final Document document) throws Exception {
-
-        return getRootElementAttributeValue(document, NAME_OBJID);
     }
 
     /**
@@ -3587,20 +3515,8 @@ public abstract class EscidocTestBase {
      */
     // TODO should better be in OmTestBase
     public String getComponentObjidValue(final Document document, final int componentNo) throws Exception {
-
-        String objid = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            objid =
-                getObjidFromHref(getAttributeValue(document, OmTestBase.XPATH_ITEM_COMPONENTS + "/component["
-                    + componentNo + "]", "xlink:href"));
-        }
-        else {
-            objid =
-                getAttributeValue(document, OmTestBase.XPATH_ITEM_COMPONENTS + "/component[" + componentNo + "]",
-                    "objid");
-        }
-
-        return (objid);
+        return getObjidFromHref(getAttributeValue(document, OmTestBase.XPATH_ITEM_COMPONENTS + "/component["
+            + componentNo + "]", "xlink:href"));
     }
 
     /**
@@ -3615,15 +3531,7 @@ public abstract class EscidocTestBase {
      *             Thrown in case of internal error.
      */
     public String getComponentObjidValue(final Document document, final String xpath) throws Exception {
-        String objid = null;
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            objid = getObjidFromHref(getAttributeValue(document, xpath, "xlink:href"));
-        }
-        else {
-            objid = getAttributeValue(document, xpath, "objid");
-        }
-        return objid;
+        return getObjidFromHref(getAttributeValue(document, xpath, "xlink:href"));
     }
 
     /**
@@ -4287,9 +4195,7 @@ public abstract class EscidocTestBase {
             // last-modification-date in content streams container
             selectSingleNodeAsserted(itemDoc, "/content-streams[@base]");
             // = '" + Constants.PROTOCOL + "://" + Constants.HOST_PORT + "']");
-            if (transport == Constants.TRANSPORT_REST) {
-                selectSingleNodeAsserted(itemDoc, "/content-streams[@href = '/ir/item/" + itemId + "/content-streams']");
-            }
+            selectSingleNodeAsserted(itemDoc, "/content-streams[@href = '/ir/item/" + itemId + "/content-streams']");
             selectSingleNodeAsserted(itemDoc, "/content-streams[@last-modification-date]");
             // TODO check if latter is date
         }
@@ -4457,26 +4363,12 @@ public abstract class EscidocTestBase {
      *            XML of the Item
      */
     public void assertItemXlinkTitles(final String xmlData) throws Exception {
-
-        // xlink:title are only in REST representations
-        if (getTransport() == Constants.TRANSPORT_REST) {
-
-            Document document = EscidocRestSoapTestBase.getDocument(xmlData);
-
-            // root element
-
-            // properties
-
-            // md-records
-
-            // relations
-            Node relations = XPathAPI.selectSingleNode(document, "/item/relations/@title", document);
-            if (relations != null) {
-                assertEquals("Xlink:title of relations differs from convention", "Relations of Item", relations
-                    .getTextContent());
-            }
-
-            // components
+        Document document = EscidocRestSoapTestBase.getDocument(xmlData);
+        // relations
+        Node relations = XPathAPI.selectSingleNode(document, "/item/relations/@title", document);
+        if (relations != null) {
+            assertEquals("Xlink:title of relations differs from convention", "Relations of Item", relations
+                .getTextContent());
         }
     }
 
@@ -4489,26 +4381,12 @@ public abstract class EscidocTestBase {
      *            XML of the Container
      */
     public void assertContainerXlinkTitles(final String xmlData) throws Exception {
-
-        // xlink:title are only in REST representations
-        if (getTransport() == Constants.TRANSPORT_REST) {
-
-            Document document = EscidocRestSoapTestBase.getDocument(xmlData);
-
-            // root element
-
-            // properties
-
-            // md-records
-
-            // relations
-            Node relations = XPathAPI.selectSingleNode(document, "/container/relations/@title", document);
-            if (relations != null) {
-                assertEquals("Xlink:title of relations differs from convention", "Relations of Container", relations
-                    .getTextContent());
-            }
-
-            // components
+        Document document = EscidocRestSoapTestBase.getDocument(xmlData);
+        // relations
+        Node relations = XPathAPI.selectSingleNode(document, "/container/relations/@title", document);
+        if (relations != null) {
+            assertEquals("Xlink:title of relations differs from convention", "Relations of Container", relations
+                .getTextContent());
         }
     }
 
@@ -4523,7 +4401,7 @@ public abstract class EscidocTestBase {
 
         if (REPOSITORY_VERSION == null) {
 
-            AdminClient admClient = new AdminClient(Constants.TRANSPORT_REST);
+            AdminClient admClient = new AdminClient();
             String info = handleXmlResult(admClient.getRepositoryInfo());
 
             Pattern p = Pattern.compile(".*<entry key=\"escidoc-core.build\">([^<]*)</entry>.*");

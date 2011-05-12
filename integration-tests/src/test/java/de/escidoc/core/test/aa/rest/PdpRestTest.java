@@ -29,7 +29,6 @@
 package de.escidoc.core.test.aa.rest;
 
 import de.escidoc.core.test.aa.PdpAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -42,12 +41,11 @@ import org.junit.runners.JUnit4;
 public class PdpRestTest extends PdpAbstractTest {
 
     /**
-     * Constructor.
+     * The constructor.
      *
      * @throws Exception If anything fails.
      */
     public PdpRestTest() throws Exception {
-
-        super(Constants.TRANSPORT_REST);
+        super();
     }
 }

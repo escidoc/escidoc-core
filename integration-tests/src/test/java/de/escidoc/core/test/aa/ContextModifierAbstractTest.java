@@ -71,7 +71,7 @@ public class ContextModifierAbstractTest extends GrantTestBase {
      */
     public ContextModifierAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
         throws Exception {
-        super(transport, handlerCode);
+        super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 

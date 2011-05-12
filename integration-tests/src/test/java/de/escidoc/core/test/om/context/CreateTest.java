@@ -35,13 +35,10 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingEleme
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ContextNameNotUniqueException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -57,17 +54,9 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class CreateTest extends ContextTestBase {
 
     private String path = TEMPLATE_CONTEXT_PATH;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public CreateTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -76,7 +65,7 @@ public class CreateTest extends ContextTestBase {
      */
     @Before
     public void setUp() throws Exception {
-        this.path += "/" + getTransport(false);
+        this.path += "/rest";
     }
 
     /**
@@ -172,20 +161,9 @@ public class CreateTest extends ContextTestBase {
             toBeAssertedOus.getLength() + 1);
 
         // compare admin-descriptor titles
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            NodeList expectedAdminDesc = selectNodeList(getDocument(template), XPATH_CONTEXT_ADMIN_DESCRIPTOR);
-            NodeList toBeAssertedAdminDesc = selectNodeList(createdDoc, XPATH_CONTEXT_ADMIN_DESCRIPTOR);
-
-            assertEquals(expectedAdminDesc.getLength(), toBeAssertedAdminDesc.getLength());
-
-            // for (int i = 1; i < expectedAdminDesc.getLength() + 1; i++) {
-            // String titleValue =
-            // selectSingleNode(createdDoc,
-            // "context/admin-descriptors/admin-descriptor[position()=i]/@title]")
-            // .getTextContent();
-            // assertTrue(titleValue.length() > 0);
-            // }
-        }
+        NodeList expectedAdminDesc = selectNodeList(getDocument(template), XPATH_CONTEXT_ADMIN_DESCRIPTOR);
+        NodeList toBeAssertedAdminDesc = selectNodeList(createdDoc, XPATH_CONTEXT_ADMIN_DESCRIPTOR);
+        assertEquals(expectedAdminDesc.getLength(), toBeAssertedAdminDesc.getLength());
     }
 
     /**
@@ -232,12 +210,9 @@ public class CreateTest extends ContextTestBase {
     @Ignore("Test large Context handling for REST")
     @Test
     public void testOmCrc1f() throws Exception {
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context-large-rest.xml");
-            substitute(context, "/context/properties/name", getUniqueName("Large Context-1 "));
-
-            create(toString(context, false));
-        }
+        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context-large-rest.xml");
+        substitute(context, "/context/properties/name", getUniqueName("Large Context-1 "));
+        create(toString(context, false));
     }
 
     /**
@@ -332,12 +307,7 @@ public class CreateTest extends ContextTestBase {
         String contextXml = null;
 
         Map<String, String> elements = new HashMap<String, String>();
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            elements.put("/context/@" + XLINK_HREF_TEMPLATES, "escidoc:id1");
-        }
-        else {
-            elements.put("/context/@objid", "escidoc:id1");
-        }
+        elements.put("/context/@" + XLINK_HREF_TEMPLATES, "escidoc:id1");
         contextXml = getContextTemplateWithReadOnlyElements(elements);
         create(contextXml);
     }
@@ -499,7 +469,7 @@ public class CreateTest extends ContextTestBase {
     @Test
     public void testCreateContextWithWrongOuState() throws Exception {
 
-        OrganizationalUnitTestBase organizationalUnitTestBase = new OrganizationalUnitTestBase(getTransport());
+        OrganizationalUnitTestBase organizationalUnitTestBase = new OrganizationalUnitTestBase();
         String ou = null;
         String context = null;
         Class<?> ec = InvalidStatusException.class;

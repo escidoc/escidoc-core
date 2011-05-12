@@ -43,13 +43,6 @@ import java.util.Map;
 public class AggregationDefinitionTestBase extends SmTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public AggregationDefinitionTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Test creating aggregationDefinition.
      *
      * @param dataXml The xml representation of the aggregationDefinition.

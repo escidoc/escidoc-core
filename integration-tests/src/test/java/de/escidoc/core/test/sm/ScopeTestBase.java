@@ -43,13 +43,6 @@ import java.util.Map;
 public class ScopeTestBase extends SmTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ScopeTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Test creating a Scope.
      *
      * @param dataXml The xml representation of the Scope.

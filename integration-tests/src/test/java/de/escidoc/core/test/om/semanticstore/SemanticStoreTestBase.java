@@ -41,14 +41,6 @@ public class SemanticStoreTestBase extends OmTestBase {
     private SemanticStoreClient semanticStoreClient = null;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public SemanticStoreTestBase(final int transport) {
-        super(transport);
-        this.semanticStoreClient = new SemanticStoreClient(transport);
-    }
-
-    /**
      * @return the semanticStoreClient
      */
     public SemanticStoreClient getSemanticStoreClient() {

@@ -39,13 +39,6 @@ import de.escidoc.core.test.om.OmTestBase;
 public class DeviationTestBase extends OmTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public DeviationTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * @return Returns the itemClient
      */
     @Override

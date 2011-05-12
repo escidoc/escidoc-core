@@ -30,12 +30,9 @@ package de.escidoc.core.test.om.item;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -45,7 +42,6 @@ import static org.junit.Assert.fail;
 /**
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 @Ignore
 // DigiLib Test sollen laut Matthias für das 1.3 Realease deaktiviert werden.
 public class ItemContentTransformationTest extends ItemTestBase {
@@ -61,13 +57,6 @@ public class ItemContentTransformationTest extends ItemTestBase {
     private int componentNo = 2;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ItemContentTransformationTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
@@ -76,7 +65,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
     public void setUp() throws Exception {
         if (itemId == null) {
             itemXml =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_for_image_transformation.xml");
 
             createdItem = EscidocRestSoapTestBase.getDocument(create(itemXml));
@@ -89,7 +78,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
             release(itemId, getTheLastModificationParam(false, itemId));
 
             componentNo = 1;
-            componentId = getObjidValue(getTransport(), createdItem, "/item/components/component[1]");
+            componentId = getObjidValue(createdItem, "/item/components/component[1]");
             Node node = selectSingleNode(createdItem, "/item/components/component[1]/properties/description");
             if (node == null) {
                 componentNo = 2;
@@ -105,15 +94,14 @@ public class ItemContentTransformationTest extends ItemTestBase {
     @Test
     public void testItComRetr() throws Exception {
 
-        componentId = getObjidValue(getTransport(), createdItem, "/item/components/component[properties]");
+        componentId = getObjidValue(createdItem, "/item/components/component[properties]");
 
         retrieveComponentProperties(itemId, componentId);
         String templateProperties =
             toString(selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 "/item/components/component[properties/description]/properties"), true);
 
-        componentId =
-            getObjidValue(getTransport(), createdItem, "/item/components/component[not(properties/description)]");
+        componentId = getObjidValue(createdItem, "/item/components/component[not(properties/description)]");
 
         retrieveComponentProperties(itemId, componentId);
     }
@@ -162,23 +150,14 @@ public class ItemContentTransformationTest extends ItemTestBase {
      */
     @Test
     public void testOMRCt1() throws Exception {
-
         String xpath = "/item/components/component[2]/";
         String compId = null;
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xpath += "@href";
-            String debug = toString(selectSingleNode(createdItem, "/item/components"), false);
-            Node component = selectSingleNode(createdItem, xpath);
-            assertNotNull("Missing Component in Item", component);
-            String href = component.getNodeValue();
-            compId = getObjidFromHref(href);
-        }
-        else {
-            xpath += "@objid";
-            compId = selectSingleNode(createdItem, xpath).getNodeValue();
-        }
-
+        xpath += "@href";
+        String debug = toString(selectSingleNode(createdItem, "/item/components"), false);
+        Node component = selectSingleNode(createdItem, xpath);
+        assertNotNull("Missing Component in Item", component);
+        String href = component.getNodeValue();
+        compId = getObjidFromHref(href);
         // FIXME replace this with a method to retrieve binary content and
         // compare the delivered afterwards.
         retrieveBinaryContent(itemId, compId, "digilib", "?ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300");

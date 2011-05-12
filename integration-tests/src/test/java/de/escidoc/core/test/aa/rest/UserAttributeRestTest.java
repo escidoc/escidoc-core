@@ -29,7 +29,6 @@
 package de.escidoc.core.test.aa.rest;
 
 import de.escidoc.core.test.aa.UserAttributeAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -41,12 +40,4 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class UserAttributeRestTest extends UserAttributeAbstractTest {
 
-    /**
-     * Constructor.
-     *
-     * @throws Exception If anything fails.
-     */
-    public UserAttributeRestTest() throws Exception {
-        super(Constants.TRANSPORT_REST);
-    }
 }

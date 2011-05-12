@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.test.oum.organizationalunit.rest;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -39,13 +38,6 @@ import org.w3c.dom.Document;
  * @author Michael Schneider
  */
 public class UpdateParentsRestTest extends OrganizationalUnitTestBase {
-
-    /**
-     * Constructor.
-     */
-    public UpdateParentsRestTest() {
-        super(Constants.TRANSPORT_REST);
-    }
 
     /**
      * Test successfully updating the organization-details sub resource of an REST.

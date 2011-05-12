@@ -35,10 +35,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaVal
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertEquals;
@@ -48,15 +45,7 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class CreateTest extends OrganizationalUnitTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public CreateTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test successfully creating an organizational unit where the root element of metadata has no XML prefix.
@@ -207,27 +196,13 @@ public class CreateTest extends OrganizationalUnitTestBase {
         deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_TYPE);
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-
-            final Class<XmlSchemaValidationException> ec = XmlSchemaValidationException.class;
-            try {
-                create(toBeCreatedXml);
-                failMissingException(ec);
-            }
-            catch (final Exception e) {
-                assertExceptionType(ec, e);
-            }
+        final Class<XmlSchemaValidationException> ec = XmlSchemaValidationException.class;
+        try {
+            create(toBeCreatedXml);
+            failMissingException(ec);
         }
-        else {
-            String createdXml = null;
-            try {
-                createdXml = create(toBeCreatedXml);
-            }
-            catch (final Exception e) {
-                failException("Lax creating of ou failed. ", e);
-            }
-            assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
+        catch (final Exception e) {
+            assertExceptionType(ec, e);
         }
     }
 

@@ -30,7 +30,6 @@ package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.apache.http.HttpResponse;
@@ -38,8 +37,6 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import java.io.File;
@@ -55,7 +52,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ItemContentURLTest extends ItemTestBase {
 
     private String theItemId = null;
@@ -69,13 +65,6 @@ public class ItemContentURLTest extends ItemTestBase {
     private final String testUploadFileMimeType = "application/zip";
 
     private StagingFileClient sfc;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemContentURLTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Clean up after servlet test.
@@ -101,7 +90,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         // content to staging
@@ -124,7 +113,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_2() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         // content to staging
@@ -146,7 +135,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testUpdateStagingURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc, "/item/components/component[not(content/@href)]");
@@ -172,7 +161,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testUpdateStagingURL_2() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc, "/item/components/component[not(content/@href)]");
@@ -199,7 +188,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_3() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc, "/item/components/component[not(content/@href)]");
@@ -210,13 +199,7 @@ public class ItemContentURLTest extends ItemTestBase {
 
         // content to staging
         String url = createStagingFile(false);
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            this.theItemDoc = (Document) substitute(this.theItemDoc, "/item/components/component/@href", "");
-        }
-        else {
-            this.theItemDoc = (Document) substitute(this.theItemDoc, "/item/components/component/@objid", "");
-        }
+        this.theItemDoc = (Document) substitute(this.theItemDoc, "/item/components/component/@href", "");
         this.theItemDoc = (Document) substitute(this.theItemDoc, "/item/components/component/content/@href", url);
 
         this.theItemXml = toString(this.theItemDoc, false);
@@ -233,7 +216,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_4() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc, "/item/components/component[not(content/@href)]");
@@ -244,13 +227,7 @@ public class ItemContentURLTest extends ItemTestBase {
 
         // content to staging
         String url = createStagingFile(true);
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            this.theItemDoc = (Document) substitute(this.theItemDoc, "/item/components/component/@href", "");
-        }
-        else {
-            this.theItemDoc = (Document) substitute(this.theItemDoc, "/item/components/component/@objid", "");
-        }
+        this.theItemDoc = (Document) substitute(this.theItemDoc, "/item/components/component/@href", "");
         this.theItemDoc = (Document) substitute(this.theItemDoc, "/item/components/component/content/@href", url);
 
         this.theItemXml = toString(this.theItemDoc, false);
@@ -278,7 +255,7 @@ public class ItemContentURLTest extends ItemTestBase {
         HttpResponse httpRes = null;
         try {
             if (sfc == null) {
-                sfc = new StagingFileClient(Constants.TRANSPORT_REST);
+                sfc = new StagingFileClient();
             }
             httpRes = (HttpResponse) sfc.create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
@@ -303,7 +280,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateFedoraURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         // content to staging
@@ -333,7 +310,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testUpdateFedoraURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc, "/item/components/component[not(content/@href)]");

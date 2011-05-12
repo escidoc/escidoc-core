@@ -35,8 +35,6 @@ import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.net.URL;
 
@@ -45,7 +43,6 @@ import java.net.URL;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContainerReleaseForOaiTest extends ContainerTestBase {
 
     private String theContainerXml;
@@ -55,13 +52,6 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
     private String theItemId;
 
     private String theSubcontainerId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerReleaseForOaiTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Successfully release of 20 containers with sub-container (member).

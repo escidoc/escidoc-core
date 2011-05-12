@@ -31,7 +31,6 @@ package de.escidoc.core.test.common.client.servlet.aa;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 
-import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
@@ -40,13 +39,6 @@ import java.util.Map;
  * @author Michael Hoppe
  */
 public class UserGroupClient extends GrantClient implements ResourceHandlerClientInterface {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public UserGroupClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Create a user group.

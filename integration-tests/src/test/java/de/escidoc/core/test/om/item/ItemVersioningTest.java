@@ -40,8 +40,6 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.xpath.XPathAPI;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -61,7 +59,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ItemVersioningTest extends ItemTestBase {
 
     private static final int ITEM_TRIPLE_COUNT = 36;
@@ -79,13 +76,6 @@ public class ItemVersioningTest extends ItemTestBase {
     private String theItemXml;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ItemVersioningTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
@@ -94,8 +84,8 @@ public class ItemVersioningTest extends ItemTestBase {
     public void setUp() throws Exception {
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
     }
@@ -145,7 +135,7 @@ public class ItemVersioningTest extends ItemTestBase {
     public void testRetrieveVersionHistory() throws Exception {
 
         String versionHistory = retrieveVersionHistory(theItemId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
 
         // assert some node existence -------------------------------
         Node versionHistoryDoc = EscidocRestSoapTestBase.getDocument(versionHistory);
@@ -228,7 +218,7 @@ public class ItemVersioningTest extends ItemTestBase {
         assertXmlExists("Properties status pending", itemDoc, "/item/properties/public-status[text() = 'pending']");
         assertXmlExists("version status pending", itemDoc, "/item/properties/version/status[text() = 'pending']");
 
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.itemTripleStoreValues(itemDoc);
 
         // assert version-history ----------------------------------------------
@@ -494,14 +484,14 @@ public class ItemVersioningTest extends ItemTestBase {
             Node n = XPathAPI.selectSingleNode(resource, xPath);
             if (n == null) {
                 throw new Exception("Node '" + xPath + "' not exists but it should. (Item "
-                    + Select.getObjidValue(resource, getTransport()) + ")");
+                    + Select.getObjidValue(resource) + ")");
             }
             if (value != null) {
                 String nodeValue = n.getTextContent();
                 if (!value.equals(nodeValue)) {
                     throw new Exception("Value of node '" + xPath + "' is '" + nodeValue
-                        + "' and differs from expected value '" + value + "' (Item "
-                        + Select.getObjidValue(resource, getTransport()) + ")");
+                        + "' and differs from expected value '" + value + "' (Item " + Select.getObjidValue(resource)
+                        + ")");
                 }
             }
         }
@@ -514,7 +504,7 @@ public class ItemVersioningTest extends ItemTestBase {
             Node n = XPathAPI.selectSingleNode(resource, xPath);
             if (n != null) {
                 throw new Exception("Node '" + xPath + "' exists but it shouldn't. (Item "
-                    + Select.getObjidValue(resource, getTransport()) + ")");
+                    + Select.getObjidValue(resource) + ")");
             }
         }
 
@@ -529,8 +519,7 @@ public class ItemVersioningTest extends ItemTestBase {
     public void testLifecycleVersions02() throws Exception {
 
         String itemTempl =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "item_without_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
 
         String handle = PWCallback.getHandle();
         String xml = create(itemTempl);
@@ -653,15 +642,9 @@ public class ItemVersioningTest extends ItemTestBase {
 
         // obtain objid from Component
         Vector<String> components = new Vector<String>();
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String href =
-                XPathAPI.selectSingleNode(getDocument(xml), "/item/components/component[1]/@href").getTextContent();
-            components.add(getObjidFromHref(href));
-        }
-        else {
-            components.add(XPathAPI
-                .selectSingleNode(getDocument(xml), "/item/components/component[1]/@objid").getTextContent());
-        }
+        String href1 =
+            XPathAPI.selectSingleNode(getDocument(xml), "/item/components/component[1]/@href").getTextContent();
+        components.add(getObjidFromHref(href1));
         componentIds.put("2", components);
 
         validateItemVersion2(objid, componentIds, xml);
@@ -750,8 +733,7 @@ public class ItemVersioningTest extends ItemTestBase {
         PWCallback.setHandle(handle);
         xml = retrieve(objid);
         Document component =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "component_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "component_for_create.xml");
         // make second component unique
         final String COMPONENT_2_CONTENT_CATEGORY = String.valueOf(System.nanoTime());
         substitute(component, "/component/properties/content-category", COMPONENT_2_CONTENT_CATEGORY);
@@ -760,19 +742,13 @@ public class ItemVersioningTest extends ItemTestBase {
 
         // obtain objid from Component
         components = new Vector<String>();
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String href =
-                XPathAPI.selectSingleNode(getDocument(xml), "/item/components/component[1]/@href").getTextContent();
-            components.add(getObjidFromHref(href));
-            href = XPathAPI.selectSingleNode(getDocument(xml), "/item/components/component[2]/@href").getTextContent();
-            components.add(getObjidFromHref(href));
-        }
-        else {
-            components.add(XPathAPI
-                .selectSingleNode(getDocument(xml), "/item/components/component[1]/@objid").getTextContent());
-            components.add(XPathAPI
-                .selectSingleNode(getDocument(xml), "/item/components/component[2]/@objid").getTextContent());
-        }
+
+        String href2 =
+            XPathAPI.selectSingleNode(getDocument(xml), "/item/components/component[1]/@href").getTextContent();
+        components.add(getObjidFromHref(href2));
+        href2 = XPathAPI.selectSingleNode(getDocument(xml), "/item/components/component[2]/@href").getTextContent();
+        components.add(getObjidFromHref(href2));
+
         componentIds.put("3", components);
 
         HashMap<String, String> requiredValues = new HashMap<String, String>();
@@ -862,8 +838,7 @@ public class ItemVersioningTest extends ItemTestBase {
          * version 1: 0 Components, submitted, released
          */
         String itemTempl =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "item_without_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
 
         String handle = PWCallback.getHandle();
         String xml = create(itemTempl);
@@ -881,15 +856,9 @@ public class ItemVersioningTest extends ItemTestBase {
 
         // obtain objid from Component
         Vector<String> components = new Vector<String>();
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String href =
-                XPathAPI.selectSingleNode(getDocument(xml), "/item/components/component[1]/@href").getTextContent();
-            components.add(getObjidFromHref(href));
-        }
-        else {
-            components.add(XPathAPI
-                .selectSingleNode(getDocument(xml), "/item/components/component[1]/@objid").getTextContent());
-        }
+        String href3 =
+            XPathAPI.selectSingleNode(getDocument(xml), "/item/components/component[1]/@href").getTextContent();
+        components.add(getObjidFromHref(href3));
 
         HashMap<String, Vector<String>> componentIds = new HashMap<String, Vector<String>>();
         componentIds.put("2", components);
@@ -980,8 +949,7 @@ public class ItemVersioningTest extends ItemTestBase {
     public void testLifecycleVersions04() throws Exception {
 
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_1_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_1_component.xml");
 
         xml = create(xml);
         String objid = getObjidValue(xml);
@@ -993,15 +961,10 @@ public class ItemVersioningTest extends ItemTestBase {
 
         // obtain objid from Component
         Vector<String> components = new Vector<String>();
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String href =
-                XPathAPI.selectSingleNode(getDocument(xml), "/item/components/component[1]/@href").getTextContent();
-            components.add(getObjidFromHref(href));
-        }
-        else {
-            components.add(XPathAPI
-                .selectSingleNode(getDocument(xml), "/item/components/component[1]/@objid").getTextContent());
-        }
+
+        String href =
+            XPathAPI.selectSingleNode(getDocument(xml), "/item/components/component[1]/@href").getTextContent();
+        components.add(getObjidFromHref(href));
 
         HashMap<String, Vector<String>> componentIds = new HashMap<String, Vector<String>>();
         componentIds.put("2", components);
@@ -1044,8 +1007,7 @@ public class ItemVersioningTest extends ItemTestBase {
         // FIXME activate this test
 
         String itemTempl =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "item_without_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
 
         String xml = create(itemTempl);
         String objid = getObjidValue(xml);
@@ -1053,7 +1015,7 @@ public class ItemVersioningTest extends ItemTestBase {
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, null, "/RDF/Description/pid",
             "<http://escidoc.de/core/01/properties/pid>");
         tsv.compareValueWithTripleStore(objid, null, "/RDF/Description/pid",
@@ -1191,38 +1153,22 @@ public class ItemVersioningTest extends ItemTestBase {
             assertXmlNotExists("Version " + i + " of Item " + theItemId + " content not as expected (negativ).",
                 EscidocRestSoapTestBase.getDocument(xml), addedElementXPath + i + "]");
             if (i < rounds) {
-                if (getTransport() == Constants.TRANSPORT_REST) {
-                    // hrefs
-                    String baseHref = "/ir/item/" + theItemId + ":" + i;
-                    assertXmlExists("Item href not as expected.", xml, "/item[@href = '" + baseHref + "']");
-                    // baseHref += ":" + i;
-                    assertXmlExists("Item properties href not as expected.", xml, "/item/properties[@href = '"
-                        + baseHref + "/properties']");
-                    NodeList nl =
-                        selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component");
-                    for (int j = nl.getLength() - 1; j >= 0; j--) {
-                        selectSingleNodeAsserted(nl.item(j), "self::node()/@href");
-                        String compId = getIdFromHrefValue(selectSingleNode(nl.item(j), "./@href").getTextContent());
-                        selectSingleNodeAsserted(nl.item(j), "self::node()[@href = '" + baseHref
-                            + "/components/component/" + compId + "']");
-                        selectSingleNodeAsserted(nl.item(j), "./properties[@href = '" + baseHref
-                            + "/components/component/" + compId + "/properties']");
-                        selectSingleNodeAsserted(nl.item(j), "./properties[substring(@href, 1, " + baseHref.length()
-                            + ") = '" + baseHref + "']");
-                    }
-                }
-                else {
-                    // objid gives no version info
-                    // String versionedObjid = theItemId + ":" + i;
-                    // assertXmlExists("Item objid not as expected.", xml,
-                    // "/item[@objid = '" + versionedObjid + "']");
-
-                    NodeList nl =
-                        selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component");
-                    for (int j = nl.getLength() - 1; j >= 0; j--) {
-                        selectSingleNodeAsserted(nl.item(j), "self::node()/@objid");
-                        String compId = selectSingleNode(nl.item(j), "./@objid").getTextContent();
-                    }
+                // hrefs
+                String baseHref = "/ir/item/" + theItemId + ":" + i;
+                assertXmlExists("Item href not as expected.", xml, "/item[@href = '" + baseHref + "']");
+                // baseHref += ":" + i;
+                assertXmlExists("Item properties href not as expected.", xml, "/item/properties[@href = '" + baseHref
+                    + "/properties']");
+                NodeList nl = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component");
+                for (int j = nl.getLength() - 1; j >= 0; j--) {
+                    selectSingleNodeAsserted(nl.item(j), "self::node()/@href");
+                    String compId = getIdFromHrefValue(selectSingleNode(nl.item(j), "./@href").getTextContent());
+                    selectSingleNodeAsserted(nl.item(j), "self::node()[@href = '" + baseHref + "/components/component/"
+                        + compId + "']");
+                    selectSingleNodeAsserted(nl.item(j), "./properties[@href = '" + baseHref + "/components/component/"
+                        + compId + "/properties']");
+                    selectSingleNodeAsserted(nl.item(j), "./properties[substring(@href, 1, " + baseHref.length()
+                        + ") = '" + baseHref + "']");
                 }
             }
             assertXmlExists("Version number ", xml, "/item/properties/version/number[text() = '" + i + "']");
@@ -1231,7 +1177,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
         // retrieve versions
         String versionHistory = retrieveVersionHistory(theItemId);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         Node versionHistoryDoc = EscidocRestSoapTestBase.getDocument(versionHistory);
         selectSingleNodeAsserted(versionHistoryDoc, "/version-history");
         NodeList versions = selectNodeList(versionHistoryDoc, "/version-history/version");
@@ -1269,7 +1215,7 @@ public class ItemVersioningTest extends ItemTestBase {
         assertXmlValidItem(xml);
 
         versionHistory = retrieveVersionHistory(id);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         assertXmlExists("Missing status submitted within event", versionHistory,
             "/version-history/version[1]/events/event[1]/" + "eventType[text() = 'submitted']");
 
@@ -1286,7 +1232,7 @@ public class ItemVersioningTest extends ItemTestBase {
         assertXmlValidItem(xml);
 
         versionHistory = retrieveVersionHistory(id);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         assertXmlExists("Event submitted ", versionHistory, "/version-history/version[1]/events/event[1]/"
             + "eventType[text() = 'released']");
 
@@ -1300,7 +1246,7 @@ public class ItemVersioningTest extends ItemTestBase {
         assertXmlValidItem(xml);
 
         versionHistory = retrieveVersionHistory(id);
-        assertXmlValidVersionHistory(getTransport(), versionHistory);
+        assertXmlValidVersionHistory(versionHistory);
         assertXmlExists("Missing withdraw comment within event", versionHistory,
             "/version-history/version[1]/events/event[1]/" + "eventType[text() = 'withdrawn']");
         /*
@@ -1878,9 +1824,7 @@ public class ItemVersioningTest extends ItemTestBase {
             itemXml = retrieve(id + ":" + i);
             assertXmlExists("Wrong dc:title in version " + i, itemXml,
                 "/item/md-records/md-record[@name='escidoc']/metadata/title" + "[text() = 'Title Version " + i + "']");
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                assertXmlExists("Wrong xlink:title in version " + i, itemXml, "/item[@title='Title Version " + i + "']");
-            }
+            assertXmlExists("Wrong xlink:title in version " + i, itemXml, "/item[@title='Title Version " + i + "']");
             assertXmlExists("Wrong dc:title in version " + i, itemXml,
                 "/item/md-records/md-record[@name='escidoc']/metadata/description" + "[text() = 'Description Version "
                     + i + "']");
@@ -2285,48 +2229,32 @@ public class ItemVersioningTest extends ItemTestBase {
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":1");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":1");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/properties/latest-release");
         forbiddenValues.add("/item/components/component");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
-
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "pending", "/RDF/Description/public-status",
@@ -2398,41 +2326,26 @@ public class ItemVersioningTest extends ItemTestBase {
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":1");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":1");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/properties/latest-release");
         forbiddenValues.add("/item/components/component");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
+        forbiddenValues.add("/item/@objid");
 
         validateResource(xml, expectedValues, forbiddenValues);
     }
@@ -2469,49 +2382,34 @@ public class ItemVersioningTest extends ItemTestBase {
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":1");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":1");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "released", "/RDF/Description/public-status",
@@ -2582,90 +2480,55 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/components/component", null);
         expectedValues.put("/item/components/component[1]/md-records/md-record", null);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
-            // Component
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/created-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
+        // Component
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/created-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/created-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/created-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/valid-status", "valid");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/valid-status", "valid");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/visibility", "public");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/visibility", "public");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/content-category", "pre-print");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/content-category", "pre-print");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@title", "Component " + componentIds.get("2").get(0));
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/content/@title", "Component " + componentIds.get("2").get(0));
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@href", "/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "/content");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/content/@href", "/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "/content");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@storage", "internal-managed");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-
-            // Component
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/properties/created-by/@objid", "escidoc:testsystemadministrator");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/properties/valid-status", "valid");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/properties/visibility", "public");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/properties/content-category", "pre-print");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/content/@href", "/ir/item/" + objid + "/components/component/" + componentIds.get("2").get(0)
-                + "/content");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/content/@storage", "internal-managed");
-        }
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/content/@storage", "internal-managed");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[2]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
     }
 
@@ -2700,44 +2563,28 @@ public class ItemVersioningTest extends ItemTestBase {
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
-
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
     }
 
@@ -2771,93 +2618,54 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/properties/content-model-specific/cms-prop/@test", "1");
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":2");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":2");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
+        // Component
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/created-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
 
-            // Component
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/created-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/created-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/created-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/valid-status", "valid");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/valid-status", "valid");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/visibility", "public");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/visibility", "public");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/content-category", "pre-print");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/content-category", "pre-print");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/content/@title", "Component " + componentIds.get("2").get(0));
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@title", "Component " + componentIds.get("2").get(0));
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/content/@href", "/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "/content");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@href", "/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "/content");
-
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@storage", "internal-managed");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-
-            // Component
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/properties/created-by/@objid", "escidoc:testsystemadministrator");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/properties/valid-status", "valid");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/properties/visibility", "public");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/properties/content-category", "pre-print");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/content/@title", "Component " + componentIds.get("2").get(0));
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/content/@href", "/ir/item/" + objid + "/components/component/" + componentIds.get("2").get(0)
-                + "/content");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("2").get(0)
-                + "']/content/@storage", "internal-managed");
-        }
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("2").get(0) + "']/content/@storage", "internal-managed");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
     }
 
@@ -2902,86 +2710,52 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/components/component/properties/" + "content-category[text() ='pre-print']", null);
 
         expectedValues.put("/item/components/component[1]/md-records/md-record", null);
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":3");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":3");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":2");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":2");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
+        // Component
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("3").get(0) + "']/properties/created-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
 
-            // Component
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("3").get(0) + "']/properties/created-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("3").get(0) + "']/properties/created-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("3").get(0) + "']/properties/created-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("3").get(0) + "']/properties/valid-status", "valid");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("3").get(0) + "']/properties/valid-status", "valid");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("3").get(0) + "']/properties/visibility", "public");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("3").get(0) + "']/properties/visibility", "public");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("3").get(0) + "']/content/@title", "Component " + componentIds.get("3").get(0));
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("3").get(0) + "']/content/@title", "Component " + componentIds.get("3").get(0));
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("3").get(0) + "']/content/@href", "/ir/item/" + objid + "/components/component/"
+            + componentIds.get("3").get(0) + "/content");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("3").get(0) + "']/content/@href", "/ir/item/" + objid + "/components/component/"
-                + componentIds.get("3").get(0) + "/content");
-
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
-                + componentIds.get("3").get(0) + "']/content/@storage", "internal-managed");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-
-            // Component
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("3").get(0)
-                + "']/properties/created-by/@objid", "escidoc:testsystemadministrator");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("3").get(0)
-                + "']/properties/valid-status", "valid");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("3").get(0)
-                + "']/properties/visibility", "public");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("3").get(0)
-                + "']/content/@href", "/ir/item/" + objid + "/components/component/" + componentIds.get("3").get(0)
-                + "/content");
-
-            expectedValues.put("/item/components/component[@objid='" + componentIds.get("3").get(0)
-                + "']/content/@storage", "internal-managed");
-        }
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + "/components/component/"
+            + componentIds.get("3").get(0) + "']/content/@storage", "internal-managed");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[3]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
-
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
     }
 
@@ -3017,75 +2791,55 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/properties/content-model-specific/cms-prop/@test", "1");
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":3");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":3");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":2");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":2");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
+        // Component
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/created-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
 
-            // Component
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/created-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/created-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/created-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/valid-status", "valid");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/valid-status", "valid");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/visibility", "public");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/visibility", "public");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
+            + componentIds.get("2").get(0) + "']/properties/content-category", "pre-print");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
-                + componentIds.get("2").get(0) + "']/properties/content-category", "pre-print");
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
+            + componentIds.get("2").get(0) + "']/content/@title", "Component " + componentIds.get("2").get(0));
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@title", "Component " + componentIds.get("2").get(0));
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
+            + componentIds.get("2").get(0) + "']/content/@href", "/ir/item/" + objid + ":2" + "/components/component/"
+            + componentIds.get("2").get(0) + "/content");
 
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@href", "/ir/item/" + objid + ":2"
-                + "/components/component/" + componentIds.get("2").get(0) + "/content");
-
-            expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@storage", "internal-managed");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-
-            // FIXME add Component tests
-
-        }
+        expectedValues.put("/item/components/component[@href='/ir/item/" + objid + ":2" + "/components/component/"
+            + componentIds.get("2").get(0) + "']/content/@storage", "internal-managed");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[3]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
-
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
     }
 
@@ -3121,51 +2875,35 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/properties/content-model-specific/cms-prop/@test", "1");
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
-
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":2");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":2");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
         // Keep in mind that these are the Triples for version 3!
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "released", "/RDF/Description/public-status",
@@ -3231,51 +2969,35 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/properties/content-model-specific/cms-prop/@test", "1");
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":3");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":3");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
-
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":2");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":2");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
         // Keep in mind that these are the Triples for version 3!
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "released", "/RDF/Description/public-status",
@@ -3342,51 +3064,34 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/properties/content-model-specific/cms-prop/@test", "1");
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
-
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
-
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "released", "/RDF/Description/public-status",
@@ -3460,51 +3165,35 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/properties/content-model-specific/cms-prop/@test", "1");
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":2");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
-
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[2]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
+        forbiddenValues.add("/item/@objid");
 
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "released", "/RDF/Description/public-status",
@@ -3581,50 +3270,35 @@ public class ItemVersioningTest extends ItemTestBase {
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":3");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":3");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
+        forbiddenValues.add("/item/@objid");
 
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "released", "/RDF/Description/public-status",
@@ -3699,53 +3373,34 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/properties/content-model-specific/cms-prop/@test", "1");
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":5");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":5");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
-
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":3");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-
-            // TODO add SOAP checks
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":3");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[5]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
-
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "released", "/RDF/Description/public-status",
@@ -3821,53 +3476,35 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/properties/content-model-specific/cms-prop/@test", "1");
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":5");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":5");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
-
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":3");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-
-            // TODO add SOAP checks
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":3");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[5]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
+        forbiddenValues.add("/item/@objid");
 
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "released", "/RDF/Description/public-status",
@@ -3942,50 +3579,36 @@ public class ItemVersioningTest extends ItemTestBase {
 
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":3");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":3");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":1");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[2]");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
+        forbiddenValues.add("/item/@objid");
 
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "released", "/RDF/Description/public-status",
@@ -4065,50 +3688,34 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/components/component[2]", null);
         expectedValues.put("/item/components/component[3]", null);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":5");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":5");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":3");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":3");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[4]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
-
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "released", "/RDF/Description/public-status",
@@ -4188,50 +3795,34 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/components/component[3]", null);
         expectedValues.put("/item/components/component[4]", null);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-            expectedValues.put("/item/properties/@title", "Properties");
-            expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
-            expectedValues.put("/item/properties/context/@title", "Context Example 1");
-            expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
-            expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
+        expectedValues.put("/item/@href", null);
+        expectedValues.put("/item/properties/@title", "Properties");
+        expectedValues.put("/item/properties/context/@href", "/ir/context/escidoc:ex1");
+        expectedValues.put("/item/properties/context/@title", "Context Example 1");
+        expectedValues.put("/item/properties/content-model/@href", "/cmm/content-model/escidoc:ex4");
+        expectedValues.put("/item/properties/content-model/@title", "Generic Content Model");
 
-            expectedValues.put("/item/properties/version/modified-by/@href",
-                "/aa/user-account/escidoc:testsystemadministrator");
-            expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
+        expectedValues.put("/item/properties/version/modified-by/@href",
+            "/aa/user-account/escidoc:testsystemadministrator");
+        expectedValues.put("/item/properties/version/modified-by/@title", "Test System Administrator User");
 
-            expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":5");
-            expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
+        expectedValues.put("/item/properties/latest-version/@href", "/ir/item/" + objid + ":5");
+        expectedValues.put("/item/properties/latest-version/@title", "Latest Version");
 
-            expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":3");
-            expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-            expectedValues.put("/item/properties/context/@objid", "escidoc:ex1");
-            expectedValues.put("/item/properties/content-model/@objid", "escidoc:ex4");
-            expectedValues.put("/item/properties/version/modified-by/@objid", "escidoc:testsystemadministrator");
-        }
+        expectedValues.put("/item/properties/latest-release/@href", "/ir/item/" + objid + ":3");
+        expectedValues.put("/item/properties/latest-release/@title", "Latest public version");
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[5]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
-
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Context Example 1", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "released", "/RDF/Description/public-status",
@@ -4305,33 +3896,19 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
 
         expectedValues.put("/item/components/component/properties/content-category", "some value of version 2");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-        }
+        expectedValues.put("/item/@href", null);
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[2]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
-
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Test Collection", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "pending", "/RDF/Description/public-status",
@@ -4407,33 +3984,19 @@ public class ItemVersioningTest extends ItemTestBase {
         expectedValues.put("/item/md-records/md-record[@name = 'escidoc']", null);
 
         expectedValues.put("/item/components/component/properties/content-category", "some value of version 2");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-        }
+        expectedValues.put("/item/@href", null);
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[2]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
-
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Test Collection", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "pending", "/RDF/Description/public-status",
@@ -4507,32 +4070,19 @@ public class ItemVersioningTest extends ItemTestBase {
 
         expectedValues.put("/item/components/component/properties/content-category", "some value of version 3");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            expectedValues.put("/item/@href", null);
-        }
-        else {
-            expectedValues.put("/item/@objid", null);
-        }
+        expectedValues.put("/item/@href", null);
 
         // -------------------
         Vector<String> forbiddenValues = new Vector<String>();
         forbiddenValues.add("/item/properties/context[2]");
         forbiddenValues.add("/item/components/component[2]");
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            forbiddenValues.add("/item/@objid");
-        }
-        else {
-            forbiddenValues.add("/item/@href");
-            forbiddenValues.add("/item/properties/@title");
-        }
-
+        forbiddenValues.add("/item/@objid");
         validateResource(xml, expectedValues, forbiddenValues);
 
         /*
          * Validate TripleStore Value
          */
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.compareValueWithTripleStore(objid, "Test Collection", "/RDF/Description/context-title",
             "<http://escidoc.de/core/01/properties/context-title>");
         tsv.compareValueWithTripleStore(objid, "pending", "/RDF/Description/public-status",

@@ -31,8 +31,6 @@ package de.escidoc.core.test.oum.organizationalunit;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,15 +40,7 @@ import java.util.Map;
  *
  * @author Torsten Tetteroo
  */
-@RunWith(value = Parameterized.class)
 public class RetrieveParentObjectsTest extends OrganizationalUnitTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public RetrieveParentObjectsTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test retrieving the list of parents of an existing organizational unit that has two parents.

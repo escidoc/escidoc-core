@@ -32,23 +32,12 @@ import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.adm.interfaces.AdminClientInterface;
 
-import javax.xml.rpc.ServiceException;
-
 /**
  * Offers access to the AdminHandler.
  *
  * @author Steffen Wagner
  */
 public class AdminClient extends ClientBase implements AdminClientInterface {
-
-    /**
-     * Admin Client.
-     *
-     * @param transport The transport identifier.
-     */
-    public AdminClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Delete objects from repository.

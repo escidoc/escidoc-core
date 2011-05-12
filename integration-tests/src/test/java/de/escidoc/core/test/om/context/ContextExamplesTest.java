@@ -31,8 +31,6 @@ package de.escidoc.core.test.om.context;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.NodeList;
 
 import java.util.HashMap;
@@ -43,15 +41,7 @@ import java.util.Map;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ContextExamplesTest extends ContextTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContextExamplesTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Delete all Contexts with same name before test runs to avoid unique name conflicts. Finding contexts with the

@@ -41,11 +41,8 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedR
 import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -68,17 +65,9 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ItemTest extends ItemTestBase {
 
     private String theItemId = null;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemTest(final int transport) {
-        super(transport);
-    }
 
     /**
      *
@@ -87,8 +76,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testIssue575() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_issue575.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_issue575.xml");
         String item = toString(xmlItem, true);
 
         item = create(item);
@@ -108,8 +96,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testNatasaItemWithWhitespaces() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "ItemWithWhitespaces.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "ItemWithWhitespaces.xml");
         String item = toString(xmlItem, true);
 
         item = create(item);
@@ -125,8 +112,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testModsMd() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_MODS-MD.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_MODS-MD.xml");
         String item = toString(xmlItem, true);
 
         item = create(item);
@@ -139,8 +125,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testContentModelSpecific() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_issue575.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_issue575.xml");
         String item = toString(deleteNodes(xmlItem, "/item/properties/content-model-specific"), true);
 
         // create item without c-m-s
@@ -183,9 +168,7 @@ public class ItemTest extends ItemTestBase {
      */
     @Test
     public void testZimPBItemCreate() throws Exception {
-        Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "item-001.xml");
+        Document xmlItem = EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "item-001.xml");
         String item = toString(xmlItem, true);
 
         item = create(item);
@@ -207,9 +190,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testZimJMItemCreate() throws Exception {
 
-        Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "item-002.xml");
+        Document xmlItem = EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "item-002.xml");
         String item = toString(xmlItem, true);
         // assertXmlValidItem(item);
 
@@ -231,8 +212,7 @@ public class ItemTest extends ItemTestBase {
     public void testCreateUpdateZim2Item() throws Exception {
 
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "zim2-create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "zim2-create.xml");
         String item = toString(xmlItem, true);
         // assertXmlValidItem(item);
 
@@ -242,8 +222,7 @@ public class ItemTest extends ItemTestBase {
         String createdItemId = getIdFromRootElement(item);
 
         Document item4Update =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "zim2-updateTest.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "zim2-updateTest.xml");
         String item4UpdateXml = toString(item4Update, true);
 
         item4UpdateXml = item4UpdateXml.replaceAll("##ITEMID##", createdItemId);
@@ -267,8 +246,7 @@ public class ItemTest extends ItemTestBase {
     public void testCreateUpdateIssue615() throws Exception {
 
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "zim2-create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "zim2-create.xml");
         String item = toString(xmlItem, true);
         // assertXmlValidItem(item);
 
@@ -276,19 +254,10 @@ public class ItemTest extends ItemTestBase {
         assertXmlValidItem(item);
 
         String createdItemId = getIdFromRootElement(item);
-        String createTitle;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            createTitle = selectSingleNode(getDocument(item), "/item/@title").getNodeValue();
-        }
-        else {
-            createTitle =
-                selectSingleNode(getDocument(item), "/item/md-records/md-record[@name='escidoc']//title/text()")
-                    .getNodeValue();
-        }
+        String createTitle = selectSingleNode(getDocument(item), "/item/@title").getNodeValue();
 
         Document item4Update =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "zim2-updateTest.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "zim2-updateTest.xml");
         // remove all changes except title in metadata
         item4Update = (Document) deleteElement(item4Update, "/item/properties/content-model-specific/*");
         String item4UpdateXml = toString(item4Update, true);
@@ -306,15 +275,7 @@ public class ItemTest extends ItemTestBase {
         assertXmlValidItem(updatedItem);
         updatedItem = retrieve(createdItemId);
         assertXmlValidItem(updatedItem);
-        String updateTitle;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            updateTitle = selectSingleNode(getDocument(updatedItem), "/item/@title").getNodeValue();
-        }
-        else {
-            updateTitle =
-                selectSingleNode(getDocument(updatedItem), "/item/md-records/md-record[@name='escidoc']//title/text()")
-                    .getNodeValue();
-        }
+        String updateTitle = selectSingleNode(getDocument(updatedItem), "/item/@title").getNodeValue();
 
         assertNotEquals("Title should be changed", createTitle, updateTitle);
 
@@ -350,7 +311,7 @@ public class ItemTest extends ItemTestBase {
         // "escidoc_item_198_for_create.xml");
 
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
@@ -364,50 +325,39 @@ public class ItemTest extends ItemTestBase {
         this.theItemId = getIdFromRootElement(createdXml);
 
         String creatorId = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            Node itemObjiId = selectSingleNode(EscidocRestSoapTestBase.getDocument(createdXml), "/item/@objid");
-            this.theItemId = itemObjiId.getTextContent();
-            Node creatorIdNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(createdXml), "/item/properties/created-by/@objid");
-            creatorId = creatorIdNode.getTextContent();
-        }
-        else {
-            Pattern PATTERN_OBJID_ATTRIBUTE = null;
-            PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
+        Pattern PATTERN_OBJID_ATTRIBUTE = null;
+        PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
 
-            Node itemObjiId = selectSingleNode(EscidocRestSoapTestBase.getDocument(createdXml), "/item/@href");
+        Node itemObjiId = selectSingleNode(EscidocRestSoapTestBase.getDocument(createdXml), "/item/@href");
 
-            Matcher m1 = PATTERN_OBJID_ATTRIBUTE.matcher(itemObjiId.getTextContent());
-            if (m1.find()) {
-                this.theItemId = m1.group(1);
-            }
+        Matcher m1 = PATTERN_OBJID_ATTRIBUTE.matcher(itemObjiId.getTextContent());
+        if (m1.find()) {
+            this.theItemId = m1.group(1);
+        }
 
-            Node creatorIdNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(createdXml), "/item/properties/created-by/@href");
-            Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(creatorIdNode.getTextContent());
-            if (m3.find()) {
-                creatorId = m3.group(1);
-            }
+        Node creatorIdNode =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(createdXml), "/item/properties/created-by/@href");
+        Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(creatorIdNode.getTextContent());
+        if (m3.find()) {
+            creatorId = m3.group(1);
         }
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlEquals("href value is wrong", createdDocument, "/item/@href", "/ir/item/" + theItemId);
-            assertXmlEquals("href value is wrong", createdDocument, "/item/md-records/@href ", "/ir/item/" + theItemId
-                + "/md-records");
-            assertXmlEquals("href value is wrong", createdDocument, "/item/md-records/md-record[1]/@href ", "/ir/item/"
-                + theItemId + "/md-records/md-record/escidoc");
-            assertXmlEquals("href value is wrong", createdDocument, "/item/properties/@href ", "/ir/item/" + theItemId
-                + "/properties");
-            assertXmlEquals("href value is wrong", createdDocument, "/item/md-records/md-record[1]/@href ", "/ir/item/"
-                + theItemId + "/md-records/md-record/escidoc");
-            assertXmlEquals("href value is wrong", createdDocument, "/item/properties/@href ", "/ir/item/" + theItemId
-                + "/properties");
-            Node itemTitle = selectSingleNode(createdDocument, "/item/@title");
-            assertNotNull(itemTitle);
-            assertFalse("item title is not set", itemTitle.getTextContent().equals(""));
-            Node creatorTitle = selectSingleNode(createdDocument, "/item/properties/created-by/@title");
-            assertNotNull(creatorTitle.getTextContent());
-            assertNotNull(creatorId);
-        }
+        assertXmlEquals("href value is wrong", createdDocument, "/item/@href", "/ir/item/" + theItemId);
+        assertXmlEquals("href value is wrong", createdDocument, "/item/md-records/@href ", "/ir/item/" + theItemId
+            + "/md-records");
+        assertXmlEquals("href value is wrong", createdDocument, "/item/md-records/md-record[1]/@href ", "/ir/item/"
+            + theItemId + "/md-records/md-record/escidoc");
+        assertXmlEquals("href value is wrong", createdDocument, "/item/properties/@href ", "/ir/item/" + theItemId
+            + "/properties");
+        assertXmlEquals("href value is wrong", createdDocument, "/item/md-records/md-record[1]/@href ", "/ir/item/"
+            + theItemId + "/md-records/md-record/escidoc");
+        assertXmlEquals("href value is wrong", createdDocument, "/item/properties/@href ", "/ir/item/" + theItemId
+            + "/properties");
+        Node itemTitle = selectSingleNode(createdDocument, "/item/@title");
+        assertNotNull(itemTitle);
+        assertFalse("item title is not set", itemTitle.getTextContent().equals(""));
+        Node creatorTitle = selectSingleNode(createdDocument, "/item/properties/created-by/@title");
+        assertNotNull(creatorTitle.getTextContent());
+        assertNotNull(creatorId);
 
         Node modifiedDate = selectSingleNode(createdDocument, "/item/@last-modification-date");
         assertNotNull(modifiedDate);
@@ -445,7 +395,7 @@ public class ItemTest extends ItemTestBase {
     public void testOMCi1b() throws Exception {
 
         Document xmlItem1 =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents1 = deleteElement(xmlItem1, "/item/components");
         String itemWithoutComponents1 = toString(xmlItemWithoutComponents1, false);
@@ -479,7 +429,7 @@ public class ItemTest extends ItemTestBase {
         final Class<?> ec = XmlCorruptedException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         deleteElement(toBeCreatedDocument, XPATH_ITEM_CONTENT_MODEL);
         addAfter(toBeCreatedDocument, XPATH_ITEM_CONTEXT, createElementNode(toBeCreatedDocument,
@@ -507,17 +457,11 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testOMCi2a() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
 
-        Node xmlItemWithoutContextId;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xmlItemWithoutContextId = substitute(xmlItemWithoutComponents, "/item/properties/context/@href", "");
-        }
-        else {
-            xmlItemWithoutContextId = substitute(xmlItemWithoutComponents, "/item/properties/context/@objid", "");
-        }
+        Node xmlItemWithoutContextId = substitute(xmlItemWithoutComponents, "/item/properties/context/@href", "");
 
         String itemWithoutContextId = toString(xmlItemWithoutContextId, true);
 
@@ -538,7 +482,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testOMCi2b() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         Node xmlItemWithoutContentType = deleteElement(xmlItemWithoutComponents, "/item/properties/content-model");
@@ -563,7 +507,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testOMCi2c() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         Node xmlItemWithoutEscidocMetadata =
@@ -589,7 +533,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testOMCi2e() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         // Node attribute =
@@ -619,19 +563,12 @@ public class ItemTest extends ItemTestBase {
     public void testOMCi3a() throws Exception {
 
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         Node xmlItemWithNotExistingContext = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xmlItemWithNotExistingContext =
-                substitute(xmlItemWithoutComponents, "/item/properties/context/@href", "bla");
-        }
-        else {
-            xmlItemWithNotExistingContext =
-                substitute(xmlItemWithoutComponents, "/item/properties/context/@objid", "bla");
-        }
 
+        xmlItemWithNotExistingContext = substitute(xmlItemWithoutComponents, "/item/properties/context/@href", "bla");
         String itemWithNotExistingContext = toString(xmlItemWithNotExistingContext, true);
 
         Class<?> ec = ContextNotFoundException.class;
@@ -652,7 +589,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testOMCi4() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutSecondComponent = deleteElement(xmlItem, "/item/components/component[2]");
         String itemWithoutSecondComponent = toString(xmlItemWithoutSecondComponent, true);
@@ -662,80 +599,64 @@ public class ItemTest extends ItemTestBase {
 
         String componentId = null;
         String creatorId = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            Node itemObjiId = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@objid");
-            this.theItemId = itemObjiId.getTextContent();
-            Node componentObjiId =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@objid");
-            componentId = componentObjiId.getTextContent();
-            Node creatorIdNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@objid");
-            creatorId = creatorIdNode.getTextContent();
-        }
-        else {
-            Pattern PATTERN_OBJID_ATTRIBUTE = null;
-            PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
+        Pattern PATTERN_OBJID_ATTRIBUTE = null;
+        PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
 
-            Node itemObjiId = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@href");
+        Node itemObjiId = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@href");
 
-            Matcher m1 = PATTERN_OBJID_ATTRIBUTE.matcher(itemObjiId.getTextContent());
-            if (m1.find()) {
-                this.theItemId = m1.group(1);
-            }
-
-            Node componentObjiId =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@href");
-
-            Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(componentObjiId.getTextContent());
-            if (m2.find()) {
-                componentId = m2.group(1);
-            }
-
-            Node creatorIdNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@href");
-            Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(creatorIdNode.getTextContent());
-            if (m3.find()) {
-                creatorId = m3.group(1);
-            }
+        Matcher m1 = PATTERN_OBJID_ATTRIBUTE.matcher(itemObjiId.getTextContent());
+        if (m1.find()) {
+            this.theItemId = m1.group(1);
         }
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/@href", "/ir/item/"
-                + this.theItemId);
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/md-records/@href ",
-                "/ir/item/" + this.theItemId + "/md-records");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/md-records/md-record[1]/@href ", "/ir/item/" + this.theItemId + "/md-records/md-record/escidoc");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/properties/@href ",
-                "/ir/item/" + this.theItemId + "/properties");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/components/@href",
-                "/ir/item/" + this.theItemId + "/components");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component/@href", "/ir/item/" + this.theItemId + "/components/component/"
-                    + componentId);
-            assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component/properties/created-by/@href", "/aa/user-account/" + creatorId);
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[1]/content/@href", "/ir/item/" + this.theItemId + "/components/component/"
-                    + componentId + "/content");
-            Node itemTitle = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@title");
-            assertNotNull(itemTitle);
-            assertFalse("item title is not set", itemTitle.getTextContent().equals(""));
-            Node creatorTitle =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@title");
-            assertNotNull(creatorTitle.getTextContent());
-            Node componentTitleNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@title");
-            String componentTitle = componentTitleNode.getTextContent();
-            assertFalse("component title is not set", componentTitle.equals(""));
-            assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component/properties/created-by/@title", creatorTitle.getTextContent());
-            Node contentTitleNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/content/@title");
-            assertNotNull(contentTitleNode);
+        Node componentObjiId =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@href");
 
-            assertFalse("component content title is not set", contentTitleNode.getTextContent().equals(""));
+        Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(componentObjiId.getTextContent());
+        if (m2.find()) {
+            componentId = m2.group(1);
         }
+
+        Node creatorIdNode =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@href");
+        Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(creatorIdNode.getTextContent());
+        if (m3.find()) {
+            creatorId = m3.group(1);
+        }
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/@href", "/ir/item/"
+            + this.theItemId);
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/md-records/@href ",
+            "/ir/item/" + this.theItemId + "/md-records");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/md-records/md-record[1]/@href ", "/ir/item/" + this.theItemId + "/md-records/md-record/escidoc");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/properties/@href ",
+            "/ir/item/" + this.theItemId + "/properties");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/components/@href",
+            "/ir/item/" + this.theItemId + "/components");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component/@href", "/ir/item/" + this.theItemId + "/components/component/" + componentId);
+        assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component/properties/created-by/@href", "/aa/user-account/" + creatorId);
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[1]/content/@href", "/ir/item/" + this.theItemId + "/components/component/"
+                + componentId + "/content");
+        Node itemTitle = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@title");
+        assertNotNull(itemTitle);
+        assertFalse("item title is not set", itemTitle.getTextContent().equals(""));
+        Node creatorTitle =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@title");
+        assertNotNull(creatorTitle.getTextContent());
+        Node componentTitleNode =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@title");
+        String componentTitle = componentTitleNode.getTextContent();
+        assertFalse("component title is not set", componentTitle.equals(""));
+        assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component/properties/created-by/@title", creatorTitle.getTextContent());
+        Node contentTitleNode =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/content/@title");
+        assertNotNull(contentTitleNode);
+
+        assertFalse("component content title is not set", contentTitleNode.getTextContent().equals(""));
 
         Node modifiedDate = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@last-modification-date");
         assertNotNull(modifiedDate);
@@ -777,11 +698,10 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testCreatingItemWithOneComponentWithTwoMdRecords() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create_2_Component_Md-Records.xml");
         NodeList mdRecordsBeforeCreate = selectNodeList(xmlItem, "/item/components/component[1]/md-records/md-record");
         String xml = create(toString(xmlItem, false));
-        // System.out.println("xml " + xml);
         assertXmlValidItem(xml);
         Document createdItem = EscidocRestSoapTestBase.getDocument(xml);
         NodeList mdRecordsAfterCreate =
@@ -800,7 +720,7 @@ public class ItemTest extends ItemTestBase {
     public void testOMCi5() throws Exception {
 
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmiItemWithSEcondInlineContent = substitute(xmlItem, "/item/components/component[2]/content", "blablabla");
         Node xmiItemWithoutContentUrl =
@@ -815,105 +735,88 @@ public class ItemTest extends ItemTestBase {
 
         String creatorId = null;
         Vector<String> componentIds = new Vector<String>();
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            NodeList components =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@objid");
-            for (int i = 0; i < components.getLength(); i++) {
-                Node componentObjId = components.item(i);
-                String componentId = componentObjId.getTextContent();
-                componentIds.add(componentId);
+        Pattern PATTERN_OBJID_ATTRIBUTE = null;
+        PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
+
+        NodeList components =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@href");
+
+        for (int i = 0; i < components.getLength(); i++) {
+            Node componentHrefNode = components.item(i);
+            String componentHref = componentHrefNode.getTextContent();
+
+            Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(componentHref);
+            if (m2.find()) {
+                componentIds.add(m2.group(1));
             }
 
-            Node creatorIdNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@objid");
-            creatorId = creatorIdNode.getTextContent();
-        }
-        else {
-            Pattern PATTERN_OBJID_ATTRIBUTE = null;
-            PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
-
-            NodeList components =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@href");
-
-            for (int i = 0; i < components.getLength(); i++) {
-                Node componentHrefNode = components.item(i);
-                String componentHref = componentHrefNode.getTextContent();
-
-                Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(componentHref);
-                if (m2.find()) {
-                    componentIds.add(m2.group(1));
-                }
-
-            }
-
-            Node creatorIdNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@href");
-            Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(creatorIdNode.getTextContent());
-            if (m3.find()) {
-                creatorId = m3.group(1);
-            }
         }
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[1]/content/@href", "/ir/item/" + theItemId + "/components/component/"
-                    + componentIds.get(0) + "/content");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/@href", "/ir/item/"
-                + theItemId);
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/md-records/@href ",
-                "/ir/item/" + theItemId + "/md-records");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/md-records/md-record[1]/@href ", "/ir/item/" + theItemId + "/md-records/md-record/escidoc");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/properties/@href ",
-                "/ir/item/" + theItemId + "/properties");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/components/@href",
-                "/ir/item/" + theItemId + "/components");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[1]/@href", "/ir/item/" + theItemId + "/components/component/"
-                    + componentIds.get(0));
-            assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[1]/properties/created-by/@href", "/aa/user-account/" + creatorId);
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[2]/@href", "/ir/item/" + theItemId + "/components/component/"
-                    + componentIds.get(1));
-            assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[2]/properties/created-by/@href", "/aa/user-account/" + creatorId);
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[2]/content/@href", "/ir/item/" + theItemId + "/components/component/"
-                    + componentIds.get(1) + "/content");
-            Node itemTitle = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@title");
-            assertNotNull(itemTitle);
-            assertFalse("item title is not set", itemTitle.getTextContent().equals(""));
-            Node creatorTitle =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@title");
-            assertNotNull(creatorTitle.getTextContent());
-            NodeList componentTitles =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@title");
-            Vector<String> componentTitlesValues = new Vector<String>();
-            for (int i = 0; i < componentTitles.getLength(); i++) {
-                Node componentTitle = componentTitles.item(i);
-                String title = componentTitle.getTextContent();
-                componentTitlesValues.add(title);
-            }
-            assertFalse("component title is not set", componentTitlesValues.get(0).equals(""));
-            assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[1]/properties/created-by/@title", creatorTitle.getTextContent());
-            NodeList componentContentTitles =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/content/@title");
-            Vector<String> componentContentTitlesValues = new Vector<String>();
-            for (int i = 0; i < componentContentTitles.getLength(); i++) {
-                Node componentContentTitle = componentContentTitles.item(i);
-                String contentTitle = componentContentTitle.getTextContent();
-                componentContentTitlesValues.add(contentTitle);
-
-            }
-            assertFalse("component content title is not set", componentContentTitlesValues.get(1).equals(""));
-
-            assertFalse("component title is not set", componentTitlesValues.get(1).equals(""));
-            assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[2]/properties/created-by/@title", creatorTitle.getTextContent());
-            assertFalse("component content title is not set", componentContentTitlesValues.get(1).equals(""));
+        Node creatorIdNode =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@href");
+        Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(creatorIdNode.getTextContent());
+        if (m3.find()) {
+            creatorId = m3.group(1);
         }
+
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[1]/content/@href", "/ir/item/" + theItemId + "/components/component/"
+                + componentIds.get(0) + "/content");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/@href", "/ir/item/"
+            + theItemId);
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/md-records/@href ",
+            "/ir/item/" + theItemId + "/md-records");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/md-records/md-record[1]/@href ", "/ir/item/" + theItemId + "/md-records/md-record/escidoc");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/properties/@href ",
+            "/ir/item/" + theItemId + "/properties");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/components/@href",
+            "/ir/item/" + theItemId + "/components");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[1]/@href", "/ir/item/" + theItemId + "/components/component/"
+                + componentIds.get(0));
+        assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[1]/properties/created-by/@href", "/aa/user-account/" + creatorId);
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[2]/@href", "/ir/item/" + theItemId + "/components/component/"
+                + componentIds.get(1));
+        assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[2]/properties/created-by/@href", "/aa/user-account/" + creatorId);
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[2]/content/@href", "/ir/item/" + theItemId + "/components/component/"
+                + componentIds.get(1) + "/content");
+        Node itemTitle = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@title");
+        assertNotNull(itemTitle);
+        assertFalse("item title is not set", itemTitle.getTextContent().equals(""));
+        Node creatorTitle =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@title");
+        assertNotNull(creatorTitle.getTextContent());
+        NodeList componentTitles =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@title");
+        Vector<String> componentTitlesValues = new Vector<String>();
+        for (int i = 0; i < componentTitles.getLength(); i++) {
+            Node componentTitle = componentTitles.item(i);
+            String title = componentTitle.getTextContent();
+            componentTitlesValues.add(title);
+        }
+        assertFalse("component title is not set", componentTitlesValues.get(0).equals(""));
+        assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[1]/properties/created-by/@title", creatorTitle.getTextContent());
+        NodeList componentContentTitles =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/content/@title");
+        Vector<String> componentContentTitlesValues = new Vector<String>();
+        for (int i = 0; i < componentContentTitles.getLength(); i++) {
+            Node componentContentTitle = componentContentTitles.item(i);
+            String contentTitle = componentContentTitle.getTextContent();
+            componentContentTitlesValues.add(contentTitle);
+
+        }
+        assertFalse("component content title is not set", componentContentTitlesValues.get(1).equals(""));
+
+        assertFalse("component title is not set", componentTitlesValues.get(1).equals(""));
+        assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[2]/properties/created-by/@title", creatorTitle.getTextContent());
+        assertFalse("component content title is not set", componentContentTitlesValues.get(1).equals(""));
 
         Node modifiedDate = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@last-modification-date");
         assertNotNull(modifiedDate);
@@ -963,7 +866,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testOMCi8() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutFirstComponent = deleteElement(xmlItem, "/item/components/component[1]");
         String itemWithoutFirstComponent = toString(xmlItemWithoutFirstComponent, true);
@@ -973,86 +876,70 @@ public class ItemTest extends ItemTestBase {
 
         String componentId = null;
         String creatorId = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            Node itemObjiId = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@objid");
-            this.theItemId = itemObjiId.getTextContent();
-            Node componentObjiId =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@objid");
-            componentId = componentObjiId.getTextContent();
-            Node creatorIdNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@objid");
-            creatorId = creatorIdNode.getTextContent();
-        }
-        else {
-            Pattern PATTERN_OBJID_ATTRIBUTE = null;
-            PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
+        Pattern PATTERN_OBJID_ATTRIBUTE = null;
+        PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
 
-            Node itemObjiId = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@href");
+        Node itemObjiId = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@href");
 
-            Matcher m1 = PATTERN_OBJID_ATTRIBUTE.matcher(itemObjiId.getTextContent());
-            if (m1.find()) {
-                this.theItemId = m1.group(1);
-            }
-
-            Node componentObjiId =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@href");
-
-            assertNotNull("Component href missing", componentObjiId);
-            assertNotNull("Component href value missing", componentObjiId.getTextContent());
-
-            Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(componentObjiId.getTextContent());
-            if (m2.find()) {
-                componentId = m2.group(1);
-            }
-
-            Node creatorIdNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@href");
-            Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(creatorIdNode.getTextContent());
-            if (m3.find()) {
-                creatorId = m3.group(1);
-            }
+        Matcher m1 = PATTERN_OBJID_ATTRIBUTE.matcher(itemObjiId.getTextContent());
+        if (m1.find()) {
+            this.theItemId = m1.group(1);
         }
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/@href", "/ir/item/"
-                + theItemId);
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/md-records/@href ",
-                "/ir/item/" + theItemId + "/md-records");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/md-records/md-record[1]/@href ", "/ir/item/" + theItemId + "/md-records/md-record/escidoc");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/properties/@href ",
-                "/ir/item/" + theItemId + "/properties");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/components/@href",
-                "/ir/item/" + theItemId + "/components");
+        Node componentObjiId =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@href");
 
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component/@href", "/ir/item/" + theItemId + "/components/component/" + componentId);
-            assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component/properties/created-by/@href", "/aa/user-account/" + creatorId);
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[1]/content/@href", "/ir/item/" + theItemId + "/components/component/"
-                    + componentId + "/content");
-            Node itemTitle = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@title");
-            assertNotNull(itemTitle);
-            assertFalse("item title is not set", itemTitle.getTextContent().equals(""));
-            Node creatorTitle =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@title");
-            assertNotNull(creatorTitle.getTextContent());
+        assertNotNull("Component href missing", componentObjiId);
+        assertNotNull("Component href value missing", componentObjiId.getTextContent());
 
-            Node componentTitleNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@title");
-            String componentTitle = componentTitleNode.getTextContent();
-
-            assertFalse("component title is not set", componentTitle.equals(""));
-            assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component/properties/created-by/@title", creatorTitle.getTextContent());
-            Node contentTitleNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/content/@title");
-            assertNotNull(contentTitleNode);
-
-            assertFalse("component content title is not set", contentTitleNode.getTextContent().equals(""));
-
+        Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(componentObjiId.getTextContent());
+        if (m2.find()) {
+            componentId = m2.group(1);
         }
+
+        Node creatorIdNode =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@href");
+        Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(creatorIdNode.getTextContent());
+        if (m3.find()) {
+            creatorId = m3.group(1);
+        }
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/@href", "/ir/item/"
+            + theItemId);
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/md-records/@href ",
+            "/ir/item/" + theItemId + "/md-records");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/md-records/md-record[1]/@href ", "/ir/item/" + theItemId + "/md-records/md-record/escidoc");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/properties/@href ",
+            "/ir/item/" + theItemId + "/properties");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/components/@href",
+            "/ir/item/" + theItemId + "/components");
+
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component/@href", "/ir/item/" + theItemId + "/components/component/" + componentId);
+        assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component/properties/created-by/@href", "/aa/user-account/" + creatorId);
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[1]/content/@href", "/ir/item/" + theItemId + "/components/component/"
+                + componentId + "/content");
+        Node itemTitle = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@title");
+        assertNotNull(itemTitle);
+        assertFalse("item title is not set", itemTitle.getTextContent().equals(""));
+        Node creatorTitle =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@title");
+        assertNotNull(creatorTitle.getTextContent());
+
+        Node componentTitleNode =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@title");
+        String componentTitle = componentTitleNode.getTextContent();
+
+        assertFalse("component title is not set", componentTitle.equals(""));
+        assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component/properties/created-by/@title", creatorTitle.getTextContent());
+        Node contentTitleNode =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/content/@title");
+        assertNotNull(contentTitleNode);
+
+        assertFalse("component content title is not set", contentTitleNode.getTextContent().equals(""));
 
         Node modifiedDate = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@last-modification-date");
         assertNotNull(modifiedDate);
@@ -1095,8 +982,8 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testOMCi9() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_2_components.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_2_components.xml");
 
         String xml = create(toString(xmlItem, false));
         assertXmlValidItem(xml);
@@ -1104,109 +991,90 @@ public class ItemTest extends ItemTestBase {
 
         String creatorId = null;
         Vector<String> componentIds = new Vector<String>();
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            NodeList components =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@objid");
-            for (int i = 0; i < components.getLength(); i++) {
-                Node componentObjId = components.item(i);
-                String componentId = componentObjId.getTextContent();
-                componentIds.add(componentId);
+        Pattern PATTERN_OBJID_ATTRIBUTE = null;
+        PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
+
+        NodeList components =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@href");
+
+        for (int i = 0; i < components.getLength(); i++) {
+            Node componentHrefNode = components.item(i);
+            String componentHref = componentHrefNode.getTextContent();
+
+            Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(componentHref);
+            if (m2.find()) {
+                componentIds.add(m2.group(1));
             }
 
-            Node creatorIdNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@objid");
-            creatorId = creatorIdNode.getTextContent();
-        }
-        else {
-            Pattern PATTERN_OBJID_ATTRIBUTE = null;
-            PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
-
-            NodeList components =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@href");
-
-            for (int i = 0; i < components.getLength(); i++) {
-                Node componentHrefNode = components.item(i);
-                String componentHref = componentHrefNode.getTextContent();
-
-                Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(componentHref);
-                if (m2.find()) {
-                    componentIds.add(m2.group(1));
-                }
-
-            }
-
-            Node creatorIdNode =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@href");
-            Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(creatorIdNode.getTextContent());
-            if (m3.find()) {
-                creatorId = m3.group(1);
-            }
         }
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/@href", "/ir/item/"
-                + theItemId);
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/md-records/@href ",
-                "/ir/item/" + theItemId + "/md-records");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/md-records/md-record[1]/@href ", "/ir/item/" + theItemId + "/md-records/md-record/escidoc");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/properties/@href ",
-                "/ir/item/" + theItemId + "/properties");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/components/@href",
-                "/ir/item/" + theItemId + "/components");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[1]/@href", "/ir/item/" + theItemId + "/components/component/"
-                    + componentIds.get(0));
-            assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[1]/properties/created-by/@href", "/aa/user-account/" + creatorId);
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[1]/content/@href", "/ir/item/" + theItemId + "/components/component/"
-                    + componentIds.get(0) + "/content");
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[2]/@href", "/ir/item/" + theItemId + "/components/component/"
-                    + componentIds.get(1));
-            assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[2]/properties/created-by/@href", "/aa/user-account/" + creatorId);
-            assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[2]/content/@href", "/ir/item/" + theItemId + "/components/component/"
-                    + componentIds.get(1) + "/content");
-            Node itemTitle = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@title");
-            assertNotNull(itemTitle);
-            assertFalse("item title is not set", itemTitle.getTextContent().equals(""));
-            Node creatorTitle =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@title");
-            assertNotNull(creatorTitle.getTextContent());
+        Node creatorIdNode =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@href");
+        Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(creatorIdNode.getTextContent());
+        if (m3.find()) {
+            creatorId = m3.group(1);
+        }
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/@href", "/ir/item/"
+            + theItemId);
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/md-records/@href ",
+            "/ir/item/" + theItemId + "/md-records");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/md-records/md-record[1]/@href ", "/ir/item/" + theItemId + "/md-records/md-record/escidoc");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/properties/@href ",
+            "/ir/item/" + theItemId + "/properties");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml), "/item/components/@href",
+            "/ir/item/" + theItemId + "/components");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[1]/@href", "/ir/item/" + theItemId + "/components/component/"
+                + componentIds.get(0));
+        assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[1]/properties/created-by/@href", "/aa/user-account/" + creatorId);
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[1]/content/@href", "/ir/item/" + theItemId + "/components/component/"
+                + componentIds.get(0) + "/content");
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[2]/@href", "/ir/item/" + theItemId + "/components/component/"
+                + componentIds.get(1));
+        assertXmlEquals("creator value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[2]/properties/created-by/@href", "/aa/user-account/" + creatorId);
+        assertXmlEquals("href value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[2]/content/@href", "/ir/item/" + theItemId + "/components/component/"
+                + componentIds.get(1) + "/content");
+        Node itemTitle = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@title");
+        assertNotNull(itemTitle);
+        assertFalse("item title is not set", itemTitle.getTextContent().equals(""));
+        Node creatorTitle =
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/properties/created-by/@title");
+        assertNotNull(creatorTitle.getTextContent());
 
-            NodeList componentTitles =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@title");
-            Vector<String> componentTitlesValues = new Vector<String>();
-            for (int i = 0; i < componentTitles.getLength(); i++) {
-                Node componentTitle = componentTitles.item(i);
-                String title = componentTitle.getTextContent();
-                componentTitlesValues.add(title);
-            }
-
-            assertFalse("component title is not set", componentTitlesValues.get(0).equals(""));
-            assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[1]/properties/created-by/@title", creatorTitle.getTextContent());
-            NodeList componentContentTitles =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/content/@title");
-            Vector<String> componentContentTitlesValues = new Vector<String>();
-            for (int i = 0; i < componentContentTitles.getLength(); i++) {
-                Node componentContentTitle = componentContentTitles.item(i);
-                String contentTitle = componentContentTitle.getTextContent();
-                componentContentTitlesValues.add(contentTitle);
-
-            }
-            assertFalse("component content title is not set", componentContentTitlesValues.get(1).equals(""));
-
-            assertFalse("component title is not set", componentTitlesValues.get(1).equals(""));
-            assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
-                "/item/components/component[2]/properties/created-by/@title", creatorTitle.getTextContent());
-
-            assertFalse("component content title is not set", componentContentTitlesValues.get(1).equals(""));
+        NodeList componentTitles =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/@title");
+        Vector<String> componentTitlesValues = new Vector<String>();
+        for (int i = 0; i < componentTitles.getLength(); i++) {
+            Node componentTitle = componentTitles.item(i);
+            String title = componentTitle.getTextContent();
+            componentTitlesValues.add(title);
         }
 
+        assertFalse("component title is not set", componentTitlesValues.get(0).equals(""));
+        assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[1]/properties/created-by/@title", creatorTitle.getTextContent());
+        NodeList componentContentTitles =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component/content/@title");
+        Vector<String> componentContentTitlesValues = new Vector<String>();
+        for (int i = 0; i < componentContentTitles.getLength(); i++) {
+            Node componentContentTitle = componentContentTitles.item(i);
+            String contentTitle = componentContentTitle.getTextContent();
+            componentContentTitlesValues.add(contentTitle);
+
+        }
+        assertFalse("component content title is not set", componentContentTitlesValues.get(1).equals(""));
+
+        assertFalse("component title is not set", componentTitlesValues.get(1).equals(""));
+        assertXmlEquals("creator title value is wrong", EscidocRestSoapTestBase.getDocument(xml),
+            "/item/components/component[2]/properties/created-by/@title", creatorTitle.getTextContent());
+
+        assertFalse("component content title is not set", componentContentTitlesValues.get(1).equals(""));
         Node modifiedDate = selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/item/@last-modification-date");
         assertNotNull(modifiedDate);
         assertFalse("modified date is not set", modifiedDate.getTextContent().equals(""));
@@ -1256,8 +1124,8 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testCreateItemWithFirstComponendWithoutMdRecords() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_2_components.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_2_components.xml");
         Node itemWith1ComponentWithoutMdRecords = deleteElement(xmlItem, "item/components/component[1]/md-records");
         Node itemWithContentin1ComponentWithExternalUrl =
             substitute(itemWith1ComponentWithoutMdRecords, "item/components/component[1]/content/@storage",
@@ -1288,7 +1156,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testOMCi12a() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutFirstComponent = deleteElement(xmlItem, "/item/components/component[1]");
         Node xmiItemWithWrongtHrefContent =
@@ -1315,7 +1183,7 @@ public class ItemTest extends ItemTestBase {
     public void testOMCi12e() throws Exception {
         String newDate = "1970-01-01T01:00:00.000Z";
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Element creator = xmlItem.createElementNS(PROPERTIES_NS_URI_04, "prop:creation-date");
         creator.setTextContent(newDate);
@@ -1358,10 +1226,10 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testRelations() throws Exception {
         String itemXml1 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String itemXml2 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
 
         String createdItemId1 = getIdFromRootElement(itemXml1);
@@ -1370,7 +1238,7 @@ public class ItemTest extends ItemTestBase {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
@@ -1408,7 +1276,7 @@ public class ItemTest extends ItemTestBase {
     public void testRelations02() throws Exception {
 
         InputStream fis =
-            ResourceProvider.getFileInputStreamFromFile(TEMPLATE_EXAMPLE_PATH + "/" + getTransport(false),
+            ResourceProvider.getFileInputStreamFromFile(TEMPLATE_EXAMPLE_PATH + "/rest",
                 "item-minimal-for-create-01.xml");
         String itemTemplate = ResourceProvider.getContentsFromInputStream(fis);
 
@@ -1418,15 +1286,12 @@ public class ItemTest extends ItemTestBase {
         String itemId1 = getIdFromRootElement(itemXml1);
         String itemId2 = getIdFromRootElement(itemXml2);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            // make hrefs from objid
-            itemId1 = "/ir/item/" + itemId1;
-            itemId2 = "/ir/item/" + itemId2;
-        }
+        // make hrefs from objid
+        itemId1 = "/ir/item/" + itemId1;
+        itemId2 = "/ir/item/" + itemId2;
 
         String itemRelationsXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_relation_01.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_relation_01.xml");
 
         itemRelationsXml = itemRelationsXml.replaceAll("###ITEM_ID1###", itemId1);
         itemRelationsXml = itemRelationsXml.replaceAll("###ITEM_ID2###", itemId2);
@@ -1465,7 +1330,7 @@ public class ItemTest extends ItemTestBase {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
@@ -1498,7 +1363,7 @@ public class ItemTest extends ItemTestBase {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
@@ -1527,22 +1392,17 @@ public class ItemTest extends ItemTestBase {
     public void testRelationsWithWrongPredicate() throws Exception {
 
         String itemXml1 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String itemXml2 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
 
         String createdItemId1 = null;
         String createdItemId2 = null;
 
-        Pattern PATTERN_OBJID_ATTRIBUTE = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
-        }
-        else {
-            PATTERN_OBJID_ATTRIBUTE = Pattern.compile("href=\"/ir/item/([^\"]*)\"");
-        }
+        Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("href=\"/ir/item/([^\"]*)\"");
+
         Matcher m1 = PATTERN_OBJID_ATTRIBUTE.matcher(itemXml1);
         if (m1.find()) {
             createdItemId1 = m1.group(1);
@@ -1555,7 +1415,7 @@ public class ItemTest extends ItemTestBase {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
@@ -1584,7 +1444,7 @@ public class ItemTest extends ItemTestBase {
     public void testComponentsInFirstVersion() throws Exception {
         // create an item with components
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         String itemXml = toString(xmlItem, true);
         final String createdItem = create(itemXml);
@@ -1613,7 +1473,7 @@ public class ItemTest extends ItemTestBase {
     public void testCreateFromRetrieve() throws Exception {
 
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         deleteElement(xmlItem, "/item/components/component[1]");
 
@@ -1636,7 +1496,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testCreateItemWith2Mdrecords() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_2_md_records_for_create.xml");
         NodeList mdrecords = selectNodeList(xmlItem, "/item/md-records/md-record");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
@@ -1659,7 +1519,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testCreateItemWith2EscidocMdrecords() throws Exception {
         String xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_2_escidoc_md_records_for_create.xml");
         try {
             create(xmlItem);
@@ -1680,7 +1540,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testCreateItemWithoutMdrecords() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_2_md_records_for_create.xml");
 
         Node xmlItemWithoutMdRecords = deleteElement(xmlItem, "/item/md-records");
@@ -1707,8 +1567,8 @@ public class ItemTest extends ItemTestBase {
     public void testDeleteComponent01() throws Exception {
 
         String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         Document itemDoc = getDocument(createdItem);
 
@@ -1738,8 +1598,8 @@ public class ItemTest extends ItemTestBase {
     public void testDeleteComponent02() throws Exception {
 
         String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         Document itemDoc = getDocument(createdItem);
 
@@ -1759,7 +1619,7 @@ public class ItemTest extends ItemTestBase {
     public void testExternalUrlWithParam() throws Exception {
 
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemDoc = deleteElement(xmlItem, "/item/components/component[not(@href) or position() = 1]");
         // set URL
@@ -1792,13 +1652,11 @@ public class ItemTest extends ItemTestBase {
     public void testMDRecordUniqueNames01() throws Exception {
 
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
 
         // add new md-record
-        String xmlMdRecord =
-            EscidocRestSoapTestBase
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), "md-record.xml");
+        String xmlMdRecord = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "md-record.xml");
         Node mdRecord = selectSingleNode(EscidocRestSoapTestBase.getDocument(xmlMdRecord), "/md-record");
 
         xmlItem.importNode(mdRecord, true);

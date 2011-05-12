@@ -31,8 +31,6 @@ package de.escidoc.core.test.om.container;
 import de.escidoc.core.test.common.fedora.Client;
 import org.fcrepo.server.types.gen.Datastream;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import static org.junit.Assert.assertFalse;
 
@@ -41,15 +39,7 @@ import static org.junit.Assert.assertFalse;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ContainerExamplesTest extends ContainerTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerExamplesTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test if the example container for create is still compatible with framework.

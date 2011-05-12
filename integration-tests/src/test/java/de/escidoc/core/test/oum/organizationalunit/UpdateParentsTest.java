@@ -33,10 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorrupted
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -46,15 +43,7 @@ import org.w3c.dom.Node;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class UpdateParentsTest extends OrganizationalUnitTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public UpdateParentsTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test successfully updating parent relation of an Organizational Unit by using the general update method.
@@ -76,13 +65,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         Document ou2doc = getDocument(ou2xml);
 
         Element parent = ou2doc.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
-
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            parent.setAttribute("objid", ou1id);
-        }
-        else {
-            parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ou1id);
-        }
+        parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ou1id);
 
         Node parents = selectSingleNode(ou2doc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
         parents.appendChild(parent);
@@ -92,13 +75,8 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         ou2doc = getDocument(ou2xml);
 
         // assert updated values
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            assertXmlExists("Missing one parent", ou2doc, XPATH_ORGANIZATIONAL_UNIT_PARENT + "[@objid='" + ou1id + "']");
-        }
-        else {
-            assertXmlExists("Missing one parent", ou2doc, XPATH_ORGANIZATIONAL_UNIT_PARENT
-                + "[@href='/oum/organizational-unit/" + ou1id + "']");
-        }
+        assertXmlExists("Missing one parent", ou2doc, XPATH_ORGANIZATIONAL_UNIT_PARENT
+            + "[@href='/oum/organizational-unit/" + ou1id + "']");
         assertXmlExists("Wrong number of parents", ou2doc, XPATH_ORGANIZATIONAL_UNIT_PARENTS + "[count(./parent)='1']");
     }
 
@@ -123,13 +101,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         Document ou2parents = getDocument(parentsXml);
 
         Element parent = ou2parents.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
-
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            parent.setAttribute("objid", ou1id);
-        }
-        else {
-            parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ou1id);
-        }
+        parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ou1id);
 
         Node parents = selectSingleNode(ou2parents, "/parents");
         parents.appendChild(parent);
@@ -139,13 +111,8 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         ou2parents = getDocument(ou2parentsXml);
 
         // assert updated values
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            assertXmlExists("Missing one parent", ou2parents, "/parents/parent[@objid='" + ou1id + "']");
-        }
-        else {
-            assertXmlExists("Missing one parent", ou2parents, "/parents/parent[@href='/oum/organizational-unit/"
-                + ou1id + "']");
-        }
+        assertXmlExists("Missing one parent", ou2parents, "/parents/parent[@href='/oum/organizational-unit/" + ou1id
+            + "']");
         assertXmlExists("Wrong number of parents", ou2parents, "/parents[count(./parent)='1']");
     }
 
@@ -187,12 +154,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
         final String createdXml = retrieve(this.ouChild1ParentId);
         Document createdDocument = getDocument(createdXml);
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            substitute(createdDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_HREF, "/ir/organizational-unit/" + id);
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            substitute(createdDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_OBJID, id);
-        }
+        substitute(createdDocument, XPATH_ORGANIZATIONAL_UNIT_PARENT_XLINK_HREF, "/ir/organizational-unit/" + id);
         String toBeUpdatedXml = toString(createdDocument, true);
         try {
             update(this.ouChild1ParentId, toBeUpdatedXml);

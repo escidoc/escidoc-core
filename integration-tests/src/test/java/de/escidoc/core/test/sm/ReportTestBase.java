@@ -40,13 +40,6 @@ import org.apache.http.util.EntityUtils;
 public class ReportTestBase extends SmTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ReportTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Test retrieving an report from the mock framework.
      *
      * @param xml Treport-parameters xml.

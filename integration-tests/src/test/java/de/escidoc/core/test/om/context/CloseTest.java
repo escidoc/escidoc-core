@@ -30,11 +30,8 @@ package de.escidoc.core.test.om.context;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 /**
@@ -42,17 +39,9 @@ import org.w3c.dom.Document;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class CloseTest extends ContextTestBase {
 
     private String path = TEMPLATE_CONTEXT_PATH;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public CloseTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -61,7 +50,7 @@ public class CloseTest extends ContextTestBase {
      */
     @Before
     public void setUp() throws Exception {
-        this.path += "/" + getTransport(false);
+        this.path += "/rest";
     }
 
     /**
@@ -140,21 +129,13 @@ public class CloseTest extends ContextTestBase {
         close(id, getTaskParam(lastModified));
 
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         Document itemDoc = EscidocRestSoapTestBase.getDocument(xmlData);
 
         String contextId = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            contextId = selectSingleNode(createdDoc, "/context/@href").getNodeValue();
-            substitute(itemDoc, "/item/properties/context/@href", contextId);
-
-        }
-        else {
-            contextId = selectSingleNode(createdDoc, "/context/@objid").getNodeValue();
-            substitute(itemDoc, "/item/properties/context/@objid", contextId);
-        }
-
+        contextId = selectSingleNode(createdDoc, "/context/@href").getNodeValue();
+        substitute(itemDoc, "/item/properties/context/@href", contextId);
         handleXmlResult(getItemClient().create(toString(itemDoc, true)));
 
     }
@@ -179,20 +160,13 @@ public class CloseTest extends ContextTestBase {
         String opened = retrieve(contextId);
 
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         Document itemDoc = EscidocRestSoapTestBase.getDocument(xmlData);
 
         String contextIdRef = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            contextIdRef = selectSingleNode(createdDoc, "/context/@href").getNodeValue();
-            substitute(itemDoc, "/item/properties/context/@href", contextIdRef);
-
-        }
-        else {
-            contextIdRef = selectSingleNode(createdDoc, "/context/@objid").getNodeValue();
-            substitute(itemDoc, "/item/properties/context/@objid", contextIdRef);
-        }
+        contextIdRef = selectSingleNode(createdDoc, "/context/@href").getNodeValue();
+        substitute(itemDoc, "/item/properties/context/@href", contextIdRef);
 
         String itemXml = handleXmlResult(getItemClient().create(toString(itemDoc, true)));
         itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);

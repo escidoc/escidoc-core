@@ -31,8 +31,6 @@ package de.escidoc.core.test.adm;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import static org.junit.Assert.fail;
 
@@ -41,18 +39,7 @@ import static org.junit.Assert.fail;
  *
  * @author André Schenk
  */
-@RunWith(value = Parameterized.class)
 public class DeleteObjectsTest extends AdminToolTestBase {
-
-    /**
-     * The constructor.
-     *
-     * @param transport The transport identifier.
-     * @throws Exception If anything fails.
-     */
-    public DeleteObjectsTest(final int transport) throws Exception {
-        super(transport);
-    }
 
     /**
      * Delete a list of objects from Fedora and search index.
@@ -63,21 +50,18 @@ public class DeleteObjectsTest extends AdminToolTestBase {
     public void testDeleteObjects() throws Exception {
         // create item
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemId = getObjidValue(createItem(xml));
 
         // delete item
         xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<param><id>" + itemId + "</id></param>";
-        System.out.println(deleteObjects(xml));
 
         // wait until process has finished
         final int waitTime = 5000;
 
         while (true) {
             String status = getPurgeStatus();
-
-            System.out.println(status);
             if (status.indexOf("finished") > 0) {
                 break;
             }

@@ -50,7 +50,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-//@RunWith(value = Parameterized.class)
 public class ContainerTestBase extends OmTestBase {
 
     protected static final String XPATH_CONTAINER = "/container";
@@ -161,11 +160,7 @@ public class ContainerTestBase extends OmTestBase {
 
     private final String containerUrl;
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerTestBase(final int transport) {
-        super(transport);
+    public ContainerTestBase() {
         containerUrl = getFrameworkUrl() + "/ir/container/";
     }
 
@@ -624,8 +619,7 @@ public class ContainerTestBase extends OmTestBase {
     public String createItemFromTemplate(final String templateName) throws Exception {
 
         // create an item and save the id
-        String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
+        String xmlData = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
         return getObjidValue(theItemXml);
@@ -641,8 +635,7 @@ public class ContainerTestBase extends OmTestBase {
      */
     public String getContainerTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
-            templateName);
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", templateName);
 
     }
 
@@ -656,8 +649,7 @@ public class ContainerTestBase extends OmTestBase {
      */
     public String getItemTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestBase
-            .getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
 
     }
 

@@ -36,8 +36,6 @@ import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -58,7 +56,6 @@ import static org.junit.Assert.fail;
  * 
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class SearchTest extends SearchTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchTest.class);
@@ -76,14 +73,9 @@ public class SearchTest extends SearchTestBase {
 
     private static String startTime = "";
 
-    /**
-     * @param transport
-     *            The transport identifier.
-     */
-    public SearchTest(final int transport) {
-        super(transport);
-        item = new ItemHelper(transport);
-        container = new ContainerHelper(transport);
+    public SearchTest() {
+        item = new ItemHelper();
+        container = new ContainerHelper();
     }
 
     /**
@@ -141,7 +133,7 @@ public class SearchTest extends SearchTestBase {
             for (int i = 0; i < Constants.NUM_CONTAINERS; i++) {
                 String xmlData =
                     EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH,
-                        "escidoc_search_container" + i + "_" + getTransport(false) + ".xml");
+                        "escidoc_search_container" + i + "_rest.xml");
                 String xml = container.create(xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 containerIds[i] = getId(xml);
@@ -187,7 +179,7 @@ public class SearchTest extends SearchTestBase {
                 // Create Item submit and release it //////////////////////////
                 String xmlData =
                     EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i
-                        + "_" + getTransport(false) + ".xml");
+                        + "_rest.xml");
                 String xml = container.createItem(containerIds[0], xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 itemIds[i] = getId(xml);
@@ -303,7 +295,7 @@ public class SearchTest extends SearchTestBase {
             for (int i = 0; i < Constants.NUM_CONTAINERS; i++) {
                 String xmlData =
                     EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH,
-                        "escidoc_search_container" + i + "_" + getTransport(false) + ".xml");
+                        "escidoc_search_container" + i + "_rest.xml");
                 String xml = container.create(xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 containerIds[i] = getId(xml);
@@ -342,7 +334,7 @@ public class SearchTest extends SearchTestBase {
                 byte[] buf = new byte[8192];
                 StringBuffer itemXml = new StringBuffer("");
                 String entryName = zipentry.getName();
-                if (entryName.matches(".*" + getTransport(false) + "\\.xml")) {
+                if (entryName.matches(".*rest\\.xml")) {
                     while ((n = zipinputstream.read(buf)) > -1) {
                         byte[] real = new byte[n];
                         for (int j = 0; j < n; j++) {
@@ -438,7 +430,7 @@ public class SearchTest extends SearchTestBase {
     @Test
     public void testSBEX2() throws Exception {
         HashMap<String, String[]> parameters = new HashMap<String, String[]>();
-        parameters.put(FILTER_PARAMETER_OPERATION, new String[]{FILTER_PARAMETER_EXPLAIN});
+        parameters.put(FILTER_PARAMETER_OPERATION, new String[] { FILTER_PARAMETER_EXPLAIN });
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
@@ -455,7 +447,7 @@ public class SearchTest extends SearchTestBase {
     @Test
     public void testSBEX3() throws Exception {
         HashMap<String, String[]> parameters = new HashMap<String, String[]>();
-        parameters.put(FILTER_PARAMETER_OPERATION, new String[]{FILTER_PARAMETER_EXPLAIN});
+        parameters.put(FILTER_PARAMETER_OPERATION, new String[] { FILTER_PARAMETER_EXPLAIN });
         try {
             explain(parameters, "zzz");
             fail("No exception occurred on explain in non-existing database.");

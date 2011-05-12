@@ -34,8 +34,6 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertTrue;
@@ -45,7 +43,6 @@ import static org.junit.Assert.assertTrue;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContainerCreateTest extends ContainerTestBase {
 
     public static final String XPATH_CONTAINER_XLINK_HREF = "/container/@href";
@@ -55,20 +52,13 @@ public class ContainerCreateTest extends ContainerTestBase {
     private String path = "";
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ContainerCreateTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
-        this.path += "/" + getTransport(false);
+        this.path += "/rest";
     }
 
     /**

@@ -28,25 +28,13 @@
  */
 package de.escidoc.core.test.common.client.servlet.sb;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-
-import javax.xml.rpc.ServiceException;
-
-import org.apache.axis.message.MessageElement;
-import org.apache.axis.types.PositiveInteger;
-import org.apache.axis.types.URI;
-
-import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
+
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Offers access methods to the escidoc REST and SOAP interface of the Search resource. (SRW-Server)
@@ -54,15 +42,6 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
  * @author Michael Hoppe
  */
 public class SearchClient extends ClientBase {
-
-    /**
-     * @param transport
-     *            The transport identifier.
-     */
-    public SearchClient(final int transport) {
-        super(transport);
-
-    }
 
     /**
      * Retrieve srw search response.
@@ -83,9 +62,7 @@ public class SearchClient extends ClientBase {
                 paramString.append("&");
             }
             String value = parameters.get(key);
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                value = URLEncoder.encode(value, HttpHelper.HTTP_DEFAULT_CHARSET);
-            }
+            value = URLEncoder.encode(value, HttpHelper.HTTP_DEFAULT_CHARSET);
             paramString.append(key).append("=").append(value);
         }
         parameters.put("database", database);
@@ -111,9 +88,9 @@ public class SearchClient extends ClientBase {
             String key = (String) iter.next();
             paramString.append(key).append("=").append(parameters.get(key));
         }
-        parameters.put("database", new String[]{database});
-        return callEsciDoc("Sb.explain", METHOD_EXPLAIN, Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI
-                    + "/" + database + paramString, new String[] {}, parameters);
+        parameters.put("database", new String[] { database });
+        return callEsciDoc("Sb.explain", METHOD_EXPLAIN, Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
+            + database + paramString, new String[] {}, parameters);
     }
 
     /**
@@ -136,9 +113,7 @@ public class SearchClient extends ClientBase {
                 paramString.append("&");
             }
             String value = parameters.get(key);
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                value = URLEncoder.encode(value, HttpHelper.HTTP_DEFAULT_CHARSET);
-            }
+            value = URLEncoder.encode(value, HttpHelper.HTTP_DEFAULT_CHARSET);
             paramString.append(key).append("=").append(value);
         }
         parameters.put("database", database);

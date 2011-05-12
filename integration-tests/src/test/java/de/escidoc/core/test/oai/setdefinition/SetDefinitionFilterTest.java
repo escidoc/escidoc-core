@@ -1,10 +1,7 @@
 package de.escidoc.core.test.oai.setdefinition;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -13,15 +10,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(value = Parameterized.class)
 public class SetDefinitionFilterTest extends SetDefinitionTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public SetDefinitionFilterTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test successful retrieving one existing set definition resource using filter set specification.
@@ -51,17 +40,9 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
             selectNodeList(retrievedDocument, XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION);
         assertEquals("Unexpected number of set definitions.", 1, setDefinitionNodes.getLength());
         String objidInTheList = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String href =
-                selectSingleNode(retrievedDocument, XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION + "/@href")
-                    .getNodeValue();
-            objidInTheList = getIdFromHrefValue(href);
-        }
-        else {
-            objidInTheList =
-                selectSingleNode(retrievedDocument, XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION + "/@objid")
-                    .getNodeValue();
-        }
+        String href =
+            selectSingleNode(retrievedDocument, XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION + "/@href").getNodeValue();
+        objidInTheList = getIdFromHrefValue(href);
         assertEquals("objid of the set definition is wrong", objid, objidInTheList);
     }
 

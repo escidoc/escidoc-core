@@ -29,8 +29,6 @@
 package de.escidoc.core.test.cmm.contentmodel;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -44,15 +42,7 @@ import java.util.Vector;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContentModelExamplesTest extends ContentModelTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentModelExamplesTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test creating a ContentModel with minimal content.

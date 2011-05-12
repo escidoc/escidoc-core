@@ -36,8 +36,6 @@ import de.escidoc.core.test.om.container.ContainerTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 /**
@@ -45,7 +43,6 @@ import org.w3c.dom.Document;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class ItemParentsTest extends ItemTestBase {
 
     private static ContainerTestBase containerTestBase;
@@ -56,12 +53,8 @@ public class ItemParentsTest extends ItemTestBase {
 
     private static int methodCounter = 0;
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemParentsTest(final int transport) {
-        super(transport);
-        containerTestBase = new ContainerTestBase(transport);
+    public ItemParentsTest() {
+        containerTestBase = new ContainerTestBase();
     }
 
     /**

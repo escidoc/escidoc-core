@@ -38,13 +38,6 @@ import de.escidoc.core.test.om.context.ContextTestBase;
 public class ContextHelper extends ContextTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ContextHelper(final int transport) {
-        super(transport);
-    }
-
-    /**
      * @param xml The item as xml.
      * @return String item-xml
      * @throws Exception e

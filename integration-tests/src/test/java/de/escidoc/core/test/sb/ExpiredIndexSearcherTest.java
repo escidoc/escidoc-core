@@ -33,8 +33,6 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.util.HashMap;
 
@@ -45,18 +43,13 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class ExpiredIndexSearcherTest extends SearchTestBase {
 
     private static final String INDEX_NAME = "item_container_admin";
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public ExpiredIndexSearcherTest(final int transport) {
-        super(transport);
-        item = new ItemHelper(transport);
-        container = new ContainerHelper(transport);
+    public ExpiredIndexSearcherTest() {
+        item = new ItemHelper();
+        container = new ContainerHelper();
     }
 
     /**
@@ -95,8 +88,7 @@ public class ExpiredIndexSearcherTest extends SearchTestBase {
             null, null, null);
         // /////////////////////////////////////////////////////////////////////
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item0" + "_"
-                + getTransport(false) + ".xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item0_rest.xml");
         item.create(xmlData);
         HashMap<String, String> parameters = new HashMap<String, String>();
         HashMap<String, String> scanParameters = new HashMap<String, String>();

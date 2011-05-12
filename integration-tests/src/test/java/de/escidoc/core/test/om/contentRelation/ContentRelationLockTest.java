@@ -39,8 +39,6 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertEquals;
@@ -52,7 +50,6 @@ import static org.junit.Assert.fail;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ContentRelationLockTest extends ContentRelationTestBase {
 
     private String theContentRelationXml;
@@ -60,13 +57,6 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
     private String theContentRelationId;
 
     private String[] user = null;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentRelationLockTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -119,16 +109,10 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             "/content-relation/properties/lock-status", "locked");
         assertXmlNotNull("lock-date", contentRelationDoc, "/content-relation/properties/lock-date");
 
-        String lockOwner = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            lockOwner =
-                getObjidFromHref(selectSingleNode(contentRelationDoc, "/content-relation/properties/lock-owner/@href")
-                    .getTextContent());
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            lockOwner =
-                selectSingleNode(contentRelationDoc, "/content-relation/properties/lock-owner/@objid").getTextContent();
-        }
+        String lockOwner =
+            getObjidFromHref(selectSingleNode(contentRelationDoc, "/content-relation/properties/lock-owner/@href")
+                .getTextContent());
+
         assertNotNull(lockOwner);
         assertXmlValidContentRelation(contentRelationXml);
 
@@ -158,16 +142,9 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             "/content-relation/properties/lock-status", "locked");
         assertXmlNotNull("lock-date", contentRelationDoc, "/content-relation/properties/lock-date");
 
-        String lockOwner = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            lockOwner =
-                getObjidFromHref(selectSingleNode(contentRelationDoc, "/content-relation/properties/lock-owner/@href")
-                    .getTextContent());
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            lockOwner =
-                selectSingleNode(contentRelationDoc, "/content-relation/properties/lock-owner/@objid").getTextContent();
-        }
+        String lockOwner =
+            getObjidFromHref(selectSingleNode(contentRelationDoc, "/content-relation/properties/lock-owner/@href")
+                .getTextContent());
         assertNotNull(lockOwner);
 
         assertXmlValidContentRelation(contentRelationXml);

@@ -3,22 +3,12 @@ package de.escidoc.core.test.oai.setdefinition;
 import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-@RunWith(value = Parameterized.class)
 public class SetDefinitionCreateTest extends SetDefinitionTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public SetDefinitionCreateTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test successful creating an SetDefinition resource.

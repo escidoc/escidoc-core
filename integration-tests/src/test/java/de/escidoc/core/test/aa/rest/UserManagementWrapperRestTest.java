@@ -29,7 +29,6 @@
 package de.escidoc.core.test.aa.rest;
 
 import de.escidoc.core.test.aa.UserManagementWrapperAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -41,12 +40,4 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class UserManagementWrapperRestTest extends UserManagementWrapperAbstractTest {
 
-    /**
-     * Constructor.
-     *
-     * @throws Exception e
-     */
-    public UserManagementWrapperRestTest() throws Exception {
-        super(Constants.TRANSPORT_REST);
-    }
 }

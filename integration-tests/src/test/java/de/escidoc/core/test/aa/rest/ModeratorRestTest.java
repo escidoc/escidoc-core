@@ -29,7 +29,6 @@
 package de.escidoc.core.test.aa.rest;
 
 import de.escidoc.core.test.aa.ModeratorAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -70,6 +69,6 @@ public class ModeratorRestTest extends ModeratorAbstractTest {
      */
     public ModeratorRestTest(final int handlerCode, final String userOrGroupId) throws Exception {
 
-        super(Constants.TRANSPORT_REST, handlerCode, userOrGroupId);
+        super(handlerCode, userOrGroupId);
     }
 }

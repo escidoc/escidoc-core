@@ -40,12 +40,8 @@ public class OaiTestBase extends EscidocRestSoapTestBase {
 
     private SetDefinitionClient setDefinitionClient = null;
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public OaiTestBase(final int transport) {
-        super(transport);
-        this.setDefinitionClient = new SetDefinitionClient(transport);
+    public OaiTestBase() {
+        this.setDefinitionClient = new SetDefinitionClient();
     }
 
     /**

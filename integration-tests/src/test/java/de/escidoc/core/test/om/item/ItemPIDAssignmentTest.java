@@ -39,8 +39,6 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -61,7 +59,6 @@ import static org.junit.Assert.fail;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ItemPIDAssignmentTest extends ItemTestBase {
     /*
      * 2008 Jan. the current tests check only the configured behavior for the
@@ -79,11 +76,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
     private final String itemUrl;
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemPIDAssignmentTest(final int transport) {
-        super(transport);
+    public ItemPIDAssignmentTest() {
         itemUrl = getFrameworkUrl() + "/ir/item/";
     }
 
@@ -523,8 +516,8 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         // create item
         final String toBeCreatedXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdXml = null;
         try {
             createdXml = create(toBeCreatedXml);
@@ -641,7 +634,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
             pid = assignVersionPid(itemVersionId, pidParam);
             String versionHistory = retrieveVersionHistory(itemId);
-            assertXmlValidVersionHistory(getTransport(), versionHistory);
+            assertXmlValidVersionHistory(versionHistory);
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
@@ -1154,8 +1147,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     @Test
     public void testCreateItemWithObjPid() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "item_with_object_pid.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "item_with_object_pid.xml");
 
         String pidValue = "hdl:someHandle/" + getRandom() + "/" + getRandom();
         Node pidNode = selectSingleNode(xmlItem, XPATH_ITEM_OBJECT_PID);
@@ -1861,8 +1853,8 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     private String createItem() throws Exception {
 
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         return (create(xmlData));
     }

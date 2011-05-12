@@ -30,7 +30,6 @@ package de.escidoc.core.test.om.item.rest;
 
 import de.escidoc.core.common.exceptions.remote.system.WebserverSystemException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 import de.escidoc.core.test.om.item.ItemTestBase;
 import org.junit.Test;
@@ -45,13 +44,6 @@ import static org.junit.Assert.fail;
  * @author Michael Schneider
  */
 public class ItemComponentExternalContentRestTest extends ItemTestBase implements ItemXpathsProvider {
-
-    /**
-     * Constructor.
-     */
-    public ItemComponentExternalContentRestTest() {
-        super(Constants.TRANSPORT_REST);
-    }
 
     /**
      * Test successfully creating an item with a component containing a binary content,referenced by an URL, and the
@@ -91,7 +83,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase implement
     @Test
     public void testRetrieveItemWithStorageExternalUrlAndWrongUrl() throws Exception {
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         String storageBeforeCreate = "external-managed";
         Document newItem =

@@ -34,13 +34,10 @@ import de.escidoc.core.common.exceptions.remote.application.security.Authorizati
 import de.escidoc.core.common.exceptions.remote.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertEquals;
@@ -52,19 +49,11 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ItemLockTest extends ItemTestBase {
 
     private String theItemXml;
 
     private String theItemId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemLockTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Successfully lock of container.
@@ -351,8 +340,8 @@ public class ItemLockTest extends ItemTestBase {
         // create an item and save the id
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
 

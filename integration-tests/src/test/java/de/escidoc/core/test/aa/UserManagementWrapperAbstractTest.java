@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.test.aa;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import de.escidoc.core.common.exceptions.remote.application.security.AuthenticationException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.escidoc.core.common.exceptions.remote.application.security.AuthenticationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test suite for the user management wrapper.
@@ -51,17 +50,6 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
     private static final String PASSWORD = PWCallback.PASSWORD;
 
     private static final String LOGIN_NAME = PWCallback.DEPOSITOR_HANDLE;
-
-    /**
-     * The constructor.
-     *
-     * @param transport The transport identifier.
-     * @throws Exception If anything fails.
-     */
-    public UserManagementWrapperAbstractTest(final int transport) throws Exception {
-
-        super(transport);
-    }
 
     /**
      * Set up servlet test.

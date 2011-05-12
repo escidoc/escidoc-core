@@ -7,8 +7,6 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -20,12 +18,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author
  */
-@RunWith(value = Parameterized.class)
 public class JhoveTest extends JhoveTestBase {
-
-    public JhoveTest(int transport) {
-        super(transport);
-    }
 
     /**
      * Clean up after servlet test.

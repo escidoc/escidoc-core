@@ -33,8 +33,6 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorrupted
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 /**
@@ -42,15 +40,7 @@ import org.w3c.dom.Document;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class CloseTest extends OrganizationalUnitTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public CloseTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Tests successfully close an organizational unit without children.

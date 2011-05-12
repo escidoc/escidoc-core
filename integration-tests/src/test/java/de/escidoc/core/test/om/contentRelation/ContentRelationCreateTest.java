@@ -31,10 +31,7 @@ package de.escidoc.core.test.om.contentRelation;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -48,16 +45,7 @@ import static org.junit.Assert.fail;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ContentRelationCreateTest extends ContentRelationTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentRelationCreateTest(final int transport) {
-        super(transport);
-    }
-
     /**
      * Test create content relation.
      *
@@ -88,29 +76,15 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
         // compare subject ------------------------------------------
         String origSubjectValue = null;
         String subjectValue = null;
-
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            origSubjectValue = selectSingleNode(createDoc, "/content-relation/subject/@href").getNodeValue();
-            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@href").getNodeValue();
-        }
-        else {
-            origSubjectValue = selectSingleNode(createDoc, "/content-relation/subject/@objid").getNodeValue();
-            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@objid").getNodeValue();
-        }
+        origSubjectValue = selectSingleNode(createDoc, "/content-relation/subject/@href").getNodeValue();
+        subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@href").getNodeValue();
         assertEquals(origSubjectValue, subjectValue);
 
         // compare subject ------------------------------------------
         String origObjValue = null;
         String objValue = null;
-
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            origObjValue = selectSingleNode(createDoc, "/content-relation/object/@href").getNodeValue();
-            objValue = selectSingleNode(retrieveDoc, "/content-relation/object/@href").getNodeValue();
-        }
-        else {
-            origObjValue = selectSingleNode(createDoc, "/content-relation/object/@objid").getNodeValue();
-            objValue = selectSingleNode(retrieveDoc, "/content-relation/object/@objid").getNodeValue();
-        }
+        origObjValue = selectSingleNode(createDoc, "/content-relation/object/@href").getNodeValue();
+        objValue = selectSingleNode(retrieveDoc, "/content-relation/object/@href").getNodeValue();
         assertEquals(origObjValue, objValue);
 
         // compare meta data
@@ -187,43 +161,38 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
      */
     @Test
     public void xlinkAttributes() throws Exception {
+        String contentRelationXml = getExampleTemplate("content-relation-01.xml");
+        String xml = create(contentRelationXml);
+        assertXmlValidContentRelation(xml);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
+        Document createDoc = getDocument(xml);
+        String objid = getObjidValue(createDoc);
 
-            String contentRelationXml = getExampleTemplate("content-relation-01.xml");
-            String xml = create(contentRelationXml);
-            assertXmlValidContentRelation(xml);
+        // properties
+        Node value = selectSingleNode(createDoc, "/content-relation/properties/@href");
+        assertNotNull("Missing xlink:href attribute", value);
+        assertEquals("Wrong xlink:href", "/ir/content-relation/" + objid + "/properties", value.getTextContent());
 
-            Document createDoc = getDocument(xml);
-            String objid = getObjidValue(createDoc);
+        value = selectSingleNode(createDoc, "/content-relation/properties/@type");
+        assertNotNull("Missing xlink:type attribute", value);
+        assertEquals("", "simple", value.getTextContent());
 
-            // properties
-            Node value = selectSingleNode(createDoc, "/content-relation/properties/@href");
-            assertNotNull("Missing xlink:href attribute", value);
-            assertEquals("Wrong xlink:href", "/ir/content-relation/" + objid + "/properties", value.getTextContent());
+        value = selectSingleNode(createDoc, "/content-relation/properties/@title");
+        assertNotNull("Missing xlink:title attribute", value);
+        assertEquals("Wrong xlink:title", "Content Relation Properties", value.getTextContent());
 
-            value = selectSingleNode(createDoc, "/content-relation/properties/@type");
-            assertNotNull("Missing xlink:type attribute", value);
-            assertEquals("", "simple", value.getTextContent());
+        // resources
+        value = selectSingleNode(createDoc, "/content-relation/resources/@href");
+        assertNotNull("Missing xlink:href attribute", value);
+        assertEquals("Wrong xlink:href", "/ir/content-relation/" + objid + "/resources", value.getTextContent());
 
-            value = selectSingleNode(createDoc, "/content-relation/properties/@title");
-            assertNotNull("Missing xlink:title attribute", value);
-            assertEquals("Wrong xlink:title", "Content Relation Properties", value.getTextContent());
+        value = selectSingleNode(createDoc, "/content-relation/resources/@type");
+        assertNotNull("Missing xlink:type attribute", value);
+        assertEquals("", "simple", value.getTextContent());
 
-            // resources
-            value = selectSingleNode(createDoc, "/content-relation/resources/@href");
-            assertNotNull("Missing xlink:href attribute", value);
-            assertEquals("Wrong xlink:href", "/ir/content-relation/" + objid + "/resources", value.getTextContent());
-
-            value = selectSingleNode(createDoc, "/content-relation/resources/@type");
-            assertNotNull("Missing xlink:type attribute", value);
-            assertEquals("", "simple", value.getTextContent());
-
-            value = selectSingleNode(createDoc, "/content-relation/resources/@title");
-            assertNotNull("Missing xlink:title attribute", value);
-            assertEquals("Wrong xlink:title", "Resources", value.getTextContent());
-
-        }
+        value = selectSingleNode(createDoc, "/content-relation/resources/@title");
+        assertNotNull("Missing xlink:title attribute", value);
+        assertEquals("Wrong xlink:title", "Resources", value.getTextContent());
     }
 
 }

@@ -31,7 +31,6 @@ package de.escidoc.core.test.aa.rest;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.aa.AudienceAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
@@ -74,7 +73,7 @@ public class AudienceRestTest extends AudienceAbstractTest {
      */
     public AudienceRestTest(final int handlerCode, final String userOrGroupId) throws Exception {
 
-        super(Constants.TRANSPORT_REST, handlerCode, userOrGroupId);
+        super(handlerCode, userOrGroupId);
     }
 
     /**

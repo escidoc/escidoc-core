@@ -61,14 +61,12 @@ public class PrivilegedViewerAbstractTest extends GrantTestBase {
     /**
      * The constructor.
      *
-     * @param transport     The transport identifier.
      * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
      * @param userOrGroupId userOrGroupId for grantCreation.
      * @throws Exception If anything fails.
      */
-    public PrivilegedViewerAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
-        throws Exception {
-        super(transport, handlerCode);
+    public PrivilegedViewerAbstractTest(final int handlerCode, final String userOrGroupId) throws Exception {
+        super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
     }
 

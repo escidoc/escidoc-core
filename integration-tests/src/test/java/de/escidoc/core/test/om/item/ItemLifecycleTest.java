@@ -42,8 +42,6 @@ import org.apache.xpath.XPathAPI;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import java.util.regex.Matcher;
@@ -57,19 +55,11 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ItemLifecycleTest extends ItemTestBase {
 
     private String theItemXml;
 
     private String theItemId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemLifecycleTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -80,8 +70,8 @@ public class ItemLifecycleTest extends ItemTestBase {
     public void setUp() throws Exception {
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(theItemXml);
     }
@@ -881,7 +871,7 @@ public class ItemLifecycleTest extends ItemTestBase {
             // create and submit item by a depositor
             PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
             final String toBeCreatedXml =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_198_for_create.xml");
             theItemXml = create(toBeCreatedXml);
             theItemId = getObjidValue(theItemXml);
@@ -990,8 +980,7 @@ public class ItemLifecycleTest extends ItemTestBase {
     public void testElementsAfterUpdate01() throws Exception {
 
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "item_without_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
         this.theItemXml = create(xmlData);
         this.theItemId = getObjidValue(theItemXml);
 
@@ -1318,8 +1307,7 @@ public class ItemLifecycleTest extends ItemTestBase {
     public void testBug697() throws Exception {
 
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "item_without_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
         this.theItemXml = create(xmlData);
         this.theItemId = getObjidValue(theItemXml);
 

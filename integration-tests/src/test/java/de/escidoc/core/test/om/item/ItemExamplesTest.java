@@ -29,14 +29,11 @@
 package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.compare.TripleStoreValue;
 import de.escidoc.core.test.common.fedora.Client;
 import org.apache.xpath.XPathAPI;
 import org.fcrepo.server.types.gen.Datastream;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertEquals;
@@ -47,15 +44,7 @@ import static org.junit.Assert.assertFalse;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ItemExamplesTest extends ItemTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemExamplesTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test if the example item for create is still compatible with framework.
@@ -72,19 +61,13 @@ public class ItemExamplesTest extends ItemTestBase {
         Document xmlItem = getDocument(xml);
 
         // assert properties
-        String xPath = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xPath = "/item/properties/context[@href = '/ir/context/escidoc:ex1']";
-        }
-        else {
-            xPath = "/item/properties/context[@objid = 'escidoc:ex1']";
-        }
+        String xPath = "/item/properties/context[@href = '/ir/context/escidoc:ex1']";
         selectSingleNodeAsserted(xmlItem, xPath);
 
         // assert Components
         assertXmlNotExists("Created Item should not have a Component", xmlItem, "/item/components/component");
 
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.itemTripleStoreValues(xmlItem);
 
         // assert version History --------------------------------------------
@@ -131,21 +114,9 @@ public class ItemExamplesTest extends ItemTestBase {
         Document xmlItem = getDocument(xml);
 
         // assert properties
-        String xPath = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xPath = "/item/properties/context[@href = '/ir/context/escidoc:ex1']";
-        }
-        else {
-            xPath = "/item/properties/context[@objid = 'escidoc:ex1']";
-        }
+        String xPath = "/item/properties/context[@href = '/ir/context/escidoc:ex1']";
         selectSingleNodeAsserted(xmlItem, xPath);
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xPath = "/item/properties/content-model[@href = " + "'/cmm/content-model/escidoc:ex4']";
-        }
-        else {
-            xPath = "/item/properties/content-model[@objid = " + "'escidoc:ex4']";
-        }
+        xPath = "/item/properties/content-model[@href = " + "'/cmm/content-model/escidoc:ex4']";
         selectSingleNodeAsserted(xmlItem, xPath);
         selectSingleNodeAsserted(xmlItem, "/item/properties/content-model-specific/cms-prop[@test = '1']");
 
@@ -162,7 +133,7 @@ public class ItemExamplesTest extends ItemTestBase {
 
         selectSingleNodeAsserted(xmlItem, "/item/components/component/content[@storage = 'internal-managed']");
 
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.itemTripleStoreValues(xmlItem);
     }
 
@@ -179,7 +150,7 @@ public class ItemExamplesTest extends ItemTestBase {
         assertXmlValidItem(xml);
 
         Document xmlItem = getDocument(xml);
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
 
         // check last-modification-date
         tsv.compareDocumentValueWithTripleStore(xmlItem, "/item/@last-modification-date", "/RDF/Description/date",
@@ -223,7 +194,7 @@ public class ItemExamplesTest extends ItemTestBase {
         Document xmlItem = getDocument(xml);
         // assert Components
         selectSingleNodeAsserted(xmlItem, "/item/components/component");
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.itemTripleStoreValues(xmlItem);
     }
 
@@ -242,7 +213,7 @@ public class ItemExamplesTest extends ItemTestBase {
         Document xmlItem = getDocument(xml);
         // assert Component
         selectSingleNodeAsserted(xmlItem, "/item/components/component");
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.itemTripleStoreValues(xmlItem);
     }
 

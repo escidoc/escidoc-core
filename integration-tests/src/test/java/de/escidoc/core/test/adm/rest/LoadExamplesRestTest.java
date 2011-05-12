@@ -29,7 +29,6 @@
 package de.escidoc.core.test.adm.rest;
 
 import de.escidoc.core.test.adm.AdminToolTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
 
 /**
@@ -38,15 +37,6 @@ import org.junit.Test;
  * @author André Schenk
  */
 public class LoadExamplesRestTest extends AdminToolTestBase {
-
-    /**
-     * Constructor.
-     *
-     * @throws Exception If anything fails.
-     */
-    public LoadExamplesRestTest() throws Exception {
-        super(Constants.TRANSPORT_REST);
-    }
 
     /**
      * Load the examples objects into the repository.

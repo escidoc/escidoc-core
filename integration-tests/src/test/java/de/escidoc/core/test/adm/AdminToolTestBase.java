@@ -44,16 +44,9 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     private ItemClient itemClient = null;
 
-    /**
-     * The constructor.
-     *
-     * @param transport The transport identifier.
-     * @throws Exception If anything fails.
-     */
-    public AdminToolTestBase(final int transport) throws Exception {
-        super(transport);
-        adminClient = new AdminClient(transport);
-        itemClient = new ItemClient(transport);
+    public AdminToolTestBase() {
+        adminClient = new AdminClient();
+        itemClient = new ItemClient();
         PWCallback.resetHandle();
     }
 
@@ -134,7 +127,6 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
     /**
      * Retrieve an item.
      *
-     * @param id item id
      * @return item XML
      * @throws Exception If anything fails.
      */

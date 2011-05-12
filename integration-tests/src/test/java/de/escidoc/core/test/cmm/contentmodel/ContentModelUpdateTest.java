@@ -35,7 +35,6 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -47,15 +46,7 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContentModelUpdateTest extends ContentModelTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentModelUpdateTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test updating a ContentModel with unchanged representation.
@@ -90,7 +81,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // full Content Model
         cmXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
                 "content-model-all-for-create.xml");
         createdXML = create(cmXml);
         contentModelId = getObjidValue(createdXML);
@@ -361,7 +352,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 1
         String contentModelXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
                 "content-model-all-for-create.xml");
         String cmV1E1 = create(contentModelXml);
 

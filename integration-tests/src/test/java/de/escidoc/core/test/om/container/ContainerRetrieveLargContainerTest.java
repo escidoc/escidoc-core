@@ -32,8 +32,6 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -43,19 +41,11 @@ import org.w3c.dom.Node;
  *
  * @author Rozita Friedman
  */
-@RunWith(value = Parameterized.class)
 public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
 
     private String theContainerXml;
 
     private String theContainerId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerRetrieveLargContainerTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -93,10 +83,8 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
             taskParam += "</param>";
             try {
                 addMembers(theContainerId, taskParam);
-                System.out.println("added of a member nr " + i + ".");
             }
             catch (final Exception e) {
-                System.out.println("adding of a member nr " + i + " failed.");
                 throw new Exception(e);
             }
 

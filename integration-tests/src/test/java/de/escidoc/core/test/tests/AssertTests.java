@@ -31,8 +31,6 @@ package de.escidoc.core.test.tests;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.om.OmTestBase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import static org.junit.Assert.fail;
 
@@ -42,15 +40,7 @@ import static org.junit.Assert.fail;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class AssertTests extends OmTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public AssertTests(final int transport) {
-        super(transport);
-    }
 
     /**
      * Check if the assertXmlEquals method throws an exception if the name of the root elements differs.
@@ -60,12 +50,11 @@ public class AssertTests extends OmTestBase {
 
         try {
             String xmlData =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
-                    "create_container.xml");
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container.xml");
             String containerXml = handleXmlResult(getContainerClient().create(xmlData));
 
             String tempItemXml =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_198_for_create.xml");
 
             String containerId = getObjidValue(containerXml);

@@ -36,8 +36,6 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.NodeList;
 
 import static org.junit.Assert.assertEquals;
@@ -48,15 +46,7 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContainerDeleteTest extends ContainerTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerDeleteTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test successfully delete of container in status 'pending'.
@@ -114,7 +104,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
         String xmlData = getContainerTemplate("create_container_v1.1-forItem.xml");
 
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
-        assertXmlValidContainer(getTransport(), replaced);
+        assertXmlValidContainer(replaced);
         String theContainerXml = create(replaced);
 
         String theContainerId = getObjidValue(theContainerXml);
@@ -199,7 +189,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
 
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
         replaced = replaced.replaceAll("##CONTAINERID##", theContainerId);
-        assertXmlValidContainer(getTransport(), replaced);
+        assertXmlValidContainer(replaced);
         String theParentId = getObjidValue(create(replaced));
 
         delete(theContainerId);
@@ -231,7 +221,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
 
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
         replaced = replaced.replaceAll("##CONTAINERID##", theContainerId);
-        assertXmlValidContainer(getTransport(), replaced);
+        assertXmlValidContainer(replaced);
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         create(replaced);
 
@@ -261,7 +251,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
 
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
         replaced = replaced.replaceAll("##CONTAINERID##", theContainerId);
-        assertXmlValidContainer(getTransport(), replaced);
+        assertXmlValidContainer(replaced);
         String theParentId = getObjidValue(create(replaced));
 
         getItemClient().delete(theItemId);
@@ -294,7 +284,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
 
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
         replaced = replaced.replaceAll("##CONTAINERID##", theContainerId);
-        assertXmlValidContainer(getTransport(), replaced);
+        assertXmlValidContainer(replaced);
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         create(replaced);
 

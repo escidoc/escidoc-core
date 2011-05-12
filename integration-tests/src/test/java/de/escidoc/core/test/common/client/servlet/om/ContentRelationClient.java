@@ -32,7 +32,6 @@ import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ContentRelationHandlerClientInterface;
 
-import javax.xml.rpc.ServiceException;
 import java.util.Map;
 
 /**
@@ -41,13 +40,6 @@ import java.util.Map;
  * @author Steffen Wagner
  */
 public class ContentRelationClient extends ClientBase implements ContentRelationHandlerClientInterface {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentRelationClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Retrieve the xml representation of all virtual resources of the content relation.

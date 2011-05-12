@@ -67,20 +67,12 @@ import static org.junit.Assert.assertNull;
  */
 public class GrantAbstractTest extends GrantTestBase {
 
-    /**
-     * The constructor.
-     *
-     * @param transport   The transport identifier.
-     * @param handlerCode The handlerCode.
-     * @throws Exception If anything fails.
-     */
-    public GrantAbstractTest(final int transport, final int handlerCode) throws Exception {
-        super(transport, handlerCode);
+    public GrantAbstractTest(final int handlerCode) throws Exception {
+        super(handlerCode);
     }
 
-    public GrantAbstractTest(final int transport, final int handlerCode, final String userIdOrUserGroupId)
-        throws Exception {
-        super(transport, handlerCode, userIdOrUserGroupId);
+    public GrantAbstractTest(final int handlerCode, final String userIdOrUserGroupId) throws Exception {
+        super(handlerCode, userIdOrUserGroupId);
     }
 
     /**
@@ -109,12 +101,7 @@ public class GrantAbstractTest extends GrantTestBase {
      */
     @Test
     public void testAACg1() throws Exception {
-
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlEquals("Object title mismatch. ", createdDocument, XPATH_GRANT_OBJECT_XLINK_TITLE,
-                "Test Collection");
-        }
     }
 
     /**
@@ -173,7 +160,7 @@ public class GrantAbstractTest extends GrantTestBase {
         // set reference to created context
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, contextHref);
 
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         String createdXml = null;
         try {
@@ -205,7 +192,7 @@ public class GrantAbstractTest extends GrantTestBase {
         substitute(toBeCreatedDocument, XPATH_GRANT_ROLE_XLINK_HREF, ROLE_HREF_COLLABORATOR);
         // substitute the object element
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.CONTAINER_BASE_URI + "/" + containerId);
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         String createdXml = null;
         try {
@@ -240,7 +227,7 @@ public class GrantAbstractTest extends GrantTestBase {
 
         // substitute the object element
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.ITEM_BASE_URI + "/" + itemId);
-        String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         String createdXml = null;
         try {
@@ -259,7 +246,7 @@ public class GrantAbstractTest extends GrantTestBase {
         // substitute the object element
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.ITEM_BASE_URI + "/" + itemId + "/"
             + Constants.SUB_COMPONENT + "/" + publicComponentId);
-        toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
@@ -286,7 +273,7 @@ public class GrantAbstractTest extends GrantTestBase {
         // substitute the object element
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.STATISTIC_SCOPE_BASE_URI + "/"
             + STATISTIC_SCOPE_ID);
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         String createdXml = null;
         try {
@@ -314,7 +301,7 @@ public class GrantAbstractTest extends GrantTestBase {
         // substitute the object element
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.USER_GROUP_BASE_URI + "/"
             + USER_GROUP_WITH_USER_LIST_ID);
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         String createdXml = null;
         try {
@@ -344,7 +331,7 @@ public class GrantAbstractTest extends GrantTestBase {
         // substitute the object element
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.CONTENT_RELATION_BASE_URI + "/"
             + getObjidValue(contentRelationXml));
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         String createdXml = null;
         try {
@@ -409,7 +396,7 @@ public class GrantAbstractTest extends GrantTestBase {
         // substitute the object element
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
             + ORGANIZATIONAL_UNIT_ID);
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
@@ -436,7 +423,7 @@ public class GrantAbstractTest extends GrantTestBase {
         // substitute the object element
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.USER_ACCOUNT_BASE_URI + "/"
             + TEST_USER_ACCOUNT_ID);
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
@@ -462,7 +449,7 @@ public class GrantAbstractTest extends GrantTestBase {
 
         // substitute the object element
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, ROLE_HREF_DEPOSITOR);
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
@@ -492,7 +479,7 @@ public class GrantAbstractTest extends GrantTestBase {
         // substitute the object element
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.USER_ACCOUNT_BASE_URI + "/"
             + TEST_USER_ACCOUNT_ID + "/" + Constants.SUB_GRANT + "/" + grantId);
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
@@ -519,7 +506,7 @@ public class GrantAbstractTest extends GrantTestBase {
         // substitute the object element
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.CONTENT_MODEL_BASE_URI + "/"
             + CONTENT_TYPE_ID);
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
@@ -630,7 +617,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_grant_for_create.xml");
         substitute(toBeCreatedDocument, XPATH_GRANT_ROLE_XLINK_HREF, Constants.ROLE_BASE_URI + "/" + UNKNOWN_ID);
 
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
@@ -656,7 +643,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_grant_for_create.xml");
         substitute(toBeCreatedDocument, XPATH_GRANT_ROLE_XLINK_HREF, Constants.ROLE_BASE_URI + "/" + CONTEXT_ID);
 
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
@@ -746,7 +733,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_grant_for_create.xml");
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.CONTEXT_BASE_URI + "/" + UNKNOWN_ID);
 
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
@@ -774,7 +761,7 @@ public class GrantAbstractTest extends GrantTestBase {
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF,
             Constants.STATISTIC_AGGREGATION_DEFINITIONS_BASE_URI + "/" + EscidocTestBase.TEST_AGGREGATION_DEFINITION_ID);
 
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
@@ -1515,16 +1502,10 @@ public class GrantAbstractTest extends GrantTestBase {
             final Node expected = expectedGrants.get(toBeAssertedId);
             assertNotNull(msg + "Unexpected grant [" + toBeAssertedId + "]", expected);
             final String xpathToBeAssertedGrant = XPATH_CURRENT_GRANTS_GRANT + "[" + (i + 1) + "]";
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                assertXmlEquals(msg + "Title mismatch. ", expected, XPATH_GRANT_XLINK_TITLE, toBeAsserted,
-                    xpathToBeAssertedGrant + PART_XLINK_TITLE);
-                assertXmlEquals(msg + "Href mismatch. ", expected, XPATH_GRANT_XLINK_HREF, toBeAsserted,
-                    xpathToBeAssertedGrant + PART_XLINK_HREF);
-            }
-            else {
-                assertXmlEquals(msg + "Objid mismatch. ", expected, XPATH_GRANT_OBJID, toBeAsserted,
-                    xpathToBeAssertedGrant + PART_OBJID);
-            }
+            assertXmlEquals(msg + "Title mismatch. ", expected, XPATH_GRANT_XLINK_TITLE, toBeAsserted,
+                xpathToBeAssertedGrant + PART_XLINK_TITLE);
+            assertXmlEquals(msg + "Href mismatch. ", expected, XPATH_GRANT_XLINK_HREF, toBeAsserted,
+                xpathToBeAssertedGrant + PART_XLINK_HREF);
             assertXmlEquals(msg + "Properties mismatch. ", expected, XPATH_GRANT_PROPERTIES, toBeAsserted,
                 xpathToBeAssertedGrant + "/" + NAME_PROPERTIES);
         }
@@ -1589,16 +1570,10 @@ public class GrantAbstractTest extends GrantTestBase {
             final Node expected = expectedGrants.get(toBeAssertedId);
             assertNotNull(msg + "Unexpected grant [" + toBeAssertedId + "]", expected);
             final String xpathToBeAssertedGrant = XPATH_CURRENT_GRANTS_GRANT + "[" + (i + 1) + "]";
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                assertXmlEquals(msg + "Title mismatch. ", expected, XPATH_GRANT_XLINK_TITLE, toBeAsserted,
-                    xpathToBeAssertedGrant + PART_XLINK_TITLE);
-                assertXmlEquals(msg + "Href mismatch. ", expected, XPATH_GRANT_XLINK_HREF, toBeAsserted,
-                    xpathToBeAssertedGrant + PART_XLINK_HREF);
-            }
-            else {
-                assertXmlEquals(msg + "Objid mismatch. ", expected, XPATH_GRANT_OBJID, toBeAsserted,
-                    xpathToBeAssertedGrant + PART_OBJID);
-            }
+            assertXmlEquals(msg + "Title mismatch. ", expected, XPATH_GRANT_XLINK_TITLE, toBeAsserted,
+                xpathToBeAssertedGrant + PART_XLINK_TITLE);
+            assertXmlEquals(msg + "Href mismatch. ", expected, XPATH_GRANT_XLINK_HREF, toBeAsserted,
+                xpathToBeAssertedGrant + PART_XLINK_HREF);
             assertXmlEquals(msg + "Properties mismatch. ", expected, XPATH_GRANT_PROPERTIES, toBeAsserted,
                 xpathToBeAssertedGrant + "/" + NAME_PROPERTIES);
         }
@@ -1649,27 +1624,14 @@ public class GrantAbstractTest extends GrantTestBase {
             final Node expected = expectedGrants.get(toBeAssertedId);
             assertNotNull(msg + "Unexpected grant [" + toBeAssertedId + "]", expected);
             final String xpathToBeAssertedGrant = XPATH_CURRENT_GRANTS_GRANT + "[" + (i + 1) + "]";
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                Node roleNode = selectSingleNode(toBeAsserted, xpathToBeAssertedGrant + "/properties/role/@href");
-                if (roleNode.getNodeValue().contains(ROLE_HREF_SYSTEM_ADMINISTRATOR)) {
-                    assertNull("assigned-on must be null for system-administrator", selectSingleNode(toBeAsserted,
-                        xpathToBeAssertedGrant + "/properties/assigned-on"));
-                }
-                else {
-                    assertNotNull("assigned-on must be set for role", selectSingleNode(toBeAsserted,
-                        xpathToBeAssertedGrant + "/properties/assigned-on"));
-                }
+            Node roleNode = selectSingleNode(toBeAsserted, xpathToBeAssertedGrant + "/properties/role/@href");
+            if (roleNode.getNodeValue().contains(ROLE_HREF_SYSTEM_ADMINISTRATOR)) {
+                assertNull("assigned-on must be null for system-administrator", selectSingleNode(toBeAsserted,
+                    xpathToBeAssertedGrant + "/properties/assigned-on"));
             }
             else {
-                Node roleNode = selectSingleNode(toBeAsserted, xpathToBeAssertedGrant + "/properties/role/@objid");
-                if (roleNode.getNodeValue().contains(getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR))) {
-                    assertNull("assigned-on must be null for system-administrator", selectSingleNode(toBeAsserted,
-                        xpathToBeAssertedGrant + "/properties/assigned-on"));
-                }
-                else {
-                    assertNotNull("assigned-on must be set for role", selectSingleNode(toBeAsserted,
-                        xpathToBeAssertedGrant + "/properties/assigned-on"));
-                }
+                assertNotNull("assigned-on must be set for role", selectSingleNode(toBeAsserted, xpathToBeAssertedGrant
+                    + "/properties/assigned-on"));
             }
         }
     }

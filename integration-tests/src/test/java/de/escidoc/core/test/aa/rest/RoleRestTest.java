@@ -34,7 +34,6 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.RoleNotFoun
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.aa.RoleAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -54,13 +53,12 @@ import static org.junit.Assert.assertNotNull;
 public class RoleRestTest extends RoleAbstractTest {
 
     /**
-     * Constructor.
+     * The constructor.
      *
      * @throws Exception If anything fails.
      */
     public RoleRestTest() throws Exception {
-
-        super(Constants.TRANSPORT_REST);
+        super();
     }
 
     /**

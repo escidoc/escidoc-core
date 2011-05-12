@@ -37,11 +37,8 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPre
 import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyExistsException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -60,19 +57,11 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ItemContentRelationsTest extends ItemTestBase {
 
     private String itemId = null;
 
     private String itemXml = null;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemContentRelationsTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -82,7 +71,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     @Before
     public void setUp() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
@@ -123,7 +112,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     @Test
     public void testAddRelation() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
@@ -145,14 +134,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
         assertXmlValidItem(itemWithRelations);
         Document itemWithRelationsDocument = EscidocRestSoapTestBase.getDocument(itemWithRelations);
 
-        NodeList relationTargets = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            relationTargets = selectNodeList(itemWithRelationsDocument, "/item/relations/relation/@href");
-        }
-        else {
-            relationTargets = selectNodeList(itemWithRelationsDocument, "/item/relations/relation/@objid");
-
-        }
+        NodeList relationTargets = selectNodeList(itemWithRelationsDocument, "/item/relations/relation/@href");
         boolean contains1 = false;
         boolean contains2 = false;
 
@@ -186,7 +168,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     @Test
     public void testAddRelationWithoutId() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
@@ -258,7 +240,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     @Test
     public void testAddRelationWithNonExistingPredicate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
@@ -359,7 +341,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     @Test
     public void testAddExistingRelation() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
@@ -393,7 +375,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     @Test
     public void testRemoveRelation() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
@@ -425,7 +407,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     @Test
     public void testRemoveDeletedRelation() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
@@ -467,7 +449,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     @Test
     public void testRemoveRelationWithWrongSource() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
@@ -568,7 +550,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     public void testRelationReturnValue01() throws Exception {
 
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
@@ -626,7 +608,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      */
     private void addRelation(final String objectId, final String predicate) throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);

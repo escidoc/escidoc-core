@@ -40,8 +40,6 @@ import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import java.util.Calendar;
@@ -56,7 +54,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class ReportTest extends ReportTestBase {
 
     private ReportDefinitionTest reportDefinition = null;
@@ -82,21 +79,14 @@ public class ReportTest extends ReportTestBase {
     private static final Pattern METHOD_INDEX_PATTERN = Pattern.compile("\\$\\{methodIndex\\}");
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ReportTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
-        reportDefinition = new ReportDefinitionTest(getTransport());
-        aggregationDefinition = new AggregationDefinitionTest(getTransport());
+        reportDefinition = new ReportDefinitionTest();
+        aggregationDefinition = new AggregationDefinitionTest();
         if (methodCounter == 0) {
             createAggregationDefinition("escidoc_aggregation_definition3.xml", 0);
             createAggregationDefinition("escidoc_aggregation_definition3_1.xml", 1);
@@ -297,7 +287,6 @@ public class ReportTest extends ReportTestBase {
                 results.append("OK");
             }
             else {
-                System.out.println(exceptionType);
                 results.append("WRONG");
             }
             assertEquals(exceptionType, "MissingMethodParameterException");
@@ -382,7 +371,6 @@ public class ReportTest extends ReportTestBase {
             return "OK";
         }
         else {
-            System.out.println(repDefIndex + expectedIndex + result);
             return "WRONG";
         }
 

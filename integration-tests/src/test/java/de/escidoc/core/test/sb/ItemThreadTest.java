@@ -28,28 +28,17 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 /**
  * Test the implementation of the item resource threaded.
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class ItemThreadTest extends SearchTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemThreadTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.

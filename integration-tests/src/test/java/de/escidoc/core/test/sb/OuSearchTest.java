@@ -36,8 +36,6 @@ import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -55,7 +53,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class OuSearchTest extends SearchTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OuSearchTest.class);
@@ -71,13 +68,6 @@ public class OuSearchTest extends SearchTestBase {
     private static final int SLEEP_TIME = 5000;
 
     private static String startTime = "";
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public OuSearchTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -220,7 +210,7 @@ public class OuSearchTest extends SearchTestBase {
     @Test
     public void testSBOUEX2() throws Exception {
         HashMap<String, String[]> parameters = new HashMap<String, String[]>();
-        parameters.put(FILTER_PARAMETER_OPERATION, new String[]{FILTER_PARAMETER_EXPLAIN});
+        parameters.put(FILTER_PARAMETER_OPERATION, new String[] { FILTER_PARAMETER_EXPLAIN });
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/escidocou_all", getDatabase(response));

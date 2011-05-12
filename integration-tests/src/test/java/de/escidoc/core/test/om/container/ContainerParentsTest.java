@@ -35,8 +35,6 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 /**
@@ -44,7 +42,6 @@ import org.w3c.dom.Document;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class ContainerParentsTest extends ContainerTestBase {
 
     private static String topLevelContainerId;
@@ -54,13 +51,6 @@ public class ContainerParentsTest extends ContainerTestBase {
     private static String[] lowLevelContainerIds = new String[3];
 
     private static int methodCounter = 0;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerParentsTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.

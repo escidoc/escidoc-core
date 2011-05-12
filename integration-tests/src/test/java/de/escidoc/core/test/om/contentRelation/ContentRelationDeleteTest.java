@@ -31,8 +31,6 @@ package de.escidoc.core.test.om.contentRelation;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import static org.junit.Assert.fail;
 
@@ -41,15 +39,7 @@ import static org.junit.Assert.fail;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ContentRelationDeleteTest extends ContentRelationTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentRelationDeleteTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test deleting content relation.

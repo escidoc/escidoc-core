@@ -157,15 +157,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         }
     };
 
-    /**
-     * The constructor.
-     *
-     * @param transport The transport identifier.
-     * @throws Exception If anything fails.
-     */
-    public GrantFilterAbstractTest(final int transport) throws Exception {
-        super(transport, USER_ACCOUNT_HANDLER_CODE);
-        userAttributeTestBase = new UserAttributeTestBase(transport);
+    public GrantFilterAbstractTest() throws Exception {
+        super(USER_ACCOUNT_HANDLER_CODE);
+        userAttributeTestBase = new UserAttributeTestBase();
     }
 
     /**
@@ -222,7 +216,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             // create users
             for (int i = 0; i < NUM_USERS; i++) {
                 Document user = createSuccessfully("escidoc_useraccount_for_create1.xml");
-                String userId = getObjidValue(getTransport(), user);
+                String userId = getObjidValue(user);
                 userAttributeTestBase.createAttribute(userId, "<attribute xmlns="
                     + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"o\">"
                     + EscidocTestBase.ORGANIZATIONAL_UNIT_ID1 + "</attribute>");
@@ -236,7 +230,6 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             for (String role : ROLES) {
                 if (roleCounter == PART_TIME_ROLE_NUMBER) {
                     partTimeParameters.put("time", new DateTime(System.currentTimeMillis()).toString());
-                    System.out.println(partTimeParameters.get("time"));
                 }
                 roleCounter++;
                 for (String object : objects) {

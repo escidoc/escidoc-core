@@ -34,8 +34,6 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -47,7 +45,6 @@ import static org.junit.Assert.fail;
 /**
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ItemRetrievePropertiesTest extends ItemTestBase {
 
     private static String ITEM_ID = null;
@@ -57,13 +54,6 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
     private static Document CREATED_ITEM = null;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ItemRetrievePropertiesTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
@@ -71,8 +61,8 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
     @Before
     public void setUp() throws Exception {
         ITEM_XML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         CREATED_ITEM = EscidocRestSoapTestBase.getDocument(create(ITEM_XML));
         ITEM_ID = getObjidValue(CREATED_ITEM);
     }
@@ -144,14 +134,12 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
         final String expectedLastModificationTimestamp, final String timestampBeforeCreation) throws Exception {
 
         Document createdProperties = EscidocRestSoapTestBase.getDocument(xmlItemProperties);
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String href = getRootElementHrefValue(createdProperties);
-            if ("".equals(href)) {
-                href = null;
-            }
-            assertNotNull("Item Properties error: href attribute was not set!", href);
-            assertEquals("Item Properties error: href has wrong value!", expectedHRef, href);
+        String href = getRootElementHrefValue(createdProperties);
+        if ("".equals(href)) {
+            href = null;
         }
+        assertNotNull("Item Properties error: href attribute was not set!", href);
+        assertEquals("Item Properties error: href has wrong value!", expectedHRef, href);
         String rootLastModificationDate = getLastModificationDateValue(createdProperties);
         if ("".equals(rootLastModificationDate)) {
             rootLastModificationDate = null;

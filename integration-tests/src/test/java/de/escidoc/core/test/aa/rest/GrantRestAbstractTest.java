@@ -54,7 +54,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
      * @throws Exception If anything fails.
      */
     public GrantRestAbstractTest(final int handlerCode) throws Exception {
-        super(Constants.TRANSPORT_REST, handlerCode);
+        super(handlerCode);
     }
 
     /**
@@ -158,7 +158,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
         roleHref = roleHref.replaceFirst(Constants.ROLE_BASE_URI, Constants.ORGANIZATIONAL_UNIT_BASE_URI);
         substitute(toBeCreatedDocument, XPATH_GRANT_ROLE_XLINK_HREF, roleHref);
 
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
@@ -186,7 +186,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF, Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
             + CONTEXT_ID);
 
-        final String toBeCreatedXml = toString(fixGrantDocument(toBeCreatedDocument), false);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);

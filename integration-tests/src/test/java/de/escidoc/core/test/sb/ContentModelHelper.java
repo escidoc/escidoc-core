@@ -38,13 +38,6 @@ import de.escidoc.core.test.cmm.contentmodel.ContentModelTestBase;
 public class ContentModelHelper extends ContentModelTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ContentModelHelper(final int transport) {
-        super(transport);
-    }
-
-    /**
      * @param xml The item as xml.
      * @return String item-xml
      * @throws Exception e

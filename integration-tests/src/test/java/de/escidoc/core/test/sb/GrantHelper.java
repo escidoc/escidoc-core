@@ -38,12 +38,11 @@ import de.escidoc.core.test.aa.GrantTestBase;
 public class GrantHelper extends GrantTestBase {
 
     /**
-     * @param transport   The transport identifier.
      * @param handlerCode The handlerCode.
      * @throws Exception e
      */
-    public GrantHelper(final int transport, final int handlerCode) throws Exception {
-        super(transport, handlerCode);
+    public GrantHelper(final int handlerCode) throws Exception {
+        super(handlerCode);
     }
 
     /**

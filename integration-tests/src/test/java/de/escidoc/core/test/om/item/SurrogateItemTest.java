@@ -31,11 +31,8 @@ package de.escidoc.core.test.om.item;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -51,15 +48,7 @@ import static org.junit.Assert.fail;
  *
  * @author Rozita Friedman
  */
-@RunWith(value = Parameterized.class)
 public class SurrogateItemTest extends ItemTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public SurrogateItemTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Creates a surrogate item owned a mandatory md-record, which references an original item, containing a mandatory
@@ -69,7 +58,7 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testCreateSurrogateItemWithOwnAndInheritedMdRecordsLatestRelease() throws Exception {
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Element mdRecord =
             item.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
@@ -88,17 +77,8 @@ public class SurrogateItemTest extends ItemTestBase {
 
         String componentHref1 = null;
         String componentHref2 = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            componentId1 = selectSingleNode(createdItemDocument, "/item/components/component[1]/@objid").getNodeValue();
-            componentId2 = selectSingleNode(createdItemDocument, "/item/components/component[2]/@objid").getNodeValue();
-
-        }
-        else {
-            componentHref1 =
-                selectSingleNode(createdItemDocument, "/item/components/component[1]/@href").getNodeValue();
-            componentHref2 =
-                selectSingleNode(createdItemDocument, "/item/components/component[2]/@href").getNodeValue();
-        }
+        componentHref1 = selectSingleNode(createdItemDocument, "/item/components/component[1]/@href").getNodeValue();
+        componentHref2 = selectSingleNode(createdItemDocument, "/item/components/component[2]/@href").getNodeValue();
 
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -114,39 +94,22 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
 
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId);
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
         String createdSurrogateItem = create(replaced);
 
         Document surrogateDocument = getDocument(createdSurrogateItem);
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            componentHref1 = selectSingleNode(surrogateDocument, "/item/components/component[1]/@href").getNodeValue();
-            componentHref2 = selectSingleNode(surrogateDocument, "/item/components/component[2]/@href").getNodeValue();
-        }
+        componentHref1 = selectSingleNode(surrogateDocument, "/item/components/component[1]/@href").getNodeValue();
+        componentHref2 = selectSingleNode(surrogateDocument, "/item/components/component[2]/@href").getNodeValue();
 
         String originId = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-
-            Node origin = selectSingleNode(surrogateDocument, "/item/properties/origin/@objid");
-            assertNotNull("attribute 'objid' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemId);
-        }
-        else {
-            Node origin = selectSingleNode(surrogateDocument, "/item/properties/origin/@href");
-            assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemHref);
-        }
+        Node origin = selectSingleNode(surrogateDocument, "/item/properties/origin/@href");
+        assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
+        originId = origin.getNodeValue();
+        assertEquals(originId, itemHref);
 
         Node inherited = selectSingleNode(surrogateDocument, "/item/md-records/md-record[@name='escidoc']/@inherited");
         assertNull("attribute 'inherited' of the element " + "'md-record' with name 'escidoc' must be null", inherited);
@@ -157,63 +120,13 @@ public class SurrogateItemTest extends ItemTestBase {
         assertNotNull("item must inherite a md-record with " + "a name 'name1'", inherited2);
 
         // check if the both components are inherited
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            Node origin1 =
-                selectSingleNode(surrogateDocument, "/item/components/component[@objid='" + componentId1
-                    + "']/@inherited");
-            assertNotNull("attribute 'inherited' of the element " + "'component' may not be null", origin1);
-
-            //            Node origin1Properties =
-            //                selectSingleNode(surrogateDocument,
-            //                    "/item/components/component[@objid='" + componentId1
-            //                        + "']/properties/@inherited");
-            //
-            //            assertNotNull("attribute 'inherited' of the element "
-            //                + "'component' may not be null", origin1Properties);
-
-            Node origin2 =
-                selectSingleNode(surrogateDocument, "/item/components/component[@objid='" + componentId2
-                    + "']/@inherited");
-            assertNotNull("attribute 'inherited' of the element " + "'component' may not be null", origin2);
-
-            //            Node origin2Properties =
-            //                selectSingleNode(surrogateDocument,
-            //                    "/item/components/component[@objid='" + componentId2
-            //                        + "']/properties/@inherited");
-            //
-            //            assertNotNull("attribute 'inherited' of the element "
-            //                + "'component' may not be null", origin2Properties);
-
-        }
-        else {
-            Node origin1 =
-                selectSingleNode(surrogateDocument, "/item/components/component[@href='" + componentHref1
-                    + "']/@inherited");
-            assertNotNull("attribute 'inherited' of the element " + "'component' may not be null", origin1);
-
-            assertNotNull("attribute 'inherited' of the element " + "'component' may not be null", origin1);
-
-            //            Node origin1Properties =
-            //                selectSingleNode(surrogateDocument,
-            //                    "/item/components/component[@href='" + componentHref1
-            //                        + "']/properties/@inherited");
-            //            assertNotNull("attribute 'inherited' of the element "
-            //                + "'component/properties' may not be null", origin1Properties);
-
-            Node origin2 =
-                selectSingleNode(surrogateDocument, "/item/components/component[@href='" + componentHref2
-                    + "']/@inherited");
-            assertNotNull("attribute 'inherited' of the element " + "'component' may not be null", origin2);
-
-            //            Node origin2Properties =
-            //                            selectSingleNode(surrogateDocument,
-            //                                "/item/components/component[@href='"
-            //                                + componentHref2
-            //                                + "']/properties/@inherited");
-            //
-            //            assertNotNull("attribute 'inherited' of the element "
-            //                + "'component/properties' may not be null", origin2Properties);
-        }
+        Node origin1 =
+            selectSingleNode(surrogateDocument, "/item/components/component[@href='" + componentHref1 + "']/@inherited");
+        assertNotNull("attribute 'inherited' of the element " + "'component' may not be null", origin1);
+        assertNotNull("attribute 'inherited' of the element " + "'component' may not be null", origin1);
+        Node origin2 =
+            selectSingleNode(surrogateDocument, "/item/components/component[@href='" + componentHref2 + "']/@inherited");
+        assertNotNull("attribute 'inherited' of the element " + "'component' may not be null", origin2);
         NodeList componentList = selectNodeList(surrogateDocument, "/item/components/component");
         assertEquals(2, componentList.getLength());
         assertXmlValidItem(createdSurrogateItem);
@@ -228,15 +141,12 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testCreateSurrogateItemWithInheritedMandatoryMdRecord() throws Exception {
 
         String itemXml =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
         String originalXlinkTitle = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            Document createdItemDocument = getDocument(itemXml);
-            originalXlinkTitle = selectSingleNode(createdItemDocument, "/item/@title").getNodeValue();
-        }
-
+        Document createdItemDocument = getDocument(itemXml);
+        originalXlinkTitle = selectSingleNode(createdItemDocument, "/item/@title").getNodeValue();
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
         String param = getTheLastModificationParam(false, itemId, null);
@@ -251,37 +161,20 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId);
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
         Document surrogateDocument = getDocument(replaced);
         Node surrogateWithoutMdRecords = deleteElement(surrogateDocument, "/item/md-records");
         String surrogate = toString(surrogateWithoutMdRecords, true);
         String createdSurrogateItem = create(surrogate);
-
-        // System.out.println("surrogate item " + createdSurrogateItem);
         Document createdSurrogateDocument = getDocument(createdSurrogateItem);
         String originId = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-
-            Node origin = selectSingleNode(surrogateDocument, "/item/properties/origin/@objid");
-            assertNotNull("attribute 'objid' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemId);
-        }
-        else {
-            Node origin = selectSingleNode(createdSurrogateDocument, "/item/properties/origin/@href");
-            assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemHref);
-        }
+        Node origin = selectSingleNode(createdSurrogateDocument, "/item/properties/origin/@href");
+        assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
+        originId = origin.getNodeValue();
+        assertEquals(originId, itemHref);
 
         Node inherited =
             selectSingleNode(createdSurrogateDocument, "/item/md-records/md-record[@name='escidoc']/@inherited");
@@ -290,12 +183,10 @@ public class SurrogateItemTest extends ItemTestBase {
         assertXmlValidItem(createdSurrogateItem);
 
         // test, if xlink:title of a surrogate comes from the original item
-        String surrogateXlinkTitle = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            surrogateXlinkTitle = selectSingleNode(createdSurrogateDocument, "/item/@title").getNodeValue();
-            assertEquals("xlink:title of the surogate is not equal xlink:title" + " of the original ",
-                surrogateXlinkTitle, originalXlinkTitle);
-        }
+        String surrogateXlinkTitle = selectSingleNode(createdSurrogateDocument, "/item/@title").getNodeValue();
+        assertEquals("xlink:title of the surogate is not equal xlink:title" + " of the original ", surrogateXlinkTitle,
+            originalXlinkTitle);
+
     }
 
     /**
@@ -305,11 +196,11 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testCreateSurrogateItemWithOwnAndInheritedContentRelations() throws Exception {
         String itemXml1 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
 
         String itemXml2 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
 
         String createdItemId1 = getIdFromRootElement(itemXml1);
@@ -319,7 +210,7 @@ public class SurrogateItemTest extends ItemTestBase {
         String href2 = "/ir/item/" + createdItemId2;
 
         String itemForCreateWithRelationsXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
@@ -357,15 +248,9 @@ public class SurrogateItemTest extends ItemTestBase {
         release(itemId, param);
 
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId);
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemHref);
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMID##", itemHref);
 
         // create surrogate for release item with relations and no components
         String createdSurrogateItem = create(replaced);
@@ -392,8 +277,8 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testCreateSurrogateItemWithOwnMdRecordLatestReleasePublicStatusPending() throws Exception {
         String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -428,34 +313,19 @@ public class SurrogateItemTest extends ItemTestBase {
         assertEquals("version status must be 'pending'", "pending", versionStatus);
         assertEquals(2, selectNodeList(updatedDocument, "/item/md-records/md-record").getLength());
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId);
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
         String createdSurrogateItem = create(replaced);
 
         assertXmlValidItem(createdSurrogateItem);
         Document surrogateDocument = getDocument(createdSurrogateItem);
         String originId = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-
-            Node origin = selectSingleNode(surrogateDocument, "/item/properties/origin/@objid");
-            assertNotNull("attribute 'objid' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemId);
-        }
-        else {
-            Node origin = selectSingleNode(surrogateDocument, "/item/properties/origin/@href");
-            assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemHref);
-        }
+        Node origin = selectSingleNode(surrogateDocument, "/item/properties/origin/@href");
+        assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
+        originId = origin.getNodeValue();
+        assertEquals(originId, itemHref);
         Node inherited = selectSingleNode(surrogateDocument, "/item/md-records/md-record[@name='escidoc']/@inherited");
         assertNull("attribute 'inherited' of the element " + "'md-record' must be null", inherited);
         Node secondMdRecord = selectSingleNode(surrogateDocument, "/item/md-records/md-record[@name='name1']");
@@ -469,8 +339,8 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testDecleaningCreateSurrogateItemWithFixedReferenceToUnreleasedVersion() throws Exception {
         String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -505,15 +375,9 @@ public class SurrogateItemTest extends ItemTestBase {
         assertEquals("version status must be 'pending'", "pending", versionStatus);
         assertEquals(2, selectNodeList(updatedDocument, "/item/md-records/md-record").getLength());
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId + ":2");
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref + ":2");
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref + ":2");
 
         try {
             create(replaced);
@@ -536,21 +400,15 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testDecleaningCreateSurrogateItemWithReferenceToUnreleasedItem() throws Exception {
         String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId + ":2");
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref + ":2");
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref + ":2");
 
         try {
             create(replaced);
@@ -572,8 +430,8 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testDecleaningCreateSurrogateItemWithReferenceToWithdrawnItem() throws Exception {
         String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -591,15 +449,9 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(true, itemId, "withdraw");
         withdraw(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId + ":2");
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref + ":2");
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref + ":2");
 
         try {
             create(replaced);
@@ -622,15 +474,9 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testDecleaningCreateSurrogateItemWithNotExistingReference() throws Exception {
 
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", "bla");
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", "bla");
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", "bla");
         try {
             create(replaced);
             fail("Missing Exception on create an surrogate item with a not " + "existing reference");
@@ -652,7 +498,7 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testDecleaningCreateSurrogateItemWithReferenceToSurrogateItem() throws Exception {
         String itemXml =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
@@ -669,16 +515,10 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
 
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId);
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
         String createdSurrogateItem = create(replaced);
 
@@ -696,17 +536,9 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, surrogateId, null);
         release(surrogateId, param);
         String surrogate2ItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
-
-        String replaced2 = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced2 = surrogate2ItemXml.replaceAll("##ITEMID##", surrogateId);
-        }
-        else {
-            replaced2 = surrogate2ItemXml.replaceAll("##ITEMHREF##", surrogateHref);
-        }
-
+        String replaced2 = surrogate2ItemXml.replaceAll("##ITEMHREF##", surrogateHref);
         try {
             create(replaced2);
             fail("Missing Exception on create an surrogate item with a reference " + "to a surrogate item");
@@ -728,7 +560,7 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testUpdateSurrogateItemWithInheritedMandatoryMdRecord() throws Exception {
         String itemXml =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
@@ -745,16 +577,10 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
 
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId);
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
         Document surrogateDocument = getDocument(replaced);
         Node surrogateWithoutMdRecords = deleteElement(surrogateDocument, "/item/md-records");
         String surrogate = toString(surrogateWithoutMdRecords, true);
@@ -764,20 +590,10 @@ public class SurrogateItemTest extends ItemTestBase {
         String surrogateId = getObjidValue(createdSurrogateItem);
         Document createdSurrogateDocument = getDocument(createdSurrogateItem);
         String originId = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-
-            Node origin = selectSingleNode(surrogateDocument, "/item/properties/origin/@objid");
-            assertNotNull("attribute 'objid' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemId);
-        }
-        else {
-            Node origin = selectSingleNode(createdSurrogateDocument, "/item/properties/origin/@href");
-            assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemHref);
-        }
-
+        Node origin = selectSingleNode(createdSurrogateDocument, "/item/properties/origin/@href");
+        assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
+        originId = origin.getNodeValue();
+        assertEquals(originId, itemHref);
         Node inherited =
             selectSingleNode(createdSurrogateDocument, "/item/md-records/md-record[@name='escidoc']/@inherited");
         assertNotNull("attribute 'inherited' of the element " + "'md-record' with name 'escidoc' may not be null",
@@ -800,7 +616,7 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testUpdateSurrogateItemWithOwnMandatoryMdRecord() throws Exception {
         String itemXml =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
@@ -817,16 +633,10 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
 
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId);
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
         String createdSurrogateItem = create(replaced);
         assertXmlValidItem(createdSurrogateItem);
@@ -834,19 +644,11 @@ public class SurrogateItemTest extends ItemTestBase {
         String surrogateId = getObjidValue(createdSurrogateItem);
         Document createdSurrogateDocument = getDocument(createdSurrogateItem);
         String originId = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
 
-            Node origin = selectSingleNode(createdSurrogateDocument, "/item/properties/origin/@objid");
-            assertNotNull("attribute 'objid' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemId);
-        }
-        else {
-            Node origin = selectSingleNode(createdSurrogateDocument, "/item/properties/origin/@href");
-            assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemHref);
-        }
+        Node origin = selectSingleNode(createdSurrogateDocument, "/item/properties/origin/@href");
+        assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
+        originId = origin.getNodeValue();
+        assertEquals(originId, itemHref);
 
         Node inherited =
             selectSingleNode(createdSurrogateDocument, "/item/md-records/md-record[@name='escidoc']/@inherited");
@@ -870,7 +672,7 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testCreateSurrogateItemWithContentStreams() throws Exception {
 
         Document itemXml =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create_3content-streams.xml");
         Node withoutFirstContentStream = deleteElement(itemXml, "/item/content-streams/content-stream[1]");
         String item = toString(withoutFirstContentStream, false);
@@ -889,16 +691,10 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
 
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId);
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
         String createdSurrogateItem = create(replaced);
         assertXmlValidItem(createdSurrogateItem);
@@ -926,8 +722,8 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testChangeSurrogateItemRepresentationWhileOriginalRelease() throws Exception {
         String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -963,34 +759,19 @@ public class SurrogateItemTest extends ItemTestBase {
         assertEquals(2, selectNodeList(updatedDocument, "/item/md-records/md-record").getLength());
 
         String surrogateItemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
-        String replaced = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replaced = surrogateItemXml.replaceAll("##ITEMID##", itemId);
-        }
-        else {
-            replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
-        }
+        String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
         String createdSurrogateItem = create(replaced);
         String surrogateId = getObjidValue(createdSurrogateItem);
         assertXmlValidItem(createdSurrogateItem);
         Document surrogateDocument = getDocument(createdSurrogateItem);
         String originId = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-
-            Node origin = selectSingleNode(surrogateDocument, "/item/properties/origin/@objid");
-            assertNotNull("attribute 'objid' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemId);
-        }
-        else {
-            Node origin = selectSingleNode(surrogateDocument, "/item/properties/origin/@href");
-            assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
-            originId = origin.getNodeValue();
-            assertEquals(originId, itemHref);
-        }
+        Node origin = selectSingleNode(surrogateDocument, "/item/properties/origin/@href");
+        assertNotNull("attribute 'href' of the element " + "'origin' may not be null", origin);
+        originId = origin.getNodeValue();
+        assertEquals(originId, itemHref);
         Node inherited = selectSingleNode(surrogateDocument, "/item/md-records/md-record[@name='escidoc']/@inherited");
         assertNull("attribute 'inherited' of the element " + "'md-record' must be null", inherited);
         Node secondMdRecord = selectSingleNode(surrogateDocument, "/item/md-records/md-record[@name='name1']");

@@ -72,16 +72,14 @@ public class UserGroupAdminAbstractTest extends GrantTestBase {
     /**
      * The constructor.
      *
-     * @param transport     The transport identifier.
      * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
      * @param userOrGroupId userOrGroupId for grantCreation.
      * @throws Exception If anything fails.
      */
-    public UserGroupAdminAbstractTest(final int transport, final int handlerCode, final String userOrGroupId)
-        throws Exception {
-        super(transport, handlerCode);
+    public UserGroupAdminAbstractTest(final int handlerCode, final String userOrGroupId) throws Exception {
+        super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
-        userGroupTestBase = new UserGroupTestBase(transport);
+        userGroupTestBase = new UserGroupTestBase();
     }
 
     /**
@@ -216,20 +214,12 @@ public class UserGroupAdminAbstractTest extends GrantTestBase {
         Document userGroupDoc = getDocument(groupXml);
         // NodeList selectorNodes = selectNodeList(userGroupDoc,
         // /user-group/selector);
-        NodeList selectorNodes = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@href");
-        }
-        else {
-            selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@objid");
-        }
+        NodeList selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@href");
 
         Vector<String> selectorsToRemove = new Vector<String>();
         for (int i = 0; i < selectorNodes.getLength(); i++) {
             String selectorId = selectorNodes.item(i).getNodeValue();
-            if (Constants.TRANSPORT_REST == getTransport()) {
-                selectorId = getIdFromHrefValue(selectorId);
-            }
+            selectorId = getIdFromHrefValue(selectorId);
             selectorsToRemove.add(selectorId);
         }
         String lastModDate = getLastModificationDateValue(userGroupDoc);
@@ -263,20 +253,12 @@ public class UserGroupAdminAbstractTest extends GrantTestBase {
         Document userGroupDoc = getDocument(groupXml);
         // NodeList selectorNodes = selectNodeList(userGroupDoc,
         // /user-group/selector);
-        NodeList selectorNodes = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@href");
-        }
-        else {
-            selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@objid");
-        }
+        NodeList selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@href");
 
         Vector<String> selectorsToRemove = new Vector<String>();
         for (int i = 0; i < selectorNodes.getLength(); i++) {
             String selectorId = selectorNodes.item(i).getNodeValue();
-            if (Constants.TRANSPORT_REST == getTransport()) {
-                selectorId = getIdFromHrefValue(selectorId);
-            }
+            selectorId = getIdFromHrefValue(selectorId);
             selectorsToRemove.add(selectorId);
         }
         String lastModDate = getLastModificationDateValue(userGroupDoc);

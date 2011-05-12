@@ -135,19 +135,11 @@ public class OmTestBase extends EscidocRestSoapTestBase {
     private DeviationClient deviationClient = null;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public OmTestBase(final int transport) {
-        super(transport);
-
-    }
-
-    /**
      * @return Returns the itemClient.
      */
     public ItemClient getItemClient() {
         if (this.itemClient == null) {
-            this.itemClient = new ItemClient(getTransport());
+            this.itemClient = new ItemClient();
         }
         return itemClient;
     }
@@ -157,7 +149,7 @@ public class OmTestBase extends EscidocRestSoapTestBase {
      */
     public IngestClient getIngestClient() {
         if (this.ingestClient == null) {
-            this.ingestClient = new IngestClient(getTransport());
+            this.ingestClient = new IngestClient();
         }
         return this.ingestClient;
     }
@@ -167,7 +159,7 @@ public class OmTestBase extends EscidocRestSoapTestBase {
      */
     public ContainerClient getContainerClient() {
         if (this.containerClient == null) {
-            this.containerClient = new ContainerClient(getTransport());
+            this.containerClient = new ContainerClient();
         }
         return containerClient;
     }
@@ -177,7 +169,7 @@ public class OmTestBase extends EscidocRestSoapTestBase {
      */
     public ContextClient getContextClient() {
         if (this.contextClient == null) {
-            this.contextClient = new ContextClient(getTransport());
+            this.contextClient = new ContextClient();
         }
         return contextClient;
     }
@@ -187,7 +179,7 @@ public class OmTestBase extends EscidocRestSoapTestBase {
      */
     public ContentRelationClient getContentRelationClient() {
         if (this.contentRelationClient == null) {
-            this.contentRelationClient = new ContentRelationClient(getTransport());
+            this.contentRelationClient = new ContentRelationClient();
         }
         return contentRelationClient;
     }
@@ -197,7 +189,7 @@ public class OmTestBase extends EscidocRestSoapTestBase {
      */
     public DeviationClient getDeviationClient() {
         if (this.deviationClient == null) {
-            this.deviationClient = new DeviationClient(getTransport());
+            this.deviationClient = new DeviationClient();
         }
         return this.deviationClient;
     }
@@ -213,16 +205,8 @@ public class OmTestBase extends EscidocRestSoapTestBase {
 
         String containerContextId = null;
         Node contextNode = null;
-
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            contextNode = XPathAPI.selectSingleNode(doc, "//properties/context/@href");
-            containerContextId = getObjidFromHref(contextNode.getNodeValue());
-        }
-        else {
-            contextNode = XPathAPI.selectSingleNode(doc, "//properties/context/@objid");
-            containerContextId = contextNode.getNodeValue();
-        }
-
+        contextNode = XPathAPI.selectSingleNode(doc, "//properties/context/@href");
+        containerContextId = getObjidFromHref(contextNode.getNodeValue());
         return containerContextId;
     }
 
@@ -235,16 +219,7 @@ public class OmTestBase extends EscidocRestSoapTestBase {
      * @throws Exception Thrown in case of substitution failure.
      */
     public Document setContextId(final Document resDoc, final String contextId) throws Exception {
-
-        Document result = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            result = (Document) substitute(resDoc, "//properties/context/@href", "/ir/context/" + contextId);
-        }
-        else {
-            result = (Document) substitute(resDoc, "//properties/context/@objid", contextId);
-        }
-
-        return result;
+        return (Document) substitute(resDoc, "//properties/context/@href", "/ir/context/" + contextId);
     }
 
     /**
@@ -287,19 +262,10 @@ public class OmTestBase extends EscidocRestSoapTestBase {
      * @throws TransformerException Thrown in case of XML Parser failure.
      */
     public String getLatestVersionId(final Document doc) throws TransformerException {
-
         String latestVersion = null;
         Node latestVersionNode = null;
-
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            latestVersionNode = XPathAPI.selectSingleNode(doc, "//properties/latest-version/@href");
-            latestVersion = getObjidFromHref(latestVersionNode.getNodeValue());
-        }
-        else {
-            latestVersionNode = XPathAPI.selectSingleNode(doc, "//properties/latest-version/@objid");
-            latestVersion = latestVersionNode.getNodeValue();
-        }
-
+        latestVersionNode = XPathAPI.selectSingleNode(doc, "//properties/latest-version/@href");
+        latestVersion = getObjidFromHref(latestVersionNode.getNodeValue());
         return latestVersion;
     }
 

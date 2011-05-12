@@ -37,12 +37,9 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPre
 import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyExistsException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -62,19 +59,11 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContainerContentRelationsTest extends ContainerTestBase {
 
     private String containerId = null;
 
     private String containerXml = null;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerContentRelationsTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -84,7 +73,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     @Before
     public void setUp() throws Exception {
         String xmlContainer =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
                 "create_container_WithoutMembers_v1.1.xml");
 
         this.containerXml = create(xmlContainer);
@@ -150,14 +139,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         NodeList relations = selectNodeList(containerWithRelationsDocument, "/container/relations/relation");
         assertEquals("Number of relations is wrong ", relations.getLength(), 1);
 
-        NodeList relationTargets = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            relationTargets = selectNodeList(containerWithRelationsDocument, "/container/relations/relation/@href");
-        }
-        else {
-            relationTargets = selectNodeList(containerWithRelationsDocument, "/container/relations/relation/@objid");
+        NodeList relationTargets =
+            selectNodeList(containerWithRelationsDocument, "/container/relations/relation/@href");
 
-        }
         boolean contains = false;
 
         for (int i = relationTargets.getLength() - 1; i >= 0; i--) {
@@ -843,7 +827,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
      */
     private String createContainer() throws Exception {
         String xmlContainer =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
                 "create_container_WithoutMembers_v1.1.xml");
         String xml = create(xmlContainer);
         return getObjidValue(xml);

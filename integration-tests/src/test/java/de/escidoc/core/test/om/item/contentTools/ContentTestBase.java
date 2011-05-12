@@ -1,7 +1,6 @@
 package de.escidoc.core.test.om.item.contentTools;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.item.ItemTestBase;
@@ -37,13 +36,6 @@ public class ContentTestBase extends ItemTestBase {
     private static final String TEMP_FILE_NAME = "testBinaryData.img";
 
     private static final String TEMP_REF_FILE_NAME = "testBinaryData-ref.img";
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentTestBase(final int transport) {
-        super(transport);
-    }
 
     /**
      * Waits until every thread of the vector with threads is finished.
@@ -386,22 +378,12 @@ public class ContentTestBase extends ItemTestBase {
         String itemXml = retrieve(itemId);
         Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
 
-        NodeList componentsIdList = null;
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            componentsIdList = selectNodeList(itemDoc, "/item/components/component/@href");
-
-        }
-        else {
-            componentsIdList = selectNodeList(itemDoc, "/item/components/component/@objid");
-        }
+        NodeList componentsIdList = selectNodeList(itemDoc, "/item/components/component/@href");
 
         for (int i = componentsIdList.getLength() - 1; i >= 0; i--) {
             String value = componentsIdList.item(i).getNodeValue();
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                int pos = value.lastIndexOf("/");
-                value = value.substring(pos + 1);
-            }
+            int pos = value.lastIndexOf("/");
+            value = value.substring(pos + 1);
             components.add(value);
         }
 
@@ -415,38 +397,13 @@ public class ContentTestBase extends ItemTestBase {
         String itemXml = retrieve(itemId);
         Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
 
-        NodeList componentsIdList = null;
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            componentsIdList = selectNodeList(itemDoc, "/item/components/component/@href");
-
-        }
-        else {
-            componentsIdList = selectNodeList(itemDoc, "/item/components/component/@objid");
-        }
+        NodeList componentsIdList = selectNodeList(itemDoc, "/item/components/component/@href");
 
         for (int i = componentsIdList.getLength() - 1; i >= 0; i--) {
             String value = componentsIdList.item(i).getNodeValue();
             String mimeType = null;
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                int pos = value.lastIndexOf("/");
-                //
-                // mimeType =
-                // selectSingleNodeAsserted(
-                // itemDoc,
-                // "/item/components/component/@href=[" + value
-                // + "]/mimeType").getNodeValue();
-                //
-                value = value.substring(pos + 1);
-
-            }
-            else {
-                // mimeType =
-                // selectSingleNodeAsserted(
-                // itemDoc,
-                // "/item/components/component/@objid=[" + value
-                // + "]/mimeType").getNodeValue();
-            }
+            int pos = value.lastIndexOf("/");
+            value = value.substring(pos + 1);
             mimeType = "image/jpeg";
             components.put(value, mimeType);
         }

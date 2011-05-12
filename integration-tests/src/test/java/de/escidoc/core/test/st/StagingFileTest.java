@@ -31,7 +31,6 @@ package de.escidoc.core.test.st;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.Header;
@@ -56,25 +55,6 @@ public abstract class StagingFileTest extends StagingFileTestBase {
     private final String testUploadFile = "UploadTest.zip";
 
     private final String testUploadFileMimeType = "application/zip";
-
-    /**
-     * Constructor.
-     */
-    public StagingFileTest() throws Exception {
-        super(Constants.TRANSPORT_REST);
-    }
-
-    /**
-     * @param transport The transport identifier.
-     * @throws Exception If anything fails.
-     */
-    protected StagingFileTest(final int transport) throws Exception {
-
-        super(transport);
-        if (transport != Constants.TRANSPORT_REST) {
-            throw new Exception("Provided Transport not supported [" + transport + "]");
-        }
-    }
 
     /**
      * Test successfully creating a StagingFile.

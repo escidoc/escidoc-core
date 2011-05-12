@@ -52,13 +52,6 @@ public class ContextTestBase extends OmTestBase {
     public static final String CONTEXT_TYPE_SWB = "SWB";
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ContextTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Successfully creates an context.
      *
      * @param templateName The name of the template to use.
@@ -96,7 +89,7 @@ public class ContextTestBase extends OmTestBase {
         for (int i = 0; i < number; i++) {
             final String createdXml = createSuccessfully(templateName);
             final Document createdDocument = EscidocRestSoapTestBase.getDocument(createdXml);
-            ret[i] = getObjidValue(getTransport(), createdDocument);
+            ret[i] = getObjidValue(createdDocument);
         }
         return ret;
     }
@@ -517,7 +510,7 @@ public class ContextTestBase extends OmTestBase {
      * @return .
      */
     protected Object checkParameter(final String param) {
-        if ((getTransport() == Constants.TRANSPORT_REST) && (param == null)) {
+        if (param == null) {
             return "";
         }
         return param;

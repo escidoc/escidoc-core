@@ -56,13 +56,6 @@ import static org.junit.Assert.assertTrue;
 public class ContentModelTestBase extends CmmTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ContentModelTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Test retrieving an organizational unit from the framework.
      *
      * @param id The id of the organizational unit.
@@ -267,24 +260,19 @@ public class ContentModelTestBase extends CmmTestBase {
                 // create item with this content model and check for dynamic
                 // behavior
                 String itemXml =
-                    EscidocRestSoapTestBase.getTemplateAsString(
-                        TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false), "item-minimal-for-content-model.xml");
+                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+                        "item-minimal-for-content-model.xml");
                 itemXml = itemXml.replace("##CONTENT_MODEL_ID##", id);
-                OmTestBase omBase = new OmTestBase(getTransport());
+                OmTestBase omBase = new OmTestBase();
                 itemXml = handleXmlResult(omBase.getItemClient().create(itemXml));
                 Document itemResources = null;
-                if (getTransport() == Constants.TRANSPORT_REST) {
-                    String itemResourcesXml =
-                        handleXmlResult(omBase.getItemClient().retrieveResources(getObjidValue(getDocument(itemXml))));
-                    itemResources = getDocument(itemResourcesXml);
-                }
-
+                String itemResourcesXml =
+                    handleXmlResult(omBase.getItemClient().retrieveResources(getObjidValue(getDocument(itemXml))));
+                itemResources = getDocument(itemResourcesXml);
                 it = resourceDefinitions.iterator();
                 while (it.hasNext()) {
                     String methodName = it.next();
-                    if (getTransport() == Constants.TRANSPORT_REST) {
-                        selectSingleNodeAsserted(itemResources, "/resources/" + methodName);
-                    }
+                    selectSingleNodeAsserted(itemResources, "/resources/" + methodName);
                 }
 
                 // check behavior
@@ -303,26 +291,21 @@ public class ContentModelTestBase extends CmmTestBase {
                 // dynamic
                 // behavior
                 String containerXml =
-                    EscidocRestSoapTestBase.getTemplateAsString(
-                        TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
                         "container-minimal-for-content-model.xml");
                 containerXml = containerXml.replace("##CONTENT_MODEL_ID##", id);
-                OmTestBase omBase = new OmTestBase(getTransport());
+                OmTestBase omBase = new OmTestBase();
                 containerXml = handleXmlResult(omBase.getContainerClient().create(containerXml));
                 Document containerResources = null;
-                if (getTransport() == Constants.TRANSPORT_REST) {
-                    String containerResourcesXml =
-                        handleXmlResult(omBase.getContainerClient().retrieveResources(
-                            getObjidValue(getDocument(containerXml))));
-                    containerResources = getDocument(containerResourcesXml);
-                }
+                String containerResourcesXml =
+                    handleXmlResult(omBase.getContainerClient().retrieveResources(
+                        getObjidValue(getDocument(containerXml))));
+                containerResources = getDocument(containerResourcesXml);
 
                 it = resourceDefinitions.iterator();
                 while (it.hasNext()) {
                     String methodName = it.next();
-                    if (getTransport() == Constants.TRANSPORT_REST) {
-                        selectSingleNodeAsserted(containerResources, "/resources/" + methodName);
-                    }
+                    selectSingleNodeAsserted(containerResources, "/resources/" + methodName);
                 }
 
                 // check behavior
@@ -389,35 +372,19 @@ public class ContentModelTestBase extends CmmTestBase {
             selectSingleNodeAsserted(contentModel, propertiesXpath + "/version/number/text()").getNodeValue();
         assertTrue("Version number of latest version must be greater or equal to version number of current version.",
             (Integer.parseInt(latestVersionNumber) >= Integer.parseInt(versionNumber)));
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            if (isRoot) {
-                selectSingleNodeAsserted(contentModel, propertiesXpath + "/@last-modification-date");
-                selectSingleNodeAsserted(contentModel, propertiesXpath + "/@base");
-            }
-            selectSingleNodeAsserted(contentModel, propertiesXpath + "[@href = '/cmm/content-model/" + id
-                + "/properties']");
-            selectSingleNodeAsserted(contentModel, propertiesXpath + "/version" + "[@href = '/cmm/content-model/" + id
-                + ":" + versionNumber + "']");
-            selectSingleNodeAsserted(contentModel, propertiesXpath + "/latest-version"
-                + "[@href = '/cmm/content-model/" + id + ":" + latestVersionNumber + "']");
-
-            selectSingleNodeAsserted(contentModel, propertiesXpath
-                + "/created-by[starts-with(@href, '/aa/user-account/')]");
-            selectSingleNodeAsserted(contentModel, propertiesXpath + "/version/modified-by"
-                + "[starts-with(@href, '/aa/user-account/')]");
+        if (isRoot) {
+            selectSingleNodeAsserted(contentModel, propertiesXpath + "/@last-modification-date");
+            selectSingleNodeAsserted(contentModel, propertiesXpath + "/@base");
         }
-        else {
-            if (isRoot) {
-                selectSingleNodeAsserted(contentModel, propertiesXpath + "/@last-modification-date");
-            }
-            selectSingleNodeAsserted(contentModel, propertiesXpath + "/version" + "[@objid = '" + id + ":"
-                + versionNumber + "']");
-            selectSingleNodeAsserted(contentModel, propertiesXpath + "/latest-version" + "[@objid = '" + id + ":"
-                + latestVersionNumber + "']");
+        selectSingleNodeAsserted(contentModel, propertiesXpath + "[@href = '/cmm/content-model/" + id + "/properties']");
+        selectSingleNodeAsserted(contentModel, propertiesXpath + "/version" + "[@href = '/cmm/content-model/" + id
+            + ":" + versionNumber + "']");
+        selectSingleNodeAsserted(contentModel, propertiesXpath + "/latest-version" + "[@href = '/cmm/content-model/"
+            + id + ":" + latestVersionNumber + "']");
 
-            selectSingleNodeAsserted(contentModel, propertiesXpath + "/created-by/@objid");
-            selectSingleNodeAsserted(contentModel, propertiesXpath + "/version/modified-by/@objid");
-        }
+        selectSingleNodeAsserted(contentModel, propertiesXpath + "/created-by[starts-with(@href, '/aa/user-account/')]");
+        selectSingleNodeAsserted(contentModel, propertiesXpath + "/version/modified-by"
+            + "[starts-with(@href, '/aa/user-account/')]");
         validateObjidForm(contentModel, propertiesXpath + "/version/modified-by");
 
         if (lastModificationDate != null) {
@@ -444,13 +411,8 @@ public class ContentModelTestBase extends CmmTestBase {
      */
     protected void validateObjidForm(Document document, String elementPath) throws Exception {
         String refObjid = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String href = selectSingleNodeAsserted(document, elementPath + "/@href").getNodeValue();
-            refObjid = href.substring(href.lastIndexOf('/'));
-        }
-        else {
-            refObjid = selectSingleNodeAsserted(document, elementPath + "/@objid").getNodeValue();
-        }
+        String href = selectSingleNodeAsserted(document, elementPath + "/@href").getNodeValue();
+        refObjid = href.substring(href.lastIndexOf('/'));
         assertObjid(refObjid);
 
     }

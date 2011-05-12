@@ -33,8 +33,6 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -49,7 +47,6 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class RetrieveContextsTest extends ContextTestBase {
 
     public static final String XPATH_SRW_CONTEXT_LIST_CONTEXT =
@@ -70,20 +67,13 @@ public class RetrieveContextsTest extends ContextTestBase {
     private static int methodCounter = 0;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public RetrieveContextsTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
-        this.path += "/" + getTransport(false);
+        this.path += "/rest";
 
         if (noOfContexts == -1) {
             String contexts = retrieveContexts(getFilterRetrieveContexts(null, null, null));

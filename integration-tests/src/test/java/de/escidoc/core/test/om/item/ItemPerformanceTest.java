@@ -40,8 +40,6 @@ import etm.core.renderer.MeasurementRenderer;
 import etm.core.renderer.SimpleTextRenderer;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -55,7 +53,6 @@ import java.util.Vector;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ItemPerformanceTest extends ItemTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemPerformanceTest.class);
@@ -67,13 +64,6 @@ public class ItemPerformanceTest extends ItemTestBase {
     private MeasurementRenderer renderer = null;
 
     private Environment testEv = null;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemPerformanceTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -156,8 +146,7 @@ public class ItemPerformanceTest extends ItemTestBase {
     public void testCreate05() throws Exception {
 
         String templateName = "escidoc_item_with_many_components-01.xml";
-        String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
+        String itemXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
 
         measureCreateMethod(itemXml, templateName);
     }
@@ -235,8 +224,7 @@ public class ItemPerformanceTest extends ItemTestBase {
     public void testRetrieve05() throws Exception {
 
         String templateName = "performance/escidoc_item_with_3_components-01.xml";
-        String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
+        String itemXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
         String newItemXml = create(itemXml);
         String objid = getObjidValue(newItemXml);
 
@@ -252,8 +240,7 @@ public class ItemPerformanceTest extends ItemTestBase {
     public void testRetrieve06() throws Exception {
 
         String templateName = "escidoc_item_with_many_components-01.xml";
-        String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
+        String itemXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
         String newItemXml = create(itemXml);
         String objid = getObjidValue(newItemXml);
 
@@ -272,9 +259,6 @@ public class ItemPerformanceTest extends ItemTestBase {
         int noOfItems = itemObjids.size();
         Random r = new Random();
         String objid = null;
-
-        System.out.println("Number of Items: " + noOfItems);
-
         monitor.reset("EscidocTestBase:create");
         monitor.reset("EscidocTestBase:retrieve");
         for (int i = 0; i < ITERATIONS; i++) {
@@ -303,8 +287,6 @@ public class ItemPerformanceTest extends ItemTestBase {
         Random r = new Random();
         String objid = null;
 
-        System.out.println("Number of Items: " + noOfItems);
-
         monitor.reset("EscidocTestBase:create");
         monitor.reset("EscidocTestBase:retrieve");
         for (int i = 0; i < ITERATIONS; i++) {
@@ -317,7 +299,7 @@ public class ItemPerformanceTest extends ItemTestBase {
             Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
             Node components = selectSingleNode(itemDoc, "/item/components/component");
             if (components != null) {
-                String componentId = getObjidValue(getTransport(), itemDoc, "/item/components/component[1]");
+                String componentId = getObjidValue(itemDoc, "/item/components/component[1]");
 
                 monitor.start();
                 retrieveComponent(objid, componentId);

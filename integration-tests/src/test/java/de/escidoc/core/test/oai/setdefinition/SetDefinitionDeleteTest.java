@@ -4,23 +4,13 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNot
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.fail;
 
-@RunWith(value = Parameterized.class)
 public class SetDefinitionDeleteTest extends SetDefinitionTestBase {
 
     String objid = null;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public SetDefinitionDeleteTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up test.

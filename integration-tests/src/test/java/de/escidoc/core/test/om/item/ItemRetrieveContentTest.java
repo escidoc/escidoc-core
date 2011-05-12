@@ -38,8 +38,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -63,7 +61,6 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 @Ignore
 // DigiLib Tests sollen laut Matthias bis auf weiteres deaktiviert werden.
 public class ItemRetrieveContentTest extends ContentTestBase {
@@ -73,13 +70,6 @@ public class ItemRetrieveContentTest extends ContentTestBase {
     private static final int MAX_RETRIEVES = 30;
 
     private static final String TRANSFORM_SERVICE_DIGILIB = "digilib";
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemRetrieveContentTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test retrieving the binary content of an Item.
@@ -155,8 +145,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // create Item
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_create_content.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_create_content.xml");
         Document itemDoc = EscidocRestSoapTestBase.getDocument(xmlData);
 
         Document newItem = (Document) substitute(itemDoc, "/item/components", "######");

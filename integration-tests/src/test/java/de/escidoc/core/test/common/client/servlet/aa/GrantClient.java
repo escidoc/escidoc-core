@@ -40,13 +40,6 @@ import java.util.Map;
 public class GrantClient extends ClientBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public GrantClient(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Retrieve the current grants of the specified user group or user-account.
      *
      * @param id The user group id.

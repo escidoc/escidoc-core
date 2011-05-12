@@ -36,8 +36,6 @@ import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -56,7 +54,6 @@ import static org.junit.Assert.assertTrue;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class ContextAdminSearchTest extends SearchTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextAdminSearchTest.class);
@@ -78,13 +75,11 @@ public class ContextAdminSearchTest extends SearchTestBase {
     private static String startTime = "";
 
     /**
-     * @param transport The transport identifier.
      * @throws Exception e
      */
-    public ContextAdminSearchTest(final int transport) throws Exception {
-        super(transport);
-        context = new ContextHelper(transport);
-        grant = new GrantHelper(transport, GrantHelper.getUserAccountHandlerCode());
+    public ContextAdminSearchTest() throws Exception {
+        context = new ContextHelper();
+        grant = new GrantHelper(GrantHelper.getUserAccountHandlerCode());
     }
 
     /**
@@ -141,16 +136,12 @@ public class ContextAdminSearchTest extends SearchTestBase {
         String handle = PWCallback.CONTEXT_ADMINISTRATOR_HANDLE;
         contextIds = new String[5];
         contextIds[0] =
-            prepareContext(PWCallback.SYSTEMADMINISTRATOR_HANDLE, "escidoc_search_context0_" + getTransport(false)
-                + ".xml", CONTEXT_STATUS_CREATED);
-        contextIds[1] =
-            prepareContext(handle, "escidoc_search_context0_" + getTransport(false) + ".xml", CONTEXT_STATUS_CREATED);
-        contextIds[2] =
-            prepareContext(handle, "escidoc_search_context0_" + getTransport(false) + ".xml", CONTEXT_STATUS_OPENED);
-        contextIds[3] =
-            prepareContext(handle, "escidoc_search_context0_" + getTransport(false) + ".xml", CONTEXT_STATUS_CLOSED);
-        contextIds[4] =
-            prepareContext(handle, "escidoc_search_context0_" + getTransport(false) + ".xml", CONTEXT_STATUS_DELETED);
+            prepareContext(PWCallback.SYSTEMADMINISTRATOR_HANDLE, "escidoc_search_context0_rest.xml",
+                CONTEXT_STATUS_CREATED);
+        contextIds[1] = prepareContext(handle, "escidoc_search_context0_rest.xml", CONTEXT_STATUS_CREATED);
+        contextIds[2] = prepareContext(handle, "escidoc_search_context0_rest.xml", CONTEXT_STATUS_OPENED);
+        contextIds[3] = prepareContext(handle, "escidoc_search_context0_rest.xml", CONTEXT_STATUS_CLOSED);
+        contextIds[4] = prepareContext(handle, "escidoc_search_context0_rest.xml", CONTEXT_STATUS_DELETED);
 
         // /////////////////////////////////////////////////////////////////////
 
@@ -390,8 +381,7 @@ public class ContextAdminSearchTest extends SearchTestBase {
                 NodeList nodes = selectNodeList(searchResultDoc, xPath);
                 for (int i = 0; i < nodes.getLength(); i++) {
                     Node node = nodes.item(i);
-                    String objId =
-                        getObjidValue(de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST, node, null);
+                    String objId = getObjidValue(node, null);
                     foundIds.add(objId);
                     assertTrue(errorTrace.toString() + "object " + objId + " may not be in searchResult",
                         ((HashMap<String, String>) role.get("searchresultIds")).containsKey(objId));

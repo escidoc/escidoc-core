@@ -35,8 +35,6 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -49,7 +47,6 @@ import static org.junit.Assert.fail;
 /**
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemRetrieveComponentPropertiesTest.class);
@@ -65,13 +62,6 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     private static int componentNo = 2;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ItemRetrieveComponentPropertiesTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
@@ -79,12 +69,12 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     @Before
     public void setUp() throws Exception {
         itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         createdItem = EscidocRestSoapTestBase.getDocument(create(itemXml));
         itemId = getObjidValue(createdItem);
         componentNo = 1;
-        componentId = getObjidValue(getTransport(), createdItem, "/item/components/component[1]");
+        componentId = getObjidValue(createdItem, "/item/components/component[1]");
         // getComponentObjidValue(createdItem, 1);
         Node node = selectSingleNode(createdItem, "/item/components/component[1]/properties/description");
         if (node == null) {
@@ -99,15 +89,8 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
      */
     @Test
     public void testOMRCP1() throws Exception {
-        // Node description =
-        // selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
-        // "/item/components/component/md-records/md-record[@name='escidoc']//description");
-        // if (description != null) {
-        // System.out.println("description " + description.getTextContent());
-        // }
         componentId =
-            getObjidValue(getTransport(), createdItem,
-                "/item/components/component[md-records/md-record[@name='escidoc']//description]");
+            getObjidValue(createdItem, "/item/components/component[md-records/md-record[@name='escidoc']//description]");
 
         String properties = retrieveComponentProperties(itemId, componentId);
 
@@ -124,7 +107,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             getLastModificationDateValue(createdItem), startTimestamp);
 
         componentId =
-            getObjidValue(getTransport(), createdItem,
+            getObjidValue(createdItem,
                 "/item/components/component[not(md-records/md-record[@name='escidoc']//description)]");
 
         properties = retrieveComponentProperties(itemId, componentId);
@@ -230,14 +213,12 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         final String expectedLastModificationTimestamp, final String timestampBeforeCreation) throws Exception {
 
         Document createdProperties = EscidocRestSoapTestBase.getDocument(xmlComponentProperties);
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String href = getRootElementHrefValue(createdProperties);
-            if ("".equals(href)) {
-                href = null;
-            }
-            assertNotNull("Component Properties error: href attribute was not set!", href);
-            assertEquals("Component Properties error: href has wrong value!", expectedHRef, href);
+        String href = getRootElementHrefValue(createdProperties);
+        if ("".equals(href)) {
+            href = null;
         }
+        assertNotNull("Component Properties error: href attribute was not set!", href);
+        assertEquals("Component Properties error: href has wrong value!", expectedHRef, href);
         String rootLastModificationDate = getLastModificationDateValue(createdProperties);
         if ("".equals(rootLastModificationDate)) {
             rootLastModificationDate = null;
@@ -287,9 +268,6 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             assertEquals("Component Properties error: description was changed!", decriptionInProperties,
                 decriptionInEscidocmdRecord);
         }
-        // System.out.println("md-record "+ templateComponentEscidocMdRecord);
-        // System.out.println(selectSingleNode(mdRecord,
-        // "/md-record//title").getTextContent());
         if (selectSingleNode(mdRecord, "/md-record//title") != null) {
             assertXmlExists("Component Properties error: 'file-name' was not set in properties!", createdProperties,
                 "/properties/file-name");
@@ -299,14 +277,6 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             assertEquals("Component Properties error: description was changed!", fileNameInProperties,
                 fileNameInEscidocmdRecord);
         }
-        // if (selectSingleNode(template, "/properties/locator-url") != null) {
-        // assertXmlExists(
-        // "Component Properties error: locator-url was not set in properties!",
-        // createdProperties, "/properties/locator-url");
-        // assertXmlEquals(
-        // "Component Properties error: locator-url was changed!",
-        // template, createdProperties, "/properties/locator-url");
-        // }
         assertXmlEquals("Component Properties error: status was changed!", template, createdProperties,
             "/properties/status");
         assertXmlEquals("Component Properties error: visibility was changed!", template, createdProperties,
@@ -314,8 +284,6 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
 
         assertXmlEquals("Component Properties error: content-category was changed!", template, createdProperties,
             "/properties/content-category");
-        // assertXmlEquals("Component Properties error: file-name was changed!",
-        // template, createdProperties, "/properties/file-name");
 
         if (selectSingleNode(template, "/properties/mime-type") != null) {
             assertXmlExists("Component Properties error: mime-type was not set in properties!", createdProperties,
@@ -323,8 +291,6 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             assertXmlEquals("Component Properties error: mime-type was changed!", template, createdProperties,
                 "/properties/mime-type");
         }
-        // assertXmlEquals("Component Properties error: file-size was changed!",
-        // template, createdProperties, "/properties/file-size");
     }
 
     /**

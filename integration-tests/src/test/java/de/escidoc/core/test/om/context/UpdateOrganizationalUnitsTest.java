@@ -29,13 +29,9 @@
 package de.escidoc.core.test.om.context;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.compare.TripleStoreValue;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -49,17 +45,9 @@ import static org.junit.Assert.assertNull;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class UpdateOrganizationalUnitsTest extends ContextTestBase {
 
     private String path = "";
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public UpdateOrganizationalUnitsTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -68,7 +56,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
      */
     @Before
     public void setUp() throws Exception {
-        this.path += "/" + getTransport(false);
+        this.path += "/rest";
     }
 
     /**
@@ -96,14 +84,8 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         // get id from removed OU
         String attrId = null;
         // String debug = toString(node, false);
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            Node hrefNode = selectSingleNode(node, "@href");
-            attrId = hrefNode.getNodeValue();
-        }
-        else {
-            Node hrefNode = selectSingleNode(node, "@objid");
-            attrId = hrefNode.getNodeValue();
-        }
+        Node hrefNode = selectSingleNode(node, "@href");
+        attrId = hrefNode.getNodeValue();
 
         created = toString(createdDoc, false);
         String newContext = update(id, created);
@@ -112,18 +94,13 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         Document newContextDoc = EscidocRestSoapTestBase.getDocument(newContext);
 
         String xpath = "/context/properties/organizational-units/organizational-unit";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xpath += "[@href = '" + attrId + "']";
-        }
-        else {
-            xpath += "[@objid = '" + attrId + "']";
-        }
+        xpath += "[@href = '" + attrId + "']";
         node = selectSingleNode(newContextDoc, xpath);
 
         assertNull("OU not removed from Context", node);
 
         // assert data structure in FoXML (indirect via triple store)
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.contextTripleStoreValues(newContextDoc);
     }
 
@@ -142,14 +119,8 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         Node node = selectSingleNode(context, "/context/properties/organizational-units/organizational-unit");
 
         String attrId = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            Node hrefNode = selectSingleNode(node, "@href");
-            attrId = hrefNode.getNodeValue();
-        }
-        else {
-            Node hrefNode = selectSingleNode(node, "@objid");
-            attrId = hrefNode.getNodeValue();
-        }
+        Node hrefNode = selectSingleNode(node, "@href");
+        attrId = hrefNode.getNodeValue();
 
         node.getParentNode().removeChild(node);
 
@@ -165,12 +136,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         Node newOu = ou.cloneNode(true);
 
         String xpath = "";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xpath = "@href";
-        }
-        else {
-            xpath = "@objid";
-        }
+        xpath = "@href";
 
         substitute(newOu, xpath, attrId);
 
@@ -190,18 +156,13 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
         assertEquals("Missing new OU after update", 2, updatedOus.getLength());
 
         xpath = "/context/properties/organizational-units/organizational-unit";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xpath += "[@href = '" + attrId + "']";
-        }
-        else {
-            xpath += "[@objid = '" + attrId + "']";
-        }
+        xpath += "[@href = '" + attrId + "']";
         node = selectSingleNode(newContextDoc, xpath);
 
         assertNotNull("OU not added to Context", node);
 
         // assert data structure in FoXML (indirect via triple store)
-        TripleStoreValue tsv = new TripleStoreValue(getTransport());
+        TripleStoreValue tsv = new TripleStoreValue();
         tsv.contextTripleStoreValues(newContextDoc);
     }
 
@@ -221,14 +182,8 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
 
         String attrId = null;
         // String debug = toString(node, false);
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            Node hrefNode = selectSingleNode(node, "@href");
-            attrId = hrefNode.getNodeValue();
-        }
-        else {
-            Node hrefNode = selectSingleNode(node, "@objid");
-            attrId = hrefNode.getNodeValue();
-        }
+        Node hrefNode = selectSingleNode(node, "@href");
+        attrId = hrefNode.getNodeValue();
 
         node.getParentNode().removeChild(node);
 
@@ -245,12 +200,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
 
         // replace id
         String xpath = "/context/properties/organizational-units/organizational-unit/";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xpath += "@href";
-        }
-        else {
-            xpath += "@objid";
-        }
+        xpath += "@href";
         // node = selectSingleNode(newContextDoc, xpath);
         substitute(createdDoc, xpath, attrId);
 
@@ -271,13 +221,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
 
         // assert that the single OU has the right id
         xpath = "/context/properties/organizational-units/organizational-unit";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xpath += "[@href = '" + attrId + "']";
-        }
-        else {
-            xpath += "[@objid = '" + attrId + "']";
-        }
-
+        xpath += "[@href = '" + attrId + "']";
         updateOu = selectNodeList(createdDoc, xpath);
         assertEquals("More than one OUs for update", 1, updateOu.getLength());
     }

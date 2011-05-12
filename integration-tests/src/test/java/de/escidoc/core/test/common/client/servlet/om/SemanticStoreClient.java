@@ -31,21 +31,12 @@ package de.escidoc.core.test.common.client.servlet.om;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
-import javax.xml.rpc.ServiceException;
-
 /**
  * Offers access methods to the escidoc REST interface of the container resource.
  *
  * @author Michael Schneider
  */
 public class SemanticStoreClient extends ClientBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public SemanticStoreClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Retrieve the Containers of a Container.

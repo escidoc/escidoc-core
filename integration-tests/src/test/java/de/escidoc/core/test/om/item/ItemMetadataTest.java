@@ -31,8 +31,6 @@ package de.escidoc.core.test.om.item;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.fedora.Client;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -43,15 +41,7 @@ import static org.junit.Assert.assertNotSame;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ItemMetadataTest extends ItemTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemMetadataTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test if no internal mapping happens if md-record with name DC is delivered from user/solution.
@@ -84,8 +74,7 @@ public class ItemMetadataTest extends ItemTestBase {
 
         // add md-record with name dc
         Document mdRecordDC =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "md-record.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "md-record.xml");
         Node newMdRecord = selectSingleNode(mdRecordDC, "/md-record");
 
         Node importedNde = curItem.importNode(newMdRecord, true);

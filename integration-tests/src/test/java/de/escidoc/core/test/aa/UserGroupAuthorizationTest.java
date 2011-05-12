@@ -35,8 +35,6 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
@@ -46,7 +44,6 @@ import java.util.ArrayList;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class UserGroupAuthorizationTest extends GrantTestBase {
 
     private static int methodCounter = 0;
@@ -80,14 +77,12 @@ public class UserGroupAuthorizationTest extends GrantTestBase {
     private static String[][] groupCollaboratorItems = new String[COLLABORATOR_GROUP_COUNT][ITEMS_PER_GROUP];
 
     /**
-     * @param transport The transport identifier.
      * @throws Exception e
      */
-    public UserGroupAuthorizationTest(final int transport) throws Exception {
-
-        super(transport, USER_ACCOUNT_HANDLER_CODE);
-        userGroupTestBase = new UserGroupTestBase(transport);
-        groupGrantTestBase = new GrantTestBase(transport, USER_GROUP_HANDLER_CODE);
+    public UserGroupAuthorizationTest() throws Exception {
+        super(USER_ACCOUNT_HANDLER_CODE);
+        userGroupTestBase = new UserGroupTestBase();
+        groupGrantTestBase = new GrantTestBase(USER_GROUP_HANDLER_CODE);
     }
 
     /**

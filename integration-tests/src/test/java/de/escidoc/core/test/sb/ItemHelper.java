@@ -39,13 +39,6 @@ import de.escidoc.core.test.om.item.ItemTestBase;
 public class ItemHelper extends ItemTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ItemHelper(final int transport) {
-        super(transport);
-    }
-
-    /**
      * @param xml The item as xml.
      * @return String item-xml
      * @throws Exception e

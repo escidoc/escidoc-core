@@ -32,21 +32,12 @@ import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 
-import javax.xml.rpc.ServiceException;
-
 /**
  * Offers access methods to the escidoc interfaces of the item resource.
  *
  * @author Michael Schneider
  */
 public class IngestClient extends ClientBase implements ResourceHandlerClientInterface {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public IngestClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Ingest a resource.

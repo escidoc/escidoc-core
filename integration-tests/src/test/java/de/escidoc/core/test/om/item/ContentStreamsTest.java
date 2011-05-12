@@ -39,8 +39,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -55,16 +53,7 @@ import static org.junit.Assert.assertNull;
  * 
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContentStreamsTest extends ItemTestBase {
-
-    /**
-     * @param transport
-     *            The transport identifier.
-     */
-    public ContentStreamsTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test successfully creating item with three content streams.
@@ -74,12 +63,11 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_198_for_create_3content-streams.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
             assertXmlValidItem(itemXml);
-            // System.out.println(itemXml);
 
             Document itemDoc = getDocument(itemXml);
             assertContentStreamsOf_escidoc_item_198_for_create_3content_streams(createdItemId, itemDoc, false);
@@ -93,12 +81,8 @@ public class ContentStreamsTest extends ItemTestBase {
             // check content stream subresources
             String contentStreamXml = retrieveContentStream(createdItemId, "internal_xml");
             assertXmlValidItem(contentStreamXml);
-
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                String content = retrieveContentStreamContent(createdItemId, "internal_xml");
-                assertNotNull(content);
-            }
-
+            String content = retrieveContentStreamContent(createdItemId, "internal_xml");
+            assertNotNull(content);
         }
         finally {
             if (createdItemId != null) {
@@ -115,7 +99,7 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_198_for_create_3content-streams.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
@@ -142,7 +126,7 @@ public class ContentStreamsTest extends ItemTestBase {
         HttpClient httpClient = getItemClient().getHttpClient();
         try {
             String itemXml =
-                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_198_for_create_3content-streams.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
@@ -156,7 +140,6 @@ public class ContentStreamsTest extends ItemTestBase {
                 if (href.startsWith("/")) {
                     href = getFrameworkUrl() + href;
                 }
-                // System.out.println(i + ": " + href);
                 HttpGet get = new HttpGet(href);
                 get.setHeader("Cookie", "escidocCookie=" + PWCallback.DEFAULT_HANDLE);
                 HttpResponse res = httpClient.execute(get);
@@ -177,12 +160,11 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_198_for_create_3content-streams.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
             assertXmlValidItem(itemXml);
-            // System.out.println(itemXml);
 
             Document itemDoc = getDocument(itemXml);
             // change updateable attributes
@@ -192,22 +174,21 @@ public class ContentStreamsTest extends ItemTestBase {
             String origTypeContentStreams = null;
             String origTitleContentStreams = null;
             String origHrefContentStreams = null;
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                origTypeContentStreams = selectSingleNode(itemDoc, "/item/content-streams/@type").getNodeValue();
-                origTitleContentStreams = selectSingleNode(itemDoc, "/item/content-streams/@title").getNodeValue();
-                origHrefContentStreams = selectSingleNode(itemDoc, "/item/content-streams/@href").getNodeValue();
-                Node typeAttributeRemoveNode = selectSingleNodeAsserted(itemDoc, "/item/content-streams");
-                NamedNodeMap attMap = typeAttributeRemoveNode.getAttributes();
-                attMap.removeNamedItem("xlink:type");
-                substitute(itemDoc, "/item/content-streams/@title", "something");
-                substitute(itemDoc, "/item/content-streams/@href", "something");
-            }
+            origTypeContentStreams = selectSingleNode(itemDoc, "/item/content-streams/@type").getNodeValue();
+            origTitleContentStreams = selectSingleNode(itemDoc, "/item/content-streams/@title").getNodeValue();
+            origHrefContentStreams = selectSingleNode(itemDoc, "/item/content-streams/@href").getNodeValue();
+            Node typeAttributeRemoveNode = selectSingleNodeAsserted(itemDoc, "/item/content-streams");
+            NamedNodeMap attMap = typeAttributeRemoveNode.getAttributes();
+            attMap.removeNamedItem("xlink:type");
+            substitute(itemDoc, "/item/content-streams/@title", "something");
+            substitute(itemDoc, "/item/content-streams/@href", "something");
+
             // content-stream:
             // NOT persistent: xlink:type, xlink:title, href (managed)
             // persistent: mime-type, href (external-url)
-            Node typeAttributeRemoveNode =
+            typeAttributeRemoveNode =
                 selectSingleNodeAsserted(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']");
-            NamedNodeMap attMap = typeAttributeRemoveNode.getAttributes();
+            attMap = typeAttributeRemoveNode.getAttributes();
             attMap.removeNamedItem("xlink:type");
             String newTitle = "something";
             substitute(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']/@title", newTitle);
@@ -230,12 +211,9 @@ public class ContentStreamsTest extends ItemTestBase {
 
             // content-streams: xlink:type, xlink:title, xlink:href must not be
             // changed
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                selectSingleNodeAsserted(updatedDoc, "/item/content-streams[@type = '" + origTypeContentStreams + "']");
-                selectSingleNodeAsserted(updatedDoc, "/item/content-streams[@title = '" + origTitleContentStreams
-                    + "']");
-                selectSingleNodeAsserted(updatedDoc, "/item/content-streams[@href = '" + origHrefContentStreams + "']");
-            }
+            selectSingleNodeAsserted(updatedDoc, "/item/content-streams[@type = '" + origTypeContentStreams + "']");
+            selectSingleNodeAsserted(updatedDoc, "/item/content-streams[@title = '" + origTitleContentStreams + "']");
+            selectSingleNodeAsserted(updatedDoc, "/item/content-streams[@href = '" + origHrefContentStreams + "']");
             // content-stream: xlink:type, xlink:href must not be changed
             selectSingleNodeAsserted(updatedDoc,
                 "/item/content-streams/content-stream[@storage = 'external-managed' and @type = 'simple']");
@@ -264,18 +242,15 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_198_for_create_inline_content-stream.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
             assertXmlValidItem(itemXml);
-            // System.out.println(itemXml);
 
             Document itemDoc = getDocument(itemXml);
             selectSingleNodeAsserted(itemDoc, "/item/content-streams/content-stream[@name = 'toc']/"
                 + "toc[@ID = 'meins']/div[@ID = 'rootNode']/" + "ptr[@ID = 'rootNodePtr']");
-            // assertContentStreamsOf_escidoc_item_198_for_create_3content_streams(
-            // createdItemId, itemDoc, false);
 
             String xml = retrieve(createdItemId);
             assertXmlValidItem(xml);
@@ -302,12 +277,11 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_198_for_create_inline_content-stream.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
             assertXmlValidItem(itemXml);
-            // System.out.println(itemXml);
 
             Document itemDoc = getDocument(itemXml);
             selectSingleNodeAsserted(itemDoc, "/item/content-streams/content-stream[@name = 'toc']/"
@@ -365,7 +339,7 @@ public class ContentStreamsTest extends ItemTestBase {
     public void testUpdateContentStreamsUnchangableValues() throws Exception {
         String createdItemId = null;
         String itemXml =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create_3content-streams.xml"));
 
         createdItemId = getIdFromRootElement(itemXml);
@@ -415,7 +389,7 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_for_create_3content-streams.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
@@ -428,10 +402,8 @@ public class ContentStreamsTest extends ItemTestBase {
             String contentStreamXml = retrieveContentStream(createdItemId, "internal_xml");
             assertXmlValidItem(contentStreamXml);
 
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                String content = retrieveContentStreamContent(createdItemId, "internal_xml");
-                assertNotNull(content);
-            }
+            String content = retrieveContentStreamContent(createdItemId, "internal_xml");
+            assertNotNull(content);
 
         }
         finally {

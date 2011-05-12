@@ -32,8 +32,6 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -43,19 +41,11 @@ import static org.junit.Assert.fail;
 /**
  * @author Rozita Friedman
  */
-@RunWith(value = Parameterized.class)
 public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
 
     private String objid;
 
     private Document createdSetDefinitionDocument;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public SetDefinitionUpdateTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up test.

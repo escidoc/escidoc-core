@@ -29,7 +29,6 @@
 package de.escidoc.core.test.oum.organizationalunit.rest;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -40,13 +39,6 @@ import org.w3c.dom.Document;
  * @author Michael Schneider
  */
 public class CreateRestTest extends OrganizationalUnitTestBase {
-
-    /**
-     * Constructor.
-     */
-    public CreateRestTest() {
-        super(Constants.TRANSPORT_REST);
-    }
 
     /**
      * Test successfully creating an organizational unit with set read only attributes and elements via REST.

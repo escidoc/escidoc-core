@@ -40,13 +40,6 @@ import org.w3c.dom.Node;
 public class OrganizationalUnitHelper extends OrganizationalUnitTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public OrganizationalUnitHelper(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Creates and insert the parent ous element at the specified position in the provided document. This element
      * contains references to the specified organizational units.
      *

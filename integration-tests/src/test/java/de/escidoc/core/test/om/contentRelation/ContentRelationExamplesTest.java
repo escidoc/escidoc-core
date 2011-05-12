@@ -29,8 +29,6 @@
 package de.escidoc.core.test.om.contentRelation;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 /**
@@ -38,15 +36,7 @@ import org.w3c.dom.Document;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ContentRelationExamplesTest extends ContentRelationTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentRelationExamplesTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test creating example content relation.

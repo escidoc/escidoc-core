@@ -51,12 +51,7 @@ public class UserAttributeTestBase extends UserAccountTestBase {
 
     private UserAccountClient client = null;
 
-    /**
-     * @param transport The transport identifier.
-     * @throws Exception e
-     */
-    public UserAttributeTestBase(final int transport) throws Exception {
-        super(transport);
+    public UserAttributeTestBase() {
         client = (UserAccountClient) getClient();
     }
 
@@ -236,11 +231,8 @@ public class UserAttributeTestBase extends UserAccountTestBase {
 
         String href = "/aa/user-account/" + userId + "/resources/attributes";
         Document attributesXmlDocument = getDocument(attributesXml);
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            selectSingleNodeAsserted(attributesXmlDocument, "/attributes/@base");
-            selectSingleNodeAsserted(attributesXmlDocument, "/attributes[@href = '" + href + "']");
-        }
+        selectSingleNodeAsserted(attributesXmlDocument, "/attributes/@base");
+        selectSingleNodeAsserted(attributesXmlDocument, "/attributes[@href = '" + href + "']");
         int count = attributeList.size();
         if (count > 0) {
             selectSingleNodeAsserted(attributesXmlDocument, "/attributes/attribute[" + count + "]");
@@ -308,7 +300,7 @@ public class UserAttributeTestBase extends UserAccountTestBase {
         for (int i = 0; i < elementCount; i++) {
             if (attributeName == null
                 || list.item(i).getAttributes().getNamedItem("name").getNodeValue().equals(attributeName)) {
-                String attributeId = getObjidValue(getTransport(), list.item(i), null);
+                String attributeId = getObjidValue(list.item(i), null);
                 col.add(attributeId);
             }
         }

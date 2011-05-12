@@ -36,8 +36,6 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -55,16 +53,11 @@ import static org.junit.Assert.fail;
  *
  * @author André Schenk
  */
-@RunWith(value = Parameterized.class)
 public class ItemContentPIDAssignmentTest extends ItemTestBase {
 
     private final String itemUrl;
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemContentPIDAssignmentTest(final int transport) {
-        super(transport);
+    public ItemContentPIDAssignmentTest() {
         itemUrl = getFrameworkUrl() + "/ir/item/";
     }
 
@@ -426,8 +419,8 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
      */
     private String createItem() throws Exception {
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         return (create(xmlData));
     }

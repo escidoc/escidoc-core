@@ -34,8 +34,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -50,7 +48,6 @@ import static org.junit.Assert.assertEquals;
  * @author Michael Hoppe
  */
 @Ignore("Test the implementation of the search resource")
-@RunWith(value = Parameterized.class)
 public class TextExtractionSearchTest extends SearchTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TextExtractionSearchTest.class);
@@ -61,13 +58,9 @@ public class TextExtractionSearchTest extends SearchTestBase {
 
     private static final String INDEX_NAME = "escidoc_all";
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public TextExtractionSearchTest(final int transport) {
-        super(transport);
-        item = new ItemHelper(transport);
-        container = new ContainerHelper(transport);
+    public TextExtractionSearchTest() {
+        item = new ItemHelper();
+        container = new ContainerHelper();
     }
 
     /**
@@ -114,8 +107,8 @@ public class TextExtractionSearchTest extends SearchTestBase {
         try {
             // Create Item submit and release it //////////////////////////
             String xmlData =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_text_extractor_error_item_"
-                    + getTransport(false) + ".xml");
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
+                    "escidoc_text_extractor_error_item_rest.xml");
             String xml = item.create(xmlData);
             String lastModDate = getLastModificationDate(xml);
             itemId = getId(xml);

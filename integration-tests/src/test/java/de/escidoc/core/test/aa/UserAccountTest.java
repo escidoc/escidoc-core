@@ -134,18 +134,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     private static int methodCounter = 0;
 
-    /**
-     * @param transport
-     *            The transport identifier.
-     */
-    public UserAccountTest(final int transport) throws Exception {
-
-        super(transport);
-        userAttributeTestBase = new UserAttributeTestBase(transport);
-        userPreferenceTestBase = new UserPreferenceTestBase(transport);
-        grantTestBase = new GrantTestBase(transport, USER_ACCOUNT_HANDLER_CODE);
-        organizationalUnitTestBase = new OrganizationalUnitTestBase(transport);
-        userGroupTestBase = new UserGroupTestBase(transport);
+    public UserAccountTest() throws Exception {
+        userAttributeTestBase = new UserAttributeTestBase();
+        userPreferenceTestBase = new UserPreferenceTestBase();
+        grantTestBase = new GrantTestBase(USER_ACCOUNT_HANDLER_CODE);
+        organizationalUnitTestBase = new OrganizationalUnitTestBase();
+        userGroupTestBase = new UserGroupTestBase();
     }
 
     /**
@@ -349,7 +343,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         String retrievedXml = null;
         try {
             retrievedXml = retrieve(encodedLoginName);
-            // System.out.println("ua " + retrievedXml);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
@@ -1718,10 +1711,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         String href = "";
         String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-account/";
-            attributeName = "href";
-        }
+        href = "/aa/user-account/";
+        attributeName = "href";
         assertXmlExists("Missing user " + TEST_USER_ACCOUNT_ID, retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[@" + attributeName + "='" + href + TEST_USER_ACCOUNT_ID + "']");
         assertXmlExists("Missing user " + userAccountFilterUser, retrievedDocument,
@@ -1832,10 +1823,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         String href = "";
         String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-account/";
-            attributeName = "href";
-        }
+        href = "/aa/user-account/";
+        attributeName = "href";
         assertXmlExists("Missing user " + additonalGroupFilterSearchUsers[0], retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[@" + attributeName + "='" + href
                 + additonalGroupFilterSearchUsers[0] + "']");
@@ -2308,7 +2297,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         // create ou and open it
         String ouXml = organizationalUnitTestBase.createSuccessfully("escidoc_ou_create.xml");
         Document createdDocument = getDocument(ouXml);
-        String ouId = getObjidValue(getTransport(), createdDocument);
+        String ouId = getObjidValue(createdDocument);
         String ouTitle = getTitleValue(createdDocument);
         String lastModDate = getLastModificationDateValue(createdDocument);
         organizationalUnitTestBase.open(ouId, "<param last-modification-date=\"" + lastModDate + "\" />");
@@ -2327,13 +2316,13 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
         ouXml = organizationalUnitTestBase.create(toBeCreatedXml);
         createdDocument = getDocument(ouXml);
-        String ouId1 = getObjidValue(getTransport(), createdDocument);
+        String ouId1 = getObjidValue(createdDocument);
         lastModDate = getLastModificationDateValue(createdDocument);
         organizationalUnitTestBase.open(ouId1, "<param last-modification-date=\"" + lastModDate + "\" />");
 
         // create user with child ou
         Document createdUser = createSuccessfully("escidoc_useraccount_for_create1.xml");
-        userAccountFilterUser = getObjidValue(getTransport(), createdUser);
+        userAccountFilterUser = getObjidValue(createdUser);
         userAttributeTestBase.createAttribute(userAccountFilterUser, "<attribute xmlns="
             + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"o\">" + ouId1 + "</attribute>");
 
@@ -2341,7 +2330,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         String attributeName = "uafiltertestkey" + System.currentTimeMillis();
         String attributeValue = "uafiltertestvalue" + System.currentTimeMillis();
         createdUser = createSuccessfully("escidoc_useraccount_for_create.xml");
-        userAccountFilterUser1 = getObjidValue(getTransport(), createdUser);
+        userAccountFilterUser1 = getObjidValue(createdUser);
         userAttributeTestBase.createAttribute(userAccountFilterUser1, "<attribute xmlns="
             + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"" + attributeName + "\">" + attributeValue
             + "</attribute>");
@@ -2354,12 +2343,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             insertUserAccountValues(toBeCreatedDocument, "filtertestname_" + i + "_" + uniqueIdentifier,
                 "filtertestloginname_" + i + "_" + uniqueIdentifier);
             String userXml = handleXmlResult(getClient().create(toString(toBeCreatedDocument, false)));
-            additonalGroupFilterSearchUsers[i] = getObjidValue(getTransport(), getDocument(userXml));
+            additonalGroupFilterSearchUsers[i] = getObjidValue(getDocument(userXml));
         }
 
         // create group with attribute-user-selector
         Document createdGroup = userGroupTestBase.createSuccessfully("escidoc_usergroup_for_create.xml");
-        String groupId = getObjidValue(getTransport(), createdGroup);
+        String groupId = getObjidValue(createdGroup);
         String lastModificationDate = getLastModificationDateValue(createdGroup);
         String[] selector1 = new String[3];
         selector1[0] = attributeName;
@@ -2372,7 +2361,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         // create group with user, ou and group selectors
         createdGroup = userGroupTestBase.createSuccessfully("escidoc_usergroup_for_create.xml");
-        userAccountFilterGroup = getObjidValue(getTransport(), createdGroup);
+        userAccountFilterGroup = getObjidValue(createdGroup);
         lastModificationDate = getLastModificationDateValue(createdGroup);
         selector1[0] = "o";
         selector1[1] = "user-attribute";

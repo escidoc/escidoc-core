@@ -70,14 +70,6 @@ public class SearchTestBase extends SbTestBase {
     protected GrantHelper grant = null;
 
     /**
-     * @param transport
-     *            The transport identifier.
-     */
-    public SearchTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Wait until the indexer has (hopefully :) run the next time.
      * 
      * @throws InterruptedException

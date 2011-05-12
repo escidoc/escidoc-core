@@ -31,23 +31,12 @@ package de.escidoc.core.test.common.client.servlet.aa;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
-import javax.xml.rpc.ServiceException;
-
 /**
  * Offers access methods to the escidoc REST and soap interface of the policy decision point.
  *
  * @author Torsten Tetteroo
  */
 public class PolicyDecisionPointClient extends ClientBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public PolicyDecisionPointClient(final int transport) {
-        super(transport);
-    }
-
-    /**
 
     /**
      * Evaluates the provided authorization requests.
@@ -57,7 +46,6 @@ public class PolicyDecisionPointClient extends ClientBase {
      * @throws Exception If the service call fails.
      */
     public Object evaluate(final String requestsXml) throws Exception {
-
         return callEsciDoc("Pdp.evaluate", METHOD_EVALUATE, Constants.HTTP_METHOD_PUT, Constants.PDP_BASE_URI,
             new String[] {}, changeToString(requestsXml));
     }

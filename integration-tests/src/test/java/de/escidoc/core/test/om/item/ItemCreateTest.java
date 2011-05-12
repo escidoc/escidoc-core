@@ -32,8 +32,6 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlEx
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -44,15 +42,7 @@ import static org.junit.Assert.fail;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ItemCreateTest extends ItemTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemCreateTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test exception if XML string is empty.

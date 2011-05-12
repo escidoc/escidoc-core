@@ -28,18 +28,17 @@
  */
 package de.escidoc.core.test.st;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.fail;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
+import de.escidoc.core.test.common.resources.ResourceProvider;
+import org.apache.http.HttpResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.http.HttpResponse;
-
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
-import de.escidoc.core.test.common.resources.ResourceProvider;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.fail;
 
 /**
  * Base class for testing the implementation of the StagingFile.
@@ -50,12 +49,8 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
 
     private StagingFileClient stagingFileClient = null;
 
-    /**
-     * @param transport The transport identifier.
-     */
-    protected StagingFileTestBase(final int transport) {
-        super(transport);
-        this.stagingFileClient = new StagingFileClient(transport);
+    protected StagingFileTestBase() {
+        this.stagingFileClient = new StagingFileClient();
     }
 
     /**

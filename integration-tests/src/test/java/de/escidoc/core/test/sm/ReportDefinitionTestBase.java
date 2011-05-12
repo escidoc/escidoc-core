@@ -42,13 +42,6 @@ import java.util.Map;
 public class ReportDefinitionTestBase extends SmTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ReportDefinitionTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Test creating a reportDefinition.
      *
      * @param dataXml The xml representation of the reportDefinition.

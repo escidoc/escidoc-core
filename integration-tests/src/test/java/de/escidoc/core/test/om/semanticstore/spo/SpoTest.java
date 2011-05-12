@@ -31,14 +31,11 @@ package de.escidoc.core.test.om.semanticstore.spo;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidTripleStoreOutputFormatException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidTripleStoreQueryException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -52,18 +49,7 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class SpoTest extends SpoTestBase {
-
-    private int transport;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public SpoTest(final int transport) {
-        super(transport);
-        this.transport = transport;
-    }
 
     /**
      * Set up servlet test.
@@ -193,7 +179,6 @@ public class SpoTest extends SpoTestBase {
         String format = "N-Triples";
         String param = getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt; &lt;" + p + "&gt; " + o, format);
         String result = spo(param);
-        // System.out.println("result " + result);
         assertTrue(result.contains(sourceId));
         // check for one single triple (result is filtered)
         String[] parts = result.split(sourceId);
@@ -282,26 +267,19 @@ public class SpoTest extends SpoTestBase {
         String theItemId = null;
         // create an item and save the id
         Document xmlData =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlData, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
-        OmTestBase testBase = new OmTestBase(this.transport);
+        OmTestBase testBase = new OmTestBase();
         String theItemXml = handleXmlResult(testBase.getItemClient().create(itemWithoutComponents));
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            theItemId = getIdFromRootElementHref(EscidocRestSoapTestBase.getDocument(theItemXml));
-        }
-        else {
-            theItemId = getIdFromRootElement(theItemXml);
-        }
-
+        theItemId = getIdFromRootElementHref(EscidocRestSoapTestBase.getDocument(theItemXml));
         return theItemId;
     }
 
     private void updateItemHelper(final String id) throws Exception {
 
-        OmTestBase testBase = new OmTestBase(this.transport);
+        OmTestBase testBase = new OmTestBase();
         String toBeUpdatedXml = handleXmlResult(testBase.getItemClient().retrieve(id));
         toBeUpdatedXml = toBeUpdatedXml.replaceFirst("Semiconductors", "Semiconductors - Updated");
         testBase.getItemClient().update(id, toBeUpdatedXml);
@@ -309,7 +287,7 @@ public class SpoTest extends SpoTestBase {
 
     private void submitItemHelper(final String id) throws Exception {
 
-        OmTestBase testBase = new OmTestBase(this.transport);
+        OmTestBase testBase = new OmTestBase();
         String toBeSubmittedXml = handleXmlResult(testBase.getItemClient().retrieve(id));
         final String taskParam =
             getTaskParam(getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(toBeSubmittedXml)));
@@ -318,12 +296,12 @@ public class SpoTest extends SpoTestBase {
 
     private void releaseItemHelper(final String id) throws Exception {
 
-        OmTestBase testBase = new OmTestBase(this.transport);
+        OmTestBase testBase = new OmTestBase();
         testBase.getItemClient().releaseWithPid(id, null);
     }
 
     private void addRelation(String sourceId, String predicate, String targetId) throws Exception {
-        OmTestBase testBase = new OmTestBase(this.transport);
+        OmTestBase testBase = new OmTestBase();
         String taskParam =
             "<param last-modification-date=\""
                 + getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(handleXmlResult(testBase

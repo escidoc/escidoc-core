@@ -30,7 +30,6 @@ package de.escidoc.core.test.aa.rest;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.aa.DepositorAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,7 +71,7 @@ public class DepositorRestTest extends DepositorAbstractTest {
      */
     public DepositorRestTest(final int handlerCode, final String userOrGroupId) throws Exception {
 
-        super(Constants.TRANSPORT_REST, handlerCode, userOrGroupId);
+        super(handlerCode, userOrGroupId);
     }
 
     /**

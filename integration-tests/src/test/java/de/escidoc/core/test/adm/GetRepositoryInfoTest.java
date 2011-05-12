@@ -30,8 +30,6 @@ package de.escidoc.core.test.adm;
 
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -46,18 +44,7 @@ import static org.junit.Assert.assertTrue;
  *
  * @author André Schenk
  */
-@RunWith(value = Parameterized.class)
 public class GetRepositoryInfoTest extends AdminToolTestBase {
-
-    /**
-     * The constructor.
-     *
-     * @param transport The transport identifier.
-     * @throws Exception If anything fails.
-     */
-    public GetRepositoryInfoTest(final int transport) throws Exception {
-        super(transport);
-    }
 
     /**
      * Get some information about the repository.

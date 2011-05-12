@@ -35,12 +35,9 @@ import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticL
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -59,19 +56,11 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class UpdateTest extends ContextTestBase {
 
     private static final String XPATH_ADMIN_DESCRIPTOR = "/context/admin-descriptors/admin-descriptor";
 
     private String path = "";
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public UpdateTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -80,7 +69,7 @@ public class UpdateTest extends ContextTestBase {
      */
     @Before
     public void setUp() throws Exception {
-        this.path += "/" + getTransport(false);
+        this.path += "/rest";
     }
 
     /**
@@ -142,60 +131,54 @@ public class UpdateTest extends ContextTestBase {
         HashMap<String, String> admTitleList = new HashMap<String, String>();
 
         // TODO add check of OU
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            // @title -----
-            String id = getObjidValue(resultDocument);
+        // @title -----
+        String id = getObjidValue(resultDocument);
 
-            NodeList nodes = selectNodeList(resultDocument, XPATH_ADMIN_DESCRIPTOR);
+        NodeList nodes = selectNodeList(resultDocument, XPATH_ADMIN_DESCRIPTOR);
 
-            String admDescrTitle = null;
-            String admDescrName = null;
-            String updateTile = null;
-            for (int i = 0; i < nodes.getLength(); i++) {
-                admDescrTitle =
-                    toString(selectSingleNode(resultDocument, XPATH_ADMIN_DESCRIPTOR + "[" + (i + 1) + "]/@title"),
-                        true);
+        String admDescrTitle = null;
+        String admDescrName = null;
+        String updateTile = null;
+        for (int i = 0; i < nodes.getLength(); i++) {
+            admDescrTitle =
+                toString(selectSingleNode(resultDocument, XPATH_ADMIN_DESCRIPTOR + "[" + (i + 1) + "]/@title"), true);
 
-                admDescrName =
-                    toString(selectSingleNode(resultDocument, XPATH_ADMIN_DESCRIPTOR + "[" + (i + 1) + "]/@name"), true);
+            admDescrName =
+                toString(selectSingleNode(resultDocument, XPATH_ADMIN_DESCRIPTOR + "[" + (i + 1) + "]/@name"), true);
 
-                updateTile = "' > " + (i + 1) + " < &";
-                substitute(resultDocument, XPATH_ADMIN_DESCRIPTOR + "[" + (i + 1) + "]/@title", updateTile);
-                admTitleList.put(admDescrName, admDescrTitle);
-            }
-
-            // created-by ----
-            String createdBy = selectSingleNode(resultDocument, "context/properties/created-by/@href").getTextContent();
-            substitute(resultDocument, "context/properties/created-by/@href", createdBy + "1");
-
-            // modified-by ----
-            String modifiedBy =
-                selectSingleNode(resultDocument, "context/properties/modified-by/@href").getTextContent();
-            substitute(resultDocument, "context/properties/modified-by/@href", modifiedBy + "1");
-
-            // ----------
-            String updated = update(id, toString(resultDocument, false));
-            assertXmlValidContext(updated);
-            resultDocument = EscidocRestSoapTestBase.getDocument(updated);
-
-            nodes = selectNodeList(resultDocument, XPATH_ADMIN_DESCRIPTOR);
-
-            for (int i = 0; i < nodes.getLength(); i++) {
-                admDescrName =
-                    toString(selectSingleNode(resultDocument, XPATH_ADMIN_DESCRIPTOR + "[" + (i + 1) + "]/@name"), true);
-
-                assertEquals("Title by update not discarded", selectSingleNode(resultDocument,
-                    XPATH_ADMIN_DESCRIPTOR + "[" + (i + 1) + "]/@title").getTextContent(), admTitleList
-                    .get(admDescrName));
-            }
-
-            assertEquals("created-by updated", selectSingleNode(resultDocument, "context/properties/created-by/@href")
-                .getTextContent(), createdBy);
-
-            assertEquals("modified-by updated",
-                selectSingleNode(resultDocument, "context/properties/modified-by/@href").getTextContent(), createdBy);
+            updateTile = "' > " + (i + 1) + " < &";
+            substitute(resultDocument, XPATH_ADMIN_DESCRIPTOR + "[" + (i + 1) + "]/@title", updateTile);
+            admTitleList.put(admDescrName, admDescrTitle);
         }
 
+        // created-by ----
+        String createdBy = selectSingleNode(resultDocument, "context/properties/created-by/@href").getTextContent();
+        substitute(resultDocument, "context/properties/created-by/@href", createdBy + "1");
+
+        // modified-by ----
+        String modifiedBy = selectSingleNode(resultDocument, "context/properties/modified-by/@href").getTextContent();
+        substitute(resultDocument, "context/properties/modified-by/@href", modifiedBy + "1");
+
+        // ----------
+        String updated = update(id, toString(resultDocument, false));
+        assertXmlValidContext(updated);
+        resultDocument = EscidocRestSoapTestBase.getDocument(updated);
+
+        nodes = selectNodeList(resultDocument, XPATH_ADMIN_DESCRIPTOR);
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            admDescrName =
+                toString(selectSingleNode(resultDocument, XPATH_ADMIN_DESCRIPTOR + "[" + (i + 1) + "]/@name"), true);
+
+            assertEquals("Title by update not discarded", selectSingleNode(resultDocument,
+                XPATH_ADMIN_DESCRIPTOR + "[" + (i + 1) + "]/@title").getTextContent(), admTitleList.get(admDescrName));
+        }
+
+        assertEquals("created-by updated", selectSingleNode(resultDocument, "context/properties/created-by/@href")
+            .getTextContent(), createdBy);
+
+        assertEquals("modified-by updated", selectSingleNode(resultDocument, "context/properties/modified-by/@href")
+            .getTextContent(), createdBy);
     }
 
     /**
@@ -853,7 +836,6 @@ public class UpdateTest extends ContextTestBase {
 
         String contextXml = toString(context, true);
         String createdXml = create(contextXml);
-        // System.out.println("created " + createdXml);
         assertXmlValidContext(createdXml);
         Document createdDocument = EscidocRestSoapTestBase.getDocument(createdXml);
         String createdContextId = getObjidValue(createdDocument);
@@ -869,10 +851,7 @@ public class UpdateTest extends ContextTestBase {
         adminDescriptor.appendChild(adminDescriptorContent);
         selectSingleNode(createdDocument, "/context/admin-descriptors").appendChild(adminDescriptor);
         String contextWithAdditionalAdminDescriptorsXml = toString(createdDocument, true);
-        // System.out.println("template for update " +
-        // contextWithAdditionalAdminDescriptorsXml);
         String updated = update(createdContextId, contextWithAdditionalAdminDescriptorsXml);
-        // System.out.println("updated " + updated);
         Document updatedDocument = EscidocRestSoapTestBase.getDocument(updated);
         NodeList adminDescriptorsAfterUpdate =
             selectNodeList(updatedDocument, "/context/admin-descriptors/admin-descriptor");

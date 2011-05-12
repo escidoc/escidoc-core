@@ -59,14 +59,10 @@ public class SbTestBase extends EscidocRestSoapTestBase {
 
     protected static final int ORGANIZATIONAL_UNIT_HANDLER_CODE = 5;
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public SbTestBase(final int transport) {
-        super(transport);
-        this.sbClient = new SearchClient(transport);
-        this.organizationalUnitClient = new OrganizationalUnitClient(transport);
-        this.orgUnitHelper = new OrganizationalUnitHelper(transport);
+    public SbTestBase() {
+        this.sbClient = new SearchClient();
+        this.organizationalUnitClient = new OrganizationalUnitClient();
+        this.orgUnitHelper = new OrganizationalUnitHelper();
     }
 
     /**

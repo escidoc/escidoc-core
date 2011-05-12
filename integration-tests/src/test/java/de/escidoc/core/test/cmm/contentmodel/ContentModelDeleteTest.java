@@ -34,23 +34,13 @@ import de.escidoc.core.common.exceptions.remote.application.violated.ResourceInU
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.om.OmTestBase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 /**
  * Test the mock implementation of the item resource.
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContentModelDeleteTest extends ContentModelTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentModelDeleteTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test deleting a ContentModel with minimal content.
@@ -102,10 +92,10 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
 
         // create item with this content model
         String itemXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
                 "item-minimal-for-content-model.xml");
         itemXml = itemXml.replace("##CONTENT_MODEL_ID##", contentModelId);
-        OmTestBase omBase = new OmTestBase(getTransport());
+        OmTestBase omBase = new OmTestBase();
         itemXml = handleXmlResult(omBase.getItemClient().create(itemXml));
 
         Class<?> ec = ResourceInUseException.class;

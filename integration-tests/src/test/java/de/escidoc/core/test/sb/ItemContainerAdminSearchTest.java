@@ -39,8 +39,6 @@ import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -61,7 +59,6 @@ import static org.junit.Assert.assertTrue;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class ItemContainerAdminSearchTest extends SearchTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemContainerAdminSearchTest.class);
@@ -90,14 +87,12 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
     private static int methodCounter = 0;
 
     /**
-     * @param transport The transport identifier.
      * @throws Exception e
      */
-    public ItemContainerAdminSearchTest(final int transport) throws Exception {
-        super(transport);
-        item = new ItemHelper(transport);
-        container = new ContainerHelper(transport);
-        grant = new GrantHelper(transport, GrantHelper.getUserAccountHandlerCode());
+    public ItemContainerAdminSearchTest() throws Exception {
+        item = new ItemHelper();
+        container = new ContainerHelper();
+        grant = new GrantHelper(GrantHelper.getUserAccountHandlerCode());
     }
 
     /**
@@ -163,29 +158,28 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 handle = PWCallback.DEPOSITOR_WALS_HANDLE;
             }
             containerIds[0 + (i * 7)] =
-                prepareContainer(handle, contextId, null, null, "escidoc_search_container0_" + getTransport(false)
-                    + ".xml", STATUS_PENDING);
+                prepareContainer(handle, contextId, null, null, "escidoc_search_container0_rest.xml", STATUS_PENDING);
             if (i == 0) {
                 LOGGER.info("parent container: " + containerIds[0]);
             }
             containerIds[1 + (i * 7)] =
-                prepareContainer(handle, contextId, null, containerIds[0 + (i * 7)], "escidoc_search_container0_"
-                    + getTransport(false) + ".xml", STATUS_PENDING);
+                prepareContainer(handle, contextId, null, containerIds[0 + (i * 7)],
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
             containerIds[2 + (i * 7)] =
-                prepareContainer(handle, contextId, null, containerIds[0 + (i * 7)], "escidoc_search_container0_"
-                    + getTransport(false) + ".xml", STATUS_PENDING);
+                prepareContainer(handle, contextId, null, containerIds[0 + (i * 7)],
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
             containerIds[3 + (i * 7)] =
-                prepareContainer(handle, contextId, null, containerIds[1 + (i * 7)], "escidoc_search_container0_"
-                    + getTransport(false) + ".xml", STATUS_PENDING);
+                prepareContainer(handle, contextId, null, containerIds[1 + (i * 7)],
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
             containerIds[4 + (i * 7)] =
-                prepareContainer(handle, contextId, null, containerIds[1 + (i * 7)], "escidoc_search_container0_"
-                    + getTransport(false) + ".xml", STATUS_PENDING);
+                prepareContainer(handle, contextId, null, containerIds[1 + (i * 7)],
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
             containerIds[5 + (i * 7)] =
-                prepareContainer(handle, contextId, null, containerIds[2 + (i * 7)], "escidoc_search_container0_"
-                    + getTransport(false) + ".xml", STATUS_PENDING);
+                prepareContainer(handle, contextId, null, containerIds[2 + (i * 7)],
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
             containerIds[6 + (i * 7)] =
-                prepareContainer(handle, contextId, null, containerIds[2 + (i * 7)], "escidoc_search_container0_"
-                    + getTransport(false) + ".xml", STATUS_PENDING);
+                prepareContainer(handle, contextId, null, containerIds[2 + (i * 7)],
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
         }
         // /////////////////////////////////////////////////////////////////////
 
@@ -244,9 +238,8 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                     }
                     HashMap<String, String> itemHash =
                         prepareItem(handle, contextId, parentContainerIds, "escidoc_search_item"
-                            + ((i * 42) + (j * 6) + k) + "_" + getTransport(false) + ".xml", status);
-                    if (i == 0 && j == 0 && k == 0
-                        && getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
+                            + ((i * 42) + (j * 6) + k) + "_rest.xml", status);
+                    if (i == 0 && j == 0 && k == 0) {
                         fillSearchFields(itemHash.get("xml"));
                     }
                     itemIds[(i * 42) + (j * 6) + k] = itemHash.get("itemId");
@@ -273,35 +266,32 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 handle = PWCallback.DEPOSITOR_WALS_HANDLE;
             }
             adminTestContainerIds[0 + (i * 10)] =
-                prepareContainer(handle, contextId, null, null, "escidoc_search_container0_" + getTransport(false)
-                    + ".xml", STATUS_PENDING);
+                prepareContainer(handle, contextId, null, null, "escidoc_search_container0_rest.xml", STATUS_PENDING);
             adminTestContainerIds[1 + (i * 10)] =
                 prepareContainer(handle, contextId, null, adminTestContainerIds[0 + (i * 10)],
-                    "escidoc_search_container0_" + getTransport(false) + ".xml", STATUS_PENDING);
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
             adminTestContainerIds[2 + (i * 10)] =
                 prepareContainer(handle, contextId, null, adminTestContainerIds[0 + (i * 10)],
-                    "escidoc_search_container0_" + getTransport(false) + ".xml", STATUS_PENDING);
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
             adminTestContainerIds[3 + (i * 10)] =
                 prepareContainer(handle, contextId, null, adminTestContainerIds[1 + (i * 10)],
-                    "escidoc_search_container0_" + getTransport(false) + ".xml", STATUS_PENDING);
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
             adminTestContainerIds[4 + (i * 10)] =
                 prepareContainer(handle, contextId, null, adminTestContainerIds[1 + (i * 10)],
-                    "escidoc_search_container0_" + getTransport(false) + ".xml", STATUS_PENDING);
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
             adminTestContainerIds[5 + (i * 10)] =
                 prepareContainer(handle, contextId, null, adminTestContainerIds[2 + (i * 10)],
-                    "escidoc_search_container0_" + getTransport(false) + ".xml", STATUS_PENDING);
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
             adminTestContainerIds[6 + (i * 10)] =
                 prepareContainer(handle, contextId, null, adminTestContainerIds[2 + (i * 10)],
-                    "escidoc_search_container0_" + getTransport(false) + ".xml", STATUS_PENDING);
+                    "escidoc_search_container0_rest.xml", STATUS_PENDING);
             adminTestContainerIds[7 + (i * 10)] =
-                prepareContainer(handle, contextId, null, null, "escidoc_search_container0_" + getTransport(false)
-                    + ".xml", STATUS_WITHDRAWN);
+                prepareContainer(handle, contextId, null, null, "escidoc_search_container0_rest.xml", STATUS_WITHDRAWN);
             adminTestContainerIds[8 + (i * 10)] =
-                prepareContainer(handle, contextId, null, null, "escidoc_search_container0_" + getTransport(false)
-                    + ".xml", "postreleased");
+                prepareContainer(handle, contextId, null, null, "escidoc_search_container0_rest.xml", "postreleased");
             adminTestContainerIds[9 + (i * 10)] =
-                prepareContainer(handle, contextId, null, null, "escidoc_search_container0_" + getTransport(false)
-                    + ".xml", STATUS_IN_REVISION);
+                prepareContainer(handle, contextId, null, null, "escidoc_search_container0_rest.xml",
+                    STATUS_IN_REVISION);
             prepareContainer(handle, contextId, adminTestContainerIds[0 + (i * 10)], null, null, STATUS_PENDING);
             prepareContainer(handle, contextId, adminTestContainerIds[1 + (i * 10)], null, null, STATUS_SUBMITTED);
             prepareContainer(handle, contextId, adminTestContainerIds[2 + (i * 10)], null, null, STATUS_SUBMITTED);
@@ -360,16 +350,14 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      */
     @Test(timeout = 240000)
     public void testSearchForAllFields() throws Exception {
-        if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
-            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-            HashMap<String, String> parameters = new HashMap<String, String>();
-            for (String search : fieldSearches) {
-                search += " and \"/id\"=\"" + itemIds[0] + "\"";
-                parameters.put(FILTER_PARAMETER_QUERY, search);
-                String response = search(parameters, INDEX_NAME);
-                assertXmlValidSearchResult(response);
-                assertEquals("Number of Hits not as expected for query " + search, "1", getNumberOfHits(response));
-            }
+        PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        for (String search : fieldSearches) {
+            search += " and \"/id\"=\"" + itemIds[0] + "\"";
+            parameters.put(FILTER_PARAMETER_QUERY, search);
+            String response = search(parameters, INDEX_NAME);
+            assertXmlValidSearchResult(response);
+            assertEquals("Number of Hits not as expected for query " + search, "1", getNumberOfHits(response));
         }
     }
 
@@ -3845,8 +3833,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 NodeList nodes = selectNodeList(searchResultDoc, xPath);
                 for (int i = 0; i < nodes.getLength(); i++) {
                     Node node = nodes.item(i);
-                    String objId =
-                        getObjidValue(de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST, node, null);
+                    String objId = getObjidValue(node, null);
                     if (objId.matches(".*?\\:.*?\\:.*")) {
                         objId = objId.replaceFirst("(.*?\\:.*?)\\:.*", "$1");
                     }
@@ -3899,14 +3886,9 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
             }
             Document xmlData =
                 EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
-            if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
-                String contextHref =
-                    de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
-                substitute(xmlData, "/item/properties/context/@href", contextHref);
-            }
-            else {
-                substitute(xmlData, "/item/properties/context/@objid", contextId);
-            }
+            String contextHref =
+                de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
+            substitute(xmlData, "/item/properties/context/@href", contextHref);
             String xml = item.create(toString(xmlData, false));
             String objectId = getId(xml);
             xml = xml.replaceAll("Meier", "Meier1");
@@ -4026,14 +4008,9 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
             else {
                 Document xmlData =
                     EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_SEARCH_PATH, templateName);
-                if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
-                    String contextHref =
-                        de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
-                    substitute(xmlData, "/container/properties/context/@href", contextHref);
-                }
-                else {
-                    substitute(xmlData, "/container/properties/context/@objid", contextId);
-                }
+                String contextHref =
+                    de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
+                substitute(xmlData, "/container/properties/context/@href", contextHref);
                 xml = container.create(toString(xmlData, false));
                 objectId = getId(xml);
                 xml = xml.replaceAll("Hoppe", "Hoppe1");

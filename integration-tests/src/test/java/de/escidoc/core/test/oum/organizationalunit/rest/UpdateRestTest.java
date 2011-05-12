@@ -29,7 +29,6 @@
 package de.escidoc.core.test.oum.organizationalunit.rest;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -40,13 +39,6 @@ import org.w3c.dom.Document;
  * @author Michael Schneider
  */
 public class UpdateRestTest extends OrganizationalUnitTestBase {
-
-    /**
-     * Constructor.
-     */
-    public UpdateRestTest() {
-        super(Constants.TRANSPORT_REST);
-    }
 
     /**
      * Test successfully updating an organizational unit with changed read only attributes and elements via REST.

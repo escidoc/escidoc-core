@@ -30,8 +30,6 @@ package de.escidoc.core.test.migration;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.util.Collection;
 import java.util.Map;
@@ -42,17 +40,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 @Ignore("Klären was dieser Test macht. Test ist im Ant-Build nicht gelaufen")
 // TODO: Klären was dieser Test macht. Test ist im Ant-Build nicht gelaufen.
 public class MigrationTest extends MigrationTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public MigrationTest(final int transport) {
-        super(transport);
-    }
 
     @Test
     public void testRetrieveObjects() throws Exception {
@@ -111,7 +101,7 @@ public class MigrationTest extends MigrationTestBase {
 
         idsFromBuild159.put(MigrationTestBase.FAILING, putValuesToCsv(failing));
         saveCheckResult(idsFromBuild159, failed);
-        assertEquals("[" + getTransport(true) + "] Check of migrated Objects failed", 0, failing.size());
+        assertEquals("[REST] Check of migrated Objects failed", 0, failing.size());
 
     }
 }

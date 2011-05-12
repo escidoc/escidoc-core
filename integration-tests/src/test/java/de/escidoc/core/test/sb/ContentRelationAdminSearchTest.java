@@ -36,8 +36,6 @@ import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -56,7 +54,6 @@ import static org.junit.Assert.assertTrue;
  * 
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationAdminSearchTest.class);
@@ -80,16 +77,13 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
     private static String startTime = "";
 
     /**
-     * @param transport
-     *            The transport identifier.
      * @throws Exception
      *             e
      */
-    public ContentRelationAdminSearchTest(final int transport) throws Exception {
-        super(transport);
-        contentRelation = new ContentRelationHelper(transport);
-        item = new ItemHelper(transport);
-        grant = new GrantHelper(transport, GrantHelper.getUserAccountHandlerCode());
+    public ContentRelationAdminSearchTest() throws Exception {
+        contentRelation = new ContentRelationHelper();
+        item = new ItemHelper();
+        grant = new GrantHelper(GrantHelper.getUserAccountHandlerCode());
     }
 
     /**
@@ -157,8 +151,8 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
         for (int k = 0; k < 10; k++) {
             String status = STATUS_PENDING;
             HashMap<String, String> itemHash =
-                prepareItem(PWCallback.SYSTEMADMINISTRATOR_HANDLE, CONTEXT_ID, null, "escidoc_search_item" + k + "_"
-                    + getTransport(false) + ".xml", status);
+                prepareItem(PWCallback.SYSTEMADMINISTRATOR_HANDLE, CONTEXT_ID, null, "escidoc_search_item" + k
+                    + "_rest.xml", status);
             itemIds[k] = itemHash.get("itemId");
         }
 
@@ -167,19 +161,19 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
         contentRelationIds = new String[5];
         contentRelationIds[0] =
             prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE, itemIds[0], itemIds[1],
-                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", STATUS_PENDING);
+                "escidoc_search_content_relation0_rest.xml", STATUS_PENDING);
         contentRelationIds[1] =
             prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE, itemIds[2], itemIds[3],
-                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", STATUS_SUBMITTED);
+                "escidoc_search_content_relation0_rest.xml", STATUS_SUBMITTED);
         contentRelationIds[2] =
             prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE, itemIds[4], itemIds[5],
-                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", STATUS_RELEASED);
+                "escidoc_search_content_relation0_rest.xml", STATUS_RELEASED);
         contentRelationIds[3] =
             prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE, itemIds[6], itemIds[7],
-                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", STATUS_IN_REVISION);
+                "escidoc_search_content_relation0_rest.xml", STATUS_IN_REVISION);
         contentRelationIds[4] =
-            prepareContentRelation(handle, itemIds[8], itemIds[9], "escidoc_search_content_relation0_"
-                + getTransport(false) + ".xml", STATUS_PENDING);
+            prepareContentRelation(handle, itemIds[8], itemIds[9], "escidoc_search_content_relation0_rest.xml",
+                STATUS_PENDING);
 
         // /////////////////////////////////////////////////////////////////////
 
@@ -395,8 +389,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 NodeList nodes = selectNodeList(searchResultDoc, xPath);
                 for (int i = 0; i < nodes.getLength(); i++) {
                     Node node = nodes.item(i);
-                    String objId =
-                        getObjidValue(de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST, node, null);
+                    String objId = getObjidValue(node, null);
                     foundIds.add(objId);
                     assertTrue(errorTrace.toString() + "object " + objId + " may not be in searchResult",
                         ((HashMap<String, String>) role.get("searchresultIds")).containsKey(objId));
@@ -452,14 +445,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
             }
             Document xmlData =
                 EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
-            if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
-                String contextHref =
-                    de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
-                substitute(xmlData, "/item/properties/context/@href", contextHref);
-            }
-            else {
-                substitute(xmlData, "/item/properties/context/@objid", contextId);
-            }
+            String contextHref =
+                de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
+            substitute(xmlData, "/item/properties/context/@href", contextHref);
             String xml = item.create(toString(xmlData, false));
             String objectId = getId(xml);
             xml = xml.replaceAll("Meier", "Meier1");
@@ -572,17 +560,11 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
             }
             Document xmlData =
                 EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_SB_CONTENT_RELATION_PATH, templateName);
-            if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
-                String subjectHref =
-                    de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + subjectId;
-                String objectHref = de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + objectId;
-                substitute(xmlData, "/content-relation/subject/@href", subjectHref);
-                substitute(xmlData, "/content-relation/object/@href", objectHref);
-            }
-            else {
-                substitute(xmlData, "/content-relation/subject/@objid", subjectId);
-                substitute(xmlData, "/content-relation/object/@objid", objectId);
-            }
+
+            String subjectHref = de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + subjectId;
+            String objectHref = de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + objectId;
+            substitute(xmlData, "/content-relation/subject/@href", subjectHref);
+            substitute(xmlData, "/content-relation/object/@href", objectHref);
             String xml = contentRelation.create(toString(xmlData, false));
             resourceId = getId(xml);
             xml = xml.replaceAll("Meier", "Meier1");

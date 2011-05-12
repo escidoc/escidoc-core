@@ -29,15 +29,14 @@
 
 package de.escidoc.core.test.common.util.xml;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import org.apache.xerces.dom.DOMInputImpl;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
 
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Helper class to change the base-url of imported schemas.

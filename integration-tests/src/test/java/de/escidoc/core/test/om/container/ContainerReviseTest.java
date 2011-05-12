@@ -36,8 +36,6 @@ import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticL
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 /**
@@ -45,19 +43,11 @@ import org.w3c.dom.Document;
  *
  * @author Torsten Tetteroo
  */
-@RunWith(value = Parameterized.class)
 public class ContainerReviseTest extends ContainerTestBase {
 
     private String theContainerXml;
 
     private String theContainerId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerReviseTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up test.

@@ -31,8 +31,6 @@ package de.escidoc.core.test.om.contentRelation;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -47,18 +45,10 @@ import static org.junit.Assert.assertTrue;
  *
  * @author André Schenk
  */
-@RunWith(value = Parameterized.class)
 public class ContentRelationFilterTest extends ContentRelationTestBase {
 
     private static final String XPATH_SRW_RELATION_LIST_RELATION =
         XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/" + NAME_CONTENT_RELATION;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentRelationFilterTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test successfully retrieving a filtered content relation list filtering by created-by.
@@ -134,14 +124,8 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
 
         Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
         NodeList nl;
-
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            selectSingleNodeAsserted(resultDoc, XPATH_SRW_RELATION_LIST_RELATION + "[@objid = '" + relationId + "']");
-        }
-        else {
-            selectSingleNodeAsserted(resultDoc, XPATH_SRW_RELATION_LIST_RELATION + "[@href = '"
-                + Constants.CONTENT_RELATION_BASE_URI + "/" + relationId + "']");
-        }
+        selectSingleNodeAsserted(resultDoc, XPATH_SRW_RELATION_LIST_RELATION + "[@href = '"
+            + Constants.CONTENT_RELATION_BASE_URI + "/" + relationId + "']");
         nl = selectNodeList(resultDoc, XPATH_SRW_RELATION_LIST_RELATION);
         assertEquals("Only one content relation should be retrieved.", nl.getLength(), 1);
 

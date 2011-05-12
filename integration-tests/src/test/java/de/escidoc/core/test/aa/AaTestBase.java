@@ -348,37 +348,30 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     private final Pattern SCOPE_PATTERN =
         Pattern.compile(".*<[^>]*?scope[^>]*?objid=\"(.*?)\".*", Pattern.DOTALL + Pattern.MULTILINE);
 
-    /**
-     * The constructor.
-     *
-     * @param transport The transport identifier.
-     */
-    public AaTestBase(final int transport) {
-
-        super(transport);
+    public AaTestBase() {
 
         PWCallback.resetHandle();
-        this.containerClient = new ContainerClient(transport);
-        this.contentTypeClient = new ContentModelClient(transport);
-        this.contextClient = new ContextClient(transport);
-        this.itemClient = new ItemClient(transport);
-        this.organizationalUnitClient = new OrganizationalUnitClient(transport);
-        this.roleClient = new RoleClient(Constants.TRANSPORT_REST);
-        this.semanticStoreClient = new SemanticStoreClient(transport);
-        this.stagingFileClient = new StagingFileClient(Constants.TRANSPORT_REST);
-        this.userAccountClient = new UserAccountClient(transport);
-        this.userGroupClient = new UserGroupClient(transport);
-        this.userManagementWrapperClient = new UserManagementWrapperClient(transport);
-        this.aggregationDefinitionClient = new AggregationDefinitionClient(transport);
-        this.reportDefinitionClient = new ReportDefinitionClient(transport);
-        this.reportClient = new ReportClient(transport);
-        this.scopeClient = new ScopeClient(transport);
-        this.statisticDataClient = new StatisticDataClient(transport);
-        this.preprocessingClient = new PreprocessingClient(transport);
-        this.contentRelationClient = new ContentRelationClient(transport);
-        this.policyDecisionPointClient = new PolicyDecisionPointClient(transport);
-        this.orgUnitHelper = new OrganizationalUnitHelper(transport);
-        this.smTestBase = new SmTestBase(transport);
+        this.containerClient = new ContainerClient();
+        this.contentTypeClient = new ContentModelClient();
+        this.contextClient = new ContextClient();
+        this.itemClient = new ItemClient();
+        this.organizationalUnitClient = new OrganizationalUnitClient();
+        this.roleClient = new RoleClient();
+        this.semanticStoreClient = new SemanticStoreClient();
+        this.stagingFileClient = new StagingFileClient();
+        this.userAccountClient = new UserAccountClient();
+        this.userGroupClient = new UserGroupClient();
+        this.userManagementWrapperClient = new UserManagementWrapperClient();
+        this.aggregationDefinitionClient = new AggregationDefinitionClient();
+        this.reportDefinitionClient = new ReportDefinitionClient();
+        this.reportClient = new ReportClient();
+        this.scopeClient = new ScopeClient();
+        this.statisticDataClient = new StatisticDataClient();
+        this.preprocessingClient = new PreprocessingClient();
+        this.contentRelationClient = new ContentRelationClient();
+        this.policyDecisionPointClient = new PolicyDecisionPointClient();
+        this.orgUnitHelper = new OrganizationalUnitHelper();
+        this.smTestBase = new SmTestBase();
     }
 
     /**
@@ -1069,16 +1062,11 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     private String prepareContainerData(final String contextId) throws Exception {
 
         Document xmlContainer =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + "/rest",
                 "create_container_WithoutMembers_v1.1.xml");
         if (contextId != null && !contextId.equals("")) {
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
-                substitute(xmlContainer, "/container/properties/context/@href", contextHref);
-            }
-            else {
-                substitute(xmlContainer, "/container/properties/context/@objid", contextId);
-            }
+            String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
+            substitute(xmlContainer, "/container/properties/context/@href", contextHref);
         }
         // deleteElement(xmlContainer, "/container/admin-descriptor");
         return toString(xmlContainer, false);
@@ -1096,21 +1084,11 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     protected String prepareItemData(final String contextId) throws Exception {
 
         final String templateName;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            templateName = "escidoc_item_198_for_create_one_component_privateREST.xml";
-        }
-        else {
-            templateName = "escidoc_item_198_for_create_one_component_privateSOAP.xml";
-        }
+        templateName = "escidoc_item_198_for_create_one_component_privateREST.xml";
         Document itemDoc = EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_AA_ITEM_PATH, templateName);
         if (contextId != null && !contextId.equals("")) {
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
-                substitute(itemDoc, "/item/properties/context/@href", contextHref);
-            }
-            else {
-                substitute(itemDoc, "/item/properties/context/@objid", contextId);
-            }
+            String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
+            substitute(itemDoc, "/item/properties/context/@href", contextHref);
         }
         return toString(itemDoc, false);
     }
@@ -1127,23 +1105,11 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
         final String contentRelationXml = getExampleTemplate("content-relation-01.xml");
         Document contentRelationDoc = EscidocRestSoapTestBase.getDocument(contentRelationXml);
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            if (subjectHref != null) {
-                substitute(contentRelationDoc, "/content-relation/subject/@href", subjectHref);
-            }
-            if (objectHref != null) {
-                substitute(contentRelationDoc, "/content-relation/object/@href", objectHref);
-            }
+        if (subjectHref != null) {
+            substitute(contentRelationDoc, "/content-relation/subject/@href", subjectHref);
         }
-        else {
-            if (subjectHref != null) {
-                substitute(contentRelationDoc, "/content-relation/subject/@objid", subjectHref.replaceFirst(".*/(.*)",
-                    "$1"));
-            }
-            if (objectHref != null) {
-                substitute(contentRelationDoc, "/content-relation/object/@objid", objectHref.replaceFirst(".*/(.*)",
-                    "$1"));
-            }
+        if (objectHref != null) {
+            substitute(contentRelationDoc, "/content-relation/object/@href", objectHref);
         }
         return toString(contentRelationDoc, false);
     }
@@ -1323,8 +1289,6 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     createResourceId(getObjidValue(EscidocRestSoapTestBase.getDocument(createdXml)), versionNumber);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
                 dateFormat.format(new Date(System.currentTimeMillis()));
-                System.out.println("MIH: " + dateFormat.format(new Date(System.currentTimeMillis()))
-                    + " getting content of component:" + componentId + ", item:" + resourceId);
                 ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(resourceId, componentId);
             }
             else {
@@ -2065,8 +2029,6 @@ public class AaTestBase extends EscidocRestSoapTestBase {
      *
      * @param userHandle             The eSciDoc user handle.
      * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param status                 The status of the content-relation. If this is <code>null</code>, it is tried to
-     *                               release an unknown content-relation.
      * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
      * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
      *                               success.
@@ -2111,8 +2073,6 @@ public class AaTestBase extends EscidocRestSoapTestBase {
      *
      * @param userHandle             The eSciDoc user handle.
      * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param status                 The status of the content-relation. If this is <code>null</code>, it is tried to
-     *                               withdraw an unknown content-relation.
      * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
      * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
      *                               success.
@@ -2615,7 +2575,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             PWCallback.setHandle(userHandle);
             String result = create(SCOPE_HANDLER_CODE, scopeXml);
             Document document = EscidocRestSoapTestBase.getDocument(result);
-            objidValue = getObjidValue(getTransport(), document);
+            objidValue = getObjidValue(document);
 
             if (expectedExceptionClass != null) {
                 EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
@@ -2665,7 +2625,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             PWCallback.setHandle(userHandle);
             String result = create(AGGREGATION_DEFINITION_HANDLER_CODE, aggregationDefinitionXml);
             Document document = EscidocRestSoapTestBase.getDocument(result);
-            objidValue = getObjidValue(getTransport(), document);
+            objidValue = getObjidValue(document);
 
             if (expectedExceptionClass != null) {
                 EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
@@ -2720,7 +2680,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             PWCallback.setHandle(userHandle);
             String result = create(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionXml);
             Document document = EscidocRestSoapTestBase.getDocument(result);
-            objidValue = getObjidValue(getTransport(), document);
+            objidValue = getObjidValue(document);
 
             if (expectedExceptionClass != null) {
                 EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
@@ -3431,9 +3391,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     protected String doTestCreateContext(
         final String userHandle, final String templateName, final Class<?> expectedExceptionClass) throws Exception {
 
-        Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + "/" + getTransport(false),
-                templateName);
+        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + "/rest", templateName);
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         try {
             PWCallback.setHandle(userHandle);
@@ -3665,8 +3623,8 @@ public class AaTestBase extends EscidocRestSoapTestBase {
      * Tests preprocessing statistic-data.
      *
      * @param userHandle              The escidoc user handle.
-     * @param aggregationDefinitionId aggregationDefinitionId to preprocess.
      * @param templateName            templateName.
+     * @param aggregationDefinitionIds aggregationDefinitionId to preprocess.
      * @param expectedExceptionClass  expectedExceptionClass.
      * @throws Exception If anything fails.
      */
@@ -3686,21 +3644,14 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 handleResult(aggregationDefinitionClient
                     .retrieveAggregationDefinitions(new HashMap<String, String[]>()));
             String objidPath = "aggregation-definition";
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                objidPath += PART_XLINK_HREF;
-            }
-            else {
-                objidPath += PART_OBJID;
-            }
+            objidPath += PART_XLINK_HREF;
 
             NodeList aggregationDefinitions =
                 selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + objidPath);
             for (int i = 0; i < aggregationDefinitions.getLength(); i++) {
                 Node aggregationDefinitionId = aggregationDefinitions.item(i);
                 String nodeValue = aggregationDefinitionId.getNodeValue();
-                if (getTransport() == Constants.TRANSPORT_REST) {
-                    nodeValue = getObjidFromHref(nodeValue);
-                }
+                nodeValue = getObjidFromHref(nodeValue);
                 usedAggregationDefinitionIds.add(nodeValue);
             }
 
@@ -3874,19 +3825,6 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Gets the document for the provided grant xml data and fixes the "link" attributes in case of SOAP.<br> The used
-     * parser is NOT namespace aware!
-     *
-     * @param grantXml The grant xml data to get the fixed document from.
-     * @return Returns the fixed document.
-     * @throws Exception If anything fails.
-     */
-    public Document getFixedGrantDocument(final String grantXml) throws Exception {
-
-        return fixGrantDocument(EscidocRestSoapTestBase.getDocument(grantXml));
-    }
-
-    /**
      * Retrieve a Template as a String and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
      * namespace aware!
      *
@@ -3913,21 +3851,6 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     public Document getTemplateAsFixedGrantDocument(final String path, final String templateName) throws Exception {
 
         final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
-        fixGrantDocument(document);
-        return document;
-    }
-
-    /**
-     * Fixes the "link" attributes in case of SOAP.
-     *
-     * @param document The document to fix.
-     * @return Returns the provided (fixed) document.
-     * @throws Exception If anything fails.
-     */
-    public Document fixGrantDocument(final Document document) throws Exception {
-
-        fixLinkAttributes(document, XPATH_GRANT_ROLE);
-        fixLinkAttributes(document, XPATH_GRANT_OBJECT);
         return document;
     }
 
@@ -3990,7 +3913,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     /**
      * Asserts that vthe expected cookies exists in a logout response.
      *
-     * @param method The {@link HttpResponse} to be asserted.
+     * @param httpRes The {@link HttpResponse} to be asserted.
      */
     private void assertLogoutCookies(final HttpResponse httpRes) {
 
@@ -4008,7 +3931,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     /**
      * Asserts the redirect values.
      *
-     * @param method              The {@link HttpResponse} to be asserted.
+     * @param httpResponse              The {@link HttpResponse} to be asserted.
      * @param expectedRedirectUrl The expected redirect url.
      */
     private void assertRedirect(final HttpResponse httpResponse, final String expectedRedirectUrl) {
@@ -4021,7 +3944,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     /**
      * Asserts, that no redirect occurred for the provided {@link HttpResponse}.
      *
-     * @param method The {@link HttpResponse} to be asserted.
+     * @param httpRes The {@link HttpResponse} to be asserted.
      */
     private void assertNoRedirect(final HttpResponse httpRes) {
         assertNull("Unexpected loction header", httpRes.getFirstHeader("Location"));

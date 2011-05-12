@@ -31,7 +31,6 @@ package de.escidoc.core.test.om.context;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.container.ContainerTestBase;
 import de.escidoc.core.test.om.item.ItemTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -39,8 +38,6 @@ import org.apache.http.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -57,7 +54,6 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class RetrieveMembersTest extends ContextTestBase {
 
     public static final String XPATH_SRW_CONTEXT_LIST_MEMBER =
@@ -99,13 +95,9 @@ public class RetrieveMembersTest extends ContextTestBase {
 
     private ContainerTestBase containerBase = null;
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public RetrieveMembersTest(final int transport) {
-        super(transport);
-        this.itemBase = new ItemTestBase(transport);
-        this.containerBase = new ContainerTestBase(transport);
+    public RetrieveMembersTest() {
+        this.itemBase = new ItemTestBase();
+        this.containerBase = new ContainerTestBase();
     }
 
     /**
@@ -191,24 +183,13 @@ public class RetrieveMembersTest extends ContextTestBase {
         String result = null;
         log("Create item in state '" + expectedState + "'");
         Node create =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            if (context != null) {
-                create = substitute(create, "/item/properties/context/@href", "/ir/context/" + context);
-            }
-            if (contentType != null) {
-                create =
-                    substitute(create, "/item/properties/content-model/@href", "/cmm/content-model/" + contentType);
-            }
+        if (context != null) {
+            create = substitute(create, "/item/properties/context/@href", "/ir/context/" + context);
         }
-        else {
-            if (context != null) {
-                create = substitute(create, "/item/properties/context/@objid", context);
-            }
-            if (contentType != null) {
-                create = substitute(create, "/item/properties/content-model/@objid", contentType);
-            }
+        if (contentType != null) {
+            create = substitute(create, "/item/properties/content-model/@href", "/cmm/content-model/" + contentType);
         }
 
         String template = toString(create, false);
@@ -259,27 +240,17 @@ public class RetrieveMembersTest extends ContextTestBase {
         log("Create container in state '" + expectedState + "'");
         Node create = null;
         create =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + "/rest",
                 "create_container_WithoutMembers_v1.1.xml");
 
         // -------------------------------------------------
         if (contextID != null) {
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                create = substitute(create, "/container/properties/context/@href", "/ir/context/" + contextID);
-            }
-            else { // SOAP
-                create = substitute(create, "/container/properties/context/@objid", contextID);
-            }
+            create = substitute(create, "/container/properties/context/@href", "/ir/context/" + contextID);
         }
         // -------------------------------------------------
         if (contentType != null) {
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                create =
-                    substitute(create, "/container/properties/content-model/@href", "/cmm/content-model/" + contentType);
-            }
-            else { // SOAP
-                create = substitute(create, "/container/properties/content-model/@objid", contentType);
-            }
+            create =
+                substitute(create, "/container/properties/content-model/@href", "/cmm/content-model/" + contentType);
         }
         Document container = EscidocRestSoapTestBase.getDocument(containerBase.create(toString(create, false)));
 
@@ -321,7 +292,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      */
     @Before
     public void setUp() throws Exception {
-        this.path = "/" + getTransport(false);
+        this.path = "/rest";
 
         if (contextId == null) {
             prepare();
@@ -378,21 +349,10 @@ public class RetrieveMembersTest extends ContextTestBase {
 
         Document membersDoc = EscidocRestSoapTestBase.getDocument(members);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertEquals("Some items have another context!", noOfItems, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER + "/item/properties/context[@href=\"/ir/context/" + contextId + "\"]"));
-            assertEquals("Some containers have another context!", noOfContainers, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER + "/container/properties/context[@href=\"/ir/context/" + contextId
-                    + "\"]"));
-        }
-        else {
-            // SOAP
-            assertEquals("Some items have another context!", noOfItems, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER + "/item/properties/context[@objid=\"" + contextId + "\"]"));
-            assertEquals("Some containers have another context!", noOfContainers, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER + "/container/properties/context[@objid=\"" + contextId + "\"]"));
-        }
-
+        assertEquals("Some items have another context!", noOfItems, getNoOfSelections(membersDoc,
+            XPATH_SRW_CONTEXT_LIST_MEMBER + "/item/properties/context[@href=\"/ir/context/" + contextId + "\"]"));
+        assertEquals("Some containers have another context!", noOfContainers, getNoOfSelections(membersDoc,
+            XPATH_SRW_CONTEXT_LIST_MEMBER + "/container/properties/context[@href=\"/ir/context/" + contextId + "\"]"));
         assertEquals("Wrong number of pending items retrieved!", noOfPendingItems, getNoOfSelections(membersDoc,
             XPATH_SRW_CONTEXT_LIST_MEMBER + "/item/properties[public-status=\"" + STATUS_PENDING + "\"]"));
         assertEquals("Wrong number of submitted items retrieved!", noOfSubmittedItems, getNoOfSelections(membersDoc,
@@ -629,14 +589,12 @@ public class RetrieveMembersTest extends ContextTestBase {
      */
     @Test
     public void testOmRmf4c() throws Exception {
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            try {
-                retrieveMembers(null, null);
-                EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
-            }
-            catch (Exception e) {
-                EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
-            }
+        try {
+            retrieveMembers(null, null);
+            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+        }
+        catch (Exception e) {
+            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 

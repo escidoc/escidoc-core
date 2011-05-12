@@ -32,8 +32,6 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -43,15 +41,7 @@ import java.util.Vector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-@RunWith(value = Parameterized.class)
 public class RetrievePathListTest extends OrganizationalUnitTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public RetrievePathListTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test retrieving a pathlist of an existing organizational unit.

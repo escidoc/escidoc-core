@@ -34,8 +34,6 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -49,7 +47,6 @@ import static org.junit.Assert.fail;
  *
  * @author Frank Schwichtenberg
  */
-@RunWith(value = Parameterized.class)
 public class ComponentChecksumTest extends ItemTestBase {
 
     private String theItemXml;
@@ -61,13 +58,6 @@ public class ComponentChecksumTest extends ItemTestBase {
     private static final String ELEMENT_CHECKSUM_ALGORITHM = "checksum-algorithm";
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ComponentChecksumTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
@@ -76,8 +66,8 @@ public class ComponentChecksumTest extends ItemTestBase {
     public void setUp() throws Exception {
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(theItemXml);
     }

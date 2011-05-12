@@ -32,8 +32,6 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import static org.junit.Assert.fail;
 
@@ -42,7 +40,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class StatisticDataTest extends StatisticDataTestBase {
 
     private ScopeAbstractTest scope = null;
@@ -52,20 +49,13 @@ public class StatisticDataTest extends StatisticDataTestBase {
     private static int methodCounter = 0;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public StatisticDataTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
      */
     @Before
     public void initialize() throws Exception {
-        scope = new ScopeAbstractTest(getTransport());
+        scope = new ScopeAbstractTest();
         if (methodCounter == 0) {
             createScope();
         }

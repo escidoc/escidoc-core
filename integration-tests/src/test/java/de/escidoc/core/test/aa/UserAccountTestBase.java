@@ -58,15 +58,6 @@ public class UserAccountTestBase extends AaTestBase {
         XPATH_USER_ACCOUNT_CURRENT_GRANTS + PART_XLINK_HREF;
 
     /**
-     * The constructor.
-     *
-     * @param transport The transport identifier.
-     */
-    public UserAccountTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Test activating an UserAccount.
      *
      * @param id           The id of the UserAccount.
@@ -808,14 +799,11 @@ public class UserAccountTestBase extends AaTestBase {
                 Constants.USER_ACCOUNT_BASE_URI, timestampBeforeLastModification);
         final String id = rootValues[0];
 
-        // assert resources (in case of REST)
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertReferencingElement("Assert of resources failed. ", toBeAssertedDocument,
-                XPATH_USER_ACCOUNT_RESOURCES, null);
-            assertReferencingElement("Assert of resource current-grants failed. ", toBeAssertedDocument,
-                XPATH_USER_ACCOUNT_RESOURCES + "/" + "current-grants[@href=\"/aa/user-account/" + id
-                    + "/resources/current-grants\"]", null);
-        }
+        assertReferencingElement("Assert of resources failed. ", toBeAssertedDocument, XPATH_USER_ACCOUNT_RESOURCES,
+            null);
+        assertReferencingElement("Assert of resource current-grants failed. ", toBeAssertedDocument,
+            XPATH_USER_ACCOUNT_RESOURCES + "/" + "current-grants[@href=\"/aa/user-account/" + id
+                + "/resources/current-grants\"]", null);
 
         // assert properties
         assertPropertiesElementUnversioned("Asserting user account properties failed. ", toBeAssertedDocument,

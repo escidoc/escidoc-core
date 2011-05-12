@@ -39,14 +39,11 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPre
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
@@ -71,7 +68,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemUpdateTest.class);
@@ -85,13 +81,6 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     public static final String XPATH_TRIPLE_STORE_DC_IDENTIFIER = "/RDF/Description/identifier";
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ItemUpdateTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
@@ -100,8 +89,8 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     public void setUp() throws Exception {
         // create an item and save the id and xml data
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
     }
@@ -112,14 +101,12 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testAddingComponentEscidocMdRecordWhileUpdate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create_2_Component_Md-Records.xml");
         Node xmlItemWithoutComponentEscidocMdRecord =
             deleteElement(xmlItem, "/item/components/component[1]/md-records/md-record[@name = 'escidoc']");
         String itemToCreate = toString(xmlItemWithoutComponentEscidocMdRecord, false);
-        // System.out.println("to cretae " + itemToCreate);
         String createdXml = create(itemToCreate);
-        // System.out.println("created xml " + createdXml);
 
         assertXmlValidItem(createdXml);
         Document createdDocument = getDocument(createdXml);
@@ -157,22 +144,13 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         String replaced =
             itemWith2ComponentMdRecordXml.replaceFirst("<escidocItem:item",
                 "<escidocItem:item xmlns:dc=\"http://purl.org/dc/elements/1.1/\" ");
-
-        // System.out.println("to update " + replaced);
         String updatedXml = update(createdItemId, replaced);
-        // String firstVersion = retrieve(theItemId + ":1");
         Document updatedDocument = getDocument(updatedXml);
-        // System.out.println("item " + updatedXml);
         Node escidocComponentMdRecord = selectSingleNode(updatedDocument, mdRecordPath);
         assertNotNull("Escidoc md-record must be created", escidocComponentMdRecord);
         // check for title from dc-mapping
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            selectSingleNodeAsserted(updatedDocument, "/item/components/component/@title[. = '" + mdRecordTitleContent
-                + "']");
-        }
-        else {
-            // no dc-mapping value included in soap-item
-        }
+        selectSingleNodeAsserted(updatedDocument, "/item/components/component/@title[. = '" + mdRecordTitleContent
+            + "']");
         // check for description from dc-mapping
         selectSingleNodeAsserted(updatedDocument, "/item/components/component/properties/description[. = '"
             + mdRecordContentDescriptionContent + "']");
@@ -188,8 +166,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     public void testAddComponentWithEscidocMdRecord() throws Exception {
 
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_1_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_1_component.xml");
         Document itemDoc = getDocument(xmlData);
         Node componentNode = selectSingleNode(itemDoc, "/item/components/component");
         String component = toString(componentNode, true);
@@ -223,12 +200,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         // check for component with metadata
         selectSingleNodeAsserted(updateDocument, "/item/components/component/md-records/md-record");
         // check for title from dc-mapping
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            selectSingleNodeAsserted(updateDocument, "/item/components/component/@title[. = '" + componentTitle + "']");
-        }
-        else {
-            // no dc-mapping value included in soap-item
-        }
+        selectSingleNodeAsserted(updateDocument, "/item/components/component/@title[. = '" + componentTitle + "']");
         // check for description from dc-mapping
         selectSingleNodeAsserted(updateDocument, "/item/components/component/properties/description[. = '"
             + componentDescription + "']");
@@ -243,8 +215,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     public void testAddComponentWithMdRecord02() throws Exception {
 
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "item_without_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
         String itemXml = create(xmlData);
         String itemId = getObjidValue(itemXml);
 
@@ -294,9 +265,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             assertXmlValidItem(updated);
             Document updatedDocument = getDocument(updated);
             assertXmlEquals("DC-Title in Md Record not updated!", updatedDocument, dcTitleXPath, newTitle);
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                assertXmlEquals("Title in Item root element not updated!", updatedDocument, "/item/@title", newTitle);
-            }
+            assertXmlEquals("Title in Item root element not updated!", updatedDocument, "/item/@title", newTitle);
         }
         catch (final Exception e) {
             failException(e);
@@ -309,9 +278,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         Document newItem = EscidocRestSoapTestBase.getDocument(theItemXml);
         selectSingleNode(newItem, "/item/properties/content-model-specific").appendChild(
             newItem.createElement("nischt"));
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            substitute(newItem, "/item/@title", "");
-        }
+        substitute(newItem, "/item/@title", "");
         String newItemXml = toString(newItem, false);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("item " + toString(newItem, false));
@@ -433,8 +400,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     public void testDcMapping() throws Exception {
 
         Document itemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "item_without_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
 
         // replace MD-Record ---------------
         // remove md-record
@@ -442,9 +408,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         oldMdRecord.getParentNode().removeChild(oldMdRecord);
 
         // add new md-record
-        String xmlMdRecord =
-            EscidocRestSoapTestBase
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), "md-record.xml");
+        String xmlMdRecord = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "md-record.xml");
         Node mdRecord = selectSingleNode(EscidocRestSoapTestBase.getDocument(xmlMdRecord), "/md-record");
 
         itemDoc.importNode(mdRecord, true);
@@ -536,8 +500,8 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
 
         // get new component from template
         String templateComponentXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         Node newComponent =
             selectSingleNode(EscidocRestSoapTestBase.getDocument(templateComponentXml), "/item/components/component[2]");
 
@@ -591,38 +555,21 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         // save component
         String curFirstComponentId = null;
         String curSecondComponentId = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            curFirstComponentId =
-                getObjidFromHref(selectSingleNode(curItem, "/item/components/component[1]/@href").getNodeValue());
-            curSecondComponentId =
-                getObjidFromHref(selectSingleNode(curItem, "/item/components/component[2]/@href").getNodeValue());
-        }
-        else {
-            curFirstComponentId = selectSingleNode(curItem, "/item/components/component[1]/@objid").getNodeValue();
-            curSecondComponentId = selectSingleNode(curItem, "/item/components/component[2]/@objid").getNodeValue();
-        }
-
+        curFirstComponentId =
+            getObjidFromHref(selectSingleNode(curItem, "/item/components/component[1]/@href").getNodeValue());
+        curSecondComponentId =
+            getObjidFromHref(selectSingleNode(curItem, "/item/components/component[2]/@href").getNodeValue());
         final String itemUpdatedXml =
             update(theItemId, toString(deleteElement(curItem, "/item/components/component[1]"), false));
         assertNotNull(itemUpdatedXml);
         Document document = EscidocRestSoapTestBase.getDocument(itemUpdatedXml);
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertNull("Deleted component returned from update",
-            // /ir/item/escidoc:18372/components/component/escidoc:18374
-                selectSingleNode(document, "/item/components/component[@href=\"" + "/ir/item/" + theItemId
-                    + "/components/component/" + curFirstComponentId + "\"]"));
-            assertNotNull("Deleted component returned from update", selectSingleNode(document,
-                "/item/components/component[@href=\"" + "/ir/item/" + theItemId + "/components/component/"
-                    + curSecondComponentId + "\"]"));
-        }
-        else {
-            assertNull("Deleted component returned from update", selectSingleNode(document,
-                "/item/components/component[@objid=\"" + curFirstComponentId + "\"]"));
-            assertNotNull("Deleted component returned from update", selectSingleNode(document,
-                "/item/components/component[@objid=\"" + curSecondComponentId + "\"]"));
-        }
-
+        assertNull("Deleted component returned from update",
+        // /ir/item/escidoc:18372/components/component/escidoc:18374
+            selectSingleNode(document, "/item/components/component[@href=\"" + "/ir/item/" + theItemId
+                + "/components/component/" + curFirstComponentId + "\"]"));
+        assertNotNull("Deleted component returned from update", selectSingleNode(document,
+            "/item/components/component[@href=\"" + "/ir/item/" + theItemId + "/components/component/"
+                + curSecondComponentId + "\"]"));
         try {
             retrieveComponent(theItemId, curFirstComponentId);
             EscidocRestSoapTestBase.failMissingException("No exception on retrieve deleted component.",
@@ -654,8 +601,8 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
 
         // get new component from template
         String templateComponentXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         Node newComponent =
             selectSingleNode(EscidocRestSoapTestBase.getDocument(templateComponentXml), "/item/components/component[2]");
 
@@ -710,7 +657,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
 
         // get new component from template
         String templateComponentXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create_2_Component_Md-Records.xml");
 
         Node newComponent =
@@ -746,15 +693,9 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         while (it.hasNext()) {
             String componentId = it.next();
             String xPathCompId = null;
-
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                xPathCompId =
-                    "/item/components/component" + "[@href='/ir/item/" + this.theItemId + "/components/component/"
-                        + componentId + "']/md-records/md-record";
-            }
-            else {
-                xPathCompId = "/item/components/component[@objid='" + componentId + "']/md-records/md-record";
-            }
+            xPathCompId =
+                "/item/components/component" + "[@href='/ir/item/" + this.theItemId + "/components/component/"
+                    + componentId + "']/md-records/md-record";
 
             NodeList mdRecordsCreate = null;
             if (componentId.equals(newComponentId)) {
@@ -789,8 +730,8 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
 
         // get new component from template
         String templateComponentXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         Node newComponent =
             selectSingleNode(EscidocRestSoapTestBase.getDocument(templateComponentXml), "/item/components/component[1]");
         String newComponentXml = toString(newComponent, true);
@@ -832,12 +773,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         // remove context.href
         NamedNodeMap atts = node.getAttributes();
         if (atts != null) {
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                atts.removeNamedItem(EscidocTestBase.XLINK_HREF_ESCIDOC);
-            }
-            else {
-                atts.removeNamedItem(EscidocTestBase.ID_ESCIDOC);
-            }
+            atts.removeNamedItem(EscidocTestBase.XLINK_HREF_ESCIDOC);
         }
 
         String newItemXml = toString(item, false);
@@ -1026,17 +962,11 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         NamedNodeMap atts = component.getAttributes();
 
         Node newItem = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            Node hrefNode = atts.getNamedItem(EscidocTestBase.XLINK_HREF_ESCIDOC);
-            String hrefVal = hrefNode.getNodeValue();
-            String hrefNewVal = hrefVal.replaceFirst("/component/escidoc:[^\"]+", "/component/escidoc:x");
-            hrefNode.setNodeValue(hrefNewVal);
-            newItem = substitute(curItem, "/item/components/component[1]/@href", hrefNewVal);
-        }
-        else {
-            newItem = substitute(curItem, "/item/components/component[1]/@objid", "escidoc:x");
-        }
-
+        Node hrefNode = atts.getNamedItem(EscidocTestBase.XLINK_HREF_ESCIDOC);
+        String hrefVal = hrefNode.getNodeValue();
+        String hrefNewVal = hrefVal.replaceFirst("/component/escidoc:[^\"]+", "/component/escidoc:x");
+        hrefNode.setNodeValue(hrefNewVal);
+        newItem = substitute(curItem, "/item/components/component[1]/@href", hrefNewVal);
         String newItemXml = toString(newItem, true);
         try {
             update(theItemId, newItemXml);
@@ -1171,16 +1101,9 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
 
         // determine a xpath that reliably selects the component
         String basePath = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String componentHref = null;
-            componentHref = selectSingleNode(newItem, "/item/components/component[" + cnum + "]/@href").getNodeValue();
-            basePath = "/item/components/component[@href='" + componentHref + "']/properties/";
-        }
-        else {
-            String componentId = null;
-            componentId = getObjidValue(newItem, "/item/components/component[" + cnum + "]");
-            basePath = "/item/components/component[@objid = '" + componentId + "']/properties/";
-        }
+        String componentHref = null;
+        componentHref = selectSingleNode(newItem, "/item/components/component[" + cnum + "]/@href").getNodeValue();
+        basePath = "/item/components/component[@href='" + componentHref + "']/properties/";
 
         // test update all updatable properties
         String testStringValue = "testing";
@@ -1248,12 +1171,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         // with empty objid
         componentXml = retrieveComponent(theItemId, componentId);
         componentDoc = getDocument(componentXml);
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            componentDoc = (Document) substitute(componentDoc, "/component/@href", "");
-        }
-        else {
-            componentDoc = (Document) substitute(componentDoc, "/component/@objid", "");
-        }
+        componentDoc = (Document) substitute(componentDoc, "/component/@href", "");
         componentXml = toString(componentDoc, true);
 
         updateItemXml = theItemXml.replaceFirst("(:components[^>]*>)", "$1" + componentXml);
@@ -1266,14 +1184,9 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         // without objid and type and title
         componentXml = retrieveComponent(theItemId, componentId);
         componentDoc = getDocument(componentXml);
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem("xlink:href");
-            selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem("xlink:type");
-            selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem("xlink:title");
-        }
-        else {
-            selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem("objid");
-        }
+        selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem("xlink:href");
+        selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem("xlink:type");
+        selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem("xlink:title");
         componentXml = toString(componentDoc, true);
 
         updateItemXml = theItemXml.replaceFirst("(:components[^>]*>)", "$1" + componentXml);
@@ -1298,18 +1211,12 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         int cnum = 1;
         String componentId = getObjidValue(newItem, "/item/components/component[" + cnum + "]");
         cnum++;
+        String componentHrefToReplace =
+            selectSingleNode(newItem, "/item/components/component[" + cnum + "]/@href").getNodeValue();
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String componentHrefToReplace =
-                selectSingleNode(newItem, "/item/components/component[" + cnum + "]/@href").getNodeValue();
-
-            newItem =
-                (Document) substitute(newItem, "/item/components/component[" + cnum + "]/@href", "/ir/item/"
-                    + this.theItemId + "/components/component/" + componentId);
-        }
-        else {
-            newItem = (Document) substitute(newItem, "/item/components/component[" + cnum + "]/@objid", componentId);
-        }
+        newItem =
+            (Document) substitute(newItem, "/item/components/component[" + cnum + "]/@href", "/ir/item/"
+                + this.theItemId + "/components/component/" + componentId);
 
         String updateItemXml = toString(newItem, false);
 
@@ -1334,17 +1241,10 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
 
         String componentId = null;
         String basePath = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            componentId =
-                getObjidFromHref(selectSingleNode(newItem, "/item/components/component/@href").getNodeValue());
-            basePath =
-                "/item/components/component[@href=\"" + "/ir/item/" + theItemId + "/components/component/"
-                    + componentId + "\"]/properties/";
-        }
-        else {
-            componentId = selectSingleNode(newItem, "/item/components/component/@objid").getNodeValue();
-            basePath = "/item/components/component[@objid = '" + componentId + "']/properties/";
-        }
+        componentId = getObjidFromHref(selectSingleNode(newItem, "/item/components/component/@href").getNodeValue());
+        basePath =
+            "/item/components/component[@href=\"" + "/ir/item/" + theItemId + "/components/component/" + componentId
+                + "\"]/properties/";
         String testStringValue = "testing";
         String testMimetypeValue = "image/tiff";
         // TODO check if values are new
@@ -1391,18 +1291,10 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         // + "']/properties/";
         String componentId = null;
         String basePath = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            componentId =
-                getObjidFromHref(selectSingleNode(document, "/item/components/component/@href").getNodeValue());
-            basePath =
-                "/item/components/component[@href=\"" + "/ir/item/" + theItemId + "/components/component/"
-                    + componentId + "\"]/properties/";
-        }
-        else {
-            componentId = selectSingleNode(document, "/item/components/component/@objid").getNodeValue();
-            basePath = "/item/components/component[@objid = '" + componentId + "']/properties/";
-        }
-
+        componentId = getObjidFromHref(selectSingleNode(document, "/item/components/component/@href").getNodeValue());
+        basePath =
+            "/item/components/component[@href=\"" + "/ir/item/" + theItemId + "/components/component/" + componentId
+                + "\"]/properties/";
         String testStringValue = "testing";
         String testDateValue = "1970-01-01T01:00:00.000Z";
         // TODO check if values are new
@@ -1650,13 +1542,13 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testRelationsUpdate() throws Exception {
         String itemXml1 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String itemXml2 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String itemNew =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
 
         String createdItemId1 = getObjidValue(EscidocRestSoapTestBase.getDocument(itemXml1));
@@ -1667,7 +1559,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
@@ -1684,13 +1576,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         Document item = EscidocRestSoapTestBase.getDocument(xml);
 
         // check for a second relation, getting the href/objid
-        String targetRelationToLeave = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            targetRelationToLeave = selectSingleNode(item, "/item/relations/relation[2]/@href").getTextContent();
-        }
-        else {
-            targetRelationToLeave = selectSingleNode(item, "/item/relations/relation[2]/@objid").getTextContent();
-        }
+        String targetRelationToLeave = selectSingleNode(item, "/item/relations/relation[2]/@href").getTextContent();
 
         // href/objid of the first relation and replacing it by href/objid of
         // third one
@@ -1698,18 +1584,10 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         Node targetObjectId = null;
         String targetRelationToAdd = null;
         String targetRelationToRemove = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            targetHref = selectSingleNode(item, "/item/relations/relation[1]/@href");
-            targetRelationToRemove = targetHref.getTextContent();
-            targetHref.setNodeValue(hrefToAdd);
-            targetRelationToAdd = hrefToAdd;
-        }
-        else {
-            targetObjectId = selectSingleNode(item, "/item/relations/relation[1]/@objid");
-            targetRelationToRemove = targetObjectId.getTextContent();
-            targetObjectId.setNodeValue(createdItemIdToAdd);
-            targetRelationToAdd = createdItemIdToAdd;
-        }
+        targetHref = selectSingleNode(item, "/item/relations/relation[1]/@href");
+        targetRelationToRemove = targetHref.getTextContent();
+        targetHref.setNodeValue(hrefToAdd);
+        targetRelationToAdd = hrefToAdd;
 
         // update with first relation changed to third one
         String updatedXml = update(createdItemId3, toString(item, true));
@@ -1719,16 +1597,8 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         NodeList relationsAfterUpdate = selectNodeList(updatedItem, "/item/relations/relation");
 
         // href/objid of relations after update
-        String targetNew1 = null;
-        String targetNew2 = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            targetNew1 = selectSingleNode(updatedItem, "/item/relations/relation[1]/@href").getTextContent();
-            targetNew2 = selectSingleNode(updatedItem, "/item/relations/relation[2]/@href").getTextContent();
-        }
-        else {
-            targetNew1 = selectSingleNode(updatedItem, "/item/relations/relation[1]/@objid").getTextContent();
-            targetNew2 = selectSingleNode(updatedItem, "/item/relations/relation[2]/@objid").getTextContent();
-        }
+        String targetNew1 = selectSingleNode(updatedItem, "/item/relations/relation[1]/@href").getTextContent();
+        String targetNew2 = selectSingleNode(updatedItem, "/item/relations/relation[2]/@href").getTextContent();
 
         assertXmlValidItem(xml);
         // assert number of relations
@@ -1758,16 +1628,9 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         relationsAfterUpdate = selectNodeList(updatedItem, "/item/relations/relation");
 
         // href/objid of relations after update
-        targetNew1 = null;
-        targetNew2 = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            targetNew1 = selectSingleNode(updatedItem, "/item/relations/relation[1]/@href").getTextContent();
-            targetNew2 = selectSingleNode(updatedItem, "/item/relations/relation[2]/@href").getTextContent();
-        }
-        else {
-            targetNew1 = selectSingleNode(updatedItem, "/item/relations/relation[1]/@objid").getTextContent();
-            targetNew2 = selectSingleNode(updatedItem, "/item/relations/relation[2]/@objid").getTextContent();
-        }
+        targetNew1 = selectSingleNode(updatedItem, "/item/relations/relation[1]/@href").getTextContent();
+        ;
+        targetNew2 = selectSingleNode(updatedItem, "/item/relations/relation[2]/@href").getTextContent();
 
         assertXmlValidItem(xml);
         // assert number of relations
@@ -1797,10 +1660,10 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testRelationsRemoveUpdate() throws Exception {
         String relationTarget1 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String relationTarget2 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
 
         String relationTargetId1 = getObjidValue(EscidocRestSoapTestBase.getDocument(relationTarget1));
@@ -1809,7 +1672,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         String relationTargetHref2 = "/ir/item/" + relationTargetId2;
 
         String itemXmlTemplate =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_createWithRelations.xml");
 
         // replace either placeholders for objid or for href
@@ -1856,10 +1719,10 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testRelationsUpdateWithWrongPredicate() throws Exception {
         String itemXml1 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String itemXml2 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
 
         String createdItemId1 = getObjidValue(EscidocRestSoapTestBase.getDocument(itemXml1));
@@ -1868,7 +1731,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
@@ -1902,10 +1765,10 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testRelationsUpdateWithNonExistingTarget() throws Exception {
         String itemXml1 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String itemXml2 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
 
         String createdItemId1 = getObjidValue(EscidocRestSoapTestBase.getDocument(itemXml1));
@@ -1914,7 +1777,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
@@ -1930,13 +1793,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         Document item = EscidocRestSoapTestBase.getDocument(xml);
         String createdItemId3 = getObjidValue(item);
 
-        Node target = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            target = selectSingleNode(item, "/item/relations/relation[1]/@href");
-        }
-        else {
-            target = selectSingleNode(item, "/item/relations/relation[1]/@objid");
-        }
+        Node target = selectSingleNode(item, "/item/relations/relation[1]/@href");
         target.setNodeValue("bla");
 
         try {
@@ -1955,10 +1812,10 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testRelationsUpdateWithWrongReferenceAttributes() throws Exception {
         String itemXml1 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
         String itemXml2 =
-            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            create(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml"));
 
         String createdItemId1 = getObjidValue(EscidocRestSoapTestBase.getDocument(itemXml1));
@@ -1967,7 +1824,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
@@ -1983,13 +1840,8 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         Document item = EscidocRestSoapTestBase.getDocument(xml);
         String createdItemId3 = getObjidValue(item);
 
-        Node targetId = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            targetId = selectSingleNode(item, "/item/relations/relation[1]/@href");
-        }
-        else {
-            targetId = selectSingleNode(item, "/item/relations/relation[1]/@objid");
-        }
+        Node targetId = selectSingleNode(item, "/item/relations/relation[1]/@href");
+
         targetId.setNodeValue("bla");
 
         try {
@@ -2008,7 +1860,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testDeleteMdrecordWhileUpdate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_2_md_records_for_create.xml");
         NodeList mdrecords = selectNodeList(xmlItem, "/item/md-records/md-record");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
@@ -2040,7 +1892,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testAddExistingMdrecordWhileUpdate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_2_md_records_for_create.xml");
         NodeList mdrecords = selectNodeList(xmlItem, "/item/md-records/md-record");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
@@ -2085,7 +1937,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testAddNewMdrecordWhileUpdate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         NodeList mdrecords = selectNodeList(xmlItem, "/item/md-records/md-record");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
@@ -2121,7 +1973,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testDeleteComponentMdRecordWhileUpdate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create_2_Component_Md-Records.xml");
         NodeList mdrecords = selectNodeList(xmlItem, "/item/components/component/md-records/md-record");
 
@@ -2151,7 +2003,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testDeleteComponentEscidocMdRecordWhileUpdate() throws Exception {
         String xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create_2_Component_Md-Records.xml");
 
         String createdXml = create(xmlItem);
@@ -2161,26 +2013,15 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         String createdItemId = getObjidValue(createdDocument);
         String componentId = null;
         String mdRecordPath = null;
-        if (getTransport(true).equals("REST")) {
-            String componentHrefValue =
-                selectSingleNode(createdDocument, "/item/components/component[1]/@href").getNodeValue();
-            componentId = getObjidFromHref(componentHrefValue);
-            mdRecordPath =
-                "/item/components/component[@href='" + componentHrefValue
-                    + "']/md-records/md-record[@name = 'escidoc']";
-        }
-        else {
-            componentId = selectSingleNode(createdDocument, "/item/components/component[1]/@objid").getNodeValue();
-            mdRecordPath =
-                "/item/components/component[@objid='" + componentId + "']/md-records/md-record[@name = 'escidoc']";
-        }
-        // System.out.println("componentId " +componentId);
+        String componentHrefValue =
+            selectSingleNode(createdDocument, "/item/components/component[1]/@href").getNodeValue();
+        componentId = getObjidFromHref(componentHrefValue);
+        mdRecordPath =
+            "/item/components/component[@href='" + componentHrefValue + "']/md-records/md-record[@name = 'escidoc']";
         Node itemWithoutComponentEscidocMdRecord = deleteElement(createdDocument, mdRecordPath);
         String itemWithoutComponentEscidocMdRecordXml = toString(itemWithoutComponentEscidocMdRecord, true);
         String updatedXml = update(createdItemId, itemWithoutComponentEscidocMdRecordXml);
-        // String firstVersion = retrieve(theItemId + ":1");
         Document updatedDocument = getDocument(updatedXml);
-        // System.out.println("item " + updatedXml);
         Node notExistedMdRecord = selectSingleNode(updatedDocument, mdRecordPath);
         assertNull("Escidoc md-record must be deleted", notExistedMdRecord);
 
@@ -2195,7 +2036,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testAddExistingComponentMdrecordWhileUpdate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create_2_Component_Md-Records.xml");
         NodeList mdrecords = selectNodeList(xmlItem, "/item/components/component/md-records/md-record");
 
@@ -2241,7 +2082,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     @Test
     public void testAddNewMdrecordToComponentWhileUpdate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                 "escidoc_item_198_for_create.xml");
         NodeList mdrecords = selectNodeList(xmlItem, "/item/components/component/md-records/md-record");
 
@@ -2272,18 +2113,6 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         // added a namespace declaration to 'md-records' element by a
         // String-replace
         String itemWithComponentMdRecordXml = toString(createdDocument, true);
-        // String expr = "/>\\s*<escidocMetadataRecords:md-records";
-        // Pattern pattern = Pattern.compile(expr);
-        //
-        // String itemWithComponentMdRecordXmlCorrect =
-        // itemWithComponentMdRecordXml
-        // .replaceAll(
-        // expr,
-        // "/><escidocMetadataRecords:md-records
-        // xmlns:escidocMetadataRecords=\"http://www.escidoc.de/schemas/metadatarecords/0.4\"");
-
-        // System.out.println("Item with component md-record " +
-        // itemWithComponentMdRecordXml);
         String updated = update(createdItemId, itemWithComponentMdRecordXml);
         Document updatedDocument = getDocument(updated);
         NodeList mdrecordsAfterUpdate =
@@ -2308,22 +2137,12 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         String fileNamePath = null;
         String mdXPath = null;
         String mdRecordName = "escidoc";
-        if ("REST".equals(getTransport(true))) {
-            String href = selectSingleNode(item, "item/components/component[1]/@href").getNodeValue();
-            componentId = getObjidFromHref(href);
-            mdXPath =
-                "/item/components/component[@href='" + href + "']/md-records/md-record[@name='" + mdRecordName
-                    + "']/publication/title";
-            fileNamePath = "/item/components/component[@href='" + href + "']/properties/file-name";
-        }
-        else {
-            componentId = selectSingleNode(item, "item/components/component[1]/@objid").getNodeValue();
-            mdXPath =
-                "/item/components/component[@objid='" + componentId + "']/md-records/md-record[@name='" + mdRecordName
-                    + "']/publication/title";
-            fileNamePath = "/item/components/component[@objid='" + componentId + "']/properties/file-name";
-        }
-
+        String href = selectSingleNode(item, "item/components/component[1]/@href").getNodeValue();
+        componentId = getObjidFromHref(href);
+        mdXPath =
+            "/item/components/component[@href='" + href + "']/md-records/md-record[@name='" + mdRecordName
+                + "']/publication/title";
+        fileNamePath = "/item/components/component[@href='" + href + "']/properties/file-name";
         String oldTitleValue = selectSingleNode(item, mdXPath).getTextContent();
         String newTitle = "new title";
         String oldFileName = selectSingleNode(item, fileNamePath).getTextContent();
@@ -2355,8 +2174,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     public void testUpdateComponentEscidocMdRecord02() throws Exception {
 
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_1_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_1_component.xml");
         String itemXml = create(xmlData);
 
         Document item = getDocument(itemXml, true);
@@ -2366,21 +2184,12 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         String mdXPath = null;
         String mdRecordName = "escidoc";
 
-        if ("REST".equals(getTransport(true))) {
-            String href = selectSingleNode(item, "item/components/component[1]/@href").getNodeValue();
-            componentId = getObjidFromHref(href);
-            mdXPath =
-                "/item/components/component[@href='" + href + "']/md-records/md-record[@name='" + mdRecordName
-                    + "']/publication/title";
-            fileNamePath = "/item/components/component[@href='" + href + "']/properties/file-name";
-        }
-        else {
-            componentId = selectSingleNode(item, "item/components/component[1]/@objid").getNodeValue();
-            mdXPath =
-                "/item/components/component[@objid='" + componentId + "']/md-records/md-record[@name='" + mdRecordName
-                    + "']/publication/title";
-            fileNamePath = "/item/components/component[@objid='" + componentId + "']/properties/file-name";
-        }
+        String href = selectSingleNode(item, "item/components/component[1]/@href").getNodeValue();
+        componentId = getObjidFromHref(href);
+        mdXPath =
+            "/item/components/component[@href='" + href + "']/md-records/md-record[@name='" + mdRecordName
+                + "']/publication/title";
+        fileNamePath = "/item/components/component[@href='" + href + "']/properties/file-name";
 
         String oldTitleValue = selectSingleNode(item, mdXPath).getTextContent().trim();
         String oldFileName = selectSingleNode(item, fileNamePath).getTextContent().trim();
@@ -2468,8 +2277,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     public void testRestoreAndAccessOlderVersions() throws Exception {
 
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_1_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_1_component.xml");
 
         final String item1Xml = create(xmlData);
         final String itemId = getObjidValue(item1Xml);
@@ -2500,23 +2308,14 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
      * @return Vector with objids of Component.
      */
     private Vector<String> obtainComponentIds(Document curItem) throws TransformerException {
-        String xPathCompId = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            xPathCompId = "/item/components/component/@href";
-        }
-        else {
-            xPathCompId = "/item/components/component/@objid";
-        }
-
+        String xPathCompId = "/item/components/component/@href";
         NodeList componentIds = selectNodeList(curItem, xPathCompId);
 
         Vector<String> compIds = new Vector<String>();
         for (int i = 0; i < componentIds.getLength(); i++) {
             Node objRef = componentIds.item(i);
             String ref = objRef.getTextContent();
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                ref = getObjidFromHref(ref);
-            }
+            ref = getObjidFromHref(ref);
             compIds.add(ref);
         }
 

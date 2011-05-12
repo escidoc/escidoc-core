@@ -32,21 +32,12 @@ import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
 
-import javax.xml.rpc.ServiceException;
-
 /**
  * Offers access methods to the escidoc REST and soap interface of the user management wrapper.
  *
  * @author Torsten Tetteroo
  */
 public class UserManagementWrapperClient extends ClientBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public UserManagementWrapperClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Login an user.

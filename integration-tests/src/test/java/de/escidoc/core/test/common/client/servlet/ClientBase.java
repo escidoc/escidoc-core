@@ -81,8 +81,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.rmi.Remote;
 import java.util.Collection;
 import java.util.Map;
@@ -423,48 +421,18 @@ public abstract class ClientBase {
 
     public static final String TEMPLATE_OM_COMMON_PATH = "/templates" + "/om/template" + "/common";
 
-    // /**
-    // * Pattern matching the class name of the exception.
-    // */
-    // private static final Pattern PATTERN_EXCEPTION_CLASS =
-    // Pattern.compile("<class><p>(.*)</p></class>");
-    //
-    // /**
-    // * Pattern matching the message of the exception.
-    // */
-    // private static final Pattern PATTERN_EXCEPTION_MESSAGE =
-    // Pattern.compile("<message><p>(.*)</p></message>");
-    //
-    // /**
-    // * Pattern matching the cause of the exception.
-    // */
-    // private static final Pattern PATTERN_EXCEPTION_CAUSE =
-    // Pattern.compile("<cause><p>(.*)</p></cause>");
-    //
-    // /**
-    // * Pattern matching the cause of the exception.
-    // */
-    // private static final Pattern PATTERN_EXCEPTION_TITLE =
-    // Pattern.compile("<title><h1>(.*)</h1></title>");
-
     private static final Pattern PATTERN_VERSION_NUMBER = Pattern.compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
 
     private static final Pattern PATTERN_ID_WITHOUT_VERSION = Pattern.compile("([a-zA-Z]+:[0-9]+):[0-9]+");
 
     private static final Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
 
-    private int transport;
-
     private DefaultHttpClient httpClient;
 
     /**
      * Constructor for client base class.
-     * 
-     * @param transport
-     *            Decides if this client is a REST or SOAP client.
      */
-    public ClientBase(final int transport) {
-        this.transport = transport;
+    public ClientBase() {
         initHttpClient();
     }
 
@@ -905,13 +873,6 @@ public abstract class ClientBase {
     }
 
     /**
-     * @return Returns the transport.
-     */
-    public int getTransport() {
-        return transport;
-    }
-
-    /**
      * @return Returns the httpClient.
      */
     public DefaultHttpClient getHttpClient() {
@@ -1050,10 +1011,6 @@ public abstract class ClientBase {
             }
         }
         return engineConfig;
-    }
-
-    public void setTransport(final int transport) {
-        this.transport = transport;
     }
 
     public Object create(final Object xml) throws Exception {
@@ -1310,16 +1267,7 @@ public abstract class ClientBase {
      *             Thrown if parsing fails.
      */
     public String getLatestVersionObjidValue(final Document document) throws Exception {
-        String id = null;
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            id = getIdFromHrefValue(selectSingleNode(document, "//properties/version/@href").getTextContent());
-        }
-        else {
-            id = selectSingleNode(document, "//properties/version/@objid").getTextContent();
-        }
-
-        return (id);
+        return selectSingleNode(document, "//properties/version/@objid").getTextContent();
     }
 
     /**

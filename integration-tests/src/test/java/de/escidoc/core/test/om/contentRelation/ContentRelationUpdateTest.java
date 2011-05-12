@@ -31,11 +31,8 @@ package de.escidoc.core.test.om.contentRelation;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -51,19 +48,11 @@ import static org.junit.Assert.fail;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ContentRelationUpdateTest extends ContentRelationTestBase {
 
     private String relationXml = null;
 
     private String relationId = null;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentRelationUpdateTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -295,16 +284,10 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
 
         String oldSubject = null;
         Node subject = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            subject = selectSingleNode(relationCreated, "/content-relation/subject/@href");
-            newSubject = "/ir/item/" + newSubject;
+        subject = selectSingleNode(relationCreated, "/content-relation/subject/@href");
+        newSubject = "/ir/item/" + newSubject;
 
-            oldSubject = selectSingleNode(relationCreated, "/content-relation/subject/@href").getNodeValue();
-        }
-        else {
-            subject = selectSingleNode(relationCreated, "/content-relation/subject/@objid");
-            oldSubject = selectSingleNode(relationCreated, "/content-relation/subject/@objid").getNodeValue();
-        }
+        oldSubject = selectSingleNode(relationCreated, "/content-relation/subject/@href").getNodeValue();
 
         subject.setNodeValue(newSubject);
 
@@ -317,14 +300,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         assertXmlValidContentRelation(updatedRelationXml);
         Document updatedRelationDoc = getDocument(updatedRelationXml);
 
-        String subjectValue = null;
-
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/subject/@href").getNodeValue();
-        }
-        else {
-            subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/subject/@objid").getNodeValue();
-        }
+        String subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/subject/@href").getNodeValue();
         assertEquals(oldSubject, subjectValue);
 
         // retrieve
@@ -333,12 +309,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         // check values of retrieved ContentRelation
         assertXmlValidContentRelation(retrieveXml);
         Document retrieveDoc = getDocument(retrieveXml);
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@href").getNodeValue();
-        }
-        else {
-            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@objid").getNodeValue();
-        }
+        subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@href").getNodeValue();
         assertEquals(oldSubject, subjectValue);
 
         String lmdCreate = getLastModificationDateValue(relationCreated);
@@ -362,17 +333,10 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         String newSubject = createItemFromTemplate("item_without_component.xml");
 
         String oldSubject = null;
-        Node subject = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            subject = selectSingleNode(relationCreated, "/content-relation/object/@href");
-            newSubject = "/ir/item/" + newSubject;
+        Node subject = selectSingleNode(relationCreated, "/content-relation/object/@href");
+        newSubject = "/ir/item/" + newSubject;
 
-            oldSubject = selectSingleNode(relationCreated, "/content-relation/object/@href").getNodeValue();
-        }
-        else {
-            subject = selectSingleNode(relationCreated, "/content-relation/object/@objid");
-            oldSubject = selectSingleNode(relationCreated, "/content-relation/object/@objid").getNodeValue();
-        }
+        oldSubject = selectSingleNode(relationCreated, "/content-relation/object/@href").getNodeValue();
 
         subject.setNodeValue(newSubject);
 
@@ -385,14 +349,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         assertXmlValidContentRelation(updatedRelationXml);
         Document updatedRelationDoc = getDocument(updatedRelationXml);
 
-        String subjectValue = null;
-
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/object/@href").getNodeValue();
-        }
-        else {
-            subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/object/@objid").getNodeValue();
-        }
+        String subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/object/@href").getNodeValue();
         assertEquals(oldSubject, subjectValue);
 
         // retrieve
@@ -401,12 +358,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         // check values of retrieved ContentRelation
         assertXmlValidContentRelation(retrieveXml);
         Document retrieveDoc = getDocument(retrieveXml);
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/object/@href").getNodeValue();
-        }
-        else {
-            subjectValue = selectSingleNode(retrieveDoc, "/content-relation/object/@objid").getNodeValue();
-        }
+        subjectValue = selectSingleNode(retrieveDoc, "/content-relation/object/@href").getNodeValue();
         assertEquals(oldSubject, subjectValue);
 
         String lmdCreate = getLastModificationDateValue(relationCreated);

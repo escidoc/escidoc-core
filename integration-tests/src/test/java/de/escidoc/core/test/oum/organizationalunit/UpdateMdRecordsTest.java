@@ -35,8 +35,6 @@ import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticL
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertEquals;
@@ -46,15 +44,7 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public UpdateMdRecordsTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test successfully updating the organization-details sub resource of an organizational.

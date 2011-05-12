@@ -37,7 +37,6 @@ import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.xpath.XPathAPI;
 import org.joda.time.DateTime;
-import org.junit.runners.Parameterized.Parameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
@@ -85,13 +84,6 @@ import static org.junit.Assert.fail;
  * @author Torsten Tetteroo
  */
 public class EscidocRestSoapTestBase extends EscidocTestBase {
-
-    @Parameters
-    public static Collection<Object[]> getParameters() {
-        Collection<Object[]> parameters = new ArrayList<Object[]>();
-        parameters.add(new Object[] { Constants.TRANSPORT_REST });
-        return parameters;
-    }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EscidocRestSoapTestBase.class);
 
@@ -585,18 +577,6 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     private static final Pattern PATTERN_VERSION_NUMBER = Pattern.compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
 
     /**
-     * The constructor.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     */
-    public EscidocRestSoapTestBase(final int transport) {
-
-        super(transport);
-    }
-
-    /**
      * Creates a new element node for the provided document. The created element is an element that refers to another
      * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/>
      * This method takes the set transport definition for this class to decide which attributes have to be sent.<br>
@@ -634,46 +614,8 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     /**
      * Creates a new element node for the provided document. The created element is an element that refers to another
      * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/>
-     * This method takes the set transport definition for this class to decide which attributes have to be sent.
-     * 
-     * @param doc
-     *            The document for that the node shall be created.
-     * @param namespaceUri
-     *            The name space uri of the node to create. This may be null.
-     * @param prefix
-     *            The prefix to use.
-     * @param tagName
-     *            The tag name of the node.
-     * @param xlinkPrefix
-     *            The prefix to use for the xlink attributes.
-     * @param title
-     *            The title of the referencing element (=xlink:title)
-     * @param href
-     *            The href of the referencing element (=xlink:href). The objid attribute value is extracted from this
-     *            href.
-     * @param withRestReadOnly
-     *            Flag indicating if the parent-ous element shall contain the REST specific read only attributes.
-     * @return Returns the created node.
-     * @throws Exception
-     *             Thrown if anything fails.
-     */
-    public Element createReferencingElementNode(
-        final Document doc, final String namespaceUri, final String prefix, final String tagName,
-        final String xlinkPrefix, final String title, final String href, final boolean withRestReadOnly)
-        throws Exception {
-
-        return createReferencingElementNode(getTransport(), doc, namespaceUri, prefix, tagName, xlinkPrefix, title,
-            href, withRestReadOnly);
-    }
-
-    /**
-     * Creates a new element node for the provided document. The created element is an element that refers to another
-     * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/>
      * This method takes the provided transport definition to decide which attributes have to be sent.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param doc
      *            The document for that the node shall be created.
      * @param namespaceUri
@@ -696,24 +638,12 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      *             Thrown if anything fails.
      */
     public static Element createReferencingElementNode(
-        final int transport, final Document doc, final String namespaceUri, final String prefix, final String tagName,
+        final Document doc, final String namespaceUri, final String prefix, final String tagName,
         final String xlinkPrefix, final String title, final String href, final boolean withRestReadOnly)
         throws Exception {
 
-        assertTransport(transport);
-
-        Element newElement;
-        if (transport == Constants.TRANSPORT_REST) {
-            newElement =
-                createElementNodeWithXlink(doc, namespaceUri, prefix, tagName, xlinkPrefix, title, href,
-                    withRestReadOnly);
-        }
-        else {
-            newElement = createElementNode(doc, namespaceUri, prefix, tagName, null);
-            Attr objidAttr = createAttributeNode(doc, null, null, NAME_OBJID, getObjidFromHref(href));
-            newElement.getAttributes().setNamedItemNS(objidAttr);
-        }
-
+        Element newElement =
+            createElementNodeWithXlink(doc, namespaceUri, prefix, tagName, xlinkPrefix, title, href, withRestReadOnly);
         return newElement;
     }
 
@@ -762,9 +692,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Asserts that the provided xml data is a valid for grants schema.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
@@ -772,33 +702,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidGrants(final String xmlData) throws Exception {
 
-        assertXmlValidGrants(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid for grants schema.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidGrants(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getGrantsSchemaLocation(transport)));
+        assertXmlValid(xmlData, new URL(getGrantsSchemaLocation()));
         assertAllPlaceholderResolved(xmlData);
     }
 
     /**
      * Asserts that the provided xml data is a valid for preferences schema.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
@@ -806,33 +718,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidPreferences(final String xmlData) throws Exception {
 
-        assertXmlValidPreferences(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid for preferences schema.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidPreferences(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getPreferencesSchemaLocation(transport)));
+        assertXmlValid(xmlData, new URL(getPreferencesSchemaLocation()));
         assertAllPlaceholderResolved(xmlData);
     }
 
     /**
      * Asserts that the provided xml data is a valid for attributes schema.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
@@ -840,76 +734,31 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidAttributes(final String xmlData) throws Exception {
 
-        assertXmlValidAttributes(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid for attributes schema.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidAttributes(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getAttributesSchemaLocation(transport)));
+        assertXmlValid(xmlData, new URL(getAttributesSchemaLocation()));
         assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Checks if the provided transport is valid.
-     * 
-     * @param transport
-     *            Specifies the transport to be asserted, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}. Otherwise, the assertion fails.
-     */
-    public static void assertTransport(final int transport) {
-
-        if (transport != Constants.TRANSPORT_REST && transport != Constants.TRANSPORT_SOAP) {
-            fail("Invalid value for transport, was " + transport);
-        }
     }
 
     public void assertXmlValidContext(final String xmlData) throws Exception {
 
-        assertXmlValidContext(getTransport(), xmlData);
-    }
-
-    public void assertXmlValidContext(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getContextSchemaBase(transport) + CONTEXT_XSD));
+        assertXmlValid(xmlData, new URL(getContextSchemaBase() + CONTEXT_XSD));
         assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidContextsList(final String xmlData) throws Exception {
-        assertXmlValidContextsList(getTransport(), xmlData);
     }
 
     public void assertXmlValidContextsList(final int transport, final String xmlData) throws Exception {
-        assertXmlValid(xmlData, new URL(getContextSchemaBase(transport) + "context-list.xsd"));
+        assertXmlValid(xmlData, new URL(getContextSchemaBase() + "context-list.xsd"));
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidContextRefsList(final String xmlData) throws Exception {
-        assertXmlValidContextRefsList(getTransport(), xmlData);
-    }
-
     public void assertXmlValidContextRefsList(final int transport, final String xmlData) throws Exception {
-        assertXmlValid(xmlData, new URL(getContextSchemaBase(transport) + "context-ref-list.xsd"));
+        assertXmlValid(xmlData, new URL(getContextSchemaBase() + "context-ref-list.xsd"));
         assertAllPlaceholderResolved(xmlData);
     }
 
     /**
-     * Asserts that the provided xml data is a valid content model.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
+     * Asserts that the provided xml data is a valid organizational unit.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
@@ -917,32 +766,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidContentModel(final String xmlData) throws Exception {
 
-        assertXmlValidContentModel(getTransport(), xmlData);
+        assertXmlValid(xmlData, new URL(getContentModelSchemaBase("0.1") + CONTENT_MODEL_XSD));
     }
 
     /**
      * Asserts that the provided xml data is a valid organizational unit.<br/>
      * This method takes the provided transport definition to decide if the provided xml data has to be validated using
      * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidContentModel(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getContentModelSchemaBase(transport, "0.1") + CONTENT_MODEL_XSD));
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
@@ -950,63 +781,28 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidOrganizationalUnit(final String xmlData) throws Exception {
 
-        assertXmlValidOrganizationalUnit(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidOrganizationalUnit(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase(transport, "0.8") + ORGANIZATIONAL_UNIT_XSD));
+        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase("0.8") + ORGANIZATIONAL_UNIT_XSD));
         assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is valid for authorization requests.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidRequests(final String xmlData) throws Exception {
-
-        assertXmlValidRequests(getTransport(), xmlData);
     }
 
     /**
      * Asserts that the provided xml data is a valid role.<br/>
      * This method takes the provided transport definition to decide if the provided xml data has to be validated using
      * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
      *             If anything fails.
      */
-    public void assertXmlValidRequests(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getRequestsSchemaBase(transport) + REQUESTS_XSD));
+    public void assertXmlValidRequests(final String xmlData) throws Exception {
+        assertXmlValid(xmlData, new URL(getRequestsSchemaBase() + REQUESTS_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
     /**
      * Asserts that the provided xml data is valid for authorization responses.
-     * 
+     *
      * @param toBeAsserted
      *            The xml data to be asserted.
      * @throws Exception
@@ -1014,31 +810,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidResults(final String toBeAsserted) throws Exception {
 
-        assertXmlValidResults(getTransport(), toBeAsserted);
-    }
-
-    /**
-     * Asserts that the provided xml data is valid for authorization responses.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param toBeAsserted
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidResults(final int transport, final String toBeAsserted) throws Exception {
-
-        assertXmlValid(toBeAsserted, new URL(getResultsSchemaBase(transport) + RESULTS_XSD));
+        assertXmlValid(toBeAsserted, new URL(getResultsSchemaBase() + RESULTS_XSD));
         assertAllPlaceholderResolved(toBeAsserted);
     }
 
     /**
      * Asserts that the provided xml data is a valid role.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
@@ -1046,33 +826,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidRole(final String xmlData) throws Exception {
 
-        assertXmlValidRole(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid role.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidRole(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getRoleSchemaBase(transport) + ROLE_XSD));
+        assertXmlValid(xmlData, new URL(getRoleSchemaBase() + ROLE_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
     /**
      * Asserts that the provided xml data is a valid list of roles.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
@@ -1080,123 +842,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidRoleList(final String xmlData) throws Exception {
 
-        assertXmlValidRoleList(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid list of roles.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidRoleList(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getRoleListSchemaBase(transport) + ROLE_LIST_XSD));
+        assertXmlValid(xmlData, new URL(getRoleListSchemaBase() + ROLE_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
     /**
-     * Asserts that the provided xml data is a valid user account.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidUserAccount(final String xmlData) throws Exception {
-
-        assertXmlValidUserAccount(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid user attribute.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidUserAttribute(final String xmlData) throws Exception {
-
-        assertXmlValidUserAttribute(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid list of user accounts.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidUserAccountList(final String xmlData) throws Exception {
-
-        assertXmlValidUserAccountList(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid user account.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidUserGroup(final String xmlData) throws Exception {
-
-        assertXmlValidUserGroup(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid list of user groups.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidUserGroupList(final String xmlData) throws Exception {
-
-        assertXmlValidUserGroupList(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid list of grants.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidGrantList(final String xmlData) throws Exception {
-
-        assertXmlValidGrantList(getTransport(), xmlData);
-    }
-
-    /**
      * Asserts that the provided xml data is a valid index configuration.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
@@ -1204,89 +858,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidIndexConfiguration(final String xmlData) throws Exception {
 
-        assertXmlValidIndexConfiguration(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid index configuration.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidIndexConfiguration(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getAdminSchemaBase(transport) + INDEX_CONFIGURATION_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid container.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidContainer(final String xmlData) throws Exception {
-
-        assertXmlValidContainer(getTransport(), xmlData);
-    }
-
-    public void assertXmlValidContainerList(final String xmlData) throws Exception {
-
-        assertXmlValidContainerList(getTransport(), xmlData);
-    }
-
-    public void assertXmlValidTocView(final String xmlData) throws Exception {
-
-        assertXmlValidTocView(getTransport(), xmlData);
-    }
-
-    public void assertXmlValidContainerMembersList(final String xmlData) throws Exception {
-        assertXmlValidContainerMembersList(getTransport(), xmlData);
-
-    }
-
-    public void assertXmlValidParents(final String xmlData) throws Exception {
-        assertXmlValidParents(getTransport(), xmlData);
-
-    }
-
-    public void assertXmlValidContainerRefList(final String xmlData) throws Exception {
-        assertXmlValidContainerRefList(getTransport(), xmlData);
-
-    }
-
-    public void assertXmlValidRelations(final String xmlData) throws Exception {
-
-        assertXmlValidRelations(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid user account.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidUserAccount(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getUserAccountSchemaBase(transport) + USER_ACCOUNT_XSD));
+        assertXmlValid(xmlData, new URL(getAdminSchemaBase() + INDEX_CONFIGURATION_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
@@ -1294,18 +866,31 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * Asserts that the provided xml data is a valid user account.<br/>
      * This method takes the provided transport definition to decide if the provided xml data has to be validated using
      * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
      *             If anything fails.
      */
-    public void assertXmlValidUserAttribute(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidUserAccount(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getAttributesSchemaLocation(transport)));
+        assertXmlValid(xmlData, new URL(getUserAccountSchemaBase() + USER_ACCOUNT_XSD));
+        assertAllPlaceholderResolved(xmlData);
+    }
+
+    /**
+     * Asserts that the provided xml data is a valid user account.<br/>
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     *
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public void assertXmlValidUserAttribute(final String xmlData) throws Exception {
+
+        assertXmlValid(xmlData, new URL(getAttributesSchemaLocation()));
         assertAllPlaceholderResolved(xmlData);
     }
 
@@ -1313,18 +898,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * Asserts that the provided xml data is a valid list of user accounts.<br/>
      * This method takes the provided transport definition to decide if the provided xml data has to be validated using
      * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
      *             If anything fails.
      */
-    public void assertXmlValidUserAccountList(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidUserAccountList(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getUserAccountListSchemaBase(transport) + USER_ACCOUNT_LIST_XSD));
+        assertXmlValid(xmlData, new URL(getUserAccountListSchemaBase() + USER_ACCOUNT_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
@@ -1332,18 +914,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * Asserts that the provided xml data is a valid user group.<br/>
      * This method takes the provided transport definition to decide if the provided xml data has to be validated using
      * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
      *             If anything fails.
      */
-    public void assertXmlValidUserGroup(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidUserGroup(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getUserGroupSchemaBase(transport) + USER_GROUP_XSD));
+        assertXmlValid(xmlData, new URL(getUserGroupSchemaBase() + USER_GROUP_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
@@ -1351,18 +930,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * Asserts that the provided xml data is a valid list of user groups.<br/>
      * This method takes the provided transport definition to decide if the provided xml data has to be validated using
      * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
      *             If anything fails.
      */
-    public void assertXmlValidUserGroupList(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidUserGroupList(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getUserGroupListSchemaBase(transport) + USER_GROUP_LIST_XSD));
+        assertXmlValid(xmlData, new URL(getUserGroupListSchemaBase() + USER_GROUP_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
@@ -1370,74 +946,70 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * Asserts that the provided xml data is a valid list of grants.<br/>
      * This method takes the provided transport definition to decide if the provided xml data has to be validated using
      * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
      *             If anything fails.
      */
-    public void assertXmlValidGrantList(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidGrantList(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getGrantsSchemaLocation(transport)));
+        assertXmlValid(xmlData, new URL(getGrantsSchemaLocation()));
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidContainer(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidContainer(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getContainerSchemaBase(transport) + CONTAINER_XSD));
+        assertXmlValid(xmlData, new URL(getContainerSchemaBase() + CONTAINER_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidContainerList(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidContainerList(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getContainerSchemaBase(transport) + CONTAINER_LIST_XSD));
+        assertXmlValid(xmlData, new URL(getContainerSchemaBase() + CONTAINER_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidVersionHistory(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidVersionHistory(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getCommonSchemaBase_03(transport) + VERSION_HISTORY_XSD));
+        assertXmlValid(xmlData, new URL(getCommonSchemaBase_03() + VERSION_HISTORY_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidTocView(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidTocView(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getContainerSchemaBase(transport) + TOC_VIEW_XSD));
+        assertXmlValid(xmlData, new URL(getContainerSchemaBase() + TOC_VIEW_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidRelations(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getCommonSchemaBase_03(transport) + RELATIONS_XSD));
+    public void assertXmlValidRelations(final String xmlData) throws Exception {
+        assertXmlValid(xmlData, new URL(getCommonSchemaBase_03() + RELATIONS_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidContainerMembersList(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidContainerMembersList(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getMemberListSchemaBase(transport) + MEMBER_LIST_XSD));
+        assertXmlValid(xmlData, new URL(getMemberListSchemaBase() + MEMBER_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidParents(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidParents(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getParentsSchemaBase(transport) + PARENTS_XSD));
+        assertXmlValid(xmlData, new URL(getParentsSchemaBase() + PARENTS_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidContainerRefList(final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidContainerRefList(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getContainerSchemaBase_03(transport) + CONTAINER_REF_LIST_XSD));
+        assertXmlValid(xmlData, new URL(getContainerSchemaBase_03() + CONTAINER_REF_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
     /**
      * Asserts that the provided xml data is a valid organizational unit pathlist.<br/>
-     * This method takes the set transport definition for this class to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
@@ -1445,36 +1017,16 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidOrganizationalUnitPathList(final String xmlData) throws Exception {
 
-        assertXmlValidOrganizationalUnitPathList(getTransport(), xmlData);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid organizational unit pathlist.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidOrganizationalUnitPathList(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase(transport, "0.4")
-            + ORGANIZATIONAL_UNIT_PATH_LIST_XSD));
+        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase("0.4") + ORGANIZATIONAL_UNIT_PATH_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
 
     }
 
     /**
      * Asserts that the provided xml data is a valid organizational unit.<br/>
-     * This method takes the set transport definition for this instance to decide if the provided xml data has to be
-     * validated using the REST schema or the SOAP schema.
-     * 
+     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
+     * the REST schema or the SOAP schema.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
@@ -1482,26 +1034,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidOrganizationalUnits(final String xmlData) throws Exception {
 
-        assertXmlValidOrganizationalUnits(getTransport(), xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/>
-     * This method takes the provided transport definition to decide if the provided xml data has to be validated using
-     * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidOrganizationalUnits(final int transport, final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase(transport, "0.8")
-            + ORGANIZATIONAL_UNIT_LIST_XSD));
+        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase("0.8") + ORGANIZATIONAL_UNIT_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
@@ -1516,8 +1049,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      *             If anything fails.
      */
     public void assertXmlValidOrganizationalUnitsRefs(final String xmlData) throws Exception {
-
-        assertXmlValidOrganizationalUnitsRefs(getTransport(), xmlData);
+        assertXmlValidOrganizationalUnitsRefs(xmlData);
         assertAllPlaceholderResolved(xmlData);
     }
 
@@ -1525,10 +1057,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * Asserts that the provided xml data is a valid organizational unit.<br/>
      * This method takes the provided transport definition to decide if the provided xml data has to be validated using
      * the REST schema or the SOAP schema.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param xmlData
      *            The xml data to be asserted.
      * @throws Exception
@@ -1536,28 +1065,8 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertXmlValidOrganizationalUnitsRefs(final int transport, final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase(transport, "0.4")
-            + ORGANIZATIONAL_UNIT_REF_LIST_XSD));
+        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase("0.4") + ORGANIZATIONAL_UNIT_REF_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Gets the base url for the schemas depending on the provided transport definition.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @return Returns the transport specific schema location base.
-     */
-    protected String getSchemaLocationBase(final int transport) {
-
-        assertTransport(transport);
-        if (transport == Constants.TRANSPORT_REST) {
-            return getSchemaLocationBase() + "rest";
-        }
-        else {
-            return getSchemaLocationBase() + "soap";
-        }
     }
 
     /**
@@ -1567,68 +1076,61 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * @return schema location
      */
     protected String getSchemaLocationBase() {
-
         if (BASE_URL_SCHEMA_LOCATION == null) {
             // Maybe it would be better to load the schema from www.escidoc.org
             BASE_URL_SCHEMA_LOCATION = getFrameworkUrl() + "/xsd/";
         }
-        return BASE_URL_SCHEMA_LOCATION;
+        return BASE_URL_SCHEMA_LOCATION + "rest";
     }
 
-    protected String getContextSchemaBase(final int transport) {
+    protected String getContextSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/context/0.7/";
+        return getSchemaLocationBase() + "/context/0.7/";
     }
 
-    protected String getContainerSchemaBase(final int transport) {
+    protected String getContainerSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/container/0.9/";
+        return getSchemaLocationBase() + "/container/0.9/";
     }
 
-    protected String getMemberListSchemaBase(final int transport) {
+    protected String getMemberListSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/common/0.10/";
+        return getSchemaLocationBase() + "/common/0.10/";
     }
 
-    protected String getParentsSchemaBase(final int transport) {
+    protected String getParentsSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/common/0.9/";
+        return getSchemaLocationBase() + "/common/0.9/";
     }
 
-    protected String getContainerSchemaBase_03(final int transport) {
+    protected String getContainerSchemaBase_03() {
 
-        return getSchemaLocationBase(transport) + "/container/0.3/";
+        return getSchemaLocationBase() + "/container/0.3/";
     }
 
-    protected String getCommonSchemaBase_03(final int transport) {
+    protected String getCommonSchemaBase_03() {
 
-        return getSchemaLocationBase(transport) + "/common/0.3/";
-    }
-
-    /**
-     * Gets the base url for all schema locations related to organizational units.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @return Returns the base url for all schema locations related to organizational units.
-     */
-    protected String getOrganizationalUnitSchemaBase(final int transport, final String version) {
-
-        return getSchemaLocationBase(transport) + "/organizational-unit/" + version + "/";
+        return getSchemaLocationBase() + "/common/0.3/";
     }
 
     /**
      * Gets the base url for all schema locations related to organizational units.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the base url for all schema locations related to organizational units.
      */
-    protected String getContentModelSchemaBase(final int transport, final String version) {
+    protected String getOrganizationalUnitSchemaBase(final String version) {
 
-        return getSchemaLocationBase(transport) + "/content-model/" + version + "/";
+        return getSchemaLocationBase() + "/organizational-unit/" + version + "/";
+    }
+
+    /**
+     * Gets the base url for all schema locations related to organizational units.
+     *
+     * @return Returns the base url for all schema locations related to organizational units.
+     */
+    protected String getContentModelSchemaBase(final String version) {
+
+        return getSchemaLocationBase() + "/content-model/" + version + "/";
     }
 
     /**
@@ -1682,132 +1184,102 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to PDP requests.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the base url for all schema locations related to PDP requests.
      */
-    protected String getRequestsSchemaBase(final int transport) {
+    protected String getRequestsSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/pdp/0.3/";
+        return getSchemaLocationBase() + "/pdp/0.3/";
     }
 
     /**
      * Gets the base url for all schema locations related to PDP results.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the base url for all schema locations related to PDP results.
      */
-    protected String getResultsSchemaBase(final int transport) {
+    protected String getResultsSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/pdp/0.3/";
+        return getSchemaLocationBase() + "/pdp/0.3/";
     }
 
     /**
      * Gets the base url for all schema locations related to roles.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the base url for all schema locations related to roles.
      */
-    protected String getRoleSchemaBase(final int transport) {
+    protected String getRoleSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/role/0.5/";
+        return getSchemaLocationBase() + "/role/0.5/";
     }
 
     /**
      * Gets the base url for all schema locations related to list of roles.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the base url for all schema locations related to list of roles.
      */
-    protected String getRoleListSchemaBase(final int transport) {
+    protected String getRoleListSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/role/0.5/";
+        return getSchemaLocationBase() + "/role/0.5/";
     }
 
     /**
      * Gets the schema locations for grants grants.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the grants schema location.
      */
-    protected String getGrantsSchemaLocation(final int transport) {
+    protected String getGrantsSchemaLocation() {
 
-        return getSchemaLocationBase(transport) + "/user-account/0.5/" + GRANTS_XSD;
+        return getSchemaLocationBase() + "/user-account/0.5/" + GRANTS_XSD;
     }
 
     /**
      * Gets the schema locations for preferences.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the preferences schema location.
      */
-    protected String getPreferencesSchemaLocation(final int transport) {
+    protected String getPreferencesSchemaLocation() {
 
-        return getSchemaLocationBase(transport) + "/user-account/0.1/" + PREFERENCES_XSD;
+        return getSchemaLocationBase() + "/user-account/0.1/" + PREFERENCES_XSD;
     }
 
     /**
      * Gets the schema locations for attributes.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the attributes schema location.
      */
-    protected String getAttributesSchemaLocation(final int transport) {
+    protected String getAttributesSchemaLocation() {
 
-        return getSchemaLocationBase(transport) + "/user-account/0.1/" + ATTRIBUTES_XSD;
+        return getSchemaLocationBase() + "/user-account/0.1/" + ATTRIBUTES_XSD;
     }
 
     /**
      * Gets the base url for all schema locations related to user accounts.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the base url for all schema locations related to user accounts.
      */
-    protected String getUserAccountSchemaBase(final int transport) {
+    protected String getUserAccountSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/user-account/0.7/";
+        return getSchemaLocationBase() + "/user-account/0.7/";
     }
 
     /**
      * Gets the base url for all schema locations related to list of user accounts.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the base url for all schema locations related to list of user accounts.
      */
-    protected String getUserAccountListSchemaBase(final int transport) {
+    protected String getUserAccountListSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/user-account/0.7/";
+        return getSchemaLocationBase() + "/user-account/0.7/";
     }
 
     /**
      * Gets the base url for all schema locations related to user groups.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the base url for all schema locations related to user groups.
      */
-    protected String getUserGroupSchemaBase(final int transport) {
+    protected String getUserGroupSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/user-group/0.6/";
+        return getSchemaLocationBase() + "/user-group/0.6/";
     }
 
     /**
@@ -1831,44 +1303,22 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the base url for all schema locations related to list of user groups.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the base url for all schema locations related to list of user groups.
      */
-    protected String getUserGroupListSchemaBase(final int transport) {
+    protected String getUserGroupListSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/user-group/0.6/";
+        return getSchemaLocationBase() + "/user-group/0.6/";
     }
 
     /**
      * Gets the base url for all schema locations related to admin.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @return Returns the base url for all schema locations related to user accounts.
      */
-    protected String getAdminSchemaBase(final int transport) {
+    protected String getAdminSchemaBase() {
 
-        return getSchemaLocationBase(transport) + "/admin/0.1/";
-    }
-
-    /**
-     * Gets the title value of the root element from the document.<br/>
-     * This method takes the provided transport definition to decide if the title value has to be extracted from the
-     * title attribute of the root element (REST) or if <code>null</code> has to be returned as no title exists (SOAP).
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @return Returns the attribute value or <code>null</code>.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public String getTitleValue(final Document document) throws Exception {
-
-        return getTitleValue(getTransport(), document);
+        return getSchemaLocationBase() + "/admin/0.1/";
     }
 
     /**
@@ -1876,26 +1326,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * This method takes the provided transport definition to decide to decide if the title value has to be extracted
      * from the title attribute of the root element (REST) or if <code>null</code> has to be returned as no title exists
      * (SOAP).
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param document
      *            The document to retrieve the value from.
      * @return Returns the attribute value or <code>null</code>.
      * @throws Exception
      *             If anything fails.
      */
-    public static String getTitleValue(final int transport, final Document document) throws Exception {
-
-        assertTransport(transport);
-
-        if (transport == Constants.TRANSPORT_REST) {
-            return getRootElementAttributeValue(document, NAME_TITLE);
-        }
-        else {
-            return null;
-        }
+    public static String getTitleValue(final Document document) throws Exception {
+        return getRootElementAttributeValue(document, NAME_TITLE);
     }
 
     /**
@@ -1912,24 +1351,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     @Override
     public String getObjidValue(final String xmlData) throws Exception {
 
-        return getObjidValue(getTransport(), getDocument(xmlData));
-    }
-
-    /**
-     * Gets the objid value of the root element from the document.<br/>
-     * This method takes set transport definition of this instance to decide if the objid value has to be extracted from
-     * the href attribute of the root element (REST) or can be taken from the objid attribute of the root element (SOAP)
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public String getObjidValue(final Document document) throws Exception {
-
-        return getObjidValue(getTransport(), document);
+        return getObjidValue(getDocument(xmlData));
     }
 
     /**
@@ -1942,16 +1364,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      *             Thrown if parsing fails.
      */
     public String getLatestVersionObjidValue(final Document document) throws Exception {
-        String id = null;
-        int transport = getTransport();
-
-        if (transport == Constants.TRANSPORT_REST) {
-            id = getIdFromHrefValue(selectSingleNode(document, "//properties/latest-version/@href").getTextContent());
-        }
-        else {
-            id = selectSingleNode(document, "//properties/latest-version/@objid").getTextContent();
-        }
-
+        String id =
+            getIdFromHrefValue(selectSingleNode(document, "//properties/latest-version/@href").getTextContent());
+        ;
         return (id);
     }
 
@@ -1988,33 +1403,21 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
         final String href;
         final String title;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlExists(msg + "Missing xlink:href in REST data. ", node, xpathXlinkHref);
-            assertXmlExists(msg + "Missing xlink:title in REST data. ", node, xpathXlinkTitle);
-            assertXmlExists(msg + "Missing xlink:type in REST data. ", node, xpathXlinkType);
+        assertXmlExists(msg + "Missing xlink:href in REST data. ", node, xpathXlinkHref);
+        assertXmlExists(msg + "Missing xlink:title in REST data. ", node, xpathXlinkTitle);
+        assertXmlExists(msg + "Missing xlink:type in REST data. ", node, xpathXlinkType);
 
-            href = selectSingleNode(node, xpathXlinkHref).getTextContent();
-            assertNotEquals(msg + "Empty href. ", "", href);
-            if (hrefBase != null) {
-                if (!href.startsWith(hrefBase)) {
-                    fail(msg + "Href does not start as expected. " + hrefBase + " but was " + href);
-                }
+        href = selectSingleNode(node, xpathXlinkHref).getTextContent();
+        assertNotEquals(msg + "Empty href. ", "", href);
+        if (hrefBase != null) {
+            if (!href.startsWith(hrefBase)) {
+                fail(msg + "Href does not start as expected. " + hrefBase + " but was " + href);
             }
-
-            title = selectSingleNode(node, xpathXlinkTitle).getTextContent();
-
-            assertXmlEquals(msg + "Unexpected value for xlink:type in REST data. ", node, xpathXlinkType,
-                XLINK_TYPE_VALUE);
-        }
-        else {
-            assertXmlNotExists(msg + "Unexpected xlink:href in SOAP data. ", node, xpathXlinkHref);
-            assertXmlNotExists(msg + "Unexpected xlink:title in SOAP data. ", node, xpathXlinkTitle);
-            assertXmlNotExists(msg + "Unexpected xlink:type in SOAP data. ", node, xpathXlinkType);
-
-            href = null;
-            title = null;
         }
 
+        title = selectSingleNode(node, xpathXlinkTitle).getTextContent();
+
+        assertXmlEquals(msg + "Unexpected value for xlink:type in REST data. ", node, xpathXlinkType, XLINK_TYPE_VALUE);
         return new String[] { href, title };
     }
 
@@ -2047,12 +1450,8 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         final String[] values = assertXlinkElement(message, node, xpath, null);
         final String href = values[0];
         final String title = values[1];
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertEquals(msg + "Mismatch in href. ", expectedHref, href);
-            assertEquals(msg + "Mismatch in title. ", expectedTitle, title);
-        }
-
+        assertEquals(msg + "Mismatch in href. ", expectedHref, href);
+        assertEquals(msg + "Mismatch in title. ", expectedTitle, title);
         return values;
     }
 
@@ -2157,18 +1556,12 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         final String xpathObjid = xpath + PART_OBJID;
 
         final String id;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlNotExists(msg + "Unexpected objid in REST data. ", node, xpathObjid);
+        assertXmlNotExists(msg + "Unexpected objid in REST data. ", node, xpathObjid);
 
-            id = getObjidFromHref(href);
-            if (hrefBase != null) {
-                String hrefBaseWithId = hrefBase + "/" + id;
-                assertEquals(msg + "Invalid xlink:href", hrefBaseWithId, href);
-            }
-        }
-        else {
-            assertXmlExists(msg + "Missing objid in SOAP data. ", node, xpathObjid);
-            id = selectSingleNode(node, xpathObjid).getTextContent();
+        id = getObjidFromHref(href);
+        if (hrefBase != null) {
+            String hrefBaseWithId = hrefBase + "/" + id;
+            assertEquals(msg + "Invalid xlink:href", hrefBaseWithId, href);
         }
 
         assertNotEquals(msg + "Empty objid value. ", "", id);
@@ -2515,65 +1908,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * Gets the objid value of the root element from the document.<br/>
      * This method takes the provided transport definition to decide if the objid value has to be extracted from the
      * href attribute of the root element (REST) or can be taken from the objid attribute of the root element (SOAP).
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param document
      *            The document to retrieve the value from.
      * @return Returns the attribute value.
      * @throws Exception
      *             If anything fails.
      */
-    public static String getObjidValue(final int transport, final Document document) throws Exception {
-
-        assertTransport(transport);
-
-        if (transport == Constants.TRANSPORT_REST) {
-            return getObjidFromHref(getRootElementHrefValue(document));
-        }
-        else {
-            return getRootElementAttributeValue(document, NAME_OBJID);
-        }
-    }
-
-    /**
-     * Gets the objid value of the element selected in the provided node.<br/>
-     * This method takes the set transport definition for this instance to decide if the objid value has to be extracted
-     * from the href attribute of the selected element (REST) or can be taken from the objid attribute of the selected
-     * element (SOAP).
-     * 
-     * @param node
-     *            The node to select an element from.
-     * @param xpath
-     *            The xpath to select the element in the provided node.
-     * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public String getObjidValue(final Node node, final String xpath) throws Exception {
-
-        return getObjidValue(getTransport(), node, xpath);
-    }
-
-    /**
-     * Gets the objid values of the elements selected in the provided node.<br/>
-     * This method takes the set transport definition for this instance to decide if the objid value has to be extracted
-     * from the href attribute of the selected element (REST) or can be taken from the objid attribute of the selected
-     * element (SOAP).
-     * 
-     * @param node
-     *            The node to select an element from.
-     * @param xpath
-     *            The xpath to select the element in the provided node.
-     * @return Returns the attribute values as String[].
-     * @throws Exception
-     *             If anything fails.
-     */
-    public String[] getObjidValues(final Node node, final String xpath) throws Exception {
-
-        return getObjidValues(getTransport(), node, xpath);
+    public static String getObjidValue(final Document document) throws Exception {
+        return getObjidFromHref(getRootElementHrefValue(document));
     }
 
     /**
@@ -2581,10 +1924,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * This method takes the provided transport definition to decide if the objid value has to be extracted from the
      * href attribute of the selected element (REST) or can be taken from the objid attribute of the selected element
      * (SOAP).
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param node
      *            The node to select an element from.
      * @param xpath
@@ -2593,10 +1933,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public static String getObjidValue(final int transport, final Node node, final String xpath) throws Exception {
-
-        assertTransport(transport);
-
+    public String getObjidValue(final Node node, final String xpath) throws Exception {
         final String attributeXpathPrefix;
         if (xpath == null || "".equals(xpath)) {
             attributeXpathPrefix = "@";
@@ -2604,15 +1941,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         else {
             attributeXpathPrefix = xpath + "/@";
         }
-        if (transport == Constants.TRANSPORT_REST) {
-            final String xpathHref = attributeXpathPrefix + NAME_HREF;
-            final String href = selectSingleNodeAsserted(node, xpathHref).getTextContent();
-            return getObjidFromHref(href);
-        }
-        else {
-            final String xpathObjid = attributeXpathPrefix + NAME_OBJID;
-            return selectSingleNodeAsserted(node, xpathObjid).getTextContent();
-        }
+        final String xpathHref = attributeXpathPrefix + NAME_HREF;
+        final String href = selectSingleNodeAsserted(node, xpathHref).getTextContent();
+        return getObjidFromHref(href);
+
     }
 
     /**
@@ -2620,10 +1952,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * This method takes the provided transport definition to decide if the objid value has to be extracted from the
      * href attribute of the selected element (REST) or can be taken from the objid attribute of the selected element
      * (SOAP).
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param node
      *            The node to select an element from.
      * @param xpath
@@ -2632,10 +1961,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public static String[] getObjidValues(final int transport, final Node node, final String xpath) throws Exception {
+    public static String[] getObjidValues(final Node node, final String xpath) throws Exception {
 
         String[] objids = null;
-        assertTransport(transport);
 
         final String attributeXpathPrefix;
         if (xpath == null || "".equals(xpath)) {
@@ -2644,23 +1972,12 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         else {
             attributeXpathPrefix = xpath + "/@";
         }
-        if (transport == Constants.TRANSPORT_REST) {
-            final String xpathHref = attributeXpathPrefix + NAME_HREF;
-            final NodeList hrefs = selectNodeList(node, xpathHref);
-            objids = new String[hrefs.getLength()];
-            for (int i = 0; i < hrefs.getLength(); i++) {
-                String hrefStr = hrefs.item(i).getTextContent();
-                objids[i] = getObjidFromHref(hrefStr);
-            }
-        }
-        else {
-            final String xpathObjid = attributeXpathPrefix + NAME_OBJID;
-            final NodeList hrefs = selectNodeList(node, xpathObjid);
-            objids = new String[hrefs.getLength()];
-            for (int i = 0; i < hrefs.getLength(); i++) {
-                String hrefStr = hrefs.item(i).getTextContent();
-                objids[i] = hrefStr;
-            }
+        final String xpathHref = attributeXpathPrefix + NAME_HREF;
+        final NodeList hrefs = selectNodeList(node, xpathHref);
+        objids = new String[hrefs.getLength()];
+        for (int i = 0; i < hrefs.getLength(); i++) {
+            String hrefStr = hrefs.item(i).getTextContent();
+            objids[i] = getObjidFromHref(hrefStr);
         }
         return objids;
     }
@@ -2713,10 +2030,10 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Gets the objid value of the created-by element.<br/>
-     * This method takes the set transport definition for this instance to decide if the objid value has to be extracted
-     * from the href attribute of the created-by element (REST) or can be taken from the objid attribute of the
-     * created-by element (SOAP).
-     * 
+     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
+     * href attribute of the created-by element (REST) or can be taken from the objid attribute of the created-by
+     * element (SOAP).
+     *
      * @param node
      *            The node to select an element from.
      * @return Returns the objid value.
@@ -2724,45 +2041,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      *             If anything fails.
      */
     public String getCreatedByObjidValue(final Node node) throws Exception {
-
-        return getCreatedByObjidValue(getTransport(), node);
-    }
-
-    /**
-     * Gets the objid value of the created-by element.<br/>
-     * This method takes the provided transport definition to decide if the objid value has to be extracted from the
-     * href attribute of the created-by element (REST) or can be taken from the objid attribute of the created-by
-     * element (SOAP).
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param node
-     *            The node to select an element from.
-     * @return Returns the objid value.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static String getCreatedByObjidValue(final int transport, final Node node) throws Exception {
-
-        return getObjidValue(transport, node, "//" + NAME_CREATED_BY);
-    }
-
-    /**
-     * Gets the objid value of the modified-by element.<br/>
-     * This method takes the set transport definition for this instance to decide if the objid value has to be extracted
-     * from the href attribute of the modified-by element (REST) or can be taken from the objid attribute of the
-     * modified-by element (SOAP).
-     * 
-     * @param node
-     *            The node to select an element from.
-     * @return Returns the objid value.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public String getModifiedByObjidValue(final Node node) throws Exception {
-
-        return getModifiedByObjidValue(getTransport(), node);
+        return getObjidValue(node, "//" + NAME_CREATED_BY);
     }
 
     /**
@@ -2770,158 +2049,16 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * This method takes the provided transport definition to decide if the objid value has to be extracted from the
      * href attribute of the modified element (REST) or can be taken from the objid attribute of the modified element
      * (SOAP).
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
+     *
      * @param node
      *            The node to select an element from.
      * @return Returns the objid value.
      * @throws Exception
      *             If anything fails.
      */
-    public static String getModifiedByObjidValue(final int transport, final Node node) throws Exception {
-
-        return getObjidValue(transport, node, "//" + NAME_MODIFIED_BY);
+    public String getModifiedByObjidValue(final Node node) throws Exception {
+        return getObjidValue(node, "//" + NAME_MODIFIED_BY);
     }
-
-    /**
-     * Fixes the attributes of the selected "link" nodes for usage with the SOAP interface. <br/>
-     * This method takes the set transport definition for this instance to decide if nothing has to be done (REST) or if
-     * the xlink attributes have to be removed and an appropriate objid attribute has to be added (SOAP).
-     * 
-     * @param document
-     *            The document from which the nodes shall be selected and fixed.
-     * @param xpath
-     *            The xpath expression to select the nodes that shall be fixed.
-     * @return Returns the provided document.
-     * @throws Exception
-     *             Thrown if anything fails.
-     */
-    public Document fixLinkAttributes(final Document document, final String xpath) throws Exception {
-
-        return fixSoapLinkAttributes(getTransport(), document, xpath);
-    }
-
-    /**
-     * Fixes the attributes of the selected "namespace" nodes for usage with the SOAP interface. <br/>
-     * This method takes the set transport definition for this instance to decide if nothing has to be done (REST) or if
-     * the xlink namespace and xml:base have to be removed.
-     * 
-     * @param document
-     *            The document from which the nodes shall be selected and fixed.
-     * @param xpath
-     *            The xpath expression to select the nodes that shall be fixed.
-     * @return Returns the provided document.
-     * @throws Exception
-     *             Thrown if anything fails.
-     */
-    public Document fixNamespaceAttributes(final Document document, final String xpath) throws Exception {
-
-        return fixSoapNamespaceAttributes(getTransport(), document, xpath);
-    }
-
-    /**
-     * Fixes the attributes of the selected "link" nodes for usage with the SOAP interface. <br/>
-     * This method takes the provided transport definition to decide if nothing has to be done (REST) or if the xlink
-     * attributes have to be removed and an appropriate objid attribute has to be added (SOAP).
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param document
-     *            The document from which the nodes shall be selected and fixed.
-     * @param xpath
-     *            The xpath expression to select the nodes that shall be fixed.
-     * @return Returns the provided document.
-     * @throws Exception
-     *             Thrown if anything fails.
-     */
-    public static Document fixSoapLinkAttributes(final int transport, final Document document, final String xpath)
-        throws Exception {
-
-        assertTransport(transport);
-
-        if (Constants.TRANSPORT_REST == transport) {
-            return document;
-        }
-
-        final String hrefXpath = xpath + PART_XLINK_HREF;
-        NodeList hrefNodes = selectNodeList(document, hrefXpath);
-        int length = hrefNodes.getLength();
-        for (int i = 0; i < length; i++) {
-            final Node hrefNode = hrefNodes.item(i);
-            final String objid = getObjidFromHref(hrefNode.getTextContent());
-            addAttribute(document, xpath + "[" + (i + 1) + "]", createAttributeNode(document, null, null, NAME_OBJID,
-                objid));
-        }
-        deleteNodes(document, hrefXpath);
-        deleteNodes(document, xpath + PART_XLINK_TITLE);
-        deleteNodes(document, xpath + PART_XLINK_TYPE);
-        return document;
-    }
-
-    /**
-     * Fixes the attributes of the selected "namespace" nodes for usage with the SOAP interface. <br/>
-     * This method takes the provided transport definition to decide if nothing has to be done (REST) or if the xlink
-     * namespace and xml:base have to be removed.
-     * 
-     * @param transport
-     *            Specifies the transport, must be one of {@link Constants.TRANSPORT_REST} or
-     *            {@link Constants.TRANSPORT_SOAP}.
-     * @param document
-     *            The document from which the nodes shall be selected and fixed.
-     * @param xpath
-     *            The xpath expression to select the nodes that shall be fixed.
-     * @return Returns the provided document.
-     * @throws Exception
-     *             Thrown if anything fails.
-     */
-    public static Document fixSoapNamespaceAttributes(final int transport, final Document document, final String xpath)
-        throws Exception {
-
-        assertTransport(transport);
-
-        if (Constants.TRANSPORT_REST == transport) {
-            return document;
-        }
-
-        deleteNodes(document, xpath + PART_XML_BASE);
-        deleteNodes(document, xpath + PART_XLINK_NS);
-        return document;
-    }
-
-    // /**
-    // * Serialize the given Dom Object to a String. If the parameter
-    // * <code>namespacePrefixPrefix</code> is specified, its value is added to
-    // * the existing prefixes to change the namespace prefixes.
-    // *
-    // * @param xml
-    // * The Xml Node to serialize.
-    // * @param omitXMLDeclaration
-    // * Indicates if XML declaration will be omitted.
-    // * @param namespacePrefixPrefix
-    // * @return The String representation of the Xml Node.
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // public static String toString(final Node xml,
-    // final boolean omitXMLDeclaration,
-    // final String namespacePrefixPrefix)
-    // throws Exception {
-    //
-    // String ret = toString(xml, omitXMLDeclaration);
-    //
-    // if (namespacePrefixPrefix != null) {
-    //
-    // ret = ret.replaceAll(currentNamespacePrefix + ":",
-    // namespacePrefix + ":");
-    // ret = ret.replaceAll("xmlns:" + currentNamespacePrefix,
-    // "xmlns:" + namespacePrefix);
-    // }
-    //
-    // return ret;
-    // }
 
     /**
      * Asserts that a container holding a list of references is as expected.
@@ -3125,12 +2262,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
         String replacedXpath = xpath;
         if (getIdAttribute) {
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                replacedXpath += PART_XLINK_HREF;
-            }
-            else {
-                replacedXpath += PART_OBJID;
-            }
+            replacedXpath += PART_XLINK_HREF;
         }
         NodeList nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), replacedXpath);
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -3139,9 +2271,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
             if (nodeValue == null) {
                 fail("nodeValue for xpath " + replacedXpath + " is null");
             }
-            if (getIdAttribute && getTransport() == Constants.TRANSPORT_REST) {
-                nodeValue = getObjidFromHref(nodeValue);
-            }
+            nodeValue = getObjidFromHref(nodeValue);
             if (!values.contains(nodeValue)) {
                 fail(replacedXpath + " contains " + node.getNodeValue());
             }
@@ -3170,12 +2300,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
         String replacedXpath = xpath;
         if (getIdAttribute) {
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                replacedXpath += PART_XLINK_HREF;
-            }
-            else {
-                replacedXpath += PART_OBJID;
-            }
+            replacedXpath += PART_XLINK_HREF;
         }
         NodeList nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), replacedXpath);
         String lastValue = "";
@@ -3194,9 +2319,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
             if (nodeValue == null) {
                 fail("nodeValue for xpath " + replacedXpath + " is null");
             }
-            if (getIdAttribute && getTransport() == Constants.TRANSPORT_REST) {
-                nodeValue = getObjidFromHref(nodeValue);
-            }
+            nodeValue = getObjidFromHref(nodeValue);
             if (isAscending) {
                 if (nodeValue.compareToIgnoreCase(lastValue) < 0) {
                     fail(nodeValue + " is not sorted correctly, should be >= " + lastValue);
@@ -3311,7 +2434,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public String getExampleTemplate(final String filename) throws Exception {
 
-        File f = getTemplatePath(TEMPLATE_EXAMPLE_PATH + "/" + getTransport(false), filename);
+        File f = getTemplatePath(TEMPLATE_EXAMPLE_PATH + "/rest", filename);
         InputStream fis = new FileInputStream(f);
         return ResourceProvider.getContentsFromInputStream(fis);
     }
@@ -3714,14 +2837,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * @return Returns the replacedXml.
      */
     public String replacePrimKey(final String xml, final String primKey) {
-        String replacedXml = null;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            replacedXml = xml.replaceFirst("(?s)(.*?objid=\").*?(\".*)", "$1" + primKey + "$2");
-        }
-        else {
-            replacedXml = xml.replaceFirst("(?s)(.*?href=\"[^\"]*/).*?(\".*)", "$1" + primKey + "$2");
-        }
-        return replacedXml;
+        return xml.replaceFirst("(?s)(.*?href=\"[^\"]*/).*?(\".*)", "$1" + primKey + "$2");
     }
 
     /**
@@ -3741,7 +2857,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     protected String login(final String loginName, final String password, final boolean encodeTargetUrlSlashes)
         throws Exception {
 
-        UserManagementWrapperClient userManagementWrapperClient = new UserManagementWrapperClient(getTransport());
+        UserManagementWrapperClient userManagementWrapperClient = new UserManagementWrapperClient();
         HttpResponse result =
             userManagementWrapperClient.login(loginName, password, false, false, "http://www.fiz-karlsruhe.de",
                 encodeTargetUrlSlashes);

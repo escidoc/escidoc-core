@@ -31,34 +31,21 @@ package de.escidoc.core.test.cmm.contentmodel;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
-
-import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class RetrieveTest extends ContentModelTestBase {
 
     private String contentModelId;
 
     private String contentModelXml;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public RetrieveTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.
@@ -68,7 +55,7 @@ public class RetrieveTest extends ContentModelTestBase {
     @Before
     public void setUp() throws Exception {
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
                 "content-model-all-for-create.xml");
         contentModelXml = toString(contentModel, false);
         contentModelXml = create(contentModelXml);
@@ -189,13 +176,7 @@ public class RetrieveTest extends ContentModelTestBase {
             subResource = retrieveResources(this.contentModelId);
         }
         catch (final NoSuchMethodException e) {
-            if (getTransport() != Constants.TRANSPORT_SOAP) {
-                throw e;
-            }
             return;
-        }
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            fail("No Exception trying to call 'retrieveResources' via SOAP.");
         }
         selectSingleNodeAsserted(getDocument(subResource), "/resources/version-history");
         assertXmlValidContentModel(subResource);

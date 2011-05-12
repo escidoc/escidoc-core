@@ -57,16 +57,6 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
     private static final String USER_TEST1 = PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE1;
 
     /**
-     * The constructor.
-     *
-     * @param transport The transport identifier.
-     * @throws Exception If anything fails.
-     */
-    public UserAttributeAbstractTest(final int transport) throws Exception {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.

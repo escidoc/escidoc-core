@@ -40,12 +40,8 @@ public class CmmTestBase extends EscidocRestSoapTestBase {
 
     private ContentModelClient cmClient = null;
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public CmmTestBase(final int transport) {
-        super(transport);
-        this.cmClient = new ContentModelClient(transport);
+    public CmmTestBase() {
+        this.cmClient = new ContentModelClient();
     }
 
     /**

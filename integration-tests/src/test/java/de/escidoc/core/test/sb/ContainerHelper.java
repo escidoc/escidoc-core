@@ -39,13 +39,6 @@ import de.escidoc.core.test.om.container.ContainerTestBase;
 public class ContainerHelper extends ContainerTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ContainerHelper(final int transport) {
-        super(transport);
-    }
-
-    /**
      * @param xml The container as xml.
      * @return String container-xml
      * @throws Exception e

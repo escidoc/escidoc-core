@@ -35,8 +35,6 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlEx
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import java.util.List;
@@ -47,15 +45,7 @@ import java.util.Map;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContentModelCreateTest extends ContentModelTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentModelCreateTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test creating a ContentModel with minimal content.
@@ -88,7 +78,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     @Test
     public void testCmCreateAll() throws Exception {
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
                 "content-model-all-for-create.xml");
 
         String title = getContentModelTitle(contentModel);
@@ -118,7 +108,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     public void testCmmCCm1() throws Exception {
 
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
                 "content-model-asRetrieved.xml");
         String cmXml = toString(contentModel, false);
         String createdXML = create(cmXml);
@@ -139,7 +129,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     public void testCreateFromRetrieve() throws Exception {
 
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
                 "content-model-all-for-create.xml");
         String title = getContentModelTitle(contentModel);
         String description = getContentModelDescription(contentModel);
@@ -221,7 +211,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
 
         String xPath = "/content-model/resource-definitions/resource-definition[@name='trans']/md-record-name";
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
                 "content-model-all-for-create.xml");
 
         String mdRecordName = "blafasel" + System.nanoTime();

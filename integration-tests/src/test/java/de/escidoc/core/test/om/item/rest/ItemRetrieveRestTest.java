@@ -29,7 +29,6 @@
 package de.escidoc.core.test.om.item.rest;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.item.ItemTestBase;
 import org.junit.Test;
 
@@ -41,13 +40,6 @@ import org.junit.Test;
 public class ItemRetrieveRestTest extends ItemTestBase {
 
     /**
-     * Constructor.
-     */
-    public ItemRetrieveRestTest() {
-        super(Constants.TRANSPORT_REST);
-    }
-
-    /**
      * Test retrieve resources of Item.
      *
      * @throws Exception Thrown if anything fails.
@@ -55,8 +47,8 @@ public class ItemRetrieveRestTest extends ItemTestBase {
     @Test
     public void testRetrieveResources() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         String itemId = getObjidValue(itemXml);
 

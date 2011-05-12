@@ -39,7 +39,6 @@ import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticL
 import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.UserGroupHierarchyViolationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import org.junit.After;
 import org.junit.Before;
@@ -91,16 +90,10 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
     private static int methodCounter = 0;
 
-    /**
-     * @param transport The transport identifier.
-     * @throws Exception e
-     */
-    public UserGroupTest(final int transport) throws Exception {
-
-        super(transport);
-        userAttributeTestBase = new UserAttributeTestBase(transport);
-        userAccountTestBase = new UserAccountTestBase(transport);
-        organizationalUnitTestBase = new OrganizationalUnitTestBase(transport);
+    public UserGroupTest() throws Exception {
+        userAttributeTestBase = new UserAttributeTestBase();
+        userAccountTestBase = new UserAccountTestBase();
+        organizationalUnitTestBase = new OrganizationalUnitTestBase();
     }
 
     /**
@@ -1152,10 +1145,8 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         String href = "";
         String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-group/";
-            attributeName = "href";
-        }
+        href = "/aa/user-group/";
+        attributeName = "href";
         assertXmlExists("Missing group " + childGroup, retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP + "[@"
             + attributeName + "='" + href + childGroup + "']");
         assertXmlExists("Missing group " + parentGroup, retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP + "[@"
@@ -1191,10 +1182,8 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         String href = "";
         String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-group/";
-            attributeName = "href";
-        }
+        href = "/aa/user-group/";
+        attributeName = "href";
         assertXmlExists("Missing group " + parentGroup, retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP + "[@"
             + attributeName + "='" + href + parentGroup + "']");
     }
@@ -1233,10 +1222,8 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         String href = "";
         String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-group/";
-            attributeName = "href";
-        }
+        href = "/aa/user-group/";
+        attributeName = "href";
         assertXmlExists("Missing group " + additonalUserFilterSearchGroups[0], retrievedDocument,
             XPATH_SRW_USER_GROUP_LIST_USER_GROUP + "[@" + attributeName + "='" + href
                 + additonalUserFilterSearchGroups[0] + "']");
@@ -1280,10 +1267,8 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         String href = "";
         String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-group/";
-            attributeName = "href";
-        }
+        href = "/aa/user-group/";
+        attributeName = "href";
         assertXmlExists("Missing group " + additonalUserFilterSearchGroups[0], retrievedDocument,
             XPATH_SRW_USER_GROUP_LIST_USER_GROUP + "[@" + attributeName + "='" + href
                 + additonalUserFilterSearchGroups[0] + "']");
@@ -1708,7 +1693,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         selectors.add(selector2);
         String taskParam = getAddSelectorsTaskParam(selectors, lastModificationDate);
         addSelectors(id, taskParam);
-        // System.out.println("group with selectors " + groupXml);
         delete(id);
         try {
 
@@ -1724,13 +1708,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
     @Test
     public void testAddSelectors() throws Exception {
         final Document createdDocument = createSuccessfully("escidoc_usergroup_for_create.xml");
-        NodeList selectorNodes = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            selectorNodes = selectNodeList(createdDocument, "/user-group/selectors/selector/@href");
-        }
-        else {
-            selectorNodes = selectNodeList(createdDocument, "/user-group/selectors/selector/@objid");
-        }
+        NodeList selectorNodes = selectNodeList(createdDocument, "/user-group/selectors/selector/@href");
         assertEquals("User-group members can not exist on user-group create", 0, selectorNodes.getLength());
         final String id = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
@@ -1748,13 +1726,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         String taskParam = getAddSelectorsTaskParam(selectors, lastModificationDate);
         String groupXml = addSelectors(id, taskParam);
         Document groupAfterAddMembers = getDocument(groupXml);
-        NodeList selectorNodesAfterAdd = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            selectorNodesAfterAdd = selectNodeList(groupAfterAddMembers, "/user-group/selectors/selector/@href");
-        }
-        else {
-            selectorNodesAfterAdd = selectNodeList(groupAfterAddMembers, "/user-group/selectors/selector/@objid");
-        }
+        NodeList selectorNodesAfterAdd = selectNodeList(groupAfterAddMembers, "/user-group/selectors/selector/@href");
         assertEquals("User-group members can not be 0 after calling of addSelectors", 2, selectorNodesAfterAdd
             .getLength());
 
@@ -1783,20 +1755,11 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         String objid = getObjidValue(userGroupDoc);
         // NodeList selectorNodes = selectNodeList(userGroupDoc,
         // /user-group/selector);
-        NodeList selectorNodes = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@href");
-        }
-        else {
-            selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@objid");
-        }
-
+        NodeList selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@href");
         Vector<String> selectorsToRemove = new Vector<String>();
         for (int i = 0; i < selectorNodes.getLength(); i++) {
             String selectorId = selectorNodes.item(i).getNodeValue();
-            if (Constants.TRANSPORT_REST == getTransport()) {
-                selectorId = getIdFromHrefValue(selectorId);
-            }
+            selectorId = getIdFromHrefValue(selectorId);
             selectorsToRemove.add(selectorId);
         }
         String lastModDate = getLastModificationDateValue(userGroupDoc);
@@ -1805,13 +1768,8 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         removeSelectors(objid, taskParam);
         String groupXmlWithoutMembers = retrieve(objid);
         Document groupWithoutMembers = getDocument(groupXmlWithoutMembers);
-        NodeList selectorNodesAfterRemove = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            selectorNodesAfterRemove = selectNodeList(groupWithoutMembers, "/user-group/selectors/selector/@href");
-        }
-        else {
-            selectorNodesAfterRemove = selectNodeList(groupWithoutMembers, "/user-group/selectors/selector/@objid");
-        }
+        NodeList selectorNodesAfterRemove = selectNodeList(groupWithoutMembers, "/user-group/selectors/selector/@href");
+
         assertEquals("User-group members should be removed ", 0, selectorNodesAfterRemove.getLength());
 
     }
@@ -1990,7 +1948,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         //create ou and open it
         String ouXml = organizationalUnitTestBase.createSuccessfully("escidoc_ou_create.xml");
         Document createdDocument = getDocument(ouXml);
-        String ouId = getObjidValue(getTransport(), createdDocument);
+        String ouId = getObjidValue(createdDocument);
         String ouTitle = getTitleValue(createdDocument);
         String lastModDate = getLastModificationDateValue(createdDocument);
         organizationalUnitTestBase.open(ouId, "<param last-modification-date=\"" + lastModDate + "\" />");
@@ -2009,13 +1967,13 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
         ouXml = organizationalUnitTestBase.create(toBeCreatedXml);
         createdDocument = getDocument(ouXml);
-        String ouId1 = getObjidValue(getTransport(), createdDocument);
+        String ouId1 = getObjidValue(createdDocument);
         lastModDate = getLastModificationDateValue(createdDocument);
         organizationalUnitTestBase.open(ouId1, "<param last-modification-date=\"" + lastModDate + "\" />");
 
         //create user with child ou
         Document createdUser = userAccountTestBase.createSuccessfully("escidoc_useraccount_for_create1.xml");
-        userAccountOuUser = getObjidValue(getTransport(), createdUser);
+        userAccountOuUser = getObjidValue(createdUser);
         userAttributeTestBase.createAttribute(userAccountOuUser, "<attribute xmlns="
             + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"o\">" + ouId1 + "</attribute>");
 
@@ -2023,7 +1981,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         String attributeName = "uafiltertestkey" + System.currentTimeMillis();
         String attributeValue = "uafiltertestvalue" + System.currentTimeMillis();
         createdUser = userAccountTestBase.createSuccessfully("escidoc_useraccount_for_groupfilter_test.xml");
-        userAccountAttributeUser = getObjidValue(getTransport(), createdUser);
+        userAccountAttributeUser = getObjidValue(createdUser);
         userAttributeTestBase.createAttribute(userAccountAttributeUser, "<attribute xmlns="
             + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"" + attributeName + "\">" + attributeValue
             + "</attribute>");
@@ -2037,7 +1995,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                 "filtertestname_" + i + "_" + uniqueIdentifier, "filtertestlabel_" + i + "_" + uniqueIdentifier,
                 "filtertestdescription_" + i + "_" + uniqueIdentifier);
             String groupXml = handleXmlResult(getClient().create(toString(toBeCreatedDocument, false)));
-            additonalUserFilterSearchGroups[i] = getObjidValue(getTransport(), getDocument(groupXml));
+            additonalUserFilterSearchGroups[i] = getObjidValue(getDocument(groupXml));
         }
 
         //create group with attribute-user-selector
@@ -2046,7 +2004,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         insertUserGroupValues(toBeCreatedDocument, "test@test.de", "test", "test" + System.currentTimeMillis(), "test");
         String groupXml = handleXmlResult(getClient().create(toString(toBeCreatedDocument, false)));
         Document createdGroup = getDocument(groupXml);
-        childGroup = getObjidValue(getTransport(), createdGroup);
+        childGroup = getObjidValue(createdGroup);
         String lastModificationDate = getLastModificationDateValue(createdGroup);
         String[] selector1 = new String[3];
         selector1[0] = attributeName;
@@ -2064,7 +2022,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             "sonstwas");
         groupXml = handleXmlResult(getClient().create(toString(toBeCreatedDocument, false)));
         createdGroup = getDocument(groupXml);
-        parentGroup = getObjidValue(getTransport(), createdGroup);
+        parentGroup = getObjidValue(createdGroup);
         lastModificationDate = getLastModificationDateValue(createdGroup);
         selector1[0] = "o";
         selector1[1] = "user-attribute";

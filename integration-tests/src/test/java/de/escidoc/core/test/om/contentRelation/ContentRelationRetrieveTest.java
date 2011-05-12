@@ -32,8 +32,6 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContentRela
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -46,15 +44,7 @@ import static org.junit.Assert.assertNull;
  *
  * @author Steffen Wagner
  */
-@RunWith(value = Parameterized.class)
 public class ContentRelationRetrieveTest extends ContentRelationTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContentRelationRetrieveTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test retrieving content relation with non-existing objid.
@@ -91,15 +81,12 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
      */
     @Test
     public void retrieveResources() throws Exception {
+        String contentRelationXml = getExampleTemplate("content-relation-01.xml");
+        String xml = create(contentRelationXml);
+        String relationId = getObjidValue(xml);
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String contentRelationXml = getExampleTemplate("content-relation-01.xml");
-            String xml = create(contentRelationXml);
-            String relationId = getObjidValue(xml);
-
-            String resourcesXML = retrieveResources(relationId);
-            assertXmlValidContentRelation(resourcesXML);
-        }
+        String resourcesXML = retrieveResources(relationId);
+        assertXmlValidContentRelation(resourcesXML);
     }
 
     /**
@@ -113,13 +100,11 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
         throws Exception {
 
         Document createdProperties = EscidocRestSoapTestBase.getDocument(propertiesXml);
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String href = getRootElementHrefValue(createdProperties);
-            if ("".equals(href)) {
-                href = null;
-            }
-            assertNotNull("Properties error: href attribute was not set!", href);
+        String href = getRootElementHrefValue(createdProperties);
+        if ("".equals(href)) {
+            href = null;
         }
+        assertNotNull("Properties error: href attribute was not set!", href);
         String rootLastModificationDate = getLastModificationDateValue(createdProperties);
         if ("".equals(rootLastModificationDate)) {
             rootLastModificationDate = null;

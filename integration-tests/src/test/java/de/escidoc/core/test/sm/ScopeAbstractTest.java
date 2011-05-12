@@ -32,8 +32,6 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -50,7 +48,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class ScopeAbstractTest extends ScopeTestBase {
 
     private static Collection<String> primKeys = new ArrayList<String>();
@@ -58,13 +55,6 @@ public class ScopeAbstractTest extends ScopeTestBase {
     private static int methodCounter = 0;
 
     public static final String XPATH_SRW_SCOPE_LIST_SCOPE = XPATH_SRW_RESPONSE_OBJECT + NAME_SCOPE;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ScopeAbstractTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.

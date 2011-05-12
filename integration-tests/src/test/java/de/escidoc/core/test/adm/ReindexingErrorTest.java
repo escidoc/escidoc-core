@@ -28,28 +28,14 @@
  */
 package de.escidoc.core.test.adm;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 /**
  * Test suite for the reindex method of the admin tool.
  *
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class ReindexingErrorTest extends AdminToolTestBase {
-
-    /**
-     * The constructor.
-     *
-     * @param transport The transport identifier.
-     * @throws Exception If anything fails.
-     */
-    public ReindexingErrorTest(final int transport) throws Exception {
-        super(transport);
-    }
 
     /**
      * Test reindexing with error.
@@ -58,9 +44,7 @@ public class ReindexingErrorTest extends AdminToolTestBase {
      */
     @Test
     public void testReindexingError() throws Exception {
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            reindex(false, "errorTest");
-        }
+        reindex(false, "errorTest");
     }
 
 }

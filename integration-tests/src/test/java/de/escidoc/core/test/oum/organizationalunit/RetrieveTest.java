@@ -31,8 +31,6 @@ package de.escidoc.core.test.oum.organizationalunit;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -41,15 +39,7 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class RetrieveTest extends OrganizationalUnitTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public RetrieveTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Tests successful retrieving of an existing OrganizationalUnit.

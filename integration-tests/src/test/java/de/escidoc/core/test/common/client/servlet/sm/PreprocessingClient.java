@@ -31,22 +31,12 @@ package de.escidoc.core.test.common.client.servlet.sm;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
-import javax.xml.rpc.ServiceException;
-
 /**
  * Offers access methods to the escidoc REST and SOAP interface of the Statistic Preprocessing resource.
  *
  * @author Michael Hoppe
  */
 public class PreprocessingClient extends ClientBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public PreprocessingClient(final int transport) {
-        super(transport);
-
-    }
 
     /**
      * Preprocess data in the escidoc framework.

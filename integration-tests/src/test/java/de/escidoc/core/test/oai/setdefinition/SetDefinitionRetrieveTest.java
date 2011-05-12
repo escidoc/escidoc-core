@@ -5,14 +5,11 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-@RunWith(value = Parameterized.class)
 public class SetDefinitionRetrieveTest extends SetDefinitionTestBase {
 
     private String objid;
@@ -22,13 +19,6 @@ public class SetDefinitionRetrieveTest extends SetDefinitionTestBase {
     private String specification = null;
 
     private String lmd = null;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public SetDefinitionRetrieveTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up test.

@@ -34,8 +34,6 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoun
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -52,17 +50,9 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ItemDeleteTest extends ItemTestBase {
 
     private String theItemId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemDeleteTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Get the param with last-modification-date.
@@ -96,8 +86,8 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi1a() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
 
@@ -125,48 +115,27 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testDeleteItemWithAllComponentsFromAllItemVersions() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
         Document curItem = EscidocRestSoapTestBase.getDocument(itemXml);
         NodeList componentIdsAfterCreate = null;
-        if (getTransport(true).equals("REST")) {
-            componentIdsAfterCreate = selectNodeList(curItem, "/item/components/component/@href");
-        }
-        else {
-
-            componentIdsAfterCreate = selectNodeList(curItem, "/item/components/component/@objid");
-        }
+        componentIdsAfterCreate = selectNodeList(curItem, "/item/components/component/@href");
         Vector<String> componentIds = new Vector<String>();
         for (int i = 0; i < componentIdsAfterCreate.getLength(); i++) {
             String id = componentIdsAfterCreate.item(i).getNodeValue();
-            if (getTransport(true).equals("REST")) {
-                id = getIdFromHrefValue(id);
-            }
+            id = getIdFromHrefValue(id);
             componentIds.add(id);
         }
         final String itemUpdatedXml =
             update(theItemId, toString(deleteElement(curItem, "/item/components/component[1]"), false));
         Document itemAfterUpdate = EscidocRestSoapTestBase.getDocument(itemUpdatedXml);
-        // System.out.println("after update " + itemUpdatedXml);
         NodeList componentIdsAfterUpdate = selectNodeList(itemAfterUpdate, "/item/components/component");
         assertEquals("number of components is wrong ", componentIdsAfterCreate.getLength() - 1, componentIdsAfterUpdate
             .getLength());
         assertNotNull(itemUpdatedXml);
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
-
-        // String result =
-        // tripleStore.requestMPT("* "
-        // + "<http://escidoc.de/core/01/structural-relations/part-of>"
-        // + " <info:fedora/" + theItemId + ">", "RDF/XML");
-
-        // NodeList componentIds =
-        // selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-        // "/RDF/Description/part-of/@resource");
-        // assertEquals("number of components is wrong ",
-        // componentIdsAfterCreate
-        // .getLength(), componentIds.getLength());
         delete(theItemId);
         for (int i = 0; i < componentIds.size(); i++) {
             String result =
@@ -176,16 +145,6 @@ public class ItemDeleteTest extends ItemTestBase {
             assertEquals("result is not empty ", 0, components.getLength());
 
         }
-        // result =
-        // tripleStore.requestMPT("* "
-        // + "<http://escidoc.de/core/01/structural-relations/part-of>"
-        // + " <info:fedora/" + theItemId + ">", "RDF/XML");
-        //
-        // componentIds =
-        // selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-        // "/RDF/Description/part-of/@resource");
-        // assertEquals("number of components is wrong ", 0,
-        // componentIds.getLength());
     }
 
     /**
@@ -196,8 +155,8 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi2a() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
         String param = getTheLastModificationParam(false);
@@ -240,8 +199,8 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi2b() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
 
@@ -307,8 +266,8 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi5() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);

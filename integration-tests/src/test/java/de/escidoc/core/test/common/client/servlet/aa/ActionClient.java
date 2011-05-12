@@ -32,21 +32,12 @@ import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 
-import javax.xml.rpc.ServiceException;
-
 /**
  * Offers access methods to the escidoc REST and soap interface of the action resource.
  *
  * @author Torsten Tetteroo
  */
 public class ActionClient extends ClientBase implements ResourceHandlerClientInterface {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ActionClient(final int transport) {
-        super(transport);
-    }
 
     /**
      * Retrieve the xml representation of the resources of a action.

@@ -34,16 +34,14 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNo
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -58,7 +56,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContainerRetrieveTest extends ContainerTestBase {
 
     private String theContainerXml;
@@ -70,20 +67,13 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     private String path = TEMPLATE_CONTAINER_PATH;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ContainerRetrieveTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
-        this.path += "/" + getTransport(false);
+        this.path += "/rest";
 
         this.theItemId = createItem();
         String xmlData = EscidocRestSoapTestBase.getTemplateAsString(this.path, "create_container_v1.1-forItem.xml");
@@ -242,14 +232,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         assertXmlValidSrwResponse(xml);
 
         NodeList nodes = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
-        }
-        else {
-            nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@objid");
-        }
+        nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
+
         assertContainers(nodes);
     }
 
@@ -277,25 +261,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     public void testRetrieveMembers() throws Exception {
         // make list from containers struct map
         Document container = EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
-        NodeList smMembers = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            smMembers = selectNodeList(container, "/container/struct-map/*/@href");
-        }
-        else {
-            smMembers = selectNodeList(container, "/container/struct-map/*/@objid");
-        }
+        NodeList smMembers = selectNodeList(container, "/container/struct-map/*/@href");
 
         // make list from containers member list
         String xml = retrieveMembers(theContainerId, new HashMap<String, String[]>());
-        NodeList mlMembers = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            mlMembers = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@href");
-        }
-        else {
-            mlMembers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
-        }
-
+        NodeList mlMembers =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@href");
         List<String> smMembersList = nodeList2List(smMembers);
         List<String> mlMembersList = nodeList2List(mlMembers);
 
@@ -314,25 +285,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         assertXmlValidSrwResponse(xml);
 
         Document xmlDoc = EscidocRestSoapTestBase.getDocument(xml);
-        NodeList memberIds = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@href");
-        }
-        else {
-            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
-        }
+        NodeList memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@href");
 
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
             String id = memberIds.item(i).getNodeValue();
-            if (Constants.TRANSPORT_REST == getTransport()) {
-
-                selectSingleNodeAsserted(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*[@href = '" + id
-                    + "']/properties/public-status[text() = 'pending']");
-            }
-            else {
-                selectSingleNodeAsserted(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*[@objid = '" + id
-                    + "']/properties/public-status[text() = 'pending']");
-            }
+            selectSingleNodeAsserted(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*[@href = '" + id
+                + "']/properties/public-status[text() = 'pending']");
         }
     }
 
@@ -348,25 +306,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         assertXmlValidSrwResponse(xml);
 
         Document xmlDoc = EscidocRestSoapTestBase.getDocument(xml);
-        NodeList memberIds = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@href");
-        }
-        else {
-            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
-        }
+        NodeList memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@href");
 
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
             String id = memberIds.item(i).getNodeValue();
-            if (Constants.TRANSPORT_REST == getTransport()) {
-
-                selectSingleNodeAsserted(xmlDoc, "/member-list/*[@href = '" + id
-                    + "']/properties/public-status[text() = 'submitted']");
-            }
-            else {
-                selectSingleNodeAsserted(xmlDoc, "/member-list/*[@objid = '" + id
-                    + "']/properties/public-status[text() = 'submitted']");
-            }
+            selectSingleNodeAsserted(xmlDoc, "/member-list/*[@href = '" + id
+                + "']/properties/public-status[text() = 'submitted']");
         }
     }
 
@@ -382,24 +327,11 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         assertXmlValidSrwResponse(xml);
 
         Document xmlDoc = EscidocRestSoapTestBase.getDocument(xml);
-        NodeList memberIds = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
-        }
-        else {
-            memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
-        }
+        NodeList memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
             String id = memberIds.item(i).getNodeValue();
-            if (Constants.TRANSPORT_REST == getTransport()) {
-
-                selectSingleNodeAsserted(xmlDoc, "/member-list/container[@href = '" + id
-                    + "']/properties/public-status[text() = 'pending']");
-            }
-            else {
-                selectSingleNodeAsserted(xmlDoc, "/member-list/container[@objid = '" + id
-                    + "']/properties/public-status[text() = 'pending']");
-            }
+            selectSingleNodeAsserted(xmlDoc, "/member-list/container[@href = '" + id
+                + "']/properties/public-status[text() = 'pending']");
         }
     }
 
@@ -439,11 +371,9 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         List<String> members = getMemberListMembers(memberListXml);
 
         // converting hrefs to objids
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            for (int i = 0; i < members.size(); i++) {
-                String objid = getObjidFromHref(members.get(i));
-                members.set(i, objid);
-            }
+        for (int i = 0; i < members.size(); i++) {
+            String objid = getObjidFromHref(members.get(i));
+            members.set(i, objid);
         }
 
         // compare the members with ids
@@ -554,17 +484,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * Get the ids of the StructMap members.
      */
     private List<String> getStructMapMembers(final String xml) throws Exception {
-
         Document container = EscidocRestSoapTestBase.getDocument(xml);
-
-        NodeList smMembers = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            smMembers = selectNodeList(container, "/container/struct-map/*/@href");
-        }
-        else {
-            smMembers = selectNodeList(container, "/container/struct-map/*/@objid");
-        }
-
+        NodeList smMembers = selectNodeList(container, "/container/struct-map/*/@href");
         return nodeList2List(smMembers);
     }
 
@@ -576,14 +497,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      */
     private List<String> getMemberListMembers(final String xml) throws Exception {
         // make list from containers member list
-        NodeList mlMembers = null;
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            mlMembers = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@href");
-        }
-        else {
-            mlMembers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
-        }
+        NodeList mlMembers =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@href");
         return nodeList2List(mlMembers);
     }
 
@@ -607,27 +522,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         list = retrieveContainers(filterParams);
         assertXmlValidSrwResponse(list);
 
-        NodeList nodes = null;
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
-        }
-        else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            nodes =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_CONTAINER_LIST_CONTAINER
-                    + "/@objid");
-        }
+        NodeList nodes =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
             Node node = nodes.item(count);
-            String nodeValue = null;
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                nodeValue = getIdFromHrefValue(node.getNodeValue());
-            }
-            else {
-                nodeValue = node.getNodeValue();
-            }
+            String nodeValue = getIdFromHrefValue(node.getNodeValue());
 
             try {
                 String container = retrieve(nodeValue);
@@ -656,10 +556,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             Node node = nodes.item(count);
             String nodeValue = node.getNodeValue();
             try {
-
-                if (Constants.TRANSPORT_REST == getTransport()) {
-                    nodeValue = getIdFromURI(nodeValue);
-                }
+                nodeValue = getIdFromURI(nodeValue);
                 String container = retrieve(nodeValue);
                 assertXmlValidContainer(container);
             }
@@ -682,8 +579,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_198_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(new URL(TEMPLATE_ITEM_PATH + "/rest/"
+                + "escidoc_item_198_for_create.xml"));
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
         return getObjidValue(theItemXml);
@@ -709,23 +606,13 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         NodeList containers = null;
 
         String list = retrieveMembers(id, filterParams);
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            items = selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/item/@href");
-            containers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/container/@href");
-        }
-        else {
-            items = selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/item/@objid");
-            containers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/container/@objid");
-        }
+        items = selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/item/@href");
+        containers = selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/container/@href");
 
         for (int count = containers.getLength() - 1; count >= 0; count--) {
             Node node = containers.item(count);
             String nodeValue = node.getNodeValue();
-            if (Constants.TRANSPORT_REST == getTransport()) {
-                nodeValue = getIdFromURI(nodeValue);
-            }
+            nodeValue = getIdFromURI(nodeValue);
             try {
                 retrieve(nodeValue);
             }
@@ -737,9 +624,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         for (int count = items.getLength() - 1; count >= 0; count--) {
             Node node = items.item(count);
             String nodeValue = node.getNodeValue();
-            if (Constants.TRANSPORT_REST == getTransport()) {
-                nodeValue = getIdFromURI(nodeValue);
-            }
+            nodeValue = getIdFromURI(nodeValue);
             try {
                 handleXmlResult(getItemClient().retrieve(nodeValue));
 
@@ -940,8 +825,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         String containerId = getObjidValue(containerXml);
 
         String itemTemplXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "item_without_component.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(new URL(TEMPLATE_ITEM_PATH + "/rest/"
+                + "item_without_component.xml"));
 
         String itemXml = createItem(containerId, itemTemplXml);
         String itemId = getObjidValue(itemXml);

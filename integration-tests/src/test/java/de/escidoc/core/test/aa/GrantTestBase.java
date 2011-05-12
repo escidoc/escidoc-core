@@ -107,12 +107,10 @@ public class GrantTestBase extends UserAccountTestBase {
     protected ResourceNotFoundException notFoundException = null;
 
     /**
-     * @param transport   The transport identifier.
      * @param handlerCode handlerCode.
      * @throws Exception e
      */
-    public GrantTestBase(final int transport, final int handlerCode) throws Exception {
-        super(transport);
+    public GrantTestBase(final int handlerCode) throws Exception {
         if (handlerCode == USER_ACCOUNT_HANDLER_CODE) {
             defaultUserAccountOrGroupId = TEST_USER_ACCOUNT_ID;
             notFoundException = new UserAccountNotFoundException();
@@ -131,13 +129,11 @@ public class GrantTestBase extends UserAccountTestBase {
     }
 
     /**
-     * @param transport   transport
      * @param handlerCode handlerCode
      * @param id          user or group id
      * @throws Exception e
      */
-    public GrantTestBase(final int transport, final int handlerCode, final String id) throws Exception {
-        super(transport);
+    public GrantTestBase(final int handlerCode, final String id) throws Exception {
         if (handlerCode == USER_ACCOUNT_HANDLER_CODE) {
             notFoundException = new UserAccountNotFoundException();
         }
@@ -962,29 +958,16 @@ public class GrantTestBase extends UserAccountTestBase {
             assertXmlEquals("Revocation remark mismatch, ", originalDocument, toBeAssertedDocument,
                 XPATH_GRANT_REVOCATION_REMARK);
 
-            // role reference
-            if (Constants.TRANSPORT_REST == getTransport()) {
-                // in case of rest, href is mandatory but the other xlink
-                // attributes are discarded, i.e. they may be contained in XML
-                // but will be ignored. Therefore, only href is compared with
-                // original values.
-                assertXmlEquals("Role reference mismatch, ", originalDocument, toBeAssertedDocument,
-                    XPATH_GRANT_ROLE_XLINK_HREF);
-            }
-            else {
-                assertXmlEquals("Role reference mismatch, ", originalDocument, toBeAssertedDocument, XPATH_GRANT_ROLE);
-            }
+            // in case of rest, href is mandatory but the other xlink
+            // attributes are discarded, i.e. they may be contained in XML
+            // but will be ignored. Therefore, only href is compared with
+            // original values.
+            assertXmlEquals("Role reference mismatch, ", originalDocument, toBeAssertedDocument,
+                XPATH_GRANT_ROLE_XLINK_HREF);
 
-            // object reference
-            if (Constants.TRANSPORT_REST == getTransport()) {
-                // href mandatory, only
-                assertXmlEquals("Object reference href mismatch, ", originalDocument, toBeAssertedDocument,
-                    XPATH_GRANT_OBJECT_XLINK_HREF);
-            }
-            else {
-                assertXmlEquals("Object reference objid mismatch, ", originalDocument, toBeAssertedDocument,
-                    XPATH_GRANT_OBJECT_OBJID);
-            }
+            // href mandatory, only
+            assertXmlEquals("Object reference href mismatch, ", originalDocument, toBeAssertedDocument,
+                XPATH_GRANT_OBJECT_XLINK_HREF);
         }
 
         return toBeAssertedDocument;

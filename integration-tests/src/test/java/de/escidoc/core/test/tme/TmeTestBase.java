@@ -7,9 +7,8 @@ public class TmeTestBase extends EscidocRestSoapTestBase {
 
     private final JhoveClient jhoveClient;
 
-    public TmeTestBase(final int transport) {
-        super(transport);
-        jhoveClient = new JhoveClient(transport);
+    public TmeTestBase() {
+        jhoveClient = new JhoveClient();
     }
 
     /**

@@ -40,13 +40,6 @@ import org.apache.http.util.EntityUtils;
 public class StatisticDataTestBase extends SmTestBase {
 
     /**
-     * @param transport The transport identifier.
-     */
-    public StatisticDataTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Test creating statistic data.
      *
      * @param dataXml The xml representation of the item.

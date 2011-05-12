@@ -36,8 +36,6 @@ import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -56,7 +54,6 @@ import static org.junit.Assert.assertTrue;
  * 
  * @author Michael Hoppe
  */
-@RunWith(value = Parameterized.class)
 public class ContentModelAdminSearchTest extends SearchTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentModelAdminSearchTest.class);
@@ -77,16 +74,9 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
 
     private static String startTime = "";
 
-    /**
-     * @param transport
-     *            The transport identifier.
-     * @throws Exception
-     *             e
-     */
-    public ContentModelAdminSearchTest(final int transport) throws Exception {
-        super(transport);
-        contentModel = new ContentModelHelper(transport);
-        grant = new GrantHelper(transport, GrantHelper.getUserAccountHandlerCode());
+    public ContentModelAdminSearchTest() throws Exception {
+        contentModel = new ContentModelHelper();
+        grant = new GrantHelper(GrantHelper.getUserAccountHandlerCode());
     }
 
     /**
@@ -146,14 +136,11 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
         String handle = PWCallback.SYSTEMADMINISTRATOR_HANDLE;
         contentModelIds = new String[3];
         contentModelIds[0] =
-            prepareContentModel(handle, "escidoc_search_content_model0_" + getTransport(false) + ".xml",
-                CONTENT_MODEL_STATUS_CREATED);
+            prepareContentModel(handle, "escidoc_search_content_model0_rest.xml", CONTENT_MODEL_STATUS_CREATED);
         contentModelIds[1] =
-            prepareContentModel(handle, "escidoc_search_content_model0_" + getTransport(false) + ".xml",
-                CONTENT_MODEL_STATUS_UPDATED);
+            prepareContentModel(handle, "escidoc_search_content_model0_rest.xml", CONTENT_MODEL_STATUS_UPDATED);
         contentModelIds[2] =
-            prepareContentModel(handle, "escidoc_search_content_model0_" + getTransport(false) + ".xml",
-                CONTENT_MODEL_STATUS_DELETED);
+            prepareContentModel(handle, "escidoc_search_content_model0_rest.xml", CONTENT_MODEL_STATUS_DELETED);
 
         // /////////////////////////////////////////////////////////////////////
 
@@ -306,8 +293,7 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
                 NodeList nodes = selectNodeList(searchResultDoc, xPath);
                 for (int i = 0; i < nodes.getLength(); i++) {
                     Node node = nodes.item(i);
-                    String objId =
-                        getObjidValue(de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST, node, null);
+                    String objId = getObjidValue(node, null);
                     foundIds.add(objId);
                     assertTrue(errorTrace.toString() + "object " + objId + " may not be in searchResult",
                         ((HashMap<String, String>) role.get("searchresultIds")).containsKey(objId));

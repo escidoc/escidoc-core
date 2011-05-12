@@ -35,8 +35,6 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.fail;
@@ -46,19 +44,11 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContainerSubmitTest extends ContainerTestBase {
 
     private String theContainerXml;
 
     private String theContainerId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerSubmitTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Set up servlet test.

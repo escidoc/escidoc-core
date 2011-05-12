@@ -14,10 +14,6 @@ import static org.junit.Assert.assertTrue;
  */
 public class DeviationRestTest extends DeviationTestBase {
 
-    public DeviationRestTest() {
-        super(Constants.TRANSPORT_REST);
-    }
-
     /**
      * Test retrieving the fedora describe xml.
      *
@@ -38,8 +34,7 @@ public class DeviationRestTest extends DeviationTestBase {
     public void testExport() throws Exception {
 
         String toBeCreatedXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_test_item0.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_test_item0.xml");
 
         String createdXml = create(toBeCreatedXml);
         String id = getObjidValue(createdXml);
@@ -57,8 +52,7 @@ public class DeviationRestTest extends DeviationTestBase {
     public void testDatastreamDissimination() throws Exception {
 
         String toBeCreatedXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_test_item0.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_test_item0.xml");
 
         String createdXml = create(toBeCreatedXml);
         Document document = EscidocRestSoapTestBase.getDocument(createdXml);

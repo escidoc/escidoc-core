@@ -58,13 +58,6 @@ public class ContentRelationTestBase extends OmTestBase {
     protected static final String XPATH_CONTENT_RELATION_XLINK_HREF = XPATH_CONTENT_RELATION + PART_XLINK_HREF;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public ContentRelationTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * @return Returns the ContentRelationClient
      */
     @Override
@@ -525,8 +518,7 @@ public class ContentRelationTestBase extends OmTestBase {
     public String createItemFromTemplate(final String templateName) throws Exception {
 
         // create an item and save the id
-        String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
+        String xmlData = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
         return getObjidValue(theItemXml);
@@ -542,8 +534,7 @@ public class ContentRelationTestBase extends OmTestBase {
      */
     public String getContainerTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
-            templateName);
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", templateName);
 
     }
 
@@ -557,8 +548,7 @@ public class ContentRelationTestBase extends OmTestBase {
      */
     public String getItemTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestBase
-            .getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
 
     }
 
@@ -659,7 +649,7 @@ public class ContentRelationTestBase extends OmTestBase {
      */
     public void addContentRelationManagerGrant(final String userId) throws Exception {
 
-        UserAccountClient uac = new UserAccountClient(getTransport());
+        UserAccountClient uac = new UserAccountClient();
         // check if user has this role already
         String userXml = handleXmlResult(uac.retrieveCurrentGrants(userId));
         if (userXml.contains("escidoc:role-content-relation-manager")) {
@@ -668,8 +658,8 @@ public class ContentRelationTestBase extends OmTestBase {
 
         // set content-relation-manager grant to user
         String grantXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_BASE_PATH + "/om/template/aa/user-account/"
-                + getTransport(false), "create_content_relation_manager_grant.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_BASE_PATH + "/om/template/aa/user-account/rest",
+                "create_content_relation_manager_grant.xml");
 
         try {
             handleXmlResult(uac.createGrant(userId, grantXml));
@@ -686,7 +676,7 @@ public class ContentRelationTestBase extends OmTestBase {
      */
     public void addContentRelationModifierGrant(final String userId) throws Exception {
 
-        UserAccountClient uac = new UserAccountClient(getTransport());
+        UserAccountClient uac = new UserAccountClient();
         // check if user has this role already
         String userXml = handleXmlResult(uac.retrieveCurrentGrants(userId));
         if (userXml.contains("escidoc:role-content-relation-modifier")) {
@@ -695,8 +685,8 @@ public class ContentRelationTestBase extends OmTestBase {
 
         // set content-relation-manager grant to user
         String grantXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_BASE_PATH + "/om/template/aa/user-account/"
-                + getTransport(false), "create_content_relation_modifier_grant.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_BASE_PATH + "/om/template/aa/user-account/rest",
+                "create_content_relation_modifier_grant.xml");
         // set objid/href of user to template
         grantXml = grantXml.replace("###USER_ID###", userId);
 
@@ -724,7 +714,7 @@ public class ContentRelationTestBase extends OmTestBase {
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         String createdUserAccountXml = null;
-        UserAccountClient uac = new UserAccountClient(getTransport());
+        UserAccountClient uac = new UserAccountClient();
         try {
             createdUserAccountXml = handleXmlResult(uac.create(toBeCreatedXml));
         }

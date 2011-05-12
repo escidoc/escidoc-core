@@ -63,13 +63,6 @@ public class ContainerCreateRestTest extends ContainerTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContainerCreateRestTest.class);
 
-    /**
-     * Constructor.
-     */
-    public ContainerCreateRestTest() {
-        super(Constants.TRANSPORT_REST);
-    }
-
     @Test
     public void testOM_CCO_1_1() throws Exception {
 

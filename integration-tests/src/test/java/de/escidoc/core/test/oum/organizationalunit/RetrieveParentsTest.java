@@ -33,8 +33,6 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.Organizatio
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -45,15 +43,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(value = Parameterized.class)
 public class RetrieveParentsTest extends OrganizationalUnitTestBase {
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public RetrieveParentsTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Test retrieving the parent-ous of an organizational unit containing no parent-ou elements.
@@ -103,13 +93,11 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
         final String organizationalUnitId, final Node parentOus, final Map<String, String> expectedParentOus,
         final String timestampBeforeLastModification) throws Exception {
         String messagePrefix = "OU parent-ous error: ";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            Node hrefNode = selectSingleNode(parentOus, XPATH_PARENTS + PART_XLINK_HREF);
-            assertNotNull(messagePrefix + " No href found! ", hrefNode);
-            String href = hrefNode.getNodeValue();
-            assertEquals(messagePrefix + "href wrong baseurl! ", href, Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
-                + organizationalUnitId + "/" + NAME_PARENTS);
-        }
+        Node hrefNode = selectSingleNode(parentOus, XPATH_PARENTS + PART_XLINK_HREF);
+        assertNotNull(messagePrefix + " No href found! ", hrefNode);
+        String href1 = hrefNode.getNodeValue();
+        assertEquals(messagePrefix + "href wrong baseurl! ", href1, Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
+            + organizationalUnitId + "/" + NAME_PARENTS);
         final String xpathLastModificationDate = XPATH_PARENTS + PART_LAST_MODIFICATION_DATE;
         assertXmlExists(messagePrefix + "Missing last modification date. ", parentOus, xpathLastModificationDate);
         final String lastModificationDate = selectSingleNode(parentOus, xpathLastModificationDate).getTextContent();
@@ -125,15 +113,10 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
         else {
             while (expectedIter.hasNext()) {
                 String parentId = expectedIter.next();
-                if (getTransport() == Constants.TRANSPORT_REST) {
-                    String href = Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + parentId;
-                    assertXmlExists("", parentOus, XPATH_PARENT + "[@href='" + href + "']");
-                    assertXmlExists("", parentOus, XPATH_PARENT + "[@href='" + href + "']/@title");
-                    assertXmlExists("", parentOus, XPATH_PARENT + "[@href='" + href + "']/@type");
-                }
-                else {
-                    assertXmlExists("", parentOus, XPATH_PARENT + "[@objid='" + parentId + "']");
-                }
+                String href2 = Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + parentId;
+                assertXmlExists("", parentOus, XPATH_PARENT + "[@href='" + href2 + "']");
+                assertXmlExists("", parentOus, XPATH_PARENT + "[@href='" + href2 + "']/@title");
+                assertXmlExists("", parentOus, XPATH_PARENT + "[@href='" + href2 + "']/@type");
             }
 
         }

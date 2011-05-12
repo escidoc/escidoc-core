@@ -61,19 +61,19 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
 
     private static final String CHECK_RESULT_PATH = "build/migration/check";
 
-    private final ContainerClient containerClient = new ContainerClient(getTransport());
+    private final ContainerClient containerClient = new ContainerClient();
 
-    private final ContentModelClient contentModelClient = new ContentModelClient(getTransport());
+    private final ContentModelClient contentModelClient = new ContentModelClient();
 
-    private final ContextClient contextClient = new ContextClient(getTransport());
+    private final ContextClient contextClient = new ContextClient();
 
-    private final ItemClient itemClient = new ItemClient(getTransport());
+    private final ItemClient itemClient = new ItemClient();
 
-    private final OrganizationalUnitClient organizationalUnitClient = new OrganizationalUnitClient(getTransport());
+    private final OrganizationalUnitClient organizationalUnitClient = new OrganizationalUnitClient();
 
-    private final RoleClient roleClient = new RoleClient(getTransport());
+    private final RoleClient roleClient = new RoleClient();
 
-    private final UserAccountClient userAccountClient = new UserAccountClient(getTransport());
+    private final UserAccountClient userAccountClient = new UserAccountClient();
 
     static final String OBJECT_TYPE_FED_2_CONTAINER = "container";
 
@@ -94,13 +94,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
     private static final int SLEEP_TIME = 100;
 
     /**
-     * @param transport The transport identifier.
-     */
-    public MigrationTestBase(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Check the given container ids if they are retrievable.
      *
      * @param ids      The list of ids.
@@ -112,7 +105,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true) + "] Start checking containers: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -123,7 +115,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             }
         }
         sleep();
-        System.out.println("[" + getTransport(true) + "] Finished. Check failed for containers: " + result);
         return result;
     }
 
@@ -139,7 +130,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true) + "] Start checking contexts: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -150,7 +140,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             }
         }
         sleep();
-        System.out.println("[" + getTransport(true) + "] Finished. Check failed for contexts: " + result);
         return result;
     }
 
@@ -165,7 +154,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true) + "] Start checking content models: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -176,7 +164,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             }
         }
         sleep();
-        System.out.println("[" + getTransport(true) + "] Finished. Check failed for content models: " + result);
         return result;
     }
 
@@ -192,7 +179,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true) + "] Start checking items: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -203,7 +189,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             }
         }
         sleep();
-        System.out.println("[" + getTransport(true) + "] Finished. Check failed for items: " + result);
         return result;
     }
 
@@ -219,7 +204,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true) + "] Start checking organizational units: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -230,7 +214,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             }
         }
         sleep();
-        System.out.println("[" + getTransport(true) + "] Finished. Check failed for organizational units: " + result);
         return result;
     }
 
@@ -246,7 +229,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true) + "] Start checking roles: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -256,7 +238,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
                 result.add(id);
             }
         }
-        System.out.println("[" + getTransport(true) + "] Finished. Check failed for roles: " + result);
         return result;
     }
 
@@ -272,7 +253,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
         Collection<String> result = new Vector<String>();
 
         Iterator<String> idIter = ids.iterator();
-        System.out.println("[" + getTransport(true) + "] Start checking user accounts: " + ids);
         while (idIter.hasNext()) {
             String id = idIter.next();
             try {
@@ -282,7 +262,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
                 result.add(id);
             }
         }
-        System.out.println("[" + getTransport(true) + "] Finished. Check failed for user accounts: " + result);
         return result;
     }
 
@@ -322,7 +301,6 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
      * Retrieve a Content-Model.
      *
      * @param id       the id.
-     * @param validate If true, retrieved object is validated against the corresponding schema.
      * @return The retrieved object.
      * @throws Exception If anything fails.
      */
@@ -492,7 +470,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
     }
 
     protected String getObjectIdFilename() {
-        return getTransport(false) + "-" + OBJECT_ID_FILENAME;
+        return "rest-" + OBJECT_ID_FILENAME;
     }
 
     protected Map<String, String> loadObjectIds() {

@@ -67,11 +67,7 @@ public class ItemTestBase extends OmTestBase {
         return getItemClient();
     }
 
-    /**
-     * @param transport The transport identifier.
-     */
-    public ItemTestBase(final int transport) {
-        super(transport);
+    public ItemTestBase() {
         itemUrl = getFrameworkUrl() + "/ir/item/";
     }
 
@@ -84,9 +80,7 @@ public class ItemTestBase extends OmTestBase {
      * @throws Exception Thrown if anything fails.
      */
     public String getItemTemplate(final String templateName) throws Exception {
-
-        return EscidocRestSoapTestBase
-            .getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
 
     }
 
@@ -191,21 +185,14 @@ public class ItemTestBase extends OmTestBase {
      * @throws Exception If an error occures.
      */
     public String retrieveContentRest(final String id, final String componentId) throws Exception {
-        int transport = getItemClient().getTransport();
 
         String result = null;
         try {
-            getItemClient().setTransport(Constants.TRANSPORT_REST);
-
             result = retrieveContent(id, componentId);
         }
         catch (final Exception e) {
             throw e;
         }
-        finally {
-            getItemClient().setTransport(transport);
-        }
-
         return result;
     }
 
@@ -245,9 +232,6 @@ public class ItemTestBase extends OmTestBase {
      * @throws Exception Thrown in case of failure.
      */
     public BinaryContent retrieveBinaryContent(final String id, final String componentId) throws Exception {
-
-        getItemClient().setTransport(Constants.TRANSPORT_REST);
-
         Object result = getItemClient().retrieveContent(id, componentId);
 
         BinaryContent binContent = null;
@@ -282,9 +266,6 @@ public class ItemTestBase extends OmTestBase {
     public BinaryContent retrieveBinaryContent(
         final String id, final String componentId, final String transformationService, final String transformParam)
         throws Exception {
-
-        getItemClient().setTransport(Constants.TRANSPORT_REST);
-
         Object result = getItemClient().retrieveContent(id, componentId, transformationService, transformParam);
 
         BinaryContent binContent = null;
@@ -752,8 +733,7 @@ public class ItemTestBase extends OmTestBase {
 
         // load component template
         Document component =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "component_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "component_for_create.xml");
 
         return addComponent(itemXml, component);
     }
@@ -928,36 +908,25 @@ public class ItemTestBase extends OmTestBase {
 
     public String[] createItemWithExternalBinaryContent(final String storage) throws Exception {
 
-        Document item =
-            getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+        Document item = getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String storageBeforeCreate = storage;
         String urlBeforeCreate = selectSingleNode(item, "/item/components/component[2]/content/@href").getNodeValue();
         Document newItem =
             (Document) substitute(item, "/item/components/component[2]/content/@storage", storageBeforeCreate);
         Node itemWithoutSecondComponent = deleteElement(newItem, "/item/components/component[1]");
         String xmlData = toString(itemWithoutSecondComponent, false);
-        // System.out.println("item " + xmlData);
         String theItemXml = create(xmlData);
         String theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         assertXmlValidItem(xmlData);
         String componentId;
         Document createdItem = getDocument(theItemXml);
-        if (getTransport(true).equals("REST")) {
-            String componentHrefValue =
-                selectSingleNode(createdItem, "/item/components/component/@href").getNodeValue();
-            componentId = getObjidFromHref(componentHrefValue);
-        }
-        else {
-            componentId = selectSingleNode(createdItem, "/item/components/component/@objid").getNodeValue();
-        }
+        String componentHrefValue = selectSingleNode(createdItem, "/item/components/component/@href").getNodeValue();
+        componentId = getObjidFromHref(componentHrefValue);
         String urlAfterCreate =
             selectSingleNode(createdItem, "/item/components/component/content/@href").getNodeValue();
         String storageAfterCtreate =
             selectSingleNode(createdItem, "/item/components/component/content/@storage").getNodeValue();
         assertEquals("The attribute 'storage' has a wrong valuue", storageBeforeCreate, storageAfterCtreate);
-        // String retrievedItem = retrieve(theItemId);
-        // System.out.println("item " + retrievedItem);
-
         return new String[] { theItemId, componentId };
     }
 

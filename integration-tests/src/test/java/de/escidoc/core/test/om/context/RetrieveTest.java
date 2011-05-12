@@ -35,8 +35,6 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -49,7 +47,6 @@ import static org.junit.Assert.assertNull;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class RetrieveTest extends ContextTestBase {
 
     private String path = "";
@@ -61,20 +58,13 @@ public class RetrieveTest extends ContextTestBase {
     private static String nonContextId = "escidoc:persistent1";
 
     /**
-     * @param transport The transport identifier.
-     */
-    public RetrieveTest(final int transport) {
-        super(transport);
-    }
-
-    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.
      */
     @Before
     public void setUp() throws Exception {
-        this.path += "/" + getTransport(false);
+        this.path += "/rest";
 
         if (contextId == null) {
             Document context =
@@ -94,17 +84,10 @@ public class RetrieveTest extends ContextTestBase {
             // String test2 = null;
             String item = null;
             Document itemDoc =
-                EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
                     "escidoc_item_198_for_create.xml");
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                item =
-                    toString(substitute(itemDoc, "/item/properties/context/@href", "/ir/context/" + contextId), true);
-                item = createItem(item);
-            }
-            else {
-                item = createItem(toString(itemDoc, true));
-            }
-
+            item = toString(substitute(itemDoc, "/item/properties/context/@href", "/ir/context/" + contextId), true);
+            item = createItem(item);
             // test2 = getTemplateAsString(TEMPLATE_ITEM_PATH,
             // filename);
             // test = toString(getTemplateAsDocument(TEMPLATE_ITEM_PATH,
@@ -314,24 +297,22 @@ public class RetrieveTest extends ContextTestBase {
      */
     @Test
     public void testRetrieveResources() throws Exception {
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String resources = retrieveResources(contextId);
-            assertXmlValidContext(resources);
+        String resources = retrieveResources(contextId);
+        assertXmlValidContext(resources);
 
-            Document contextResources = EscidocRestSoapTestBase.getDocument(contextXml);
+        Document contextResources = EscidocRestSoapTestBase.getDocument(contextXml);
 
-            // context resources contains members
-            // TODO check this for REST case in asserXmlValid method (see todo)
+        // context resources contains members
+        // TODO check this for REST case in asserXmlValid method (see todo)
 
-            // check members
-            String membersHref = selectSingleNode(contextResources, "/context/resources/members/@href").getNodeValue();
+        // check members
+        String membersHref = selectSingleNode(contextResources, "/context/resources/members/@href").getNodeValue();
 
-            String SUB_CONTEXT_MEMBERS = Constants.SUB_RESOURCES + "/" + "members";
+        String SUB_CONTEXT_MEMBERS = Constants.SUB_RESOURCES + "/" + "members";
 
-            if (!membersHref.endsWith(SUB_CONTEXT_MEMBERS)) {
-                throw new Exception("resource members href wrong: " + membersHref + ", should end with "
-                    + SUB_CONTEXT_MEMBERS);
-            }
+        if (!membersHref.endsWith(SUB_CONTEXT_MEMBERS)) {
+            throw new Exception("resource members href wrong: " + membersHref + ", should end with "
+                + SUB_CONTEXT_MEMBERS);
         }
     }
 
@@ -351,14 +332,12 @@ public class RetrieveTest extends ContextTestBase {
         final String expectedLastModificationTimestamp, final String timestampBeforeCreation) throws Exception {
 
         Document createdProperties = EscidocRestSoapTestBase.getDocument(xmlContextProperties);
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            String href = getRootElementHrefValue(createdProperties);
-            if ("".equals(href)) {
-                href = null;
-            }
-            assertNotNull("Context Properties error: href attribute was not set!", href);
-            assertEquals("Context Properties error: href has wrong value!", expectedHRef, href);
+        String href = getRootElementHrefValue(createdProperties);
+        if ("".equals(href)) {
+            href = null;
         }
+        assertNotNull("Context Properties error: href attribute was not set!", href);
+        assertEquals("Context Properties error: href has wrong value!", expectedHRef, href);
         String rootLastModificationDate = getLastModificationDateValue(createdProperties);
         if ("".equals(rootLastModificationDate)) {
             rootLastModificationDate = null;
@@ -405,15 +384,12 @@ public class RetrieveTest extends ContextTestBase {
 
         assertXmlExists("admin descriptors element does not contain conditional root attribute", adminDescriptors,
             "/admin-descriptors/@last-modification-date");
+        assertXmlNotExists("resources element contains conditional root attribute", context,
+            "/context/resources/@last-modification-date");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlNotExists("resources element contains conditional root attribute", context,
-                "/context/resources/@last-modification-date");
+        final Document resources = EscidocRestSoapTestBase.getDocument(retrieveResources(contextId));
 
-            final Document resources = EscidocRestSoapTestBase.getDocument(retrieveResources(contextId));
-
-            assertXmlExists("resources element does not contain conditional root attribute", resources,
-                "/resources/@last-modification-date");
-        }
+        assertXmlExists("resources element does not contain conditional root attribute", resources,
+            "/resources/@last-modification-date");
     }
 }

@@ -33,14 +33,11 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNo
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertEquals;
@@ -51,7 +48,6 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-@RunWith(value = Parameterized.class)
 public class ContainerLockTest extends ContainerTestBase {
 
     private String theContainerXml;
@@ -61,13 +57,6 @@ public class ContainerLockTest extends ContainerTestBase {
     private String theItemId;
 
     private String theSubcontainerId;
-
-    /**
-     * @param transport The transport identifier.
-     */
-    public ContainerLockTest(final int transport) {
-        super(transport);
-    }
 
     /**
      * Successfully lock container, successfully update of a locked container by a lock-owner.
@@ -83,13 +72,7 @@ public class ContainerLockTest extends ContainerTestBase {
         assertXmlEquals("Container lock status not as expected", containerDoc, "/container/properties/lock-status",
             "locked");
         assertXmlNotNull("lock-date", containerDoc, "/container/properties/lock-date");
-        if (Constants.TRANSPORT_REST == getTransport()) {
-            assertXmlNotNull("lock-owner", containerDoc, "/container/properties/lock-owner/@href");
-
-        }
-        else {
-            assertXmlNotNull("lock-owner", containerDoc, "/container/properties/lock-owner/@objid");
-        }
+        assertXmlNotNull("lock-owner", containerDoc, "/container/properties/lock-owner/@href");
         assertXmlValidContainer(containerXml);
 
         param = getTheLastModificationParam(false, theContainerId);
