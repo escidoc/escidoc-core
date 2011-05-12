@@ -96,9 +96,6 @@ public final class LuceneValues extends Values {
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:container", "permissions-filter.objecttype:item "
             + "AND permissions-filter.parent:({4})");
 
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:container.collection",
-            "<info:escidoc/names:aa:1.0:resource:item:container.collection>");
-
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:context", "permissions-filter.objecttype:item "
             + "AND permissions-filter.context-id:({4})");
 

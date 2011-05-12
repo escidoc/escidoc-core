@@ -73,8 +73,10 @@ public abstract class Values {
         IGNORED_SCOPES.add("info:escidoc/names:aa:1.0:resource:component:item:context");
         IGNORED_SCOPES.add("info:escidoc/names:aa:1.0:resource:component:item:hierarchical-containers");
 
-        // This is a rule from the "author" role which seems to be obsolete.
+        // These are rules from the "author" role which seems to be obsolete.
         IGNORED_SCOPES.add("info:escidoc/names:aa:1.0:resource:container.collection:id");
+        IGNORED_SCOPES.add("info:escidoc/names:aa:1.0:resource:container:container.collection");
+        IGNORED_SCOPES.add("info:escidoc/names:aa:1.0:resource:item:container.collection");
     }
 
     /**
