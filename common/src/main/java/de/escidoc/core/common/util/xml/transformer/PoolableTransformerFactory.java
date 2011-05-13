@@ -145,29 +145,37 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         final String nsUri = keyParts[0];
         final String contentModelId = keyParts[1];
         InputStream xslt = null;
-        String dcMappingXsltFedoraUrl = null;
+        // xslt is the mpdl-xslt- or default-xslt-stream
+        String internalXsltUrl =
+            nsUri != null && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? EscidocConfiguration
+                .getInstance().appendToSelfURL(XSL_MAPPING_MPDL_TO_DC) : this.defaultXsltUrl;
+        String xsltUrl = null;
 
         try {
-            // xslt is the mpdl-xslt- or default-xslt-stream
             if (contentModelId.length() > 0 && !"null".equalsIgnoreCase(contentModelId)) {
-                // create link to content of DC-MAPPING in content model object
-                dcMappingXsltFedoraUrl = "/get/" + contentModelId + '/' + CONTENT_MODEL_XSLT_DC_DATASTREAM;
-                xslt = FedoraUtility.getInstance().requestFedoraURL(dcMappingXsltFedoraUrl);
+                try {
+                    // create link to content of DC-MAPPING in content model object
+                    xsltUrl = "/get/" + contentModelId + '/' + CONTENT_MODEL_XSLT_DC_DATASTREAM;
+                    xslt = FedoraUtility.getInstance().requestFedoraURL(xsltUrl);
+                }
+                catch (final WebserverSystemException e) {
+                    // fall back to internal XSLT
+                    xsltUrl = internalXsltUrl;
+                    xslt = connectionUtility.getRequestURL(new URL(xsltUrl)).getEntity().getContent();
+                }
             }
             else {
-                dcMappingXsltFedoraUrl =
-                    nsUri != null && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? EscidocConfiguration
-                        .getInstance().appendToSelfURL(XSL_MAPPING_MPDL_TO_DC) : this.defaultXsltUrl;
-                xslt = connectionUtility.getRequestURL(new URL(dcMappingXsltFedoraUrl)).getEntity().getContent();
+                xsltUrl = internalXsltUrl;
+                xslt = connectionUtility.getRequestURL(new URL(xsltUrl)).getEntity().getContent();
             }
         }
         catch (final WebserverSystemException e) {
             // xslt is still the stream set above
             if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'');
+                LOGGER.warn("Error on requesting URL '" + xsltUrl + '\'');
             }
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'', e);
+                LOGGER.debug("Error on requesting URL '" + xsltUrl + '\'', e);
             }
         }
         return xslt;
