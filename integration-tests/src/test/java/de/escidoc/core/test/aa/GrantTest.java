@@ -72,14 +72,14 @@ import static org.junit.Assert.assertNull;
 @RunWith(Parameterized.class)
 public abstract class GrantTest extends GrantTestBase {
 
-        /**
+    /**
      * Initializes test-class with data.
      *
      * @return Collection with data.
      */
     @Parameterized.Parameters
     public static Collection<Object> data() {
-        return Arrays.asList(new Object[]{USER_GROUP_HANDLER_CODE, USER_ACCOUNT_HANDLER_CODE});
+        return Arrays.asList(new Object[] { USER_GROUP_HANDLER_CODE, USER_ACCOUNT_HANDLER_CODE });
     }
 
     public GrantTest(final int handlerCode) throws Exception {
