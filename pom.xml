@@ -53,11 +53,15 @@
         <module>jms-server</module>
         <module>fedora-service-client</module>
         <module>fedora-service-rest</module>
+        <module>aspects</module>
         <module>utilities</module>
 		<module>http-client</module>
 		<module>index-service-spec</module>
-		<module>statistic-service-spec</module>
-		<module>purge-service-spec</module>
+		<module>index-service-impl</module>
+        <module>statistic-service-spec</module>
+		<module>statistic-service-impl</module>
+        <module>purge-service-spec</module>
+		<module>purge-service-impl</module>
 		<module>common</module>
 		<module>aa</module>
 		<module>adm</module>
@@ -70,15 +74,11 @@
 		<module>st</module>
 		<module>tme</module>
 		<module>escidoc-core.war</module>
-		<module>common-remote</module>
 		<module>escidoc-core.ear</module>
 		<module>assembly</module>
 		<module>installer</module>
     	<module>integration-tests</module>
-		<module>index-service-impl</module>
-		<module>statistic-service-impl</module>
-		<module>purge-service-impl</module>
-	</modules>
+    </modules>
 
 	<build>
 		<pluginManagement>
@@ -1651,6 +1651,11 @@
             <dependency>
                 <groupId>org.escidoc.core</groupId>
                 <artifactId>fedora-service-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.escidoc.core</groupId>
+                <artifactId>aspects</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

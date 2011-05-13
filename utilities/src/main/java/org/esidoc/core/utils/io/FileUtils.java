@@ -1,5 +1,6 @@
 package org.esidoc.core.utils.io;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -94,11 +95,11 @@ public final class FileUtils {
         return defaultTempDirectory;
     }
 
-    public static void removeDirectory(final File directory) {
+    public static void removeDirectory(@NotNull final File directory) {
         removeDirectory(directory, false);
     }
 
-    private static void removeDirectory(final File directory, final boolean inShutdown) {
+    private static void removeDirectory(@NotNull final File directory, final boolean inShutdown) {
         String[] list = directory.list();
         if (list == null) {
             list = new String[0];
@@ -114,11 +115,11 @@ public final class FileUtils {
         delete(directory, inShutdown);
     }
 
-    public static void delete(final File file) {
+    public static void delete(@NotNull final File file) {
         delete(file, false);
     }
 
-    public static void delete(final File file, final boolean inShutdown) {
+    public static void delete(@NotNull final File file, final boolean inShutdown) {
         if (!file.delete()) {
             if (isWindows()) {
                 System.gc(); // Ignore FindBugs warning!

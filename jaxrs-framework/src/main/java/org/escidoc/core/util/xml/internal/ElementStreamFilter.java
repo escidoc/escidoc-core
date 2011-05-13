@@ -24,7 +24,8 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-@Guarded
+@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
+        assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
 public class ElementStreamFilter implements StreamFilter {
 
     private final static Logger LOG = LoggerFactory.getLogger(ElementStreamFilter.class);

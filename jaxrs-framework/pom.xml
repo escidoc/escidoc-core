@@ -41,8 +41,8 @@
 							<artifactId>spring-aspects</artifactId>
 						</aspectLibrary>
                         <aspectLibrary>
-                            <groupId>net.sf.oval</groupId>
-                            <artifactId>oval</artifactId>
+                            <groupId>org.escidoc.core</groupId>
+                            <artifactId>aspects</artifactId>
                         </aspectLibrary>
                     </aspectLibraries>
                 </configuration>
@@ -59,6 +59,11 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>aspects</artifactId>
+        </dependency>
+        <!-- Specs -->
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-servlet_3.0_spec</artifactId>

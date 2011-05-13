@@ -70,7 +70,8 @@ import static org.esidoc.core.utils.Preconditions.checkState;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Service
-@Guarded
+@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
+        assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
 public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     public final static Logger LOG = LoggerFactory.getLogger(FedoraServiceClientImpl.class);

@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>aspects</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.jvnet.jaxb2_commons</groupId>
             <artifactId>jaxb2-basics-runtime</artifactId>
         </dependency>
@@ -98,8 +102,8 @@
 							<artifactId>spring-aspects</artifactId>
 						</aspectLibrary>
                         <aspectLibrary>
-                            <groupId>net.sf.oval</groupId>
-                            <artifactId>oval</artifactId>
+                            <groupId>org.escidoc.core</groupId>
+                            <artifactId>aspects</artifactId>
                         </aspectLibrary>
                     </aspectLibraries>
                 </configuration>

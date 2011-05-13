@@ -1,6 +1,5 @@
 package org.escidoc.core.services.fedora;
 
-import net.sf.oval.guard.Guarded;
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.esidoc.core.utils.io.Datastream;
@@ -13,7 +12,6 @@ import java.util.concurrent.Future;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-@Guarded
 public interface FedoraServiceClient {
 
     PidListTO getNextPID(@NotNull String namespace);

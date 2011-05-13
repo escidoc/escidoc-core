@@ -1,6 +1,5 @@
 package org.escidoc.core.services.fedora;
 
-import net.sf.oval.guard.Guarded;
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.esidoc.core.utils.io.Datastream;
@@ -23,7 +22,6 @@ import javax.ws.rs.QueryParam;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Path("/fedora/objects")
-@Guarded
 public interface FedoraServiceRESTEndpoint {
 
     @POST

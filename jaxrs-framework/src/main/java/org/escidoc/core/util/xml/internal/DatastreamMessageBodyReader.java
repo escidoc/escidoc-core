@@ -24,7 +24,8 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Provider
-@Guarded
+@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
+        assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
 public class DatastreamMessageBodyReader implements MessageBodyReader<Datastream> {
 
 

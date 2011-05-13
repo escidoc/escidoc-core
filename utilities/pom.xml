@@ -38,8 +38,8 @@
                     <showWeaveInfo>false</showWeaveInfo>
                     <aspectLibraries>
                         <aspectLibrary>
-                            <groupId>net.sf.oval</groupId>
-                            <artifactId>oval</artifactId>
+                            <groupId>org.escidoc.core</groupId>
+                            <artifactId>aspects</artifactId>
                         </aspectLibrary>
                     </aspectLibraries>
                 </configuration>
@@ -57,8 +57,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>aspects</artifactId>
         </dependency>
     </dependencies>
 

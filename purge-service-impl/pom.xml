@@ -32,10 +32,56 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.3</version>
+                <dependencies>
+	                <dependency>
+	                    <groupId>org.aspectj</groupId>
+	                    <artifactId>aspectjrt</artifactId>
+                        <version>${aspectj.version}</version>
+	                </dependency>
+	                <dependency>
+	                    <groupId>org.aspectj</groupId>
+	                    <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+	                </dependency>
+	            </dependencies>
+                <configuration>
+                    <verbose>false</verbose>
+                    <source>${java.source.version}</source>
+                    <complianceLevel>${java.target.version}</complianceLevel>
+                    <outxml>true</outxml>
+                    <showWeaveInfo>false</showWeaveInfo>
+                    <aspectLibraries>
+                        <aspectLibrary>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-aspects</artifactId>
+						</aspectLibrary>
+                        <aspectLibrary>
+                            <groupId>org.escidoc.core</groupId>
+                            <artifactId>aspects</artifactId>
+                        </aspectLibrary>
+                    </aspectLibraries>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>aspects</artifactId>
+        </dependency>
         <dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>purge-service-spec</artifactId>
