@@ -32,7 +32,7 @@ import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
- * Offers access methods to the escidoc REST and SOAP interface of the Statistic Preprocessing resource.
+ * Offers access methods to the escidoc interface of the Statistic Preprocessing resource.
  *
  * @author Michael Hoppe
  */
@@ -43,7 +43,7 @@ public class PreprocessingClient extends ClientBase {
      *
      * @param id                          aggregationDefinitionId.
      * @param preprocessingInformationXml The xml representation of the preprocessing-information.
-     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object preprocess(final String id, final Object preprocessingInformationXml) throws Exception {

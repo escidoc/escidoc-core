@@ -44,7 +44,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Create an organizational unit.
      *
      * @param ouXml The xml representation of an organizational unit
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -58,7 +58,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Delete an organizational unit.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -73,7 +73,7 @@ public class OrganizationalUnitClient extends ClientBase {
      *
      * @param id    the organizational unit id.
      * @param ouXml The xml representation of the organizational unit
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -88,7 +88,7 @@ public class OrganizationalUnitClient extends ClientBase {
      *
      * @param id    the organizational unit id.
      * @param ouXml The xml representation of the sub resource organization-details of the organizational unit
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updateMdRecords(final String id, final Object ouXml) throws Exception {
@@ -103,7 +103,7 @@ public class OrganizationalUnitClient extends ClientBase {
      *
      * @param id    the organizational unit id.
      * @param ouXml The xml representation of the sub resource parent-ous of the organizational unit
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updateParents(final String id, final Object ouXml) throws Exception {
@@ -117,7 +117,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Retrieve the xml representation of an organizational unit.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -131,7 +131,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Retrieve the xml representation of a list of resources.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
@@ -145,7 +145,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Retrieve the xml representation of the properties.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveProperties(final String id) throws Exception {
@@ -159,7 +159,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Retrieve the xml representation of the organizational-details.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveMdRecords(final String id) throws Exception {
@@ -173,7 +173,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Retrieve the xml representation of the parent-ous.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveParents(final String id) throws Exception {
@@ -186,7 +186,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Retrieve the child ous of an organizational unit.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveChildObjects(final String id) throws Exception {
@@ -200,7 +200,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Retrieve the parent ous of an organizational unit.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveParentObjects(final String id) throws Exception {
@@ -214,7 +214,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Retrieve a filtered list of all organizational units.
      *
      * @param filter The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveOrganizationalUnits(final Map<String, String[]> filter) throws Exception {
@@ -229,7 +229,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * @param id        The id of the organizational unit to close.
      * @param taskParam The task parameter containing the last modification date of the organizational unit and an
      *                  comment.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object close(final String id, final String taskParam) throws Exception {
@@ -244,7 +244,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * @param id        The id of the organizational unit to open.
      * @param taskParam The task parameter containing the last modification date of the organizational unit and an
      *                  comment.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object open(final String id, final String taskParam) throws Exception {
@@ -257,7 +257,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Retrieve a pathlist of references from a specified organizational units to the toplevel ous.
      *
      * @param id The Organizational Unit id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrievePathList(final String id) throws Exception {
@@ -271,7 +271,7 @@ public class OrganizationalUnitClient extends ClientBase {
      * Retrieve a list of successors from a specified organizational unit.
      *
      * @param objid The Organizational Unit id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveSuccessors(final String objid) throws Exception {

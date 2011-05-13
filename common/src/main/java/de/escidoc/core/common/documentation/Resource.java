@@ -172,7 +172,7 @@ public class Resource extends XMLBase {
      */
     public void toDocbook() {
 
-        LOGGER.info("[Resource " + this.name + "] Creating documentation for REST and SOAP interface.");
+        LOGGER.info("[Resource " + this.name + "] Creating documentation for interface.");
         initResult(INTERFACE_REST, getChapterStart(getTitle(INTERFACE_REST)));
         initResult(INTERFACE_SOAP, getChapterStart(getTitle(INTERFACE_SOAP)));
 

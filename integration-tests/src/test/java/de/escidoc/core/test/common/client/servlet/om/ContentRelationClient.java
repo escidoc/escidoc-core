@@ -45,7 +45,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      * Retrieve the xml representation of all virtual resources of the content relation.
      *
      * @param id The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
@@ -58,7 +58,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      * Retrieve the xml representation of a content relation.
      *
      * @param id The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -72,7 +72,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      * Retrieve content relations.
      *
      * @param filter The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveContentRelations(final Map<String, String[]> filter) throws Exception {
@@ -85,7 +85,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      * Retrieve the xml representation of the properties of a resource.
      *
      * @param id The resource id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveProperties(final String id) throws Exception {
@@ -98,7 +98,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      * Create a content relation in the escidoc framework.
      *
      * @param contentRelationXml The xml representation of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -113,7 +113,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      *
      * @param id                 The id of the content relation.
      * @param contentRelationXml The xml representation of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -127,7 +127,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      * Delete a content relation from the escidoc framework.
      *
      * @param id The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -141,7 +141,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      * Submit a content relation.
      *
      * @param id The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object submit(final String id, final String param) throws Exception {
@@ -154,7 +154,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      * Release a content relation.
      *
      * @param id The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object release(final String id, final String param) throws Exception {
@@ -167,7 +167,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      * Revise a content relation.
      *
      * @param id The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object revise(final String id, final String param) throws Exception {
@@ -180,7 +180,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      * Lock a Content Relation for other user access.
      *
      * @param id The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object lock(final String id, final String param) throws Exception {
@@ -192,7 +192,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      * Unlock a Content Relation for other user access.
      *
      * @param id The id of the content relation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object unlock(final String id, final String param) throws Exception {
@@ -203,7 +203,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
     /**
      * Assign persistent identifier to a Content-relation object.
      *
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
 
@@ -215,7 +215,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
     /**
      * Get escidoc XML representation of ContentRelations md-records.
      *
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveMdRecords(final String id) throws Exception {

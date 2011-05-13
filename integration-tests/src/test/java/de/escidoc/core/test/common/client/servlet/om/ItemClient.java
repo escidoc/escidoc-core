@@ -51,7 +51,7 @@ public class ItemClient extends ClientBase
      * Retrieve Items.
      *
      * @param filter The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveItems(final Map<String, String[]> filter) throws Exception {
@@ -64,7 +64,7 @@ public class ItemClient extends ClientBase
      * Create an item in the escidoc framework.
      *
      * @param itemXml The xml representation of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -78,7 +78,7 @@ public class ItemClient extends ClientBase
      * Delete an item from the escidoc framework.
      *
      * @param id The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -92,7 +92,7 @@ public class ItemClient extends ClientBase
      * Retrieve the xml representation of an item.
      *
      * @param id The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -119,7 +119,7 @@ public class ItemClient extends ClientBase
      *
      * @param id      The id of the item.
      * @param itemXml The xml representation of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -134,7 +134,7 @@ public class ItemClient extends ClientBase
      *
      * @param id        The id of the item.
      * @param component The new component.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object createComponent(final String id, final String component) throws Exception {
@@ -148,7 +148,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId      The id of the item.
      * @param componentId The id of the component.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveComponent(final String itemId, final String componentId) throws Exception {
@@ -162,7 +162,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId      The id of the item.
      * @param componentId The id of the component.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object deleteComponent(final String itemId, final String componentId) throws Exception {
@@ -177,7 +177,7 @@ public class ItemClient extends ClientBase
      * @param itemId      The id of the item.
      * @param componentId The id of the component.
      * @param component   The new component.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updateComponent(final String itemId, final String componentId, final String component)
@@ -192,7 +192,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId      The id of the item.
      * @param componentId The id of the component to get the content from.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveContent(final String itemId, final String componentId) throws Exception {
@@ -209,7 +209,7 @@ public class ItemClient extends ClientBase
      * @param componentId          The id of the component to get the content from.
      * @param transformationSerice The service which transforms the content.
      * @param transformParams      The parameter for the transformation service.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveContent(
@@ -225,7 +225,7 @@ public class ItemClient extends ClientBase
      * Retrieve all Components of an Item.
      *
      * @param itemId The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveComponents(final String itemId) throws Exception {
@@ -239,7 +239,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId      The id of the item.
      * @param componentId The id of the component.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveComponentProperties(final String itemId, final String componentId) throws Exception {
@@ -254,7 +254,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId     The id of the item.
      * @param mdRecordId The id of the metadata record.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveMdRecord(final String itemId, final String mdRecordId) throws Exception {
@@ -269,7 +269,7 @@ public class ItemClient extends ClientBase
      * @param itemId      The id of the item.
      * @param mdRecordId  The id of the metadata record.
      * @param mdRecordXml The xml representation of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updateMdRecord(final String itemId, final String mdRecordId, final Object mdRecordXml)
@@ -284,7 +284,7 @@ public class ItemClient extends ClientBase
      * Retrieve the Set of Metadata Records of an Item.
      *
      * @param itemId The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveMdRecords(final String itemId) throws Exception {
@@ -298,7 +298,7 @@ public class ItemClient extends ClientBase
      * Retrieve the list of Parents related to an Item.
      *
      * @param id The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveParents(final String id) throws Exception {
@@ -311,7 +311,7 @@ public class ItemClient extends ClientBase
      * Retrieve the Set of content streams of an Item.
      *
      * @param itemId The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Deprecated
@@ -327,7 +327,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId            The id of the item.
      * @param contentStreamName The name of the content stream.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Deprecated
@@ -344,7 +344,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId            The id of the item.
      * @param contentStreamName The name of the content stream.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Deprecated
@@ -360,7 +360,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId          The id of the item.
      * @param metaDataRecords The Set of Metadata Records.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updateMdRecords(final String itemId, final String metaDataRecords) throws Exception {
@@ -374,7 +374,7 @@ public class ItemClient extends ClientBase
      * Retrieve the Properties of an Item.
      *
      * @param id The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveProperties(final String id) throws Exception {
@@ -387,7 +387,7 @@ public class ItemClient extends ClientBase
      * Retrieve the history of an Item.
      *
      * @param itemId The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveVersionHistory(final String itemId) throws Exception {
@@ -400,7 +400,7 @@ public class ItemClient extends ClientBase
      * Retrieve the list of available Resources of an Item.
      *
      * @param id The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
@@ -413,7 +413,7 @@ public class ItemClient extends ClientBase
      * Retrieve the list of content relations of an Item.
      *
      * @param id The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveRelations(final String id) throws Exception {
@@ -426,7 +426,7 @@ public class ItemClient extends ClientBase
      * Retrieve the METS representation of an Item.
      *
      * @param itemId The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveMets(final String itemId) throws Exception {
@@ -440,7 +440,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId The id of the item.
      * @param param  The parameter structur with resolver entries as XML snippet.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object assignVersionPid(final String itemId, final String param) throws Exception {
@@ -454,7 +454,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId The id of the item.
      * @param param  The parameter structur with resolver entries as XML snippet.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object assignObjectPid(final String itemId, final String param) throws Exception {
@@ -469,7 +469,7 @@ public class ItemClient extends ClientBase
      * @param itemId      The id of the item.
      * @param componentId The id of the component.
      * @param param       The parameter structure with resolver entries as XML snippet.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object assignContentPid(final String itemId, final String componentId, final String param) throws Exception {
@@ -612,7 +612,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId The id of the item.
      * @param param  The timestamp of the last modification of the Item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object lock(final String itemId, final String param) throws Exception {
@@ -626,7 +626,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId The id of the item.
      * @param param  The timestamp of the last modification of the Item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object unlock(final String itemId, final String param) throws Exception {
@@ -640,7 +640,7 @@ public class ItemClient extends ClientBase
      *
      * @param itemId The id of the item.
      * @param param  The timestamp of the last modification of the Item and the new Context.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object moveToContext(final String itemId, final String param) throws Exception {

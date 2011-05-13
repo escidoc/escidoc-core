@@ -35,7 +35,7 @@ import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClie
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the role resource.
+ * Offers access methods to the escidoc interface of the role resource.
  *
  * @author Torsten Tetteroo
  */
@@ -45,7 +45,7 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
      * Create a role.
      *
      * @param roleXml The xml representation of a role
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -59,7 +59,7 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
      * Delete a role.
      *
      * @param id The role id.
-     * @return The HttpMethod after the service call (REST) or null (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -72,7 +72,7 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
      * Retrieve the xml representation of a role.
      *
      * @param id The role id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -85,7 +85,7 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
      * Retrieve the xml representation of the resources of a role.
      *
      * @param id The role id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
@@ -98,7 +98,7 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
      *
      * @param id      The role id.
      * @param roleXml The xml representation of the role
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -112,7 +112,7 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
      * Retrieve role list.
      *
      * @param filter The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveRoles(final Map<String, String[]> filter) throws Exception {

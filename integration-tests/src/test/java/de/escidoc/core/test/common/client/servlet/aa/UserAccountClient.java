@@ -46,7 +46,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the user resource.
+ * Offers access methods to the escidoc interface of the user resource.
  *
  * @author Michael Schneider
  */
@@ -58,7 +58,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * Create an user.
      *
      * @param userXml The xml representation of an user
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -72,7 +72,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * Delete an user.
      *
      * @param id The user id.
-     * @return The HttpMethod after the service call (REST) or null (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -85,7 +85,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * Retrieve the xml representation of an user.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -97,7 +97,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     /**
      * Retrieve the xml representation of the current user.
      *
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveCurrentUser() throws Exception {
@@ -109,7 +109,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * Retrieve the xml representation of the resources of an user account.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
@@ -121,7 +121,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * Retrieve the xml representation of the list of user accounts.
      *
      * @param filter The filter parameters.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveUserAccounts(final Map<String, String[]> filter) throws Exception {
@@ -134,7 +134,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param id      The user id.
      * @param userXml The xml representation of the user
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -149,7 +149,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param id           The user id.
      * @param taskParamXml The xml representation of the user
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updatePassword(final String id, final Object taskParamXml) throws Exception {
@@ -163,7 +163,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param id           The user account id.
      * @param taskParamXml The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object activate(final String id, final String taskParamXml) throws Exception {
@@ -177,7 +177,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param id           The user account id.
      * @param taskParamXml The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object deactivate(final String id, final String taskParamXml) throws Exception {
@@ -190,7 +190,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * Retrieve the current grants of the specified user account.
      *
      * @param id The user account id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -205,7 +205,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param id       The user account id.
      * @param grantXml The XML representation of an grant.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -220,7 +220,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param id      The user account id.
      * @param grantId The id of the grant.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -236,7 +236,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * @param id           The user account id.
      * @param grantId      The id of the grant.
      * @param taskParamXml The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -252,7 +252,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param id        The user account id.
      * @param filterXml The filter-criteria in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -267,7 +267,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * Retrieve a list of grants matching the provided filter-criteria.
      *
      * @param filter The filter-criteria in a CQL query.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -334,7 +334,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * Retrieve the current preferences of the specified user account.
      *
      * @param id The user account id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrievePreferences(final String id) throws Exception {
@@ -348,7 +348,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param id   The user account id.
      * @param name The name of the preference.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrievePreference(final String id, final String name) throws Exception {
@@ -362,7 +362,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param id  The id of the UserAccount.
      * @param xml The xml representation of the preference.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object createPreference(final String id, final String xml) throws Exception {
@@ -377,7 +377,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param id   The id of the UserAccount.
      * @param name The xml representation of the preference.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object deletePreference(final String id, final String name) throws Exception {
@@ -391,7 +391,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param id  The id of the UserAccount.
      * @param xml The xml representation of the preferences.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updatePreferences(final String id, final String xml) throws Exception {
@@ -406,7 +406,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * @param id   The id of the UserAccount.
      * @param name Name of preference.
      * @param xml  The xml representation of the preference.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updatePreference(final String id, final String name, final String xml) throws Exception {
@@ -421,7 +421,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param userId The id of the UserAccount.
      * @param xml    The xml representation of the attribute.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object createAttribute(final String userId, final String xml) throws Exception {
@@ -435,7 +435,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * Retrieve the attributes of the specified user account.
      *
      * @param userId The user account id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveAttributes(final String userId) throws Exception {
@@ -449,7 +449,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param userId The user account id.
      * @param name   The name of the requested attributes.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveNamedAttributes(final String userId, final String name) throws Exception {
@@ -464,7 +464,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      *
      * @param userId      The user account id.
      * @param attributeId The id of the attribute.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveAttribute(final String userId, final String attributeId) throws Exception {
@@ -479,7 +479,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * @param userId      The id of the UserAccount.
      * @param attributeId The name of the attribute to update.
      * @param xml         The xml representation of the attribute.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updateAttribute(final String userId, final String attributeId, final String xml) throws Exception {
@@ -495,7 +495,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      * @param userId      The id of the UserAccount.
      * @param attributeId The id of the attribute to delete.
      * @param attributeId The xml representation of the attribute.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object deleteAttribute(final String userId, final String attributeId) throws Exception {

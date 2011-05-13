@@ -33,7 +33,7 @@ import de.escidoc.core.test.common.client.servlet.ClientBase;
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the grant resource.
+ * Offers access methods to the escidoc interface of the grant resource.
  *
  * @author Michael Hoppe
  */
@@ -43,7 +43,7 @@ public class GrantClient extends ClientBase {
      * Retrieve the current grants of the specified user group or user-account.
      *
      * @param id The user group id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveCurrentGrants(final String id) throws Exception {
@@ -55,7 +55,7 @@ public class GrantClient extends ClientBase {
      *
      * @param id       The user group id.
      * @param grantXml The XML representation of an grant.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object createGrant(final String id, final String grantXml) throws Exception {
@@ -67,7 +67,7 @@ public class GrantClient extends ClientBase {
      *
      * @param id      The user group id.
      * @param grantId The id of the grant.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveGrant(final String id, final String grantId) throws Exception {
@@ -80,7 +80,7 @@ public class GrantClient extends ClientBase {
      * @param id           The user group id.
      * @param grantId      The id of the grant.
      * @param taskParamXml The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object revokeGrant(final String id, final String grantId, final String taskParamXml) throws Exception {
@@ -92,7 +92,7 @@ public class GrantClient extends ClientBase {
      *
      * @param id        The user group id.
      * @param filterXml The filter-criteria in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object revokeGrants(final String id, final String filterXml) throws Exception {
@@ -103,7 +103,7 @@ public class GrantClient extends ClientBase {
      * Retrieve a list of grants matching the provided filter-criteria.
      *
      * @param filter The filter-criteria in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveGrants(final Map<String, String[]> filter) throws Exception {

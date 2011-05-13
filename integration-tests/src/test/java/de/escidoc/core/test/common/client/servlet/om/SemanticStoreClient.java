@@ -42,7 +42,7 @@ public class SemanticStoreClient extends ClientBase {
      * Retrieve the Containers of a Container.
      *
      * @param queryParam The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object spo(final String queryParam) throws Exception {

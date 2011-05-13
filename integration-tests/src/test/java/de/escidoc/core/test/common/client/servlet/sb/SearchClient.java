@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Offers access methods to the escidoc REST and SOAP interface of the Search resource. (SRW-Server)
+ * Offers access methods to the escidoc interface of the Search resource. (SRW-Server)
  * 
  * @author Michael Hoppe
  */
@@ -50,7 +50,7 @@ public class SearchClient extends ClientBase {
      *            The http-parameters as HashMap.
      * @param database
      *            database where search is executed.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception
      *             If the service call fails.
      */
@@ -77,7 +77,7 @@ public class SearchClient extends ClientBase {
      *            The http-parameters as HashMap.
      * @param database
      *            database where search is executed.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception
      *             If the service call fails.
      */
@@ -100,7 +100,7 @@ public class SearchClient extends ClientBase {
      *            The http-parameters as HashMap.
      * @param database
      *            database where scan is executed.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception
      *             If the service call fails.
      */

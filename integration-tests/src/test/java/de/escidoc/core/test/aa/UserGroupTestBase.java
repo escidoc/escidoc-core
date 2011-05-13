@@ -166,7 +166,7 @@ public abstract class UserGroupTestBase extends AaTestBase {
      *
      * @param id      The user group id.
      * @param grantId The id of the grant.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public String retrieveGrant(final String id, final String grantId) throws Exception {
@@ -177,7 +177,7 @@ public abstract class UserGroupTestBase extends AaTestBase {
      * Retrieve the current grants of the specified user group.
      *
      * @param id The user group id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
 
@@ -191,7 +191,7 @@ public abstract class UserGroupTestBase extends AaTestBase {
      *
      * @param id        The user group id.
      * @param filterXml The filter-criteria in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
 

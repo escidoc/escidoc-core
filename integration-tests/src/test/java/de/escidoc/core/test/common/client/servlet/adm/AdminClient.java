@@ -43,7 +43,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
      * Delete objects from repository.
      *
      * @param xml XML containing the object id's
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object deleteObjects(final String xml) throws Exception {
@@ -55,7 +55,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
     /**
      * Get the purge status.
      *
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object getPurgeStatus() throws Exception {
@@ -67,7 +67,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
     /**
      * Get repository information.
      *
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object getRepositoryInfo() throws Exception {
@@ -79,7 +79,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
     /**
      * Get repository information.
      *
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object getIndexConfiguration() throws Exception {
@@ -92,7 +92,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
      * Load example objects.
      *
      * @param type examples type (only "common" allowed at the moment)
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object loadExamples(final String type) throws Exception {
@@ -104,7 +104,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
      * Reindex
      *
      * @param indexName name of Index
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object reindex(final boolean clearIndex, final String indexName) throws Exception {

@@ -44,7 +44,7 @@ public class ContentModelClient extends ClientBase {
      * Retrieve the xml representation of a content model.
      *
      * @param id The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -100,7 +100,7 @@ public class ContentModelClient extends ClientBase {
      * Retrieve content models.
      *
      * @param filter The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveContentModels(final Map<String, String[]> filter) throws Exception {
@@ -144,7 +144,7 @@ public class ContentModelClient extends ClientBase {
      * Retrieve the history of an Content Model.
      *
      * @param id The id of the Content Model.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveVersionHistory(final String id) throws Exception {

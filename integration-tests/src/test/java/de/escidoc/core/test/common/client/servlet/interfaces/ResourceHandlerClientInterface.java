@@ -39,7 +39,7 @@ public interface ResourceHandlerClientInterface {
      * Create a resource.
      *
      * @param resourceXml The xml representation of the resource
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     Object create(final Object resourceXml) throws Exception;
@@ -48,7 +48,7 @@ public interface ResourceHandlerClientInterface {
      * Delete a resource.
      *
      * @param id The resource id.
-     * @return The HttpMethod after the service call (REST) or null (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     Object delete(final String id) throws Exception;
@@ -57,7 +57,7 @@ public interface ResourceHandlerClientInterface {
      * Retrieve the xml representation of a resource.
      *
      * @param id The resource id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     Object retrieve(final String id) throws Exception;
@@ -66,7 +66,7 @@ public interface ResourceHandlerClientInterface {
      * Retrieve the xml representation of the (virtual) resources of a resource.
      *
      * @param id The resource id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     Object retrieveResources(final String id) throws Exception;
@@ -76,7 +76,7 @@ public interface ResourceHandlerClientInterface {
      *
      * @param id          The resource id.
      * @param resourceXml The xml representation of the resource
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     Object update(final String id, final Object resourceXml) throws Exception;

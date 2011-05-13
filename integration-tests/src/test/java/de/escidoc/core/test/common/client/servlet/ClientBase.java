@@ -474,23 +474,6 @@ public abstract class ClientBase {
     }
 
     /**
-     * Gets the soap client to use.<br>
-     * This method is called by the (default) implementation of the method callSoapMethod to determine the soap client
-     * to use.<br>
-     * This default implementation throws an exception indicating further implementation is needed in the concrete test
-     * class.
-     * 
-     * @return Returns the soapClient.
-     * @throws ServiceException
-     *             If the client creation fails.
-     */
-    public Remote getSoapClient() throws ServiceException {
-
-        throw new UnsupportedOperationException("getSoapClient() not supported. In the concrete test class, either"
-            + " this method has to be implemented or the method" + " callSoapMethod() has to be overridden.");
-    }
-
-    /**
      * Make a service call to the escidoc framework for methods without sending an xml representation of a resource.
      * 
      * @param label
@@ -514,7 +497,7 @@ public abstract class ClientBase {
      *            </ul>
      * @param parameters
      *            The parameters for an HTTP GET request.
-     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @return The HttpResponse after the service call .
      * @throws Exception
      *             If the service call fails.
      */
@@ -547,7 +530,7 @@ public abstract class ClientBase {
      *            <li>pathElements[4] = subSubResourceId</li>
      *            <li>...</li>
      *            </ul>
-     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @return The HttpResponse after the service call .
      * @throws Exception
      *             If the service call fails.
      */
@@ -580,7 +563,7 @@ public abstract class ClientBase {
      *            </ul>
      * @param xml
      *            The xml representaion of a new or updated framework object.
-     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @return The HttpResponse after the service call .
      * @throws Exception
      *             If the service call fails.
      */
@@ -613,7 +596,7 @@ public abstract class ClientBase {
      *            <li>pathElements[4] = subSubResourceId</li>
      *            <li>...</li>
      *            </ul>
-     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @return The HttpResponse after the service call .
      * @throws Exception
      *             If the service call fails.
      */
@@ -653,7 +636,7 @@ public abstract class ClientBase {
      *            The mime type of the data.
      * @param filename
      *            The name of the file.
-     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @return The HttpResponse after the service call .
      * @throws Exception
      *             If the service call fails.
      */
@@ -686,7 +669,7 @@ public abstract class ClientBase {
      *            The name of the file, in case of binary content.
      * @param parameters
      *            The request parameters for HTTP GET.
-     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @return The HttpResponse after the service call .
      * @throws Exception
      *             If the service call fails.
      */
@@ -721,7 +704,7 @@ public abstract class ClientBase {
      *            The name of the file, in case of binary content.
      * @param parameters
      *            The request parameters for HTTP GET.
-     * @return The HttpResponse after the service call (REST) or the result object (SOAP).
+     * @return The HttpResponse after the service call .
      * @throws Exception
      *             If the service call fails.
      */
@@ -829,7 +812,7 @@ public abstract class ClientBase {
     protected void logRestServiceCall(
         final String method, final String HttpResponse, final String url, final Object body) {
         String message =
-            "[REST] [" + method + "] Calling eSciDoc with URL='" + url + "' and http method='"
+            '[' + method + "] Calling eSciDoc with URL='" + url + "' and http method='"
                 + HttpResponse.toUpperCase() + "'";
         // if ((Constants.HTTP_METHOD_POST.equals(HttpResponse.toUpperCase()))
         // || (Constants.HTTP_METHOD_PUT.equals(HttpResponse.toUpperCase()))) {
@@ -850,7 +833,7 @@ public abstract class ClientBase {
     @Deprecated
     protected void logSoapServiceCall(final String method, final Collection<Object> params) {
 
-        String message = "[SOAP] [" + method + " ( " + params + " )] Calling eSciDoc service method.";
+        String message = '[' + method + " ( " + params + " )] Calling eSciDoc service method.";
         LOGGER.debug(message);
     }
 

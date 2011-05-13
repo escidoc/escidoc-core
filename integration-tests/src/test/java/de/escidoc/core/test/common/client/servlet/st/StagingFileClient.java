@@ -46,7 +46,7 @@ public class StagingFileClient extends ClientBase {
      * @param binaryContent The binary content of the staging file.
      * @param mimeType      The mime type of the data.
      * @param filename      The name of the file.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object create(final InputStream binaryContent, final String mimeType, final String filename)
@@ -60,7 +60,7 @@ public class StagingFileClient extends ClientBase {
      * Retrieve the binary content of a StagingFile.
      *
      * @param id The id of the StagingFile.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieve(final String id) throws Exception {

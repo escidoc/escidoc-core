@@ -34,7 +34,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc REST and SOAP interface of the Statistic Scope resource.
+ * Offers access methods to the escidoc interface of the Statistic Scope resource.
  *
  * @author Michael Hoppe
  */
@@ -44,7 +44,7 @@ public class ScopeClient extends ClientBase {
      * Create an Scope in the escidoc framework.
      *
      * @param scopeXml The xml representation of the Scope.
-     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -58,7 +58,7 @@ public class ScopeClient extends ClientBase {
      * Delete an Scope from the escidoc framework.
      *
      * @param id The id of the Scope.
-     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -72,7 +72,7 @@ public class ScopeClient extends ClientBase {
      * Retrieve the xml representation of an Scope.
      *
      * @param id The id of the Scope.
-     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -86,7 +86,7 @@ public class ScopeClient extends ClientBase {
      * Retrieve the XML representation of the list of scopes.
      *
      * @param filter filter as CQL query
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveScopes(final Map<String, String[]> filter) throws Exception {
@@ -100,7 +100,7 @@ public class ScopeClient extends ClientBase {
      *
      * @param id       The id of the Scope.
      * @param scopeXml The xml representation of the Scope.
-     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override

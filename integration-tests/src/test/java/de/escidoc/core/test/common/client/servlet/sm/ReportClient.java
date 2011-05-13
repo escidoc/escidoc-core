@@ -32,7 +32,7 @@ import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
- * Offers access methods to the escidoc REST and SOAP interface of the Statistic Report resource.
+ * Offers access methods to the escidoc interface of the Statistic Report resource.
  *
  * @author Michael Hoppe
  */
@@ -42,7 +42,7 @@ public class ReportClient extends ClientBase {
      * Create an item in the escidoc framework.
      *
      * @param xml report-parameters xml.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieve(final String xml) throws Exception {

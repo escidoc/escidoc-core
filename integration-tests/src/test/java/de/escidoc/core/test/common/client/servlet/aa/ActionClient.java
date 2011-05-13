@@ -33,7 +33,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the action resource.
+ * Offers access methods to the escidoc interface of the action resource.
  *
  * @author Torsten Tetteroo
  */
@@ -43,7 +43,7 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
      * Retrieve the xml representation of the resources of a action.
      *
      * @param id The action id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
@@ -56,7 +56,7 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
      *
      * @param contextId The id of the context
      * @param actions   The xml representation of the list of unsecured actions.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object createUnsecuredActions(final String contextId, final String actions) throws Exception {
@@ -69,7 +69,7 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
      * Deletes the unsecured actions list related to a context.
      *
      * @param contextId The id of the context
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object deleteUnsecuredActions(final String contextId) throws Exception {
@@ -82,7 +82,7 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
      * Retrieves the unsecured actions list related to a context.
      *
      * @param contextId The id of the context
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveUnsecuredActions(final String contextId) throws Exception {

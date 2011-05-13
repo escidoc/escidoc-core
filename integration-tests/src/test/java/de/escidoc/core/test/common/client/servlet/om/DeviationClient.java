@@ -83,7 +83,7 @@ public class DeviationClient extends ClientBase {
     /**
      * get the fedora describe xml.
      * 
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception
      *             If the service call fails.
      */

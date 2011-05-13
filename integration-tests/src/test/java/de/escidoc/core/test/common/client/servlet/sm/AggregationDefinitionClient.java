@@ -34,7 +34,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc REST and SOAP interface of the Statistic AggregationDefinition resource.
+ * Offers access methods to the escidoc interface of the Statistic AggregationDefinition resource.
  *
  * @author Michael Hoppe
  */
@@ -44,7 +44,7 @@ public class AggregationDefinitionClient extends ClientBase {
      * Create an item in the escidoc framework.
      *
      * @param aggregationXml The xml representation of the aggregation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -58,7 +58,7 @@ public class AggregationDefinitionClient extends ClientBase {
      * Delete an aggregation from the escidoc framework.
      *
      * @param id The id of the aggregation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -72,7 +72,7 @@ public class AggregationDefinitionClient extends ClientBase {
      * Retrieve the xml representation of an aggregation.
      *
      * @param id The id of the aggregation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -86,7 +86,7 @@ public class AggregationDefinitionClient extends ClientBase {
      * Retrieve the xml representation of the list of aggregation-definitions.
      *
      * @param filter filter
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveAggregationDefinitions(final Map<String, String[]> filter) throws Exception {

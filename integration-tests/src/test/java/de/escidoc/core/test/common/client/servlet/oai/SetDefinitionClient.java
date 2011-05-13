@@ -45,7 +45,7 @@ public class SetDefinitionClient extends ClientBase implements ResourceHandlerCl
      * Retrieve the Containers of a Container.
      *
      * @param id The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieve(final String id) throws Exception {
@@ -58,7 +58,7 @@ public class SetDefinitionClient extends ClientBase implements ResourceHandlerCl
      * Create an defintion set in the escidoc framework.
      *
      * @param setDefinitionXml The xml representation of the defintion set.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -72,7 +72,7 @@ public class SetDefinitionClient extends ClientBase implements ResourceHandlerCl
      * Delete an item from the escidoc framework.
      *
      * @param id The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -87,7 +87,7 @@ public class SetDefinitionClient extends ClientBase implements ResourceHandlerCl
      *
      * @param id               The id of the setDefinition.
      * @param setDefinitionXml The xml representation of the setDefintion.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -101,7 +101,7 @@ public class SetDefinitionClient extends ClientBase implements ResourceHandlerCl
      * Retrieve set definitions.
      *
      * @param filter The filter query.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveSetDefinitions(final Map<String, String[]> filter) throws Exception {

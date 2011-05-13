@@ -32,7 +32,7 @@ import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the policy decision point.
+ * Offers access methods to the escidoc interface of the policy decision point.
  *
  * @author Torsten Tetteroo
  */
@@ -42,7 +42,7 @@ public class PolicyDecisionPointClient extends ClientBase {
      * Evaluates the provided authorization requests.
      *
      * @param requestsXml The xml representation of a list of authorization requests.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object evaluate(final String requestsXml) throws Exception {

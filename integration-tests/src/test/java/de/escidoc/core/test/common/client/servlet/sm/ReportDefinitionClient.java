@@ -34,7 +34,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc REST and SOAP interface of the Statistic ReportDefinition resource.
+ * Offers access methods to the escidoc interface of the Statistic ReportDefinition resource.
  *
  * @author Michael Hoppe
  */
@@ -44,7 +44,7 @@ public class ReportDefinitionClient extends ClientBase {
      * Create an ReportDefinition in the escidoc framework.
      *
      * @param reportDefinitionXml The xml representation of the ReportDefinition.
-     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -58,7 +58,7 @@ public class ReportDefinitionClient extends ClientBase {
      * Delete an ReportDefinition from the escidoc framework.
      *
      * @param id The id of the ReportDefinition.
-     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -72,7 +72,7 @@ public class ReportDefinitionClient extends ClientBase {
      * Retrieve the xml representation of an ReportDefinition.
      *
      * @param id The id of the ReportDefinition.
-     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -86,7 +86,7 @@ public class ReportDefinitionClient extends ClientBase {
      * Retrieve the xml representation of the list of all report-definitions.
      *
      * @param filter filterXml
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveReportDefinitions(final Map<String, String[]> filter) throws Exception {
@@ -100,7 +100,7 @@ public class ReportDefinitionClient extends ClientBase {
      *
      * @param id      The id of the ReportDefinition.
      * @param itemXml The xml representation of the ReportDefinition.
-     * @return The HttpMethod after the service call(REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override

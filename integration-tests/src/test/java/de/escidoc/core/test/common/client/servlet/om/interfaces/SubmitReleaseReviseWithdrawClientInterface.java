@@ -38,7 +38,7 @@ public interface SubmitReleaseReviseWithdrawClientInterface {
      *
      * @param itemId The id of the item.
      * @param param  The timestamp of the last modification of the Item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     Object release(final String itemId, final String param) throws Exception;
@@ -48,7 +48,7 @@ public interface SubmitReleaseReviseWithdrawClientInterface {
      *
      * @param itemId            The id of the item.
      * @param creatorUserHandle The user Handle of the creator to get authenticated access.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     Object releaseWithPid(final String itemId, final String creatorUserHandle) throws Exception;
@@ -58,7 +58,7 @@ public interface SubmitReleaseReviseWithdrawClientInterface {
      *
      * @param itemId The id of the item.
      * @param param  The timestamp of the last modification of the Item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     Object submit(final String itemId, final String param) throws Exception;
@@ -68,7 +68,7 @@ public interface SubmitReleaseReviseWithdrawClientInterface {
      *
      * @param itemId The id of the item.
      * @param param  The timestamp of the last modification of the Item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     Object withdraw(final String itemId, final String param) throws Exception;

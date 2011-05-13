@@ -34,7 +34,7 @@ import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClie
 import java.util.Map;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the user group resource.
+ * Offers access methods to the escidoc interface of the user group resource.
  *
  * @author Michael Hoppe
  */
@@ -44,7 +44,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      * Create a user group.
      *
      * @param userGroupXml The xml representation of an userGroup
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -58,7 +58,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      * Delete a user group.
      *
      * @param id The userGroup id.
-     * @return The HttpMethod after the service call (REST) or null (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -71,7 +71,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      * Retrieve the xml representation of a userGroup.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -84,7 +84,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      * Retrieve the xml representation of the resources of a user group.
      *
      * @param id The id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
@@ -96,7 +96,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      * Retrieve the xml representation of the list of user groups.
      *
      * @param filter The filter parameters.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveUserGroups(final Map<String, String[]> filter) throws Exception {
@@ -109,7 +109,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      *
      * @param id           The userGroup id.
      * @param userGroupXml The xml representation of the user
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -124,7 +124,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      *
      * @param id           The user group id.
      * @param taskParamXml The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object activate(final String id, final String taskParamXml) throws Exception {
@@ -138,7 +138,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      *
      * @param id           The user group id.
      * @param taskParamXml The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object deactivate(final String id, final String taskParamXml) throws Exception {
@@ -151,7 +151,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      * Retrieve the current grants of the specified user group.
      *
      * @param id The user group id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -166,7 +166,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      *
      * @param id       The user group id.
      * @param grantXml The XML representation of an grant.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -181,7 +181,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      *
      * @param id      The user group id.
      * @param grantId The id of the grant.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -196,7 +196,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      *
      * @param id        The user group id.
      * @param taskParam The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
 
@@ -211,7 +211,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      *
      * @param id        The user group id.
      * @param taskParam The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
 
@@ -226,7 +226,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      *
      * @param id        The user group id.
      * @param filterXml The filter-criteria in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -243,7 +243,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      * @param id           The user account id.
      * @param grantId      The id of the grant.
      * @param taskParamXml The task parameter in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override

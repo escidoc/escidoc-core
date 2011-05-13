@@ -33,7 +33,7 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
 
 /**
- * Offers access methods to the escidoc REST and soap interface of the user management wrapper.
+ * Offers access methods to the escidoc interface of the user management wrapper.
  *
  * @author Torsten Tetteroo
  */
@@ -67,7 +67,7 @@ public class UserManagementWrapperClient extends ClientBase {
      * Logout an user.
      *
      * @param userHandle The eSciDOc user handle that shall be sent in the cookie of the logout request.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object logout(final String userHandle) throws Exception {
@@ -83,7 +83,7 @@ public class UserManagementWrapperClient extends ClientBase {
      * @param userHandle               The eSciDOc user handle that shall be sent in the cookie of the logout request.
      * @param encodeRedirectUrlSlashes Flag indicating that the slashes contained in the redirectUrl shall be encoded
      *                                 (<code>true</code>) or shall not be encoded (<code>false</code>).
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object logout(final String redirectUrl, final String userHandle, final boolean encodeRedirectUrlSlashes)

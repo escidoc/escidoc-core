@@ -43,7 +43,7 @@ public class IngestClient extends ClientBase implements ResourceHandlerClientInt
      * Ingest a resource.
      *
      * @param xmlData the string containing the resource in XML representation.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object ingest(final String xmlData) throws Exception {
@@ -54,7 +54,7 @@ public class IngestClient extends ClientBase implements ResourceHandlerClientInt
 
     /**
      * @param id The id of the item.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {

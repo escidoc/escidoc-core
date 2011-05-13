@@ -42,7 +42,7 @@ public class JhoveClient extends ClientBase {
      * Retrieve the Containers of a Container.
      *
      * @param param TODO
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object identify(final String param) throws Exception {

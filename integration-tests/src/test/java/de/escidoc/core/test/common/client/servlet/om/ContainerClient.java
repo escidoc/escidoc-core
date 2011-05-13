@@ -51,7 +51,7 @@ public class ContainerClient extends ClientBase
      * Create a container in the escidoc framework.
      *
      * @param containerXml The xml representation of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -65,7 +65,7 @@ public class ContainerClient extends ClientBase
      * Retrieve the xml representation of a container.
      *
      * @param id The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -79,7 +79,7 @@ public class ContainerClient extends ClientBase
      * Delete a container from the escidoc framework.
      *
      * @param id The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -94,7 +94,7 @@ public class ContainerClient extends ClientBase
      *
      * @param id           The id of the container.
      * @param containerXml The xml representation of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -108,7 +108,7 @@ public class ContainerClient extends ClientBase
      * Retrieve the Containers of a Container.
      *
      * @param filter The filter parameter.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveContainers(final Map<String, String[]> filter) throws Exception {
@@ -121,7 +121,7 @@ public class ContainerClient extends ClientBase
      * Retrieve the Items of a Container.
      *
      * @param id The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveItems(final String id) throws Exception {
@@ -135,7 +135,7 @@ public class ContainerClient extends ClientBase
      *
      * @param id     The id of the container.
      * @param filter filter as CQL query
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveMembers(final String id, final Map<String, String[]> filter) throws Exception {
@@ -149,7 +149,7 @@ public class ContainerClient extends ClientBase
      * Retrieve the list of Parents related to a Container.
      *
      * @param id The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveParents(final String id) throws Exception {
@@ -163,7 +163,7 @@ public class ContainerClient extends ClientBase
      *
      * @param id     The id of the container.
      * @param filter filter as CQL query
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveTocs(final String id, final Map<String, String[]> filter) throws Exception {
@@ -195,7 +195,7 @@ public class ContainerClient extends ClientBase
      *
      * @param itemId     The id of the container.
      * @param mdRecordId The id of the metadata record.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveMdRecord(final String itemId, final String mdRecordId) throws Exception {
@@ -210,7 +210,7 @@ public class ContainerClient extends ClientBase
      * @param itemId      The id of the container.
      * @param mdRecordId  The id of the metadata record.
      * @param mdRecordXml The xml representation of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updateMetaDataRecord(final String itemId, final String mdRecordId, final Object mdRecordXml)
@@ -225,7 +225,7 @@ public class ContainerClient extends ClientBase
      * Retrieve the Set of Metadata Records of a Container.
      *
      * @param id The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveMetaDataRecords(final String id) throws Exception {
@@ -240,7 +240,7 @@ public class ContainerClient extends ClientBase
      *
      * @param id              The id of the container.
      * @param metaDataRecords The Set of Metadata Records.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updateMetaDataRecords(final String id, final String metaDataRecords) throws Exception {
@@ -253,7 +253,7 @@ public class ContainerClient extends ClientBase
      * Retrieve the Properties of a Container.
      *
      * @param id The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveProperties(final String id) throws Exception {
@@ -266,7 +266,7 @@ public class ContainerClient extends ClientBase
      * Retrieve the list of virtual Resources available for a Container.
      *
      * @param id The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
@@ -279,7 +279,7 @@ public class ContainerClient extends ClientBase
      * Retrieve the list of Relations available for a Container.
      *
      * @param id The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveRelations(final String id) throws Exception {
@@ -293,7 +293,7 @@ public class ContainerClient extends ClientBase
      *
      * @param id     The id of the container.
      * @param tocXml The xml representation of the toc of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object createToc(final String id, final Object tocXml) throws Exception {
@@ -307,7 +307,7 @@ public class ContainerClient extends ClientBase
      *
      * @param id    The id of the container.
      * @param id The id of the toc.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object deleteToc(final String id) throws Exception {
@@ -321,7 +321,7 @@ public class ContainerClient extends ClientBase
      *
      * @param containerId The id of the container.
      * @param tocId       The id of the toc.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveToc(final String containerId, final String tocId) throws Exception {
@@ -335,7 +335,7 @@ public class ContainerClient extends ClientBase
      *
      * @param id     The id of the container.
      * @param tocXml The xml representation of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updateToc(final String id, final Object tocXml) throws Exception {
@@ -348,7 +348,7 @@ public class ContainerClient extends ClientBase
      * Retrieve the Tocs of a Container.
      *
      * @param containerId The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveTocs(final String containerId) throws Exception {
@@ -362,7 +362,7 @@ public class ContainerClient extends ClientBase
      *
      * @param id      The id of the container.
      * @param tocsXml The xml representation of the tocs of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object updateTocs(final String id, final Object tocsXml) throws Exception {
@@ -375,7 +375,7 @@ public class ContainerClient extends ClientBase
      * Retrieve the history of a Container.
      *
      * @param containerId The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveVersionHistory(final String containerId) throws Exception {
@@ -389,7 +389,7 @@ public class ContainerClient extends ClientBase
      * Retrieve the METS representation of a Container.
      *
      * @param containerId The id of the container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveMets(final String containerId) throws Exception {
@@ -433,7 +433,7 @@ public class ContainerClient extends ClientBase
      *
      * @param containerId The id of the Container.
      * @param param       The timestamp of the last modification of the Container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object release(final String containerId, final String param) throws Exception {
@@ -447,7 +447,7 @@ public class ContainerClient extends ClientBase
      * @param containerId       The id of the Container.
      * @param creatorUserHandle The user handle of the creator. The PID assignment will be done with higher rights and
      *                          set afterward back to the creatorUserHandle.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object releaseWithPid(final String containerId, final String creatorUserHandle) throws Exception {
@@ -511,7 +511,7 @@ public class ContainerClient extends ClientBase
      *
      * @param containerId The id of the Container.
      * @param param       The timestamp of the last modification of the Container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object releaseWithoutPid(final String containerId, final String param) throws Exception {
@@ -525,7 +525,7 @@ public class ContainerClient extends ClientBase
      *
      * @param containerId The id of the Container.
      * @param param       The timestamp of the last modification of the Container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object revise(final String containerId, final String param) throws Exception {
@@ -539,7 +539,7 @@ public class ContainerClient extends ClientBase
      *
      * @param containerId The id of the Container.
      * @param param       The timestamp of the last modification of the Container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object submit(final String containerId, final String param) throws Exception {
@@ -553,7 +553,7 @@ public class ContainerClient extends ClientBase
      *
      * @param containerId The id of the Container.
      * @param param       The timestamp of the last modification of the Container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object withdraw(final String containerId, final String param) throws Exception {
@@ -567,7 +567,7 @@ public class ContainerClient extends ClientBase
      *
      * @param containerId The id of the Container.
      * @param param       The timestamp of the last modification of the Container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object lock(final String containerId, final String param) throws Exception {
@@ -581,7 +581,7 @@ public class ContainerClient extends ClientBase
      *
      * @param containerId The id of the Container.
      * @param param       The timestamp of the last modification of the Container.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object unlock(final String containerId, final String param) throws Exception {

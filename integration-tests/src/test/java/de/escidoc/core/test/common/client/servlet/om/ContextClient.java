@@ -45,7 +45,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      * Retrieve the xml representation of all contexts matching the filter criteria.
      *
      * @param filter The filters to select the contexts.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveContexts(final Map<String, String[]> filter) throws Exception {
@@ -59,7 +59,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      *
      * @param id     The id of the context.
      * @param filter The filters to select the members.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveMembers(final String id, final Map<String, String[]> filter) throws Exception {
@@ -73,7 +73,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      * Retrieve the xml representation of all virtual resources of the context matching the filter criteria.
      *
      * @param id The id of the context.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
@@ -86,7 +86,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      * Retrieve the xml representation of all admin-descriptors of the context.
      *
      * @param id The id of the context.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveAdminDescriptors(final String id) throws Exception {
@@ -100,7 +100,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      *
      * @param id              The id of the context.
      * @param admDescriptorId The name of the admin-descriptor.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveAdminDescriptor(final String id, final String admDescriptorId) throws Exception {
@@ -115,7 +115,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      *
      * @param id        The id of the context.
      * @param taskParam The task parameters including the last-modification-date.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object open(final String id, final String taskParam) throws Exception {
@@ -129,7 +129,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      *
      * @param id        The id of the context.
      * @param taskParam The task parameters including the last-modification-date.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object close(final String id, final String taskParam) throws Exception {
@@ -142,7 +142,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      * Retrieve the xml representation of a context.
      *
      * @param id The id of the context.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -156,7 +156,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      * Retrieve the xml representation of the properties of a resource.
      *
      * @param id The resource id.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     public Object retrieveProperties(final String id) throws Exception {
@@ -169,7 +169,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      * Create a context in the escidoc framework.
      *
      * @param contextXml The xml representation of the context.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -184,7 +184,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      *
      * @param id         The id of the context.
      * @param contextXml The xml representation of the context.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override
@@ -198,7 +198,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
      * Delete a context from the escidoc framework.
      *
      * @param id The id of the context.
-     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
     @Override

@@ -1937,8 +1937,7 @@ public final class XmlUtility {
     }
 
     /**
-     * @param commonPart The tailing part of a schema location that is common for the rest schema location and the soap
-     *                   schema location, e.g. role/0.4/role.xsd.
+     * @param commonPart The tailing part of a schema location, e.g. role/0.4/role.xsd.
      * @return Returns the complete schema location for the provided value dependent on UserContext flag isRestAccess.
      * @throws WebserverSystemException In case of an error.
      */

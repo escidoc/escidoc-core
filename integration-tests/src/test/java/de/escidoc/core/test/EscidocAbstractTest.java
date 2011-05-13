@@ -1460,7 +1460,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
     /**
      * Asserts that the selected element is a valid referencing element. This is an element that contains xlink
-     * attributes (REST) or an objid attribute (SOAP). In case of Rest, the xlink:href ends with the object id of the
+     * attributes. In case of Rest, the xlink:href ends with the object id of the
      * referenced attribute.
      * 
      * @param message
@@ -1507,7 +1507,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
     /**
      * Asserts that the selected element is a valid referencing element. This is an element that contains xlink
-     * attributes (REST) or an objid attribute (SOAP). In case of Rest, the xlink:href ends with the object id of the
+     * attributes. In case of Rest, the xlink:href ends with the object id of the
      * referenced attribute.
      * 
      * @param message
@@ -1547,7 +1547,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
     /**
      * Asserts that the selected element is a valid referencing element. This is an element that contains xlink
-     * attributes (REST) or an objid attribute (SOAP). In case of Rest, the xlink:href ends with the object id of the
+     * attributes. In case of Rest, the xlink:href ends with the object id of the
      * referenced attribute.<br/>
      * Additionally it is checked whether the values from the selected element matches the respective values from the
      * node containing the expected values. Hereby, the title only is asserted, if the expected node contains one, as
@@ -1604,7 +1604,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
     /**
      * Asserts that the selected element is a valid referencing element. This is an element that contains xlink
-     * attributes (REST) or an objid attribute (SOAP). In case of Rest, the xlink:href ends with the object id of the
+     * attributes. In case of Rest, the xlink:href ends with the object id of the
      * referenced attribute.<br/>
      * Additionally it is checked whether the values from the selected element matches the respective values from the
      * node containing the expected values. In comparing to assertReferencingElement(String, Node, Node, String,
