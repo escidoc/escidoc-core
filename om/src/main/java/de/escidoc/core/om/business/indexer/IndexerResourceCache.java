@@ -321,6 +321,9 @@ public class IndexerResourceCache implements ApplicationContextAware {
 
             href = this.tripleStoreUtility.getHref(objectType, identifier);
         }
+        if (!href.startsWith("http") && !href.startsWith("/")) {
+            href = "/" + href;
+        }
         return href;
     }
 }
