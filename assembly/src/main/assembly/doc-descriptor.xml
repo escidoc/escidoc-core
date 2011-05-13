@@ -26,7 +26,7 @@
   </formats>
   <fileSets>
     <fileSet>
-      <directory>${project.build.directory}/site/technical-documentation/pdf</directory>
+      <directory>${project.basedir}/../target/site/technical-documentation/pdf</directory>
       <includes>
         <include>*.pdf</include>
       </includes>
