@@ -156,11 +156,11 @@ public class GenericVersionableResource extends GenericResourcePid {
         this.initLastModificationDate();
     }
 
-    private void initVersionNumber() throws TripleStoreSystemException, WebserverSystemException,
+    private void initVersionNumber(final String id) throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
         // determine version Number (suffix). Depending on latest-version and
         // status is the versionNumber the suffix or null.
-        this.versionNumber = this.getId().replaceFirst(getId(), "");
+        this.versionNumber = id.replaceFirst(getId(), "");
 
         if (this.versionNumber != null && this.versionNumber.length() > 0) {
 
@@ -220,7 +220,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         ResourceNotFoundException {
         super.setId(id);
         this.versionId = XmlUtility.getVersionNumberFromObjid(id);
-        this.initVersionNumber();
+        this.initVersionNumber(id);
     }
 
     /**
