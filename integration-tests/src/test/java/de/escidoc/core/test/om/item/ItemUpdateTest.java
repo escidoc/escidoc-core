@@ -68,7 +68,7 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
+public class ItemUpdateTest extends ItemTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemUpdateTest.class);
 

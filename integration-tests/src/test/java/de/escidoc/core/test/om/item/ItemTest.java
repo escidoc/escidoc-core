@@ -35,13 +35,16 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingAttri
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ComponentNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.resources.ResourceProvider;
+import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -1674,6 +1677,69 @@ public class ItemTest extends ItemTestBase {
             return;
         }
         fail("Not expected exception");
+    }
+
+    /**
+     * Test declining creation of Item with providing reference to context with invalid href (substring context not in
+     * href).
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testOMCi13_1_rest() throws Exception {
+
+        final Class<?> ec = ContextNotFoundException.class;
+
+        Document toBeCreatedDocument =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+
+        String href = selectSingleNodeAsserted(toBeCreatedDocument, ItemXpathsProvider.XPATH_ITEM_CONTEXT_XLINK_HREF)
+                .getTextContent();
+        href = href.replaceFirst(Constants.CONTEXT_BASE_URI, Constants.ORGANIZATIONAL_UNIT_BASE_URI);
+        substitute(toBeCreatedDocument, ItemXpathsProvider.XPATH_ITEM_CONTEXT_XLINK_HREF, href);
+
+        String toBeCreatedXml = toString(toBeCreatedDocument, true);
+
+        try {
+            create(toBeCreatedXml);
+            EscidocAbstractTest.failMissingException("Creating item with invalid object href not declined. ", ec);
+        }
+        catch (final Exception e) {
+            EscidocAbstractTest
+                    .assertExceptionType("Creating item with invalid object href not declined," + " properly. ", ec, e);
+        }
+    }
+
+    /**
+     * Test declining creation of Item with providing reference to content-model with invalid href (substring
+     * content-model not in href).
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testOMCi13_2_rest() throws Exception {
+
+        final Class ec = ContentModelNotFoundException.class;
+
+        Document toBeCreatedDocument =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+
+        String href =
+            selectSingleNodeAsserted(toBeCreatedDocument, ItemXpathsProvider.XPATH_ITEM_CONTENT_TYPE_XLINK_HREF)
+                    .getTextContent();
+        href = href.replaceFirst(Constants.CONTENT_MODEL_BASE_URI, Constants.ORGANIZATIONAL_UNIT_BASE_URI);
+        substitute(toBeCreatedDocument, ItemXpathsProvider.XPATH_ITEM_CONTENT_TYPE_XLINK_HREF, href);
+
+        String toBeCreatedXml = toString(toBeCreatedDocument, true);
+
+        try {
+            create(toBeCreatedXml);
+            EscidocAbstractTest.failMissingException("Creating item with invalid object href not declined. ", ec);
+        }
+        catch (final Exception e) {
+            EscidocAbstractTest
+                    .assertExceptionType("Creating item with invalid object href not declined," + " properly. ", ec, e);
+        }
     }
 
 }

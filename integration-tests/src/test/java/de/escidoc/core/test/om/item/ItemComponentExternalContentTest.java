@@ -29,6 +29,7 @@
 package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.remote.system.WebserverSystemException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 import org.junit.Test;
@@ -43,7 +44,7 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Schneider
  */
-public class ItemComponentExternalContentTest extends ItemTestBase implements ItemXpathsProvider {
+public class ItemComponentExternalContentTest extends ItemTestBase {
 
     private static final String STORAGE_EXTERNAL_MANAGED = "external-managed";
 
@@ -283,6 +284,42 @@ public class ItemComponentExternalContentTest extends ItemTestBase implements It
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("InvalidContentException", InvalidContentException.class, e);
+        }
+    }
+
+    /**
+     * Test declining retrieve a component content of a component containing the attribute 'storage' set to
+     * 'external-managed' and a wrong URL.
+     */
+    @Test
+    public void testRetrieveItemWithStorageExternalUrlAndWrongUrl() throws Exception {
+        Document item =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+        String storageBeforeCreate = "external-managed";
+        Document newItem =
+            (Document) substitute(item, "/item/components/component[2]/content/@storage", storageBeforeCreate);
+        Document newItem2 =
+            (Document) substitute(newItem, "/item/components/component[2]/content/@href", "http://www.bla.invalid");
+        Node itemWithoutSecondComponent = deleteElement(newItem2, "/item/components/component[1]");
+        String xmlData = toString(itemWithoutSecondComponent, false);
+
+        String theItemXml = create(xmlData);
+        String theItemId = getObjidValue(EscidocAbstractTest.getDocument(theItemXml));
+
+        assertXmlValidItem(xmlData);
+        Document createdItem = getDocument(theItemXml);
+        String componentId;
+        String componentHrefValue = selectSingleNode(createdItem, "/item/components/component/@href").getNodeValue();
+
+        componentId = getObjidFromHref(componentHrefValue);
+        try {
+            retrieveContent(theItemId, componentId);
+            fail("No exception occurred on retrieve content of a component with "
+                + "the attribute 'storage' set to 'external-managed and a wrong url " + "/ir/item/" + theItemId
+                + "/components/component/" + componentId + "/content");
+        }
+        catch (final Exception e) {
+            EscidocAbstractTest.assertExceptionType("WebserverSystemException", WebserverSystemException.class, e);
         }
     }
 }

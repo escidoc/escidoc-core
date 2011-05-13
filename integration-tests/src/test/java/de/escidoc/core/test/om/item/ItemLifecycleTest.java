@@ -43,6 +43,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1385,11 +1386,55 @@ public class ItemLifecycleTest extends ItemTestBase {
             "/item/properties/public-status[text() = 'released']");
         assertXmlExists("Version status not released", anonymousXml,
             "/item/properties/version/status[text() = 'released']");
+    }
 
-        // xml = retrieve(theItemId + ":2");
-        //
-        // Document itemDoc = getDocument(releasedItemXml);
-        // String lmd = getLastModificationDateValue(itemDoc);
+    /**
+     * Test declining retrieving of released item with component visibility "private".
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testOMRContentVisibilityPrivate() throws Exception {
+        PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        Document item =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+        Node itemChanged = substitute(item, "/item/components/component/properties/visibility", "private");
+        String itemXml = toString(itemChanged, false);
+        String cretaedItem = create(itemXml);
+        Document itemDocument = getDocument(cretaedItem);
+        String componentId =
+            selectSingleNode(itemDocument, "/item/components/component" + "[properties/visibility='private']/@href")
+                .getNodeValue();
+        componentId = getIdFromHrefValue(componentId);
+        String itemId = getObjidValue(cretaedItem);
+        String param = getTheLastModificationParam(false, itemId);
+        submit(itemId, param);
+        String pidParam;
+        if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
+            pidParam = getPidParam(itemId, "http://somewhere" + itemId);
+            assignObjectPid(itemId, pidParam);
+        }
+        if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+            String latestVersion = getLatestVersionObjidValue(cretaedItem);
+            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+            assignVersionPid(latestVersion, pidParam);
+        }
+
+        param = getTheLastModificationParam(false, itemId);
+
+        release(itemId, param);
+
+        // PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        PWCallback.setHandle("");
+        try {
+            retrieveContent(itemId, componentId);
+            fail("No AuthorizationException retrieving " + "item with component visibility 'private'.");
+        }
+        catch (final Exception e) {
+            EscidocAbstractTest.assertExceptionType(AuthorizationException.class, e);
+        }
 
     }
 

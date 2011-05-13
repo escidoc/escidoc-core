@@ -1,4 +1,4 @@
-package de.escidoc.core.test.om.deviation.rest;
+package de.escidoc.core.test.om.deviation;
 
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;

@@ -67,6 +67,33 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     private String path = TEMPLATE_CONTAINER_PATH;
 
     /**
+     * Test successfully retrieving of container.
+     *
+     * @throws Exception Thrown if retrieve fails.
+     */
+    @Test
+    public void testRetrieveResources() throws Exception {
+
+        String xmlData =
+            EscidocAbstractTest
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+
+        String theItemXml = handleXmlResult(getItemClient().create(xmlData));
+
+        this.theItemId = getObjidValue(theItemXml);
+        xmlData =
+            EscidocAbstractTest
+                    .getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_v1.1-forItem.xml");
+
+        String theContainerXml = create(xmlData.replaceAll("##ITEMID##", theItemId));
+        String theContainerId = getObjidValue(theContainerXml);
+
+        String resourcesXml = retrieveResources(theContainerId);
+        assertXmlValidContainer(resourcesXml);
+
+    }
+
+    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.

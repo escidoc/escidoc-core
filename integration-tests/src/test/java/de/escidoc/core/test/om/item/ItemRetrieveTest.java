@@ -50,6 +50,24 @@ import static org.junit.Assert.fail;
 public class ItemRetrieveTest extends ItemTestBase {
 
     /**
+     * Test retrieve resources of Item.
+     *
+     * @throws Exception Thrown if anything fails.
+     */
+    @Test
+    public void testRetrieveResources() throws Exception {
+        String xml =
+            EscidocAbstractTest
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+        String itemXml = create(xml);
+        String itemId = getObjidValue(itemXml);
+
+        String resources = retrieveResources(itemId);
+        assertXmlValidItem(resources);
+
+    }
+
+    /**
      * Test successfully retrieving item with a component without valid-status. Issue 655.
      *
      * @throws Exception If anything fails.
