@@ -59,6 +59,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 import org.fcrepo.client.FedoraClient;
 import org.fcrepo.client.HttpInputStream;
 import org.fcrepo.server.access.FedoraAPIA;
@@ -1460,7 +1461,7 @@ public class FedoraUtility implements InitializingBean {
             final HttpResponse httpResponse = httpClient.execute(httpGet);
             final int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (responseCode != HttpServletResponse.SC_OK) {
-
+                EntityUtils.consume(httpResponse.getEntity());
                 throw new WebserverSystemException("Bad response code '" + responseCode + "' requesting '"
                     + this.fedoraUrl + localUrl + "'.", new FedoraSystemException(httpResponse
                     .getStatusLine().getReasonPhrase()));
