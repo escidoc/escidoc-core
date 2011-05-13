@@ -116,14 +116,13 @@ public class ContextPropertiesHandler extends DefaultHandler {
 
                 try {
                     final String id;
-                        final String xlinkHref = element.getAttribute(Constants.XLINK_URI, "href").getValue();
-                        id = XmlUtility.getIdFromURI(xlinkHref);
+                    final String xlinkHref = element.getAttribute(Constants.XLINK_URI, "href").getValue();
+                    id = XmlUtility.getIdFromURI(xlinkHref);
 
-                        if (!xlinkHref.equals("/oum/organizational-unit/" + id)) {
-                            throw new OrganizationalUnitNotFoundException(
-                                "The 'organizational-unit' element has a wrong " + "url. the url have to look like: "
-                                    + "/oum/organizational-unit/id");
-                        }
+                    if (!xlinkHref.equals("/oum/organizational-unit/" + id)) {
+                        throw new OrganizationalUnitNotFoundException("The 'organizational-unit' element has a wrong "
+                            + "url. the url have to look like: " + "/oum/organizational-unit/id");
+                    }
                     this.utility.checkIsOrganizationalUnit(id);
 
                     final String orgUnitStatus =

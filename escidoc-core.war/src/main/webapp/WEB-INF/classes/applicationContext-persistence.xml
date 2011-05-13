@@ -160,13 +160,13 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
 
-    <tx:annotation-driven mode="aspectj" transaction-manager="escidoc-core.transactionManager" />
-
     <bean id="escidoc-core.transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource">
             <ref bean="escidoc-core.DataSource"/>
         </property>
     </bean>
+
+    <tx:annotation-driven mode="aspectj" transaction-manager="escidoc-core.transactionManager" />
 
     <bean id="fedora.triplestore.DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
           lazy-init="true">

@@ -150,13 +150,12 @@ public class SecurityInterceptor implements Ordered {
      * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
-    @Around("execution(public * de.escidoc.core.*.service.*.*(..))" +
-            " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)" +
-            " && !within(de.escidoc.core.common.util.aop..*)")
-    public Object authorize(final ProceedingJoinPoint joinPoint)
-            throws Throwable, MissingAttributeValueException, AuthorizationException, ResourceNotFoundException,
-            MissingElementValueException, InvalidXmlException, MissingMethodParameterException,
-            WebserverSystemException {
+    @Around("execution(public * de.escidoc.core.*.service.*.*(..))"
+        + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
+        + " && !within(de.escidoc.core.common.util.aop..*)")
+    public Object authorize(final ProceedingJoinPoint joinPoint) throws Throwable, MissingAttributeValueException,
+        AuthorizationException, ResourceNotFoundException, MissingElementValueException, InvalidXmlException,
+        MissingMethodParameterException, WebserverSystemException {
         final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         final Method calledMethod = methodSignature.getMethod();
         final String target = getTargetInterface(joinPoint);

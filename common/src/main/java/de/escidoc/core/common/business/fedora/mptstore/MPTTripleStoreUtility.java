@@ -1482,23 +1482,23 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         sb.append(prefixedRootElement);
 
         sb.append(namespaceDecl);
-            sb.append(" xlink:title=\"list of ");
-            sb.append(objectType);
-            sb.append(" references\" xlink:type=\"simple\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
-            sb.append(" xml:base=\"");
-            sb.append(XmlUtility.getEscidocBaseUrl()).append('\"');
+        sb.append(" xlink:title=\"list of ");
+        sb.append(objectType);
+        sb.append(" references\" xlink:type=\"simple\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
+        sb.append(" xml:base=\"");
+        sb.append(XmlUtility.getEscidocBaseUrl()).append('\"');
         sb.append('>');
 
         for (final String id : list) {
             sb.append('<');
             sb.append(prefixedListElement);
-                sb.append(" xlink:href=\"/");
-                sb.append(absoluteLocalPathFirstPart);
-                sb.append('/');
-                sb.append(objectType);
-                sb.append('/');
-                sb.append(id);
-                sb.append("\" xlink:type=\"simple\"");
+            sb.append(" xlink:href=\"/");
+            sb.append(absoluteLocalPathFirstPart);
+            sb.append('/');
+            sb.append(objectType);
+            sb.append('/');
+            sb.append(id);
+            sb.append("\" xlink:type=\"simple\"");
             sb.append(" />");
         }
         sb.append("</");

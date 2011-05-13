@@ -59,7 +59,6 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     private final Collection<ResourceListener> itemListeners = new ArrayList<ResourceListener>();
 
-
     @PostConstruct
     private void init() {
         addItemListener(indexingHandler);

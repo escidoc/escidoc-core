@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
+       default-lazy-init="false">
+
+    <jaxrs:client id="fedoraServiceRestClient"
+                  address="${fedora.url}"
+                  serviceClass="org.escidoc.core.services.fedora.FedoraServiceRESTEndpoint"
+                  username="${fedora.user}"
+                  password="${fedora.password}">
+        <jaxrs:providers>
+            <ref bean="jaxbProvider"/>
+            <ref bean="cachedOutputStreamMessageBodyReader"/>
+            <ref bean="cachedOutputStreamMessageBodyWriter"/>
+        </jaxrs:providers>
+    </jaxrs:client>
+
+</beans>

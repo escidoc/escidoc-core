@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jms-server</artifactId>
-    <name>eSciDoc Core - JMS Server</name>
+    <name>eSciDoc Core - Infrastructure - JMS Server</name>
 
     <build>
 		<plugins>

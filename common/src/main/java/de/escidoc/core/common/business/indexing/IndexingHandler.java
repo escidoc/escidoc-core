@@ -142,8 +142,8 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be stored.
      */
     @Override
-    public void resourceCreated(final String id, final String xml) throws SystemException,
-        TripleStoreSystemException, WebserverSystemException, ApplicationServerSystemException {
+    public void resourceCreated(final String id, final String xml) throws SystemException, TripleStoreSystemException,
+        WebserverSystemException, ApplicationServerSystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }
@@ -194,8 +194,8 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be deleted and newly created.
      */
     @Override
-    public void resourceModified(final String id, final String xml) throws SystemException,
-        TripleStoreSystemException, WebserverSystemException, ApplicationServerSystemException {
+    public void resourceModified(final String id, final String xml) throws SystemException, TripleStoreSystemException,
+        WebserverSystemException, ApplicationServerSystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }

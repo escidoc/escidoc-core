@@ -121,9 +121,8 @@ public class RelationHandler2 extends DefaultHandler {
 
             String id = null;
             try {
-                    final String href =
-                        element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
-                    id = Utility.getId(href);
+                final String href = element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
+                id = Utility.getId(href);
 
             }
             catch (final NoSuchAttributeException e) {

@@ -147,8 +147,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     private String getAlternateForm() throws SystemException, WebserverSystemException {
         try {
-                UserContext.setRestAccess(false);
-                return getRenderer().render(getOrganizationalUnit());
+            UserContext.setRestAccess(false);
+            return getRenderer().render(getOrganizationalUnit());
         }
         catch (final WebserverSystemException e) {
             throw new SystemException(e);

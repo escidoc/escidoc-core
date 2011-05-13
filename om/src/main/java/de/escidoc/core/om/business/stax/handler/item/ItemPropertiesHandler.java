@@ -249,8 +249,8 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 href = element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
             }
             catch (final NoSuchAttributeException e1) {
-                throw new MissingAttributeValueException("The attribute " + Elements.ATTRIBUTE_XLINK_HREF + " of " + Elements.ELEMENT_CONTEXT
-                    + " is missing in item for create.", e);
+                throw new MissingAttributeValueException("The attribute " + Elements.ATTRIBUTE_XLINK_HREF + " of "
+                    + Elements.ELEMENT_CONTEXT + " is missing in item for create.", e);
             }
             final int indexOfLastSlash = href.lastIndexOf('/');
             contextId = href.substring(indexOfLastSlash + 1);
@@ -291,8 +291,8 @@ public class ItemPropertiesHandler extends DefaultHandler {
             catch (final NoSuchAttributeException e1) {
                 final String refType = Elements.ELEMENT_CONTENT_MODEL;
                 final String objType = "item";
-                throw new MissingAttributeValueException("The attribute " + Elements.ATTRIBUTE_XLINK_HREF + " of " + refType + " is missing in "
-                    + objType + " for create.", e);
+                throw new MissingAttributeValueException("The attribute " + Elements.ATTRIBUTE_XLINK_HREF + " of "
+                    + refType + " is missing in " + objType + " for create.", e);
             }
             final int indexOfLastSlash = href.lastIndexOf('/');
             contentModelId = href.substring(indexOfLastSlash + 1);
@@ -333,8 +333,8 @@ public class ItemPropertiesHandler extends DefaultHandler {
             catch (final NoSuchAttributeException e1) {
                 final String refType = Elements.ELEMENT_ORIGIN;
                 final String objType = "item";
-                throw new MissingAttributeValueException("The attribute " + Elements.ATTRIBUTE_XLINK_HREF + " of " + refType + " is missing in "
-                    + objType + " for create.", e);
+                throw new MissingAttributeValueException("The attribute " + Elements.ATTRIBUTE_XLINK_HREF + " of "
+                    + refType + " is missing in " + objType + " for create.", e);
             }
             final int indexOfLastSlash = href.lastIndexOf('/');
             originId = href.substring(indexOfLastSlash + 1);

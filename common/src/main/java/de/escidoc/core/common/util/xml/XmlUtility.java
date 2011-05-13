@@ -1546,10 +1546,10 @@ public final class XmlUtility {
      */
     public static String getAdminDescriptorSchemaLocation() throws WebserverSystemException {
         final String subPath = "context/0.4/context.xsd";
-            if (contextRestSchemaLocation == null) {
-                contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + subPath;
-            }
-            return contextRestSchemaLocation;
+        if (contextRestSchemaLocation == null) {
+            contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + subPath;
+        }
+        return contextRestSchemaLocation;
     }
 
     /**
@@ -2100,12 +2100,12 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getAggregationDefinitionSchemaLocation() throws WebserverSystemException {
-            if (aggregationDefinitionRestSchemaLocation == null) {
-                aggregationDefinitionRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/aggregation-definition"
-                        + Constants.AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION + "/aggregation-definition.xsd";
-            }
-            return aggregationDefinitionRestSchemaLocation;
+        if (aggregationDefinitionRestSchemaLocation == null) {
+            aggregationDefinitionRestSchemaLocation =
+                getSchemaBaseUrl() + "rest/aggregation-definition"
+                    + Constants.AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION + "/aggregation-definition.xsd";
+        }
+        return aggregationDefinitionRestSchemaLocation;
     }
 
     /**
@@ -2113,12 +2113,12 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getReportDefinitionSchemaLocation() throws WebserverSystemException {
-            if (reportDefinitionRestSchemaLocation == null) {
-                reportDefinitionRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/report-definition" + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION
-                        + "/report-definition.xsd";
-            }
-            return reportDefinitionRestSchemaLocation;
+        if (reportDefinitionRestSchemaLocation == null) {
+            reportDefinitionRestSchemaLocation =
+                getSchemaBaseUrl() + "rest/report-definition" + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION
+                    + "/report-definition.xsd";
+        }
+        return reportDefinitionRestSchemaLocation;
     }
 
     /**
@@ -2126,11 +2126,11 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getScopeSchemaLocation() throws WebserverSystemException {
-            if (scopeRestSchemaLocation == null) {
-                scopeRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/scope" + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
-            }
-            return scopeRestSchemaLocation;
+        if (scopeRestSchemaLocation == null) {
+            scopeRestSchemaLocation =
+                getSchemaBaseUrl() + "rest/scope" + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
+        }
+        return scopeRestSchemaLocation;
     }
 
     /**
