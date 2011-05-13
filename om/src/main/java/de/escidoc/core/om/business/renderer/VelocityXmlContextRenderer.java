@@ -344,7 +344,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *
      * @param values Value Map for Velocity
      */
-    protected void addStructuralRelationsNamespaceValues(final Map<String, Object> values) {
+    protected static void addStructuralRelationsNamespaceValues(final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
@@ -355,7 +355,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *
      * @param values Value Map for Velocity
      */
-    protected void addPropertiesNamespaceValues(final Map<String, Object> values) {
+    protected static void addPropertiesNamespaceValues(final Map<String, Object> values) {
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
     }

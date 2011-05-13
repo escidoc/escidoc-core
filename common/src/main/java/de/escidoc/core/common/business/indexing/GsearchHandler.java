@@ -505,7 +505,7 @@ public class GsearchHandler {
      * @param path path to Directory
      * @return boolean if delete was successful
      */
-    public boolean deleteDir(final File path) {
+    public static boolean deleteDir(final File path) {
         if (path.exists()) {
             final File[] files = path.listFiles();
             for (final File file : files) {

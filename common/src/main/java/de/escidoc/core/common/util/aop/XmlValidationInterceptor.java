@@ -75,7 +75,7 @@ public class XmlValidationInterceptor implements Ordered {
         }
     }
 
-    private Method getTargetInterfaceMethod(final JoinPoint joinPoint) {
+    private static Method getTargetInterfaceMethod(final JoinPoint joinPoint) {
         Method targetMethod = null;
         final Method calledMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
         Class[] interfaces = joinPoint.getTarget().getClass().getInterfaces();
@@ -102,7 +102,7 @@ public class XmlValidationInterceptor implements Ordered {
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      */
-    private void validate(final String xml, final String resolvingMethod, final String root)
+    private static void validate(final String xml, final String resolvingMethod, final String root)
         throws WebserverSystemException, XmlParserSystemException, XmlSchemaValidationException, XmlCorruptedException {
 
         XmlUtility.validate(xml, getSchemaLocation(resolvingMethod), root);

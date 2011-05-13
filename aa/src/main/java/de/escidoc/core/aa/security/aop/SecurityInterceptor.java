@@ -81,7 +81,7 @@ import java.util.regex.Pattern;
     + "de.escidoc.core.aa.security.aop.SecurityInterceptor, "
     + "de.escidoc.core.common.util.aop.ParameterCheckInterceptor, "
     + "de.escidoc.core.common.util.aop.XmlValidationInterceptor, "
-    + "de.escidoc.core.common.util.aop.StatisticInterceptor, " + "*")
+    + "de.escidoc.core.common.util.aop.StatisticInterceptor, " + '*')
 public class SecurityInterceptor implements Ordered {
 
     /**
@@ -230,7 +230,7 @@ public class SecurityInterceptor implements Ordered {
         }
     }
 
-    private String getTargetInterface(final ProceedingJoinPoint joinPoint) {
+    private static String getTargetInterface(final ProceedingJoinPoint joinPoint) {
         String target = null;
         final Method calledMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
         Class[] interfaces = joinPoint.getTarget().getClass().getInterfaces();

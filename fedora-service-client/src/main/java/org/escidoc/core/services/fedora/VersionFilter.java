@@ -29,12 +29,12 @@ public class VersionFilter extends EsciDocUnmarshallerListener {
 
                 public DatastreamVersionTypeTO process(DatastreamVersionTypeTO datastreamVersionTypeTO) {
                     if (versionDate.equals(datastreamVersionTypeTO.getCREATED())) {
-                        if (datastreamTypeTO.getDatastreamVersion().size() > 0) {
+                        if (! datastreamTypeTO.getDatastreamVersion().isEmpty()) {
                             datastreamTypeTO.getDatastreamVersion().remove(0);
                         }
                         return datastreamVersionTypeTO;
                     } else if (versionDate.isAfter(datastreamVersionTypeTO.getCREATED())) {
-                        if (datastreamTypeTO.getDatastreamVersion().size() == 0) {
+                        if (datastreamTypeTO.getDatastreamVersion().isEmpty()) {
                             return datastreamVersionTypeTO;
                         } else {
                             final DatastreamVersionTypeTO lastDatastreamVersionTypeTO = datastreamTypeTO.getDatastreamVersion().get(0);

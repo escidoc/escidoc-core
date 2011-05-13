@@ -258,8 +258,7 @@ public final class PoliciesCache {
      *                      for the provided values.
      */
     public static void putRoleIsGrantedEvaluationResult(
-        final String userOrGroupId, final String roleId, final String resourceId,
-        final EvaluationResult roleIsGranted) {
+        final String userOrGroupId, final String roleId, final String resourceId, final EvaluationResult roleIsGranted) {
 
         if (userOrGroupId == null || roleId == null) {
             return;

@@ -238,7 +238,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
                 i++;
             }
             fieldsSql.append(") ");
-            valuesSql.append(")");
+            valuesSql.append(')');
             sql.append(fieldsSql).append(valuesSql);
             getJdbcTemplate().execute(sql.toString());
         }
@@ -434,7 +434,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
             createSql.append(databaseTableFieldVo.getFieldName()).append(' ').append(dbDataType).append("");
             i++;
         }
-        createSql.append(")");
+        createSql.append(')');
         sqlStatements.add(createSql.toString());
 
         // Get Create-Statements for Indexes
@@ -453,7 +453,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
                     indexSql.append(indexField);
                     j++;
                 }
-                indexSql.append(")");
+                indexSql.append(')');
                 sqlStatements.add(indexSql.toString());
             }
         }

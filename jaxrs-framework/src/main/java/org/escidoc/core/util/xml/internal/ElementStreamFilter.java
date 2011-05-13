@@ -98,7 +98,7 @@ public class ElementStreamFilter implements StreamFilter {
                     break;
                 // TODO: implement other events!
                 default:
-                    System.out.println("TODO: Implement handling for XML event " + reader.getEventType() + ".");
+                    System.out.println("TODO: Implement handling for XML event " + reader.getEventType() + '.');
             }
         }
         return true;

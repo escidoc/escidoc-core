@@ -311,7 +311,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @param values             The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void addCommonValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
+    private static void addCommonValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws WebserverSystemException {
 
         String lmd = null;

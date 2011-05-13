@@ -137,7 +137,7 @@ public final class FileUtils {
 
     private static boolean isWindows() {
         String osName = System.getProperty("os.name").toLowerCase(Locale.US);
-        return osName.indexOf("windows") > -1;
+        return osName.contains("windows");
     }
 
 }

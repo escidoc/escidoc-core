@@ -159,7 +159,7 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * @param values The {@link Map} to that the values shall be added.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    private void addReportNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addReportNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("reportNamespacePrefix", Constants.REPORT_NS_PREFIX);
         values.put("reportNamespace", Constants.REPORT_NS_URI);

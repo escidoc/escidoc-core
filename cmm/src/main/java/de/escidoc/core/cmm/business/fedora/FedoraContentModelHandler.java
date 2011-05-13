@@ -733,7 +733,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * @param item The item which is to validate.
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
-    private void validate(final ContentModelCreate item) throws InvalidContentException {
+    private static void validate(final ContentModelCreate item) throws InvalidContentException {
 
         // check public status of Content Model
         final StatusType publicStatus = item.getProperties().getObjectProperties().getStatus();

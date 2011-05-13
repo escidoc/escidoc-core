@@ -430,7 +430,7 @@ public class AccessRights {
      * @param roleId      role id
      * @return set of ids of all scopes
      */
-    private Set<String> getScopeIds(
+    private static Set<String> getScopeIds(
         final Map<String, Map<String, List<RoleGrant>>> userGrants,
         final Map<String, Map<String, List<RoleGrant>>> groupGrants, final String roleId) {
         final Set<String> result = new HashSet<String>();
@@ -523,7 +523,7 @@ public class AccessRights {
      * @param href HREF to an eSciDoc resource
      * @return resource type for that HREF
      */
-    public ResourceType getResourceTypeFromHref(final String href) {
+    public static ResourceType getResourceTypeFromHref(final String href) {
         ResourceType result = null;
 
         if (href != null) {

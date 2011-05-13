@@ -132,7 +132,7 @@ public class XMLBase {
      * @return The resulting list of nodes.
      * @throws TransformerException If anything fails.
      */
-    public NodeList parse(final String xPath, final Node node) throws TransformerException {
+    public static NodeList parse(final String xPath, final Node node) throws TransformerException {
         return XPathAPI.selectNodeList(node, xPath);
     }
 
@@ -143,7 +143,7 @@ public class XMLBase {
      * @param attribute The attribute name.
      * @return The value of teh attribute.
      */
-    public String getAttributeValue(final Node node, final String attribute) {
+    public static String getAttributeValue(final Node node, final String attribute) {
 
         String result = null;
         if (node != null) {
@@ -165,7 +165,7 @@ public class XMLBase {
      * @param childName The name of the child node.
      * @return The child node.
      */
-    public Node getChild(final Node node, final String childName) {
+    public static Node getChild(final Node node, final String childName) {
 
         Node result = null;
         try {
@@ -190,7 +190,7 @@ public class XMLBase {
      * @param path  The path.
      * @return The resulting xPath.
      */
-    public String appendToXpath(final String xPath, final String path) {
+    public static String appendToXpath(final String xPath, final String path) {
 
         String result = xPath;
         if (xPath != null && path != null) {
@@ -240,7 +240,7 @@ public class XMLBase {
      * @return The <code>String</code> representation of teh document.
      * @throws IOException If the serialization fails.
      */
-    public String getDocumentAsString(final Document document) throws IOException {
+    public static String getDocumentAsString(final Document document) throws IOException {
 
         final StringWriter stringOut = new StringWriter();
 
@@ -297,7 +297,8 @@ public class XMLBase {
      * @throws IOException If the save operation fails.
      * @throws java.io.FileNotFoundException
      */
-    public void saveToFile(final String filename, final String contents) throws IOException, FileNotFoundException {
+    public static void saveToFile(final String filename, final String contents) throws IOException,
+        FileNotFoundException {
 
         final File outFile = new File(filename);
         outFile.createNewFile();

@@ -104,25 +104,25 @@ public class VelocityXmlCommonRenderer {
         }
     }
 
-    protected void addXlinkValues(final Map values) throws WebserverSystemException {
+    protected static void addXlinkValues(final Map values) throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
     }
 
-    protected void addRelationsNamespaceValues(final Map values) throws WebserverSystemException {
+    protected static void addRelationsNamespaceValues(final Map values) throws WebserverSystemException {
         values.put("contentRelationsNamespacePrefix", Constants.CONTENT_RELATIONS_NAMESPACE_PREFIX);
         values.put("contentRelationsNamespace", Constants.CONTENT_RELATIONS_NAMESPACE_URI);
 
     }
 
-    protected void addStructuralRelationsValues(final Map values) throws WebserverSystemException {
+    protected static void addStructuralRelationsValues(final Map values) throws WebserverSystemException {
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
-    protected void addParentsNamespaceValues(final Map values) throws WebserverSystemException {
+    protected static void addParentsNamespaceValues(final Map values) throws WebserverSystemException {
         values.put("parentsNamespacePrefix", Constants.PARENTS_NAMESPACE_PREFIX);
         values.put("parentsNamespace", Constants.PARENTS_NAMESPACE_URI);
 

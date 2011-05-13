@@ -455,7 +455,7 @@ public class Resource extends XMLBase {
         try {
             final Class[] exceptionTypes = getExceptions(getAttributeValue(invoke, INVOKE_METHOD_ATTR), paramNo - 1);
             if (exceptionTypes != null && exceptionTypes.length > 0) {
-                final StringBuffer c1 = new StringBuffer();
+                final StringBuilder c1 = new StringBuilder();
                 final StringBuilder c2 = new StringBuilder();
                 for (int i = 0; i < exceptionTypes.length; ++i) {
                     String msg;

@@ -24,11 +24,11 @@ public final class DatastreamVersionTypeListTO implements Collection<DatastreamV
     }
 
     public boolean addAll(Collection c) {
-        return this.addAll(c);
+        return internalArrayList.addAll(c);
     }
 
     public boolean addAll(int index, Collection c) {
-        return this.addAll(index, c);
+        return internalArrayList.addAll(index, c);
     }
 
     public boolean removeAll(Collection<?> c) {

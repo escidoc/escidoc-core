@@ -48,7 +48,7 @@ public class SmXmlUtility {
      * @param sql sql-statement of report-definition.
      * @return Collection with aggregation-definition prim keys.
      */
-    public Collection<String> extractAggregationPrimKeysFromSql(final String sql) {
+    public static Collection<String> extractAggregationPrimKeysFromSql(final String sql) {
         final Collection<String> primKeys = new ArrayList<String>();
         if (sql != null) {
             String workSql = sql.replaceAll("\\s+", " ");
@@ -81,7 +81,7 @@ public class SmXmlUtility {
      * @return String scopeId
      * @throws XmlParserSystemException e
      */
-    public String getScopeId(final String xmlData) throws XmlParserSystemException {
+    public static String getScopeId(final String xmlData) throws XmlParserSystemException {
         return xmlData.replaceFirst("(?s).*?<[^>]*?scope.*?objid=\"(.*?)\".*", "$1");
     }
 
@@ -91,7 +91,7 @@ public class SmXmlUtility {
      * @param primKey primKey
      * @return String primKeyWithoutSpecialSigns
      */
-    public String convertPrimKeyToTableName(final String primKey) {
+    public static String convertPrimKeyToTableName(final String primKey) {
         if (primKey != null) {
             return primKey.replaceAll("\\:", "");
         }

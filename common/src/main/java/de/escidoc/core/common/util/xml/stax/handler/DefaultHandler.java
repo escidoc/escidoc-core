@@ -109,7 +109,7 @@ public abstract class DefaultHandler {
      * @param e
      * @return Returns a {@link SystemException} as this situation can occur due to internal errors, only.
      */
-    protected SystemException createMandatoryAttributeNotFoundException(
+    protected static SystemException createMandatoryAttributeNotFoundException(
         final StartElement startElement, final String namespaceUri, final String attributeName, final Exception e) {
 
         return new WebserverSystemException(StringUtility.format(MSG_MANDATORY_ATTRIBUTE_NOT_FOUND, startElement
@@ -139,7 +139,8 @@ public abstract class DefaultHandler {
      *             throws an exception. Get the value of an Attribute.
      */
     @Deprecated
-    protected String getAttributeValue(final StartElement element, final String namespace, final String attributeName) {
+    protected static String getAttributeValue(
+        final StartElement element, final String namespace, final String attributeName) {
 
         String typeValue = null;
         final int indexOfType = element.indexOfAttribute(namespace, attributeName);

@@ -119,7 +119,7 @@ public class ItemHandlerBase extends HandlerBase {
      *
      * @return ItemXmlProvider.
      */
-    final ItemXmlProvider getItemXmlProvider() {
+    static final ItemXmlProvider getItemXmlProvider() {
         return ItemXmlProvider.getInstance();
     }
 
@@ -128,7 +128,7 @@ public class ItemHandlerBase extends HandlerBase {
      *
      * @return RelationsXmlProvider.
      */
-    protected RelationsXmlProvider getRelationsXmlProvider() {
+    protected static RelationsXmlProvider getRelationsXmlProvider() {
 
         return RelationsXmlProvider.getInstance();
     }
@@ -456,8 +456,8 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws FileNotFoundException Thrown if access to remote resource failed.
      * @throws FedoraSystemException Thrown if Fedora reports an error.
      */
-    final void handleFedoraUploadError(final String url, final FedoraSystemException e) throws FileNotFoundException,
-        FedoraSystemException {
+    static final void handleFedoraUploadError(final String url, final FedoraSystemException e)
+        throws FileNotFoundException, FedoraSystemException {
 
         final Matcher matcherErrorGetting = PATTERN_ERROR_GETTING.matcher(e.getMessage());
         final Matcher matcherMalformedUrl = PATTERN_MALFORMED_URL.matcher(e.getMessage());

@@ -994,7 +994,7 @@ public class GenericResource implements FedoraResource {
      * @param sourceKey The key in the source Map.
      * @param targetKey The key in the target Map where the value is to store.
      */
-    public void map(
+    public static void map(
         final Map<String, String> sourceMap, final Map<String, String> targetMap, final String sourceKey,
         final String targetKey) {
 

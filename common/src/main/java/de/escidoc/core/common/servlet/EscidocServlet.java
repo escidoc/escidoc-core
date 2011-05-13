@@ -293,7 +293,7 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException In case of any failure.
      * @throws java.io.UnsupportedEncodingException
      */
-    private boolean handleException(
+    private static boolean handleException(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse, final BeanMethod method,
         final Throwable e) throws IOException, UnsupportedEncodingException {
 
@@ -384,7 +384,7 @@ public class EscidocServlet extends HttpServlet {
      * @param result       The {@link String} object that shall be sent in the response.
      * @throws IOException If anything fails.
      */
-    private void doSendStringResponse(
+    private static void doSendStringResponse(
         final HttpServletResponse httpResponse, final String httpMethod, final String result) throws IOException {
 
         if (HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod) || HTTP_POST.equals(httpMethod)) {
@@ -430,7 +430,8 @@ public class EscidocServlet extends HttpServlet {
      * @param httpMethod   The http method of the request.
      * @throws IOException If anything fails.
      */
-    private void doSendVoidResponse(final HttpServletResponse httpResponse, final String httpMethod) throws IOException {
+    private static void doSendVoidResponse(final HttpServletResponse httpResponse, final String httpMethod)
+        throws IOException {
 
         if (HTTP_DELETE.equals(httpMethod)) {
             doSendStringResponse(httpResponse, null, HttpServletResponse.SC_NO_CONTENT);
@@ -610,7 +611,7 @@ public class EscidocServlet extends HttpServlet {
      * @param param   The name of the param.
      * @return The value of the param.
      */
-    protected String getQueryParamValue(final HttpServletRequest request, final String param) {
+    protected static String getQueryParamValue(final HttpServletRequest request, final String param) {
         String result = null;
         if (request.getQueryString() != null) {
             final StringTokenizer queryToken = new StringTokenizer(request.getQueryString(), "&");

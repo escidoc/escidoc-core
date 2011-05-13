@@ -170,7 +170,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
             final Fingerprint currentFingerprint = new Fingerprint(connection);
             final Fingerprint storedFingerprint =
                 Fingerprint.readObject(getClass().getResourceAsStream(
-                    FINGERPRINT_PATH + DatabaseType.valueOf(connection).getProductName() + "/" + DB_VERSION.toString()
+                    FINGERPRINT_PATH + DatabaseType.valueOf(connection).getProductName() + '/' + DB_VERSION.toString()
                         + ".xml"));
             result = storedFingerprint.equals(currentFingerprint);
         }
