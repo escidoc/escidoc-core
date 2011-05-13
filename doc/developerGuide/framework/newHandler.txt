@@ -4,18 +4,6 @@ Insert new HandlerInterface in OM-Package:
 -create businessInterface in de.fiz.escidoc.om.business.interfaces
 -create Implementation in in de.fiz.escidoc.om.business
 
--Register for SOAP:
-Wenn service-name vom Klassennamen abweichen soll, dann in de.fiz.escidoc.service.<Name>Handler
-	 * @axis.service scope="Request" urn="access" provider="java:EJB" 
-als class-tag eintragen
-
-Wenn custom-Rückgabetypen verwendet werden, diese in
-merge/axis-mappings<name>Bean.xml eintragen
-
--in aa/src/beanRefFactory:
-  <alias name="Aa.spring.ejb.context"
-		alias="UserManagementWrapper.spring.ejb.context" />
-
 -Register for REST:
 /om/servlet/item.xml definiert die Resource mit Uri + Methoden
 
@@ -27,4 +15,4 @@ escidoc-core.ear/escidoc-core.war/WEB-INF/web.xml:
 -Policies updaten: neue Methoden in actions, method-mappings, invocation-mappings + policies eintragen
 	
 -Testprojekt:
-antcall wsdl2java in src/bin/build-axis für den Handler eintragen
+antcall wsdl2java in src/bin/build-axis fï¿½r den Handler eintragen

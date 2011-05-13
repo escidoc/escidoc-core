@@ -33,7 +33,7 @@ import java.lang.reflect.Method;
 /**
  * AOP Interceptor used for checking that no method parameter is null.<p/>
  * <p/>
- * This Interceptor is invoked every time an EJB calls one of its service classes.<br>
+ * This Interceptor is invoked every time an service calls one of its classes.<br>
  *
  * @author Michael Schneider
  */

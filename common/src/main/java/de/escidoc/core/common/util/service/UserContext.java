@@ -92,8 +92,8 @@ public final class UserContext {
     /**
      * Sets the user context. The user context is stored in the provided {@link SecurityContext} object. This object is
      * stored via the spring security {@link SecurityContextHolder}</code>.<br> This constructor is used to forward the
-     * security context to another EJB. The provided security context is checked for being created by the base services
-     * to prevent setting it by external services.<br> A previous UserContext is deleted by this method.
+     * security context to another service. The provided security context is checked for being created by the base
+     * services to prevent setting it by external services.<br> A previous UserContext is deleted by this method.
      *
      * @param context The principal storing information about the user. This principal must be signed by a known key.
      *                Otherwise, an exception is thrown.

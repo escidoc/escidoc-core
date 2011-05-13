@@ -44,13 +44,13 @@ import java.util.regex.Pattern;
  * Interceptor used to create statistic data for the eSciDoc base services.
  * <p/>
  * <p/>
- * This Interceptor is invoked every time an EJB calls one of its service classes.<br/> It must be the first interceptor
+ * This Interceptor is invoked every time an service calls one of its classes.<br/> It must be the first interceptor
  * in the chain.<br/> This interceptor performs user authentication, too, as the user data is needed for the
  * statistics.<br/> This interceptor stores in the thread local <code>StatisticDataVo</code> object the following
  * information before calling the handler method: <ul> <li><code>PARAM_HANDLER</code>, the name of the called
  * handler.</li> <li><code>PARAM_REQUEST</code>, the name of the called handler method.</li>
  * <li><code>PARAM_INTERNAL</code>, the flag indicating if this is an internal call from one infrastructure service
- * (EJB) to another ( <code>VALUE_INTERNAL_TRUE</code>), or if it is an external call from a non-infrastructure service
+ * to another ( <code>VALUE_INTERNAL_TRUE</code>), or if it is an external call from a non-infrastructure service
  * or application (<code>VALUE_INTERNAL_FALSE</code> ).</li> <li><code>PARAM_USER_ID</code>, the id of the user
  * performing the current request.</li> <li><code>PARAM_OBJECT_ID</code>, the id of the accessed resource, if this is
  * available in the first parameter. To check this, it is asserted that the first parameter does not seem to contain XML

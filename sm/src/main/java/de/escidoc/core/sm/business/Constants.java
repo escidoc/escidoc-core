@@ -151,11 +151,6 @@ public final class Constants {
     public static final String SCOPE_OBJECT_TYPE = "scope";
 
     /**
-     * Spring Object-Names.
-     */
-    public static final String SM_SPRING_CONTEXT_NAME = "Sm.spring.ejb.context";
-
-    /**
      * JAXB-Binding Constants.
      */
     public static final String AGGREGATION_DEFINITION_CONTEXT_PATH =

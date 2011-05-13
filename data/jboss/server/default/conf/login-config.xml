@@ -47,9 +47,7 @@ $Revision: 64598 $
 -->
 
 <policy>
-    <!-- Used by clients within the application server VM such as
-    mbeans and servlets that access EJBs.
-    -->
+    <!-- Used by clients within the application server VM such as mbeans and servlets. -->
     <application-policy name = "client-login">
        <authentication>
           <login-module code = "org.jboss.security.ClientLoginModule"

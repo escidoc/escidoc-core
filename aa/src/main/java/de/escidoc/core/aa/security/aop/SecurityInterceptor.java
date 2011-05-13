@@ -67,7 +67,7 @@ import java.util.regex.Pattern;
  * Interceptor used for securing the escidoc framework.
  * <p/>
  * <p/>
- * This Interceptor is invoked every time an EJB calls one of its service classes, except <ul>
+ * This Interceptor is invoked every time an service calls one of its classes, except <ul>
  * <li>FedoraManagementDeviationaHandler (as this just delegates to other resource handlers that are secured)</li>
  * <li>FedoraAccessDeviationaHandler (as this just delegates to the item handler that is secured)</li>
  * <li>FedoraDescribeDeviationaHandler (as this handler does not provide any information that has to be secured)</li>
@@ -126,7 +126,7 @@ public class SecurityInterceptor implements Ordered {
      * <li><code>ShibbolethUser</code>, which means that the service has been invoked from via a webservice,
      * </li> <li><code>internal</code>, which means that the service has been called internally from another
      * component and <code>INTERNAL_INTERCEPTION</code> is turned off, or</li>
-     * <li><code>authorization</code>, which means that the EJB has been called internally from the authorization
+     * <li><code>authorization</code>, which means that the service has been called internally from the authorization
      * component.</li> </ul> <li>In case the technical username is <code>internal</code>, no further security checks are
      * done, the intercepted method is invoked and its return value is returned to the originally invoking method.</li>
      * <li>In case the technical username is <code>ShibbolethUser</code>, the following steps are executed.</li> <li>The
@@ -137,7 +137,7 @@ public class SecurityInterceptor implements Ordered {
      * returning some return values.</li> <li>If the return values are a list of objects, these have to filtered before
      * returned to the invoking service. For this the private method <code>doFiltering</code> is called, which returns the
      * (filtered) return value of the intercepted method.</li> <li>The (filtered) return value of the intercepted method
-     * is returned back to the invoking EJB.</li> </ul>
+     * is returned back to the invoking service.</li> </ul>
      *
      * @param joinPoint The current {@link JoinPoint}.
      * @throws Throwable Thrown in case of an error.

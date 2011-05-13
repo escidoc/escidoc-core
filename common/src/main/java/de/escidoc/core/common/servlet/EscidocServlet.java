@@ -41,7 +41,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.context.SecurityContextHolder;
 import org.xml.sax.SAXException;
 
-import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
@@ -306,9 +305,6 @@ public class EscidocServlet extends HttpServlet {
         else if (e instanceof InvocationTargetException) {
             ret =
                 handleException(httpRequest, httpResponse, method, ((InvocationTargetException) e).getTargetException());
-        }
-        else if (e instanceof EJBException) {
-            ret = handleException(httpRequest, httpResponse, method, ((EJBException) e).getCausedByException());
         }
         else if (e instanceof AspectException) {
             ret = handleException(httpRequest, httpResponse, method, e.getCause());

@@ -1,9 +1,6 @@
 # Changes during switch to Maven2 build
 
 - reorganize data structure
-- use remote ejb interfaces if different package is called (this should be the 
-  case before, but is wasn't)
-
 
 Check this
 =============

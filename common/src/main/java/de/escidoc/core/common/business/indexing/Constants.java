@@ -42,11 +42,6 @@ public final class Constants {
     //3 hrs, because of optimize
     public static final int REQUEST_TIMEOUT = 3 * 60 * 60 * 1000;
 
-    /**
-     * Spring Object-Names.
-     */
-    public static final String SB_SPRING_CONTEXT_NAME = "Sb.spring.ejb.context";
-
     public static final String INDEXING_ERROR_LOGFILE = "indexer-errors";
 
     /**
