@@ -224,8 +224,6 @@ public class IngestTest extends IngestTestBase {
      *             <li>No exception is thrown because object PID is missing</li>
      *             </ul>
      */
-    // FIXME should be activated when SOAP is dropped
-    @Ignore("Mapping in SOAP seems wrong and unfixable")
     @Test(expected = ContextNotFoundException.class)
     public void ingestItemWithWrongContextReference() throws Exception {
 
@@ -532,11 +530,8 @@ public class IngestTest extends IngestTestBase {
      * @throws Exception
      *             Thrown if behavior is not as expected.
      */
-    // FIXME should be activated when SOAP is dropped
-    @Ignore("Mapping in SOAP seems wrong and unfixable")
     @Test(expected = XmlCorruptedException.class)
     public void testInvalidXml() throws Exception {
-
         ingest("laber-rababer");
     }
 

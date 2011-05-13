@@ -72,7 +72,7 @@ public class SetDefinitionTestBase extends OaiTestBase {
     }
 
     /**
-     * Retrieve a Template as a Document and fixes the "link" attributes in case of SOAP.<br> The used parser is NOT
+     * Retrieve a Template as a Document .<br> The used parser is NOT
      * namespace aware!
      *
      * @param path         The Path of the Template.
