@@ -64,8 +64,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,13 +77,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Base class for tests that are used to test the REST and SOAP interfaces of the eSciDoc core services.
+ * Base class for tests that are used to test the interfaces of the eSciDoc core services.
  * 
  * @author Torsten Tetteroo
  */
-public class EscidocRestSoapTestBase extends EscidocTestBase {
+public abstract class EscidocAbstractTest extends EscidocTestBase {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EscidocRestSoapTestBase.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EscidocAbstractTest.class);
 
     private static final String XPATH_MODIFIED_BY = "//" + NAME_PROPERTIES + "/" + NAME_MODIFIED_BY;
 
@@ -578,7 +576,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Creates a new element node for the provided document. The created element is an element that refers to another
-     * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/>
+     * resource, i.e. it has xlink attributes.<br/>
      * 
      * @param doc
      *            The document for that the node shall be created.
@@ -609,7 +607,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     /**
      * Creates a new element node for the provided document. The created element is an element that refers to another
-     * resource, i.e. it has xlink attributes in case of REST or objid attribute in case of SOAP.<br/>
+     * resource, i.e. it has xlink attributes.<br/>
      *
      * @param doc
      *            The document for that the node shall be created.
@@ -1476,7 +1474,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      *            attribute in case of REST.<br/>
      *            If this value is <code>null</code>, this assertion is skipped.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
-     *         element. In case of SOAP, the returned href and title values are <code>null</code>.
+     *         element.
      * @throws Exception
      *             Thrown if anything fails.
      */
@@ -1527,7 +1525,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      *            attribute in case of REST.<br/>
      *            If this value is <code>null</code>, this assertion is skipped.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
-     *         element. In case of SOAP, the returned href and title values are <code>null</code>.
+     *         element.
      * @throws Exception
      *             Thrown if anything fails.
      */
@@ -1568,7 +1566,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      *            attribute in case of REST.<br/>
      *            If this value is <code>null</code>, this assertion is skipped.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
-     *         element. In case of SOAP, the returned href and title values are <code>null</code>.
+     *         element.
      * @throws Exception
      *             Thrown if anything fails.
      */
@@ -1627,7 +1625,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      *            attribute in case of REST.<br/>
      *            If this value is <code>null</code>, this assertion is skipped.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
-     *         element. In case of SOAP, the returned href and title values are <code>null</code>.
+     *         element.
      * @throws Exception
      *             Thrown if anything fails.
      */
@@ -1924,7 +1922,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * @param toBeAssertedNode
      *            The node that shall be asserted.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
-     *         element. In case of SOAP, the returned href and title values are <code>null</code>.
+     *         element.
      * @throws Exception
      *             If anything fails.
      */
@@ -1947,7 +1945,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      * @param toBeAssertedNode
      *            The node that shall be asserted.
      * @return Returns an array containing the object id, the href (if any), and the title (if any) of the referenced
-     *         element. In case of SOAP, the returned href and title values are <code>null</code>.
+     *         element.
      * @throws Exception
      *             If anything fails.
      */
@@ -2191,7 +2189,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         if (getIdAttribute) {
             replacedXpath += PART_XLINK_HREF;
         }
-        NodeList nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), replacedXpath);
+        NodeList nodes = selectNodeList(EscidocAbstractTest.getDocument(xml), replacedXpath);
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
             String nodeValue = node.getNodeValue();
@@ -2229,7 +2227,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         if (getIdAttribute) {
             replacedXpath += PART_XLINK_HREF;
         }
-        NodeList nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), replacedXpath);
+        NodeList nodes = selectNodeList(EscidocAbstractTest.getDocument(xml), replacedXpath);
         String lastValue = "";
         if (!isAscending) {
             lastValue = "ZZZZZZZZZZZZZZZZZZZZZ";
@@ -2280,7 +2278,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     public void assertNodeCount(final String xml, final String xpath, final int count) throws Exception {
 
-        NodeList nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), xpath);
+        NodeList nodes = selectNodeList(EscidocAbstractTest.getDocument(xml), xpath);
         assertEquals(count, nodes.getLength());
     }
 
@@ -2419,8 +2417,8 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      */
     private static File getTemplatePath(final String path, final String templateName) throws Exception {
 
-        final String className = "EscidocRestSoapTestBase.class";
-        URL url = EscidocRestSoapTestBase.class.getResource(className);
+        final String className = "EscidocAbstractTest.class";
+        URL url = EscidocAbstractTest.class.getResource(className);
 
         int pos = url.getPath().indexOf("de/escidoc/core/test/" + className);
         String tempPath = url.getPath().substring(0, pos) + "../../src/test/resources/" + path + "/" + templateName;
@@ -2732,7 +2730,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         String xpathPublicStatus = "/[item|container]/properties/status";
 
         String objXml = retrieve(objid);
-        Document objDoc = EscidocRestSoapTestBase.getDocument(objXml);
+        Document objDoc = EscidocAbstractTest.getDocument(objXml);
         Node statusNode = selectSingleNode(objDoc, xpathPublicStatus);
 
         return statusNode.getTextContent();

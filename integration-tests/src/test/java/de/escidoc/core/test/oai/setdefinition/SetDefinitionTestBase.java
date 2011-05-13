@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.oai.setdefinition;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.oai.OaiTestBase;
 import org.apache.http.HttpResponse;
@@ -64,7 +64,7 @@ public class SetDefinitionTestBase extends OaiTestBase {
             createdSetDefinitionXml = create(toBeCreatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSetDefinition(createdSetDefinitionXml);
         Document createdSetDefinition = getDocument(createdSetDefinitionXml);
@@ -83,10 +83,10 @@ public class SetDefinitionTestBase extends OaiTestBase {
     public Document getTemplateAsFixedSetDefinitionDocument(final String path, final String templateName)
         throws Exception {
 
-        // return fixLinkAttributes(EscidocRestSoapTestBase
+        // return fixLinkAttributes(EscidocAbstractTest
         // .getTemplateAsDocument(path, templateName),
         // XPATH_USER_GROUP_SELECTORS);
-        return EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        return EscidocAbstractTest.getTemplateAsDocument(path, templateName);
     }
 
     /**

@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
@@ -444,7 +444,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 PWCallback.setHandle(creatorHandle);
             }
             Document xmlData =
-                EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
+                EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
             String contextHref =
                 de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
             substitute(xmlData, "/item/properties/context/@href", contextHref);
@@ -453,7 +453,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
             xml = xml.replaceAll("Meier", "Meier1");
             xml = item.update(objectId, xml);
             String lastModDate = getLastModificationDate(xml);
-            Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
+            Document itemDoc = EscidocAbstractTest.getDocument(xml);
             returnHash.put("itemId", objectId);
             for (int i = 1;; i++) {
                 try {
@@ -559,7 +559,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 PWCallback.setHandle(creatorHandle);
             }
             Document xmlData =
-                EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_SB_CONTENT_RELATION_PATH, templateName);
+                EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_SB_CONTENT_RELATION_PATH, templateName);
 
             String subjectHref = de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + subjectId;
             String objectHref = de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + objectId;

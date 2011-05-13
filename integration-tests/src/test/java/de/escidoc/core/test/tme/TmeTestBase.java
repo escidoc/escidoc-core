@@ -1,9 +1,9 @@
 package de.escidoc.core.test.tme;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.tme.JhoveClient;
 
-public class TmeTestBase extends EscidocRestSoapTestBase {
+public class TmeTestBase extends EscidocAbstractTest {
 
     private final JhoveClient jhoveClient;
 

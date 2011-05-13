@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.common;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.fedora.Client;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.apache.xpath.XPathAPI;
@@ -106,7 +106,7 @@ public class PurgeRepository {
         // call value from TripleStore
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result = tripleStore.requestMPT("* " + trsPredicate + " *", "RDF/XML");
-        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
+        Document resultDoc = EscidocAbstractTest.getDocument(result);
 
         // obtain objids
         NodeList nl = XPathAPI.selectNodeList(resultDoc, "/RDF/Description/@about");

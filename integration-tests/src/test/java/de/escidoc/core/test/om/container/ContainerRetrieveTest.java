@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.MdRecordNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -76,7 +76,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         this.path += "/rest";
 
         this.theItemId = createItem();
-        String xmlData = EscidocRestSoapTestBase.getTemplateAsString(this.path, "create_container_v1.1-forItem.xml");
+        String xmlData = EscidocAbstractTest.getTemplateAsString(this.path, "create_container_v1.1-forItem.xml");
 
         theContainerXml = create(xmlData.replaceAll("##ITEMID##", theItemId));
         this.theContainerId = getObjidValue(this.theContainerXml);
@@ -129,7 +129,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected on retrieve members.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected on retrieve members.", ec, e);
         }
     }
 
@@ -146,7 +146,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected on retrieve members.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected on retrieve members.", ec, e);
         }
     }
 
@@ -197,7 +197,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -214,7 +214,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         catch (final Exception e) {
             // Class<?> ec = ContainerNotFoundException.class;
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -232,7 +232,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         assertXmlValidSrwResponse(xml);
 
         NodeList nodes = null;
-        nodes = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
+        nodes = selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
 
         assertContainers(nodes);
     }
@@ -260,13 +260,13 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     @Test
     public void testRetrieveMembers() throws Exception {
         // make list from containers struct map
-        Document container = EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
+        Document container = EscidocAbstractTest.getDocument(retrieve(theContainerId));
         NodeList smMembers = selectNodeList(container, "/container/struct-map/*/@href");
 
         // make list from containers member list
         String xml = retrieveMembers(theContainerId, new HashMap<String, String[]>());
         NodeList mlMembers =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@href");
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@href");
         List<String> smMembersList = nodeList2List(smMembers);
         List<String> mlMembersList = nodeList2List(mlMembers);
 
@@ -284,7 +284,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         assertXmlValidSrwResponse(xml);
 
-        Document xmlDoc = EscidocRestSoapTestBase.getDocument(xml);
+        Document xmlDoc = EscidocAbstractTest.getDocument(xml);
         NodeList memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@href");
 
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
@@ -305,7 +305,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         assertXmlValidSrwResponse(xml);
 
-        Document xmlDoc = EscidocRestSoapTestBase.getDocument(xml);
+        Document xmlDoc = EscidocAbstractTest.getDocument(xml);
         NodeList memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@href");
 
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
@@ -326,7 +326,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         assertXmlValidSrwResponse(xml);
 
-        Document xmlDoc = EscidocRestSoapTestBase.getDocument(xml);
+        Document xmlDoc = EscidocAbstractTest.getDocument(xml);
         NodeList memberIds = selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
             String id = memberIds.item(i).getNodeValue();
@@ -396,7 +396,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         String nameWS = "MD-Records Descriptor Name with whitespaces";
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "create_container.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "create_container.xml");
         substitute(context, "/container/md-records/md-record[2]/@name", nameWS);
         String template = toString(context, false);
 
@@ -405,7 +405,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -424,7 +424,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             "MD-Records_Attribute_Name_without_whitespaces_but_"
                 + "extra_long_to_reach_the_64_character_limit_of_fedora_other" + "_things_are_not_tested";
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "create_container.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "create_container.xml");
         substitute(context, "/container/md-records/md-record[2]/@name", nameLong);
         String template = toString(context, false);
 
@@ -433,7 +433,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -484,7 +484,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * Get the ids of the StructMap members.
      */
     private List<String> getStructMapMembers(final String xml) throws Exception {
-        Document container = EscidocRestSoapTestBase.getDocument(xml);
+        Document container = EscidocAbstractTest.getDocument(xml);
         NodeList smMembers = selectNodeList(container, "/container/struct-map/*/@href");
         return nodeList2List(smMembers);
     }
@@ -498,7 +498,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     private List<String> getMemberListMembers(final String xml) throws Exception {
         // make list from containers member list
         NodeList mlMembers =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@href");
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + "*/@href");
         return nodeList2List(mlMembers);
     }
 
@@ -523,7 +523,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         assertXmlValidSrwResponse(list);
 
         NodeList nodes =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(list), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
+            selectNodeList(EscidocAbstractTest.getDocument(list), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
             Node node = nodes.item(count);
@@ -532,12 +532,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             try {
                 String container = retrieve(nodeValue);
                 String containerStatus =
-                    selectSingleNode(EscidocRestSoapTestBase.getDocument(container), filterResultXPath).getNodeValue();
+                    selectSingleNode(EscidocAbstractTest.getDocument(container), filterResultXPath).getNodeValue();
                 assertEquals(reqStatus, containerStatus);
             }
             catch (final ContainerNotFoundException e) {
                 if (reqStatus.equals(STATUS_WITHDRAWN)) {
-                    EscidocRestSoapTestBase.assertExceptionType(ItemNotFoundException.class, e);
+                    EscidocAbstractTest.assertExceptionType(ItemNotFoundException.class, e);
                 }
                 else {
                     fail("No container could be retrieved with id " + nodeValue + " returned by retrieveContainerRefs.");
@@ -579,8 +579,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(new URL(TEMPLATE_ITEM_PATH + "/rest/"
-                + "escidoc_item_198_for_create.xml"));
+            EscidocAbstractTest
+                    .getTemplateAsString(new URL(TEMPLATE_ITEM_PATH + "/rest/" + "escidoc_item_198_for_create.xml"));
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
         return getObjidValue(theItemXml);
@@ -606,8 +606,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         NodeList containers = null;
 
         String list = retrieveMembers(id, filterParams);
-        items = selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/item/@href");
-        containers = selectNodeList(EscidocRestSoapTestBase.getDocument(list), "/member-list/member/container/@href");
+        items = selectNodeList(EscidocAbstractTest.getDocument(list), "/member-list/member/item/@href");
+        containers = selectNodeList(EscidocAbstractTest.getDocument(list), "/member-list/member/container/@href");
 
         for (int count = containers.getLength() - 1; count >= 0; count--) {
             Node node = containers.item(count);
@@ -756,7 +756,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             result = retrieveContainers(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }
@@ -778,7 +778,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             result = retrieveMembers(theContainerId, filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }
@@ -800,7 +800,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             result = retrieveTocs(theContainerId, filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }
@@ -825,8 +825,8 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         String containerId = getObjidValue(containerXml);
 
         String itemTemplXml =
-            EscidocRestSoapTestBase.getTemplateAsString(new URL(TEMPLATE_ITEM_PATH + "/rest/"
-                + "item_without_component.xml"));
+            EscidocAbstractTest
+                    .getTemplateAsString(new URL(TEMPLATE_ITEM_PATH + "/rest/" + "item_without_component.xml"));
 
         String itemXml = createItem(containerId, itemTemplXml);
         String itemId = getObjidValue(itemXml);

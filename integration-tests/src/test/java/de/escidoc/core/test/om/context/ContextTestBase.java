@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.context;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.om.OmTestBase;
@@ -61,7 +61,7 @@ public class ContextTestBase extends OmTestBase {
     protected String createSuccessfully(final String templateName) throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH, templateName);
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH, templateName);
         setUniqueValue(toBeCreatedDocument, XPATH_CONTEXT_NAME);
         final String toBeCreatedXml = toString(toBeCreatedDocument, true);
 
@@ -70,7 +70,7 @@ public class ContextTestBase extends OmTestBase {
             createdXml = create(toBeCreatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Create of OU failed. ", e);
+            EscidocAbstractTest.failException("Create of OU failed. ", e);
         }
         return createdXml;
     }
@@ -88,7 +88,7 @@ public class ContextTestBase extends OmTestBase {
         String[] ret = new String[number];
         for (int i = 0; i < number; i++) {
             final String createdXml = createSuccessfully(templateName);
-            final Document createdDocument = EscidocRestSoapTestBase.getDocument(createdXml);
+            final Document createdDocument = EscidocAbstractTest.getDocument(createdXml);
             ret[i] = getObjidValue(createdDocument);
         }
         return ret;
@@ -116,10 +116,10 @@ public class ContextTestBase extends OmTestBase {
         final String timestampBeforeLastModification, final boolean assertCreationDate) throws Exception {
 
         assertXmlValidContext(toBeAssertedXml);
-        Document document = EscidocRestSoapTestBase.getDocument(toBeAssertedXml);
+        Document document = EscidocAbstractTest.getDocument(toBeAssertedXml);
 
         if (originalXml != null) {
-            Document originalDocument = EscidocRestSoapTestBase.getDocument(originalXml);
+            Document originalDocument = EscidocAbstractTest.getDocument(originalXml);
 
             if (assertCreationDate) {
                 final String expectedCreationDate = getCreationDateValue(originalDocument);
@@ -188,8 +188,8 @@ public class ContextTestBase extends OmTestBase {
 
         assertXmlValidContext(toBeAssertedXml);
 
-        Document toBeAssertedDocument = EscidocRestSoapTestBase.getDocument(toBeAssertedXml);
-        Document template = EscidocRestSoapTestBase.getDocument(xmlTemplateContext);
+        Document toBeAssertedDocument = EscidocAbstractTest.getDocument(toBeAssertedXml);
+        Document template = EscidocAbstractTest.getDocument(xmlTemplateContext);
 
         // assert root element
         // String[] values =

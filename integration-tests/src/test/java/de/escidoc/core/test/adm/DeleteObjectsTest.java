@@ -29,7 +29,7 @@
 package de.escidoc.core.test.adm;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Test;
 
 import static org.junit.Assert.fail;
@@ -50,7 +50,7 @@ public class DeleteObjectsTest extends AdminToolTestBase {
     public void testDeleteObjects() throws Exception {
         // create item
         String xml =
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemId = getObjidValue(createItem(xml));
 
@@ -74,7 +74,7 @@ public class DeleteObjectsTest extends AdminToolTestBase {
             fail("item with id " + itemId + " still exists");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ItemNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType(ItemNotFoundException.class, e);
         }
     }
 }

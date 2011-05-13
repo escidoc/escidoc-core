@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.item;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.fedora.Client;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -62,7 +62,7 @@ public class ItemMetadataTest extends ItemTestBase {
         String itemXml = getExampleTemplate(templateName);
 
         // add explicid datastream with name DC to Item
-        Document curItem = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document curItem = EscidocAbstractTest.getDocument(itemXml);
 
         // select or create md-records node
         Node mdRecords = selectSingleNode(curItem, "/item/md-records");
@@ -74,7 +74,7 @@ public class ItemMetadataTest extends ItemTestBase {
 
         // add md-record with name dc
         Document mdRecordDC =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "md-record.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "md-record.xml");
         Node newMdRecord = selectSingleNode(mdRecordDC, "/md-record");
 
         Node importedNde = curItem.importNode(newMdRecord, true);
@@ -89,7 +89,7 @@ public class ItemMetadataTest extends ItemTestBase {
         String xml = create(newXml);
 
         // check if created XML contains both meta data elements
-        Document newItem = EscidocRestSoapTestBase.getDocument(xml);
+        Document newItem = EscidocAbstractTest.getDocument(xml);
         assertXmlExists("md-record with name 'escidoc' missing", newItem,
             "/item/md-records/md-record[@name = 'escidoc']");
 
@@ -99,7 +99,7 @@ public class ItemMetadataTest extends ItemTestBase {
         String dcXML = fc.getDatastreamContent("DC", objid);
 
         assertNotSame("DC mapping failed.", 0, dcXML.length());
-        Document newDC = EscidocRestSoapTestBase.getDocument(dcXML);
+        Document newDC = EscidocAbstractTest.getDocument(dcXML);
 
         assertXmlExists("DC mapping failed: missing or wrong dc:title", newDC,
             "/dc/title[text() = 'Quasiparticle calculations for " + "point defects at semiconductor surfaces']");
@@ -126,13 +126,13 @@ public class ItemMetadataTest extends ItemTestBase {
         String itemXml = getExampleTemplate(templateName);
 
         // add explicid datastream with name DC to Item
-        Document curItem = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document curItem = EscidocAbstractTest.getDocument(itemXml);
         String newXml = toString(curItem, false);
 
         String xml = create(newXml);
 
         // check if created XML contains both meta data elements
-        Document newItem = EscidocRestSoapTestBase.getDocument(xml);
+        Document newItem = EscidocAbstractTest.getDocument(xml);
         assertXmlExists("md-record with name 'escidoc' missing", newItem,
             "/item/md-records/md-record[@name = 'escidoc']");
 

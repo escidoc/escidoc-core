@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyWithdrawnException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
@@ -77,7 +77,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -117,7 +117,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -135,7 +135,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -151,7 +151,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -171,7 +171,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -384,7 +384,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = AlreadyWithdrawnException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -395,7 +395,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
     public String getTheLastModificationParam(boolean includeWithdrawComment, String id) throws Exception {
         String lastModificationDate = null;
         try {
-            Document container = EscidocRestSoapTestBase.getDocument(retrieve(id));
+            Document container = EscidocAbstractTest.getDocument(retrieve(id));
 
             // get last-modification-date
             NamedNodeMap atts = container.getDocumentElement().getAttributes();
@@ -417,7 +417,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
             else if (result instanceof String) {
                 xmlResult = (String) result;
             }
-            Document item = EscidocRestSoapTestBase.getDocument(xmlResult);
+            Document item = EscidocAbstractTest.getDocument(xmlResult);
             // get last-modification-date
             NamedNodeMap atts = item.getDocumentElement().getAttributes();
             Node lastModificationDateNode = atts.getNamedItem("last-modification-date");

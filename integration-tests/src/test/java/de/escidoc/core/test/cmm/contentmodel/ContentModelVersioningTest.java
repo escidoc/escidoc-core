@@ -28,10 +28,9 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.apache.xpath.XPathAPI;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -60,7 +59,7 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
         Document cmDocV1E1 = getDocument(cmV1E1);
         String objid = getObjidValue(cmV1E1);
 
-        Document wovDocV1E1 = EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
+        Document wovDocV1E1 = EscidocAbstractTest.getDocument(retrieveVersionHistory(objid));
 
         // check timestamps consistency ----------------------------------
         // /content-model/@last-modification-date ==
@@ -128,13 +127,13 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
 
         // version 2
         String cmXmlV2E1 = update(objid, toString(tmpl, false));
-        Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+        Document cmDocV2E1 = EscidocAbstractTest.getDocument(cmXmlV2E1);
 
         // FIXME the test is uncomplete because update() failed.
         /*
          * check data structure
          */
-        Document wovDocV2E1 = EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
+        Document wovDocV2E1 = EscidocAbstractTest.getDocument(retrieveVersionHistory(objid));
 
         // check timestamp of version 1
         assertEquals("timestamp of version 1 of Content Model [" + objid

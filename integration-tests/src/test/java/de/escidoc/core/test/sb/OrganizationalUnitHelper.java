@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -72,7 +72,7 @@ public class OrganizationalUnitHelper extends OrganizationalUnitTestBase {
      * @throws Exception e
      */
     public String getTemplateAsString(final String xmlName) throws Exception {
-        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, xmlName);
+        return EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, xmlName);
     }
 
     /**

@@ -32,7 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.HttpResponse;
 import org.junit.After;
@@ -68,7 +68,7 @@ public class ContainerLockTest extends ContainerTestBase {
         lock(theContainerId, param);
 
         String containerXml = retrieve(theContainerId);
-        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
         assertXmlEquals("Container lock status not as expected", containerDoc, "/container/properties/lock-status",
             "locked");
         assertXmlNotNull("lock-date", containerDoc, "/container/properties/lock-date");
@@ -80,7 +80,7 @@ public class ContainerLockTest extends ContainerTestBase {
             update(theContainerId, containerXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Update container failed with exception. ", e);
+            EscidocAbstractTest.failException("Update container failed with exception. ", e);
         }
 
     }
@@ -98,19 +98,19 @@ public class ContainerLockTest extends ContainerTestBase {
             lock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Unlocking container can not be tested, locking"
-                + " failed with exception.", e);
+            EscidocAbstractTest
+                    .failException("Unlocking container can not be tested, locking" + " failed with exception.", e);
         }
 
         try {
             unlock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Unlocking container failed with exception. ", e);
+            EscidocAbstractTest.failException("Unlocking container failed with exception. ", e);
         }
 
         String containerXml = retrieve(theContainerId);
-        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
         assertXmlEquals("Container lock status not as expected", containerDoc, "/container/properties/lock-status",
             "unlocked");
 
@@ -129,7 +129,7 @@ public class ContainerLockTest extends ContainerTestBase {
             update(theContainerId, containerXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Updating unlocked container failed with exception. ", e);
+            EscidocAbstractTest.failException("Updating unlocked container failed with exception. ", e);
         }
 
     }
@@ -147,8 +147,8 @@ public class ContainerLockTest extends ContainerTestBase {
             lock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Unlocking container can not be tested, locking"
-                + " failed with exception.", e);
+            EscidocAbstractTest
+                    .failException("Unlocking container can not be tested, locking" + " failed with exception.", e);
         }
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -157,11 +157,11 @@ public class ContainerLockTest extends ContainerTestBase {
             unlock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Unlocking container failed with exception. ", e);
+            EscidocAbstractTest.failException("Unlocking container failed with exception. ", e);
         }
 
         String containerXml = retrieve(theContainerId);
-        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
         assertXmlEquals("Container lock status not as expected", containerDoc, "/container/properties/lock-status",
             "unlocked");
 
@@ -179,7 +179,7 @@ public class ContainerLockTest extends ContainerTestBase {
             update(theContainerId, containerXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Updating unlocked container failed with exception. ", e);
+            EscidocAbstractTest.failException("Updating unlocked container failed with exception. ", e);
         }
 
     }
@@ -199,18 +199,18 @@ public class ContainerLockTest extends ContainerTestBase {
             lock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Unlocking container can not be tested, locking"
-                + " failed with exception.", e);
+            EscidocAbstractTest
+                    .failException("Unlocking container can not be tested, locking" + " failed with exception.", e);
         }
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
 
         try {
             unlock(theContainerId, param);
-            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
+            EscidocAbstractTest.failMissingException(AuthorizationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
+            EscidocAbstractTest.assertExceptionType(AuthorizationException.class, e);
         }
     }
 
@@ -228,7 +228,7 @@ public class ContainerLockTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -246,7 +246,7 @@ public class ContainerLockTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -264,7 +264,7 @@ public class ContainerLockTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -280,11 +280,11 @@ public class ContainerLockTest extends ContainerTestBase {
         String resultXml = lock(theContainerId, param);
         assertXmlValidResult(resultXml);
 
-        Document resultDoc = EscidocRestSoapTestBase.getDocument(resultXml);
+        Document resultDoc = EscidocAbstractTest.getDocument(resultXml);
         String lmdResultLock = getLastModificationDateValue(resultDoc);
 
         String containerXml = retrieve(theContainerId);
-        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
         String lmdRetrieve = getLastModificationDateValue(containerDoc);
 
         assertEquals("Last modification date of result and container not equal", lmdResultLock, lmdRetrieve);
@@ -292,11 +292,11 @@ public class ContainerLockTest extends ContainerTestBase {
         // now check unlock
         resultXml = unlock(theContainerId, param);
         assertXmlValidResult(resultXml);
-        resultDoc = EscidocRestSoapTestBase.getDocument(resultXml);
+        resultDoc = EscidocAbstractTest.getDocument(resultXml);
         String lmdResultUnlock = getLastModificationDateValue(resultDoc);
 
         containerXml = retrieve(theContainerId);
-        containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        containerDoc = EscidocAbstractTest.getDocument(containerXml);
         lmdRetrieve = getLastModificationDateValue(containerDoc);
 
         assertEquals("Last modification date of result and container not equal", lmdResultUnlock, lmdRetrieve);

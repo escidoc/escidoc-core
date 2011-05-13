@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -593,8 +593,8 @@ public final class HttpHelper {
             if (accountIsDeactivated) {
                 // correct values have been sent, user account is deactived.
                 // page with info about deactivated account is presented
-                EscidocRestSoapTestBase.assertHttpStatus("Wrong status for expected 'Deactivated User Account' page.",
-                    HttpServletResponse.SC_OK, httpRes);
+                EscidocAbstractTest.assertHttpStatus("Wrong status for expected 'Deactivated User Account' page.",
+                        HttpServletResponse.SC_OK, httpRes);
                 assertNull(httpRes.getFirstHeader("Location"));
 
                 // FIXME: add assertion for page content
@@ -610,11 +610,11 @@ public final class HttpHelper {
                 // user account is active, login servlet creates user handle
                 // and redirects to target
                 if (!StringUtils.isEmpty(targetUrl)) {
-                    EscidocRestSoapTestBase.assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, httpRes);
+                    EscidocAbstractTest.assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, httpRes);
                     assertNotNull(httpRes.getFirstHeader("Location"));
                 }
                 else {
-                    EscidocRestSoapTestBase.assertHttpStatus("", HttpServletResponse.SC_OK, httpRes);
+                    EscidocAbstractTest.assertHttpStatus("", HttpServletResponse.SC_OK, httpRes);
                 }
                 assertNotNull(httpRes.getFirstHeader("Set-Cookie"));
 

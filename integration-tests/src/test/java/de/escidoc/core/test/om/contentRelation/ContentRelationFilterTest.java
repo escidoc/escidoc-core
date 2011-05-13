@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.contentRelation;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -60,7 +60,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
         String xml = createContentRelation();
         String relationId = getObjidValue(xml);
         String createdBy =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(xml), "/content-relation/properties/created-by");
+            getObjidValue(EscidocAbstractTest.getDocument(xml), "/content-relation/properties/created-by");
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + relationId + " and "
@@ -71,7 +71,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
         assertXmlValidSrwResponse(result);
 
         NodeList relations =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result), XPATH_SRW_RELATION_LIST_RELATION);
+            selectNodeList(EscidocAbstractTest.getDocument(result), XPATH_SRW_RELATION_LIST_RELATION);
 
         assertTrue("Wrong number of content relations matched filter criteria, " + "expected 1, but was "
             + relations.getLength(), relations.getLength() == 1);
@@ -99,7 +99,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
         assertXmlValidSrwResponse(result);
 
         NodeList relations =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result), XPATH_SRW_RELATION_LIST_RELATION);
+            selectNodeList(EscidocAbstractTest.getDocument(result), XPATH_SRW_RELATION_LIST_RELATION);
 
         assertTrue("Wrong number of content relations matched filter criteria, " + "expected 0, but was "
             + relations.getLength(), relations.getLength() == 0);
@@ -122,7 +122,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
 
         assertXmlValidSrwResponse(result);
 
-        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
+        Document resultDoc = EscidocAbstractTest.getDocument(result);
         NodeList nl;
         selectSingleNodeAsserted(resultDoc, XPATH_SRW_RELATION_LIST_RELATION + "[@href = '"
             + Constants.CONTENT_RELATION_BASE_URI + "/" + relationId + "']");
@@ -150,7 +150,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
             result = retrieveContentRelations(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.migration;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.cmm.ContentModelClient;
@@ -53,7 +53,7 @@ import java.util.Vector;
 /**
  * @author Michael Schneider
  */
-public class MigrationTestBase extends EscidocRestSoapTestBase {
+public class MigrationTestBase extends EscidocAbstractTest {
 
     private static final String OBJECT_ID_PATH = "build/migration";
 

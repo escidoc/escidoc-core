@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.OumTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -155,15 +155,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = createSuccessfullyChild(DEFAULT_OU_FOR_CREATE, parentIds);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -330,15 +330,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrieve(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -402,15 +402,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrieveMdRecords(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -449,15 +449,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrieveParents(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -496,15 +496,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrieveChildObjects(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -543,15 +543,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrieveParentObjects(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -602,15 +602,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             delete(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -650,15 +650,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
             ouXml = close(ouId, getTheLastModificationParam(true, ouId, "Opened organizational unit '" + ouId + "'."));
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -699,15 +699,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
             ouXml = open(ouId, getTheLastModificationParam(true, ouId, "Opened organizational unit '" + ouId + "'."));
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -751,15 +751,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = update(ouId, toString(ouDoc, false));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -804,15 +804,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = update(ouId, toBeUpdatedXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -889,15 +889,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrievePathList(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {

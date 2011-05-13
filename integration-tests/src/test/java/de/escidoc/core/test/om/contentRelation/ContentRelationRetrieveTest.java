@@ -29,7 +29,7 @@
 package de.escidoc.core.test.om.contentRelation;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentRelationNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -99,7 +99,7 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
     private void assertContentRelationProperties(final String propertiesXml, final String timestampBeforeCreation)
         throws Exception {
 
-        Document createdProperties = EscidocRestSoapTestBase.getDocument(propertiesXml);
+        Document createdProperties = EscidocAbstractTest.getDocument(propertiesXml);
         String href = getRootElementHrefValue(createdProperties);
         if ("".equals(href)) {
             href = null;

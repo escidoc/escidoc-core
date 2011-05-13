@@ -26,10 +26,10 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.test.om.item.rest;
+package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.system.WebserverSystemException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 import de.escidoc.core.test.om.item.ItemTestBase;
 import org.junit.Test;
@@ -83,8 +83,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase implement
     @Test
     public void testRetrieveItemWithStorageExternalUrlAndWrongUrl() throws Exception {
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String storageBeforeCreate = "external-managed";
         Document newItem =
             (Document) substitute(item, "/item/components/component[2]/content/@storage", storageBeforeCreate);
@@ -94,7 +93,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase implement
         String xmlData = toString(itemWithoutSecondComponent, false);
 
         String theItemXml = create(xmlData);
-        String theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        String theItemId = getObjidValue(EscidocAbstractTest.getDocument(theItemXml));
 
         assertXmlValidItem(xmlData);
         Document createdItem = getDocument(theItemXml);
@@ -109,7 +108,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase implement
                 + "/components/component/" + componentId + "/content");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("WebserverSystemException", WebserverSystemException.class, e);
+            EscidocAbstractTest.assertExceptionType("WebserverSystemException", WebserverSystemException.class, e);
         }
     }
 }

@@ -184,35 +184,21 @@ public final class XmlUtility {
 
     private static String containerRestSchemaLocation;
 
-    private static String containerSoapSchemaLocation;
-
     private static String updateRelationsSchemaLocation;
 
     private static String relationsSchemaLocation;
 
     private static String itemRestSchemaLocation;
 
-    private static String itemSoapSchemaLocation;
-
     private static String organizationalUnitRestSchemaLocation;
-
-    private static String organizationalUnitSoapSchemaLocation;
 
     private static String filterSchemaLocationRest;
 
-    private static String filterSchemaLocationSoap;
-
     private static String organizationalUnitListRestSchemaLocation;
-
-    private static String organizationalUnitListSoapSchemaLocation;
 
     private static String organizationalUnitPathListRestSchemaLocation;
 
-    private static String organizationalUnitPathListSoapSchemaLocation;
-
     private static String organizationalUnitRefListRestSchemaLocation;
-
-    private static String organizationalUnitRefListSoapSchemaLocation;
 
     private static String pdpRequestsSchemaLocation;
 
@@ -220,37 +206,21 @@ public final class XmlUtility {
 
     private static String containersFilterRestSchemaLocation;
 
-    private static String containersFilterSoapSchemaLocation;
-
-    private static String containerMembersFilterSoapSchemaLocation;
-
     private static String spoTaskParamSchemaLocation;
 
     private static String containerMembersFilterRestSchemaLocation;
 
     private static String contextRestSchemaLocation;
 
-    private static String contextSoapSchemaLocation;
-
     private static String contentRelationRestSchemaLocation;
-
-    private static String contentRelationSoapSchemaLocation;
 
     private static String contentModelRestSchemaLocation;
 
-    private static String contentModelSoapSchemaLocation;
-
     private static String setDefinitionRestSchemaLocation;
-
-    private static String setDefinitionSoapSchemaLocation;
 
     private static String contextsFilterSchemaLocationRest;
 
-    private static String contextsFilterSchemaLocationSoap;
-
     private static String contextMembersFilterSchemaLocationRest;
-
-    private static String contextMembersFilterSchemaLocationSoap;
 
     private static String xmlSchemaSchemaLocation;
 
@@ -260,23 +230,13 @@ public final class XmlUtility {
 
     private static String aggregationDefinitionRestSchemaLocation;
 
-    private static String aggregationDefinitionSoapSchemaLocation;
-
     private static String reportDefinitionRestSchemaLocation;
-
-    private static String reportDefinitionSoapSchemaLocation;
 
     private static String reportRestSchemaLocation;
 
-    private static String reportSoapSchemaLocation;
-
     private static String scopeRestSchemaLocation;
 
-    private static String scopeSoapSchemaLocation;
-
     private static String reportParametersRestSchemaLocation;
-
-    private static String reportParametersSoapSchemaLocation;
 
     private static String preprocessingInformationSchemaLocation;
 
@@ -494,8 +454,6 @@ public final class XmlUtility {
     public static final String BASE_REPORT_DEFINITION = BASE_SM + NAME_REPORT_DEFINITION + '/';
 
     private static final Map<String, String> REST_SCHEMA_LOCATIONS = new HashMap<String, String>();
-
-    private static final Map<String, String> SOAP_SCHEMA_LOCATIONS = new HashMap<String, String>();
 
     public static final String XPATH_USER_ACCOUNT_PROPERTIES = '/' + NAME_USER_ACCOUNT + '/' + NAME_PROPERTIES;
 
@@ -1796,10 +1754,6 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getPdpRequestsSchemaLocation() throws WebserverSystemException {
-
-        // There are is no difference between calling the pdp via rest or soap,
-        // the schemas are the same. Therefore, the schema from the rest folder
-        // is allways used.
         if (pdpRequestsSchemaLocation == null) {
             pdpRequestsSchemaLocation = getSchemaBaseUrl() + "rest/pdp/0.3/requests.xsd";
         }
@@ -1811,7 +1765,6 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getRoleSchemaLocation() throws WebserverSystemException {
-
         return getSchemaLocation("role/0.5/role.xsd");
     }
 
@@ -1832,10 +1785,6 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getTmeRequestsSchemaLocation() throws WebserverSystemException {
-
-        // There is no difference between calling the Tme via rest or soap,
-        // the schemas are the same. Therefore, the schema from the rest folder
-        // is allways used.
         if (tmeRequestsSchemaLocation == null) {
             tmeRequestsSchemaLocation = getSchemaBaseUrl() + "tme/0.1/request.xsd";
         }
@@ -2026,7 +1975,6 @@ public final class XmlUtility {
      * Replace all escape sequences for forbidden charcters with their readable.
      *
      * @param xmlText     The xml text with escape sequences.
-     * @param isAttribute Indicates if this is an attribute.
      * @return The resulting text with unescaped characters.
      */
     public static String unescapeForbiddenXmlCharacters(final String xmlText) {

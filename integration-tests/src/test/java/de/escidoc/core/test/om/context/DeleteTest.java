@@ -31,7 +31,7 @@ package de.escidoc.core.test.om.context;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -60,7 +60,7 @@ public class DeleteTest extends ContextTestBase {
      */
     @Test(expected = ContextNotFoundException.class)
     public void testOmDc1() throws Exception {
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         String template = toString(context, false);
         String created = create(template);
@@ -99,12 +99,12 @@ public class DeleteTest extends ContextTestBase {
      */
     @Test(expected = InvalidStatusException.class)
     public void testOmDc4() throws Exception {
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         String template = toString(context, false);
         String created = create(template);
         assertXmlValidContext(created);
-        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
+        Document createdDoc = EscidocAbstractTest.getDocument(created);
         String id = getObjidValue(createdDoc);
         String lastModification = getLastModificationDateValue(createdDoc);
         open(id, getTaskParam(lastModification));

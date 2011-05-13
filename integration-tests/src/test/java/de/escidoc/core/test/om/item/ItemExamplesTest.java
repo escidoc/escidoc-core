@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.item;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.compare.TripleStoreValue;
 import de.escidoc.core.test.common.fedora.Client;
 import org.apache.xpath.XPathAPI;
@@ -75,8 +75,8 @@ public class ItemExamplesTest extends ItemTestBase {
         String lmd = getLastModificationDateValue(xmlItem);
 
         String versionHistory = retrieveVersionHistory(itemId);
-        Document wovDoc = EscidocRestSoapTestBase.getDocument(versionHistory);
-        Document itemDocV1 = EscidocRestSoapTestBase.getDocument(retrieve(itemId + ":1"));
+        Document wovDoc = EscidocAbstractTest.getDocument(versionHistory);
+        Document itemDocV1 = EscidocAbstractTest.getDocument(retrieve(itemId + ":1"));
 
         // compare time stamps
         assertXmlExists("Wrong timestamp in version-history root element", versionHistory,

@@ -31,7 +31,7 @@ package de.escidoc.core.test.om.item;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -62,7 +62,7 @@ public class ItemDeleteTest extends ItemTestBase {
      * @throws Exception Thrown if converting of XML to Document format fails.
      */
     private String getTheLastModificationParam(final boolean includeWithdrawComment) throws Exception {
-        Document item = EscidocRestSoapTestBase.getDocument(retrieve(theItemId));
+        Document item = EscidocAbstractTest.getDocument(retrieve(theItemId));
 
         // get last-modification-date
         NamedNodeMap atts = item.getDocumentElement().getAttributes();
@@ -86,7 +86,7 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi1a() throws Exception {
         String xml =
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
@@ -98,7 +98,7 @@ public class ItemDeleteTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ItemNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -108,11 +108,11 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testDeleteItemWithAllComponentsFromAllItemVersions() throws Exception {
         String xml =
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
-        Document curItem = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document curItem = EscidocAbstractTest.getDocument(itemXml);
         NodeList componentIdsAfterCreate = null;
         componentIdsAfterCreate = selectNodeList(curItem, "/item/components/component/@href");
         Vector<String> componentIds = new Vector<String>();
@@ -123,7 +123,7 @@ public class ItemDeleteTest extends ItemTestBase {
         }
         final String itemUpdatedXml =
             update(theItemId, toString(deleteElement(curItem, "/item/components/component[1]"), false));
-        Document itemAfterUpdate = EscidocRestSoapTestBase.getDocument(itemUpdatedXml);
+        Document itemAfterUpdate = EscidocAbstractTest.getDocument(itemUpdatedXml);
         NodeList componentIdsAfterUpdate = selectNodeList(itemAfterUpdate, "/item/components/component");
         assertEquals("number of components is wrong ", componentIdsAfterCreate.getLength() - 1, componentIdsAfterUpdate
             .getLength());
@@ -134,7 +134,7 @@ public class ItemDeleteTest extends ItemTestBase {
             String result =
                 tripleStore.requestMPT("<info:fedora/" + componentIds.get(i) + "> "
                     + "<http://purl.org/dc/elements/1.1/identifier>" + " *", "RDF/XML");
-            NodeList components = selectNodeList(EscidocRestSoapTestBase.getDocument(result), "/RDF/Description/*");
+            NodeList components = selectNodeList(EscidocAbstractTest.getDocument(result), "/RDF/Description/*");
             assertEquals("result is not empty ", 0, components.getLength());
 
         }
@@ -148,7 +148,7 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi2a() throws Exception {
         String xml =
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
@@ -174,12 +174,12 @@ public class ItemDeleteTest extends ItemTestBase {
         Class<?> ec = InvalidStatusException.class;
         try {
             delete(this.theItemId);
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .failMissingException("Deleting an item in status 'released' was not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Deleting an item in status 'released' raised wrong exception. ", ec, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Deleting an item in status 'released' raised wrong exception. ", ec, e);
         }
 
     }
@@ -192,7 +192,7 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi2b() throws Exception {
         String xml =
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
@@ -201,12 +201,12 @@ public class ItemDeleteTest extends ItemTestBase {
         Class<?> ec = InvalidStatusException.class;
         try {
             delete(this.theItemId);
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .failMissingException("Deleting an item in status 'released' was not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Deleting an item in status 'released' raised "
-                + "wrong exception. ", ec, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Deleting an item in status 'released' raised " + "wrong exception. ", ec, e);
         }
     }
 
@@ -253,12 +253,12 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi5() throws Exception {
         String xml =
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
-        Node component = selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml), "/item/components/component");
+        Node component = selectSingleNode(EscidocAbstractTest.getDocument(itemXml), "/item/components/component");
         String componentId = getObjidValue(toString(component, true));
 
         try {

@@ -100,7 +100,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
     /**
      * Get the xml representation of the resources of an organizational unit.
      *
-     * @return The xml representation in REST or SOAP format of an organizational unit.
+     * @return The xml representation of an organizational unit
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getResourcesXml() throws WebserverSystemException {

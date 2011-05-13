@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -60,7 +60,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
         String xml = createContentModel();
         String modelId = getObjidValue(xml);
         String createdBy =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(xml), "/content-model/properties/created-by");
+            getObjidValue(EscidocAbstractTest.getDocument(xml), "/content-model/properties/created-by");
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + modelId + " and "
@@ -70,7 +70,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
 
         assertXmlValidSrwResponse(result);
 
-        NodeList models = selectNodeList(EscidocRestSoapTestBase.getDocument(result), XPATH_SRW_MODEL_LIST_MODEL);
+        NodeList models = selectNodeList(EscidocAbstractTest.getDocument(result), XPATH_SRW_MODEL_LIST_MODEL);
 
         assertTrue("Wrong number of content Models matched filter criteria, " + "expected 1, but was "
             + models.getLength(), models.getLength() == 1);
@@ -96,7 +96,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
 
         assertXmlValidSrwResponse(result);
 
-        NodeList models = selectNodeList(EscidocRestSoapTestBase.getDocument(result), XPATH_SRW_MODEL_LIST_MODEL);
+        NodeList models = selectNodeList(EscidocAbstractTest.getDocument(result), XPATH_SRW_MODEL_LIST_MODEL);
 
         assertTrue("Wrong number of content models matched filter criteria, " + "expected 0, but was "
             + models.getLength(), models.getLength() == 0);
@@ -119,7 +119,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
 
         assertXmlValidSrwResponse(result);
 
-        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
+        Document resultDoc = EscidocAbstractTest.getDocument(result);
         NodeList nl;
 
         selectSingleNodeAsserted(resultDoc, XPATH_SRW_MODEL_LIST_MODEL + "[@href = '"
@@ -148,7 +148,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
             result = retrieveContentModels(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

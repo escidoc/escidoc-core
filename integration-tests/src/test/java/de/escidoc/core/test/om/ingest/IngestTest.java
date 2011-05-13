@@ -32,9 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotF
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidResourceException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.EscidocAbstractTest;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -75,8 +73,8 @@ public class IngestTest extends IngestTestBase {
     public void testIngestItemValid() throws Exception {
 
         String toBeCreatedXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
-                "rest/escidoc_item_198_for_create_2_Component_Md-Records.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH,
+                    "rest/escidoc_item_198_for_create_2_Component_Md-Records.xml");
 
         String createdXml = ingest(toBeCreatedXml);
 
@@ -119,7 +117,7 @@ public class IngestTest extends IngestTestBase {
     public void testIngestReleasedItem01() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH, "rest/item_without_component.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH, "rest/item_without_component.xml");
 
         Element publicStatus =
             createElementNode(toBeCreatedDocument, "http://escidoc.de/core/01/properties/", "prop", "public-status",
@@ -136,7 +134,7 @@ public class IngestTest extends IngestTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -159,7 +157,7 @@ public class IngestTest extends IngestTestBase {
     public void testIngestReleasedItem02() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH, "rest/item_without_component.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH, "rest/item_without_component.xml");
 
         Element publicStatus =
             createElementNode(toBeCreatedDocument, "http://escidoc.de/core/01/properties/", "prop", "public-status",
@@ -232,7 +230,7 @@ public class IngestTest extends IngestTestBase {
     public void ingestItemWithWrongContextReference() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH, "rest/item_without_component.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH, "rest/item_without_component.xml");
 
         substitute(toBeCreatedDocument, "/item/properties/context/@href", "/ir/context/" + UNKNOWN_ID);
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
@@ -273,7 +271,7 @@ public class IngestTest extends IngestTestBase {
     @Test
     public void testIngestContextValid() throws Exception {
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH, "rest/context_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH, "rest/context_create.xml");
         substitute(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_NAME, getUniqueName("Unique Name "));
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
@@ -311,7 +309,7 @@ public class IngestTest extends IngestTestBase {
     @Test
     public void testIngestContainerValid() throws Exception {
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH, "rest/create_container.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH, "rest/create_container.xml");
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
         String createdXml = ingest(toBeCreatedXml);
 
@@ -354,7 +352,7 @@ public class IngestTest extends IngestTestBase {
     public void testIngestReleasedContainer01() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH, "rest/create_container.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH, "rest/create_container.xml");
 
         Element publicStatus =
             createElementNode(toBeCreatedDocument, "http://escidoc.de/core/01/properties/", "prop", "public-status",
@@ -374,7 +372,7 @@ public class IngestTest extends IngestTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -397,7 +395,7 @@ public class IngestTest extends IngestTestBase {
     public void testIngestReleasedContainer02() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH, "rest/create_container.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH, "rest/create_container.xml");
 
         Element publicStatus =
             createElementNode(toBeCreatedDocument, "http://escidoc.de/core/01/properties/", "prop", "public-status",

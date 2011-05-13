@@ -30,7 +30,7 @@ package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -57,7 +57,7 @@ public class ItemCreateTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -73,7 +73,7 @@ public class ItemCreateTest extends ItemTestBase {
         String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
         String xml = create(itemXml);
 
-        Document item = EscidocRestSoapTestBase.getDocument(xml);
+        Document item = EscidocAbstractTest.getDocument(xml);
         Node itemChanged = substitute(item, "/item/properties/public-status", "released");
         itemChanged = substitute(itemChanged, "/item/properties/version/status", "released");
         String xmlTmp = toString(itemChanged, false);
@@ -99,7 +99,7 @@ public class ItemCreateTest extends ItemTestBase {
         String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
         String xml = create(itemXml);
 
-        Document item = EscidocRestSoapTestBase.getDocument(xml);
+        Document item = EscidocAbstractTest.getDocument(xml);
         Node itemChanged = substitute(item, "/item/properties/public-status", "in-revision");
         itemChanged = substitute(itemChanged, "/item/properties/version/status", "in-revision");
         String xmlTmp = toString(itemChanged, false);
@@ -124,7 +124,7 @@ public class ItemCreateTest extends ItemTestBase {
         String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
         String xml = create(itemXml);
 
-        Document item = EscidocRestSoapTestBase.getDocument(xml);
+        Document item = EscidocAbstractTest.getDocument(xml);
         Node itemChanged = substitute(item, "/item/properties/public-status", "withdrawn");
         itemChanged = substitute(itemChanged, "/item/properties/version/status", "withdrawn");
         String xmlTmp = toString(itemChanged, false);

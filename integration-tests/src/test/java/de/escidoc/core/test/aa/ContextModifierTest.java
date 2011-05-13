@@ -30,7 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -140,12 +140,12 @@ public class ContextModifierTest extends GrantTestBase {
 
         contextXml = handleResult(contextClient.update(contextId, contextXml));
 
-        String lastModificationDate = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(contextXml));
+        String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
         contextXml =
             handleResult(contextClient.open(contextId, getTheLastModificationParam(true, contextId, "comment",
                 lastModificationDate)));
 
-        lastModificationDate = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(contextXml));
+        lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
         contextXml =
             handleResult(contextClient.close(contextId, getTheLastModificationParam(true, contextId, "comment",
                 lastModificationDate)));

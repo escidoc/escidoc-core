@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OrganizationalUnitHierarchyViolationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -873,7 +873,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         // only allowed value.
 
         // has-children
-        substitute(createdDocument, EscidocRestSoapTestBase.XPATH_ORGANIZATIONAL_UNIT_HAS_CHILDREN, "true");
+        substitute(createdDocument, EscidocAbstractTest.XPATH_ORGANIZATIONAL_UNIT_HAS_CHILDREN, "true");
 
         // data xlink
         substitute(createdDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS_XLINK_HREF, "Some Href");

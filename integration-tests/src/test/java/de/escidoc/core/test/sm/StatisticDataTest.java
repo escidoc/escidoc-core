@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sm;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -97,7 +97,7 @@ public class StatisticDataTest extends StatisticDataTestBase {
     @Test
     public void testSMSD2() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_STAT_DATA_PATH, "escidoc_statistic_data_invalid.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_STAT_DATA_PATH, "escidoc_statistic_data_invalid.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         create(xml);
     }
@@ -110,7 +110,7 @@ public class StatisticDataTest extends StatisticDataTestBase {
     @Test
     public void testSMSD3() throws Exception {
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_STAT_DATA_PATH, "escidoc_statistic_data1.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_STAT_DATA_PATH, "escidoc_statistic_data1.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);

@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.context;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.NodeList;
@@ -59,7 +59,7 @@ public class ContextExamplesTest extends ContextTestBase {
         String result = retrieveContexts(filterParams);
 
         NodeList contexts =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
+            selectNodeList(EscidocAbstractTest.getDocument(result),
                 "/searchRetrieveResponse/records/record/recordData/context/@objid");
 
     }

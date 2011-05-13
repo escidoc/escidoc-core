@@ -31,7 +31,7 @@ package de.escidoc.core.test.om.container;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -72,14 +72,14 @@ public class ContainerSubmitTest extends ContainerTestBase {
     public void testOM_SC_1() throws Exception {
 
         String paramXml = getTheLastModificationParam(false, theContainerId);
-        final Document paramDocument = EscidocRestSoapTestBase.getDocument(paramXml);
+        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
         final String pendingLastModificationDate = getLastModificationDateValue(paramDocument);
 
         try {
             submit(theContainerId, paramXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Submitting the pending item failed. ", e);
+            EscidocAbstractTest.failException("Submitting the pending item failed. ", e);
         }
 
         String submittedXml = null;
@@ -87,9 +87,9 @@ public class ContainerSubmitTest extends ContainerTestBase {
             submittedXml = retrieve(theContainerId);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving the revised, submitted item failed. ", e);
+            EscidocAbstractTest.failException("Retrieving the revised, submitted item failed. ", e);
         }
-        final Document submittedDocument = EscidocRestSoapTestBase.getDocument(submittedXml);
+        final Document submittedDocument = EscidocAbstractTest.getDocument(submittedXml);
         assertDateBeforeAfter(pendingLastModificationDate, getLastModificationDateValue(submittedDocument));
         assertXmlEquals("Unexpected status. ", submittedDocument, XPATH_CONTAINER_STATUS, STATE_SUBMITTED);
         assertXmlEquals("Unexpected current version status", submittedDocument, XPATH_CONTAINER_CURRENT_VERSION_STATUS,
@@ -109,14 +109,14 @@ public class ContainerSubmitTest extends ContainerTestBase {
         paramXml = getTheLastModificationParam(false, theContainerId);
         revise(theContainerId, paramXml);
         paramXml = getTheLastModificationParam(false, theContainerId);
-        final Document paramDocument = EscidocRestSoapTestBase.getDocument(paramXml);
+        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
         final String revisedLastModificationDate = getLastModificationDateValue(paramDocument);
 
         try {
             submit(theContainerId, paramXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Submitting the revised item failed. ", e);
+            EscidocAbstractTest.failException("Submitting the revised item failed. ", e);
         }
 
         String submittedXml = null;
@@ -124,9 +124,9 @@ public class ContainerSubmitTest extends ContainerTestBase {
             submittedXml = retrieve(theContainerId);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving the revised, submitted item failed. ", e);
+            EscidocAbstractTest.failException("Retrieving the revised, submitted item failed. ", e);
         }
-        final Document submittedDocument = EscidocRestSoapTestBase.getDocument(submittedXml);
+        final Document submittedDocument = EscidocAbstractTest.getDocument(submittedXml);
         assertDateBeforeAfter(revisedLastModificationDate, getLastModificationDateValue(submittedDocument));
         assertXmlEquals("Unexpected status. ", submittedDocument, XPATH_CONTAINER_STATUS, STATE_SUBMITTED);
         assertXmlEquals("Unexpected current version status", submittedDocument, XPATH_CONTAINER_CURRENT_VERSION_STATUS,
@@ -147,7 +147,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -168,7 +168,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -186,7 +186,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -202,7 +202,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 

@@ -30,7 +30,7 @@ package de.escidoc.core.test.sb;
 
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.sb.stax.handler.AllStaxHandler;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -3885,7 +3885,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 PWCallback.setHandle(creatorHandle);
             }
             Document xmlData =
-                EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
+                EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
             String contextHref =
                 de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
             substitute(xmlData, "/item/properties/context/@href", contextHref);
@@ -3894,7 +3894,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
             xml = xml.replaceAll("Meier", "Meier1");
             xml = item.update(objectId, xml);
             String lastModDate = getLastModificationDate(xml);
-            Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
+            Document itemDoc = EscidocAbstractTest.getDocument(xml);
             returnHash.put("itemId", objectId);
             for (int i = 1;; i++) {
                 try {
@@ -4007,7 +4007,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
             }
             else {
                 Document xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_SEARCH_PATH, templateName);
+                    EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTAINER_SEARCH_PATH, templateName);
                 String contextHref =
                     de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
                 substitute(xmlData, "/container/properties/context/@href", contextHref);

@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sm;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -404,14 +404,14 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
         final String ID = "escidoc:repdef1";
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY, new String[] { "\""
-            + EscidocRestSoapTestBase.FILTER_IDENTIFIER + "\"=" + ID });
+        filterParams.put(EscidocAbstractTest.FILTER_PARAMETER_QUERY, new String[] { "\""
+            + EscidocAbstractTest.FILTER_IDENTIFIER + "\"=" + ID });
 
         String result = retrieveReportDefinitions(filterParams);
 
         assertXmlValidSrwResponse(result);
 
-        Document retrievedDocument = EscidocRestSoapTestBase.getDocument(result);
+        Document retrievedDocument = EscidocAbstractTest.getDocument(result);
         NodeList reportDefinitionNodes =
             selectNodeList(retrievedDocument, XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION);
         assertEquals("Unexpected number of report definitions.", 1, reportDefinitionNodes.getLength());
@@ -430,14 +430,14 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
         final String NAME = "Item retrievals, all users";
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY, new String[] { "\""
-            + EscidocRestSoapTestBase.FILTER_NAME + "\"=\"" + NAME + "\"" });
+        filterParams.put(EscidocAbstractTest.FILTER_PARAMETER_QUERY, new String[] { "\""
+            + EscidocAbstractTest.FILTER_NAME + "\"=\"" + NAME + "\"" });
 
         String result = retrieveReportDefinitions(filterParams);
 
         assertXmlValidSrwResponse(result);
 
-        Document retrievedDocument = EscidocRestSoapTestBase.getDocument(result);
+        Document retrievedDocument = EscidocAbstractTest.getDocument(result);
         NodeList reportDefinitionNodes =
             selectNodeList(retrievedDocument, XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION);
         assertEquals("Unexpected number of report definitions.", 1, reportDefinitionNodes.getLength());
@@ -463,11 +463,11 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
             result = retrieveReportDefinitions(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of ReportDefinitions failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of ReportDefinitions failed. ", e);
         }
 
         assertXmlValidSrwResponse(result);
-        Document retrievedDocument = EscidocRestSoapTestBase.getDocument(result);
+        Document retrievedDocument = EscidocAbstractTest.getDocument(result);
         NodeList resultNodes = selectNodeList(retrievedDocument, XPATH_SRW_REP_DEF_LIST_REP_DEF);
         final int totalRecordsWithZeroMaximum = resultNodes.getLength();
 
@@ -484,7 +484,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
     public void explainTest() throws Exception {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN, new String[] { "" });
+        filterParams.put(EscidocAbstractTest.FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
         String result = null;
 
@@ -492,7 +492,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
             result = retrieveReportDefinitions(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

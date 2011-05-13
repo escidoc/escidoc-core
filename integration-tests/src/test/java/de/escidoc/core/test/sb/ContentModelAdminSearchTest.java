@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
@@ -342,7 +342,7 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
                 PWCallback.setHandle(creatorHandle);
             }
             Document xmlData =
-                EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_SB_CONTENT_MODEL_PATH, templateName);
+                EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_SB_CONTENT_MODEL_PATH, templateName);
             String xml = contentModel.create(toString(xmlData, false));
             String objectId = getId(xml);
 

@@ -29,7 +29,7 @@
 package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -242,10 +242,10 @@ public class ContextAdminTest extends GrantTestBase {
             super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
         }
         try {
-            revokeAllGrants(EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1);
+            revokeAllGrants(EscidocAbstractTest.TEST_USER_ACCOUNT_ID1);
             String contextXml = doTestCreateContext(HANDLE, "context_create.xml", null);
             String contextId = getObjidValue(contextXml);
-            doTestCreateGrant(HANDLE, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, Constants.CONTEXT_BASE_URI + "/"
+            doTestCreateGrant(HANDLE, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.CONTEXT_BASE_URI + "/"
                 + contextId, ROLE_HREF_MODERATOR, null);
         }
         finally {
@@ -266,9 +266,9 @@ public class ContextAdminTest extends GrantTestBase {
             super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
         }
         try {
-            revokeAllGrants(EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1);
-            doTestCreateGrant(HANDLE, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, Constants.CONTEXT_BASE_URI + "/"
-                + EscidocRestSoapTestBase.CONTEXT_ID, ROLE_HREF_MODERATOR, AuthorizationException.class);
+            revokeAllGrants(EscidocAbstractTest.TEST_USER_ACCOUNT_ID1);
+            doTestCreateGrant(HANDLE, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.CONTEXT_BASE_URI + "/"
+                + EscidocAbstractTest.CONTEXT_ID, ROLE_HREF_MODERATOR, AuthorizationException.class);
         }
         finally {
             if (!isUserAccountTest) {
@@ -288,10 +288,10 @@ public class ContextAdminTest extends GrantTestBase {
             super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
         }
         try {
-            revokeAllGrants(EscidocRestSoapTestBase.TEST_USER_GROUP_ID);
+            revokeAllGrants(EscidocAbstractTest.TEST_USER_GROUP_ID);
             String contextXml = doTestCreateContext(HANDLE, "context_create.xml", null);
             String contextId = getObjidValue(contextXml);
-            doTestCreateGrant(HANDLE, EscidocRestSoapTestBase.TEST_USER_GROUP_ID, Constants.CONTEXT_BASE_URI + "/"
+            doTestCreateGrant(HANDLE, EscidocAbstractTest.TEST_USER_GROUP_ID, Constants.CONTEXT_BASE_URI + "/"
                 + contextId, ROLE_HREF_MODERATOR, null);
         }
         finally {
@@ -312,9 +312,9 @@ public class ContextAdminTest extends GrantTestBase {
             super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
         }
         try {
-            revokeAllGrants(EscidocRestSoapTestBase.TEST_USER_GROUP_ID);
-            doTestCreateGrant(HANDLE, EscidocRestSoapTestBase.TEST_USER_GROUP_ID, Constants.CONTEXT_BASE_URI + "/"
-                + EscidocRestSoapTestBase.CONTEXT_ID, ROLE_HREF_MODERATOR, AuthorizationException.class);
+            revokeAllGrants(EscidocAbstractTest.TEST_USER_GROUP_ID);
+            doTestCreateGrant(HANDLE, EscidocAbstractTest.TEST_USER_GROUP_ID, Constants.CONTEXT_BASE_URI + "/"
+                + EscidocAbstractTest.CONTEXT_ID, ROLE_HREF_MODERATOR, AuthorizationException.class);
         }
         finally {
             if (isUserAccountTest) {

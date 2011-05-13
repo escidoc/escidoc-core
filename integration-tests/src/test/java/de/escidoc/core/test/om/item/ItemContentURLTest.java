@@ -29,7 +29,7 @@
 package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.apache.http.HttpResponse;
@@ -90,8 +90,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         // content to staging
         String url = createStagingFile(false);
@@ -113,8 +112,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_2() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         // content to staging
         String url = createStagingFile(true);
@@ -135,8 +133,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testUpdateStagingURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc, "/item/components/component[not(content/@href)]");
         this.theItemXml = toString(this.theItemDoc, true);
@@ -161,8 +158,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testUpdateStagingURL_2() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc, "/item/components/component[not(content/@href)]");
         this.theItemXml = toString(this.theItemDoc, true);
@@ -188,8 +184,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_3() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc, "/item/components/component[not(content/@href)]");
         this.theItemXml = toString(this.theItemDoc, true);
@@ -216,8 +211,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_4() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc, "/item/components/component[not(content/@href)]");
         this.theItemXml = toString(this.theItemDoc, true);
@@ -260,7 +254,7 @@ public class ItemContentURLTest extends ItemTestBase {
             httpRes = (HttpResponse) sfc.create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
@@ -280,8 +274,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateFedoraURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         // content to staging
         String fedoraUrl =
@@ -310,8 +303,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testUpdateFedoraURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc, "/item/components/component[not(content/@href)]");
         this.theItemXml = toString(this.theItemDoc, true);

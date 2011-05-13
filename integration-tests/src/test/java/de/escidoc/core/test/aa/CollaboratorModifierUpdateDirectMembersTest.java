@@ -29,7 +29,7 @@
 package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -146,20 +146,20 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
 
         //create 1. container in status pending
         String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
-        Document containerDocument = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDocument = EscidocAbstractTest.getDocument(containerXml);
         containerId = getObjidValue(containerDocument);
         containerHref = Constants.CONTAINER_BASE_URI + "/" + containerId;
 
         //create 2. container in status pending
         containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
-        Document containerDocument2 = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDocument2 = EscidocAbstractTest.getDocument(containerXml);
         containerId2 = getObjidValue(containerDocument2);
         containerHref2 = Constants.CONTAINER_BASE_URI + "/" + containerId2;
 
         //create item in status pending
         // in context /ir/context/escidoc:persistent3
         String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document document = EscidocAbstractTest.getDocument(itemXml);
 
         //save ids
         contextId = extractContextId(document);
@@ -472,7 +472,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, privateComponentId);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("retrieving content of object failed. ", e);
+            EscidocAbstractTest.failException("retrieving content of object failed. ", e);
         }
         finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -496,10 +496,10 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
         try {
             PWCallback.setHandle(HANDLE);
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, privateComponentId);
-            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
+            EscidocAbstractTest.failMissingException(AuthorizationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
+            EscidocAbstractTest.assertExceptionType(AuthorizationException.class, e);
         }
         finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -523,10 +523,10 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
         try {
             PWCallback.setHandle(HANDLE);
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, privateComponentId);
-            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
+            EscidocAbstractTest.failMissingException(AuthorizationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
+            EscidocAbstractTest.assertExceptionType(AuthorizationException.class, e);
         }
         finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);

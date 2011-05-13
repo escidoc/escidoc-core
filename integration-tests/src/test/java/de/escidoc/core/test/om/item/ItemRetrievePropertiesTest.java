@@ -30,7 +30,7 @@ package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,9 +61,9 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
     @Before
     public void setUp() throws Exception {
         ITEM_XML =
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
-        CREATED_ITEM = EscidocRestSoapTestBase.getDocument(create(ITEM_XML));
+        CREATED_ITEM = EscidocAbstractTest.getDocument(create(ITEM_XML));
         ITEM_ID = getObjidValue(CREATED_ITEM);
     }
 
@@ -76,7 +76,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
     public void testOMRIP1() throws Exception {
 
         String properties = retrieveProperties(ITEM_ID);
-        assertItemProperties(properties, toString(selectSingleNode(EscidocRestSoapTestBase.getDocument(ITEM_XML),
+        assertItemProperties(properties, toString(selectSingleNode(EscidocAbstractTest.getDocument(ITEM_XML),
             "/item/properties"), true), "/ir/item/" + ITEM_ID + "/properties",
             getLastModificationDateValue(CREATED_ITEM), startTimestamp);
 
@@ -95,7 +95,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -113,7 +113,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -133,7 +133,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
         final String xmlItemProperties, final String xmlTemplateItemProperties, final String expectedHRef,
         final String expectedLastModificationTimestamp, final String timestampBeforeCreation) throws Exception {
 
-        Document createdProperties = EscidocRestSoapTestBase.getDocument(xmlItemProperties);
+        Document createdProperties = EscidocAbstractTest.getDocument(xmlItemProperties);
         String href = getRootElementHrefValue(createdProperties);
         if ("".equals(href)) {
             href = null;
@@ -178,7 +178,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
         assertNull("Item Properties error: withdrawal-comment must be null!", nodeWithdrawalComment);
 
         Node nodeLatestRevision = selectSingleNode(createdProperties, "/properties/latest-revison");
-        Document template = EscidocRestSoapTestBase.getDocument(xmlTemplateItemProperties);
+        Document template = EscidocAbstractTest.getDocument(xmlTemplateItemProperties);
         assertNull("Item Properties error: latest-revison must be null!", nodeLatestRevision);
 
         assertXmlEquals("Item Properties error: content-type-specific is wrong!", template, createdProperties,

@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.apache.http.HttpResponse;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -104,11 +104,11 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
 
             // check the Container and children
             String containerXml = retrieve(theContainerId);
-            assertXmlEquals("Container Status not as expected", EscidocRestSoapTestBase.getDocument(containerXml),
+            assertXmlEquals("Container Status not as expected", EscidocAbstractTest.getDocument(containerXml),
                 "/container/properties/public-status", "released");
 
             String subContainerXml = retrieve(subContainerId);
-            assertXmlEquals("Container Status not as expected", EscidocRestSoapTestBase.getDocument(subContainerXml),
+            assertXmlEquals("Container Status not as expected", EscidocAbstractTest.getDocument(subContainerXml),
                 "/container/properties/public-status", "released");
             if (i > 0) {
                 tearDown();
@@ -169,8 +169,8 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
     private String submitItemHelp(final String itemId) throws Exception {
 
         String lmd =
-            getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(handleXmlResult(getItemClient().retrieve(
-                itemId))));
+            getLastModificationDateValue(
+                    EscidocAbstractTest.getDocument(handleXmlResult(getItemClient().retrieve(itemId))));
 
         return submitItemHelp(itemId, lmd);
     }

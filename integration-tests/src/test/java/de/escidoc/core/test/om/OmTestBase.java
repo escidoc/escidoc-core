@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ContainerClient;
 import de.escidoc.core.test.common.client.servlet.om.ContentRelationClient;
@@ -47,7 +47,7 @@ import javax.xml.transform.TransformerException;
  *
  * @author Michael Schneider
  */
-public class OmTestBase extends EscidocRestSoapTestBase {
+public class OmTestBase extends EscidocAbstractTest {
 
     public static final String NAME_CONTENT_MODEL = "content-model";
 
@@ -302,8 +302,8 @@ public class OmTestBase extends EscidocRestSoapTestBase {
 
         final String msg = "Asserting retrieved md-record failed. ";
 
-        Document toBeAssertedDocument = EscidocRestSoapTestBase.getDocument(xmlCreatedMdRecord);
-        Document template = EscidocRestSoapTestBase.getDocument(xmlTemplateResource);
+        Document toBeAssertedDocument = EscidocAbstractTest.getDocument(xmlCreatedMdRecord);
+        Document template = EscidocAbstractTest.getDocument(xmlTemplateResource);
 
         // assert root element
         // String[] values =

@@ -31,7 +31,7 @@ package de.escidoc.core.test.om.container;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.xpath.XPathAPI;
@@ -80,7 +80,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
     public void testRetrieveVersionHistory() throws Exception {
         String versionHistory = retrieveVersionHistory(theContainerId);
         assertXmlValidVersionHistory(versionHistory);
-        Node versionHistoryDoc = EscidocRestSoapTestBase.getDocument(versionHistory);
+        Node versionHistoryDoc = EscidocAbstractTest.getDocument(versionHistory);
         selectSingleNodeAsserted(versionHistoryDoc, "/version-history");
         selectSingleNodeAsserted(versionHistoryDoc, "/version-history/version");
 
@@ -99,7 +99,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -111,7 +111,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -153,7 +153,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
                     "/container/properties/content-model-specific/nox[" + (i - 1) + "]");
             }
             else {
-                assertXmlNotExists("Version " + i + " content not as expected (negativ).", EscidocRestSoapTestBase
+                assertXmlNotExists("Version " + i + " content not as expected (negativ).", EscidocAbstractTest
                     .getDocument(xml), "/container/properties/content-model-specific/nox[" + i + "]");
             }
             assertXmlValidContainer(xml);
@@ -162,7 +162,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         // retrieve versions
         versionHistory = retrieveVersionHistory(theContainerId);
         assertXmlValidVersionHistory(versionHistory);
-        Node versionHistoryDoc = EscidocRestSoapTestBase.getDocument(versionHistory);
+        Node versionHistoryDoc = EscidocAbstractTest.getDocument(versionHistory);
         selectSingleNodeAsserted(versionHistoryDoc, "/version-history");
         NodeList versions = selectNodeList(versionHistoryDoc, "/version-history/version");
         assertEquals(rounds, versions.getLength());
@@ -638,7 +638,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
 
     }
@@ -804,14 +804,14 @@ public class ContainerVersioningTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
 
     }
 
     @Override
     public String addCtsElement(final String xml) throws Exception {
-        Document doc = EscidocRestSoapTestBase.getDocument(xml);
+        Document doc = EscidocAbstractTest.getDocument(xml);
         Node cts = selectSingleNode(doc, "/container/properties/content-model-specific");
         cts.appendChild(createElementNode(doc, null, null, "nox", "modified"));
         // doc = (Document) addAfter(doc,
@@ -838,7 +838,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
     public void testContainerStatusAfterAddingItems() throws Exception {
 
         String containerXml = theContainerXml;
-        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
 
         // count items of Container --------------------------------------------
         NodeList itemList = selectNodeList(containerDoc, "/container/struct-map/item");
@@ -849,7 +849,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         releaseWithPid(theContainerId);
 
         containerXml = retrieve(theContainerId);
-        containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        containerDoc = EscidocAbstractTest.getDocument(containerXml);
 
         assertEquals("Version status not changed ", STATE_RELEASED, getVersionStatus(containerDoc));
 
@@ -865,14 +865,14 @@ public class ContainerVersioningTest extends ContainerTestBase {
 
         // prepare Item -------------------------------------------------------
         String tempItemXml = getItemTemplate("escidoc_item_198_for_create.xml");
-        Document tempItemDoc = EscidocRestSoapTestBase.getDocument(tempItemXml);
+        Document tempItemDoc = EscidocAbstractTest.getDocument(tempItemXml);
 
         tempItemDoc = setContextId(tempItemDoc, containerContextId);
         String itemXml = toString(tempItemDoc, false);
         createItem(theContainerId, itemXml);
 
         containerXml = retrieve(theContainerId);
-        containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        containerDoc = EscidocAbstractTest.getDocument(containerXml);
 
         // check if new version was created ------------------------------------
         int newltstVrsNo = getLatestVersionNumber(containerDoc);
@@ -892,7 +892,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         PWCallback.setHandle(PWCallback.ANONYMOUS_HANDLE);
 
         containerXml = retrieve(theContainerId);
-        containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        containerDoc = EscidocAbstractTest.getDocument(containerXml);
 
         itemList = selectNodeList(containerDoc, "/container/struct-map/item");
         noOfItemsCreate = itemList.getLength();

@@ -33,7 +33,7 @@ import static org.junit.Assert.assertEquals;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -78,8 +78,8 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     @Test
     public void testCmCreateAll() throws Exception {
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
-                "content-model-all-for-create.xml");
+            EscidocAbstractTest
+                    .getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-all-for-create.xml");
 
         String title = getContentModelTitle(contentModel);
         String description = getContentModelDescription(contentModel);
@@ -108,8 +108,8 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     public void testCmmCCm1() throws Exception {
 
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
-                "content-model-asRetrieved.xml");
+            EscidocAbstractTest
+                    .getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-asRetrieved.xml");
         String cmXml = toString(contentModel, false);
         String createdXML = create(cmXml);
 
@@ -129,8 +129,8 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     public void testCreateFromRetrieve() throws Exception {
 
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
-                "content-model-all-for-create.xml");
+            EscidocAbstractTest
+                    .getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-all-for-create.xml");
         String title = getContentModelTitle(contentModel);
         String description = getContentModelDescription(contentModel);
         Map<String, String> mdRecordDefinitions = getContentModelMdRecordDefinitions(contentModel);
@@ -160,10 +160,10 @@ public class ContentModelCreateTest extends ContentModelTestBase {
         Class<?> ec = MissingMethodParameterException.class;
         try {
             create(null);
-            EscidocRestSoapTestBase.failMissingException(ec);
+            EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -211,8 +211,8 @@ public class ContentModelCreateTest extends ContentModelTestBase {
 
         String xPath = "/content-model/resource-definitions/resource-definition[@name='trans']/md-record-name";
         Document contentModel =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
-                "content-model-all-for-create.xml");
+            EscidocAbstractTest
+                    .getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-all-for-create.xml");
 
         String mdRecordName = "blafasel" + System.nanoTime();
         substitute(contentModel, xPath, mdRecordName);
@@ -220,7 +220,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
         String contentModelXml = toString(contentModel, false);
         String createdXML = create(contentModelXml);
 
-        Document cmCreated = EscidocRestSoapTestBase.getDocument(createdXML);
+        Document cmCreated = EscidocAbstractTest.getDocument(createdXML);
 
         assertEquals("Wrong md-record-name", mdRecordName, selectSingleNode(cmCreated, xPath + "/text()")
             .getNodeValue());

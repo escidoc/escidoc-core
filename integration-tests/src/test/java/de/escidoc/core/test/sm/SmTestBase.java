@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sm;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.sm.AggregationDefinitionClient;
 import de.escidoc.core.test.common.client.servlet.sm.PreprocessingClient;
 import de.escidoc.core.test.common.client.servlet.sm.ReportClient;
@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
  *
  * @author Michael Hoppe
  */
-public class SmTestBase extends EscidocRestSoapTestBase {
+public class SmTestBase extends EscidocAbstractTest {
 
     private StatisticDataClient statisticDataClient = null;
 
@@ -233,7 +233,7 @@ public class SmTestBase extends EscidocRestSoapTestBase {
      */
     public Document getTemplateAsFixedScopeDocument(final String path, final String templateName) throws Exception {
 
-        final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        final Document document = EscidocAbstractTest.getTemplateAsDocument(path, templateName);
         return document;
     }
 
@@ -265,7 +265,7 @@ public class SmTestBase extends EscidocRestSoapTestBase {
     public Document getTemplateAsFixedAggregationDefinitionDocument(final String path, final String templateName)
         throws Exception {
 
-        final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        final Document document = EscidocAbstractTest.getTemplateAsDocument(path, templateName);
         return document;
     }
 
@@ -297,7 +297,7 @@ public class SmTestBase extends EscidocRestSoapTestBase {
     public Document getTemplateAsFixedReportDefinitionDocument(final String path, final String templateName)
         throws Exception {
 
-        final Document document = EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        final Document document = EscidocAbstractTest.getTemplateAsDocument(path, templateName);
         return document;
     }
 
@@ -327,7 +327,7 @@ public class SmTestBase extends EscidocRestSoapTestBase {
      */
     public Document getTemplateAsFixedReportParametersDocument(final String path, final String templateName)
         throws Exception {
-        return EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        return EscidocAbstractTest.getTemplateAsDocument(path, templateName);
     }
 
     /**
@@ -354,7 +354,7 @@ public class SmTestBase extends EscidocRestSoapTestBase {
      * @throws Exception If anything fails.
      */
     public Document getTemplateAsFixedReportDocument(final String path, final String templateName) throws Exception {
-        return EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
+        return EscidocAbstractTest.getTemplateAsDocument(path, templateName);
     }
 
 }

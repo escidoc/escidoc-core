@@ -29,7 +29,7 @@
 package de.escidoc.core.test.om.contentRelation;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentRelationNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Test;
 
 import static org.junit.Assert.fail;
@@ -61,7 +61,7 @@ public class ContentRelationDeleteTest extends ContentRelationTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ContentRelationNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 }

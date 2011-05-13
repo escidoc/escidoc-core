@@ -30,7 +30,7 @@ package de.escidoc.core.test.om.container;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -94,7 +94,7 @@ public class ContainerCreateTest extends ContainerTestBase {
     public void testConCr1() throws Exception {
 
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + this.path, "create_container.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + this.path, "create_container.xml");
         substitute(context, "/container/properties/name", getUniqueName("Container Name "));
         substitute(context, "/container/md-records/md-record[1]", "");
         String template = toString(context, false);
@@ -149,7 +149,7 @@ public class ContainerCreateTest extends ContainerTestBase {
     @Test
     public void testCreateContainerWithoutContentModel() throws Exception {
         Document container =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + this.path, "create_container.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + this.path, "create_container.xml");
 
         deleteNodes(container, XPATH_CONTAINER_PROPERTIES_CMS);
         create(toString(container, false));

@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorrupted
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -88,19 +88,19 @@ public class ContainerReviseTest extends ContainerTestBase {
         assertXmlValidResult(resultXml);
 
         paramXml = getTheLastModificationParam(false);
-        final Document paramDocument = EscidocRestSoapTestBase.getDocument(paramXml);
+        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
         final String submittedLastModificationDate = getLastModificationDateValue(paramDocument);
 
         try {
             resultXml = revise(theContainerId, paramXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Revising the submitted container failed", e);
+            EscidocAbstractTest.failException("Revising the submitted container failed", e);
         }
         assertXmlValidResult(resultXml);
 
         final String revisedXml = retrieve(theContainerId);
-        final Document revisedDocument = EscidocRestSoapTestBase.getDocument(revisedXml);
+        final Document revisedDocument = EscidocAbstractTest.getDocument(revisedXml);
         assertDateBeforeAfter(submittedLastModificationDate, getLastModificationDateValue(revisedDocument));
         //        assertXmlEquals("Unexpected status. ", revisedDocument,
         //            XPATH_CONTAINER_STATUS, STATE_IN_REVISION);
@@ -120,11 +120,11 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(theContainerId, param);
-            EscidocRestSoapTestBase.failMissingException(InvalidStatusException.class);
+            EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising failed with unexpected exception. ",
-                InvalidStatusException.class, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
         }
     }
 
@@ -143,7 +143,7 @@ public class ContainerReviseTest extends ContainerTestBase {
         String pidParam;
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            if (selectSingleNode(EscidocRestSoapTestBase.getDocument(theContainerXml), "/container/properties/pid") == null) {
+            if (selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), "/container/properties/pid") == null) {
                 pidParam = getPidParam(this.theContainerId, "http://somewhere" + this.theContainerId);
                 assignObjectPid(this.theContainerId, pidParam);
             }
@@ -162,11 +162,11 @@ public class ContainerReviseTest extends ContainerTestBase {
         param = getTheLastModificationParam(false);
         try {
             revise(theContainerId, param);
-            EscidocRestSoapTestBase.failMissingException(InvalidStatusException.class);
+            EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising failed with unexpected exception. ",
-                InvalidStatusException.class, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
         }
     }
 
@@ -185,7 +185,7 @@ public class ContainerReviseTest extends ContainerTestBase {
         String pidParam;
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            if (selectSingleNode(EscidocRestSoapTestBase.getDocument(theContainerXml), "/container/properties/pid") == null) {
+            if (selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), "/container/properties/pid") == null) {
                 pidParam = getPidParam(this.theContainerId, "http://somewhere" + this.theContainerId);
                 assignObjectPid(this.theContainerId, pidParam);
             }
@@ -209,11 +209,11 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(theContainerId, param);
-            EscidocRestSoapTestBase.failMissingException(InvalidStatusException.class);
+            EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising failed with unexpected exception. ",
-                InvalidStatusException.class, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
         }
     }
 
@@ -229,11 +229,11 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(UNKNOWN_ID, param);
-            EscidocRestSoapTestBase.failMissingException(ContainerNotFoundException.class);
+            EscidocAbstractTest.failMissingException(ContainerNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising unknown container failed with unexpected exception. ", ContainerNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising unknown container failed with unexpected exception. ",
+                    ContainerNotFoundException.class, e);
         }
     }
 
@@ -249,11 +249,11 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(null, param);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising without id failed with unexpected exception. ",
-                MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising without id failed with unexpected exception. ",
+                    MissingMethodParameterException.class, e);
         }
     }
 
@@ -273,11 +273,11 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(theContainerId, null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising without id failed with unexpected exception. ",
-                MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising without id failed with unexpected exception. ",
+                    MissingMethodParameterException.class, e);
         }
     }
 
@@ -298,11 +298,12 @@ public class ContainerReviseTest extends ContainerTestBase {
         try {
             revise(theContainerId, param);
             // TODO should be XmlCorruptedException ???
-            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising without last modification date failed with"
-                + " unexpected exception. ", XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType(
+                    "Revising without last modification date failed with" + " unexpected exception. ",
+                    XmlCorruptedException.class, e);
         }
     }
 
@@ -321,11 +322,12 @@ public class ContainerReviseTest extends ContainerTestBase {
         try {
             revise(theContainerId, param);
             // TODO should be XmlCorruptedException ???
-            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising without last modification date failed with"
-                + " unexpected exception. ", XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType(
+                    "Revising without last modification date failed with" + " unexpected exception. ",
+                    XmlCorruptedException.class, e);
         }
     }
 
@@ -342,11 +344,12 @@ public class ContainerReviseTest extends ContainerTestBase {
 
         try {
             revise(theContainerId, param);
-            EscidocRestSoapTestBase.failMissingException(OptimisticLockingException.class);
+            EscidocAbstractTest.failMissingException(OptimisticLockingException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising with outdated last modification date failed "
-                + "with unexpected exception. ", OptimisticLockingException.class, e);
+            EscidocAbstractTest.assertExceptionType(
+                    "Revising with outdated last modification date failed " + "with unexpected exception. ",
+                    OptimisticLockingException.class, e);
         }
     }
 }

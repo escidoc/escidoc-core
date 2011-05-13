@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.joda.time.DateTime;
@@ -132,8 +132,8 @@ public class SearchTest extends SearchTestBase {
             containerIds = new String[Constants.NUM_CONTAINERS];
             for (int i = 0; i < Constants.NUM_CONTAINERS; i++) {
                 String xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH,
-                        "escidoc_search_container" + i + "_rest.xml");
+                    EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH,
+                            "escidoc_search_container" + i + "_rest.xml");
                 String xml = container.create(xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 containerIds[i] = getId(xml);
@@ -178,8 +178,8 @@ public class SearchTest extends SearchTestBase {
             for (int i = 0; i < Constants.NUM_ITEMS; i++) {
                 // Create Item submit and release it //////////////////////////
                 String xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i
-                        + "_rest.xml");
+                    EscidocAbstractTest
+                            .getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i + "_rest.xml");
                 String xml = container.createItem(containerIds[0], xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 itemIds[i] = getId(xml);
@@ -188,7 +188,7 @@ public class SearchTest extends SearchTestBase {
                 item.submit(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
                 // assignPids
-                Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
+                Document itemDoc = EscidocAbstractTest.getDocument(xml);
                 String componentId = getComponentObjidValue(itemDoc, 1);
                 String pidParam = getItemPidParam(itemIds[i]);
                 item.assignContentPid(itemIds[i], componentId, pidParam);
@@ -253,7 +253,7 @@ public class SearchTest extends SearchTestBase {
             // submit container
             container.submit(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
             String version =
-                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml), "/container/properties/version/number")
+                selectSingleNode(EscidocAbstractTest.getDocument(xml), "/container/properties/version/number")
                     .getTextContent();
 
             // assign pids
@@ -294,8 +294,8 @@ public class SearchTest extends SearchTestBase {
             containerIds = new String[Constants.NUM_CONTAINERS];
             for (int i = 0; i < Constants.NUM_CONTAINERS; i++) {
                 String xmlData =
-                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH,
-                        "escidoc_search_container" + i + "_rest.xml");
+                    EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH,
+                            "escidoc_search_container" + i + "_rest.xml");
                 String xml = container.create(xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 containerIds[i] = getId(xml);
@@ -351,7 +351,7 @@ public class SearchTest extends SearchTestBase {
                     item.submit(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
                     // assignPids
-                    Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
+                    Document itemDoc = EscidocAbstractTest.getDocument(xml);
                     String componentId = getComponentObjidValue(itemDoc, 1);
                     String pidParam = getItemPidParam(itemIds[i]);
                     item.assignContentPid(itemIds[i], componentId, pidParam);

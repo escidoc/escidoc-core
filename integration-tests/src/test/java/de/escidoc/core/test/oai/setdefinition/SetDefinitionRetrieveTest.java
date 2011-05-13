@@ -1,7 +1,7 @@
 package de.escidoc.core.test.oai.setdefinition;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,7 +57,7 @@ public class SetDefinitionRetrieveTest extends SetDefinitionTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }

@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
@@ -425,7 +425,7 @@ public class ContextAdminSearchTest extends SearchTestBase {
             if (creatorHandle != null) {
                 PWCallback.setHandle(creatorHandle);
             }
-            Document xmlData = EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_SB_CONTEXT_PATH, templateName);
+            Document xmlData = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_SB_CONTEXT_PATH, templateName);
             substitute(xmlData, "/context/properties/name", getUniqueName("PubMan Context "));
             String xml = context.create(toString(xmlData, false));
             String lastModDate = getLastModificationDate(xml);

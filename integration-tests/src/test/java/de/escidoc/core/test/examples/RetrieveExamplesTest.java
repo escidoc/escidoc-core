@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.examples;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.cmm.ContentModelClient;
@@ -41,7 +41,7 @@ import org.junit.Test;
 /**
  * @author Michael Schneider
  */
-public class RetrieveExamplesTest extends EscidocRestSoapTestBase {
+public class RetrieveExamplesTest extends EscidocAbstractTest {
 
     private final String[] EXAMPLE_CONTEXT_IDS = { "escidoc:ex1" };
 

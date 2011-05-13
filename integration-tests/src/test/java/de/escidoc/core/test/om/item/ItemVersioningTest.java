@@ -32,7 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.compare.TripleStoreValue;
 import de.escidoc.core.test.common.util.xml.Select;
@@ -84,10 +84,10 @@ public class ItemVersioningTest extends ItemTestBase {
     public void setUp() throws Exception {
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
-        theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        theItemId = getObjidValue(EscidocAbstractTest.getDocument(theItemXml));
     }
 
     /**
@@ -138,7 +138,7 @@ public class ItemVersioningTest extends ItemTestBase {
         assertXmlValidVersionHistory(versionHistory);
 
         // assert some node existence -------------------------------
-        Node versionHistoryDoc = EscidocRestSoapTestBase.getDocument(versionHistory);
+        Node versionHistoryDoc = EscidocAbstractTest.getDocument(versionHistory);
         selectSingleNodeAsserted(versionHistoryDoc, "/version-history");
         selectSingleNodeAsserted(versionHistoryDoc, "/version-history/version");
         selectSingleNodeAsserted(versionHistoryDoc, "/version-history/version/events/event");
@@ -181,7 +181,7 @@ public class ItemVersioningTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ItemNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -197,7 +197,7 @@ public class ItemVersioningTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -212,7 +212,7 @@ public class ItemVersioningTest extends ItemTestBase {
         String xml = theItemXml;
         assertXmlValidItem(xml);
 
-        Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
+        Document itemDoc = EscidocAbstractTest.getDocument(xml);
 
         assertXmlExists("New version number", itemDoc, "/item/properties/version/number[text() = '1']");
         assertXmlExists("Properties status pending", itemDoc, "/item/properties/public-status[text() = 'pending']");
@@ -280,7 +280,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
         // check version 1 again
         xml = retrieve(theItemId + ":1");
-        itemDoc = EscidocRestSoapTestBase.getDocument(xml);
+        itemDoc = EscidocAbstractTest.getDocument(xml);
         assertXmlExists("New version number", itemDoc, "/item/properties/version/number[text() = '1']");
         assertXmlExists("Properties status pending", itemDoc, "/item/properties/public-status[text() = 'pending']");
         assertXmlExists("version status pending", itemDoc, "/item/properties/version/status[text() = 'pending']");
@@ -446,7 +446,7 @@ public class ItemVersioningTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
 
         versionHistory = retrieveVersionHistory(theItemId);
@@ -519,7 +519,7 @@ public class ItemVersioningTest extends ItemTestBase {
     public void testLifecycleVersions02() throws Exception {
 
         String itemTempl =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
 
         String handle = PWCallback.getHandle();
         String xml = create(itemTempl);
@@ -733,7 +733,7 @@ public class ItemVersioningTest extends ItemTestBase {
         PWCallback.setHandle(handle);
         xml = retrieve(objid);
         Document component =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "component_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "component_for_create.xml");
         // make second component unique
         final String COMPONENT_2_CONTENT_CATEGORY = String.valueOf(System.nanoTime());
         substitute(component, "/component/properties/content-category", COMPONENT_2_CONTENT_CATEGORY);
@@ -838,7 +838,7 @@ public class ItemVersioningTest extends ItemTestBase {
          * version 1: 0 Components, submitted, released
          */
         String itemTempl =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
 
         String handle = PWCallback.getHandle();
         String xml = create(itemTempl);
@@ -949,7 +949,7 @@ public class ItemVersioningTest extends ItemTestBase {
     public void testLifecycleVersions04() throws Exception {
 
         String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_1_component.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_1_component.xml");
 
         xml = create(xml);
         String objid = getObjidValue(xml);
@@ -1007,7 +1007,7 @@ public class ItemVersioningTest extends ItemTestBase {
         // FIXME activate this test
 
         String itemTempl =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
 
         String xml = create(itemTempl);
         String objid = getObjidValue(xml);
@@ -1125,7 +1125,7 @@ public class ItemVersioningTest extends ItemTestBase {
                 + "']");
 
             // check return value of update
-            Document itemDoc = EscidocRestSoapTestBase.getDocument(theItemXml);
+            Document itemDoc = EscidocAbstractTest.getDocument(theItemXml);
             assertXmlExists("Version " + i + " of Item " + theItemId + " content not as expected (negativ).", itemDoc,
                 addedElementXPath + i + "]");
             assertXmlNotExists("Version " + i + " of Item " + theItemId + " content not as expected (negativ).",
@@ -1151,7 +1151,7 @@ public class ItemVersioningTest extends ItemTestBase {
             }
 
             assertXmlNotExists("Version " + i + " of Item " + theItemId + " content not as expected (negativ).",
-                EscidocRestSoapTestBase.getDocument(xml), addedElementXPath + i + "]");
+                EscidocAbstractTest.getDocument(xml), addedElementXPath + i + "]");
             if (i < rounds) {
                 // hrefs
                 String baseHref = "/ir/item/" + theItemId + ":" + i;
@@ -1159,7 +1159,7 @@ public class ItemVersioningTest extends ItemTestBase {
                 // baseHref += ":" + i;
                 assertXmlExists("Item properties href not as expected.", xml, "/item/properties[@href = '" + baseHref
                     + "/properties']");
-                NodeList nl = selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/item/components/component");
+                NodeList nl = selectNodeList(EscidocAbstractTest.getDocument(xml), "/item/components/component");
                 for (int j = nl.getLength() - 1; j >= 0; j--) {
                     selectSingleNodeAsserted(nl.item(j), "self::node()/@href");
                     String compId = getIdFromHrefValue(selectSingleNode(nl.item(j), "./@href").getTextContent());
@@ -1178,7 +1178,7 @@ public class ItemVersioningTest extends ItemTestBase {
         // retrieve versions
         String versionHistory = retrieveVersionHistory(theItemId);
         assertXmlValidVersionHistory(versionHistory);
-        Node versionHistoryDoc = EscidocRestSoapTestBase.getDocument(versionHistory);
+        Node versionHistoryDoc = EscidocAbstractTest.getDocument(versionHistory);
         selectSingleNodeAsserted(versionHistoryDoc, "/version-history");
         NodeList versions = selectNodeList(versionHistoryDoc, "/version-history/version");
         assertEquals(rounds, versions.getLength());
@@ -1846,7 +1846,7 @@ public class ItemVersioningTest extends ItemTestBase {
         Document itemDocV1E1 = getDocument(itemV1E1);
         String objid = getObjidValue(itemV1E1);
 
-        Document wovDocV1E1 = EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
+        Document wovDocV1E1 = EscidocAbstractTest.getDocument(retrieveVersionHistory(objid));
 
         // check timestamps consistency ----------------------------------
         // /item/@last-modification-date == /item/properties/creation-date
@@ -1945,7 +1945,7 @@ public class ItemVersioningTest extends ItemTestBase {
         itemXml = retrieve(objid);
         Document itemDocV1E5 = getDocument(itemXml);
 
-        Document wovDocV1E5 = EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
+        Document wovDocV1E5 = EscidocAbstractTest.getDocument(retrieveVersionHistory(objid));
 
         // check timestamps consistency ==================================
 
@@ -2138,12 +2138,12 @@ public class ItemVersioningTest extends ItemTestBase {
 
         // version 2
         String itemXmlV2E1 = update(objid, addComponent(itemXml));
-        Document itemDocV2E1 = EscidocRestSoapTestBase.getDocument(itemXmlV2E1);
+        Document itemDocV2E1 = EscidocAbstractTest.getDocument(itemXmlV2E1);
 
         /*
          * check data structure
          */
-        Document wovDocV2E1 = EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
+        Document wovDocV2E1 = EscidocAbstractTest.getDocument(retrieveVersionHistory(objid));
 
         // check timestamp of version 1
         assertEquals("timestamp of version 1 of Item [" + objid
@@ -2157,7 +2157,7 @@ public class ItemVersioningTest extends ItemTestBase {
         /*
          * check data structure
          */
-        Document wovDocV2E2 = EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
+        Document wovDocV2E2 = EscidocAbstractTest.getDocument(retrieveVersionHistory(objid));
 
         // check timestamp of version 1
         assertEquals(
@@ -2173,7 +2173,7 @@ public class ItemVersioningTest extends ItemTestBase {
         /*
          * check data structure
          */
-        Document wovDocV2E3 = EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
+        Document wovDocV2E3 = EscidocAbstractTest.getDocument(retrieveVersionHistory(objid));
 
         // check timestamp of version 1
         assertEquals("timestamp of version 1 of Item [" + objid
@@ -2188,7 +2188,7 @@ public class ItemVersioningTest extends ItemTestBase {
         /*
          * check data structure
          */
-        Document wovDocV2E4 = EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
+        Document wovDocV2E4 = EscidocAbstractTest.getDocument(retrieveVersionHistory(objid));
 
         // check timestamp of version 1
         assertEquals("timestamp of version 1 of Item [" + objid

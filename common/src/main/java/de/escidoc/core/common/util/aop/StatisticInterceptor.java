@@ -49,7 +49,6 @@ import java.util.regex.Pattern;
  * statistics.<br/> This interceptor stores in the thread local <code>StatisticDataVo</code> object the following
  * information before calling the handler method: <ul> <li><code>PARAM_HANDLER</code>, the name of the called
  * handler.</li> <li><code>PARAM_REQUEST</code>, the name of the called handler method.</li>
- * <li><code>PARAM_INTERFACE</code>, the interface that has been called, i.e. REST or SOAP.</li>
  * <li><code>PARAM_INTERNAL</code>, the flag indicating if this is an internal call from one infrastructure service
  * (EJB) to another ( <code>VALUE_INTERNAL_TRUE</code>), or if it is an external call from a non-infrastructure service
  * or application (<code>VALUE_INTERNAL_FALSE</code> ).</li> <li><code>PARAM_USER_ID</code>, the id of the user
@@ -103,8 +102,6 @@ public class StatisticInterceptor implements Ordered {
     private static final String PARAM_SUCCESSFUL = "successful";
 
     private static final String PARAM_USER_ID = "user_id";
-
-    private static final String VALUE_INTERFACE_SOAP = "SOAP";
 
     private static final String VALUE_INTERFACE_REST = "REST";
 

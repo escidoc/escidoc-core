@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sm;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -281,11 +281,11 @@ public abstract class ScopeAbstractTest extends ScopeTestBase {
             result = retrieveScopes(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of Scopes failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of Scopes failed. ", e);
         }
 
         assertXmlValidSrwResponse(result);
-        Document retrievedDocument = EscidocRestSoapTestBase.getDocument(result);
+        Document retrievedDocument = EscidocAbstractTest.getDocument(result);
         NodeList resultNodes = selectNodeList(retrievedDocument, XPATH_SRW_SCOPE_LIST_SCOPE);
         final int totalRecordsWithZeroMaximum = resultNodes.getLength();
 
@@ -302,7 +302,7 @@ public abstract class ScopeAbstractTest extends ScopeTestBase {
     public void explainTest() throws Exception {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN, new String[] { "" });
+        filterParams.put(EscidocAbstractTest.FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
         String result = null;
 
@@ -310,7 +310,7 @@ public abstract class ScopeAbstractTest extends ScopeTestBase {
             result = retrieveScopes(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

@@ -1,7 +1,7 @@
 package de.escidoc.core.test.oai.setdefinition;
 
 import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConstraintViolationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -43,7 +43,7 @@ public class SetDefinitionCreateTest extends SetDefinitionTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = UniqueConstraintViolationException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 }

@@ -32,7 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
@@ -61,10 +61,10 @@ public class ContainerDeleteTest extends ContainerTestBase {
 
         try {
             retrieve(containerId);
-            EscidocRestSoapTestBase.failMissingException(ContainerNotFoundException.class);
+            EscidocAbstractTest.failMissingException(ContainerNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ContainerNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType(ContainerNotFoundException.class, e);
         }
     }
 
@@ -85,10 +85,10 @@ public class ContainerDeleteTest extends ContainerTestBase {
 
         try {
             retrieve(containerId);
-            EscidocRestSoapTestBase.failMissingException(ContainerNotFoundException.class);
+            EscidocAbstractTest.failMissingException(ContainerNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ContainerNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType(ContainerNotFoundException.class, e);
         }
     }
 
@@ -110,11 +110,11 @@ public class ContainerDeleteTest extends ContainerTestBase {
         String theContainerId = getObjidValue(theContainerXml);
         try {
             delete(theContainerId);
-            EscidocRestSoapTestBase.failMissingException("No exception with deleting container with members.",
-                InvalidStatusException.class);
+            EscidocAbstractTest.failMissingException("No exception with deleting container with members.",
+                    InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(InvalidStatusException.class, e);
+            EscidocAbstractTest.assertExceptionType(InvalidStatusException.class, e);
         }
     }
 
@@ -128,11 +128,11 @@ public class ContainerDeleteTest extends ContainerTestBase {
 
         try {
             delete("bla");
-            EscidocRestSoapTestBase.failMissingException("No exception occurred on delete with non existing id.",
-                ContainerNotFoundException.class);
+            EscidocAbstractTest.failMissingException("No exception occurred on delete with non existing id.",
+                    ContainerNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ContainerNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType(ContainerNotFoundException.class, e);
         }
     }
 
@@ -146,11 +146,11 @@ public class ContainerDeleteTest extends ContainerTestBase {
 
         try {
             delete(null);
-            EscidocRestSoapTestBase.failMissingException("No exception occurred on delete with missing id.",
-                MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException("No exception occurred on delete with missing id.",
+                    MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 
@@ -167,11 +167,11 @@ public class ContainerDeleteTest extends ContainerTestBase {
         submit(containerId, param);
         try {
             delete(containerId);
-            EscidocRestSoapTestBase.failMissingException("No exception occurred on delete submitted container.",
-                InvalidStatusException.class);
+            EscidocAbstractTest.failMissingException("No exception occurred on delete submitted container.",
+                    InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(InvalidStatusException.class, e);
+            EscidocAbstractTest.assertExceptionType(InvalidStatusException.class, e);
         }
     }
 

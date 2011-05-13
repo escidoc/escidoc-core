@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import de.escidoc.core.test.common.client.servlet.sb.SearchClient;
@@ -47,7 +47,7 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author Michael Hoppe
  */
-public class SbTestBase extends EscidocRestSoapTestBase {
+public class SbTestBase extends EscidocAbstractTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SbTestBase.class);
 
@@ -125,10 +125,10 @@ public class SbTestBase extends EscidocRestSoapTestBase {
             createdXml = create(ORGANIZATIONAL_UNIT_HANDLER_CODE, prepareOrgUnitData(template, parentIds));
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNotNull(createdXml);
-        Document document = EscidocRestSoapTestBase.getDocument(createdXml);
+        Document document = EscidocAbstractTest.getDocument(createdXml);
         final String objidValue = getObjidValue(document);
 
         if (!ORGANIZATIONAL_UNIT_STATUS_CREATED.equals(status) && !ORGANIZATIONAL_UNIT_STATUS_DELETED.equals(status)) {

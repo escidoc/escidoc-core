@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.item;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.common.resources.BinaryContent;
@@ -80,7 +80,7 @@ public class ItemTestBase extends OmTestBase {
      * @throws Exception Thrown if anything fails.
      */
     public String getItemTemplate(final String templateName) throws Exception {
-        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
+        return EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
 
     }
 
@@ -535,7 +535,7 @@ public class ItemTestBase extends OmTestBase {
 
         if (!getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")
             || !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
-            itemDoc = EscidocRestSoapTestBase.getDocument(retrieve(id));
+            itemDoc = EscidocAbstractTest.getDocument(retrieve(id));
             lmd = getLastModificationDateValue(itemDoc);
         }
 
@@ -548,7 +548,7 @@ public class ItemTestBase extends OmTestBase {
                 String pidParam = getPidParam2(new DateTime(lmd, DateTimeZone.UTC), new URL(itemUrl + itemId));
                 pidXml = assignObjectPid(id, pidParam);
                 assertXmlValidResult(pidXml);
-                Document pidDoc = EscidocRestSoapTestBase.getDocument(pidXml);
+                Document pidDoc = EscidocAbstractTest.getDocument(pidXml);
                 lmd = getLastModificationDateValue(pidDoc);
             }
         }
@@ -569,7 +569,7 @@ public class ItemTestBase extends OmTestBase {
                 assertXmlValidResult(pidXml);
 
                 // assignVersionPid does not alter the last-modification-date
-                Document pidDoc = EscidocRestSoapTestBase.getDocument(pidXml);
+                Document pidDoc = EscidocAbstractTest.getDocument(pidXml);
                 lmd = getLastModificationDateValue(pidDoc);
             }
         }
@@ -698,7 +698,7 @@ public class ItemTestBase extends OmTestBase {
      */
     protected String addCtsElement(final String xml) throws Exception {
 
-        Document doc = EscidocRestSoapTestBase.getDocument(xml);
+        Document doc = EscidocAbstractTest.getDocument(xml);
         doc =
             (Document) addAfter(doc, "/item/properties/content-model-specific/nix", createElementNode(doc, null, null,
                 "nox", "modified"));
@@ -716,7 +716,7 @@ public class ItemTestBase extends OmTestBase {
      */
     protected String addElement(final String xml, final String xPath) throws Exception {
 
-        Document doc = EscidocRestSoapTestBase.getDocument(xml);
+        Document doc = EscidocAbstractTest.getDocument(xml);
         doc = (Document) addAfter(doc, xPath, createElementNode(doc, null, null, "nox", "modified"));
         String newXml = toString(doc, true);
         return newXml;
@@ -733,7 +733,7 @@ public class ItemTestBase extends OmTestBase {
 
         // load component template
         Document component =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "component_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "component_for_create.xml");
 
         return addComponent(itemXml, component);
     }
@@ -748,7 +748,7 @@ public class ItemTestBase extends OmTestBase {
      */
     protected String addComponent(final String itemXml, final Document component) throws Exception {
         // FIXME using importNode and adoptNode should not be necessary
-        Document curItem = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document curItem = EscidocAbstractTest.getDocument(itemXml);
 
         Node newComponent = selectSingleNode(component, "/component");
         curItem.importNode(newComponent, true);
@@ -841,9 +841,9 @@ public class ItemTestBase extends OmTestBase {
 
         assertXmlValidItem(toBeAssertedXml);
 
-        Document toBeAssertedDocument = EscidocRestSoapTestBase.getDocument(toBeAssertedXml);
+        Document toBeAssertedDocument = EscidocAbstractTest.getDocument(toBeAssertedXml);
         // Document template =
-        // EscidocRestSoapTestBase.getDocument(xmlTemplateContext);
+        // EscidocAbstractTest.getDocument(xmlTemplateContext);
 
         // assert root element
         // String[] values =
@@ -916,7 +916,7 @@ public class ItemTestBase extends OmTestBase {
         Node itemWithoutSecondComponent = deleteElement(newItem, "/item/components/component[1]");
         String xmlData = toString(itemWithoutSecondComponent, false);
         String theItemXml = create(xmlData);
-        String theItemId = getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        String theItemId = getObjidValue(EscidocAbstractTest.getDocument(theItemXml));
         assertXmlValidItem(xmlData);
         String componentId;
         Document createdItem = getDocument(theItemXml);

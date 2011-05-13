@@ -26,45 +26,34 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.test.om.container.rest;
+package de.escidoc.core.test.om.item;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.om.container.ContainerTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.om.item.ItemTestBase;
 import org.junit.Test;
 
 /**
- * Container tests.
+ * Item tests.
  *
  * @author Michael Schneider
  */
-public class ContainerRetrieveRestTest extends ContainerTestBase {
-
-    private String theItemId;
+public class ItemRetrieveRestTest extends ItemTestBase {
 
     /**
-     * Test successfully retrieving of container.
+     * Test retrieve resources of Item.
      *
-     * @throws Exception Thrown if retrieve fails.
+     * @throws Exception Thrown if anything fails.
      */
     @Test
     public void testRetrieveResources() throws Exception {
-
-        String xmlData =
-            EscidocRestSoapTestBase
+        String xml =
+            EscidocAbstractTest
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+        String itemXml = create(xml);
+        String itemId = getObjidValue(itemXml);
 
-        String theItemXml = handleXmlResult(getItemClient().create(xmlData));
-
-        this.theItemId = getObjidValue(theItemXml);
-        xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
-                "create_container_v1.1-forItem.xml");
-
-        String theContainerXml = create(xmlData.replaceAll("##ITEMID##", theItemId));
-        String theContainerId = getObjidValue(theContainerXml);
-
-        String resourcesXml = retrieveResources(theContainerId);
-        assertXmlValidContainer(resourcesXml);
+        String resources = retrieveResources(itemId);
+        assertXmlValidItem(resources);
 
     }
 

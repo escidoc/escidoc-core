@@ -34,7 +34,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaVal
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ContextNameNotUniqueException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -96,7 +96,7 @@ public class CreateTest extends ContextTestBase {
     @Test
     public void testOmCr1a() throws Exception {
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         String template = toString(context, false);
         String created = create(template);
@@ -111,7 +111,7 @@ public class CreateTest extends ContextTestBase {
     @Test
     public void testOmCrc1b() throws Exception {
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_mpdl.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_mpdl.xml");
         substitute(context, "/context/properties/name", getUniqueName("my context reloaded "));
         String template = toString(context, false);
         String created = create(template);
@@ -127,7 +127,7 @@ public class CreateTest extends ContextTestBase {
     @Test
     public void testOmCr1aSC() throws Exception {
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create_sc.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create_sc.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan < äöüß > & &amp; Context "));
         String template = toString(context, false);
         String created = create(template);
@@ -145,14 +145,14 @@ public class CreateTest extends ContextTestBase {
     public void testOmCrc1c() throws Exception {
 
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_createWithDoubleOrganizationalUnits.xml");
+            EscidocAbstractTest.getTemplateAsDocument(this.path, "context_createWithDoubleOrganizationalUnits.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         String template = toString(context, false);
         String created = create(template);
-        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
+        Document createdDoc = EscidocAbstractTest.getDocument(created);
         assertXmlValidContext(created);
         NodeList expectedOus =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(template), XPATH_CONTEXT_PROPERTIES_ORGANIZATIONAL_UNIT);
+            selectNodeList(EscidocAbstractTest.getDocument(template), XPATH_CONTEXT_PROPERTIES_ORGANIZATIONAL_UNIT);
         NodeList toBeAssertedOus = selectNodeList(createdDoc, XPATH_CONTEXT_PROPERTIES_ORGANIZATIONAL_UNIT);
 
         // double entries of same ou are to remove
@@ -179,7 +179,7 @@ public class CreateTest extends ContextTestBase {
          * 500 Internal eSciDoc System Error Should not be reached.
          * StaxParser.handle(StartElement)
          */
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_mpdl_issue303.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_mpdl_issue303.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         String template = toString(context, false);
         String created = create(template);
@@ -194,7 +194,7 @@ public class CreateTest extends ContextTestBase {
     @Test
     public void testOmCrc1e() throws Exception {
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_mpdl_issue357.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_mpdl_issue357.xml");
         substitute(context, "/context/properties/name", getUniqueName("Publications of the MPI for Plasmaphysics "));
         String template = toString(context, false);
         String created = create(template);
@@ -210,7 +210,7 @@ public class CreateTest extends ContextTestBase {
     @Ignore("Test large Context handling for REST")
     @Test
     public void testOmCrc1f() throws Exception {
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context-large-rest.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context-large-rest.xml");
         substitute(context, "/context/properties/name", getUniqueName("Large Context-1 "));
         create(toString(context, false));
     }
@@ -223,7 +223,7 @@ public class CreateTest extends ContextTestBase {
     @Test(expected = ContextNameNotUniqueException.class)
     public void testOmCrc2() throws Exception {
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         String template = toString(context, false);
         create(template);
@@ -238,7 +238,7 @@ public class CreateTest extends ContextTestBase {
     @Test(expected = MissingElementValueException.class)
     public void testOmCrc2a() throws Exception {
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(context, "/context/properties/name", "");
         String template = toString(context, false);
         create(template);
@@ -252,7 +252,7 @@ public class CreateTest extends ContextTestBase {
     @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc3a() throws Exception {
 
-        create(toString(deleteElement(EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml"),
+        create(toString(deleteElement(EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml"),
             "/context/properties"), false));
     }
 
@@ -292,7 +292,7 @@ public class CreateTest extends ContextTestBase {
     @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc3d() throws Exception {
 
-        create(toString(deleteElement(EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml"),
+        create(toString(deleteElement(EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml"),
             "/context/properties/name"), false));
     }
 
@@ -437,7 +437,7 @@ public class CreateTest extends ContextTestBase {
     @Test
     public void testOmCreateContextWithoutOU() throws Exception {
 
-        Document contextDoc = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        Document contextDoc = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(contextDoc, "/context/properties/name", getUniqueName("PubMan Context "));
         deleteElements(contextDoc, "/context/properties/" + "organizational-units/organizational-unit");
 
@@ -447,7 +447,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
         // ---------------------------------------
@@ -457,7 +457,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -480,14 +480,14 @@ public class CreateTest extends ContextTestBase {
             ou = getObjidValue(ouXML);
 
             // create context
-            String contextXML = EscidocRestSoapTestBase.getTemplateAsString(path, "context_create.xml");
+            String contextXML = EscidocAbstractTest.getTemplateAsString(path, "context_create.xml");
             contextXML = contextXML.replace("escidoc:persistent13", ou);
             try {
                 contextXML = create(contextXML);
                 fail(InvalidStatusException.class + " expected but no error occurred!");
             }
             catch (Exception e) {
-                EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+                EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
             }
         }
         finally {
@@ -514,8 +514,7 @@ public class CreateTest extends ContextTestBase {
      */
     protected String getContextTemplateWithReadOnlyElements(final Map<String, String> expected) throws Exception {
         Node template =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH,
-                "context_create_read_only_elements.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH, "context_create_read_only_elements.xml");
 
         template = changeTemplateWithReadOnly(template, expected, "/context/@objid");
         template = changeTemplateWithReadOnly(template, expected, "/context/@" + XLINK_HREF_TEMPLATES);
@@ -538,7 +537,7 @@ public class CreateTest extends ContextTestBase {
     @Test(expected = XmlSchemaValidationException.class)
     public void testOmCr7() throws Exception {
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         substitute(context, "/context/admin-descriptors/admin-descriptor[1]", "");
         String template = toString(context, false);
@@ -557,7 +556,7 @@ public class CreateTest extends ContextTestBase {
 
         String nameWS = "Admin Descriptor Name with whitespaces";
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(context, "/context/admin-descriptors/admin-descriptor[1]/@name", nameWS);
         String template = toString(context, false);
 
@@ -576,7 +575,7 @@ public class CreateTest extends ContextTestBase {
         String nameLong =
             "Admin_Descriptor_Name_without_whitespaces_but_" + "extra_long_to_reach_the_64_character_limit_of_fedora";
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(context, "/context/admin-descriptors/admin-descriptor[1]/@name", nameLong);
         String template = toString(context, false);
 

@@ -56,9 +56,8 @@ public class LinkCollectionStaxHandler extends LinkStaxHandler {
      *
      * @param elementPath    The path to the link elements that shall be handled by this handler.
      * @param hrefBaseUri    The base uri of the href pointing to the objects that are referenced by the links that
-     *                       shall be parsed by this handler. In case of REST, this value is used to check the provided
-     *                       href. In case of SOAP it is ignored.
-     * @param exceptionClass The type of the exception to throw if href base uri is not matched in case of REST. This
+     *                       shall be parsed by this handler.
+     * @param exceptionClass The type of the exception to throw if href base uri is not matched. This
      *                       parameter must not be <code>null</code> and must be an instance of {@link
      *                       EscidocException}, but this is not checked!.
      */

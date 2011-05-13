@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.protocol.RequestAddCookies;
@@ -132,7 +132,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
             checkRestReferences(theContainerXml);
         }
 
-        String ltstVrsnId = getLatestVersionId(EscidocRestSoapTestBase.getDocument(theContainerXml));
+        String ltstVrsnId = getLatestVersionId(EscidocAbstractTest.getDocument(theContainerXml));
         call("/ir/container/" + ltstVrsnId);
         int maxVersion = Integer.valueOf(ltstVrsnId.substring(ltstVrsnId.lastIndexOf(':') + 1));
 
@@ -150,7 +150,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
      */
     private void checkRestReferences(final String containerXml) throws Exception {
 
-        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
 
         NodeList hrefs = selectNodeList(containerDoc, "//@href");
         List<String> refList = nodeList2List(hrefs);
@@ -201,7 +201,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
      */
     private void checkSoapReferences(final String containerXml) throws Exception {
 
-        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
 
         NodeList objids = selectNodeList(containerDoc, "//*[@objid]");
         List<String> refList = nodeListSOAP2List(objids);
@@ -232,7 +232,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
      */
     private void checkRestPropertiesReferences(final String containerXml, final String id) throws Exception {
 
-        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
 
         String versionSuffix = getVersionNumber(id);
         Node n = selectSingleNode(containerDoc, "/container/properties/version/@href");
@@ -262,7 +262,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
      */
     private void checkSoapPropertiesReferences(final String containerXml, final String id) throws Exception {
 
-        Document containerDoc = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
 
         Node n = selectSingleNode(containerDoc, "/container/properties/version/@objid");
         String currentVersion = n.getNodeValue();

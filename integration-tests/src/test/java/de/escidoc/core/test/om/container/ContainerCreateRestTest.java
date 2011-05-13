@@ -26,7 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.test.om.container.rest;
+package de.escidoc.core.test.om.container;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
@@ -36,9 +36,8 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContentMode
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.container.ContainerTestBase;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +74,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
         }
         assertXmlValidContainer(theContainerXml);
 
-        Document document = EscidocRestSoapTestBase.getDocument(theContainerXml);
+        Document document = EscidocAbstractTest.getDocument(theContainerXml);
         String containerId = getObjidValue(document);
 
         assertXmlEquals("href value is wrong", document, XPATH_CONTAINER_XLINK_HREF, "/ir/container/" + containerId);
@@ -150,11 +149,11 @@ public class ContainerCreateRestTest extends ContainerTestBase {
 
         String xmlWithContainer1 = xmlData.replaceAll("##CONTAINERID1##", subContainerId1);
         String xmlWithContainer2 = xmlWithContainer1.replaceAll("##CONTAINERID2##", subContainerId2);
-        Document document = EscidocRestSoapTestBase.getDocument(xmlWithContainer2);
+        Document document = EscidocAbstractTest.getDocument(xmlWithContainer2);
         NodeList members = selectNodeList(document, "/container/struct-map/member-ref-list/member/container-ref/@href");
         final String theContainerXml = create(xmlWithContainer2);
         assertXmlValidContainer(theContainerXml);
-        final Document createdDocument = EscidocRestSoapTestBase.getDocument(theContainerXml);
+        final Document createdDocument = EscidocAbstractTest.getDocument(theContainerXml);
         NodeList membersAfterCreate =
             selectNodeList(createdDocument, "/container/struct-map/member-ref-list/member/container-ref/@href");
 
@@ -177,7 +176,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
     public void testOM_CCO_2_3() throws Exception {
 
         Document container =
-            EscidocRestSoapTestBase.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
+            EscidocAbstractTest.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
         Node containerWithMissingContextHref =
             deleteAttribute(container, "/container/properties/context", XLINK_HREF_TEMPLATES);
         String containerWithMissingContextHrefXml = toString(containerWithMissingContextHref, false);
@@ -189,7 +188,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = XmlCorruptedException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
             return;
         }
 
@@ -203,7 +202,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
     @Test
     public void testOM_CCO_2_2() throws Exception {
         Document container =
-            EscidocRestSoapTestBase.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
+            EscidocAbstractTest.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
         Node containerWithWrongContextHref = substitute(container, "/container/properties/context/@href", "/ir/bla");
         String containerWithWrongContextHrefXml = toString(containerWithWrongContextHref, false);
         try {
@@ -224,7 +223,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
     @Test
     public void testOM_CCO_3() throws Exception {
         Document container =
-            EscidocRestSoapTestBase.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
+            EscidocAbstractTest.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
         Node containerWithWrongContextId =
             substitute(container, "/container/properties/context/@href", "/ir/context/bla");
         String containerWithWrongContextIdXml = toString(containerWithWrongContextId, false);
@@ -246,7 +245,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
     @Test
     public void testOM_CCO_4() throws Exception {
         Document container =
-            EscidocRestSoapTestBase.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
+            EscidocAbstractTest.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
         Node containerWithWrongContextObjectType =
             substitute(container, "/container/properties/context/@href", "/ctm/context/escidoc:persistent4");
         String containerWithWrongContextObjectTypeXml = toString(containerWithWrongContextObjectType, false);
@@ -268,7 +267,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
     @Test
     public void testOM_CCO_5() throws Exception {
         Document container =
-            EscidocRestSoapTestBase.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
+            EscidocAbstractTest.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
 
         Node attributeMdRecordName = selectSingleNode(container, "/container/md-records/md-record[1]/@name");
         String nameValue = attributeMdRecordName.getTextContent();
@@ -295,7 +294,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
     @Test
     public void testOMCi2e() throws Exception {
         Document xmlContainer =
-            EscidocRestSoapTestBase.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
+            EscidocAbstractTest.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
 
         // Node attribute =
         // selectSingleNode(xmlItemWithoutComponents,
@@ -308,10 +307,10 @@ public class ContainerCreateRestTest extends ContainerTestBase {
         Class<?> ec = MissingMdRecordException.class;
         try {
             create(xmlContainerWithoutInternalMetadataXml);
-            EscidocRestSoapTestBase.failMissingException(ec);
+            EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -326,9 +325,9 @@ public class ContainerCreateRestTest extends ContainerTestBase {
         assertXmlValidContainer(containerXml1);
         String containerXml2 = create(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
         assertXmlValidContainer(containerXml2);
-        Document document1 = EscidocRestSoapTestBase.getDocument(containerXml1);
+        Document document1 = EscidocAbstractTest.getDocument(containerXml1);
         String createdContainerId1 = getObjidValue(document1);
-        Document document2 = EscidocRestSoapTestBase.getDocument(containerXml2);
+        Document document2 = EscidocAbstractTest.getDocument(containerXml2);
         String createdContainerId2 = getObjidValue(document2);
 
         String href1 = "/ir/container/" + createdContainerId1;
@@ -345,14 +344,14 @@ public class ContainerCreateRestTest extends ContainerTestBase {
         containerForCreateWithRelationsXml =
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);
         Document containerForCreateWithRelations =
-            EscidocRestSoapTestBase.getDocument(containerForCreateWithRelationsXml);
+            EscidocAbstractTest.getDocument(containerForCreateWithRelationsXml);
 
         NodeList relations = selectNodeList(containerForCreateWithRelations, "/container/relations/relation");
 
         String xml = create(containerForCreateWithRelationsXml);
 
         NodeList relationsAfterCreate =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), "/container/relations/relation");
+            selectNodeList(EscidocAbstractTest.getDocument(xml), "/container/relations/relation");
 
         assertXmlValidContainer(xml);
         assertEquals("Number of relations is wrong ", relations.getLength(), relationsAfterCreate.getLength());
@@ -388,8 +387,8 @@ public class ContainerCreateRestTest extends ContainerTestBase {
                 + " references non existing targets.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("ReferencedResourceNotFoundException expected.",
-                ReferencedResourceNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("ReferencedResourceNotFoundException expected.",
+                    ReferencedResourceNotFoundException.class, e);
         }
 
     }
@@ -421,8 +420,8 @@ public class ContainerCreateRestTest extends ContainerTestBase {
                 + " target ids containing a version number.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("InvalidContentException expected.",
-                InvalidContentException.class, e);
+            EscidocAbstractTest
+                    .assertExceptionType("InvalidContentException expected.", InvalidContentException.class, e);
         }
     }
 
@@ -450,7 +449,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
         containerForCreateWithRelationsXml =
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);
         Document containerForCreateWithRelations =
-            EscidocRestSoapTestBase.getDocument(containerForCreateWithRelationsXml);
+            EscidocAbstractTest.getDocument(containerForCreateWithRelationsXml);
         Node relationPredicate =
             selectSingleNode(containerForCreateWithRelations, "/container/relations/relation[1]/@predicate");
         relationPredicate.setNodeValue("http://www.bla.de#bla");
@@ -463,8 +462,8 @@ public class ContainerCreateRestTest extends ContainerTestBase {
                 + " references non existing predicate.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("RelationPredicateNotFoundException expected.",
-                RelationPredicateNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("RelationPredicateNotFoundException expected.",
+                    RelationPredicateNotFoundException.class, e);
         }
 
     }
@@ -481,7 +480,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
         final Class<?> ec = ContextNotFoundException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
+            EscidocAbstractTest.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
 
         String href =
             selectSingleNodeAsserted(toBeCreatedDocument, XPATH_CONTAINER_CONTEXT_XLINK_HREF).getTextContent();
@@ -492,12 +491,12 @@ public class ContainerCreateRestTest extends ContainerTestBase {
 
         try {
             create(toBeCreatedXml);
-            EscidocRestSoapTestBase.failMissingException("Creating Container with invalid object href not declined. ",
-                ec);
+            EscidocAbstractTest.failMissingException("Creating Container with invalid object href not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Creating Container with invalid object href not declined,"
-                + " properly. ", ec, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Creating Container with invalid object href not declined," + " properly. ",
+                            ec, e);
         }
     }
 
@@ -513,7 +512,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
         final Class<?> ec = ContentModelNotFoundException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
+            EscidocAbstractTest.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
 
         String href =
             selectSingleNodeAsserted(toBeCreatedDocument, XPATH_CONTAINER_CONTENT_TYPE_XLINK_HREF).getTextContent();
@@ -524,12 +523,12 @@ public class ContainerCreateRestTest extends ContainerTestBase {
 
         try {
             create(toBeCreatedXml);
-            EscidocRestSoapTestBase.failMissingException("Creating Container with invalid object href not declined. ",
-                ec);
+            EscidocAbstractTest.failMissingException("Creating Container with invalid object href not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Creating Container with invalid object href not declined,"
-                + " properly. ", ec, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Creating Container with invalid object href not declined," + " properly. ",
+                            ec, e);
         }
     }
 
@@ -544,7 +543,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
         final Class<?> ec = XmlCorruptedException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
+            EscidocAbstractTest.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
         deleteElement(toBeCreatedDocument, XPATH_CONTAINER_CONTENT_MODEL);
         addAfter(toBeCreatedDocument, XPATH_CONTAINER_CONTEXT, createElementNode(toBeCreatedDocument, SREL_NS_URI,
             "srel", NAME_CONTENT_MODEL, null));
@@ -553,12 +552,12 @@ public class ContainerCreateRestTest extends ContainerTestBase {
 
         try {
             create(toBeCreatedXml);
-            EscidocRestSoapTestBase.failMissingException(
-                "Creating container with empty content-model element not declined.", ec);
+            EscidocAbstractTest
+                    .failMissingException("Creating container with empty content-model element not declined.", ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Creating container with empty content-model element not declined" + ", properly", ec, e);
+            EscidocAbstractTest.assertExceptionType(
+                    "Creating container with empty content-model element not declined" + ", properly", ec, e);
         }
 
     }
@@ -569,7 +568,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
     @Test
     public void testCreateContainerWith2Mdrecords() throws Exception {
         Document xmlContainer =
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .getDocument(getContainerTemplate("create_container_2_Md_Records_WithoutMembers_v1.1.xml"));
         NodeList mdrecords = selectNodeList(xmlContainer, "/container/md-records/md-record");
         String containerWithoutAdminDescriptorXml = toString(xmlContainer, false);
@@ -578,7 +577,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
         final String createdXml = create(containerWithoutAdminDescriptorXml);
 
         assertXmlValidContainer(createdXml);
-        final Document createdDocument = EscidocRestSoapTestBase.getDocument(createdXml);
+        final Document createdDocument = EscidocAbstractTest.getDocument(createdXml);
 
         NodeList mdrecordsAfterCreate = selectNodeList(createdDocument, "/container/md-records/md-record");
         assertEquals(mdrecords.getLength(), mdrecordsAfterCreate.getLength());

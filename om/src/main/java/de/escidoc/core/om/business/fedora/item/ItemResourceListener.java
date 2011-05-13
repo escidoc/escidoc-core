@@ -123,8 +123,6 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      */
     public void fireItemModified(final String id, final String xmlData) throws SystemException,
         WebserverSystemException {
-        final String restXml;
-        final String soapXml;
         for (final ResourceListener itemListener : this.itemListeners) {
             itemListener.resourceModified(id, xmlData);
         }

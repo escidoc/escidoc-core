@@ -30,7 +30,7 @@ package de.escidoc.core.test.om.context;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.AdminDescriptorNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -62,23 +62,23 @@ public class AdminDescriptorsTest extends ContextTestBase {
 
         if (contextId == null) {
             Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+                EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
             substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
             String template = toString(context, false);
             contextXml = create(template);
             assertXmlValidContext(contextXml);
             assertCreatedContext(contextXml, template, startTimestamp);
 
-            contextId = getObjidValue(EscidocRestSoapTestBase.getDocument(contextXml));
+            contextId = getObjidValue(EscidocAbstractTest.getDocument(contextXml));
 
             // open Context
-            String lastModificationDate = getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(contextXml));
+            String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
             this.getContextClient().open(contextId,
                 getTheLastModificationParam(true, contextId, "comment", lastModificationDate));
 
             String filename = "escidoc_item_198_for_create.xml";
-            createItem(toString(substitute(EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                filename), "/item/properties/context/@href", "/ir/context/" + contextId), true));
+            createItem(toString(substitute(
+                    EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", filename), "/item/properties/context/@href", "/ir/context/" + contextId), true));
         }
     }
 

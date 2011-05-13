@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.common.compare;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.common.util.Version;
 import de.escidoc.core.test.common.util.xml.Assert;
@@ -68,7 +68,7 @@ public class TripleStoreValue {
          * non representation values
          */
         // retrieve frameworkj version from running instance
-        EscidocRestSoapTestBase etb = new EscidocRestSoapTestBase();
+        EscidocAbstractTest etb = new EscidocAbstractTest(){};
         String coreVersion = etb.obtainFrameworkVersion();
 
         // check build number
@@ -200,7 +200,7 @@ public class TripleStoreValue {
          * non representation values
          */
         // retrieve frameworkj version from running instance
-        EscidocRestSoapTestBase etb = new EscidocRestSoapTestBase();
+        EscidocAbstractTest etb = new EscidocAbstractTest(){};
         String coreVersion = etb.obtainFrameworkVersion();
 
         // check build number
@@ -251,9 +251,9 @@ public class TripleStoreValue {
             Node ou =
                 XPathAPI.selectSingleNode(xmlContext, "/context/properties/organizational-units/organizational-unit["
                     + i + "]/@href");
-            ouId = EscidocRestSoapTestBase.getObjidFromHref(ou.getTextContent());
+            ouId = EscidocAbstractTest.getObjidFromHref(ou.getTextContent());
 
-            compareValuesWithTripleStore(EscidocRestSoapTestBase.getObjidValue(xmlContext), "<info:fedora/" + ouId
+            compareValuesWithTripleStore(EscidocAbstractTest.getObjidValue(xmlContext), "<info:fedora/" + ouId
                 + ">", "/RDF/Description/organizational-unit",
                 "<http://escidoc.de/core/01/structural-relations/organizational-unit>");
         }
@@ -280,7 +280,7 @@ public class TripleStoreValue {
         // call value from TripleStore
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result = tripleStore.requestMPT("<info:fedora/" + itemId + "> " + trsPredicate + " *", "RDF/XML");
-        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
+        Document resultDoc = EscidocAbstractTest.getDocument(result);
 
         if (value != null) {
             // make sure only one value exist in TripleStore
@@ -323,7 +323,7 @@ public class TripleStoreValue {
         // call value from TripleStore
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result = tripleStore.requestMPT("<info:fedora/" + itemId + "> " + trsPredicate + " " + value, "RDF/XML");
-        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
+        Document resultDoc = EscidocAbstractTest.getDocument(result);
 
         // make sure only one value exist in TripleStore
         assertEquals("Value for predicate '" + trsPredicate + "' and value '" + value
@@ -346,7 +346,7 @@ public class TripleStoreValue {
         // call value from TripleStore
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result = tripleStore.requestMPT("<info:fedora/" + itemId + "> * *", "RDF/XML");
-        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
+        Document resultDoc = EscidocAbstractTest.getDocument(result);
 
         return XPathAPI.selectNodeList(resultDoc, "/RDF/Description/*").getLength();
     }

@@ -30,7 +30,7 @@ package de.escidoc.core.test.oum.organizationalunit;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -53,11 +53,11 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
     @Test
     public void testOumRPO1_1() throws Exception {
 
-        Document xml = EscidocRestSoapTestBase.getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        Document xml = EscidocAbstractTest.getDocument(createSuccessfully("escidoc_ou_create.xml"));
         String id = getObjidValue(xml);
         String parentOus = retrieveParents(id);
         assertXmlValidOrganizationalUnit(parentOus);
-        assertParentOus(id, EscidocRestSoapTestBase.getDocument(parentOus), new HashMap<String, String>(),
+        assertParentOus(id, EscidocAbstractTest.getDocument(parentOus), new HashMap<String, String>(),
             startTimestamp);
     }
 
@@ -71,9 +71,9 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
 
         // create two parents
         final String parent1Xml = createSuccessfully("escidoc_ou_create.xml");
-        final String parent1Id = getObjidValue(EscidocRestSoapTestBase.getDocument(parent1Xml));
+        final String parent1Id = getObjidValue(EscidocAbstractTest.getDocument(parent1Xml));
         final String parent2Xml = createSuccessfully("escidoc_ou_create.xml");
-        final String parent2Id = getObjidValue(EscidocRestSoapTestBase.getDocument(parent2Xml));
+        final String parent2Id = getObjidValue(EscidocAbstractTest.getDocument(parent2Xml));
 
         // store parents in map for later assertions
         final Map<String, String> expectedParents = new HashMap<String, String>(2);
@@ -82,11 +82,11 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
 
         // create child with the two parents
         final String childXml = createSuccessfullyChild("escidoc_ou_create.xml", new String[] { parent1Id, parent2Id });
-        final String childId = getObjidValue(EscidocRestSoapTestBase.getDocument(childXml));
+        final String childId = getObjidValue(EscidocAbstractTest.getDocument(childXml));
 
         String parentOus = retrieveParents(childId);
         assertXmlValidOrganizationalUnit(parentOus);
-        assertParentOus(childId, EscidocRestSoapTestBase.getDocument(parentOus), expectedParents, startTimestamp);
+        assertParentOus(childId, EscidocAbstractTest.getDocument(parentOus), expectedParents, startTimestamp);
     }
 
     public void assertParentOus(
@@ -133,10 +133,10 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
         Class ec = OrganizationalUnitNotFoundException.class;
         try {
             retrieveParents(UNKNOWN_ID);
-            EscidocRestSoapTestBase.failMissingException(ec);
+            EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -152,10 +152,10 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
         Class ec = OrganizationalUnitNotFoundException.class;
         try {
             retrieveParents(CONTEXT_ID);
-            EscidocRestSoapTestBase.failMissingException(ec);
+            EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -170,10 +170,10 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
         Class ec = MissingMethodParameterException.class;
         try {
             retrieveParents(null);
-            EscidocRestSoapTestBase.failMissingException(ec);
+            EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -188,10 +188,10 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
         Class ec = MissingMethodParameterException.class;
         try {
             retrieveParents("");
-            EscidocRestSoapTestBase.failMissingException(ec);
+            EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 

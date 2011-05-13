@@ -31,7 +31,7 @@ package de.escidoc.core.test.om.item;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,9 +69,9 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     @Before
     public void setUp() throws Exception {
         itemXml =
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
-        createdItem = EscidocRestSoapTestBase.getDocument(create(itemXml));
+        createdItem = EscidocAbstractTest.getDocument(create(itemXml));
         itemId = getObjidValue(createdItem);
         componentNo = 1;
         componentId = getObjidValue(createdItem, "/item/components/component[1]");
@@ -95,12 +95,12 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         String properties = retrieveComponentProperties(itemId, componentId);
 
         Node escidocMdRecordWithDescription =
-            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
+            selectSingleNode(EscidocAbstractTest.getDocument(itemXml),
                 "/item/components/component/md-records/md-record[@name='escidoc' and *//description]");
         String escidocMdRecordWithDescriptionTemplate = toString(escidocMdRecordWithDescription, false);
 
         String templateProperties =
-            toString(selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
+            toString(selectSingleNode(EscidocAbstractTest.getDocument(itemXml),
                 "/item/components/component[md-records/md-record[@name='escidoc']//description]/properties"), true);
         assertComponentProperties(properties, templateProperties, escidocMdRecordWithDescriptionTemplate, "/ir/item/"
             + itemId + "/components/component/" + componentId + "/properties",
@@ -113,10 +113,10 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         properties = retrieveComponentProperties(itemId, componentId);
 
         Node escidocMdRecordWithoutDescription =
-            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
+            selectSingleNode(EscidocAbstractTest.getDocument(itemXml),
                 "/item/components/component/md-records/md-record[@name='escidoc' and not(*//description)]");
         String escidocMdRecordWithoutDescriptionTemplate = toString(escidocMdRecordWithoutDescription, false);
-        assertComponentProperties(properties, toString(selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
+        assertComponentProperties(properties, toString(selectSingleNode(EscidocAbstractTest.getDocument(itemXml),
             "/item/components/component[not(md-records/md-record[@name='escidoc']//description)]/properties"), true),
             escidocMdRecordWithoutDescriptionTemplate, "/ir/item/" + itemId + "/components/component/" + componentId
                 + "/properties", getLastModificationDateValue(createdItem), startTimestamp);
@@ -212,7 +212,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         final String templateComponentEscidocMdRecord, final String expectedHRef,
         final String expectedLastModificationTimestamp, final String timestampBeforeCreation) throws Exception {
 
-        Document createdProperties = EscidocRestSoapTestBase.getDocument(xmlComponentProperties);
+        Document createdProperties = EscidocAbstractTest.getDocument(xmlComponentProperties);
         String href = getRootElementHrefValue(createdProperties);
         if ("".equals(href)) {
             href = null;
@@ -256,8 +256,8 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         assertReferencingElement("Invalid created-by. ", createdProperties, "/properties/created-by",
             Constants.USER_ACCOUNT_BASE_URI);
 
-        Document template = EscidocRestSoapTestBase.getDocument(xmlTemplateComponentProperties);
-        Document mdRecord = EscidocRestSoapTestBase.getDocument(templateComponentEscidocMdRecord);
+        Document template = EscidocAbstractTest.getDocument(xmlTemplateComponentProperties);
+        Document mdRecord = EscidocAbstractTest.getDocument(templateComponentEscidocMdRecord);
         if (selectSingleNode(mdRecord, "/md-record//description") != null) {
             assertXmlExists("Component Properties error: description was not set in properties!", createdProperties,
                 "/properties/description");
@@ -299,13 +299,13 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
      */
     @Test
     public void testIssue1021() throws Exception {
-        final Document component = EscidocRestSoapTestBase.getDocument(retrieveComponent(itemId, componentId));
+        final Document component = EscidocAbstractTest.getDocument(retrieveComponent(itemId, componentId));
 
         assertXmlNotExists("properties element contains conditional root attribute", component,
             "/component/properties/@last-modification-date");
 
         final Document componentProperties =
-            EscidocRestSoapTestBase.getDocument(retrieveComponentProperties(itemId, componentId));
+            EscidocAbstractTest.getDocument(retrieveComponentProperties(itemId, componentId));
 
         assertXmlExists("properties element does not contain conditional root attribute", componentProperties,
             "/properties/@last-modification-date");

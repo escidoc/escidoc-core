@@ -29,7 +29,7 @@
 package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -105,7 +105,7 @@ public class UserGroupAuthorizationTest extends GrantTestBase {
 
             //create one item with no roles on
             String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID, false, false);
-            Document item = EscidocRestSoapTestBase.getDocument(itemXml);
+            Document item = EscidocAbstractTest.getDocument(itemXml);
             String itemId = getObjidValue(item);
             noCollaboratorItem = itemId;
 
@@ -114,7 +114,7 @@ public class UserGroupAuthorizationTest extends GrantTestBase {
             //create item
             for (int i = 0; i < ITEMS_PER_GROUP; i++) {
                 itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID, false, false);
-                item = EscidocRestSoapTestBase.getDocument(itemXml);
+                item = EscidocAbstractTest.getDocument(itemXml);
                 itemId = getObjidValue(item);
 
                 //attach role collaborator for item to user
@@ -130,7 +130,7 @@ public class UserGroupAuthorizationTest extends GrantTestBase {
                 for (int j = 0; j < ITEMS_PER_GROUP; j++) {
                     //create item
                     itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID, false, false);
-                    item = EscidocRestSoapTestBase.getDocument(itemXml);
+                    item = EscidocAbstractTest.getDocument(itemXml);
                     itemId = getObjidValue(item);
                     groupCollaboratorItems[i][j] = itemId;
                 }
@@ -167,7 +167,7 @@ public class UserGroupAuthorizationTest extends GrantTestBase {
 
             //create item in context CONTEXT_ID2
             itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID2, false, false);
-            item = EscidocRestSoapTestBase.getDocument(itemXml);
+            item = EscidocAbstractTest.getDocument(itemXml);
             itemId = getObjidValue(item);
 
             //attach role administrator for item to user
@@ -177,7 +177,7 @@ public class UserGroupAuthorizationTest extends GrantTestBase {
 
             //create item in context CONTEXT_ID3
             itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID3, false, false);
-            item = EscidocRestSoapTestBase.getDocument(itemXml);
+            item = EscidocAbstractTest.getDocument(itemXml);
             itemId = getObjidValue(item);
 
             //create group
@@ -260,10 +260,10 @@ public class UserGroupAuthorizationTest extends GrantTestBase {
         PWCallback.setHandle(HANDLE);
         try {
             retrieve(ITEM_HANDLER_CODE, noCollaboratorItem);
-            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
+            EscidocAbstractTest.failMissingException(AuthorizationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
+            EscidocAbstractTest.assertExceptionType(AuthorizationException.class, e);
         }
     }
 

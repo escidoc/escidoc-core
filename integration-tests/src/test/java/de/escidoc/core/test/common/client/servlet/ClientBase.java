@@ -28,12 +28,11 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.resources.ResourceProvider;
-import de.escidoc.core.test.common.service.BeanMapping;
 import org.apache.axis.AxisFault;
 import org.apache.axis.EngineConfiguration;
 import org.apache.axis.configuration.FileProvider;
@@ -84,7 +83,6 @@ import java.io.UnsupportedEncodingException;
 import java.rmi.Remote;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -766,7 +764,7 @@ public abstract class ClientBase {
         // eScidoc exception.
         Document exceptionDocument = null;
         try {
-            exceptionDocument = EscidocRestSoapTestBase.getDocument(exceptionXML, false);
+            exceptionDocument = EscidocAbstractTest.getDocument(exceptionXML, false);
         }
         catch (final Exception e) {
             // parsing failed, does not seem to be an eScidocException
@@ -875,23 +873,6 @@ public abstract class ClientBase {
      */
     public DefaultHttpClient getHttpClient() {
         return this.httpClient;
-    }
-
-    /**
-     * Creates and adds a new bean mapping for the provided class to the provided mapping vector.
-     * 
-     * @param clazz
-     *            The class for which the mapping shall be created.
-     * @param mappings
-     *            The mapping vector.
-     */
-    protected void addBeanMapping(final Class<?> clazz, final Vector<Object> mappings) {
-
-        BeanMapping beanMapping = new BeanMapping();
-        beanMapping.setBean(clazz);
-        beanMapping.setNamespace(getNamespace(clazz));
-        beanMapping.setNamespaceUri(getNamespaceUri(clazz));
-        mappings.add(beanMapping);
     }
 
     /**
@@ -1247,7 +1228,7 @@ public abstract class ClientBase {
      *             Thrown if anything fails.
      */
     public String getTheLastModificationDate(final String id) throws Exception {
-        Document resource = EscidocRestSoapTestBase.getDocument(handleXmlResult(retrieve(id)));
+        Document resource = EscidocAbstractTest.getDocument(handleXmlResult(retrieve(id)));
 
         // get last-modification-date
         NamedNodeMap atts = resource.getDocumentElement().getAttributes();
@@ -1394,14 +1375,14 @@ public abstract class ClientBase {
 
         if (timestamp != null) {
             final Node document =
-                substitute(EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH,
-                    "task_param_last_modification_date.xml"), "/param/@last-modification-date", timestamp);
+                substitute(EscidocAbstractTest
+                        .getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH, "task_param_last_modification_date.xml"), "/param/@last-modification-date", timestamp);
             result = toString(document, false);
         }
         else {
             result =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_OM_COMMON_PATH,
-                    "task_param_last_modification_date.xml");
+                EscidocAbstractTest
+                        .getTemplateAsString(TEMPLATE_OM_COMMON_PATH, "task_param_last_modification_date.xml");
         }
         return result;
     }

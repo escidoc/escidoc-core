@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.item;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.CountRepository;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.util.Environment;
@@ -146,7 +146,7 @@ public class ItemPerformanceTest extends ItemTestBase {
     public void testCreate05() throws Exception {
 
         String templateName = "escidoc_item_with_many_components-01.xml";
-        String itemXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
+        String itemXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
 
         measureCreateMethod(itemXml, templateName);
     }
@@ -224,7 +224,7 @@ public class ItemPerformanceTest extends ItemTestBase {
     public void testRetrieve05() throws Exception {
 
         String templateName = "performance/escidoc_item_with_3_components-01.xml";
-        String itemXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
+        String itemXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
         String newItemXml = create(itemXml);
         String objid = getObjidValue(newItemXml);
 
@@ -240,7 +240,7 @@ public class ItemPerformanceTest extends ItemTestBase {
     public void testRetrieve06() throws Exception {
 
         String templateName = "escidoc_item_with_many_components-01.xml";
-        String itemXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
+        String itemXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
         String newItemXml = create(itemXml);
         String objid = getObjidValue(newItemXml);
 
@@ -296,7 +296,7 @@ public class ItemPerformanceTest extends ItemTestBase {
             monitor.stop();
 
             // retrieve component (if exists)
-            Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
+            Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
             Node components = selectSingleNode(itemDoc, "/item/components/component");
             if (components != null) {
                 String componentId = getObjidValue(itemDoc, "/item/components/component[1]");

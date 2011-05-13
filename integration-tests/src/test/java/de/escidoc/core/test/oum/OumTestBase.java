@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.oum;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import org.apache.commons.collections.ListUtils;
 import org.w3c.dom.Document;
@@ -42,7 +42,7 @@ import java.util.Arrays;
  *
  * @author Michael Schneider
  */
-public class OumTestBase extends EscidocRestSoapTestBase {
+public class OumTestBase extends EscidocAbstractTest {
 
     public static final String XPATH_PARENTS = "/" + NAME_PARENTS;
 
@@ -86,7 +86,7 @@ public class OumTestBase extends EscidocRestSoapTestBase {
         String[] result = null;
         NodeList nodeList = null;
         nodeList =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(organizationalUnitList),
+            selectNodeList(EscidocAbstractTest.getDocument(organizationalUnitList),
                 XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT + "/@href");
         result = new String[nodeList.getLength()];
         for (int i = 0; i < nodeList.getLength(); i++) {

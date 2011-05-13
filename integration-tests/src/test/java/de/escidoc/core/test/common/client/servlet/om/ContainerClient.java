@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -467,7 +467,7 @@ public class ContainerClient extends ClientBase
         if (!getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")
             || !getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
             String objXml = handleXmlResult(retrieve(containerId));
-            resDoc = EscidocRestSoapTestBase.getDocument(objXml);
+            resDoc = EscidocAbstractTest.getDocument(objXml);
         }
 
         // assign objectPid
@@ -498,7 +498,7 @@ public class ContainerClient extends ClientBase
         }
 
         String containerXml = handleResult(retrieve(containerId));
-        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document document = EscidocAbstractTest.getDocument(containerXml);
         String param = getTaskParam(getRootElementAttributeValue(document, "last-modification-date"));
 
         PWCallback.setHandle(creatorUserHandle);

@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
@@ -246,7 +246,7 @@ public class SearchTestBase extends SbTestBase {
      */
     protected String getLastModificationDate(final String xml) throws Exception {
 
-        return getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(xml));
+        return getLastModificationDateValue(EscidocAbstractTest.getDocument(xml));
     }
 
     /**
@@ -260,7 +260,7 @@ public class SearchTestBase extends SbTestBase {
      */
     protected String getCreationDate(final String xml) throws Exception {
 
-        return getCreationDateValue(EscidocRestSoapTestBase.getDocument(xml));
+        return getCreationDateValue(EscidocAbstractTest.getDocument(xml));
     }
 
     /**

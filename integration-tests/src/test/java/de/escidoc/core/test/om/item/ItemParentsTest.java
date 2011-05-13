@@ -30,7 +30,7 @@ package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.container.ContainerTestBase;
 import org.junit.After;
@@ -216,10 +216,10 @@ public class ItemParentsTest extends ItemTestBase {
     public void testDecliningRetrieveParentsWithWrongId() throws Exception {
         try {
             retrieveParents("wrongId");
-            EscidocRestSoapTestBase.failMissingException(ItemNotFoundException.class);
+            EscidocAbstractTest.failMissingException(ItemNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ItemNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType(ItemNotFoundException.class, e);
         }
     }
 
@@ -232,10 +232,10 @@ public class ItemParentsTest extends ItemTestBase {
     public void testDecliningRetrieveParentsWithNoId() throws Exception {
         try {
             retrieveParents(null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 

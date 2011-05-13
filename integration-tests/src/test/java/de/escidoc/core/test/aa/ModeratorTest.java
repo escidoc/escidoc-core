@@ -30,7 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -161,20 +161,20 @@ public class ModeratorTest extends GrantTestBase {
     protected void prepare() throws Exception {
         //create container in context1 status pending
         String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID, false, false);
-        Document containerDocument = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDocument = EscidocAbstractTest.getDocument(containerXml);
         containerId = getObjidValue(containerDocument);
         containerHref = Constants.CONTAINER_BASE_URI + "/" + containerId;
 
         //create container in context2 status pending
         containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID1, false, false);
-        containerDocument = EscidocRestSoapTestBase.getDocument(containerXml);
+        containerDocument = EscidocAbstractTest.getDocument(containerXml);
         containerId1 = getObjidValue(containerDocument);
         containerHref1 = Constants.CONTAINER_BASE_URI + "/" + containerId1;
 
         //create item in status pending
         // in context1
         String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document document = EscidocAbstractTest.getDocument(itemXml);
 
         //save ids
         itemId = getObjidValue(document);
@@ -185,7 +185,7 @@ public class ModeratorTest extends GrantTestBase {
         //create item in status pending
         // in context2
         itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, CONTEXT_ID1, false, false);
-        document = EscidocRestSoapTestBase.getDocument(itemXml);
+        document = EscidocAbstractTest.getDocument(itemXml);
 
         //save ids
         itemId1 = getObjidValue(document);
@@ -215,7 +215,7 @@ public class ModeratorTest extends GrantTestBase {
     @Test
     public void testReleaseItem() throws Exception {
         String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document document = EscidocAbstractTest.getDocument(itemXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
             ROLE_HREF_MODERATOR, null);
@@ -231,7 +231,7 @@ public class ModeratorTest extends GrantTestBase {
     @Test
     public void testReleaseContainer() throws Exception {
         String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document document = EscidocAbstractTest.getDocument(containerXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
             ROLE_HREF_MODERATOR, null);
@@ -247,7 +247,7 @@ public class ModeratorTest extends GrantTestBase {
     @Test
     public void testRetrievePendingItem() throws Exception {
         String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document document = EscidocAbstractTest.getDocument(itemXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
             ROLE_HREF_MODERATOR, null);
@@ -270,7 +270,7 @@ public class ModeratorTest extends GrantTestBase {
     @Test
     public void testRetrieveSubmittedItem() throws Exception {
         String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document document = EscidocAbstractTest.getDocument(itemXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
             ROLE_HREF_MODERATOR, null);
@@ -287,7 +287,7 @@ public class ModeratorTest extends GrantTestBase {
     @Test
     public void testRetrieveReleasedItem() throws Exception {
         String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document document = EscidocAbstractTest.getDocument(itemXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
             ROLE_HREF_MODERATOR, null);
@@ -304,7 +304,7 @@ public class ModeratorTest extends GrantTestBase {
     @Test
     public void testRetrieveWithdrawnItem() throws Exception {
         String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_WITHDRAWN, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document document = EscidocAbstractTest.getDocument(itemXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
             ROLE_HREF_MODERATOR, null);
@@ -321,7 +321,7 @@ public class ModeratorTest extends GrantTestBase {
     @Test
     public void testRetrievePendingContainer() throws Exception {
         String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document document = EscidocAbstractTest.getDocument(containerXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
             ROLE_HREF_MODERATOR, null);
@@ -344,7 +344,7 @@ public class ModeratorTest extends GrantTestBase {
     @Test
     public void testRetrieveSubmittedContainer() throws Exception {
         String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_SUBMITTED, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document document = EscidocAbstractTest.getDocument(containerXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
             ROLE_HREF_MODERATOR, null);
@@ -361,7 +361,7 @@ public class ModeratorTest extends GrantTestBase {
     @Test
     public void testRetrieveReleasedContainer() throws Exception {
         String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document document = EscidocAbstractTest.getDocument(containerXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
             ROLE_HREF_MODERATOR, null);
@@ -378,7 +378,7 @@ public class ModeratorTest extends GrantTestBase {
     @Test
     public void testRetrieveWithdrawnContainer() throws Exception {
         String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_WITHDRAWN, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document document = EscidocAbstractTest.getDocument(containerXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID,
             ROLE_HREF_MODERATOR, null);

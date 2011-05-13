@@ -39,7 +39,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyDeac
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.remote.system.SqlDatabaseSystemException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -194,10 +194,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             create("<Corrupt XML data");
-            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlCorruptedException.class, e);
         }
     }
 
@@ -212,10 +212,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             create(null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 
@@ -229,16 +229,16 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAACua5() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getDocument(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH,
-                "escidoc_useraccount_for_create.xml"));
+            EscidocAbstractTest.getDocument(EscidocAbstractTest
+                    .getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_useraccount_for_create.xml"));
         deleteElement(toBeCreatedDocument, XPATH_USER_ACCOUNT_LOGINNAME);
 
         try {
             create(toString(toBeCreatedDocument, false));
-            EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
+            EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
 
@@ -252,16 +252,16 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAACua61() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getDocument(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH,
-                "escidoc_useraccount_for_create.xml"));
+            EscidocAbstractTest.getDocument(EscidocAbstractTest
+                    .getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_useraccount_for_create.xml"));
         substitute(toBeCreatedDocument, XPATH_USER_ACCOUNT_LOGINNAME, "current");
 
         try {
             create(toString(toBeCreatedDocument, false));
-            EscidocRestSoapTestBase.failMissingException(UniqueConstraintViolationException.class);
+            EscidocAbstractTest.failMissingException(UniqueConstraintViolationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(UniqueConstraintViolationException.class, e);
+            EscidocAbstractTest.assertExceptionType(UniqueConstraintViolationException.class, e);
         }
     }
 
@@ -279,10 +279,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             create(toBeCreatedDocument);
-            EscidocRestSoapTestBase.failMissingException(UniqueConstraintViolationException.class);
+            EscidocAbstractTest.failMissingException(UniqueConstraintViolationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(UniqueConstraintViolationException.class, e);
+            EscidocAbstractTest.assertExceptionType(UniqueConstraintViolationException.class, e);
         }
     }
 
@@ -304,7 +304,7 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountXML = retrieve(id);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertUserAccount(retrievedUserAccountXML, createdUserAccountXML, startTimestamp, startTimestamp, true);
     }
@@ -326,7 +326,7 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedXml = retrieve(loginname);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertUserAccount(retrievedXml, toString(createdDocument, false), startTimestamp, startTimestamp, true);
     }
@@ -347,7 +347,7 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedXml = retrieve(encodedLoginName);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertUserAccount(retrievedXml, toString(createdDocument, false), startTimestamp, startTimestamp, true);
     }
@@ -365,7 +365,7 @@ public class UserAccountTest extends UserAccountTestBase {
             retrieveCurrentUser(null);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
     }
 
@@ -380,10 +380,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             retrieveCurrentUser(PWCallback.ANONYMOUS_HANDLE);
-            EscidocRestSoapTestBase.failMissingException(UserAccountNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(UserAccountNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType(UserAccountNotFoundException.class, e);
         }
     }
 
@@ -398,10 +398,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             retrieve(UNKNOWN_ID);
-            EscidocRestSoapTestBase.failMissingException(UserAccountNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
         }
     }
 
@@ -416,10 +416,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             retrieve(CONTEXT_ID);
-            EscidocRestSoapTestBase.failMissingException(UserAccountNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
         }
     }
 
@@ -433,10 +433,10 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAARua3() throws Exception {
         try {
             retrieve(null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
         }
     }
 
@@ -459,7 +459,7 @@ public class UserAccountTest extends UserAccountTestBase {
             deactivate(id, taskParamXML);
         }
         catch (final Exception e1) {
-            EscidocRestSoapTestBase.failException(e1);
+            EscidocAbstractTest.failException(e1);
         }
 
         String retrievedUserAccountXML = null;
@@ -467,7 +467,7 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountXML = retrieve(id);
         }
         catch (final Exception e1) {
-            EscidocRestSoapTestBase.failException(e1);
+            EscidocAbstractTest.failException(e1);
         }
         final Document retrievedDeactivatedDocument =
             assertDeactiveUserAccount(retrievedUserAccountXML, createdXml, startTimestamp, beforeDeactivationTimestamp,
@@ -482,7 +482,7 @@ public class UserAccountTest extends UserAccountTestBase {
             xmlData = activate(id, taskParamXML);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNull("Did not expect result data. ", xmlData);
 
@@ -491,10 +491,10 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedActivatedXml = retrieve(id);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertActiveUserAccount(retrievedActivatedXml, createdXml, startTimestamp, beforeActivationTimestamp, true);
-        final Document retrievedActivatedDocument = EscidocRestSoapTestBase.getDocument(retrievedActivatedXml);
+        final Document retrievedActivatedDocument = EscidocAbstractTest.getDocument(retrievedActivatedXml);
         assertXmlLastModificationDateUpdate("", retrievedDeactivatedDocument, retrievedActivatedDocument);
     }
 
@@ -508,13 +508,13 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAAAua2() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
         try {
             activate(UNKNOWN_ID, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(UserAccountNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
         }
     }
 
@@ -528,13 +528,13 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAAAua2_2() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
         try {
             activate(CONTEXT_ID, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(UserAccountNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
         }
     }
 
@@ -548,13 +548,13 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAAAua3() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
         try {
             activate(null, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
         }
     }
 
@@ -574,10 +574,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             activate(id, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(AlreadyActiveException.class);
+            EscidocAbstractTest.failMissingException(AlreadyActiveException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AlreadyActiveException.class, e);
+            EscidocAbstractTest.assertExceptionType(AlreadyActiveException.class, e);
         }
     }
 
@@ -595,10 +595,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             deactivate(id, null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
         }
     }
 
@@ -626,7 +626,7 @@ public class UserAccountTest extends UserAccountTestBase {
             xmlData = deactivate(id, taskParamXML);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNull("Did not expect result data. ", xmlData);
 
@@ -635,11 +635,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedDeactivatedXml = retrieve(id);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertDeactiveUserAccount(retrievedDeactivatedXml, createdXml, startTimestamp, beforeDeactivationTimestamp,
             true);
-        final Document retrievedDeactivatedDocument = EscidocRestSoapTestBase.getDocument(retrievedDeactivatedXml);
+        final Document retrievedDeactivatedDocument = EscidocAbstractTest.getDocument(retrievedDeactivatedXml);
         assertXmlLastModificationDateUpdate("", createdDocument, retrievedDeactivatedDocument);
 
         // Currently, new created user accounts have predefined password
@@ -658,13 +658,13 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAADua2() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
         try {
             deactivate(UNKNOWN_ID, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(UserAccountNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
         }
     }
 
@@ -678,13 +678,13 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAADua2_2() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
         try {
             deactivate(CONTEXT_ID, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(UserAccountNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
         }
     }
 
@@ -698,13 +698,13 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAADua3() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_task_param.xml");
         try {
             deactivate(null, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
         }
     }
 
@@ -727,27 +727,27 @@ public class UserAccountTest extends UserAccountTestBase {
             deactivate(id, taskParamXML);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
 
         try {
             xmlData = retrieve(id);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNotNull("No result from retrieve", xmlData);
-        final Document document = EscidocRestSoapTestBase.getDocument(xmlData);
+        final Document document = EscidocAbstractTest.getDocument(xmlData);
         assertXmlExists("Last modification date does not exist. ", createdDocument, XPATH_USER_ACCOUNT_LAST_MOD_DATE);
         lastModificationDate = selectSingleNode(document, XPATH_USER_ACCOUNT_LAST_MOD_DATE).getTextContent();
         taskParamXML = "<param last-modification-date=\"" + lastModificationDate + "\" />";
 
         try {
             deactivate(id, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(AlreadyDeactiveException.class);
+            EscidocAbstractTest.failMissingException(AlreadyDeactiveException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AlreadyDeactiveException.class, e);
+            EscidocAbstractTest.assertExceptionType(AlreadyDeactiveException.class, e);
         }
     }
 
@@ -765,10 +765,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             deactivate(id, null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
         }
     }
 
@@ -795,7 +795,7 @@ public class UserAccountTest extends UserAccountTestBase {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertActiveUserAccount(updatedXml, toBeUpdatedXml, startTimestamp, beforeModificationTimestamp, true);
     }
@@ -814,10 +814,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             update(id, null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 
@@ -835,10 +835,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             update(id, "<Corrupt XML data");
-            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlCorruptedException.class, e);
         }
     }
 
@@ -855,10 +855,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             update(null, toString(createdDocument, false));
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 
@@ -877,10 +877,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             update(objid, toString(createdDocument, false));
-            EscidocRestSoapTestBase.failMissingException(OptimisticLockingException.class);
+            EscidocAbstractTest.failMissingException(OptimisticLockingException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(OptimisticLockingException.class, e);
+            EscidocAbstractTest.assertExceptionType(OptimisticLockingException.class, e);
         }
     }
 
@@ -898,10 +898,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             update(objid, "<Corrupt XML data");
-            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlCorruptedException.class, e);
         }
     }
 
@@ -920,10 +920,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             update(objid, toString(createdDocument, false));
-            EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
+            EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
 
@@ -945,10 +945,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             update(objid2, toString(createdDocument2, false));
-            EscidocRestSoapTestBase.failMissingException(UniqueConstraintViolationException.class);
+            EscidocAbstractTest.failMissingException(UniqueConstraintViolationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(UniqueConstraintViolationException.class, e);
+            EscidocAbstractTest.assertExceptionType(UniqueConstraintViolationException.class, e);
         }
     }
 
@@ -965,10 +965,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             update(UNKNOWN_ID, toString(toBeUpdatedDocument, false));
-            EscidocRestSoapTestBase.failMissingException(UserAccountNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(UserAccountNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType(UserAccountNotFoundException.class, e);
         }
 
     }
@@ -986,10 +986,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             update(CONTEXT_ID, toString(toBeUpdatedDocument, false));
-            EscidocRestSoapTestBase.failMissingException(UserAccountNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(UserAccountNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType(UserAccountNotFoundException.class, e);
         }
 
     }
@@ -1018,7 +1018,7 @@ public class UserAccountTest extends UserAccountTestBase {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertActiveUserAccount(updatedXml, toBeUpdatedXml, startTimestamp, beforeModificationTimestamp, true);
     }
@@ -1313,7 +1313,7 @@ public class UserAccountTest extends UserAccountTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = UserAccountNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
 
     }
@@ -1337,7 +1337,7 @@ public class UserAccountTest extends UserAccountTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = SqlDatabaseSystemException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
         finally {
             if (grantId != null) {
@@ -1367,11 +1367,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME
@@ -1397,14 +1397,14 @@ public class UserAccountTest extends UserAccountTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_NAME + "\"=or or or or and" });
         try {
             retrieveUserAccounts(filterParams);
-            EscidocRestSoapTestBase.failMissingException(
-                "Retrieving user accounts with providing corrupted filter params" + " not declined. ",
-                InvalidSearchQueryException.class);
+            EscidocAbstractTest.failMissingException(
+                    "Retrieving user accounts with providing corrupted filter params" + " not declined. ",
+                    InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Retrieving user accounts with providing corrupted filter params" + "not declined, properly. ",
-                InvalidSearchQueryException.class, e);
+            EscidocAbstractTest.assertExceptionType(
+                    "Retrieving user accounts with providing corrupted filter params" + "not declined, properly. ",
+                    InvalidSearchQueryException.class, e);
         }
     }
 
@@ -1422,13 +1422,14 @@ public class UserAccountTest extends UserAccountTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + NAME_CREATED_BY + "\"=\"Some value\"" });
         try {
             retrieveUserAccounts(filterParams);
-            EscidocRestSoapTestBase.failMissingException(
-                "Retrieving user accounts with providing invalid filter params" + " not declined. ",
-                InvalidSearchQueryException.class);
+            EscidocAbstractTest.failMissingException(
+                    "Retrieving user accounts with providing invalid filter params" + " not declined. ",
+                    InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Retrieving user accounts with providing invalid filter params"
-                + "not declined, properly. ", InvalidSearchQueryException.class, e);
+            EscidocAbstractTest.assertExceptionType(
+                    "Retrieving user accounts with providing invalid filter params" + "not declined, properly. ",
+                    InvalidSearchQueryException.class, e);
         }
     }
 
@@ -1452,11 +1453,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 2, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
@@ -1488,11 +1489,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + SYSTEM_ADMINISTRATOR_LOGIN_NAME
@@ -1527,7 +1528,7 @@ public class UserAccountTest extends UserAccountTestBase {
             deactivate(id, taskParamXML);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
 
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
@@ -1540,11 +1541,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing deactivated user [" + id + "]", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='" + loginName + "']");
@@ -1598,11 +1599,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 3, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
@@ -1631,11 +1632,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 3, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
@@ -1664,11 +1665,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[properties/login-name='sysadmin']");
@@ -1701,11 +1702,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
@@ -1745,11 +1746,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         assertXmlNotExists("List is not empty but should be.", retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
     }
 
@@ -1775,11 +1776,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 2, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
@@ -1813,11 +1814,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
@@ -1860,10 +1861,10 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user accounts failed. ", e);
         }
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
@@ -2027,11 +2028,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 3, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
@@ -2068,11 +2069,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 3, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
@@ -2110,11 +2111,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 2, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
@@ -2151,11 +2152,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 1, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
@@ -2186,14 +2187,14 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user accounts failed. ", e);
         }
         finally {
             PWCallback.resetHandle();
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 1, userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
@@ -2223,14 +2224,14 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user accounts failed. ", e);
         }
         finally {
             PWCallback.resetHandle();
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 0, userAccountNodes.getLength());
     }
@@ -2254,11 +2255,11 @@ public class UserAccountTest extends UserAccountTestBase {
             retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user accounts failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user accounts failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserAccountsXml);
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         final int totalRecordsWithZeroMaximum = userAccountNodes.getLength();
 
@@ -2284,7 +2285,7 @@ public class UserAccountTest extends UserAccountTestBase {
             result = retrieveUserAccounts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }
@@ -2394,8 +2395,7 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAACua4_3_rest() throws Exception {
 
         Document newUserAccountDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH,
-                "escidoc_useraccount_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_useraccount_for_create.xml");
         Attr newNode = createAttributeNode(newUserAccountDoc, USER_ACCOUNT_NS_URI, null, "objid", "escidoc:1");
         addAttribute(newUserAccountDoc, XPATH_USER_ACCOUNT, newNode);
         insertUniqueLoginName(newUserAccountDoc);
@@ -2403,10 +2403,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             create(newUserAccountXML);
-            EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
+            EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
 
@@ -2480,7 +2480,7 @@ public class UserAccountTest extends UserAccountTestBase {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Updating with changed read only values failed. ", e);
+            EscidocAbstractTest.failException("Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
             assertUserAccount(updatedXml, createdXml, startTimestamp, beforeUpdateTimestamp, true);
@@ -2530,7 +2530,7 @@ public class UserAccountTest extends UserAccountTestBase {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Updating with changed read only values failed. ", e);
+            EscidocAbstractTest.failException("Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
             assertUserAccount(updatedXml, createdXml, startTimestamp, beforeUpdateTimestamp, true);
@@ -2560,7 +2560,7 @@ public class UserAccountTest extends UserAccountTestBase {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Updating with changed read only values failed. ", e);
+            EscidocAbstractTest.failException("Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
             assertUserAccount(updatedXml, createdXml, startTimestamp, beforeUpdateTimestamp, true);
@@ -2591,7 +2591,7 @@ public class UserAccountTest extends UserAccountTestBase {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Updating with changed read only values failed. ", e);
+            EscidocAbstractTest.failException("Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
             assertUserAccount(updatedXml, createdXml, startTimestamp, beforeUpdateTimestamp, true);
@@ -2622,7 +2622,7 @@ public class UserAccountTest extends UserAccountTestBase {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Updating with changed read only values failed. ", e);
+            EscidocAbstractTest.failException("Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
             assertUserAccount(updatedXml, createdXml, startTimestamp, beforeUpdateTimestamp, true);
@@ -2648,11 +2648,11 @@ public class UserAccountTest extends UserAccountTestBase {
             resourcesXml = retrieveResources(objid);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNotNull("No data from retrieveResources. ", resourcesXml);
         assertXmlValidUserAccount(resourcesXml);
-        Document resourcesDocument = EscidocRestSoapTestBase.getDocument(resourcesXml);
+        Document resourcesDocument = EscidocAbstractTest.getDocument(resourcesXml);
         assertXmlExists("No resources element", resourcesDocument, XPATH_RESOURCES);
         assertXmlExists("no resources xlink:type", resourcesDocument, XPATH_RESOURCES_XLINK_TYPE);
         assertXmlExists("no resources xlink:title", resourcesDocument, XPATH_RESOURCES_XLINK_TITLE);
@@ -2680,10 +2680,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             retrieveResources(UNKNOWN_ID);
-            EscidocRestSoapTestBase.failMissingException(UserAccountNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
         }
     }
 
@@ -2698,10 +2698,10 @@ public class UserAccountTest extends UserAccountTestBase {
 
         try {
             retrieveResources(CONTEXT_ID);
-            EscidocRestSoapTestBase.failMissingException(UserAccountNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserAccountNotFoundException.class, e);
         }
     }
 
@@ -2714,10 +2714,10 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAARvr3_rest() throws Exception {
         try {
             retrieveResources(null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
         }
     }
 }

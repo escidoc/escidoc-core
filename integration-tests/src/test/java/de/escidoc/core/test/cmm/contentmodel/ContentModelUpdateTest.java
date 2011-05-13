@@ -31,10 +31,8 @@ package de.escidoc.core.test.cmm.contentmodel;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import org.junit.Ignore;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -81,8 +79,8 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // full Content Model
         cmXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
-                "content-model-all-for-create.xml");
+            EscidocAbstractTest
+                    .getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-all-for-create.xml");
         createdXML = create(cmXml);
         contentModelId = getObjidValue(createdXML);
 
@@ -111,10 +109,10 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         Class<?> ec = ContentModelNotFoundException.class;
         try {
             update(UNKNOWN_ID, cmXml);
-            EscidocRestSoapTestBase.failMissingException(ec);
+            EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -130,10 +128,10 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         Class<?> ec = ContentModelNotFoundException.class;
         try {
             update(CONTEXT_ID, cmXml);
-            EscidocRestSoapTestBase.failMissingException(ec);
+            EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -149,10 +147,10 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         Class<?> ec = MissingMethodParameterException.class;
         try {
             update(null, cmXml);
-            EscidocRestSoapTestBase.failMissingException(ec);
+            EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -170,10 +168,10 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         Class<?> ec = MissingMethodParameterException.class;
         try {
             update(contentModelId, null);
-            EscidocRestSoapTestBase.failMissingException(ec);
+            EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -191,10 +189,10 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         Class<?> ec = XmlSchemaValidationException.class;
         try {
             update(contentModelId, "<content-model/>");
-            EscidocRestSoapTestBase.failMissingException(ec);
+            EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -220,14 +218,14 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 2
         String cmXmlV2E1 = update(objid, toString(tmpl, true));
-        Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+        Document cmDocV2E1 = EscidocAbstractTest.getDocument(cmXmlV2E1);
 
         assertXmlExists("Properties element name not updated ", cmDocV2E1, "/content-model/properties/name[text() = '"
             + newName + "']");
 
         // retrieve version 2
         String cmXmlV2E1R = retrieve(objid);
-        Document cmDocV2E1R = EscidocRestSoapTestBase.getDocument(cmXmlV2E1R);
+        Document cmDocV2E1R = EscidocAbstractTest.getDocument(cmXmlV2E1R);
 
         assertXmlExists("Properties element name not updated ", cmDocV2E1R, "/content-model/properties/name[text() = '"
             + newName + "']");
@@ -256,14 +254,14 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 2
         String cmXmlV2E1 = update(objid, toString(tmpl, true));
-        Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+        Document cmDocV2E1 = EscidocAbstractTest.getDocument(cmXmlV2E1);
 
         assertXmlExists("Properties element description not updated ", cmDocV2E1,
             "/content-model/properties/description[text() = '" + newName + "']");
 
         // retrieve version 2
         String cmXmlV2E1R = retrieve(objid);
-        Document cmDocV2E1R = EscidocRestSoapTestBase.getDocument(cmXmlV2E1R);
+        Document cmDocV2E1R = EscidocAbstractTest.getDocument(cmXmlV2E1R);
 
         assertXmlExists("Properties element description not updated ", cmDocV2E1R,
             "/content-model/properties/description[text() = '" + newName + "']");
@@ -315,7 +313,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 2
         String cmXmlV2E1 = update(objid, cmWithMdRecordXml);
-        Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+        Document cmDocV2E1 = EscidocAbstractTest.getDocument(cmXmlV2E1);
 
         // check for added md-record-definition, its name and schema href
         selectSingleNodeAsserted(cmDocV2E1, "/content-model/md-record-definitions/md-record-definition[@name='"
@@ -328,7 +326,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // retrieve version 2
         String cmXmlV2E1R = retrieve(objid);
-        Document cmDocV2E1R = EscidocRestSoapTestBase.getDocument(cmXmlV2E1R);
+        Document cmDocV2E1R = EscidocAbstractTest.getDocument(cmXmlV2E1R);
 
         // check for added md-record-definition, its name and schema href
         selectSingleNodeAsserted(cmDocV2E1R, "/content-model/md-record-definitions/md-record-definition[@name='"
@@ -352,8 +350,8 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 1
         String contentModelXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
-                "content-model-all-for-create.xml");
+            EscidocAbstractTest
+                    .getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-all-for-create.xml");
         String cmV1E1 = create(contentModelXml);
 
         Document cmDocV1E1 = getDocument(cmV1E1);
@@ -393,7 +391,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 2
         String cmXmlV2E1 = update(objid, cmWithResourceDefinitionXml);
-        Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+        Document cmDocV2E1 = EscidocAbstractTest.getDocument(cmXmlV2E1);
 
         // check for added md-record-definition, its name and schema href
         selectSingleNodeAsserted(cmDocV2E1, "/content-model/resource-definitions/resource-definition[@name='"

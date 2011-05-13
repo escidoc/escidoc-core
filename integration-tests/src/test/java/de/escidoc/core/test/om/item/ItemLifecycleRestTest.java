@@ -26,10 +26,10 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.test.om.item.rest;
+package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.om.item.ItemTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
@@ -54,8 +54,7 @@ public class ItemLifecycleRestTest extends ItemTestBase {
     public void testOMRContentVisibilityPrivate() throws Exception {
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         Document item =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         Node itemChanged = substitute(item, "/item/components/component/properties/visibility", "private");
         String itemXml = toString(itemChanged, false);
         String cretaedItem = create(itemXml);
@@ -91,7 +90,7 @@ public class ItemLifecycleRestTest extends ItemTestBase {
             fail("No AuthorizationException retrieving " + "item with component visibility 'private'.");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
+            EscidocAbstractTest.assertExceptionType(AuthorizationException.class, e);
         }
 
     }

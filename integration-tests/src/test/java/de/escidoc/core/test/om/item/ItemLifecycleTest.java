@@ -36,7 +36,7 @@ import de.escidoc.core.common.exceptions.remote.application.security.Authorizati
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyWithdrawnException;
 import de.escidoc.core.common.exceptions.remote.application.violated.NotPublishedException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.xpath.XPathAPI;
 import org.junit.After;
@@ -70,7 +70,7 @@ public class ItemLifecycleTest extends ItemTestBase {
     public void setUp() throws Exception {
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestBase
+            EscidocAbstractTest
                 .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(theItemXml);
@@ -98,14 +98,14 @@ public class ItemLifecycleTest extends ItemTestBase {
     public void testOmSi1() throws Exception {
 
         String paramXml = getTheLastModificationParam(false);
-        final Document paramDocument = EscidocRestSoapTestBase.getDocument(paramXml);
+        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
         final String pendingLastModificationDate = getLastModificationDateValue(paramDocument);
 
         try {
             submit(theItemId, paramXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Submitting the pending Item failed. ", e);
+            EscidocAbstractTest.failException("Submitting the pending Item failed. ", e);
         }
 
         String submittedXml = null;
@@ -113,9 +113,9 @@ public class ItemLifecycleTest extends ItemTestBase {
             submittedXml = retrieve(theItemId);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving the revised, submitted item failed. ", e);
+            EscidocAbstractTest.failException("Retrieving the revised, submitted item failed. ", e);
         }
-        final Document submittedDocument = EscidocRestSoapTestBase.getDocument(submittedXml);
+        final Document submittedDocument = EscidocAbstractTest.getDocument(submittedXml);
         assertDateBeforeAfter(pendingLastModificationDate, getLastModificationDateValue(submittedDocument));
         assertXmlEquals("Unexpected status. ", submittedDocument, XPATH_ITEM_STATUS, STATE_SUBMITTED);
         assertXmlEquals("Unexpected current version status", submittedDocument, XPATH_ITEM_CURRENT_VERSION_STATUS,
@@ -137,7 +137,7 @@ public class ItemLifecycleTest extends ItemTestBase {
             "/item/properties/latest-version/date").getTextContent());
 
         // check timestamps within Version History XML -------------------
-        Document wovDocV1E2 = EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(theItemId));
+        Document wovDocV1E2 = EscidocAbstractTest.getDocument(retrieveVersionHistory(theItemId));
 
         // /version-history/version[version-number='1']/events/event[1]
         // /eventDateTime ==
@@ -181,7 +181,7 @@ public class ItemLifecycleTest extends ItemTestBase {
     public void testSubmitAfterRelease() throws Exception {
 
         final String xPath = "/item/properties/content-model-specific";
-        final Document paramDocument = EscidocRestSoapTestBase.getDocument(getTheLastModificationParam(false));
+        final Document paramDocument = EscidocAbstractTest.getDocument(getTheLastModificationParam(false));
         final String pendingLastModificationDate = getLastModificationDateValue(paramDocument);
 
         submit(theItemId, getTheLastModificationParam(false));
@@ -209,9 +209,9 @@ public class ItemLifecycleTest extends ItemTestBase {
             submittedXml = retrieve(theItemId);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving the revised, submitted item failed. ", e);
+            EscidocAbstractTest.failException("Retrieving the revised, submitted item failed. ", e);
         }
-        final Document submittedDocument = EscidocRestSoapTestBase.getDocument(submittedXml);
+        final Document submittedDocument = EscidocAbstractTest.getDocument(submittedXml);
         assertDateBeforeAfter(pendingLastModificationDate, getLastModificationDateValue(submittedDocument));
         assertXmlEquals("Unexpected status. ", submittedDocument, XPATH_ITEM_STATUS, STATE_RELEASED);
         assertXmlEquals("Unexpected current version status", submittedDocument, XPATH_ITEM_CURRENT_VERSION_STATUS,
@@ -248,14 +248,14 @@ public class ItemLifecycleTest extends ItemTestBase {
         revise(theItemId, paramXml);
         paramXml = getTheLastModificationParam(false, theItemId);
         paramXml = getTheLastModificationParam(false);
-        final Document paramDocument = EscidocRestSoapTestBase.getDocument(paramXml);
+        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
         final String revisedLastModificationDate = getLastModificationDateValue(paramDocument);
 
         try {
             submit(theItemId, paramXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Submitting the pending container failed. ", e);
+            EscidocAbstractTest.failException("Submitting the pending container failed. ", e);
         }
 
         String submittedXml = null;
@@ -263,9 +263,9 @@ public class ItemLifecycleTest extends ItemTestBase {
             submittedXml = retrieve(theItemId);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving the revised, submitted item failed. ", e);
+            EscidocAbstractTest.failException("Retrieving the revised, submitted item failed. ", e);
         }
-        final Document submittedDocument = EscidocRestSoapTestBase.getDocument(submittedXml);
+        final Document submittedDocument = EscidocAbstractTest.getDocument(submittedXml);
         assertDateBeforeAfter(revisedLastModificationDate, getLastModificationDateValue(submittedDocument));
         assertXmlEquals("Unexpected status. ", submittedDocument, XPATH_ITEM_STATUS, STATE_SUBMITTED);
         assertXmlEquals("Unexpected current version status", submittedDocument, XPATH_ITEM_CURRENT_VERSION_STATUS,
@@ -315,7 +315,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -427,7 +427,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = NotPublishedException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -449,7 +449,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = NotPublishedException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -501,7 +501,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -538,7 +538,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -558,7 +558,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<ItemNotFoundException> ec = ItemNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
 
         }
 
@@ -598,7 +598,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<AlreadyWithdrawnException> ec = AlreadyWithdrawnException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -614,18 +614,18 @@ public class ItemLifecycleTest extends ItemTestBase {
         String paramXml = getTheLastModificationParam(false);
         submit(theItemId, paramXml);
         paramXml = getTheLastModificationParam(false);
-        final Document paramDocument = EscidocRestSoapTestBase.getDocument(paramXml);
+        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
         final String submittedLastModificationDate = getLastModificationDateValue(paramDocument);
 
         try {
             revise(theItemId, paramXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Revising the submitted item failed", e);
+            EscidocAbstractTest.failException("Revising the submitted item failed", e);
         }
 
         final String revisedXml = retrieve(theItemId);
-        final Document revisedDocument = EscidocRestSoapTestBase.getDocument(revisedXml);
+        final Document revisedDocument = EscidocAbstractTest.getDocument(revisedXml);
         assertDateBeforeAfter(submittedLastModificationDate, getLastModificationDateValue(revisedDocument));
         // assertXmlEquals("Unexpected status. ", revisedDocument,
         // XPATH_ITEM_STATUS, STATE_IN_REVISION);
@@ -645,11 +645,11 @@ public class ItemLifecycleTest extends ItemTestBase {
 
         try {
             revise(theItemId, param);
-            EscidocRestSoapTestBase.failMissingException(InvalidStatusException.class);
+            EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising failed with unexpected exception. ",
-                InvalidStatusException.class, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
         }
     }
 
@@ -682,11 +682,11 @@ public class ItemLifecycleTest extends ItemTestBase {
 
         try {
             revise(theItemId, param);
-            EscidocRestSoapTestBase.failMissingException(InvalidStatusException.class);
+            EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising failed with unexpected exception. ",
-                InvalidStatusException.class, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
         }
     }
 
@@ -721,11 +721,11 @@ public class ItemLifecycleTest extends ItemTestBase {
 
         try {
             revise(theItemId, param);
-            EscidocRestSoapTestBase.failMissingException(InvalidStatusException.class);
+            EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising failed with unexpected exception. ",
-                InvalidStatusException.class, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
         }
     }
 
@@ -741,11 +741,11 @@ public class ItemLifecycleTest extends ItemTestBase {
 
         try {
             revise(UNKNOWN_ID, param);
-            EscidocRestSoapTestBase.failMissingException(ItemNotFoundException.class);
+            EscidocAbstractTest.failMissingException(ItemNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising unknown item failed with unexpected exception. ",
-                ItemNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising unknown item failed with unexpected exception. ",
+                    ItemNotFoundException.class, e);
         }
     }
 
@@ -761,11 +761,11 @@ public class ItemLifecycleTest extends ItemTestBase {
 
         try {
             revise(null, param);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising without id failed with unexpected exception. ",
-                MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising without id failed with unexpected exception. ",
+                    MissingMethodParameterException.class, e);
         }
     }
 
@@ -783,11 +783,11 @@ public class ItemLifecycleTest extends ItemTestBase {
 
         try {
             revise(theItemId, null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Revising without id failed with unexpected exception. ",
-                MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising without id failed with unexpected exception. ",
+                    MissingMethodParameterException.class, e);
         }
     }
 
@@ -805,12 +805,12 @@ public class ItemLifecycleTest extends ItemTestBase {
 
         try {
             revise(theItemId, null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising without last modification date failed with unexpected exception. ",
-                MissingMethodParameterException.class, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Revising without last modification date failed with unexpected exception. ",
+                            MissingMethodParameterException.class, e);
         }
     }
 
@@ -828,12 +828,12 @@ public class ItemLifecycleTest extends ItemTestBase {
 
         try {
             revise(theItemId, param);
-            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising without last modification date failed with unexpected exception. ",
-                XmlCorruptedException.class, e);
+            EscidocAbstractTest
+                    .assertExceptionType("Revising without last modification date failed with unexpected exception. ",
+                            XmlCorruptedException.class, e);
         }
     }
 
@@ -850,12 +850,12 @@ public class ItemLifecycleTest extends ItemTestBase {
 
         try {
             revise(theItemId, param);
-            EscidocRestSoapTestBase.failMissingException(OptimisticLockingException.class);
+            EscidocAbstractTest.failMissingException(OptimisticLockingException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Revising with outdated last modification date failed with unexpected exception. ",
-                OptimisticLockingException.class, e);
+            EscidocAbstractTest.assertExceptionType(
+                    "Revising with outdated last modification date failed with unexpected exception. ",
+                    OptimisticLockingException.class, e);
         }
     }
 
@@ -871,8 +871,7 @@ public class ItemLifecycleTest extends ItemTestBase {
             // create and submit item by a depositor
             PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
             final String toBeCreatedXml =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                    "escidoc_item_198_for_create.xml");
+                EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
             theItemXml = create(toBeCreatedXml);
             theItemId = getObjidValue(theItemXml);
 
@@ -887,7 +886,7 @@ public class ItemLifecycleTest extends ItemTestBase {
                 revise(theItemId, param);
             }
             catch (final Exception e) {
-                EscidocRestSoapTestBase.failException("Revising the submitted item failed", e);
+                EscidocAbstractTest.failException("Revising the submitted item failed", e);
             }
 
             // retrieve, update and submit the item by the depositor
@@ -896,24 +895,25 @@ public class ItemLifecycleTest extends ItemTestBase {
                 theItemXml = retrieve(theItemId);
             }
             catch (final Exception e) {
-                EscidocRestSoapTestBase.failException(
-                    "Retrieving the revised item by the depositor failed with exception. ", e);
+                EscidocAbstractTest
+                        .failException("Retrieving the revised item by the depositor failed with exception. ", e);
             }
             theItemXml.replaceFirst("", "");
             try {
                 theItemXml = update(theItemId, theItemXml);
             }
             catch (final Exception e) {
-                EscidocRestSoapTestBase.failException(
-                    "Updating the revised item by the depositor failed with exception. ", e);
+                EscidocAbstractTest
+                        .failException("Updating the revised item by the depositor failed with exception. ", e);
             }
             param = getTheLastModificationParam(false);
             try {
                 submit(theItemId, param);
             }
             catch (final Exception e) {
-                EscidocRestSoapTestBase.failException(
-                    "Submitting the revised, updated item by the depositor failed with exception. ", e);
+                EscidocAbstractTest
+                        .failException("Submitting the revised, updated item by the depositor failed with exception. ",
+                                e);
             }
 
         }
@@ -951,11 +951,11 @@ public class ItemLifecycleTest extends ItemTestBase {
         assertXmlExists("version status released", xml, XPATH_ITEM_CURRENT_VERSION_STATUS + "[text() = 'released']");
         assertXmlExists("Released item latest-release", xml, "/item/properties/latest-release");
 
-        Document newItem = EscidocRestSoapTestBase.getDocument(xml);
+        Document newItem = EscidocAbstractTest.getDocument(xml);
         selectSingleNode(newItem, "/item/properties/content-model-specific").appendChild(
             newItem.createElement("nischt"));
         xml = update(theItemId, toString(newItem, false));
-        Document xmlDoc = EscidocRestSoapTestBase.getDocument(xml);
+        Document xmlDoc = EscidocAbstractTest.getDocument(xml);
 
         assertXmlValidItem(xml);
         assertXmlExists("Properties status not 'released' after update of released item. ", xml, XPATH_ITEM_STATUS
@@ -980,7 +980,7 @@ public class ItemLifecycleTest extends ItemTestBase {
     public void testElementsAfterUpdate01() throws Exception {
 
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
         this.theItemXml = create(xmlData);
         this.theItemId = getObjidValue(theItemXml);
 
@@ -1009,7 +1009,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<AuthorizationException> ec = AuthorizationException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -1062,7 +1062,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<ItemNotFoundException> ec = ItemNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
         /*
@@ -1077,7 +1077,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<AuthorizationException> ec = AuthorizationException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -1134,7 +1134,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<ItemNotFoundException> ec = ItemNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
         /*
@@ -1159,7 +1159,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<AuthorizationException> ec = AuthorizationException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
         // retrieve version 2 (role: anonymous)
@@ -1250,7 +1250,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<ItemNotFoundException> ec = ItemNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
         /*
@@ -1275,7 +1275,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<AuthorizationException> ec = AuthorizationException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
         // retrieve version 2 (role: anonymous)
@@ -1295,7 +1295,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             Class<AuthorizationException> ec = AuthorizationException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName() + " expected.", ec, e);
+            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -1307,7 +1307,7 @@ public class ItemLifecycleTest extends ItemTestBase {
     public void testBug697() throws Exception {
 
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_without_component.xml");
         this.theItemXml = create(xmlData);
         this.theItemId = getObjidValue(theItemXml);
 

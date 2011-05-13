@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.om.OmTestBase;
@@ -388,7 +388,7 @@ public class ContainerTestBase extends OmTestBase {
 
         if (!getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")
             || !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
-            itemDoc = EscidocRestSoapTestBase.getDocument(retrieve(id));
+            itemDoc = EscidocAbstractTest.getDocument(retrieve(id));
         }
 
         // assign objectPid
@@ -418,7 +418,7 @@ public class ContainerTestBase extends OmTestBase {
             }
         }
 
-        itemDoc = EscidocRestSoapTestBase.getDocument(retrieve(id));
+        itemDoc = EscidocAbstractTest.getDocument(retrieve(id));
         String param = getTaskParam(getLastModificationDateValue(itemDoc));
 
         Object result = getContainerClient().release(id, param);
@@ -549,7 +549,7 @@ public class ContainerTestBase extends OmTestBase {
     }
 
     protected String addCtsElement(final String xml) throws Exception {
-        Document doc = EscidocRestSoapTestBase.getDocument(xml);
+        Document doc = EscidocAbstractTest.getDocument(xml);
         doc =
             (Document) addAfter(doc, "/container/properties/content-model-specific/xxx", createElementNode(doc, null,
                 null, "nox", "modified"));
@@ -619,7 +619,7 @@ public class ContainerTestBase extends OmTestBase {
     public String createItemFromTemplate(final String templateName) throws Exception {
 
         // create an item and save the id
-        String xmlData = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
+        String xmlData = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
         return getObjidValue(theItemXml);
@@ -635,7 +635,7 @@ public class ContainerTestBase extends OmTestBase {
      */
     public String getContainerTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", templateName);
+        return EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", templateName);
 
     }
 
@@ -649,7 +649,7 @@ public class ContainerTestBase extends OmTestBase {
      */
     public String getItemTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
+        return EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", templateName);
 
     }
 

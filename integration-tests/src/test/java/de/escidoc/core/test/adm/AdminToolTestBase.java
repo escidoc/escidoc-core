@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.adm;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -38,7 +38,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  *
  * @author André Schenk
  */
-public class AdminToolTestBase extends EscidocRestSoapTestBase {
+public class AdminToolTestBase extends EscidocAbstractTest {
 
     private AdminClient adminClient = null;
 

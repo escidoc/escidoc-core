@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.junit.After;
 import org.junit.Before;
@@ -107,8 +107,8 @@ public class TextExtractionSearchTest extends SearchTestBase {
         try {
             // Create Item submit and release it //////////////////////////
             String xmlData =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
-                    "escidoc_text_extractor_error_item_rest.xml");
+                EscidocAbstractTest
+                        .getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_text_extractor_error_item_rest.xml");
             String xml = item.create(xmlData);
             String lastModDate = getLastModificationDate(xml);
             itemId = getId(xml);
@@ -117,7 +117,7 @@ public class TextExtractionSearchTest extends SearchTestBase {
             item.submit(itemId, "<param last-modification-date=\"" + lastModDate + "\" />");
 
             // assignPids
-            Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
+            Document itemDoc = EscidocAbstractTest.getDocument(xml);
             String componentId = getComponentObjidValue(itemDoc, 1);
             String pidParam = getItemPidParam(itemId);
             item.assignContentPid(itemId, componentId, pidParam);

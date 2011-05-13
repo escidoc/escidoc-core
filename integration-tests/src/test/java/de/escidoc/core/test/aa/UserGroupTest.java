@@ -38,7 +38,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyDeac
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.UserGroupHierarchyViolationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import org.junit.After;
 import org.junit.Before;
@@ -142,10 +142,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             create("<Corrupt XML data");
-            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlCorruptedException.class, e);
         }
     }
 
@@ -159,10 +159,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             create(null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 
@@ -175,16 +175,16 @@ public class UserGroupTest extends UserGroupTestBase {
     public void testAACug5() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getDocument(EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_GROUP_PATH,
-                "escidoc_usergroup_for_create.xml"));
+            EscidocAbstractTest.getDocument(EscidocAbstractTest
+                    .getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_usergroup_for_create.xml"));
         deleteElement(toBeCreatedDocument, XPATH_USER_GROUP_LABEL);
 
         try {
             create(toString(toBeCreatedDocument, false));
-            EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
+            EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
 
@@ -201,10 +201,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             create(toBeCreatedDocument);
-            EscidocRestSoapTestBase.failMissingException(UniqueConstraintViolationException.class);
+            EscidocAbstractTest.failMissingException(UniqueConstraintViolationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(UniqueConstraintViolationException.class, e);
+            EscidocAbstractTest.assertExceptionType(UniqueConstraintViolationException.class, e);
         }
     }
 
@@ -225,7 +225,7 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupXML = retrieve(id);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertUserGroup(retrievedUserGroupXML, createdUserGroupXML, startTimestamp, startTimestamp, true);
     }
@@ -246,7 +246,7 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedXml = retrieve(label);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertUserGroup(retrievedXml, toString(createdDocument, false), startTimestamp, startTimestamp, true);
     }
@@ -261,10 +261,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             retrieve(UNKNOWN_ID);
-            EscidocRestSoapTestBase.failMissingException(UserGroupNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
         }
     }
 
@@ -278,10 +278,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             retrieve(CONTEXT_ID);
-            EscidocRestSoapTestBase.failMissingException(UserGroupNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
         }
     }
 
@@ -294,10 +294,10 @@ public class UserGroupTest extends UserGroupTestBase {
     public void testAARug3() throws Exception {
         try {
             retrieve(null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
         }
     }
 
@@ -319,7 +319,7 @@ public class UserGroupTest extends UserGroupTestBase {
             deactivate(id, taskParamXML);
         }
         catch (final Exception e1) {
-            EscidocRestSoapTestBase.failException(e1);
+            EscidocAbstractTest.failException(e1);
         }
 
         String retrievedUserGroupXML = null;
@@ -327,7 +327,7 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupXML = retrieve(id);
         }
         catch (final Exception e1) {
-            EscidocRestSoapTestBase.failException(e1);
+            EscidocAbstractTest.failException(e1);
         }
         final Document retrievedDeactivatedDocument =
             assertDeactiveUserGroup(retrievedUserGroupXML, createdXml, startTimestamp, beforeDeactivationTimestamp,
@@ -342,7 +342,7 @@ public class UserGroupTest extends UserGroupTestBase {
             xmlData = activate(id, taskParamXML);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNull("Did not expect result data. ", xmlData);
 
@@ -351,10 +351,10 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedActivatedXml = retrieve(id);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertActiveUserGroup(retrievedActivatedXml, createdXml, startTimestamp, beforeActivationTimestamp, true);
-        final Document retrievedActivatedDocument = EscidocRestSoapTestBase.getDocument(retrievedActivatedXml);
+        final Document retrievedActivatedDocument = EscidocAbstractTest.getDocument(retrievedActivatedXml);
         assertXmlLastModificationDateUpdate("", retrievedDeactivatedDocument, retrievedActivatedDocument);
     }
 
@@ -367,13 +367,13 @@ public class UserGroupTest extends UserGroupTestBase {
     public void testAAAug2() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
         try {
             activate(UNKNOWN_ID, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(UserGroupNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
         }
     }
 
@@ -386,13 +386,13 @@ public class UserGroupTest extends UserGroupTestBase {
     public void testAAAug2_2() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
         try {
             activate(CONTEXT_ID, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(UserGroupNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
         }
     }
 
@@ -405,13 +405,13 @@ public class UserGroupTest extends UserGroupTestBase {
     public void testAAAug3() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
         try {
             activate(null, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
         }
     }
 
@@ -430,10 +430,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             activate(id, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(AlreadyActiveException.class);
+            EscidocAbstractTest.failMissingException(AlreadyActiveException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AlreadyActiveException.class, e);
+            EscidocAbstractTest.assertExceptionType(AlreadyActiveException.class, e);
         }
     }
 
@@ -450,10 +450,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             deactivate(id, null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
         }
     }
 
@@ -478,7 +478,7 @@ public class UserGroupTest extends UserGroupTestBase {
             xmlData = deactivate(id, taskParamXML);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNull("Did not expect result data. ", xmlData);
 
@@ -487,10 +487,10 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedDeactivatedXml = retrieve(id);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertDeactiveUserGroup(retrievedDeactivatedXml, createdXml, startTimestamp, beforeDeactivationTimestamp, true);
-        final Document retrievedDeactivatedDocument = EscidocRestSoapTestBase.getDocument(retrievedDeactivatedXml);
+        final Document retrievedDeactivatedDocument = EscidocAbstractTest.getDocument(retrievedDeactivatedXml);
         assertXmlLastModificationDateUpdate("", createdDocument, retrievedDeactivatedDocument);
 
     }
@@ -504,13 +504,13 @@ public class UserGroupTest extends UserGroupTestBase {
     public void testAADug2() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
         try {
             deactivate(UNKNOWN_ID, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(UserGroupNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
         }
     }
 
@@ -523,13 +523,13 @@ public class UserGroupTest extends UserGroupTestBase {
     public void testAADug2_2() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
         try {
             deactivate(CONTEXT_ID, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(UserGroupNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", UserGroupNotFoundException.class, e);
         }
     }
 
@@ -542,13 +542,13 @@ public class UserGroupTest extends UserGroupTestBase {
     public void testAADug3() throws Exception {
 
         final String taskParamXML =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_task_param.xml");
         try {
             deactivate(null, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
         }
     }
 
@@ -570,27 +570,27 @@ public class UserGroupTest extends UserGroupTestBase {
             deactivate(id, taskParamXML);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
 
         try {
             xmlData = retrieve(id);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNotNull("No result from retrieve", xmlData);
-        final Document document = EscidocRestSoapTestBase.getDocument(xmlData);
+        final Document document = EscidocAbstractTest.getDocument(xmlData);
         assertXmlExists("Last modification date does not exist. ", createdDocument, XPATH_USER_GROUP_LAST_MOD_DATE);
         lastModificationDate = selectSingleNode(document, XPATH_USER_GROUP_LAST_MOD_DATE).getTextContent();
         taskParamXML = "<param last-modification-date=\"" + lastModificationDate + "\" />";
 
         try {
             deactivate(id, taskParamXML);
-            EscidocRestSoapTestBase.failMissingException(AlreadyDeactiveException.class);
+            EscidocAbstractTest.failMissingException(AlreadyDeactiveException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AlreadyDeactiveException.class, e);
+            EscidocAbstractTest.assertExceptionType(AlreadyDeactiveException.class, e);
         }
     }
 
@@ -607,10 +607,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             deactivate(id, null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType("Wrong exception. ", MissingMethodParameterException.class, e);
         }
     }
 
@@ -636,7 +636,7 @@ public class UserGroupTest extends UserGroupTestBase {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertActiveUserGroup(updatedXml, toBeUpdatedXml, startTimestamp, beforeModificationTimestamp, true);
     }
@@ -654,10 +654,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             update(id, null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 
@@ -674,10 +674,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             update(id, "<Corrupt XML data");
-            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlCorruptedException.class, e);
         }
     }
 
@@ -693,10 +693,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             update(null, toString(createdDocument, false));
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 
@@ -715,10 +715,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             update(objid, toString(createdDocument, false));
-            EscidocRestSoapTestBase.failMissingException(OptimisticLockingException.class);
+            EscidocAbstractTest.failMissingException(OptimisticLockingException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(OptimisticLockingException.class, e);
+            EscidocAbstractTest.assertExceptionType(OptimisticLockingException.class, e);
         }
     }
 
@@ -735,10 +735,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             update(objid, "<Corrupt XML data");
-            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlCorruptedException.class, e);
         }
     }
 
@@ -756,10 +756,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             update(objid, toString(createdDocument, false));
-            EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
+            EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
 
@@ -780,10 +780,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             update(objid2, toString(createdDocument2, false));
-            EscidocRestSoapTestBase.failMissingException(UniqueConstraintViolationException.class);
+            EscidocAbstractTest.failMissingException(UniqueConstraintViolationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(UniqueConstraintViolationException.class, e);
+            EscidocAbstractTest.assertExceptionType(UniqueConstraintViolationException.class, e);
         }
     }
 
@@ -799,10 +799,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             update(UNKNOWN_ID, toString(toBeUpdatedDocument, false));
-            EscidocRestSoapTestBase.failMissingException(UserGroupNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(UserGroupNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType(UserGroupNotFoundException.class, e);
         }
 
     }
@@ -819,10 +819,10 @@ public class UserGroupTest extends UserGroupTestBase {
 
         try {
             update(CONTEXT_ID, toString(toBeUpdatedDocument, false));
-            EscidocRestSoapTestBase.failMissingException(UserGroupNotFoundException.class);
+            EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(UserGroupNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType(UserGroupNotFoundException.class, e);
         }
 
     }
@@ -850,7 +850,7 @@ public class UserGroupTest extends UserGroupTestBase {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertActiveUserGroup(updatedXml, toBeUpdatedXml, startTimestamp, beforeModificationTimestamp, true);
     }
@@ -873,7 +873,7 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
@@ -893,13 +893,14 @@ public class UserGroupTest extends UserGroupTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + NAME_CREATED_BY + "\"=\"Some value\"" });
         try {
             retrieveUserGroups(filterParams);
-            EscidocRestSoapTestBase.failMissingException(
-                "Retrieving user groups with providing corrupted filter params" + " not declined. ",
-                InvalidSearchQueryException.class);
+            EscidocAbstractTest.failMissingException(
+                    "Retrieving user groups with providing corrupted filter params" + " not declined. ",
+                    InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Retrieving user groups with providing corrupted filter params"
-                + "not declined, properly. ", InvalidSearchQueryException.class, e);
+            EscidocAbstractTest.assertExceptionType(
+                    "Retrieving user groups with providing corrupted filter params" + "not declined, properly. ",
+                    InvalidSearchQueryException.class, e);
         }
     }
 
@@ -916,12 +917,14 @@ public class UserGroupTest extends UserGroupTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + NAME_CREATED_BY + "\"=\"Some value\"" });
         try {
             retrieveUserGroups(filterParams);
-            EscidocRestSoapTestBase.failMissingException("Retrieving user groups with providing invalid filter params"
-                + " not declined. ", InvalidSearchQueryException.class);
+            EscidocAbstractTest.failMissingException(
+                    "Retrieving user groups with providing invalid filter params" + " not declined. ",
+                    InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType("Retrieving user groups with providing invalid filter params"
-                + "not declined, properly. ", InvalidSearchQueryException.class, e);
+            EscidocAbstractTest.assertExceptionType(
+                    "Retrieving user groups with providing invalid filter params" + "not declined, properly. ",
+                    InvalidSearchQueryException.class, e);
         }
     }
 
@@ -950,11 +953,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
         assertEquals("Unexpected number of user groups.", 2, userGroupNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
@@ -979,11 +982,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
         // FIXME further assertions needed
     }
@@ -1006,7 +1009,7 @@ public class UserGroupTest extends UserGroupTestBase {
             deactivate(id, taskParamXML);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
 
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
@@ -1019,11 +1022,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
         // FIXME further assertions needed
     }
@@ -1055,12 +1058,12 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user groups failed. ", e);
         }
 
         try {
             assertXmlValidSrwResponse(retrievedUserGroupsXml);
-            final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+            final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
             final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
             assertEquals("Unexpected number of user groups.", 1, userGroupNodes.getLength());
             assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
@@ -1100,12 +1103,12 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user group failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user group failed. ", e);
         }
 
         try {
             assertXmlValidSrwResponse(retrievedUserGroupsXml);
-            final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+            final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
             final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
             assertEquals("Unexpected number of user groups.", 1, userGroupNodes.getLength());
             assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
@@ -1134,11 +1137,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user group failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user group failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
         assertEquals("Unexpected number of user groups.", 2, userGroupNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
@@ -1171,11 +1174,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of user group failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of user group failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
         assertEquals("Unexpected number of user groups.", 1, userGroupNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
@@ -1210,11 +1213,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
 
         final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
@@ -1255,11 +1258,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
 
         final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
@@ -1403,11 +1406,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         assertXmlNotExists("List is not empty but should be.", retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
     }
 
@@ -1436,11 +1439,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
         assertEquals("Unexpected number of user groups.", 2, userGroupNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
@@ -1499,11 +1502,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
         assertEquals("Unexpected number of user groups.", 3, userGroupNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
@@ -1547,11 +1550,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
         assertEquals("Unexpected number of user groups.", 3, userGroupNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
@@ -1596,11 +1599,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
         assertEquals("Unexpected number of user groups.", 2, userGroupNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
@@ -1644,11 +1647,11 @@ public class UserGroupTest extends UserGroupTestBase {
             retrievedUserGroupsXml = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving list of user groups failed. ", e);
+            EscidocAbstractTest.failException("Retrieving list of user groups failed. ", e);
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument = EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
+        final Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedUserGroupsXml);
         final NodeList userGroupNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
         assertEquals("Unexpected number of user groups.", 1, userGroupNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
@@ -1670,7 +1673,7 @@ public class UserGroupTest extends UserGroupTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = UserGroupNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
 
     }
@@ -1701,7 +1704,7 @@ public class UserGroupTest extends UserGroupTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = UserGroupNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -1823,7 +1826,7 @@ public class UserGroupTest extends UserGroupTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = UserGroupHierarchyViolationException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
 
     }
@@ -1854,7 +1857,7 @@ public class UserGroupTest extends UserGroupTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = XmlCorruptedException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -1884,7 +1887,7 @@ public class UserGroupTest extends UserGroupTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = XmlSchemaValidationException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
     }
 
@@ -1905,11 +1908,11 @@ public class UserGroupTest extends UserGroupTestBase {
             result = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving of list of UserGroup failed. ", e);
+            EscidocAbstractTest.failException("Retrieving of list of UserGroup failed. ", e);
         }
 
         assertXmlValidSrwResponse(result);
-        Document retrievedDocument = EscidocRestSoapTestBase.getDocument(result);
+        Document retrievedDocument = EscidocAbstractTest.getDocument(result);
         NodeList resultNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
         final int totalRecordsWithZeroMaximum = resultNodes.getLength();
 
@@ -1934,7 +1937,7 @@ public class UserGroupTest extends UserGroupTestBase {
             result = retrieveUserGroups(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

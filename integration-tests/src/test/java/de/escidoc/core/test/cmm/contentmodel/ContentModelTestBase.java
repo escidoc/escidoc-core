@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.cmm.CmmTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
@@ -260,8 +260,8 @@ public class ContentModelTestBase extends CmmTestBase {
                 // create item with this content model and check for dynamic
                 // behavior
                 String itemXml =
-                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
-                        "item-minimal-for-content-model.xml");
+                    EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+                            "item-minimal-for-content-model.xml");
                 itemXml = itemXml.replace("##CONTENT_MODEL_ID##", id);
                 OmTestBase omBase = new OmTestBase();
                 itemXml = handleXmlResult(omBase.getItemClient().create(itemXml));
@@ -291,8 +291,8 @@ public class ContentModelTestBase extends CmmTestBase {
                 // dynamic
                 // behavior
                 String containerXml =
-                    EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
-                        "container-minimal-for-content-model.xml");
+                    EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+                            "container-minimal-for-content-model.xml");
                 containerXml = containerXml.replace("##CONTENT_MODEL_ID##", id);
                 OmTestBase omBase = new OmTestBase();
                 containerXml = handleXmlResult(omBase.getContainerClient().create(containerXml));

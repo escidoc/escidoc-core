@@ -26,34 +26,45 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.test.om.item.rest;
+package de.escidoc.core.test.om.container;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.om.item.ItemTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.om.container.ContainerTestBase;
 import org.junit.Test;
 
 /**
- * Item tests.
+ * Container tests.
  *
  * @author Michael Schneider
  */
-public class ItemRetrieveRestTest extends ItemTestBase {
+public class ContainerRetrieveRestTest extends ContainerTestBase {
+
+    private String theItemId;
 
     /**
-     * Test retrieve resources of Item.
+     * Test successfully retrieving of container.
      *
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception Thrown if retrieve fails.
      */
     @Test
     public void testRetrieveResources() throws Exception {
-        String xml =
-            EscidocRestSoapTestBase
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
-        String itemXml = create(xml);
-        String itemId = getObjidValue(itemXml);
 
-        String resources = retrieveResources(itemId);
-        assertXmlValidItem(resources);
+        String xmlData =
+            EscidocAbstractTest
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+
+        String theItemXml = handleXmlResult(getItemClient().create(xmlData));
+
+        this.theItemId = getObjidValue(theItemXml);
+        xmlData =
+            EscidocAbstractTest
+                    .getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_v1.1-forItem.xml");
+
+        String theContainerXml = create(xmlData.replaceAll("##ITEMID##", theItemId));
+        String theContainerId = getObjidValue(theContainerXml);
+
+        String resourcesXml = retrieveResources(theContainerId);
+        assertXmlValidContainer(resourcesXml);
 
     }
 

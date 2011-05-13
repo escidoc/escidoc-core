@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.junit.After;
 import org.junit.Before;
@@ -88,7 +88,7 @@ public class ExpiredIndexSearcherTest extends SearchTestBase {
             null, null, null);
         // /////////////////////////////////////////////////////////////////////
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item0_rest.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item0_rest.xml");
         item.create(xmlData);
         HashMap<String, String> parameters = new HashMap<String, String>();
         HashMap<String, String> scanParameters = new HashMap<String, String>();

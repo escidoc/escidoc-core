@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -384,7 +384,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
             result = retrieveOrganizationalUnits(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

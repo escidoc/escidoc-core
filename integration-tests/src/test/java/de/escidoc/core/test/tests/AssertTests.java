@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.tests;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.om.OmTestBase;
 import org.junit.Test;
 
@@ -50,12 +50,11 @@ public class AssertTests extends OmTestBase {
 
         try {
             String xmlData =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container.xml");
+                EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container.xml");
             String containerXml = handleXmlResult(getContainerClient().create(xmlData));
 
             String tempItemXml =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                    "escidoc_item_198_for_create.xml");
+                EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
             String containerId = getObjidValue(containerXml);
             String itemXml = handleXmlResult(getContainerClient().createItem(containerId, tempItemXml));
@@ -67,7 +66,7 @@ public class AssertTests extends OmTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = Exception.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
 
     }

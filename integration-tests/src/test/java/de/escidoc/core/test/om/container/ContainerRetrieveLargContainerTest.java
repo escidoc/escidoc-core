@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -95,7 +95,7 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
     }
 
     private String getTheLastModificationDate() throws Exception {
-        Document item = EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
+        Document item = EscidocAbstractTest.getDocument(retrieve(theContainerId));
 
         // get last-modification-date
         NamedNodeMap atts = item.getDocumentElement().getAttributes();

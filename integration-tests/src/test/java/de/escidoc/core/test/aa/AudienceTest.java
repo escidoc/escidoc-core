@@ -29,7 +29,7 @@
 package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -145,13 +145,13 @@ public class AudienceTest extends GrantTestBase {
 
         //create container
         String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null, false, false);
-        Document containerDocument = EscidocRestSoapTestBase.getDocument(containerXml);
+        Document containerDocument = EscidocAbstractTest.getDocument(containerXml);
         containerId = getObjidValue(containerDocument);
         containerHref = Constants.CONTAINER_BASE_URI + "/" + containerId;
 
         //create item in status released
         String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document document = EscidocAbstractTest.getDocument(itemXml);
 
         //save ids
         contextId = extractContextId(document);
@@ -201,7 +201,7 @@ public class AudienceTest extends GrantTestBase {
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, audienceComponentId);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("retrieving content failed. ", e);
+            EscidocAbstractTest.failException("retrieving content failed. ", e);
         }
         finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -224,10 +224,10 @@ public class AudienceTest extends GrantTestBase {
         try {
             PWCallback.setHandle(HANDLE);
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, privateComponentId);
-            EscidocRestSoapTestBase.failMissingException(AuthorizationException.class);
+            EscidocAbstractTest.failMissingException(AuthorizationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(AuthorizationException.class, e);
+            EscidocAbstractTest.assertExceptionType(AuthorizationException.class, e);
         }
         finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);

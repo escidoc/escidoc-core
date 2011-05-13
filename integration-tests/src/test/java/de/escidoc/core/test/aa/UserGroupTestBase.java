@@ -30,7 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyActiveException;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyDeactiveException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -257,7 +257,7 @@ public class UserGroupTestBase extends AaTestBase {
                 createdUserGroupXml = create(toBeCreatedXml);
             }
             catch (final Exception e) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             return assertActiveUserGroup(createdUserGroupXml, toBeCreatedXml, beforeCreationTimestamp,
                 beforeCreationTimestamp, false);
@@ -286,7 +286,7 @@ public class UserGroupTestBase extends AaTestBase {
             createdUserGroupXml = create(toBeCreatedXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         return assertActiveUserGroup(createdUserGroupXml, toBeCreatedXml, beforeCreationTimestamp,
             beforeCreationTimestamp, false);
@@ -306,10 +306,10 @@ public class UserGroupTestBase extends AaTestBase {
             retrievedXml = retrieve(id);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException("Retrieving user group failed. ", e);
+            EscidocAbstractTest.failException("Retrieving user group failed. ", e);
         }
         assertXmlValidUserGroup(retrievedXml);
-        return EscidocRestSoapTestBase.getDocument(retrievedXml);
+        return EscidocAbstractTest.getDocument(retrievedXml);
     }
 
     /**
@@ -325,7 +325,7 @@ public class UserGroupTestBase extends AaTestBase {
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String userGroupXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, templateName);
+        String userGroupXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
         String createdUserGroupXml = handleResult(userGroupClient.create(userGroupXml));
         String userId = getObjidValue(createdUserGroupXml);
@@ -336,15 +336,15 @@ public class UserGroupTestBase extends AaTestBase {
 
             userGroupClient.update(userId, createdUserGroupXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -371,15 +371,15 @@ public class UserGroupTestBase extends AaTestBase {
 
             userGroupClient.update(groupId, userGroupXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -400,7 +400,7 @@ public class UserGroupTestBase extends AaTestBase {
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String userGroupXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, templateName);
+        String userGroupXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
         String createdUserGroupXml = handleResult(userGroupClient.create(userGroupXml));
         String userId = getObjidValue(createdUserGroupXml);
@@ -410,15 +410,15 @@ public class UserGroupTestBase extends AaTestBase {
 
             userGroupClient.delete(userId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -442,15 +442,15 @@ public class UserGroupTestBase extends AaTestBase {
 
             userGroupClient.delete(groupId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -471,7 +471,7 @@ public class UserGroupTestBase extends AaTestBase {
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String userGroupXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, templateName);
+        String userGroupXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
         String createdUserGroupXml = handleResult(userGroupClient.create(userGroupXml));
         String userId = getObjidValue(createdUserGroupXml);
@@ -479,19 +479,19 @@ public class UserGroupTestBase extends AaTestBase {
         try {
             PWCallback.setHandle(userHandle);
             String lastModificationDate =
-                getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(createdUserGroupXml));
+                getLastModificationDateValue(EscidocAbstractTest.getDocument(createdUserGroupXml));
             String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
             userGroupClient.activate(userId, taskParamXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -512,7 +512,7 @@ public class UserGroupTestBase extends AaTestBase {
         try {
             String userGroupXml = handleResult(userGroupClient.retrieve(groupId));
             String lastModificationDate =
-                getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(userGroupXml));
+                getLastModificationDateValue(EscidocAbstractTest.getDocument(userGroupXml));
             String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
             userGroupClient.deactivate(groupId, taskParamXml);
         }
@@ -524,19 +524,19 @@ public class UserGroupTestBase extends AaTestBase {
         try {
             PWCallback.setHandle(userHandle);
             String lastModificationDate =
-                getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(userGroupXml));
+                getLastModificationDateValue(EscidocAbstractTest.getDocument(userGroupXml));
             String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
             userGroupClient.activate(groupId, taskParamXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -557,7 +557,7 @@ public class UserGroupTestBase extends AaTestBase {
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String userGroupXml = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, templateName);
+        String userGroupXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_GROUP_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
         String createdUserGroupXml = handleResult(userGroupClient.create(userGroupXml));
         String userId = getObjidValue(createdUserGroupXml);
@@ -565,19 +565,19 @@ public class UserGroupTestBase extends AaTestBase {
         try {
             PWCallback.setHandle(userHandle);
             String lastModificationDate =
-                getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(createdUserGroupXml));
+                getLastModificationDateValue(EscidocAbstractTest.getDocument(createdUserGroupXml));
             String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
             userGroupClient.deactivate(userId, taskParamXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -599,7 +599,7 @@ public class UserGroupTestBase extends AaTestBase {
         try {
             String userGroupXml = handleResult(userGroupClient.retrieve(groupId));
             String lastModificationDate =
-                getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(userGroupXml));
+                getLastModificationDateValue(EscidocAbstractTest.getDocument(userGroupXml));
             String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
             userGroupClient.activate(groupId, taskParamXml);
         }
@@ -611,19 +611,19 @@ public class UserGroupTestBase extends AaTestBase {
         try {
             PWCallback.setHandle(userHandle);
             String lastModificationDate =
-                getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(userGroupXml));
+                getLastModificationDateValue(EscidocAbstractTest.getDocument(userGroupXml));
             String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
             userGroupClient.deactivate(groupId, taskParamXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -653,15 +653,15 @@ public class UserGroupTestBase extends AaTestBase {
         try {
             retrievedXml = retrieve(id);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -694,15 +694,15 @@ public class UserGroupTestBase extends AaTestBase {
         try {
             retrievedXml = addSelectors(id, taskParam);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -735,15 +735,15 @@ public class UserGroupTestBase extends AaTestBase {
         try {
             retrievedXml = removeSelectors(id, taskParam);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
         }
         catch (final Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestBase.failException(e);
+                EscidocAbstractTest.failException(e);
             }
             else {
-                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
             }
         }
         finally {
@@ -925,7 +925,7 @@ public class UserGroupTestBase extends AaTestBase {
         final String timestampBeforeLastModification, final boolean assertCreationDate) throws Exception {
 
         assertXmlValidUserGroup(toBeAssertedXml);
-        Document toBeAssertedDocument = EscidocRestSoapTestBase.getDocument(toBeAssertedXml);
+        Document toBeAssertedDocument = EscidocAbstractTest.getDocument(toBeAssertedXml);
 
         String[] rootValues =
             assertRootElement("Invalid root element. ", toBeAssertedDocument, XPATH_USER_GROUP,
@@ -945,7 +945,7 @@ public class UserGroupTestBase extends AaTestBase {
         assertXmlExists("Missing active flag. ", toBeAssertedDocument, XPATH_USER_GROUP_ACTIVE);
 
         if (originalXml != null) {
-            final Document originalDocument = EscidocRestSoapTestBase.getDocument(originalXml);
+            final Document originalDocument = EscidocAbstractTest.getDocument(originalXml);
 
             if (assertCreationDate) {
                 final String expectedCreationDate = getCreationDateValue(originalDocument);

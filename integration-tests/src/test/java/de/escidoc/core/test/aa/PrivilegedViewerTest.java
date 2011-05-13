@@ -29,7 +29,7 @@
 package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -134,7 +134,7 @@ public class PrivilegedViewerTest extends GrantTestBase {
     protected HashMap<String, String> prepare(final String status, final String contextId) throws Exception {
         HashMap<String, String> createdIds = new HashMap<String, String>();
         String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, status, contextId, false, false);
-        Document document = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document document = EscidocAbstractTest.getDocument(itemXml);
         createdIds.put("itemId", getObjidValue(document));
         createdIds.put("publicComponentId", extractComponentId(document, VISIBILITY_PUBLIC));
         createdIds.put("privateComponentId", extractComponentId(document, VISIBILITY_PRIVATE));

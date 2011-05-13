@@ -61,8 +61,7 @@ import java.util.Map;
 
 /**
  * The PropertiesHandler. Verifies the elements <code>organizational-unit</code> of a properties snippet of a parsed
- * context XML. These elements must contain <code>xlink:href</code> attribute in the REST case and <code>objid</code>
- * attribute in the SOAP case.
+ * context XML. These elements must contain <code>xlink:href</code> attribute.
  */
 @Configurable
 public class ContextPropertiesHandler extends DefaultHandler {

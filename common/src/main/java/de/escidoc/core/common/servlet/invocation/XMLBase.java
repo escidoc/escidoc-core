@@ -72,8 +72,6 @@ public class XMLBase {
 
     public static final String REST_ELEMENT = "rest";
 
-    public static final String SOAP_ELEMENT = "soap";
-
     public static final String PREVIOUS_ELEMENT = "previous";
 
     public static final String DESCRIPTION_ELEMENT = "description";

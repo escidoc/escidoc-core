@@ -30,7 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.aa.PolicyDecisionPointClient;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -85,7 +85,7 @@ public class PdpTest extends AaTestBase {
     @Test
     public void testAAEar1() throws Exception {
 
-        String requestsXML = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests.xml");
+        String requestsXML = EscidocAbstractTest.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests.xml");
         assertXmlValidRequests(requestsXML);
 
         String evaluationResponsesXml = null;
@@ -93,11 +93,11 @@ public class PdpTest extends AaTestBase {
             evaluationResponsesXml = evaluate(requestsXML);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNotNull(evaluationResponsesXml);
         assertXmlValidResults(evaluationResponsesXml);
-        Document evaluationDocument = EscidocRestSoapTestBase.getDocument(evaluationResponsesXml);
+        Document evaluationDocument = EscidocAbstractTest.getDocument(evaluationResponsesXml);
         assertXmlExists("", evaluationDocument, "/results/result[1]");
         assertXmlExists("", evaluationDocument, "/results/result[2]");
     }
@@ -112,10 +112,10 @@ public class PdpTest extends AaTestBase {
 
         try {
             evaluate("<Corrupt XML data");
-            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType(XmlCorruptedException.class, e);
         }
     }
 
@@ -129,10 +129,10 @@ public class PdpTest extends AaTestBase {
 
         try {
             evaluate(null);
-            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
+            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 
@@ -144,18 +144,18 @@ public class PdpTest extends AaTestBase {
     @Test
     public void testAAEar4() throws Exception {
 
-        String requestsXML = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests3.xml");
+        String requestsXML = EscidocAbstractTest.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests3.xml");
         assertXmlValidRequests(requestsXML);
         String evaluationResponsesXml = null;
         try {
             evaluationResponsesXml = evaluate(requestsXML);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNotNull(evaluationResponsesXml);
         assertXmlValidResults(evaluationResponsesXml);
-        Document evaluationDocument = EscidocRestSoapTestBase.getDocument(evaluationResponsesXml);
+        Document evaluationDocument = EscidocAbstractTest.getDocument(evaluationResponsesXml);
         NodeList nodes = selectNodeList(evaluationDocument, "/results/result/@decision");
         assertEquals("result-node not found", 1, nodes.getLength());
         assertEquals("wrong decision", "deny", nodes.item(0).getTextContent());
@@ -170,18 +170,18 @@ public class PdpTest extends AaTestBase {
     @Test
     public void testAAEar5() throws Exception {
 
-        String requestsXML = EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests4.xml");
+        String requestsXML = EscidocAbstractTest.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests4.xml");
         assertXmlValidRequests(requestsXML);
         String evaluationResponsesXml = null;
         try {
             evaluationResponsesXml = evaluate(requestsXML);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertNotNull(evaluationResponsesXml);
         assertXmlValidResults(evaluationResponsesXml);
-        Document evaluationDocument = EscidocRestSoapTestBase.getDocument(evaluationResponsesXml);
+        Document evaluationDocument = EscidocAbstractTest.getDocument(evaluationResponsesXml);
         NodeList nodes = selectNodeList(evaluationDocument, "/results/result/@decision");
         assertEquals("result-node not found", 1, nodes.getLength());
         assertEquals("wrong decision", "permit", nodes.item(0).getTextContent());

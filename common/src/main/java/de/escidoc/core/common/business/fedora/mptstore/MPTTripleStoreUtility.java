@@ -2016,18 +2016,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             queryPart.append(".s=");
             queryPart.append("'<info:fedora/").append(expectedValue).append(">'");
         }
-        // if (!targetIsSubject
-        // ||
-        // predicateId.equals(TripleStoreUtility.Fedora_Creation_Date_Predicate))
-        // {
-        // queryPart.append(tableWithPredicate);
-        // queryPart.append(".s=");
-        // queryPart.append("'<info:fedora/" + expectedValue + ">'");
-        // } else {
-        // queryPart.append(tableWithPredicate);
-        // queryPart.append(".o=");
-        // queryPart.append("'<info:fedora/" + expectedValue + ">'");
-        // }
 
         if (braceToAddAtBeginn == 1) {
             queryPart.insert(0, '(');

@@ -1,6 +1,6 @@
 package de.escidoc.core.test.om.item.contentTools;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.item.ItemTestBase;
@@ -376,7 +376,7 @@ public class ContentTestBase extends ItemTestBase {
         Vector<String> components = new Vector<String>();
 
         String itemXml = retrieve(itemId);
-        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
 
         NodeList componentsIdList = selectNodeList(itemDoc, "/item/components/component/@href");
 
@@ -395,7 +395,7 @@ public class ContentTestBase extends ItemTestBase {
         HashMap<String, String> components = new HashMap<String, String>();
 
         String itemXml = retrieve(itemId);
-        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
+        Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
 
         NodeList componentsIdList = selectNodeList(itemDoc, "/item/components/component/@href");
 

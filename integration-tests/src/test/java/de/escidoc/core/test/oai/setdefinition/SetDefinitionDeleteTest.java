@@ -1,7 +1,7 @@
 package de.escidoc.core.test.oai.setdefinition;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -34,7 +34,7 @@ public class SetDefinitionDeleteTest extends SetDefinitionTestBase {
         }
         catch (final Exception e) {
             Class<?> ec = ResourceNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
+            EscidocAbstractTest.assertExceptionType(ec, e);
         }
 
     }

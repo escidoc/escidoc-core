@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.context;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
@@ -79,15 +79,15 @@ public class RetrieveContextsTest extends ContextTestBase {
             String contexts = retrieveContexts(getFilterRetrieveContexts(null, null, null));
             assertXmlValidSrwResponse(contexts);
             noOfContexts =
-                getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT);
+                getNoOfSelections(EscidocAbstractTest.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT);
             noOfPubManContexts =
-                getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
+                getNoOfSelections(EscidocAbstractTest.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
                     + "/properties[type=\"" + CONTEXT_TYPE_PUB_MAN + "\"]");
             noOfSwbContexts =
-                getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
+                getNoOfSelections(EscidocAbstractTest.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
                     + "/properties[type=\"" + CONTEXT_TYPE_SWB + "\"]");
 
-            Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+            Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
             substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
             substitute(context, "/context/properties/type", CONTEXT_TYPE_PUB_MAN);
             create(toString(context, false));
@@ -106,14 +106,14 @@ public class RetrieveContextsTest extends ContextTestBase {
             contexts = retrieveContexts(getFilterRetrieveContexts(null, null, null));
             assertXmlValidSrwResponse(contexts);
             noOfPubManContextsForDepositorUser =
-                getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
+                getNoOfSelections(EscidocAbstractTest.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
                     + "/properties[type=\"" + CONTEXT_TYPE_PUB_MAN + "\"]");
             contexts =
                 retrieveContexts(getFilterRetrieveContexts(PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE,
                     "escidoc:role-depositor", null));
             assertXmlValidSrwResponse(contexts);
             noOfPubManContextsForDepositorUserAndRole =
-                getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
+                getNoOfSelections(EscidocAbstractTest.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
                     + "/properties[type=\"" + CONTEXT_TYPE_PUB_MAN + "\"]");
             PWCallback.resetHandle();
         }
@@ -225,7 +225,7 @@ public class RetrieveContextsTest extends ContextTestBase {
     @Test
     public void testRetrieveAdminDescriptors() throws Exception {
 
-        Document context = EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create.xml");
+        Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
 
         String template = toString(context, false);
@@ -273,7 +273,7 @@ public class RetrieveContextsTest extends ContextTestBase {
     public void testRetrieveEmptyAdminDescriptors() throws Exception {
 
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(this.path, "context_create_without_admindescriptor.xml");
+            EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create_without_admindescriptor.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
 
         // create Context
@@ -310,7 +310,7 @@ public class RetrieveContextsTest extends ContextTestBase {
 
         assertXmlValidSrwResponse(contexts);
 
-        int no = getNoOfSelections(EscidocRestSoapTestBase.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT);
+        int no = getNoOfSelections(EscidocAbstractTest.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT);
         String label = contextType;
 
         if (contextType == null) {
@@ -336,7 +336,7 @@ public class RetrieveContextsTest extends ContextTestBase {
             result = retrieveContexts(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
+            EscidocAbstractTest.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

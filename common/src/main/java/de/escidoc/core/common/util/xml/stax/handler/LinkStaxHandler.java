@@ -30,6 +30,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 
+import javax.validation.constraints.NotNull;
 import java.lang.reflect.Constructor;
 
 /**
@@ -37,8 +38,7 @@ import java.lang.reflect.Constructor;
  * access, a link consists of the xlink attributes referencing the resource object. The xlink:type attribute is
  * "simple". In common, the xlink:href consists of a base uri (e.g. /ir/item/) followed by an id (e.g. escidoc:12345).
  * The expected base uri can be specified during creation of the {@link LinkStaxHandler} instance. This value will be
- * used to validate the provided href.<br> In case of a SOAP access, a link consists of the objid referencing the
- * resource object.
+ * used to validate the provided href.
  *
  * @author Torsten Tetteroo
  */
@@ -79,9 +79,8 @@ public class LinkStaxHandler extends DefaultHandler {
      *
      * @param elementPath    The path to the link element that shall be handled by this handler.
      * @param hrefBaseUri    The base uri of the href pointing to the object that is referenced by the link that shall
-     *                       be parsed by this handler. In case of REST, this value is used to check the provided href.
-     *                       In case of SOAP it is ignored.
-     * @param exceptionClass The type of the exception to throw if href base uri is not matched in case of REST. This
+     *                       be parsed by this handler.
+     * @param exceptionClass The type of the exception to throw if href base uri is not matched. This
      *                       parameter must not be <code>null</code> and must be an instance of {@link
      *                       EscidocException}, but this is not checked!.
      */
