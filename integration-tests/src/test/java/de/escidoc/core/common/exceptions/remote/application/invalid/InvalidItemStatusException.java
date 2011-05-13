@@ -1,4 +1,3 @@
-
 package de.escidoc.core.common.exceptions.remote.application.invalid;
 
 public class InvalidItemStatusException

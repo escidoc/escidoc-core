@@ -1,4 +1,3 @@
-
 package de.escidoc.core.common.exceptions.remote.system;
 
 public class IntegritySystemException extends de.escidoc.core.common.exceptions.remote.system.SystemException
