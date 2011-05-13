@@ -607,7 +607,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         // create an item and save the id
         String xmlData =
             EscidocAbstractTest
-                    .getTemplateAsString(new URL(TEMPLATE_ITEM_PATH + "/rest/" + "escidoc_item_198_for_create.xml"));
+                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest/", "escidoc_item_198_for_create.xml");
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
         return getObjidValue(theItemXml);
@@ -853,7 +853,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         String itemTemplXml =
             EscidocAbstractTest
-                    .getTemplateAsString(new URL(TEMPLATE_ITEM_PATH + "/rest/" + "item_without_component.xml"));
+                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest/", "item_without_component.xml");
 
         String itemXml = createItem(containerId, itemTemplXml);
         String itemId = getObjidValue(itemXml);
