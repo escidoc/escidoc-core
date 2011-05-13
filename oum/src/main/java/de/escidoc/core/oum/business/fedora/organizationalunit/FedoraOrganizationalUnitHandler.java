@@ -138,28 +138,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
     }
 
     /**
-     * Get the alternate form of an ou representation. If the current request came in via REST, then the SOAP form will
-     * be returned here and vice versa.
-     *
-     * @return alternate form of the ou
-     * @throws SystemException An internal error occurred.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    private String getAlternateForm() throws SystemException, WebserverSystemException {
-        try {
-            UserContext.setRestAccess(false);
-            return getRenderer().render(getOrganizationalUnit());
-        }
-        catch (final WebserverSystemException e) {
-            throw new SystemException(e);
-        }
-        catch (final Exception e) {
-            // should not happen here
-            throw new SystemException(e);
-        }
-    }
-
-    /**
      * Notify the listeners that an ou was created.
      *
      * @param id      ou id

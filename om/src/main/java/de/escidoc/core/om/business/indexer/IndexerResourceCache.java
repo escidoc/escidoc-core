@@ -208,11 +208,8 @@ public class IndexerResourceCache implements ApplicationContextAware {
      */
     private void cacheInternalResource(final String identifier) throws SystemException {
         try {
-            if (UserContext.getHandle() != null) {
-                UserContext.setRestAccess(Constants.USE_REST_REQUEST_PROTOCOL);
-            }
             final BeanMethod method = methodMapper.getMethod(identifier, null, null, "GET", "");
-            final Object content = method.invokeWithProtocol(null, Constants.USE_REST_REQUEST_PROTOCOL);
+            final Object content = method.invokeWithProtocol(null);
             if (content != null && "EscidocBinaryContent".equals(content.getClass().getSimpleName())) {
                 final EscidocBinaryContent escidocBinaryContent = (EscidocBinaryContent) content;
                 final ByteArrayOutputStream out = new ByteArrayOutputStream();

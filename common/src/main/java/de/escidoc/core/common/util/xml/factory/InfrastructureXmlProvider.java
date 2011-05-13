@@ -4,8 +4,8 @@
  * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
  * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
- * the specific language governing permissions and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
+ * for the specific language governing permissions and limitations under the License.
  *
  * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
  * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
@@ -33,8 +33,6 @@ public abstract class InfrastructureXmlProvider extends VelocityXmlProvider {
 
     private static final String REST_PATH = "rest";
 
-    private static final String SOAP_PATH = "soap";
-
     /**
      * Protected constructor to prevent initialization.
      */
@@ -44,7 +42,7 @@ public abstract class InfrastructureXmlProvider extends VelocityXmlProvider {
 
     @Override
     protected String completePath() throws WebserverSystemException {
-        return UserContext.isRestAccess() ? REST_PATH : SOAP_PATH;
+        return REST_PATH;
     }
 
 }

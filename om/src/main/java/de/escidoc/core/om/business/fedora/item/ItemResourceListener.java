@@ -143,41 +143,6 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
     }
 
     /**
-     * Get the alternate form of an item representation. If the current request came in via REST, then the SOAP form
-     * will be returned here and vice versa.
-     *
-     * @return alternate form of the item
-     * @throws SystemException An internal error occurred.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    private String getAlternateForm() throws SystemException, WebserverSystemException {
-        String result = null;
-        final boolean isRestAccess = UserContext.isRestAccess();
-
-        try {
-            if (isRestAccess) {
-                UserContext.setRestAccess(false);
-                result = render();
-            }
-            else {
-                UserContext.setRestAccess(true);
-                result = render();
-            }
-        }
-        catch (final WebserverSystemException e) {
-            throw new SystemException(e);
-        }
-        catch (final Exception e) {
-            // should not happen here
-            throw new SystemException(e);
-        }
-        finally {
-            UserContext.setRestAccess(isRestAccess);
-        }
-        return result;
-    }
-
-    /**
      * Notify the listeners that an item was modified.
      *
      * @param ids list of item ids

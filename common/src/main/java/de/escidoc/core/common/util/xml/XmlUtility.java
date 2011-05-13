@@ -1143,7 +1143,6 @@ public final class XmlUtility {
      * @return Returns the validator for the schema specified by the provided URL.
      * @throws IOException              Thrown in case of an I/O error.
      * @throws WebserverSystemException Thrown if schema can not be parsed.
-     * @throws java.net.MalformedURLException
      */
     public static Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException,
         MalformedURLException {
@@ -1557,25 +1556,11 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContainerSchemaLocation() throws WebserverSystemException {
-
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (containerRestSchemaLocation == null) {
-                containerRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION
-                        + "/container.xsd";
-            }
-            result = containerRestSchemaLocation;
+        if (containerRestSchemaLocation == null) {
+            containerRestSchemaLocation =
+                getSchemaBaseUrl() + "rest/container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION + "/container.xsd";
         }
-        else {
-            if (containerSoapSchemaLocation == null) {
-                containerSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION
-                        + "/container.xsd";
-            }
-            result = containerSoapSchemaLocation;
-        }
-        return result;
+        return containerRestSchemaLocation;
     }
 
     /**
@@ -1594,20 +1579,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContainerMembersFilterSchemaLocation() throws WebserverSystemException {
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (containerMembersFilterRestSchemaLocation == null) {
-                containerMembersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/container/0.3/filter-members.xsd";
-            }
-            result = containerMembersFilterRestSchemaLocation;
+        if (containerMembersFilterRestSchemaLocation == null) {
+            containerMembersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/container/0.3/filter-members.xsd";
         }
-        else {
-            if (containerMembersFilterSoapSchemaLocation == null) {
-                containerMembersFilterSoapSchemaLocation = getSchemaBaseUrl() + "soap/container/0.3/filter-members.xsd";
-            }
-            result = containerMembersFilterSoapSchemaLocation;
-        }
-        return result;
+        return containerMembersFilterRestSchemaLocation;
     }
 
     /**
@@ -1615,17 +1590,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContainersFilterSchemaLocation() throws WebserverSystemException {
-        final String result;
-        if (UserContext.isRestAccess()) {
+        if (containersFilterRestSchemaLocation == null) {
             containersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/container/0.3/filter-containers.xsd";
-            result = containersFilterRestSchemaLocation;
         }
-        else {
-            containersFilterSoapSchemaLocation = getSchemaBaseUrl() + "soap/container/0.3/filter-containers.xsd";
-            result = containersFilterSoapSchemaLocation;
-        }
-
-        return result;
+        return containersFilterRestSchemaLocation;
     }
 
     /**
@@ -1633,23 +1601,13 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContentModelSchemaLocation() throws WebserverSystemException {
-
         final String result;
         final String contentModelXsd =
             "content-model" + Constants.CONTENT_MODEL_NS_URI_SCHEMA_VERSION + "/content-model.xsd";
-        if (UserContext.isRestAccess()) {
-            if (contentModelRestSchemaLocation == null) {
-                contentModelRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentModelXsd;
-            }
-            result = contentModelRestSchemaLocation;
+        if (contentModelRestSchemaLocation == null) {
+            contentModelRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentModelXsd;
         }
-        else {
-            if (contentModelSoapSchemaLocation == null) {
-                contentModelSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + contentModelXsd;
-            }
-            result = contentModelSoapSchemaLocation;
-        }
-        return result;
+        return contentModelRestSchemaLocation;
     }
 
     /**
@@ -1657,22 +1615,11 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContextSchemaLocation() throws WebserverSystemException {
-
-        final String result;
         final String contextXsd = "context" + Constants.CONTEXT_NS_URI_SCHEMA_VERSION + "/context.xsd";
-        if (UserContext.isRestAccess()) {
-            if (contextRestSchemaLocation == null) {
-                contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contextXsd;
-            }
-            result = contextRestSchemaLocation;
+        if (contextRestSchemaLocation == null) {
+            contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contextXsd;
         }
-        else {
-            if (contextSoapSchemaLocation == null) {
-                contextSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + contextXsd;
-            }
-            result = contextSoapSchemaLocation;
-        }
-        return result;
+        return contextRestSchemaLocation;
     }
 
     /**
@@ -1680,23 +1627,12 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContentRelationSchemaLocation() throws WebserverSystemException {
-
-        final String result;
         final String contentRelationXsd =
             "content-relation" + Constants.CONTENT_RELATION_NS_URI_SCHEMA_VERSION + "/content-relation.xsd";
-        if (UserContext.isRestAccess()) {
-            if (contentRelationRestSchemaLocation == null) {
-                contentRelationRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentRelationXsd;
-            }
-            result = contentRelationRestSchemaLocation;
+        if (contentRelationRestSchemaLocation == null) {
+            contentRelationRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentRelationXsd;
         }
-        else {
-            if (contentRelationSoapSchemaLocation == null) {
-                contentRelationSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + contentRelationXsd;
-            }
-            result = contentRelationSoapSchemaLocation;
-        }
-        return result;
+        return contentRelationRestSchemaLocation;
     }
 
     /**
@@ -1704,22 +1640,11 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getSetDefinitionSchemaLocation() throws WebserverSystemException {
-
-        final String result;
         final String setDefinitionXsd = "set-definition/0.1/set-definition.xsd";
-        if (UserContext.isRestAccess()) {
-            if (setDefinitionRestSchemaLocation == null) {
-                setDefinitionRestSchemaLocation = getSchemaBaseUrl() + "rest/" + setDefinitionXsd;
-            }
-            result = setDefinitionRestSchemaLocation;
+        if (setDefinitionRestSchemaLocation == null) {
+            setDefinitionRestSchemaLocation = getSchemaBaseUrl() + "rest/" + setDefinitionXsd;
         }
-        else {
-            if (setDefinitionSoapSchemaLocation == null) {
-                setDefinitionSoapSchemaLocation = getSchemaBaseUrl() + "soap/" + setDefinitionXsd;
-            }
-            result = setDefinitionSoapSchemaLocation;
-        }
-        return result;
+        return setDefinitionRestSchemaLocation;
     }
 
     /**
@@ -1727,22 +1652,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContextsFilterSchemaLocation() throws WebserverSystemException {
-
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (contextsFilterSchemaLocationRest == null) {
-                contextsFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/context/0.3/filter-contexts.xsd";
-            }
-            result = contextsFilterSchemaLocationRest;
+        if (contextsFilterSchemaLocationRest == null) {
+            contextsFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/context/0.3/filter-contexts.xsd";
         }
-        else {
-            if (contextsFilterSchemaLocationSoap == null) {
-                contextsFilterSchemaLocationSoap = getSchemaBaseUrl() + "soap/context/0.3/filter-contexts.xsd";
-            }
-            result = contextsFilterSchemaLocationSoap;
-        }
-
-        return result;
+        return contextsFilterSchemaLocationRest;
     }
 
     /**
@@ -1750,24 +1663,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContextMembersFilterSchemaLocation() throws WebserverSystemException {
-
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (contextMembersFilterSchemaLocationRest == null) {
-                contextMembersFilterSchemaLocationRest =
-                    getSchemaBaseUrl() + "rest/" + "context/0.3/filter-contexts.xsd";
-            }
-            result = contextMembersFilterSchemaLocationRest;
+        if (contextMembersFilterSchemaLocationRest == null) {
+            contextMembersFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/" + "context/0.3/filter-contexts.xsd";
         }
-        else {
-            if (contextMembersFilterSchemaLocationSoap == null) {
-                contextMembersFilterSchemaLocationSoap =
-                    getSchemaBaseUrl() + "soap/" + "context/0.3/filter-contexts.xsd";
-            }
-            result = contextMembersFilterSchemaLocationSoap;
-        }
-
-        return result;
+        return contextMembersFilterSchemaLocationRest;
     }
 
     /**
@@ -1802,23 +1701,11 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getItemSchemaLocation() throws WebserverSystemException {
-
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (itemRestSchemaLocation == null) {
-                itemRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
-            }
-            result = itemRestSchemaLocation;
+        if (itemRestSchemaLocation == null) {
+            itemRestSchemaLocation =
+                getSchemaBaseUrl() + "rest/item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
         }
-        else {
-            if (itemSoapSchemaLocation == null) {
-                itemSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
-            }
-            result = itemSoapSchemaLocation;
-        }
-        return result;
+        return itemRestSchemaLocation;
     }
 
     /**
@@ -1826,21 +1713,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getUpdateRelationsSchemaLocation() throws WebserverSystemException {
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (updateRelationsSchemaLocation == null) {
-                updateRelationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/update-relations.xsd";
-            }
-            result = updateRelationsSchemaLocation;
+        if (updateRelationsSchemaLocation == null) {
+            updateRelationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/update-relations.xsd";
         }
-        else {
-            if (updateRelationsSchemaLocation == null) {
-                updateRelationsSchemaLocation = getSchemaBaseUrl() + "soap/common/0.3/update-relations.xsd";
-            }
-            result = updateRelationsSchemaLocation;
-        }
-        return result;
-
+        return updateRelationsSchemaLocation;
     }
 
     /**
@@ -1848,20 +1724,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getRelationsSchemaLocation() throws WebserverSystemException {
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (relationsSchemaLocation == null) {
-                relationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/relations.xsd";
-            }
-            result = relationsSchemaLocation;
+        if (relationsSchemaLocation == null) {
+            relationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/relations.xsd";
         }
-        else {
-            if (relationsSchemaLocation == null) {
-                relationsSchemaLocation = getSchemaBaseUrl() + "soap/common/0.3/relations.xsd";
-            }
-            result = relationsSchemaLocation;
-        }
-        return result;
+        return relationsSchemaLocation;
     }
 
     /**
@@ -1869,25 +1735,12 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getOrganizationalUnitSchemaLocation() throws WebserverSystemException {
-
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (organizationalUnitRestSchemaLocation == null) {
-                organizationalUnitRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
-                        + Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION + "/organizational-unit.xsd";
-            }
-            result = organizationalUnitRestSchemaLocation;
+        if (organizationalUnitRestSchemaLocation == null) {
+            organizationalUnitRestSchemaLocation =
+                getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
+                    + Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION + "/organizational-unit.xsd";
         }
-        else {
-            if (organizationalUnitSoapSchemaLocation == null) {
-                organizationalUnitSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + NAME_ORGANIZATIONAL_UNIT
-                        + Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION + "/organizational-unit.xsd";
-            }
-            result = organizationalUnitSoapSchemaLocation;
-        }
-        return result;
+        return organizationalUnitRestSchemaLocation;
     }
 
     /**
@@ -1895,25 +1748,12 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getOrganizationalUnitListSchemaLocation() throws WebserverSystemException {
-
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (organizationalUnitListRestSchemaLocation == null) {
-                organizationalUnitListRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
-                        + Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION + "/organizational-unit-list.xsd";
-            }
-            result = organizationalUnitListRestSchemaLocation;
+        if (organizationalUnitListRestSchemaLocation == null) {
+            organizationalUnitListRestSchemaLocation =
+                getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
+                    + Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION + "/organizational-unit-list.xsd";
         }
-        else {
-            if (organizationalUnitListSoapSchemaLocation == null) {
-                organizationalUnitListSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/" + NAME_ORGANIZATIONAL_UNIT
-                        + Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION + "/organizational-unit-list.xsd";
-            }
-            result = organizationalUnitListSoapSchemaLocation;
-        }
-        return result;
+        return organizationalUnitListRestSchemaLocation;
     }
 
     /**
@@ -1921,23 +1761,11 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getOrganizationalUnitPathListSchemaLocation() throws WebserverSystemException {
-
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (organizationalUnitPathListRestSchemaLocation == null) {
-                organizationalUnitPathListRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-path-list.xsd";
-            }
-            result = organizationalUnitPathListRestSchemaLocation;
+        if (organizationalUnitPathListRestSchemaLocation == null) {
+            organizationalUnitPathListRestSchemaLocation =
+                getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-path-list.xsd";
         }
-        else {
-            if (organizationalUnitPathListSoapSchemaLocation == null) {
-                organizationalUnitPathListSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/organizational-unit/0.4/organizational-unit-path-list.xsd";
-            }
-            result = organizationalUnitPathListSoapSchemaLocation;
-        }
-        return result;
+        return organizationalUnitPathListRestSchemaLocation;
     }
 
     /**
@@ -1945,23 +1773,11 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getOrganizationalUnitRefListSchemaLocation() throws WebserverSystemException {
-
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (organizationalUnitRefListRestSchemaLocation == null) {
-                organizationalUnitRefListRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-ref-list.xsd";
-            }
-            result = organizationalUnitRefListRestSchemaLocation;
+        if (organizationalUnitRefListRestSchemaLocation == null) {
+            organizationalUnitRefListRestSchemaLocation =
+                getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-ref-list.xsd";
         }
-        else {
-            if (organizationalUnitRefListSoapSchemaLocation == null) {
-                organizationalUnitRefListSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/organizational-unit/0.4/organizational-unit-ref-list.xsd";
-            }
-            result = organizationalUnitRefListSoapSchemaLocation;
-        }
-        return result;
+        return organizationalUnitRefListRestSchemaLocation;
     }
 
     /**
@@ -1969,22 +1785,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getFilterSchemaLocation() throws WebserverSystemException {
-
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (filterSchemaLocationRest == null) {
-                filterSchemaLocationRest = getSchemaBaseUrl() + "rest/common/0.4/filter.xsd";
-            }
-            result = filterSchemaLocationRest;
+        if (filterSchemaLocationRest == null) {
+            filterSchemaLocationRest = getSchemaBaseUrl() + "rest/common/0.4/filter.xsd";
         }
-        else {
-            if (filterSchemaLocationSoap == null) {
-                filterSchemaLocationSoap = getSchemaBaseUrl() + "soap/common/0.4/filter.xsd";
-            }
-            result = filterSchemaLocationSoap;
-        }
-
-        return result;
+        return filterSchemaLocationRest;
     }
 
     /**
@@ -2138,23 +1942,11 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getReportSchemaLocation() throws WebserverSystemException {
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (reportRestSchemaLocation == null) {
-                reportRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/report" + Constants.REPORT_NS_URI_SCHEMA_VERSION + "/report.xsd";
-            }
-            result = reportRestSchemaLocation;
+        if (reportRestSchemaLocation == null) {
+            reportRestSchemaLocation =
+                getSchemaBaseUrl() + "rest/report" + Constants.REPORT_NS_URI_SCHEMA_VERSION + "/report.xsd";
         }
-        else {
-            if (reportSoapSchemaLocation == null) {
-                reportSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/report" + Constants.REPORT_NS_URI_SCHEMA_VERSION + "/report.xsd";
-            }
-            result = reportSoapSchemaLocation;
-        }
-
-        return result;
+        return reportRestSchemaLocation;
     }
 
     /**
@@ -2162,25 +1954,12 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getReportParametersSchemaLocation() throws WebserverSystemException {
-        final String result;
-        if (UserContext.isRestAccess()) {
-            if (reportParametersRestSchemaLocation == null) {
-                reportParametersRestSchemaLocation =
-                    getSchemaBaseUrl() + "rest/report" + Constants.REPORT_PARAMETERS_NS_URI_SCHEMA_VERSION
-                        + "/report-parameters.xsd";
-            }
-            result = reportParametersRestSchemaLocation;
+        if (reportParametersRestSchemaLocation == null) {
+            reportParametersRestSchemaLocation =
+                getSchemaBaseUrl() + "rest/report" + Constants.REPORT_PARAMETERS_NS_URI_SCHEMA_VERSION
+                    + "/report-parameters.xsd";
         }
-        else {
-            if (reportParametersSoapSchemaLocation == null) {
-                reportParametersSoapSchemaLocation =
-                    getSchemaBaseUrl() + "soap/report" + Constants.REPORT_PARAMETERS_NS_URI_SCHEMA_VERSION
-                        + "/report-parameters.xsd";
-            }
-            result = reportParametersSoapSchemaLocation;
-        }
-
-        return result;
+        return reportParametersRestSchemaLocation;
     }
 
     /**
@@ -2202,7 +1981,6 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getXmlSchemaSchemaLocation() throws WebserverSystemException {
-
         if (xmlSchemaSchemaLocation == null) {
             xmlSchemaSchemaLocation = getSchemaBaseUrl() + "common/0.2/xml-schema.xsd";
         }
@@ -2216,22 +1994,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     private static String getSchemaLocation(final String commonPart) throws WebserverSystemException {
-
-        String result;
-
-        if (UserContext.isRestAccess()) {
-            result = REST_SCHEMA_LOCATIONS.get(commonPart);
-            if (result == null) {
-                result = getSchemaBaseUrl() + "rest/" + commonPart;
-                REST_SCHEMA_LOCATIONS.put(commonPart, result);
-            }
-        }
-        else {
-            result = SOAP_SCHEMA_LOCATIONS.get(commonPart);
-            if (result == null) {
-                result = getSchemaBaseUrl() + "soap/" + commonPart;
-                SOAP_SCHEMA_LOCATIONS.put(commonPart, result);
-            }
+        String result = REST_SCHEMA_LOCATIONS.get(commonPart);
+        if (result == null) {
+            result = getSchemaBaseUrl() + "rest/" + commonPart;
+            REST_SCHEMA_LOCATIONS.put(commonPart, result);
         }
         return result;
     }
@@ -2244,7 +2010,6 @@ public final class XmlUtility {
      * @return The resulting text with escaped characters.
      */
     public static String escapeForbiddenXmlCharacters(final String xmlText) {
-
         String result = xmlText;
         if (result != null && PATTERN_ESCAPE_NEEDED.matcher(result).find()) {
             result = PATTERN_AMPERSAND.matcher(result).replaceAll(ESC_AMPERSAND);
@@ -2265,7 +2030,6 @@ public final class XmlUtility {
      * @return The resulting text with unescaped characters.
      */
     public static String unescapeForbiddenXmlCharacters(final String xmlText) {
-
         String result = xmlText;
         if (result != null && PATTERN_UNESCAPE_NEEDED.matcher(result).find()) {
             result = PATTERN_ESC_LESS_THAN.matcher(result).replaceAll(LESS_THAN);
@@ -2318,7 +2082,6 @@ public final class XmlUtility {
      * @return Returns the initalized <code>XMLOutputFactory</code> instance.
      */
     private static XMLOutputFactory getInitilizedXmlOutputFactory(final boolean repairing) {
-
         final XMLOutputFactory xmlof = XMLOutputFactory.newInstance();
         xmlof.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES, repairing);
         if (repairing) {
@@ -2337,7 +2100,6 @@ public final class XmlUtility {
      * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
     public static XMLStreamWriter createXmlStreamWriter(final OutputStream out) throws XMLStreamException {
-
         return getInitilizedXmlOutputFactory(false).createXMLStreamWriter(out);
     }
 
@@ -2374,7 +2136,6 @@ public final class XmlUtility {
      * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
     public static XMLEventWriter createXmlEventWriter(final Writer writer) throws XMLStreamException {
-
         return getInitilizedXmlOutputFactory(false).createXMLEventWriter(writer);
     }
 
@@ -2387,7 +2148,6 @@ public final class XmlUtility {
      */
     public static void throwMissingAttributeValueException(final AbstractElement element, final String attributeName)
         throws MissingAttributeValueException {
-
         throw new MissingAttributeValueException(StringUtility.format(ERR_MSG_MISSING_ATTRIBUTE, element.getPath(),
             attributeName, element.getLocationString()));
     }
@@ -2419,9 +2179,7 @@ public final class XmlUtility {
     public static String createDC(
         final String nsUri, final String mdRecordXml, final CharSequence objID, final String contentModelID)
         throws WebserverSystemException {
-
         String result = null;
-
         Transformer t = null;
         final String transformerKey = nsUri + ';' + contentModelID;
         try {
@@ -2454,12 +2212,10 @@ public final class XmlUtility {
                 }
             }
         }
-
         // check if result is empty
         if (result != null && result.length() == 0) {
             result = null;
         }
-
         return result;
     }
 

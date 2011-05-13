@@ -538,8 +538,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                         + getContainer().getId() + "</id></param>";
                 final BeanMethod method =
                     methodMapper.getMethod("/ir/container/" + parent + "/members/remove", null, null, "POST", param);
-                method.invokeWithProtocol(UserContext.getHandle(),
-                    de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
+                method.invokeWithProtocol(UserContext.getHandle());
             }
             catch (final InvocationTargetException e) {
                 final Throwable cause = e.getCause();

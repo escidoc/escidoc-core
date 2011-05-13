@@ -1215,40 +1215,4 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         return result;
     }
 
-    /**
-     * Get the alternate form of a content relation representation. If the current request came in via REST, then the
-     * SOAP form will be returned here and vice versa.
-     *
-     * @param cr content relation
-     * @return alternate form of the content relation
-     * @throws SystemException An internal error occurred.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    private String getAlternateForm(final ContentRelationCreate cr) throws SystemException, WebserverSystemException {
-        String result = null;
-        final boolean isRestAccess = UserContext.isRestAccess();
-
-        try {
-            if (isRestAccess) {
-                UserContext.setRestAccess(false);
-                result = this.contentRelationXmlProvider.getContentRelationXml(cr);
-            }
-            else {
-                UserContext.setRestAccess(true);
-                result = this.contentRelationXmlProvider.getContentRelationXml(cr);
-            }
-        }
-        catch (final WebserverSystemException e) {
-            throw new SystemException(e);
-        }
-        catch (final Exception e) {
-            // should not happen here
-            throw new SystemException(e);
-        }
-        finally {
-            UserContext.setRestAccess(isRestAccess);
-        }
-        return result;
-    }
-
 }

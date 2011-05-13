@@ -35,36 +35,9 @@ public class EscidocRequestDetail implements Serializable {
     private static final long serialVersionUID = -4779944843870131966L;
 
     /**
-     * Flag indicating if this is a REST access (<code>true</code>) or a SOAP/EJB access (<code>false</code>). The
-     * latter one is the default value.
-     */
-    private boolean restAccess;
-
-    /**
      * The restricted permission, if any.
      */
     private int restrictedPermissionCode = UserContext.UNRESTRICTED_PERMISSION;
-
-    /**
-     * Sets the REST access flag.
-     *
-     * @param restAccess The flag indicating if this is a REST user (<code>true</code>) or a SOAP/EJB user
-     *                   (<code>false</code>). The latter one is the default value.
-     */
-    public void setRestAccess(final boolean restAccess) {
-
-        this.restAccess = restAccess;
-    }
-
-    /**
-     * Checks if this is a REST access.
-     *
-     * @return Returns <code>true</code> if this is a REST access, else <code>false</code>.
-     */
-    public boolean isRestAccess() {
-
-        return this.restAccess;
-    }
 
     /**
      * Sets restricted permissions, e.g. retrieval restricted to releases.
@@ -72,7 +45,6 @@ public class EscidocRequestDetail implements Serializable {
      * @param restrictedPermissions The code identifying the restricted permissions.
      */
     public void setRestrictedPermissions(final int restrictedPermissions) {
-
         this.restrictedPermissionCode = restrictedPermissions;
     }
 
@@ -82,7 +54,6 @@ public class EscidocRequestDetail implements Serializable {
      * @return Returns the code identifying the restricted permissions.
      */
     public int getRestrictedPermissions() {
-
         return this.restrictedPermissionCode;
     }
 }

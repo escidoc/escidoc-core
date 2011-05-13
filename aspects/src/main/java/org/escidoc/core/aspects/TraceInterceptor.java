@@ -18,7 +18,7 @@
  * terms.
  */
 
-package de.escidoc.core.common.util.aop;
+package org.escidoc.core.aspects;
 
 import org.aspectj.lang.JoinPoint.StaticPart;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -37,7 +37,9 @@ public class TraceInterceptor {
 
     private static final int DEPTH_SPACES = 2;
 
-    @Around("execution(public * de.escidoc.core..*.* (..))" + " && !within(de.escidoc.core.common.util.aop..*)")
+    @Around("execution(public * de.escidoc.core..*.* (..))"
+            + " && !within(org.escidoc.core.aspects..*)"
+            + " && !within(de.escidoc.core.common.util.aop..*)")
     public Object traceMethod(final ProceedingJoinPoint joinPoint) throws Throwable, Exception {
         if (LOGGER.isDebugEnabled()) {
             final StaticPart staticPart = joinPoint.getStaticPart();

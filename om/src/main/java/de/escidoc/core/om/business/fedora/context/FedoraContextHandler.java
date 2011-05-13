@@ -493,41 +493,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
     }
 
     /**
-     * Get the alternate form of a context representation. If the current request came in via REST, then the SOAP form
-     * will be returned here and vice versa.
-     *
-     * @return alternate form of the context
-     * @throws SystemException An internal error occurred.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    private String getAlternateForm() throws SystemException, WebserverSystemException {
-        String result = null;
-        final boolean isRestAccess = UserContext.isRestAccess();
-
-        try {
-            if (isRestAccess) {
-                UserContext.setRestAccess(false);
-                result = getContextXml(this);
-            }
-            else {
-                UserContext.setRestAccess(true);
-                result = getContextXml(this);
-            }
-        }
-        catch (final WebserverSystemException e) {
-            throw new SystemException(e);
-        }
-        catch (final Exception e) {
-            // should not happen here
-            throw new SystemException(e);
-        }
-        finally {
-            UserContext.setRestAccess(isRestAccess);
-        }
-        return result;
-    }
-
-    /**
      * Retrieve all content relation in which the current resource is subject or object.
      *
      * @param id context id

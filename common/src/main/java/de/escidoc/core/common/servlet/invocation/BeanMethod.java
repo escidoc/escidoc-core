@@ -91,28 +91,25 @@ public class BeanMethod implements ApplicationContextAware {
      */
     public Object invoke(final String username, final String password) throws InvocationTargetException,
         MethodNotFoundException, WebserverSystemException {
-        return invokeWithProtocol(password, true);
+        return invokeWithProtocol(password);
     }
 
     /**
-     * Invoke the method on the given resource with a given protocol. protocol is the 3rd parameter (restAccess). If set
-     * to true it means REST-Access If set to false it means SOAP-Access
+     * Invoke the method on the given resource with a given protocol.
      *
      * @param eSciDocUserHandle The eSciDoc userHandle.
-     * @param restAccess        The restAccess.
      * @return The return value of the method invocation.
      * @throws InvocationTargetException If the method throws a declared exception.
      * @throws MethodNotFoundException   If the invoked method does not exist.
      * @throws WebserverSystemException  If the invocation of the method causes an error.
      */
-    public Object invokeWithProtocol(final String eSciDocUserHandle, final boolean restAccess)
-        throws InvocationTargetException, MethodNotFoundException, WebserverSystemException {
+    public Object invokeWithProtocol(final String eSciDocUserHandle) throws InvocationTargetException,
+        MethodNotFoundException, WebserverSystemException {
 
         final Object result;
         try {
             if (eSciDocUserHandle != null) {
                 UserContext.setUserContext(eSciDocUserHandle);
-                UserContext.setRestAccess(restAccess);
             }
             Class[] parameterTypes = null;
             if (this.parameters != null) {

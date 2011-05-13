@@ -45,7 +45,6 @@ public class ParameterCheckInterceptor implements Ordered {
      */
     @Override
     public int getOrder() {
-
         return AopUtil.PRECEDENCE_PARAMETER_CHECK_INTERCEPTOR;
     }
 

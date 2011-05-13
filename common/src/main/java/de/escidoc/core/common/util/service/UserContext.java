@@ -75,12 +75,10 @@ public final class UserContext {
      */
     public static void setUserContext(final String handle) throws MissingMethodParameterException,
         WebserverSystemException {
-
         String hd = handle;
         if (hd == null) {
             hd = ANONYMOUS_IDENTIFIER;
         }
-
         SecurityContextHolder.clearContext();
         final UsernamePasswordAuthenticationToken authentication =
             new UsernamePasswordAuthenticationToken(new EscidocUserDetails(), hd);
@@ -105,14 +103,11 @@ public final class UserContext {
      */
     public static void setUserContext(final SecurityContext context) throws MissingMethodParameterException,
         WebserverSystemException {
-
         if (context == null) {
             throw new MissingMethodParameterException("No security context provided");
         }
-
         SecurityContextHolder.clearContext();
         SecurityContextHolder.setContext(context);
-
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(StringUtility.format("Stored provided security context", getSecurityContext()));
         }
@@ -127,7 +122,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static boolean runAsInternalUser() throws WebserverSystemException {
-
         final Authentication authentication = getSecurityContext().getAuthentication();
         if (!(authentication instanceof EscidocRunAsInternalUserToken)) {
             getSecurityContext().setAuthentication(new EscidocRunAsInternalUserToken(authentication));
@@ -144,7 +138,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static boolean runAsExternalUser() throws WebserverSystemException {
-
         final Authentication authentication = getSecurityContext().getAuthentication();
         if (authentication instanceof EscidocRunAsInternalUserToken) {
             getSecurityContext().setAuthentication(
@@ -168,7 +161,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static void setId(final String id) throws WebserverSystemException {
-
         getPrincipal().setId(id);
     }
 
@@ -183,26 +175,10 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static void setRealName(final String realName) throws WebserverSystemException {
-
         if (realName == null) {
             return;
         }
-
         getPrincipal().setRealName(realName);
-    }
-
-    /**
-     * Sets the REST access flag of the user context. This flag is stored in the {@link SecurityContext} object, which
-     * is stored via the spring security {@link SecurityContextHolder}.<br> Before calling this method, the user context
-     * must be set by using the setContext method. Otherwise, an exception is thrown here.
-     *
-     * @param restUser The flag indicating if this is a REST user (<code>true</code>) or a SOAP/EJB user
-     *                 (<code>false</code>).
-     * @throws WebserverSystemException Thrown in case of an internal error.
-     */
-    public static void setRestAccess(final boolean restUser) throws WebserverSystemException {
-
-        getRequestDetails().setRestAccess(restUser);
     }
 
     /**
@@ -213,7 +189,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an uninitialized user context.
      */
     public static SecurityContext getSecurityContext() throws WebserverSystemException {
-
         final SecurityContext securityContext = SecurityContextHolder.getContext();
         if (securityContext == null) {
             throw new WebserverSystemException(USER_CONTEXT_IS_NOT_INITIALIZED);
@@ -229,7 +204,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an uninitialized user context.
      */
     private static Authentication getAuthentication() throws WebserverSystemException {
-
         final Authentication authenticationToken = getSecurityContext().getAuthentication();
         if (authenticationToken == null) {
             throw new WebserverSystemException(USER_CONTEXT_IS_NOT_INITIALIZED);
@@ -245,7 +219,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static EscidocUserDetails getPrincipal() throws WebserverSystemException {
-
         return (EscidocUserDetails) getAuthentication().getPrincipal();
     }
 
@@ -258,16 +231,13 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static void setPrincipal(final EscidocUserDetails principal) throws WebserverSystemException {
-
         final Authentication oldAuthentication = getAuthentication();
         final boolean isInternaluser = isInternalUser();
         final UsernamePasswordAuthenticationToken newAuthentication =
             new UsernamePasswordAuthenticationToken(principal, oldAuthentication.getCredentials());
         newAuthentication.setDetails(oldAuthentication.getDetails());
         getSecurityContext().setAuthentication(newAuthentication);
-
-        // restore run as internal user context if the original authentication
-        // was one.
+        // restore run as internal user context if the original authentication was one.
         if (isInternaluser) {
             runAsInternalUser();
         }
@@ -282,7 +252,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static String getId() throws WebserverSystemException {
-
         return getPrincipal().getId();
     }
 
@@ -296,7 +265,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static String getRealName() throws WebserverSystemException {
-
         return getPrincipal().getRealName();
     }
 
@@ -310,7 +278,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static String getHandle() throws WebserverSystemException {
-
         return (String) getAuthentication().getCredentials();
     }
 
@@ -323,7 +290,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static boolean isExternalUser() throws WebserverSystemException {
-
         return !(getAuthentication() instanceof EscidocRunAsInternalUserToken);
     }
 
@@ -336,7 +302,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static boolean isInternalUser() throws WebserverSystemException {
-
         return getAuthentication() instanceof EscidocRunAsInternalUserToken;
     }
 
@@ -348,7 +313,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static boolean isAnonymousUser() throws WebserverSystemException {
-
         return ANONYMOUS_IDENTIFIER.equals(getHandle());
     }
 
@@ -360,20 +324,7 @@ public final class UserContext {
      *         is an empty string.
      */
     public static boolean isIdOfAnonymousUser(final String userId) {
-
         return ANONYMOUS_IDENTIFIER.equals(userId);
-    }
-
-    /**
-     * Checks if the stored user context is the context of a REST access.<br> Before calling this method, the user
-     * context must be set by using the setContext method. Otherwise, an exception is thrown here.
-     *
-     * @return Returns <code>true</code> if this is a REST access, else <code>false</code>.
-     * @throws WebserverSystemException Thrown in case of an internal error.
-     */
-    public static boolean isRestAccess() throws WebserverSystemException {
-
-        return getRequestDetails().isRestAccess();
     }
 
     /**
@@ -383,7 +334,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static void setRestrictedPermissions(final int restrictedPermissionCode) throws WebserverSystemException {
-
         getRequestDetails().setRestrictedPermissions(restrictedPermissionCode);
     }
 
@@ -394,7 +344,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static int getRestrictedPermissions() throws WebserverSystemException {
-
         return getRequestDetails().getRestrictedPermissions();
     }
 
@@ -406,7 +355,6 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static boolean isRetrieveRestrictedToReleased() throws WebserverSystemException {
-
         return (getRequestDetails().getRestrictedPermissions() & RESTRICTED_PERMISSION_RELEASES_ONLY) != 0;
     }
 

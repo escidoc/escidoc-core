@@ -161,40 +161,4 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
             containerMemberListener.resourceModified(id, null);
         }
     }
-
-    /**
-     * Get the alternate form of a container representation. If the current request came in via REST, then the SOAP form
-     * will be returned here and vice versa.
-     *
-     * @return alternate form of the container
-     * @throws SystemException An internal error occurred.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    private String getAlternateForm() throws SystemException, WebserverSystemException {
-        String result = null;
-        final boolean isRestAccess = UserContext.isRestAccess();
-
-        try {
-            if (isRestAccess) {
-                UserContext.setRestAccess(false);
-                result = getContainerXml(getContainer());
-            }
-            else {
-                UserContext.setRestAccess(true);
-                result = getContainerXml(getContainer());
-            }
-        }
-        catch (final WebserverSystemException e) {
-            throw new SystemException(e);
-        }
-        catch (final Exception e) {
-            // should not happen here
-            throw new SystemException(e);
-        }
-        finally {
-            UserContext.setRestAccess(isRestAccess);
-        }
-        return result;
-    }
-
 }

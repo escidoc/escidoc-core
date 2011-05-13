@@ -18,7 +18,7 @@
  * terms.
  */
 
-package de.escidoc.core.common.util.aop;
+package org.escidoc.core.aspects;
 
 public final class TraceDepthThreadLocal {
 

@@ -102,54 +102,36 @@ public class LinkStaxHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws EscidocException, SystemException,
         WebserverSystemException {
-
         final String currentPath = element.getPath();
         if (isNotReady() && currentPath.equals(this.elementPath)) {
             this.href = null;
             this.objid = null;
-
-            if (UserContext.isRestAccess()) {
-                final int index = element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
-                if (index != -1) {
-                    this.href = element.getAttribute(index).getValue();
-                    this.objid = XmlUtility.getIdFromURI(this.href);
-
-                    // check if href refers to the correct object type, if this
-                    // has been specified
-                    if (this.hrefBaseUri != null) {
-                        final String expectedHref = this.hrefBaseUri + this.objid;
-                        if (!expectedHref.equals(this.href)) {
-                            final String errorMsg =
-                                StringUtility.format(MSG_WRONG_BASE_URI, this.hrefBaseUri, this.href, element
-                                    .getLocationString());
-                            try {
-                                final Constructor constructor =
-                                    exceptionClass.getConstructor(new Class[] { String.class });
-                                throw (EscidocException) constructor.newInstance(errorMsg);
-                            }
-                            catch (final EscidocException e) {
-                                throw e;
-                            }
-                            catch (final Exception e) {
-                                throw new SystemException("Initializing exception failed.", e);
-                            }
+            final int index = element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
+            if (index != -1) {
+                this.href = element.getAttribute(index).getValue();
+                this.objid = XmlUtility.getIdFromURI(this.href);
+                // check if href refers to the correct object type, if this has been specified
+                if (this.hrefBaseUri != null) {
+                    final String expectedHref = this.hrefBaseUri + this.objid;
+                    if (!expectedHref.equals(this.href)) {
+                        final String errorMsg =
+                            StringUtility.format(MSG_WRONG_BASE_URI, this.hrefBaseUri, this.href, element
+                                .getLocationString());
+                        try {
+                            final Constructor constructor = exceptionClass.getConstructor(new Class[] { String.class });
+                            throw (EscidocException) constructor.newInstance(errorMsg);
+                        }
+                        catch (final EscidocException e) {
+                            throw e;
+                        }
+                        catch (final Exception e) {
+                            throw new SystemException("Initializing exception failed.", e);
                         }
                     }
                 }
-
-                // the type is allways "simple" and discarded, the title is
-                // discarded, too.
             }
-            else {
-                final int index = element.indexOfAttribute(null, "objid");
-                if (index != -1) {
-                    this.objid = element.getAttribute(index).getValue();
-                }
-            }
-
             startLinkElement(element);
         }
-
         return element;
     }
 
