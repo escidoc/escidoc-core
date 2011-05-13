@@ -803,7 +803,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp, beforeUpdateTimestamp);
     }
 
-        /**
+    /**
      * Test successfully updating an organizational unit with changed read only attributes and elements via REST.
      *
      * @throws Exception If anything fails.

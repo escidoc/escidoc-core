@@ -1265,8 +1265,7 @@ public abstract class ClientBase {
      *             Thrown if parsing fails.
      */
     public String getLatestVersionObjidValue(final Document document) throws Exception {
-        return getIdFromHrefValue(selectSingleNode(document, 
-                "//properties/version/@href").getTextContent());
+        return getIdFromHrefValue(selectSingleNode(document, "//properties/version/@href").getTextContent());
     }
 
     /**

@@ -484,7 +484,6 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
         delete(id);
     }
 
-
     /**
      * Test successfully updating the organization-details sub resource of an REST.
      *

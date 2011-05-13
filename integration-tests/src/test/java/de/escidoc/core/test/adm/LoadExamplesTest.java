@@ -39,4 +39,3 @@ public class LoadExamplesTest extends AdminToolTestBase {
         loadExamples("common");
     }
 }
-
