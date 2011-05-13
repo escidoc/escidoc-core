@@ -38,7 +38,7 @@ import org.apache.http.util.EntityUtils;
  *
  * @author Torsten Tetteroo
  */
-public class UserPreferenceTestBase extends UserAccountTestBase {
+public abstract class UserPreferenceTestBase extends UserAccountTestBase {
 
     private UserAccountClient client = null;
 

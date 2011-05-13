@@ -159,7 +159,7 @@ public class GrantFilterTest extends GrantTestBase {
 
     public GrantFilterTest() throws Exception {
         super(USER_ACCOUNT_HANDLER_CODE);
-        userAttributeTestBase = new UserAttributeTestBase();
+        userAttributeTestBase = new UserAttributeTestBase(){};
     }
 
     /**

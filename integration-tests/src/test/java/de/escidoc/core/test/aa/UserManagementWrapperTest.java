@@ -43,7 +43,7 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author Torsten Tetteroo
  */
-public class UserManagementWrapperTest extends UserManagementWrapperTestBase {
+public class UserManagementWrapperTest extends UserAccountTestBase {
 
     public static final String UNKNOWN_ESCIDOC_USER_HANDLE = "UnknownHandle";
 

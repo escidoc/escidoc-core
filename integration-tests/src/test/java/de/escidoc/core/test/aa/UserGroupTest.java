@@ -91,8 +91,8 @@ public class UserGroupTest extends UserGroupTestBase {
     private static int methodCounter = 0;
 
     public UserGroupTest() throws Exception {
-        userAttributeTestBase = new UserAttributeTestBase();
-        userAccountTestBase = new UserAccountTestBase();
+        userAttributeTestBase = new UserAttributeTestBase(){};
+        userAccountTestBase = new UserAccountTestBase(){};
         organizationalUnitTestBase = new OrganizationalUnitTestBase();
     }
 

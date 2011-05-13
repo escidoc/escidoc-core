@@ -47,7 +47,7 @@ import java.util.Map;
  *
  * @author Torsten Tetteroo
  */
-public class UserAccountTestBase extends AaTestBase {
+public abstract class UserAccountTestBase extends AaTestBase {
 
     public static final String XPATH_USER_ACCOUNT_XML_BASE = XPATH_USER_ACCOUNT + PART_XML_BASE;
 

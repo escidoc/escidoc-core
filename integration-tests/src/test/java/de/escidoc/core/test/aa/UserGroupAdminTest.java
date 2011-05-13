@@ -99,7 +99,7 @@ public class UserGroupAdminTest extends GrantTestBase {
     public UserGroupAdminTest(final int handlerCode, final String userOrGroupId) throws Exception {
         super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
-        userGroupTestBase = new UserGroupTestBase();
+        userGroupTestBase = new UserGroupTestBase(){};
     }
 
     /**

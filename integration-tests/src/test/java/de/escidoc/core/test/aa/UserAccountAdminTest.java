@@ -93,7 +93,7 @@ public class UserAccountAdminTest extends GrantTestBase {
     public UserAccountAdminTest(final int handlerCode, final String userOrGroupId) throws Exception {
         super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
-        userAccountTestBase = new UserAccountTestBase();
+        userAccountTestBase = new UserAccountTestBase(){};
     }
 
     /**

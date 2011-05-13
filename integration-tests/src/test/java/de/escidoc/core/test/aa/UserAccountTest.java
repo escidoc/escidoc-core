@@ -137,11 +137,11 @@ public class UserAccountTest extends UserAccountTestBase {
     private static int methodCounter = 0;
 
     public UserAccountTest() throws Exception {
-        userAttributeTestBase = new UserAttributeTestBase();
-        userPreferenceTestBase = new UserPreferenceTestBase();
-        grantTestBase = new GrantTestBase(USER_ACCOUNT_HANDLER_CODE);
+        userAttributeTestBase = new UserAttributeTestBase(){};
+        userPreferenceTestBase = new UserPreferenceTestBase(){};
+        grantTestBase = new GrantTestBase(USER_ACCOUNT_HANDLER_CODE){};
         organizationalUnitTestBase = new OrganizationalUnitTestBase();
-        userGroupTestBase = new UserGroupTestBase();
+        userGroupTestBase = new UserGroupTestBase(){};
     }
 
     /**

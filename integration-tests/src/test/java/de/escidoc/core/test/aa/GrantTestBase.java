@@ -57,7 +57,7 @@ import static org.junit.Assert.assertNull;
  *
  * @author Torsten Tetteroo
  */
-public class GrantTestBase extends UserAccountTestBase {
+public abstract class GrantTestBase extends UserAccountTestBase {
 
     public static final String NAME_GRANT = "grant";
 

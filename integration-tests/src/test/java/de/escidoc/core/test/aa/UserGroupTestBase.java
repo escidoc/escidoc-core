@@ -50,7 +50,7 @@ import java.util.Vector;
  *
  * @author Michael Hoppe
  */
-public class UserGroupTestBase extends AaTestBase {
+public abstract class UserGroupTestBase extends AaTestBase {
 
     public static final String XPATH_USER_GROUP_XML_BASE = XPATH_USER_GROUP + PART_XML_BASE;
 

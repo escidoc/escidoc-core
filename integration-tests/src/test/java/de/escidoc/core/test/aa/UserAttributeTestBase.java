@@ -47,7 +47,7 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Hoppe
  */
-public class UserAttributeTestBase extends UserAccountTestBase {
+public abstract class UserAttributeTestBase extends UserAccountTestBase {
 
     private UserAccountClient client = null;
 

@@ -81,8 +81,8 @@ public class UserGroupAuthorizationTest extends GrantTestBase {
      */
     public UserGroupAuthorizationTest() throws Exception {
         super(USER_ACCOUNT_HANDLER_CODE);
-        userGroupTestBase = new UserGroupTestBase();
-        groupGrantTestBase = new GrantTestBase(USER_GROUP_HANDLER_CODE);
+        userGroupTestBase = new UserGroupTestBase(){};
+        groupGrantTestBase = new GrantTestBase(USER_GROUP_HANDLER_CODE){};
     }
 
     /**

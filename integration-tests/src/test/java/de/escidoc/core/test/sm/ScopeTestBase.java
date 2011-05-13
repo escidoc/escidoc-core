@@ -40,7 +40,7 @@ import java.util.Map;
  *
  * @author Michael Hoppe
  */
-public class ScopeTestBase extends SmTestBase {
+public abstract class ScopeTestBase extends SmTestBase {
 
     /**
      * Test creating a Scope.

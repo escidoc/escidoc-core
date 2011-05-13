@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Michael Hoppe
  */
-public class DeviationRestTest extends DeviationTestBase {
+public class DeviationTest extends DeviationTestBase {
 
     /**
      * Test retrieving the fedora describe xml.
