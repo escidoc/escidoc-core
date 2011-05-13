@@ -1,19 +1,22 @@
 package org.escidoc.core.services.fedora;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.util.xml.internal.EsciDocUnmarshallerListener;
 import org.joda.time.DateTime;
 
+import javax.validation.constraints.NotNull;
 import java.io.InputStream;
 
 import static org.esidoc.core.utils.Preconditions.checkNotNull;
 
+@Guarded
 public class VersionFilter extends EsciDocUnmarshallerListener {
 
     private DateTime versionDate;
 
-    public VersionFilter(final InputStream inputStream, final DateTime versionDate) {
+    public VersionFilter(@NotNull final InputStream inputStream, @NotNull final DateTime versionDate) {
         super(inputStream);
-        this.versionDate = checkNotNull(versionDate, "Version date can not be null.");
+        this.versionDate = versionDate;
     }
 
     public void beforeUnmarshal(Object target, Object parent) {

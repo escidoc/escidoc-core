@@ -1,10 +1,12 @@
 package org.escidoc.core.util.xml.internal;
 
+import net.sf.oval.guard.Guarded;
 import org.esidoc.core.utils.io.Datastream;
 import org.esidoc.core.utils.xml.DatastreamHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamReader;
@@ -20,6 +22,7 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
+@Guarded
 public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
 
     public final static Logger LOG = LoggerFactory.getLogger(EsciDocUnmarshallerListener.class);
@@ -28,7 +31,7 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
 
     private ElementStreamFilter elementStreamFilter;
 
-    public EsciDocUnmarshallerListener(InputStream inputStream) {
+    public EsciDocUnmarshallerListener(@NotNull final InputStream inputStream) {
         this.elementStreamFilter = new ElementStreamFilter(inputStream);
         init();
     }
@@ -50,18 +53,15 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
         return this.elementStreamFilter.getFilteredXmlStreamReader();
     }
 
-    public void addUnmarshallerListener(final UnmarshallerListener unmarshallerListener) {
-        checkNotNull(unmarshallerListener, "UnmarshallerListener can not be null.");
+    public void addUnmarshallerListener(@NotNull final UnmarshallerListener unmarshallerListener) {
         this.unmarshallerListeners.add(unmarshallerListener);
     }
 
-    public void removeUnmarshallerListener(final UnmarshallerListener unmarshallerListener) {
-        checkNotNull(unmarshallerListener, "UnmarshallerListener can not be null.");
+    public void removeUnmarshallerListener(@NotNull final UnmarshallerListener unmarshallerListener) {
         this.unmarshallerListeners.remove(unmarshallerListener);
     }
 
-    public void beforeUnmarshal(final Object target, final Object parent) {
-        checkNotNull(target, "Target can not be null.");
+    public void beforeUnmarshal(@NotNull final Object target, final Object parent) {
         if (target instanceof DatastreamHolder) {
             final DatastreamHolder contentTO = (DatastreamHolder) target;
             beforeUnmarshalContentTO(contentTO);
@@ -71,8 +71,7 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
         }
     }
 
-    public void afterUnmarshal(final Object target, final Object parent) {
-        checkNotNull(target, "Target can not be null.");
+    public void afterUnmarshal(@NotNull final Object target, final Object parent) {
         if (target instanceof DatastreamHolder) {
             final DatastreamHolder contentTO = (DatastreamHolder) target;
             afterUnmarshalContentTO(contentTO);

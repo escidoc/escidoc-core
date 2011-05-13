@@ -3,6 +3,7 @@ package org.escidoc.core.services.fedora.internal;
 import com.googlecode.ehcache.annotations.Cacheable;
 import com.googlecode.ehcache.annotations.KeyGenerator;
 import com.googlecode.ehcache.annotations.TriggersRemove;
+import net.sf.oval.guard.Guarded;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
@@ -49,6 +50,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -68,6 +70,7 @@ import static org.esidoc.core.utils.Preconditions.checkState;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Service
+@Guarded
 public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     public final static Logger LOG = LoggerFactory.getLogger(FedoraServiceClientImpl.class);
@@ -80,22 +83,13 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     @Qualifier("taskExecutor")
     private AsyncTaskExecutor taskExecutor;
 
-    public void setFedoraService(final FedoraServiceRESTEndpoint fedoraService) {
-        this.fedoraService = checkNotNull(fedoraService, "Fedora Service can not be null.");
-    }
-
-    public void setTaskExecutor(final AsyncTaskExecutor taskExecutor) {
-        this.taskExecutor = taskExecutor;
-    }
-
     @Override
     public PidListTO getNextPID(final String namespace) {
         return this.getNextPID(namespace, NextPIDQueryParam.DEFAULT_NUMBER_OF_PIDS);
     }
 
     @Override
-    public PidListTO getNextPID(final String namespace, final int numPIDs) {
-        checkNotNull(namespace, "Namespace parameter can not be null.");
+    public PidListTO getNextPID(@NotNull final String namespace, final int numPIDs) {
         checkState(numPIDs > 0, "Number of PIDs must be > 0.");
         NextPIDPathParam path = new NextPIDPathParam();
         NextPIDQueryParam query = new NextPIDQueryParam();
@@ -105,7 +99,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    public Future<PidListTO> getNextPIDAsync(final String namespace) {
+    public Future<PidListTO> getNextPIDAsync(@NotNull final String namespace) {
         return this.taskExecutor.submit(new Callable<PidListTO>() {
             public PidListTO call() throws Exception {
                 return getNextPID(namespace);
@@ -114,7 +108,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    public Future<PidListTO> getNextPIDAsync(final String namespace, final int numPIDs) {
+    public Future<PidListTO> getNextPIDAsync(@NotNull final String namespace, final int numPIDs) {
         return this.taskExecutor.submit(new Callable<PidListTO>() {
             public PidListTO call() throws Exception {
                 return getNextPID(namespace, numPIDs);
@@ -122,17 +116,13 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         });
     }
 
-    public void createObject(final CreateObjectPathParam path,
-                             final CreateObjectQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public void createObject(@NotNull final CreateObjectPathParam path,
+                             @NotNull final CreateObjectQueryParam query) {
         this.fedoraService.createObject(path, query);
     }
 
-    public Future createObjectAsync(final CreateObjectPathParam path,
-                                    final CreateObjectQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public Future createObjectAsync(@NotNull final CreateObjectPathParam path,
+                                    @NotNull final CreateObjectQueryParam query) {
         return this.taskExecutor.submit(new Callable() {
             public PidListTO call() throws Exception {
                 createObject(path, query);
@@ -143,19 +133,15 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Cacheable(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.GetObjectProfileKeyGenerator"))
-    public ObjectProfileTO getObjectProfile(final GetObjectProfilePathParam path,
-                                            final GetObjectProfileQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public ObjectProfileTO getObjectProfile(@NotNull final GetObjectProfilePathParam path,
+                                            @NotNull final GetObjectProfileQueryParam query) {
         return this.fedoraService.getObjectProfile(path, query);
     }
 
     @Cacheable(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.GetObjectProfileKeyGenerator"))
-    public Future<ObjectProfileTO> getObjectProfileAsync(final GetObjectProfilePathParam path,
-                                                         final GetObjectProfileQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public Future<ObjectProfileTO> getObjectProfileAsync(@NotNull final GetObjectProfilePathParam path,
+                                                         @NotNull final GetObjectProfileQueryParam query) {
         return this.taskExecutor.submit(new Callable<ObjectProfileTO>() {
             public ObjectProfileTO call() throws Exception {
                 return getObjectProfile(path, query);
@@ -165,23 +151,17 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @TriggersRemove(cacheName = "Fedora.DatastreamsLists", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.AddDatastreamKeyGenerator"))
-    public void addDatastream(final AddDatastreamPathParam path,
-                              final AddDatastreamQueryParam query,
-                              final Datastream datastream) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
-        checkNotNull(datastream, "Datastream can not be null.");
+    public void addDatastream(@NotNull final AddDatastreamPathParam path,
+                              @NotNull final AddDatastreamQueryParam query,
+                              @NotNull final Datastream datastream) {
         this.fedoraService.addDatastream(path, query, datastream);
     }
 
     @TriggersRemove(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.AddDatastreamKeyGenerator"))
-    public Future addDatastreamAsync(final AddDatastreamPathParam path,
-                                     final AddDatastreamQueryParam query,
-                                     final Datastream datastream) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
-        checkNotNull(datastream, "Datastream can not be null.");
+    public Future addDatastreamAsync(@NotNull final AddDatastreamPathParam path,
+                                     @NotNull final AddDatastreamQueryParam query,
+                                     @NotNull final Datastream datastream) {;
         return this.taskExecutor.submit(new Callable() {
             public Object call() throws Exception {
                 addDatastream(path, query, datastream);
@@ -192,19 +172,15 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Cacheable(cacheName = "Fedora.Datastreams", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamKeyGenerator"))
-    public Datastream getDatastream(final GetDatastreamPathParam path,
-                                    final GetDatastreamQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public Datastream getDatastream(@NotNull final GetDatastreamPathParam path,
+                                    @NotNull final GetDatastreamQueryParam query) {
         return this.fedoraService.getDatastream(path, query);
     }
 
     @Cacheable(cacheName = "Fedora.Datastreams", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamKeyGenerator"))
-    public Future<Datastream> getDatastreamAsync(final GetDatastreamPathParam path,
-                                                 final GetDatastreamQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public Future<Datastream> getDatastreamAsync(@NotNull final GetDatastreamPathParam path,
+                                                 @NotNull final GetDatastreamQueryParam query) {
         return this.taskExecutor.submit(new Callable<Datastream>() {
             public Datastream call() throws Exception {
                 return getDatastream(path, query);
@@ -214,23 +190,17 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @TriggersRemove(cacheName = "Fedora.Datastreams", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.ModifyDatastreamKeyGenerator"))
-    public void modifyDatastream(final ModifiyDatastreamPathParam path,
-                                 final ModifyDatastreamQueryParam query,
-                                 final Datastream datastream) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
-        checkNotNull(datastream, "Datastream can not be null.");
+    public void modifyDatastream(@NotNull final ModifiyDatastreamPathParam path,
+                                 @NotNull final ModifyDatastreamQueryParam query,
+                                 @NotNull final Datastream datastream) {
         this.fedoraService.modifyDatastream(path, query, datastream);
     }
 
     @TriggersRemove(cacheName = "Fedora.Datastreams", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.ModifyDatastreamKeyGenerator"))
-    public Future modifyDatastreamAsync(final ModifiyDatastreamPathParam path,
-                                        final ModifyDatastreamQueryParam query,
-                                        final Datastream datastream) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
-        checkNotNull(datastream, "Datastream can not be null.");
+    public Future modifyDatastreamAsync(@NotNull final ModifiyDatastreamPathParam path,
+                                        @NotNull final ModifyDatastreamQueryParam query,
+                                        @NotNull final Datastream datastream) {
         return this.taskExecutor.submit(new Callable() {
             public Object call() throws Exception {
                 modifyDatastreamAsync(path, query, datastream);
@@ -241,19 +211,15 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))
-    public ObjectDatastreamsTO listDatastreams(final ListDatastreamsPathParam path,
-                                               final ListDatastreamsQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public ObjectDatastreamsTO listDatastreams(@NotNull final ListDatastreamsPathParam path,
+                                               @NotNull final ListDatastreamsQueryParam query) {
         return this.fedoraService.listDatastreams(path, query);
     }
 
     @Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))
-    public Future<ObjectDatastreamsTO> listDatastreamsAsync(final ListDatastreamsPathParam path,
-                                                            final ListDatastreamsQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public Future<ObjectDatastreamsTO> listDatastreamsAsync(@NotNull final ListDatastreamsPathParam path,
+                                                            @NotNull final ListDatastreamsQueryParam query) {
         return this.taskExecutor.submit(new Callable<ObjectDatastreamsTO>() {
             public ObjectDatastreamsTO call() throws Exception {
                 return listDatastreams(path, query);
@@ -263,17 +229,15 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @TriggersRemove(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.UpdateObjectKeyGenerator"))
-    public void updateObject(final UpdateObjectPathParam path, final UpdateObjectQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public void updateObject(@NotNull final UpdateObjectPathParam path,
+                             @NotNull final UpdateObjectQueryParam query) {
         this.fedoraService.updateObject(path, query);
     }
 
     @TriggersRemove(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.UpdateObjectKeyGenerator"))
-    public Future updateObjectAsync(final UpdateObjectPathParam path, final UpdateObjectQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public Future updateObjectAsync(@NotNull final UpdateObjectPathParam path,
+                                    @NotNull final UpdateObjectQueryParam query) {
         return this.taskExecutor.submit(new Callable() {
             public Object call() throws Exception {
                 updateObject(path, query);
@@ -284,17 +248,14 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @TriggersRemove(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.DeleteObjectKeyGenerator"))
-    public void deleteObject(final DeleteObjectPathParam path, final DeleteObjectQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public void deleteObject(@NotNull final DeleteObjectPathParam path, @NotNull final DeleteObjectQueryParam query) {
         this.fedoraService.deleteObject(path, query);
     }
 
     @TriggersRemove(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.DeleteObjectKeyGenerator"))
-    public Future deleteObjectAsync(final DeleteObjectPathParam path, final DeleteObjectQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public Future deleteObjectAsync(@NotNull final DeleteObjectPathParam path,
+                                    @NotNull final DeleteObjectQueryParam query) {
         return this.taskExecutor.submit(new Callable() {
             public Object call() throws Exception {
                 deleteObject(path, query);
@@ -303,21 +264,15 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         });
     }
 
-    public String ingest(final IngestPathParam path,
-                         final IngestQueryParam query,
-                         final DigitalObjectTypeTOExtension digitalObjectTO) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
-        checkNotNull(digitalObjectTO, "DigitalObjectTO can not be null.");
+    public String ingest(@NotNull final IngestPathParam path,
+                         @NotNull final IngestQueryParam query,
+                         @NotNull final DigitalObjectTypeTOExtension digitalObjectTO) {
         return this.fedoraService.ingest(path, query, digitalObjectTO);
     }
 
-    public Future<String> ingestAsync(final IngestPathParam path,
-                                      final IngestQueryParam query,
-                                      final DigitalObjectTypeTOExtension digitalObjectTO) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
-        checkNotNull(digitalObjectTO, "DigitalObjectTO can not be null.");
+    public Future<String> ingestAsync(@NotNull final IngestPathParam path,
+                                      @NotNull final IngestQueryParam query,
+                                      @NotNull final DigitalObjectTypeTOExtension digitalObjectTO) {
         return this.taskExecutor.submit(new Callable<String>() {
             public String call() throws Exception {
                 return ingest(path, query, digitalObjectTO);
@@ -325,64 +280,18 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         });
     }
 
-    public DigitalObjectTO getObjectXML(final GetObjectXMLPathParam path, final GetObjectXMLQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public DigitalObjectTO getObjectXML(@NotNull final GetObjectXMLPathParam path,
+                                        @NotNull final GetObjectXMLQueryParam query) {
         return this.fedoraService.getObjectXML(path, query);
     }
 
-    public Future<DigitalObjectTypeTOExtension> getObjectXMLAsync(final GetObjectXMLPathParam path,
-                                                                  final GetObjectXMLQueryParam query) {
-        checkNotNull(path, "Path parameter can not be null.");
-        checkNotNull(query, "Query parameter can not be null.");
+    public Future<DigitalObjectTypeTOExtension> getObjectXMLAsync(@NotNull final GetObjectXMLPathParam path,
+                                                                  @NotNull final GetObjectXMLQueryParam query) {
         return this.taskExecutor.submit(new Callable<DigitalObjectTypeTOExtension>() {
             public DigitalObjectTypeTOExtension call() throws Exception {
                 return getObjectXML(path, query);
             }
         });
-    }
-
-    private DigitalObjectTO parseObjectVersion(Datastream datastream, DateTime versionDate) throws IOException {
-        try {
-            final JAXBContext jaxbContext = JAXBContext.newInstance(DigitalObjectTO.class);
-            final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            final VersionFilter versionFilter = new VersionFilter(datastream.getInputStream(), versionDate);
-            unmarshaller.setListener(versionFilter);
-            return (DigitalObjectTO) unmarshaller.unmarshal(versionFilter.getFilteredXmlStreamReader());
-        } catch (JAXBException e) {
-            throw new IOException("Error on parsing object version.", e);
-        }
-    }
-
-    private Datastream getVersionHistoryDatastream(Datastream datastream) throws IOException {
-        try {
-            final JAXBContext jaxbContext = JAXBContext.newInstance(DigitalObjectTO.class);
-            final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            final VersionHistoryFilter versionHistoryFilter = new VersionHistoryFilter(datastream.getInputStream());
-            unmarshaller.setListener(versionHistoryFilter);
-            final DigitalObjectTO digitalObjectTO =
-                    (DigitalObjectTO) unmarshaller.unmarshal(versionHistoryFilter.getFilteredXmlStreamReader());
-            if (digitalObjectTO.getDatastream() != null
-                    && digitalObjectTO.getDatastream().get(0) != null
-                    && digitalObjectTO.getDatastream().get(0).getDatastreamVersion() != null
-                    && digitalObjectTO.getDatastream().get(0).getDatastreamVersion().get(0) != null) {
-                final XmlContentTypeDatastreamHolderTO versionHistory = (XmlContentTypeDatastreamHolderTO)
-                        digitalObjectTO.getDatastream().get(0).getDatastreamVersion().get(0).getXmlContent();
-                if (versionHistory != null) {
-                    return versionHistory.getDatastream();
-                }
-            }
-        } catch (final JAXBException e) {
-            throw new IOException("Error on parsing version history datastream.", e);
-        }
-        return null;
-    }
-
-    private Datastream copyResponseToDatastream(Response fedoraResponse) throws IOException {
-        final InputStream inputStream = (InputStream) fedoraResponse.getEntity();
-        final Datastream datastream = new Datastream();
-        IOUtils.copy(inputStream, datastream);
-        return datastream;
     }
 
 }

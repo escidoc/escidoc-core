@@ -1,7 +1,9 @@
 package org.escidoc.core.util.xml.internal;
 
+import net.sf.oval.guard.Guarded;
 import org.esidoc.core.utils.io.Datastream;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -20,6 +22,7 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Provider
+@Guarded
 public class DatastreamMessageBodyWriter implements MessageBodyWriter<Datastream> {
 
     public boolean isWriteable(final Class<?> type,
@@ -43,8 +46,7 @@ public class DatastreamMessageBodyWriter implements MessageBodyWriter<Datastream
                         final Annotation[] annotations,
                         final MediaType mediaType,
                         final MultivaluedMap<String, Object> httpHeaders,
-                        final OutputStream entityStream) throws IOException, WebApplicationException {
-        checkNotNull(entityStream, "Entity stream can not be null.");
+                        @NotNull final OutputStream entityStream) throws IOException, WebApplicationException {
         cachedOutputStream.writeCacheTo(entityStream);
     }
 

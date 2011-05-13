@@ -1,8 +1,10 @@
 package org.esidoc.core.utils.io;
 
+import net.sf.oval.guard.Guarded;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.constraints.NotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +15,7 @@ import java.nio.charset.Charset;
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
+@Guarded
 public final class IOUtils {
 
     private final static Logger LOG = LoggerFactory.getLogger(IOUtils.class);
@@ -23,14 +26,14 @@ public final class IOUtils {
     private IOUtils() {
     }
 
-    public static int copy(final InputStream input,
-                           final OutputStream output)
+    public static int copy(@NotNull final InputStream input,
+                           @NotNull final OutputStream output)
             throws IOException {
         return copy(input, output, DEFAULT_BUFFER_SIZE);
     }
 
-    public static int copyAndCloseInput(final InputStream input,
-                                        final OutputStream output) throws IOException {
+    public static int copyAndCloseInput(@NotNull final InputStream input,
+                                        @NotNull final OutputStream output) throws IOException {
         try {
             return copy(input, output, DEFAULT_BUFFER_SIZE);
         } finally {
@@ -38,8 +41,8 @@ public final class IOUtils {
         }
     }
 
-    public static int copyAndCloseInput(final InputStream input,
-                                        final OutputStream output,
+    public static int copyAndCloseInput(@NotNull final InputStream input,
+                                        @NotNull final OutputStream output,
                                         final int bufferSize) throws IOException {
         try {
             return copy(input, output, bufferSize);
@@ -48,8 +51,8 @@ public final class IOUtils {
         }
     }
 
-    public static int copy(final InputStream input,
-                           final OutputStream output,
+    public static int copy(@NotNull final InputStream input,
+                           @NotNull final OutputStream output,
                            int bufferSize) throws IOException {
         int avail = input.available();
         if (avail > 262144) {
@@ -70,7 +73,7 @@ public final class IOUtils {
         return total;
     }
 
-    public static byte[] readBytesFromStream(final InputStream input) throws IOException {
+    public static byte[] readBytesFromStream(@NotNull final InputStream input) throws IOException {
         int i = input.available();
         if (i < DEFAULT_BUFFER_SIZE) {
             i = DEFAULT_BUFFER_SIZE;
@@ -85,10 +88,8 @@ public final class IOUtils {
         try {
             return new String(bytes, charsetName);
         } catch (UnsupportedEncodingException e) {
-            throw
-                    new RuntimeException("Impossible failure: Charset.forName(\""
-                            + charsetName + "\") returns invalid name.");
-
+            throw new RuntimeException("Impossible failure: Charset.forName(\"" + charsetName + "\") returns " +
+                    "invalid name.");
         }
     }
 
@@ -103,9 +104,8 @@ public final class IOUtils {
         try {
             return new String(bytes, start, length, charsetName);
         } catch (UnsupportedEncodingException e) {
-            throw
-                    new RuntimeException("Impossible failure: Charset.forName(\""
-                            + charsetName + "\") returns invalid name.");
+            throw new RuntimeException("Impossible failure: Charset.forName(\"" + charsetName + "\") returns invalid " +
+                    "name.");
 
         }
     }
@@ -125,12 +125,12 @@ public final class IOUtils {
         }
     }
 
-    public static void closeOutputStream(OutputStream input) {
-        if (input == null) {
+    public static void closeOutputStream(OutputStream output) {
+        if (output == null) {
             return;
         }
         try {
-            input.close();
+            output.close();
         } catch (final IOException e) {
             LOG.error("Error on closing output stream.", e);
         }

@@ -1,9 +1,11 @@
 package org.escidoc.core.services.fedora;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.esidoc.core.utils.io.Datastream;
 
+import javax.validation.constraints.NotNull;
 import java.util.concurrent.Future;
 
 /**
@@ -11,15 +13,16 @@ import java.util.concurrent.Future;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
+@Guarded
 public interface FedoraServiceClient {
 
-    PidListTO getNextPID(String namespace);
+    PidListTO getNextPID(@NotNull String namespace);
 
-    PidListTO getNextPID(String namespace, int numPIDs);
+    PidListTO getNextPID(@NotNull String namespace, int numPIDs);
 
-    Future<PidListTO> getNextPIDAsync(String namespace);
+    Future<PidListTO> getNextPIDAsync(@NotNull String namespace);
 
-    Future<PidListTO> getNextPIDAsync(String namespace, int numPIDs);
+    Future<PidListTO> getNextPIDAsync(@NotNull String namespace, int numPIDs);
 
     // TODO: Refactor interface. Use real parameters and not REST interface (Path and Query objects)
 

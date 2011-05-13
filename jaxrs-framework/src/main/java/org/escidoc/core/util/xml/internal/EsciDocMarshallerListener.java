@@ -1,9 +1,11 @@
 package org.escidoc.core.util.xml.internal;
 
+import net.sf.oval.guard.Guarded;
 import org.esidoc.core.utils.io.Datastream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.Marshaller;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -20,6 +22,7 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
+@Guarded
 public class EsciDocMarshallerListener extends Marshaller.Listener {
 
     public final static Logger LOG = LoggerFactory.getLogger(EsciDocUnmarshallerListener.class);
@@ -45,18 +48,15 @@ public class EsciDocMarshallerListener extends Marshaller.Listener {
         return this.filteringXmlStreamWriter;
     }
 
-    public void addMarshallerListener(final MarshallerListener marshallerListener) {
-        checkNotNull(marshallerListener, "MarshallerListener can not be null.");
+    public void addMarshallerListener(@NotNull final MarshallerListener marshallerListener) {
         this.marshallerListeners.add(marshallerListener);
     }
 
-    public void removeMarshallerListener(final MarshallerListener marshallerListener) {
-        checkNotNull(marshallerListener, "MarshallerListener can not be null.");
+    public void removeMarshallerListener(@NotNull final MarshallerListener marshallerListener) {
         this.marshallerListeners.remove(marshallerListener);
     }
 
-    public void beforeMarshal(final Object source) {
-        checkNotNull(source, "Source can not be null.");
+    public void beforeMarshal(@NotNull final Object source) {
         if (source instanceof Datastream) {
             final Datastream datastream = (Datastream) source;
             try {

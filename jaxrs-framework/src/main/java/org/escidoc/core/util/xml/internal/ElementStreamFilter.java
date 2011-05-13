@@ -1,8 +1,10 @@
 package org.escidoc.core.util.xml.internal;
 
+import net.sf.oval.guard.Guarded;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.namespace.QName;
 import javax.xml.stream.StreamFilter;
 import javax.xml.stream.XMLInputFactory;
@@ -22,6 +24,7 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
+@Guarded
 public class ElementStreamFilter implements StreamFilter {
 
     private final static Logger LOG = LoggerFactory.getLogger(ElementStreamFilter.class);
@@ -31,7 +34,7 @@ public class ElementStreamFilter implements StreamFilter {
     private boolean active = false;
     private final List<QName> ignoredElements = new ArrayList<QName>();
 
-    public ElementStreamFilter(InputStream inputStream) {
+    public ElementStreamFilter(@NotNull final InputStream inputStream) {
         final XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         try {
             final XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(inputStream);
@@ -67,24 +70,20 @@ public class ElementStreamFilter implements StreamFilter {
         this.active = active;
     }
 
-    public void setOutputStream(final OutputStream outputStream) {
-        checkNotNull(outputStream, "Output stream can not be null.");
+    public void setOutputStream(@NotNull final OutputStream outputStream) {
         this.output = new PrintStream(outputStream);
     }
 
-    public void addIgnoredElemenet(final QName elementName) {
-        checkNotNull(elementName, "Element name can not be null.");
+    public void addIgnoredElemenet(@NotNull final QName elementName) {
         this.ignoredElements.add(elementName);
     }
 
-    public void removeIgnoredElemenet(final QName elementName) {
-        checkNotNull(elementName, "Element name can not be null.");
+    public void removeIgnoredElemenet(@NotNull final QName elementName) {
         this.ignoredElements.remove(elementName);
     }
 
 
-    public boolean accept(final XMLStreamReader reader) {
-        checkNotNull(reader, "XML stream reader can not be null.");
+    public boolean accept(@NotNull final XMLStreamReader reader) {
         if (this.active) {
             switch (reader.getEventType()) {
                 case XMLStreamConstants.START_ELEMENT:
@@ -104,8 +103,7 @@ public class ElementStreamFilter implements StreamFilter {
         return true;
     }
 
-    private void onStartElement(final XMLStreamReader reader) {
-        checkNotNull(reader, "XML stream reader can not be null.");
+    private void onStartElement(@NotNull final XMLStreamReader reader) {
         final QName elementName = reader.getName();
         this.output.print("<");
         if (elementName.getPrefix() != null && elementName.getPrefix().trim().length() > 0) {

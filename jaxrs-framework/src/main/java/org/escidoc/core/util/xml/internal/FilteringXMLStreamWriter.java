@@ -1,7 +1,9 @@
 package org.escidoc.core.util.xml.internal;
 
+import net.sf.oval.guard.Guarded;
 import org.esidoc.core.utils.xml.DatastreamHolder;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -13,13 +15,14 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
+@Guarded
 public class FilteringXMLStreamWriter implements XMLStreamWriter {
 
     private final XMLStreamWriter xmlStreamWriter;
     private boolean ignore = false;
 
-    public FilteringXMLStreamWriter(final XMLStreamWriter xmlStreamWriter) {
-        this.xmlStreamWriter = checkNotNull(xmlStreamWriter, "XML stream writer can not be null.");
+    public FilteringXMLStreamWriter(@NotNull final XMLStreamWriter xmlStreamWriter) {
+        this.xmlStreamWriter = xmlStreamWriter;
     }
 
     public void close() throws XMLStreamException {
