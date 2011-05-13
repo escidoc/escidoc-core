@@ -25,6 +25,7 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.ConnectionUtility;
 import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,6 +76,10 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")
     private FedoraUtility fedoraUtility;
+
+    @Autowired
+    @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
+    private ConnectionUtility connectionUtility;
 
     /**
      * The default constructor.<br/> The default style sheet uri is set to the value of the constant
@@ -144,34 +149,43 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      */
     private InputStream mapKeyToXslt(final String key) throws WebserverSystemException, FedoraSystemException,
         IOException, MalformedURLException {
-
         final String[] keyParts = SPLIT_PATTERN.split(key);
         final String nsUri = keyParts[0];
         final String contentModelId = keyParts[1];
-
-        InputStream xslt =
-            nsUri != null && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? new URL(
-                EscidocConfiguration.getInstance().appendToSelfURL(XSL_MAPPING_MPDL_TO_DC)).openStream() : new URL(
-                this.defaultXsltUrl).openStream();
+        InputStream xslt = null;
         // xslt is the mpdl-xslt- or default-xslt-stream
-        if (contentModelId.length() > 0 && !"null".equalsIgnoreCase(contentModelId)) {
-            // create link to content of DC-MAPPING in content model object
-            final String dcMappingXsltFedoraUrl = "/get/" + contentModelId + '/' + CONTENT_MODEL_XSLT_DC_DATASTREAM;
-            try {
-                xslt = this.fedoraUtility.requestFedoraURL(dcMappingXsltFedoraUrl);
+        String internalXsltUrl =
+            nsUri != null && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? EscidocConfiguration
+                .getInstance().appendToSelfURL(XSL_MAPPING_MPDL_TO_DC) : this.defaultXsltUrl;
+        String xsltUrl = null;
 
+        try {
+            if (contentModelId.length() > 0 && !"null".equalsIgnoreCase(contentModelId)) {
+                try {
+                    // create link to content of DC-MAPPING in content model object
+                    xsltUrl = "/get/" + contentModelId + '/' + CONTENT_MODEL_XSLT_DC_DATASTREAM;
+                    xslt = this.fedoraUtility.requestFedoraURL(xsltUrl);
+                }
+                catch (final WebserverSystemException e) {
+                    // fall back to internal XSLT
+                    xsltUrl = internalXsltUrl;
+                    xslt = this.connectionUtility.getRequestURL(new URL(xsltUrl)).getEntity().getContent();
+                }
             }
-            catch (final WebserverSystemException e) {
-                // xslt is still the stream set above
-                if (LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'');
-                }
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'', e);
-                }
+            else {
+                xsltUrl = internalXsltUrl;
+                xslt = this.connectionUtility.getRequestURL(new URL(xsltUrl)).getEntity().getContent();
             }
         }
-
+        catch (final WebserverSystemException e) {
+            // xslt is still the stream set above
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on requesting URL '" + xsltUrl + '\'');
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on requesting URL '" + xsltUrl + '\'', e);
+            }
+        }
         return xslt;
     }
 }
