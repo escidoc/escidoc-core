@@ -20,24 +20,27 @@
 
 package de.escidoc.core.common.util.xml.transformer;
 
-import de.escidoc.core.common.business.fedora.FedoraUtility;
-import de.escidoc.core.common.exceptions.system.FedoraSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.regex.Pattern;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamSource;
+
+import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.escidoc.core.common.business.fedora.FedoraUtility;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.ConnectionUtility;
 
 /**
  * {@link BaseKeyedPoolableObjectFactory} implementation creating {@link Transformer} objects using a {@link
@@ -67,6 +70,8 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
     private static final String CONTENT_MODEL_XSLT_DC_DATASTREAM = "DC-MAPPING";
 
     private String defaultXsltUrl = "http://localhost:8080" + XSL_MAPPING_UNKNOWN_TO_DC;
+
+    private final ConnectionUtility connectionUtility = new ConnectionUtility();
 
     /**
      * The default constructor.<br/> The default style sheet uri is set to the value of the constant
@@ -136,34 +141,35 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      */
     private InputStream mapKeyToXslt(final String key) throws WebserverSystemException, FedoraSystemException,
         IOException, MalformedURLException {
-
         final String[] keyParts = SPLIT_PATTERN.split(key);
         final String nsUri = keyParts[0];
         final String contentModelId = keyParts[1];
+        InputStream xslt = null;
+        String dcMappingXsltFedoraUrl = null;
 
-        InputStream xslt =
-            nsUri != null && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? new URL(
-                EscidocConfiguration.getInstance().appendToSelfURL(XSL_MAPPING_MPDL_TO_DC)).openStream() : new URL(
-                this.defaultXsltUrl).openStream();
-        // xslt is the mpdl-xslt- or default-xslt-stream
-        if (contentModelId.length() > 0 && !"null".equalsIgnoreCase(contentModelId)) {
-            // create link to content of DC-MAPPING in content model object
-            final String dcMappingXsltFedoraUrl = "/get/" + contentModelId + '/' + CONTENT_MODEL_XSLT_DC_DATASTREAM;
-            try {
+        try {
+            // xslt is the mpdl-xslt- or default-xslt-stream
+            if (contentModelId.length() > 0 && !"null".equalsIgnoreCase(contentModelId)) {
+                // create link to content of DC-MAPPING in content model object
+                dcMappingXsltFedoraUrl = "/get/" + contentModelId + '/' + CONTENT_MODEL_XSLT_DC_DATASTREAM;
                 xslt = FedoraUtility.getInstance().requestFedoraURL(dcMappingXsltFedoraUrl);
-
             }
-            catch (final WebserverSystemException e) {
-                // xslt is still the stream set above
-                if (LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'');
-                }
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'', e);
-                }
+            else {
+                dcMappingXsltFedoraUrl =
+                    nsUri != null && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? EscidocConfiguration
+                        .getInstance().appendToSelfURL(XSL_MAPPING_MPDL_TO_DC) : this.defaultXsltUrl;
+                xslt = connectionUtility.getRequestURL(new URL(dcMappingXsltFedoraUrl)).getEntity().getContent();
             }
         }
-
+        catch (final WebserverSystemException e) {
+            // xslt is still the stream set above
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'');
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'', e);
+            }
+        }
         return xslt;
     }
 }
