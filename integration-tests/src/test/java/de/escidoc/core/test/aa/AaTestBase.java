@@ -1061,7 +1061,7 @@ public class AaTestBase extends EscidocAbstractTest {
 
         Document xmlContainer =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + "/rest",
-                    "create_container_WithoutMembers_v1.1.xml");
+                "create_container_WithoutMembers_v1.1.xml");
         if (contextId != null && !contextId.equals("")) {
             String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
             substitute(xmlContainer, "/container/properties/context/@href", contextHref);
@@ -2346,8 +2346,8 @@ public class AaTestBase extends EscidocAbstractTest {
             }
             else if ("byLoginName".equals(identifierSelection)) {
                 accountIdentifier =
-                    selectSingleNodeAsserted(EscidocAbstractTest.getDocument(createdXml),
-                        XPATH_USER_ACCOUNT_LOGINNAME).getTextContent();
+                    selectSingleNodeAsserted(EscidocAbstractTest.getDocument(createdXml), XPATH_USER_ACCOUNT_LOGINNAME)
+                        .getTextContent();
             }
             else if ("byHandle".equals(identifierSelection)) {
                 // FIXME: implement
@@ -3686,7 +3686,6 @@ public class AaTestBase extends EscidocAbstractTest {
         String userHandle = null;
         try {
             userHandle = login(loginname, password, true);
-            Thread.sleep(1000);
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException("INIT: Log in of the user failed.", e);
