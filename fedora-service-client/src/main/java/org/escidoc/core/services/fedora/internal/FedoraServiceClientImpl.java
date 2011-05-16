@@ -54,7 +54,7 @@ import static org.esidoc.core.utils.Preconditions.checkState;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-@Service
+@Service("fedoraServiceClient")
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
         assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
 public class FedoraServiceClientImpl implements FedoraServiceClient {
@@ -128,7 +128,7 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
             name = "org.escidoc.core.services.fedora.internal.cache.AddDatastreamKeyGenerator"))
     public void addDatastream(@NotNull final AddDatastreamPathParam path,
                               @NotNull final AddDatastreamQueryParam query,
-                              @NotNull final Datastream datastream) {
+                              final Datastream datastream) {
         this.fedoraService.addDatastream(path, query, datastream);
     }
 
@@ -136,7 +136,7 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     @Async
     public Future<VoidObject> addDatastreamAsync(@NotNull final AddDatastreamPathParam path,
                                      @NotNull final AddDatastreamQueryParam query,
-                                     @NotNull final Datastream datastream) {;
+                                     final Datastream datastream) {;
         addDatastream(path, query, datastream);
         return new AsyncResult<VoidObject>(VoidObject.getInstance());
     }
