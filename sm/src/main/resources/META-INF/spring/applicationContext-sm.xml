@@ -78,30 +78,4 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             </bean>
         </property>
     </bean>
-
-    <!-- cron job with spring -->
-    <bean id="escidoc.core.sm.StatisticPreprocessorJob"
-          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject">
-            <ref bean="mbean.StatisticPreprocessorService"/>
-        </property>
-        <property name="targetMethod" value="execute"/>
-        <property name="concurrent" value="false"/>
-    </bean>
-
-    <bean id="escidoc.core.sm.StatisticPreprocessorTrigger"
-          class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail">
-            <ref bean="escidoc.core.sm.StatisticPreprocessorJob"/>
-        </property>
-        <property name="cronExpression" value="0 0 1 * * ?"/>
-    </bean>
-
-    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
-            <list>
-                <ref bean="escidoc.core.sm.StatisticPreprocessorTrigger"/>
-            </list>
-        </property>
-    </bean>
 </beans>

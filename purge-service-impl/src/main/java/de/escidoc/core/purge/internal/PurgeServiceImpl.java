@@ -6,9 +6,9 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.purge.PurgeRequest;
+import de.escidoc.core.purge.PurgeService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * Default implementation of {@link PurgeService}.
  */
 @Service("de.escidoc.core.purge.internal.PurgeServiceImpl")
-public class PurgeServiceImpl {
+public class PurgeServiceImpl implements PurgeService {
 
     private static final Log LOGGER = LogFactory.getLog(PurgeServiceImpl.class);
 

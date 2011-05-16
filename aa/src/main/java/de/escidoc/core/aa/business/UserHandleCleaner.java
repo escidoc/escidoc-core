@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -37,6 +38,8 @@ public class UserHandleCleaner {
     /**
      * Cleans up the login data, i.e. removes each eSciDoc user handle that has been expired a while ago.
      */
+    @Scheduled(fixedRate = 3600000)
+    // TODO: made configurable
     public void cleanUp() {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Cleaning up the staging file area");

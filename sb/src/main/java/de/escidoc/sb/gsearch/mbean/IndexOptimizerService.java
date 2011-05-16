@@ -37,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -65,6 +66,7 @@ public class IndexOptimizerService {
      * call optimize.
      */
     @ManagedOperation(description = "call optimize.")
+    @Scheduled(cron = "0 0 2 * * ?")
     public void execute() {
         final long lastExecutionTime = IndexOptimizerServiceTimer.getInstance().getLastExecutionTime();
         if (lastExecutionTime > 0L && System.currentTimeMillis() - lastExecutionTime < 1000L) {

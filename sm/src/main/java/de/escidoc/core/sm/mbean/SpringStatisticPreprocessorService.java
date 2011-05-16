@@ -38,6 +38,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedOperationParameter;
 import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -81,6 +82,7 @@ public class SpringStatisticPreprocessorService {
      * @throws Exception e
      */
     @ManagedOperation(description = "Preprocess statistic data.")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void execute() throws Exception {
         final long lastExecutionTime = StatisticPreprocessorServiceTimer.getInstance().getLastExecutionTime();
         if (lastExecutionTime > 0L && System.currentTimeMillis() - lastExecutionTime < 1000L) {

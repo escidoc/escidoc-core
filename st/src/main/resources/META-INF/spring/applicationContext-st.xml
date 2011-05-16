@@ -23,23 +23,4 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="escidoc-core.SessionFactory"/>
         </property>
     </bean>
-    <bean id="escidoc.core.st.CleanerJob"
-          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="st.StagingCleaner"/>
-        <property name="targetMethod" value="cleanUp"/>
-        <property name="concurrent" value="false"/>
-    </bean>
-    <bean id="escidoc.core.st.CleanerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-        <property name="jobDetail" ref="escidoc.core.st.CleanerJob"/>
-        <property name="startDelay" value="0"/>
-        <property name="repeatInterval" value="${escidoc-core.st.cleanup.period}"/>
-    </bean>
-    <bean id="escidoc.core.st.SchedulerFactory" lazy-init="false"
-          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
-            <list>
-                <ref bean="escidoc.core.st.CleanerTrigger"/>
-            </list>
-        </property>
-    </bean>
 </beans>

@@ -21,7 +21,7 @@ import javax.ws.rs.QueryParam;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-@Path("/fedora/objects")
+@Path("/objects")
 public interface FedoraServiceRESTEndpoint {
 
     @POST

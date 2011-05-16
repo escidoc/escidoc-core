@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -78,6 +79,8 @@ public class StagingCleaner {
      * Cleans up the staging area, i.e. removes each file in the file system associated to an expired staging file
      * object and each expired staging file whose associated file does not exist or could be removed.
      */
+    @Scheduled(fixedRate = 3600000)
+    // TODO: made configurable
     public void cleanUp() {
         final long lastExecutionTime = StagingCleanerTimer.getInstance().getLastExecutionTime();
         if (lastExecutionTime > 0L && System.currentTimeMillis() - lastExecutionTime < 10000L) {

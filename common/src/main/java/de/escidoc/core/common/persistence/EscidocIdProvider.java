@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * Provider for new eSciDoc object ids.<br> This class prefetches a number of ids and provides ids on request. If no id
- * is available, a set of ids is fetched from a back end.<br> Currently, {@link FedoraResourceIdentifierDao} is used to
+ * is available, a set of ids is fetched from a back end.<br> Currently, {@link ResourceIdentifierDao} is used to
  * fetch the ids from a fedora repository.
  *
  * @author Torsten Tetteroo
@@ -88,7 +88,7 @@ public class EscidocIdProvider {
     private void fetchIds(final int numberNeededIds) throws SystemException {
 
         final int number = Math.max(numberNeededIds, this.numberPrefetchedIds);
-        final List<String> idArryList = Arrays.asList(resourceIdentifierDao.getNextPids(number));
+        final List<String> idArryList = resourceIdentifierDao.getNextPids(number);
 
         // check if prefixes have lower characters
         // I assume that its enough to check the first retrieved pid

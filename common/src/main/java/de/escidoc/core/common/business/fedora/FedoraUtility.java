@@ -77,6 +77,7 @@ import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.rpc.ServiceException;
 import java.io.IOException;
@@ -96,7 +97,7 @@ import java.util.regex.Pattern;
  * @author Rozita Friedman
  */
 @ManagedResource(objectName = "eSciDocCore:name=FedoraUtility", description = "The utility class to access the fedora repository.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
-public class FedoraUtility implements InitializingBean {
+public class FedoraUtility {
 
     public static final String DATASTREAM_STATUS_DELETED = "D";
 
@@ -1316,14 +1317,8 @@ public class FedoraUtility implements InitializingBean {
             .getMessage(), e);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @see InitializingBean #afterPropertiesSet()
-     */
-    @Override
-    public void afterPropertiesSet() throws IOException, MalformedURLException, ServiceException {
-
+    @PostConstruct
+    private void init() throws IOException, MalformedURLException, ServiceException {
         this.fedoraClientPool =
             new StackObjectPool(PoolUtils.synchronizedPoolableFactory(new BasePoolableObjectFactory() {
                 /**

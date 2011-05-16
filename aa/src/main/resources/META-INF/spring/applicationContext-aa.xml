@@ -55,32 +55,12 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="eSciDoc.core.common.SecurityInterceptorCache"/>
         </property>
         <property name="tsu">
-            <ref bean="business.TripleStoreUtility"/>
+    jobDetail        <ref bean="business.TripleStoreUtility"/>
         </property>
     </bean>
     <bean id="persistence.UserGroupDao" class="de.escidoc.core.aa.business.persistence.hibernate.HibernateUserGroupDao">
         <property name="mySessionFactory">
             <ref bean="escidoc-core.SessionFactory"/>
-        </property>
-    </bean>
-    <!-- Clean up of login data -->
-    <bean id="eSciDoc.core.aa.CleanerJob"
-          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="eSciDoc.core.aa.UserHandleCleaner"/>
-        <property name="targetMethod" value="cleanUp"/>
-        <property name="concurrent" value="false"/>
-    </bean>
-    <bean id="eSciDoc.core.aa.CleanerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-        <property name="jobDetail" ref="eSciDoc.core.aa.CleanerJob"/>
-        <property name="startDelay" value="0"/>
-        <property name="repeatInterval" value="${escidoc-core.aa.cleanup.period}"/>
-    </bean>
-    <bean id="eSciDoc.core.aa.SchedulerFactory" lazy-init="false"
-          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
-            <list>
-                <ref bean="eSciDoc.core.aa.CleanerTrigger"/>
-            </list>
         </property>
     </bean>
 </beans>

@@ -2,6 +2,7 @@ package org.escidoc.core.services.fedora;
 
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
+import org.esidoc.core.utils.VoidObject;
 import org.esidoc.core.utils.io.Datastream;
 
 import javax.validation.constraints.NotNull;
@@ -26,7 +27,7 @@ public interface FedoraServiceClient {
 
     void createObject(CreateObjectPathParam path, CreateObjectQueryParam query);
 
-    Future createObjectAsync(CreateObjectPathParam path, CreateObjectQueryParam query);
+    Future<VoidObject> createObjectAsync(CreateObjectPathParam path, CreateObjectQueryParam query);
 
     ObjectProfileTO getObjectProfile(GetObjectProfilePathParam path, GetObjectProfileQueryParam query);
 
@@ -34,7 +35,7 @@ public interface FedoraServiceClient {
 
     void addDatastream(AddDatastreamPathParam path, AddDatastreamQueryParam query, Datastream outputStream);
 
-    Future addDatastreamAsync(AddDatastreamPathParam path, AddDatastreamQueryParam query, Datastream outputStream);
+    Future<VoidObject> addDatastreamAsync(AddDatastreamPathParam path, AddDatastreamQueryParam query, Datastream outputStream);
 
     Datastream getDatastream(GetDatastreamPathParam path, GetDatastreamQueryParam query);
 
@@ -44,7 +45,7 @@ public interface FedoraServiceClient {
                           ModifyDatastreamQueryParam query,
                           Datastream outputStream);
 
-    Future modifyDatastreamAsync(ModifiyDatastreamPathParam path,
+    Future<VoidObject> modifyDatastreamAsync(ModifiyDatastreamPathParam path,
                                  ModifyDatastreamQueryParam query,
                                  Datastream outputStream);
 
@@ -56,11 +57,11 @@ public interface FedoraServiceClient {
 
     void updateObject(UpdateObjectPathParam path, UpdateObjectQueryParam query);
 
-    Future updateObjectAsync(UpdateObjectPathParam path, UpdateObjectQueryParam query);
+    Future<VoidObject> updateObjectAsync(UpdateObjectPathParam path, UpdateObjectQueryParam query);
 
     void deleteObject(DeleteObjectPathParam path, DeleteObjectQueryParam query);
 
-    Future deleteObjectAsync(DeleteObjectPathParam path, DeleteObjectQueryParam query);
+    Future<VoidObject> deleteObjectAsync(DeleteObjectPathParam path, DeleteObjectQueryParam query);
 
     String ingest(IngestPathParam path, IngestQueryParam query, DigitalObjectTypeTOExtension digitalObjectTO);
 
@@ -68,6 +69,6 @@ public interface FedoraServiceClient {
 
     DigitalObjectTO getObjectXML(GetObjectXMLPathParam path, GetObjectXMLQueryParam query);
 
-    Future<DigitalObjectTypeTOExtension> getObjectXMLAsync(GetObjectXMLPathParam path, GetObjectXMLQueryParam query);
+    Future<DigitalObjectTO> getObjectXMLAsync(GetObjectXMLPathParam path, GetObjectXMLQueryParam query);
 
 }
