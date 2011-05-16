@@ -452,7 +452,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      */
     @Override
     @Transactional
-   public void update(final UserAccount userAccount) throws SqlDatabaseSystemException {
+    public void update(final UserAccount userAccount) throws SqlDatabaseSystemException {
         // remove user from cache
         clearUserDetailsCache(userAccount.getId());
         super.update(userAccount);
@@ -763,6 +763,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #save(de.escidoc.core.aa.business.persistence.RoleGrant)
      */
     @Override
+    @Transactional
     public void save(final RoleGrant grant) throws SqlDatabaseSystemException {
         super.save(grant);
     }
@@ -773,6 +774,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #update(de.escidoc.core.aa.business.persistence.RoleGrant)
      */
     @Override
+    @Transactional
     public void update(final RoleGrant grant) throws SqlDatabaseSystemException {
         super.update(grant);
     }
@@ -905,6 +907,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #save(de.escidoc.core.aa.business.persistence.UserAttribute)
      */
     @Override
+    @Transactional
     public void save(final UserAttribute attribute) throws SqlDatabaseSystemException {
 
         super.save(attribute);
@@ -916,6 +919,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #update(de.escidoc.core.aa.business.persistence.UserAttribute)
      */
     @Override
+    @Transactional
     public void update(final UserAttribute attribute) throws SqlDatabaseSystemException {
 
         super.update(attribute);
@@ -927,6 +931,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #delete(de.escidoc.core.aa.business.persistence.UserAttribute)
      */
     @Override
+    @Transactional
     public void delete(final UserAttribute attribute) throws SqlDatabaseSystemException {
 
         super.delete(attribute);
@@ -1022,6 +1027,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #saveOrUpdate(de.escidoc.core.aa.business.persistence.UserLoginData)
      */
     @Override
+    @Transactional
     public void saveOrUpdate(final UserLoginData data) throws SqlDatabaseSystemException {
         // remove UserDetails from Cache
         PoliciesCache.clearUserDetails(data.getHandle());
@@ -1034,6 +1040,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #delete(de.escidoc.core.aa.business.persistence.UserLoginData)
      */
     @Override
+    @Transactional
     public void delete(final UserLoginData data) throws SqlDatabaseSystemException {
         // remove UserData from Cache
         PoliciesCache.clearUserDetails(data.getHandle());
@@ -1044,6 +1051,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * See Interface for functional description.
      */
     @Override
+    @Transactional
     public void deleteUserLoginData(final String handle) throws SqlDatabaseSystemException {
         // remove UserData from Cache
         PoliciesCache.clearUserDetails(handle);
@@ -1187,6 +1195,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #retrievePreferenceByUserId(java.lang.String)
      */
     @Override
+    @Transactional
     public void save(final UserPreference preference) throws SqlDatabaseSystemException {
         super.save(preference);
     }
@@ -1199,6 +1208,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #delete(de.escidoc.core.aa.business.persistence.UserPreference)
      */
     @Override
+    @Transactional
     public void delete(final UserPreference data) throws SqlDatabaseSystemException {
         super.delete(data);
     }

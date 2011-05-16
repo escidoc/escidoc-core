@@ -126,6 +126,7 @@ public class StatisticInterceptor implements Ordered {
      * @throws Exception
      */
     @Around("execution(public * de.escidoc.core.*.service.*.*(..))"
+        + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
         + " && !execution(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
         + " && !execution(* de.escidoc.core..*.StatisticService*.*(..))"
         + " && !execution(* de.escidoc.core.common..*.*(..))")
