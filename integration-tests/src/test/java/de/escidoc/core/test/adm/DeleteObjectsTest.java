@@ -50,12 +50,12 @@ public class DeleteObjectsTest extends AdminToolTestBase {
     public void testDeleteObjects() throws Exception {
         // create item
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemId = getObjidValue(createItem(xml));
 
         // delete item
         xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<param><id>" + itemId + "</id></param>";
+        deleteObjects(xml);
 
         // wait until process has finished
         final int waitTime = 5000;
