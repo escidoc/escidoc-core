@@ -98,8 +98,8 @@ public class ContainerLockTest extends ContainerTestBase {
             lock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .failException("Unlocking container can not be tested, locking" + " failed with exception.", e);
+            EscidocAbstractTest.failException("Unlocking container can not be tested, locking"
+                + " failed with exception.", e);
         }
 
         try {
@@ -147,8 +147,8 @@ public class ContainerLockTest extends ContainerTestBase {
             lock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .failException("Unlocking container can not be tested, locking" + " failed with exception.", e);
+            EscidocAbstractTest.failException("Unlocking container can not be tested, locking"
+                + " failed with exception.", e);
         }
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -199,8 +199,8 @@ public class ContainerLockTest extends ContainerTestBase {
             lock(theContainerId, param);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .failException("Unlocking container can not be tested, locking" + " failed with exception.", e);
+            EscidocAbstractTest.failException("Unlocking container can not be tested, locking"
+                + " failed with exception.", e);
         }
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);

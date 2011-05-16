@@ -123,8 +123,8 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising failed with unexpected exception. ",
+                InvalidStatusException.class, e);
         }
     }
 
@@ -165,8 +165,8 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising failed with unexpected exception. ",
+                InvalidStatusException.class, e);
         }
     }
 
@@ -212,8 +212,8 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising failed with unexpected exception. ",
+                InvalidStatusException.class, e);
         }
     }
 
@@ -233,7 +233,7 @@ public class ContainerReviseTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Revising unknown container failed with unexpected exception. ",
-                    ContainerNotFoundException.class, e);
+                ContainerNotFoundException.class, e);
         }
     }
 
@@ -253,7 +253,7 @@ public class ContainerReviseTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Revising without id failed with unexpected exception. ",
-                    MissingMethodParameterException.class, e);
+                MissingMethodParameterException.class, e);
         }
     }
 
@@ -277,7 +277,7 @@ public class ContainerReviseTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Revising without id failed with unexpected exception. ",
-                    MissingMethodParameterException.class, e);
+                MissingMethodParameterException.class, e);
         }
     }
 
@@ -301,9 +301,8 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Revising without last modification date failed with" + " unexpected exception. ",
-                    XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising without last modification date failed with"
+                + " unexpected exception. ", XmlCorruptedException.class, e);
         }
     }
 
@@ -325,9 +324,8 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Revising without last modification date failed with" + " unexpected exception. ",
-                    XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising without last modification date failed with"
+                + " unexpected exception. ", XmlCorruptedException.class, e);
         }
     }
 
@@ -347,9 +345,8 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocAbstractTest.failMissingException(OptimisticLockingException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Revising with outdated last modification date failed " + "with unexpected exception. ",
-                    OptimisticLockingException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising with outdated last modification date failed "
+                + "with unexpected exception. ", OptimisticLockingException.class, e);
         }
     }
 }

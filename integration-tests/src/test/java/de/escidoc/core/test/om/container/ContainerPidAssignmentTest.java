@@ -233,8 +233,8 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
         try {
             pidParam =
                 "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(theContainerId)))
-                    + "\" >" + "<url>http://escidoc.de/container/resource</url>" + "</param>";
+                    + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(theContainerId))) + "\" >"
+                    + "<url>http://escidoc.de/container/resource</url>" + "</param>";
 
             pid = assignObjectPid(theContainerId, pidParam);
             fail("InvalidStatusException expected.");
@@ -530,8 +530,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
 
         // check if returned pid equals RELS-EXT entry
         theContainerXml = retrieve(theContainerId);
-        Node thePid =
-            selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), XPATH_CONTAINER_OBJECT_PID);
+        Node thePid = selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), XPATH_CONTAINER_OBJECT_PID);
         assertNotNull(thePid);
         Node returnedPid = selectSingleNode(EscidocAbstractTest.getDocument(pid), XPATH_RESULT_PID);
         assertEquals(returnedPid.getTextContent(), thePid.getTextContent());
@@ -566,8 +565,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
 
         // check if returned pid equals RELS-EXT entry
         theContainerXml = retrieve(theContainerId);
-        Node thePid =
-            selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), XPATH_CONTAINER_OBJECT_PID);
+        Node thePid = selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), XPATH_CONTAINER_OBJECT_PID);
         assertNotNull(thePid);
         Node returnedPid = selectSingleNode(EscidocAbstractTest.getDocument(pid), XPATH_RESULT_PID);
         assertEquals(returnedPid.getTextContent(), thePid.getTextContent());
@@ -611,8 +609,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
 
         // check if returned pid equals RELS-EXT entry
         theContainerXml = retrieve(theContainerId);
-        Node thePid =
-            selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), XPATH_CONTAINER_OBJECT_PID);
+        Node thePid = selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), XPATH_CONTAINER_OBJECT_PID);
         assertNotNull(thePid);
         Node returnedPid = selectSingleNode(EscidocAbstractTest.getDocument(pid), XPATH_RESULT_PID);
         assertEquals(returnedPid.getTextContent(), thePid.getTextContent());

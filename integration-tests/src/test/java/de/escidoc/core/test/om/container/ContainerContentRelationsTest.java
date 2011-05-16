@@ -73,8 +73,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     @Before
     public void setUp() throws Exception {
         String xmlContainer =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
+                "create_container_WithoutMembers_v1.1.xml");
 
         this.containerXml = create(xmlContainer);
         this.containerId = getObjidValue(containerXml);
@@ -239,7 +239,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("ReferencedResourceNotFoundException.",
-                    ReferencedResourceNotFoundException.class, e);
+                ReferencedResourceNotFoundException.class, e);
         }
 
     }
@@ -266,7 +266,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("RelationPredicateNotFoundException.",
-                    RelationPredicateNotFoundException.class, e);
+                RelationPredicateNotFoundException.class, e);
         }
 
     }
@@ -397,7 +397,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("ContentRelationNotFoundException expected.",
-                    ContentRelationNotFoundException.class, e);
+                ContentRelationNotFoundException.class, e);
         }
     }
 
@@ -424,8 +424,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             fail("No exception occurred on remove an relation with a" + " wrong source");
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("ContentRelationNotFoundException.", ContentRelationNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("ContentRelationNotFoundException.",
+                ContentRelationNotFoundException.class, e);
         }
 
     }
@@ -826,8 +826,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
      */
     private String createContainer() throws Exception {
         String xmlContainer =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
+                "create_container_WithoutMembers_v1.1.xml");
         String xml = create(xmlContainer);
         return getObjidValue(xml);
     }

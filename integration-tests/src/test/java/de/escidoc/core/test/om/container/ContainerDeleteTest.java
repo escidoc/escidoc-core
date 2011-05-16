@@ -111,7 +111,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
         try {
             delete(theContainerId);
             EscidocAbstractTest.failMissingException("No exception with deleting container with members.",
-                    InvalidStatusException.class);
+                InvalidStatusException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidStatusException.class, e);
@@ -129,7 +129,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
         try {
             delete("bla");
             EscidocAbstractTest.failMissingException("No exception occurred on delete with non existing id.",
-                    ContainerNotFoundException.class);
+                ContainerNotFoundException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(ContainerNotFoundException.class, e);
@@ -147,7 +147,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
         try {
             delete(null);
             EscidocAbstractTest.failMissingException("No exception occurred on delete with missing id.",
-                    MissingMethodParameterException.class);
+                MissingMethodParameterException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
@@ -168,7 +168,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
         try {
             delete(containerId);
             EscidocAbstractTest.failMissingException("No exception occurred on delete submitted container.",
-                    InvalidStatusException.class);
+                InvalidStatusException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidStatusException.class, e);

@@ -471,8 +471,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
         // content-type (xlink:type xlink:href xlink:title)
 
         // status
-        testContainer =
-            substitute(EscidocAbstractTest.getDocument(theContainerXml), basePath + "status", "withdrawn");
+        testContainer = substitute(EscidocAbstractTest.getDocument(theContainerXml), basePath + "status", "withdrawn");
         try {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update status.");
@@ -731,14 +730,12 @@ public class ContainerUpdateTest extends ContainerTestBase {
             tripleStore.requestMPT("<info:fedora/" + theContainerId + "> "
                 + "<http://purl.org/dc/elements/1.1/creator>" + " *", "RDF/XML");
         String oldCreatorDcName =
-            selectSingleNode(EscidocAbstractTest.getDocument(result), XPATH_TRIPLE_STORE_DC_CREATOR)
-                .getTextContent();
+            selectSingleNode(EscidocAbstractTest.getDocument(result), XPATH_TRIPLE_STORE_DC_CREATOR).getTextContent();
         String oldTitle =
             selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), "/container/properties/name")
                 .getTextContent();
         assertTrue(oldCreatorName + " is not contained in DC 'creator' ", oldCreatorDcName.endsWith(oldCreatorName));
-        Document newMdRecord =
-            (Document) substitute(EscidocAbstractTest.getDocument(mdRecordXml), mdXPath, newName);
+        Document newMdRecord = (Document) substitute(EscidocAbstractTest.getDocument(mdRecordXml), mdXPath, newName);
         newMdRecord = (Document) substitute(newMdRecord, mdTitlePath, newTitle);
         Node oldModDateNode = selectSingleNode(newMdRecord, lastModificationDateXPath);
 
@@ -756,8 +753,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             tripleStore.requestMPT("<info:fedora/" + theContainerId + "> "
                 + "<http://purl.org/dc/elements/1.1/creator>" + " *", "RDF/XML");
         String newCreatorDcName =
-            selectSingleNode(EscidocAbstractTest.getDocument(result), XPATH_TRIPLE_STORE_DC_CREATOR)
-                .getTextContent();
+            selectSingleNode(EscidocAbstractTest.getDocument(result), XPATH_TRIPLE_STORE_DC_CREATOR).getTextContent();
         assertTrue(newName + " is not contained in DC 'creator' ", newCreatorDcName.endsWith(newName));
         String title = selectSingleNode(updateDocument, "/container/properties/name").getTextContent();
         assertTrue("title was not updated", title.equals(newTitle));
@@ -1165,8 +1161,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", href1);
         containerForCreateWithRelationsXml =
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);
-        Document containerForCreateWithRelations =
-            EscidocAbstractTest.getDocument(containerForCreateWithRelationsXml);
+        Document containerForCreateWithRelations = EscidocAbstractTest.getDocument(containerForCreateWithRelationsXml);
 
         NodeList relations = selectNodeList(containerForCreateWithRelations, "/container/relations/relation");
 
@@ -1270,8 +1265,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", containerHref1);
         containerForCreateWithRelationsXml =
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", containerHref2);
-        Document containerForCreateWithRelations =
-            EscidocAbstractTest.getDocument(containerForCreateWithRelationsXml);
+        Document containerForCreateWithRelations = EscidocAbstractTest.getDocument(containerForCreateWithRelationsXml);
 
         // create container with two relations
         String xml = create(containerForCreateWithRelationsXml);
@@ -1346,7 +1340,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("RelationPredicateNotFoundException.",
-                    RelationPredicateNotFoundException.class, e);
+                RelationPredicateNotFoundException.class, e);
         }
 
     }
@@ -1400,7 +1394,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("ReferencedResourceNotFoundException.",
-                    ReferencedResourceNotFoundException.class, e);
+                ReferencedResourceNotFoundException.class, e);
         }
     }
 

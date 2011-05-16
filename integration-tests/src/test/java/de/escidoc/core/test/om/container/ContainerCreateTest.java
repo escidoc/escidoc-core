@@ -450,8 +450,7 @@ public class ContainerCreateTest extends ContainerTestBase {
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", href1);
         containerForCreateWithRelationsXml =
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);
-        Document containerForCreateWithRelations =
-            EscidocAbstractTest.getDocument(containerForCreateWithRelationsXml);
+        Document containerForCreateWithRelations = EscidocAbstractTest.getDocument(containerForCreateWithRelationsXml);
 
         NodeList relations = selectNodeList(containerForCreateWithRelations, "/container/relations/relation");
 
@@ -495,7 +494,7 @@ public class ContainerCreateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("ReferencedResourceNotFoundException expected.",
-                    ReferencedResourceNotFoundException.class, e);
+                ReferencedResourceNotFoundException.class, e);
         }
 
     }
@@ -527,8 +526,8 @@ public class ContainerCreateTest extends ContainerTestBase {
                 + " target ids containing a version number.");
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("InvalidContentException expected.", InvalidContentException.class, e);
+            EscidocAbstractTest.assertExceptionType("InvalidContentException expected.", InvalidContentException.class,
+                e);
         }
     }
 
@@ -555,8 +554,7 @@ public class ContainerCreateTest extends ContainerTestBase {
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", href1);
         containerForCreateWithRelationsXml =
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);
-        Document containerForCreateWithRelations =
-            EscidocAbstractTest.getDocument(containerForCreateWithRelationsXml);
+        Document containerForCreateWithRelations = EscidocAbstractTest.getDocument(containerForCreateWithRelationsXml);
         Node relationPredicate =
             selectSingleNode(containerForCreateWithRelations, "/container/relations/relation[1]/@predicate");
         relationPredicate.setNodeValue("http://www.bla.de#bla");
@@ -570,7 +568,7 @@ public class ContainerCreateTest extends ContainerTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("RelationPredicateNotFoundException expected.",
-                    RelationPredicateNotFoundException.class, e);
+                RelationPredicateNotFoundException.class, e);
         }
 
     }
@@ -601,9 +599,8 @@ public class ContainerCreateTest extends ContainerTestBase {
             EscidocAbstractTest.failMissingException("Creating Container with invalid object href not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Creating Container with invalid object href not declined," + " properly. ",
-                            ec, e);
+            EscidocAbstractTest.assertExceptionType("Creating Container with invalid object href not declined,"
+                + " properly. ", ec, e);
         }
     }
 
@@ -633,9 +630,8 @@ public class ContainerCreateTest extends ContainerTestBase {
             EscidocAbstractTest.failMissingException("Creating Container with invalid object href not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Creating Container with invalid object href not declined," + " properly. ",
-                            ec, e);
+            EscidocAbstractTest.assertExceptionType("Creating Container with invalid object href not declined,"
+                + " properly. ", ec, e);
         }
     }
 
@@ -659,12 +655,12 @@ public class ContainerCreateTest extends ContainerTestBase {
 
         try {
             create(toBeCreatedXml);
-            EscidocAbstractTest
-                    .failMissingException("Creating container with empty content-model element not declined.", ec);
+            EscidocAbstractTest.failMissingException(
+                "Creating container with empty content-model element not declined.", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Creating container with empty content-model element not declined" + ", properly", ec, e);
+            EscidocAbstractTest.assertExceptionType("Creating container with empty content-model element not declined"
+                + ", properly", ec, e);
         }
 
     }

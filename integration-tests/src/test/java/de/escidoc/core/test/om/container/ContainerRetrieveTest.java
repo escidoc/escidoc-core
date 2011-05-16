@@ -75,15 +75,14 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     public void testRetrieveResources() throws Exception {
 
         String xmlData =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
 
         this.theItemId = getObjidValue(theItemXml);
         xmlData =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_v1.1-forItem.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
+                "create_container_v1.1-forItem.xml");
 
         String theContainerXml = create(xmlData.replaceAll("##ITEMID##", theItemId));
         String theContainerId = getObjidValue(theContainerXml);
@@ -606,8 +605,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         // create an item and save the id
         String xmlData =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest/", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest/", "escidoc_item_198_for_create.xml");
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
         return getObjidValue(theItemXml);
@@ -852,8 +850,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         String containerId = getObjidValue(containerXml);
 
         String itemTemplXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest/", "item_without_component.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest/", "item_without_component.xml");
 
         String itemXml = createItem(containerId, itemTemplXml);
         String itemId = getObjidValue(itemXml);
