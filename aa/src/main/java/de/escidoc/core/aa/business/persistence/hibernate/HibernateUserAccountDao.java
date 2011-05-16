@@ -59,6 +59,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -439,6 +440,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #save(de.escidoc.core.aa.business.persistence.UserAccount)
      */
     @Override
+    @Transactional
     public void save(final UserAccount userAccount) throws SqlDatabaseSystemException {
         super.save(userAccount);
     }
@@ -449,7 +451,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #update(de.escidoc.core.aa.business.persistence.UserAccount)
      */
     @Override
-    public void update(final UserAccount userAccount) throws SqlDatabaseSystemException {
+    @Transactional
+   public void update(final UserAccount userAccount) throws SqlDatabaseSystemException {
         // remove user from cache
         clearUserDetailsCache(userAccount.getId());
         super.update(userAccount);
@@ -461,6 +464,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #delete(de.escidoc.core.aa.business.persistence.UserAccount)
      */
     @Override
+    @Transactional
     public void delete(final UserAccount userAccount) throws SqlDatabaseSystemException {
         // remove User from Cache
         if (userAccount.getEscidocRolesByCreatorId() != null && !userAccount.getEscidocRolesByCreatorId().isEmpty()
