@@ -169,8 +169,8 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
     private String submitItemHelp(final String itemId) throws Exception {
 
         String lmd =
-            getLastModificationDateValue(
-                    EscidocAbstractTest.getDocument(handleXmlResult(getItemClient().retrieve(itemId))));
+            getLastModificationDateValue(EscidocAbstractTest.getDocument(handleXmlResult(getItemClient().retrieve(
+                itemId))));
 
         return submitItemHelp(itemId, lmd);
     }
