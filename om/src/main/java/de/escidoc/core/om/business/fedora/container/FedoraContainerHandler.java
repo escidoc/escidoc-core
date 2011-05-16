@@ -1306,6 +1306,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             }
 
             releaseMembers(id);
+            setContainer(id);
 
             // set status "submited"
             // only renew the timestamp and set status with version entry
@@ -1591,6 +1592,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             if (getTripleStoreUtility().getPropertiesElements(id, TripleStoreUtility.PROP_CONTENT_MODEL_TITLE).equals(
                 COLLECTION)) {
                 withdrawMembers(id, taskParameter.getWithdrawComment());
+                setContainer(id);
             }
 
             // withdrawing is possible in every version status
@@ -1949,6 +1951,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         checkLocked();
 
         final String containerXml = create(xmlData);
+        setContainer(containerId);
 
         final String objid = XmlUtility.getIdFromXml(containerXml);
 
