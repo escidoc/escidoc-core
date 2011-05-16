@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>1.3</version>
+		<version1.3.1-SNAPSHOT/version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
 	<artifactId>tme</artifactId>
     <packaging>ejb</packaging>
 	<name>eSciDoc Core - Technical Metadata Extraction Service</name>
-	<version>1.3</version>
+	<version1.3.1-SNAPSHOT/version>
 
 	<description>Technical Metadata Extraction Service package of eSciDoc Core</description>
 	<build>
@@ -39,7 +39,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.3</version>
+                <version1.3.1-SNAPSHOT/version>
                 <dependencies>
 	                <dependency>
 	                    <groupId>org.aspectj</groupId>
