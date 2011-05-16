@@ -661,12 +661,12 @@ public abstract class GrantTest extends GrantTestBase {
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
-            EscidocAbstractTest.failMissingException("Creating grant with role-reference to context not declined. ", ec);
+            EscidocAbstractTest
+                .failMissingException("Creating grant with role-reference to context not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Creating grant with role-reference to context not declined, properly. ", ec,
-                            e);
+            EscidocAbstractTest.assertExceptionType(
+                "Creating grant with role-reference to context not declined, properly. ", ec, e);
         }
     }
 
@@ -686,12 +686,12 @@ public abstract class GrantTest extends GrantTestBase {
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
-            EscidocAbstractTest
-                    .failMissingException("Creating duplicate grant not declined.", AlreadyExistsException.class);
+            EscidocAbstractTest.failMissingException("Creating duplicate grant not declined.",
+                AlreadyExistsException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Creating duplicate grant not declined, properly.",
-                    AlreadyExistsException.class, e);
+                AlreadyExistsException.class, e);
         }
     }
 
@@ -751,12 +751,12 @@ public abstract class GrantTest extends GrantTestBase {
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
-            EscidocAbstractTest
-                    .failMissingException("Creating grant with reference to unknown object not declined. ", ec);
+            EscidocAbstractTest.failMissingException("Creating grant with reference to unknown object not declined. ",
+                ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Creating grant with reference to unknown object not declined," + " properly. ", ec, e);
+            EscidocAbstractTest.assertExceptionType("Creating grant with reference to unknown object not declined,"
+                + " properly. ", ec, e);
         }
     }
 
@@ -779,12 +779,12 @@ public abstract class GrantTest extends GrantTestBase {
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
-            EscidocAbstractTest
-                    .failMissingException("Creating grant with reference to unsupported object" + " not declined. ", ec);
+            EscidocAbstractTest.failMissingException("Creating grant with reference to unsupported object"
+                + " not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Creating grant with reference to unsupported object" + " not declined, properly. ", ec, e);
+            EscidocAbstractTest.assertExceptionType("Creating grant with reference to unsupported object"
+                + " not declined, properly. ", ec, e);
         }
     }
 
@@ -1752,8 +1752,8 @@ public abstract class GrantTest extends GrantTestBase {
     public void testAACg12_rest() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocAbstractTest
-                    .getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_grant_for_create_rest_read_only.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH,
+                "escidoc_grant_for_create_rest_read_only.xml");
 
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
@@ -1809,8 +1809,8 @@ public abstract class GrantTest extends GrantTestBase {
             EscidocAbstractTest.failMissingException("Creating grant with invalid object href not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Creating grant with invalid object href not declined," + " properly. ", ec, e);
+            EscidocAbstractTest.assertExceptionType("Creating grant with invalid object href not declined,"
+                + " properly. ", ec, e);
         }
     }
 
@@ -1837,8 +1837,8 @@ public abstract class GrantTest extends GrantTestBase {
             EscidocAbstractTest.failMissingException("Creating grant with invalid object href not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Creating grant with invalid object href not declined," + " properly. ", ec, e);
+            EscidocAbstractTest.assertExceptionType("Creating grant with invalid object href not declined,"
+                + " properly. ", ec, e);
         }
     }
 

@@ -137,11 +137,16 @@ public class UserAccountTest extends UserAccountTestBase {
     private static int methodCounter = 0;
 
     public UserAccountTest() throws Exception {
-        userAttributeTestBase = new UserAttributeTestBase(){};
-        userPreferenceTestBase = new UserPreferenceTestBase(){};
-        grantTestBase = new GrantTestBase(USER_ACCOUNT_HANDLER_CODE){};
+        userAttributeTestBase = new UserAttributeTestBase() {
+        };
+        userPreferenceTestBase = new UserPreferenceTestBase() {
+        };
+        grantTestBase = new GrantTestBase(
+            USER_ACCOUNT_HANDLER_CODE) {
+        };
         organizationalUnitTestBase = new OrganizationalUnitTestBase();
-        userGroupTestBase = new UserGroupTestBase(){};
+        userGroupTestBase = new UserGroupTestBase() {
+        };
     }
 
     /**
@@ -229,8 +234,8 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAACua5() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocAbstractTest.getDocument(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_useraccount_for_create.xml"));
+            EscidocAbstractTest.getDocument(EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH,
+                "escidoc_useraccount_for_create.xml"));
         deleteElement(toBeCreatedDocument, XPATH_USER_ACCOUNT_LOGINNAME);
 
         try {
@@ -252,8 +257,8 @@ public class UserAccountTest extends UserAccountTestBase {
     public void testAACua61() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocAbstractTest.getDocument(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_useraccount_for_create.xml"));
+            EscidocAbstractTest.getDocument(EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_ACCOUNT_PATH,
+                "escidoc_useraccount_for_create.xml"));
         substitute(toBeCreatedDocument, XPATH_USER_ACCOUNT_LOGINNAME, "current");
 
         try {
@@ -1397,14 +1402,12 @@ public class UserAccountTest extends UserAccountTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_NAME + "\"=or or or or and" });
         try {
             retrieveUserAccounts(filterParams);
-            EscidocAbstractTest.failMissingException(
-                    "Retrieving user accounts with providing corrupted filter params" + " not declined. ",
-                    InvalidSearchQueryException.class);
+            EscidocAbstractTest.failMissingException("Retrieving user accounts with providing corrupted filter params"
+                + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Retrieving user accounts with providing corrupted filter params" + "not declined, properly. ",
-                    InvalidSearchQueryException.class, e);
+            EscidocAbstractTest.assertExceptionType("Retrieving user accounts with providing corrupted filter params"
+                + "not declined, properly. ", InvalidSearchQueryException.class, e);
         }
     }
 
@@ -1422,14 +1425,12 @@ public class UserAccountTest extends UserAccountTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + NAME_CREATED_BY + "\"=\"Some value\"" });
         try {
             retrieveUserAccounts(filterParams);
-            EscidocAbstractTest.failMissingException(
-                    "Retrieving user accounts with providing invalid filter params" + " not declined. ",
-                    InvalidSearchQueryException.class);
+            EscidocAbstractTest.failMissingException("Retrieving user accounts with providing invalid filter params"
+                + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Retrieving user accounts with providing invalid filter params" + "not declined, properly. ",
-                    InvalidSearchQueryException.class, e);
+            EscidocAbstractTest.assertExceptionType("Retrieving user accounts with providing invalid filter params"
+                + "not declined, properly. ", InvalidSearchQueryException.class, e);
         }
     }
 

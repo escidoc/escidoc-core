@@ -159,7 +159,8 @@ public class GrantFilterTest extends GrantTestBase {
 
     public GrantFilterTest() throws Exception {
         super(USER_ACCOUNT_HANDLER_CODE);
-        userAttributeTestBase = new UserAttributeTestBase(){};
+        userAttributeTestBase = new UserAttributeTestBase() {
+        };
     }
 
     /**
@@ -2364,14 +2365,12 @@ public class GrantFilterTest extends GrantTestBase {
 
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + NAME_CREATED_BY + "\"=\"Some value\"" });
             retrieveGrants(filterParams);
-            EscidocAbstractTest
-                    .failMissingException("Retrieving grants with providing corrupt filter" + " not declined. ",
-                            InvalidSearchQueryException.class);
+            EscidocAbstractTest.failMissingException("Retrieving grants with providing corrupt filter"
+                + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Retrieving grants with providing corrupt filter" + "not declined properly. ",
-                            InvalidSearchQueryException.class, e);
+            EscidocAbstractTest.assertExceptionType("Retrieving grants with providing corrupt filter"
+                + "not declined properly. ", InvalidSearchQueryException.class, e);
         }
     }
 
@@ -2450,7 +2449,6 @@ public class GrantFilterTest extends GrantTestBase {
 
             // login to get handle
             final String loginName = selectSingleNode(user, XPATH_USER_ACCOUNT_LOGINNAME).getTextContent();
-            Thread.sleep(1000);
             final String handle = login(loginName, SYSADMIN_PASSWORD, true);
 
             // save userId + handle

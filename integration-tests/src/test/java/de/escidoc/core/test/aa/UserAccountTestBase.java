@@ -589,8 +589,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
         final String userHandle, final String accountId, final Class<?> expectedExceptionClass) throws Exception {
         try {
             String userAccountXml = handleResult(userAccountClient.retrieve(accountId));
-            String lastModificationDate =
-                getLastModificationDateValue(EscidocAbstractTest.getDocument(userAccountXml));
+            String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(userAccountXml));
             String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
             userAccountClient.deactivate(accountId, taskParamXml);
         }
@@ -601,8 +600,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
 
         try {
             PWCallback.setHandle(userHandle);
-            String lastModificationDate =
-                getLastModificationDateValue(EscidocAbstractTest.getDocument(userAccountXml));
+            String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(userAccountXml));
             String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
             userAccountClient.activate(accountId, taskParamXml);
             if (expectedExceptionClass != null) {
@@ -676,8 +674,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
 
         try {
             String userAccountXml = handleResult(userAccountClient.retrieve(accountId));
-            String lastModificationDate =
-                getLastModificationDateValue(EscidocAbstractTest.getDocument(userAccountXml));
+            String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(userAccountXml));
             String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
             userAccountClient.activate(accountId, taskParamXml);
         }
@@ -688,8 +685,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
 
         try {
             PWCallback.setHandle(userHandle);
-            String lastModificationDate =
-                getLastModificationDateValue(EscidocAbstractTest.getDocument(userAccountXml));
+            String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(userAccountXml));
             String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
             userAccountClient.deactivate(accountId, taskParamXml);
             if (expectedExceptionClass != null) {

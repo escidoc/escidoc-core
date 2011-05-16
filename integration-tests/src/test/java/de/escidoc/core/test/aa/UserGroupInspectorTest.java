@@ -92,7 +92,8 @@ public class UserGroupInspectorTest extends GrantTestBase {
     public UserGroupInspectorTest(final int handlerCode, final String userOrGroupId) throws Exception {
         super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
-        userGroupTestBase = new UserGroupTestBase(){};
+        userGroupTestBase = new UserGroupTestBase() {
+        };
     }
 
     /**

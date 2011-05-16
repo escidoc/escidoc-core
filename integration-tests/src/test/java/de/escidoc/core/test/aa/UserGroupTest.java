@@ -91,8 +91,10 @@ public class UserGroupTest extends UserGroupTestBase {
     private static int methodCounter = 0;
 
     public UserGroupTest() throws Exception {
-        userAttributeTestBase = new UserAttributeTestBase(){};
-        userAccountTestBase = new UserAccountTestBase(){};
+        userAttributeTestBase = new UserAttributeTestBase() {
+        };
+        userAccountTestBase = new UserAccountTestBase() {
+        };
         organizationalUnitTestBase = new OrganizationalUnitTestBase();
     }
 
@@ -175,8 +177,8 @@ public class UserGroupTest extends UserGroupTestBase {
     public void testAACug5() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocAbstractTest.getDocument(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_USER_GROUP_PATH, "escidoc_usergroup_for_create.xml"));
+            EscidocAbstractTest.getDocument(EscidocAbstractTest.getTemplateAsString(TEMPLATE_USER_GROUP_PATH,
+                "escidoc_usergroup_for_create.xml"));
         deleteElement(toBeCreatedDocument, XPATH_USER_GROUP_LABEL);
 
         try {
@@ -893,14 +895,12 @@ public class UserGroupTest extends UserGroupTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + NAME_CREATED_BY + "\"=\"Some value\"" });
         try {
             retrieveUserGroups(filterParams);
-            EscidocAbstractTest.failMissingException(
-                    "Retrieving user groups with providing corrupted filter params" + " not declined. ",
-                    InvalidSearchQueryException.class);
+            EscidocAbstractTest.failMissingException("Retrieving user groups with providing corrupted filter params"
+                + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Retrieving user groups with providing corrupted filter params" + "not declined, properly. ",
-                    InvalidSearchQueryException.class, e);
+            EscidocAbstractTest.assertExceptionType("Retrieving user groups with providing corrupted filter params"
+                + "not declined, properly. ", InvalidSearchQueryException.class, e);
         }
     }
 
@@ -917,14 +917,12 @@ public class UserGroupTest extends UserGroupTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + NAME_CREATED_BY + "\"=\"Some value\"" });
         try {
             retrieveUserGroups(filterParams);
-            EscidocAbstractTest.failMissingException(
-                    "Retrieving user groups with providing invalid filter params" + " not declined. ",
-                    InvalidSearchQueryException.class);
+            EscidocAbstractTest.failMissingException("Retrieving user groups with providing invalid filter params"
+                + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Retrieving user groups with providing invalid filter params" + "not declined, properly. ",
-                    InvalidSearchQueryException.class, e);
+            EscidocAbstractTest.assertExceptionType("Retrieving user groups with providing invalid filter params"
+                + "not declined, properly. ", InvalidSearchQueryException.class, e);
         }
     }
 

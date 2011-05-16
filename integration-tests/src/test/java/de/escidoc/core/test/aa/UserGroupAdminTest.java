@@ -99,7 +99,8 @@ public class UserGroupAdminTest extends GrantTestBase {
     public UserGroupAdminTest(final int handlerCode, final String userOrGroupId) throws Exception {
         super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
-        userGroupTestBase = new UserGroupTestBase(){};
+        userGroupTestBase = new UserGroupTestBase() {
+        };
     }
 
     /**
@@ -468,8 +469,8 @@ public class UserGroupAdminTest extends GrantTestBase {
         }
         try {
             revokeAllGrants(EscidocAbstractTest.TEST_USER_ACCOUNT_ID1);
-            doTestCreateGrant(HANDLE, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI
-                + "/" + groupId, ROLE_HREF_USER_GROUP_INSPECTOR, null);
+            doTestCreateGrant(HANDLE, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI + "/"
+                + groupId, ROLE_HREF_USER_GROUP_INSPECTOR, null);
         }
         finally {
             if (!isUserAccountTest) {
@@ -512,8 +513,8 @@ public class UserGroupAdminTest extends GrantTestBase {
         }
         try {
             revokeAllGrants(EscidocAbstractTest.TEST_USER_ACCOUNT_ID1);
-            doTestCreateGrant(HANDLE, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI
-                + "/" + groupId1, ROLE_HREF_USER_GROUP_INSPECTOR, AuthorizationException.class);
+            doTestCreateGrant(HANDLE, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI + "/"
+                + groupId1, ROLE_HREF_USER_GROUP_INSPECTOR, AuthorizationException.class);
         }
         finally {
             if (!isUserAccountTest) {
@@ -564,8 +565,8 @@ public class UserGroupAdminTest extends GrantTestBase {
             revokeAllGrants(EscidocAbstractTest.TEST_USER_ACCOUNT_ID1);
             //first create a grant as sysadmin
             String grantXml =
-                doTestCreateGrant(null, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI
-                    + "/" + groupId, ROLE_HREF_USER_GROUP_INSPECTOR, null);
+                doTestCreateGrant(null, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI + "/"
+                    + groupId, ROLE_HREF_USER_GROUP_INSPECTOR, null);
             String grantId = getObjidValue(grantXml);
 
             //then try to revoke it
@@ -620,13 +621,12 @@ public class UserGroupAdminTest extends GrantTestBase {
             revokeAllGrants(EscidocAbstractTest.TEST_USER_ACCOUNT_ID1);
             //first create a grant as sysadmin
             String grantXml =
-                doTestCreateGrant(null, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI
-                    + "/" + groupId1, ROLE_HREF_USER_GROUP_INSPECTOR, null);
+                doTestCreateGrant(null, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI + "/"
+                    + groupId1, ROLE_HREF_USER_GROUP_INSPECTOR, null);
             String grantId = getObjidValue(grantXml);
 
             //then try to revoke it
-            doTestRevokeGrant(HANDLE, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, grantId,
-                AuthorizationException.class);
+            doTestRevokeGrant(HANDLE, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, grantId, AuthorizationException.class);
         }
         finally {
             if (!isUserAccountTest) {
@@ -677,8 +677,8 @@ public class UserGroupAdminTest extends GrantTestBase {
             revokeAllGrants(EscidocAbstractTest.TEST_USER_ACCOUNT_ID1);
             //first create a grant as sysadmin
             String grantXml =
-                doTestCreateGrant(null, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI
-                    + "/" + groupId, ROLE_HREF_USER_GROUP_INSPECTOR, null);
+                doTestCreateGrant(null, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI + "/"
+                    + groupId, ROLE_HREF_USER_GROUP_INSPECTOR, null);
             String grantId = getObjidValue(grantXml);
 
             //then try to retrieve it
@@ -710,8 +710,7 @@ public class UserGroupAdminTest extends GrantTestBase {
             String grantId = getObjidValue(grantXml);
 
             //then try to retrieve it
-            doTestRetrieveGrant(HANDLE, EscidocAbstractTest.TEST_USER_GROUP_ID, grantId,
-                AuthorizationException.class);
+            doTestRetrieveGrant(HANDLE, EscidocAbstractTest.TEST_USER_GROUP_ID, grantId, AuthorizationException.class);
         }
         finally {
             if (isUserAccountTest) {
@@ -734,8 +733,8 @@ public class UserGroupAdminTest extends GrantTestBase {
             revokeAllGrants(EscidocAbstractTest.TEST_USER_ACCOUNT_ID1);
             //first create a grant as sysadmin
             String grantXml =
-                doTestCreateGrant(null, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI
-                    + "/" + groupId1, ROLE_HREF_USER_GROUP_INSPECTOR, null);
+                doTestCreateGrant(null, EscidocAbstractTest.TEST_USER_ACCOUNT_ID1, Constants.USER_GROUP_BASE_URI + "/"
+                    + groupId1, ROLE_HREF_USER_GROUP_INSPECTOR, null);
             String grantId = getObjidValue(grantXml);
 
             //then try to retrieve it

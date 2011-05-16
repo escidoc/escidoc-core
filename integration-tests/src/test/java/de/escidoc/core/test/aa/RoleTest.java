@@ -604,7 +604,8 @@ public class RoleTest extends AaTestBase {
     public void testAACro19() throws Exception {
 
         try {
-            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ROLE_PATH, "role_without_attribute_object_type.xml"));
+            create(EscidocAbstractTest
+                .getTemplateAsString(TEMPLATE_ROLE_PATH, "role_without_attribute_object_type.xml"));
             EscidocAbstractTest.failMissingException(WebserverSystemException.class);
         }
         catch (final Exception e) {
@@ -621,8 +622,8 @@ public class RoleTest extends AaTestBase {
     public void testAACro20() throws Exception {
 
         try {
-            create(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ROLE_PATH, "role_with_wrong_attribute_object_type.xml"));
+            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ROLE_PATH,
+                "role_with_wrong_attribute_object_type.xml"));
             EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }
         catch (final Exception e) {
@@ -1428,14 +1429,12 @@ public class RoleTest extends AaTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_NAME + "\"=or or or or and" });
         try {
             retrieveRoles(filterParams);
-            EscidocAbstractTest
-                    .failMissingException("Retrieving roles with providing corrupted filter params" + " not declined. ",
-                            InvalidSearchQueryException.class);
+            EscidocAbstractTest.failMissingException("Retrieving roles with providing corrupted filter params"
+                + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Retrieving roles with providing corrupted filter params" + "not declined, properly. ",
-                    InvalidSearchQueryException.class, e);
+            EscidocAbstractTest.assertExceptionType("Retrieving roles with providing corrupted filter params"
+                + "not declined, properly. ", InvalidSearchQueryException.class, e);
         }
     }
 
@@ -1452,14 +1451,12 @@ public class RoleTest extends AaTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + NAME_CREATED_BY + "\"=\"Some value\"" });
         try {
             retrieveRoles(filterParams);
-            EscidocAbstractTest
-                    .failMissingException("Retrieving roles with providing corrupted filter params" + " not declined. ",
-                            InvalidSearchQueryException.class);
+            EscidocAbstractTest.failMissingException("Retrieving roles with providing corrupted filter params"
+                + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Retrieving roles with providing corrupted filter params" + "not declined, properly. ",
-                    InvalidSearchQueryException.class, e);
+            EscidocAbstractTest.assertExceptionType("Retrieving roles with providing corrupted filter params"
+                + "not declined, properly. ", InvalidSearchQueryException.class, e);
         }
     }
 

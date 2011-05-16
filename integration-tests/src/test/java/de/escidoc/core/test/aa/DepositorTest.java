@@ -268,8 +268,8 @@ public class DepositorTest extends GrantTestBase {
         final String toBeUpdatedXml = updatedXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");
 
         try {
-            update(ITEM_HANDLER_CODE, createResourceId(getObjidValue(EscidocAbstractTest.getDocument(updatedXml)),
-                "1"), toBeUpdatedXml);
+            update(ITEM_HANDLER_CODE,
+                createResourceId(getObjidValue(EscidocAbstractTest.getDocument(updatedXml)), "1"), toBeUpdatedXml);
             EscidocAbstractTest.failMissingException(ReadonlyVersionException.class);
         }
         catch (final Exception e) {

@@ -98,7 +98,8 @@ public class DefaultPoliciesTest extends GrantTestBase {
      */
     public DefaultPoliciesTest() throws Exception {
         super(USER_ACCOUNT_HANDLER_CODE);
-        userGroupTestBase = new UserGroupTestBase(){};
+        userGroupTestBase = new UserGroupTestBase() {
+        };
     }
 
     /**
