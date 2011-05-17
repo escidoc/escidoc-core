@@ -98,10 +98,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
-			<artifactId>common-remote</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.escidoc.core</groupId>
 			<artifactId>statistic-service-impl</artifactId>
 		</dependency>
 		<dependency>
