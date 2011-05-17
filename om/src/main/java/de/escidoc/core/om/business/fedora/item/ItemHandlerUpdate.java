@@ -321,6 +321,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws EncodingSystemException    If encoding fails.
      * @throws IntegritySystemException   If the integrity of the repository is violated.
      */
+    @Deprecated
     protected void setContentTypeSpecificProperties(final String xml) throws FedoraSystemException, LockingException,
         WebserverSystemException, TripleStoreSystemException, EncodingSystemException, IntegritySystemException {
         try {
