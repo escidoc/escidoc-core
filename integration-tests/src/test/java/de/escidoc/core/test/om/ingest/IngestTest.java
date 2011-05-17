@@ -53,7 +53,6 @@ import static org.junit.Assert.fail;
  * 
  * @author Steffen Wagner, KST
  */
-@RunWith(value = Parameterized.class)
 public class IngestTest extends IngestTestBase {
 
     private static final Pattern OBJECT_PATTERN =
