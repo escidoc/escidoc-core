@@ -658,13 +658,6 @@
 						</manifest>
 					</archive>
 					<modules>
-						<jarModule>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>common-remote</artifactId>
-							<bundleFileName>12_common-remote.jar</bundleFileName>
-							<bundleDir>/</bundleDir>
-							<includeInApplicationXml>true</includeInApplicationXml>
-						</jarModule>
 						<webModule>
 							<groupId>org.escidoc</groupId>
 							<artifactId>fedoragsearch</artifactId>
