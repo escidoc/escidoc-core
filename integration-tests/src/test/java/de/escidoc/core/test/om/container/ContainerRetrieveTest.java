@@ -93,6 +93,34 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     }
 
     /**
+     * Test retrieving (virtual-)resource by name.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void retrieveResourcesByName() throws Exception {
+
+        String xml = null;
+        xml = retrieveResource(this.theContainerId, "version-history");
+        assertXmlValidVersionHistory(xml);
+
+        xml = retrieveResource(this.theContainerId, "parents");
+        // FIXME
+        //assertXmlValidVersionHistory(xml);
+
+        xml = retrieveResource(this.theContainerId, "members");
+        // FIXME
+        //assertXmlValidMembers(xml);
+
+        xml = retrieveResource(this.theContainerId, "relations");
+        assertXmlValidRelations(xml);
+
+        // dissemination (defined by content-model)
+        // FIXME used content-model has not sdef etc.
+        // xml = retrieveResource(this.theContainerId, "blafasel");
+    }
+
+    /**
      * Set up servlet test.
      *
      * @throws Exception If anything fails.

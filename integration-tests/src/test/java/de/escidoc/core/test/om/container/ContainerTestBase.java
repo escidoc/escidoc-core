@@ -297,6 +297,19 @@ public class ContainerTestBase extends OmTestBase {
     }
 
     /**
+     * Test retrieving the resources of an Container.
+     *
+     * @param id The id of the container.
+     * @param methodName The name of the requested method 
+     * @return The retrieved resources.
+     * @throws Exception If anything fails.
+     */
+    public String retrieveResource(final String id, final String methodName) throws Exception {
+
+        return handleXmlResult(getContainerClient().retrieveResource(id, methodName));
+    }
+
+    /**
      * Test retrieving the struct-map of a Container.
      *
      * @param id The id of the container.
