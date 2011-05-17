@@ -190,6 +190,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws StreamNotFoundException If datastream with content-model-specific id does not exist
      * @throws FedoraSystemException   If access to Fedora fail
      */
+    @Deprecated
     public Datastream getCts() throws StreamNotFoundException, FedoraSystemException {
         if (this.cts == null) {
             try {

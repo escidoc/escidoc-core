@@ -456,6 +456,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         return this.cts;
     }
 
+    @Deprecated
     public void setCts(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
         // TODO should lock only be checked in handler?
         // if (this.isLocked) {
@@ -712,7 +713,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                 }
             }
 
-            // isNew does not indicate that the datastream does not extist
+            // isNew does not indicate that the datastream does not exist
             // in fedora, it may be deleted
             if (contentChanged || isNew) {
                 this.contentStreams.put(name, ds);
