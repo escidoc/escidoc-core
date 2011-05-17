@@ -59,7 +59,7 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
         Future<PidListTO> futurePIDList = fedoraServiceClient.getNextPIDAsync("escidoc", noOfPids);
         PidListTO pidListTO = null;
         try {
-            pidListTO = futurePIDList.get(10, TimeUnit.SECONDS);
+            pidListTO = futurePIDList.get(60, TimeUnit.SECONDS);
             returnValue = pidListTO.getPid();
         }
         catch (InterruptedException e) {
