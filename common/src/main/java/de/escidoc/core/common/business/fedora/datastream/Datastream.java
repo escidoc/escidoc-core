@@ -34,6 +34,12 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.escidoc.core.services.fedora.AddDatastreamPathParam;
+import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
+import org.escidoc.core.services.fedora.ControlGroup;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.esidoc.core.utils.io.IOUtils;
+import org.fcrepo.client.FedoraClient;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.fcrepo.server.types.gen.MIMETypedStream;
 import org.joda.time.ReadableDateTime;
@@ -46,7 +52,9 @@ import org.xml.sax.SAXException;
 
 import javax.annotation.PostConstruct;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.PipedInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,8 +63,6 @@ import java.util.Map;
 
 /**
  * Representation of a datastream managed in Fedora Digital Repository System.
- * <p/>
- * Note: The Set <code>alternateIDs</code> is a not synchronized {@link HashSet HashSet}.
  *
  * @author Frank Schwichtenberg
  */
@@ -112,7 +118,8 @@ public class Datastream {
 
     private String checksum;
 
-    private static final boolean VERSIONABLE = true;
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")
@@ -442,6 +449,34 @@ public class Datastream {
      * @throws WebserverSystemException Thrown if getting Fedora instance fails.
      */
     public String persist(final boolean sync) throws FedoraSystemException, WebserverSystemException {
+        /*final AddDatastreamPathParam path = new AddDatastreamPathParam();
+        path.setPid(this.parentId);
+        path.setDsID(this.name);
+        final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
+        query.setAltIDs(this.alternateIDs);
+        query.setDsLabel(this.label);
+        query.setMimeType(this.mimeType);
+        query.setControlGroup(ControlGroup.fromValue(this.controlGroupValue));
+        if (this.getStream() == null && this.location != null) {
+            query.setDsLocation(this.location);
+            this.fedoraServiceClient.addDatastream(path, query, null);
+        }
+        else if (this.getStream() != null) {
+            query.setVersionable(true);
+            org.esidoc.core.utils.io.Datastream stream = new org.esidoc.core.utils.io.Datastream();
+            try {
+                stream.write(this.getStream());
+                stream.lock();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            this.fedoraServiceClient.addDatastream(path, query, stream);
+        }
+        // TODO: Timestamp auslesen!
+        if (sync) {
+            this.fedoraUtility.sync();
+        }*/
 
         if (this.getStream() == null && this.location != null) {
             this.timestamp =
@@ -452,8 +487,10 @@ public class Datastream {
         else if (this.getStream() != null) {
             this.timestamp =
                 this.fedoraUtility.addDatastream(this.parentId, this.name, this.alternateIDs
-                    .toArray(new String[alternateIDs.size()]), this.label, VERSIONABLE, this.getStream(), sync);
+                    .toArray(new String[alternateIDs.size()]), this.label, true, this.getStream(), sync);
         }
+
+
 
         return this.timestamp;
     }
@@ -510,7 +547,7 @@ public class Datastream {
      */
 
     /**
-     * Returns a {@link Set Set} of the alternate IDs of this datastream. Metadata datastreams have the alternate ID
+     * Returns a {@link java.util.Set Set} of the alternate IDs of this datastream. Metadata datastreams have the alternate ID
      * "metadata".
      *
      * @return The alternate IDs of this datastream.
@@ -520,8 +557,8 @@ public class Datastream {
     }
 
     /**
-     * Adds an alternate ID to the {@link Vector Vector} of the alternate IDs of this datastream. A subsequent call with
-     * the same string have no effect. A value off <code>null</code> may be forbidden.
+     * Adds an alternate ID to the {@link java.util.List List} of the alternate IDs of this datastream. A subsequent
+     * call with the same string have no effect. A value off <code>null</code> may be forbidden.
      *
      * @param alternateId An alternate ID to add to this Datastream.
      */
@@ -530,8 +567,8 @@ public class Datastream {
     }
 
     /**
-     * Replaces an alternate ID in the {@link Vector Vector} of the alternate IDs of this datastream. A subsequent call
-     * with the same string have no effect. A value off <code>null</code> may be forbidden.
+     * Replaces an alternate ID in the {@link java.util.List List} of the alternate IDs of this datastream. A
+     * subsequent call with the same string have no effect. A value off <code>null</code> may be forbidden.
      *
      * @param alternateId An alternate ID to add to this Datastream.
      * @param index       position to insert ID
@@ -544,7 +581,7 @@ public class Datastream {
     /**
      * Sets the alternate IDs for this datastream. Overrides all existing alternate IDs.
      *
-     * @param alternateIDs A {@link Set Set} of strings with alternate IDs.
+     * @param alternateIDs A {@link java.util.Set Set} of strings with alternate IDs.
      */
     public void setAlternateIDs(final List<String> alternateIDs) {
         this.alternateIDs = alternateIDs;

@@ -1,5 +1,9 @@
 package org.escidoc.core.services.fedora;
 
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
@@ -7,7 +11,7 @@ public final class AddDatastreamQueryParam {
 
     private ControlGroup controlGroup;
     private String dsLocation;
-    private String altIDs;
+    private List<String> altIDs = new ArrayList<String>();
     private String dsLabel;
     private Boolean versionable;
     private DatastreamState dsState;
@@ -33,11 +37,11 @@ public final class AddDatastreamQueryParam {
         this.dsLocation = dsLocation;
     }
 
-    public String getAltIDs() {
+    public List<String> getAltIDs() {
         return altIDs;
     }
 
-    public void setAltIDs(final String altIDs) {
+    public void setAltIDs(@NotNull final List<String> altIDs) {
         this.altIDs = altIDs;
     }
 

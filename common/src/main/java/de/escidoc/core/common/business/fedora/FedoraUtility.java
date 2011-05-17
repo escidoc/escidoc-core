@@ -292,33 +292,6 @@ public class FedoraUtility {
     }
 
     /**
-     * Get next object IDs from Fedora (Fedora use the name PID for there identifier).
-     * 
-     * @param noOfPids
-     *            Number of IDs which are to request.
-     * @return Array with object IDs.
-     * @throws FedoraSystemException
-     *             Thrown if collection values from Fedora failed.
-     */
-    public String[] getNextPID(final int noOfPids) throws FedoraSystemException {
-
-        String[] pids = null;
-        final NonNegativeInteger number = new NonNegativeInteger(String.valueOf(noOfPids));
-
-        final FedoraAPIM apim = borrowApim();
-        try {
-            pids = apim.getNextPID(number, this.identifierPrefix);
-        }
-        catch (final RemoteException e) {
-            throw new FedoraSystemException("Unable to get Obids from Fedora: " + e.getMessage(), e);
-        }
-        finally {
-            returnApim(apim);
-        }
-        return pids;
-    }
-
-    /**
      * The method sets the data stream status to a provided value.
      * 
      * @param pid
