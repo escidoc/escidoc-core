@@ -1184,18 +1184,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 content.setContent(new ByteArrayInputStream(
                     retrieveMembers(id, new LuceneRequestParameters(parameters))
                         .getBytes(XmlUtility.CHARACTER_ENCODING)));
-                return content;
             }
             catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
         }
 
-        if ("version-history".equals(resourceName)) {
+        else if ("version-history".equals(resourceName)) {
             try {
                 content.setContent(new ByteArrayInputStream(retrieveVersionHistory(id).getBytes(
                     XmlUtility.CHARACTER_ENCODING)));
-                return content;
             }
             catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
@@ -1205,23 +1203,32 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             try {
                 content.setContent(new ByteArrayInputStream(retrieveContentRelations(id).getBytes(
                     XmlUtility.CHARACTER_ENCODING)));
-                return content;
             }
             catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
         }
-
-        setContainer(id);
-        final String contentModelId = getContainer().getProperty(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID);
-        final byte[] bytes;
-        try {
-            bytes = this.fedoraUtility.getDissemination(id, contentModelId, resourceName);
+        else if ("parents".equals(resourceName)) {
+            try {
+                content
+                    .setContent(new ByteArrayInputStream(retrieveParents(id).getBytes(XmlUtility.CHARACTER_ENCODING)));
+            }
+            catch (final UnsupportedEncodingException e) {
+                throw new WebserverSystemException(e);
+            }
         }
-        catch (final FedoraSystemException e) {
-            throw new OperationNotFoundException(e);
+        else {
+            setContainer(id);
+            final String contentModelId = getContainer().getProperty(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID);
+            final byte[] bytes;
+            try {
+                bytes = this.fedoraUtility.getDissemination(id, contentModelId, resourceName);
+            }
+            catch (final FedoraSystemException e) {
+                throw new OperationNotFoundException(e);
+            }
+            content.setContent(new ByteArrayInputStream(bytes));
         }
-        content.setContent(new ByteArrayInputStream(bytes));
 
         return content;
     }
