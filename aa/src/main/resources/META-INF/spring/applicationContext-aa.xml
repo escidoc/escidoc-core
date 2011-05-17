@@ -55,7 +55,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="eSciDoc.core.common.SecurityInterceptorCache"/>
         </property>
         <property name="tsu">
-    jobDetail        <ref bean="business.TripleStoreUtility"/>
+            <ref bean="business.TripleStoreUtility"/>
         </property>
     </bean>
     <bean id="persistence.UserGroupDao" class="de.escidoc.core.aa.business.persistence.hibernate.HibernateUserGroupDao">
