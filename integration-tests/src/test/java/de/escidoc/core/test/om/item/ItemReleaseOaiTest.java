@@ -56,7 +56,7 @@ public class ItemReleaseOaiTest extends ItemTestBase {
         // create an item and save the id
         String xmlData =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                    "escidoc_item_198_for_create_withoutComponents_2Md-Records.xml");
+                "escidoc_item_198_for_create_withoutComponents_2Md-Records.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(theItemXml);
 

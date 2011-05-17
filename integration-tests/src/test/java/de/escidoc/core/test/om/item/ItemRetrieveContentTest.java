@@ -145,8 +145,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // create Item
         String xmlData =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_create_content.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_create_content.xml");
         Document itemDoc = EscidocAbstractTest.getDocument(xmlData);
 
         Document newItem = (Document) substitute(itemDoc, "/item/components", "######");

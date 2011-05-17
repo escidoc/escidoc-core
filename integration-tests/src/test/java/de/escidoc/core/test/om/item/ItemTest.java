@@ -141,8 +141,7 @@ public class ItemTest extends ItemTestBase {
             failException("No exception expected!", e);
         }
         assertXmlValidItem(item);
-        Node node =
-            selectSingleNode(EscidocAbstractTest.getDocument(item), "/item/properties/content-model-specific");
+        Node node = selectSingleNode(EscidocAbstractTest.getDocument(item), "/item/properties/content-model-specific");
         assertNull("No element content-model-specific expected.", node);
 
         // add c-m-s
@@ -156,8 +155,7 @@ public class ItemTest extends ItemTestBase {
         // remove content from c-m-s
         item = toString(deleteNodes(getDocument(item), "/item/properties/content-model-specific/nix"), true);
         item = update(itemId, item);
-        node =
-            selectSingleNode(EscidocAbstractTest.getDocument(item), "/item/properties/content-model-specific/nix");
+        node = selectSingleNode(EscidocAbstractTest.getDocument(item), "/item/properties/content-model-specific/nix");
         assertNull("No element content-model-specific expected.", node);
         // remove c-m-s should not delete
         item = toString(deleteNodes(getDocument(item), "/item/properties/content-model-specific"), true);
@@ -214,8 +212,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testCreateUpdateZim2Item() throws Exception {
 
-        Document xmlItem =
-            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "zim2-create.xml");
+        Document xmlItem = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "zim2-create.xml");
         String item = toString(xmlItem, true);
         // assertXmlValidItem(item);
 
@@ -248,8 +245,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testCreateUpdateIssue615() throws Exception {
 
-        Document xmlItem =
-            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "zim2-create.xml");
+        Document xmlItem = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "zim2-create.xml");
         String item = toString(xmlItem, true);
         // assertXmlValidItem(item);
 
@@ -439,12 +435,12 @@ public class ItemTest extends ItemTestBase {
 
         try {
             create(toBeCreatedXml);
-            EscidocAbstractTest.failMissingException("Creating item with empty content-model element not declined.", ec);
+            EscidocAbstractTest
+                .failMissingException("Creating item with empty content-model element not declined.", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Creating item with empty content-model element not declined" + ", properly",
-                            ec, e);
+            EscidocAbstractTest.assertExceptionType("Creating item with empty content-model element not declined"
+                + ", properly", ec, e);
         }
 
     }
@@ -693,7 +689,7 @@ public class ItemTest extends ItemTestBase {
     public void testCreatingItemWithOneComponentWithTwoMdRecords() throws Exception {
         Document xmlItem =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                    "escidoc_item_198_for_create_2_Component_Md-Records.xml");
+                "escidoc_item_198_for_create_2_Component_Md-Records.xml");
         NodeList mdRecordsBeforeCreate = selectNodeList(xmlItem, "/item/components/component[1]/md-records/md-record");
         String xml = create(toString(xmlItem, false));
         assertXmlValidItem(xml);
@@ -731,8 +727,7 @@ public class ItemTest extends ItemTestBase {
         Pattern PATTERN_OBJID_ATTRIBUTE = null;
         PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
 
-        NodeList components =
-            selectNodeList(EscidocAbstractTest.getDocument(xml), "/item/components/component/@href");
+        NodeList components = selectNodeList(EscidocAbstractTest.getDocument(xml), "/item/components/component/@href");
 
         for (int i = 0; i < components.getLength(); i++) {
             Node componentHrefNode = components.item(i);
@@ -974,8 +969,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testOMCi9() throws Exception {
         Document xmlItem =
-            EscidocAbstractTest
-                .getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_2_components.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_2_components.xml");
 
         String xml = create(toString(xmlItem, false));
         assertXmlValidItem(xml);
@@ -986,8 +980,7 @@ public class ItemTest extends ItemTestBase {
         Pattern PATTERN_OBJID_ATTRIBUTE = null;
         PATTERN_OBJID_ATTRIBUTE = Pattern.compile(".*\\/([^\"\\/]*)");
 
-        NodeList components =
-            selectNodeList(EscidocAbstractTest.getDocument(xml), "/item/components/component/@href");
+        NodeList components = selectNodeList(EscidocAbstractTest.getDocument(xml), "/item/components/component/@href");
 
         for (int i = 0; i < components.getLength(); i++) {
             Node componentHrefNode = components.item(i);
@@ -1116,8 +1109,7 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testCreateItemWithFirstComponendWithoutMdRecords() throws Exception {
         Document xmlItem =
-            EscidocAbstractTest
-                .getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_2_components.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_2_components.xml");
         Node itemWith1ComponentWithoutMdRecords = deleteElement(xmlItem, "item/components/component[1]/md-records");
         Node itemWithContentin1ComponentWithExternalUrl =
             substitute(itemWith1ComponentWithoutMdRecords, "item/components/component[1]/content/@storage",
@@ -1206,8 +1198,8 @@ public class ItemTest extends ItemTestBase {
             EscidocAbstractTest.assertExceptionType(ec, e);
         }
         // read only elements are ignored now
-        assertNotEquals("Read-only element should not be set ", selectSingleNode(
-            EscidocAbstractTest.getDocument(xml), "/item/properties/creation-date").getTextContent(), newDate);
+        assertNotEquals("Read-only element should not be set ", selectSingleNode(EscidocAbstractTest.getDocument(xml),
+            "/item/properties/creation-date").getTextContent(), newDate);
     }
 
     /**
@@ -1216,11 +1208,11 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testRelations() throws Exception {
         String itemXml1 =
-            create(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_create.xml"));
         String itemXml2 =
-            create(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_create.xml"));
 
         String createdItemId1 = getIdFromRootElement(itemXml1);
         String createdItemId2 = getIdFromRootElement(itemXml2);
@@ -1228,8 +1220,8 @@ public class ItemTest extends ItemTestBase {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_createWithRelations.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID2##", createdItemId2);
@@ -1320,8 +1312,8 @@ public class ItemTest extends ItemTestBase {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_createWithRelations.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID2##", createdItemId2);
@@ -1337,7 +1329,7 @@ public class ItemTest extends ItemTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("ReferencedResourceNotFound expected.",
-                    ReferencedResourceNotFoundException.class, e);
+                ReferencedResourceNotFoundException.class, e);
         }
     }
 
@@ -1353,8 +1345,8 @@ public class ItemTest extends ItemTestBase {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_createWithRelations.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID2##", createdItemId2);
@@ -1370,8 +1362,8 @@ public class ItemTest extends ItemTestBase {
                 + " target ids containing a version number.");
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("InvalidContentException expected.", InvalidContentException.class, e);
+            EscidocAbstractTest.assertExceptionType("InvalidContentException expected.", InvalidContentException.class,
+                e);
         }
     }
 
@@ -1382,11 +1374,11 @@ public class ItemTest extends ItemTestBase {
     public void testRelationsWithWrongPredicate() throws Exception {
 
         String itemXml1 =
-            create(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_create.xml"));
         String itemXml2 =
-            create(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_create.xml"));
 
         String createdItemId1 = null;
         String createdItemId2 = null;
@@ -1405,8 +1397,8 @@ public class ItemTest extends ItemTestBase {
         String href1 = "/ir/item/" + createdItemId1;
         String href2 = "/ir/item/" + createdItemId2;
         String itemForCreateWithRelationsXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_createWithRelations.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID2##", createdItemId2);
@@ -1425,7 +1417,7 @@ public class ItemTest extends ItemTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("RelationPredicateNotFoundException expected.",
-                    RelationPredicateNotFoundException.class, e);
+                RelationPredicateNotFoundException.class, e);
         }
 
     }
@@ -1484,8 +1476,8 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testCreateItemWith2Mdrecords() throws Exception {
         Document xmlItem =
-            EscidocAbstractTest
-                    .getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_2_md_records_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_2_md_records_for_create.xml");
         NodeList mdrecords = selectNodeList(xmlItem, "/item/md-records/md-record");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
 
@@ -1508,7 +1500,7 @@ public class ItemTest extends ItemTestBase {
     public void testCreateItemWith2EscidocMdrecords() throws Exception {
         String xmlItem =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                    "escidoc_item_2_escidoc_md_records_for_create.xml");
+                "escidoc_item_2_escidoc_md_records_for_create.xml");
         try {
             create(xmlItem);
             fail("InvalidContentException expected if cretaing item without" + " Md-records.");
@@ -1528,8 +1520,8 @@ public class ItemTest extends ItemTestBase {
     @Test
     public void testCreateItemWithoutMdrecords() throws Exception {
         Document xmlItem =
-            EscidocAbstractTest
-                    .getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_2_md_records_for_create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_2_md_records_for_create.xml");
 
         Node xmlItemWithoutMdRecords = deleteElement(xmlItem, "/item/md-records");
 
@@ -1555,8 +1547,7 @@ public class ItemTest extends ItemTestBase {
     public void testDeleteComponent01() throws Exception {
 
         String itemXml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         Document itemDoc = getDocument(createdItem);
 
@@ -1586,8 +1577,7 @@ public class ItemTest extends ItemTestBase {
     public void testDeleteComponent02() throws Exception {
 
         String itemXml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         Document itemDoc = getDocument(createdItem);
 
@@ -1693,7 +1683,8 @@ public class ItemTest extends ItemTestBase {
         Document toBeCreatedDocument =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
-        String href = selectSingleNodeAsserted(toBeCreatedDocument, ItemXpathsProvider.XPATH_ITEM_CONTEXT_XLINK_HREF)
+        String href =
+            selectSingleNodeAsserted(toBeCreatedDocument, ItemXpathsProvider.XPATH_ITEM_CONTEXT_XLINK_HREF)
                 .getTextContent();
         href = href.replaceFirst(Constants.CONTEXT_BASE_URI, Constants.ORGANIZATIONAL_UNIT_BASE_URI);
         substitute(toBeCreatedDocument, ItemXpathsProvider.XPATH_ITEM_CONTEXT_XLINK_HREF, href);
@@ -1705,8 +1696,8 @@ public class ItemTest extends ItemTestBase {
             EscidocAbstractTest.failMissingException("Creating item with invalid object href not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Creating item with invalid object href not declined," + " properly. ", ec, e);
+            EscidocAbstractTest.assertExceptionType("Creating item with invalid object href not declined,"
+                + " properly. ", ec, e);
         }
     }
 
@@ -1726,7 +1717,7 @@ public class ItemTest extends ItemTestBase {
 
         String href =
             selectSingleNodeAsserted(toBeCreatedDocument, ItemXpathsProvider.XPATH_ITEM_CONTENT_TYPE_XLINK_HREF)
-                    .getTextContent();
+                .getTextContent();
         href = href.replaceFirst(Constants.CONTENT_MODEL_BASE_URI, Constants.ORGANIZATIONAL_UNIT_BASE_URI);
         substitute(toBeCreatedDocument, ItemXpathsProvider.XPATH_ITEM_CONTENT_TYPE_XLINK_HREF, href);
 
@@ -1737,8 +1728,8 @@ public class ItemTest extends ItemTestBase {
             EscidocAbstractTest.failMissingException("Creating item with invalid object href not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Creating item with invalid object href not declined," + " properly. ", ec, e);
+            EscidocAbstractTest.assertExceptionType("Creating item with invalid object href not declined,"
+                + " properly. ", ec, e);
         }
     }
 

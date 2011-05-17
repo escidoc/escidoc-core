@@ -107,8 +107,8 @@ public class TextExtractionSearchTest extends SearchTestBase {
         try {
             // Create Item submit and release it //////////////////////////
             String xmlData =
-                EscidocAbstractTest
-                        .getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_text_extractor_error_item_rest.xml");
+                EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH,
+                    "escidoc_text_extractor_error_item_rest.xml");
             String xml = item.create(xmlData);
             String lastModDate = getLastModificationDate(xml);
             itemId = getId(xml);

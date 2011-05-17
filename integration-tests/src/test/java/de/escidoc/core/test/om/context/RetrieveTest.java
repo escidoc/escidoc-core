@@ -84,8 +84,8 @@ public class RetrieveTest extends ContextTestBase {
             // String test2 = null;
             String item = null;
             Document itemDoc =
-                EscidocAbstractTest
-                        .getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+                EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
+                    "escidoc_item_198_for_create.xml");
             item = toString(substitute(itemDoc, "/item/properties/context/@href", "/ir/context/" + contextId), true);
             item = createItem(item);
             // test2 = getTemplateAsString(TEMPLATE_ITEM_PATH,
@@ -284,8 +284,7 @@ public class RetrieveTest extends ContextTestBase {
         // assertEquals(name, title);
 
         String propName =
-            selectSingleNodeAsserted(EscidocAbstractTest.getDocument(properties), "/properties/name")
-                .getTextContent();
+            selectSingleNodeAsserted(EscidocAbstractTest.getDocument(properties), "/properties/name").getTextContent();
 
         assertEquals(propName, name);
     }

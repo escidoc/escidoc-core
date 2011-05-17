@@ -78,8 +78,7 @@ public class RetrieveContextsTest extends ContextTestBase {
         if (noOfContexts == -1) {
             String contexts = retrieveContexts(getFilterRetrieveContexts(null, null, null));
             assertXmlValidSrwResponse(contexts);
-            noOfContexts =
-                getNoOfSelections(EscidocAbstractTest.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT);
+            noOfContexts = getNoOfSelections(EscidocAbstractTest.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT);
             noOfPubManContexts =
                 getNoOfSelections(EscidocAbstractTest.getDocument(contexts), XPATH_SRW_CONTEXT_LIST_CONTEXT
                     + "/properties[type=\"" + CONTEXT_TYPE_PUB_MAN + "\"]");

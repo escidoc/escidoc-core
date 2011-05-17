@@ -195,16 +195,16 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
         assignContentPid(itemId, componentId, getPidParam(itemId, itemUrl + itemId));
 
         String contentPid1 =
-            selectSingleNode(EscidocAbstractTest.getDocument(retrieveComponent(itemId, componentId)),
-                XPATH_CONTENT_PID).getTextContent();
+            selectSingleNode(EscidocAbstractTest.getDocument(retrieveComponent(itemId, componentId)), XPATH_CONTENT_PID)
+                .getTextContent();
 
         assertNotNull(contentPid1);
         release(itemId, getTheLastModificationParam(false, itemId));
 
         // check if returned content PID equals RELS-EXT entry
         String contentPid2 =
-            selectSingleNode(EscidocAbstractTest.getDocument(retrieveComponent(itemId, componentId)),
-                XPATH_CONTENT_PID).getTextContent();
+            selectSingleNode(EscidocAbstractTest.getDocument(retrieveComponent(itemId, componentId)), XPATH_CONTENT_PID)
+                .getTextContent();
 
         assertEquals(contentPid1, contentPid2);
 
@@ -219,8 +219,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
 
         // check if content PID still exists
         Node contentPid3 =
-            selectSingleNode(EscidocAbstractTest.getDocument(retrieveComponent(itemId, componentId)),
-                XPATH_CONTENT_PID);
+            selectSingleNode(EscidocAbstractTest.getDocument(retrieveComponent(itemId, componentId)), XPATH_CONTENT_PID);
 
         assertNotNull("missing content PID after item update", contentPid3);
         assertEquals(contentPid2, contentPid3.getTextContent());
@@ -269,8 +268,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
 
         // check if content PID still exists
         Node contentPid2 =
-            selectSingleNode(EscidocAbstractTest.getDocument(retrieveComponent(itemId, componentId)),
-                XPATH_CONTENT_PID);
+            selectSingleNode(EscidocAbstractTest.getDocument(retrieveComponent(itemId, componentId)), XPATH_CONTENT_PID);
 
         assertNull("content PID still exists after component update", contentPid2);
     }
@@ -419,8 +417,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
      */
     private String createItem() throws Exception {
         String xmlData =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         return (create(xmlData));
     }

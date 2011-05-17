@@ -61,8 +61,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
     @Before
     public void setUp() throws Exception {
         ITEM_XML =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         CREATED_ITEM = EscidocAbstractTest.getDocument(create(ITEM_XML));
         ITEM_ID = getObjidValue(CREATED_ITEM);
     }

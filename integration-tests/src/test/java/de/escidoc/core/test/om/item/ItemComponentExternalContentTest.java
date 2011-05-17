@@ -263,7 +263,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase {
         // get new component from template
         String templateComponentXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                    "escidoc_item_198_for_create_2_Component_Md-Records.xml");
+                "escidoc_item_198_for_create_2_Component_Md-Records.xml");
         Node itemWithFirstComponentWithoutAttributeStorage =
             deleteAttribute(EscidocAbstractTest.getDocument(templateComponentXml),
                 "/item/components/component[1]/content/@storage");

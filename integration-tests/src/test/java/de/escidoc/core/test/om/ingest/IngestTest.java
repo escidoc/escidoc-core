@@ -74,7 +74,7 @@ public class IngestTest extends IngestTestBase {
 
         String toBeCreatedXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH,
-                    "rest/escidoc_item_198_for_create_2_Component_Md-Records.xml");
+                "rest/escidoc_item_198_for_create_2_Component_Md-Records.xml");
 
         String createdXml = ingest(toBeCreatedXml);
 

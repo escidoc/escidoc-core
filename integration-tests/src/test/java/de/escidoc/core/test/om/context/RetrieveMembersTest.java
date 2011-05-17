@@ -144,9 +144,9 @@ public class RetrieveMembersTest extends ContextTestBase {
 
         log("Create context in state '" + expectedState + "'");
         Document created =
-            EscidocAbstractTest.getDocument(create(toString(substitute(
-                    EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml"),
-                    "/context/properties/name", getUniqueName("PubMan Context ")), false)));
+            EscidocAbstractTest.getDocument(create(toString(substitute(EscidocAbstractTest.getTemplateAsDocument(
+                TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml"), "/context/properties/name",
+                getUniqueName("PubMan Context ")), false)));
         String objId = getObjidValue(created);
 
         if (CONTEXT_STATUS_CREATED.equals(expectedState)) {
@@ -240,7 +240,7 @@ public class RetrieveMembersTest extends ContextTestBase {
         Node create = null;
         create =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + "/rest",
-                    "create_container_WithoutMembers_v1.1.xml");
+                "create_container_WithoutMembers_v1.1.xml");
 
         // -------------------------------------------------
         if (contextID != null) {
@@ -387,8 +387,8 @@ public class RetrieveMembersTest extends ContextTestBase {
         String members = retrieveMembers(contextId, filterParams);
 
         assertXmlValidSrwResponse(members);
-        assertEquals("Type filter doesn't work!", noOfItems, getNoOfSelections(EscidocAbstractTest
-            .getDocument(members), XPATH_SRW_CONTEXT_LIST_MEMBER + "/item"));
+        assertEquals("Type filter doesn't work!", noOfItems, getNoOfSelections(
+            EscidocAbstractTest.getDocument(members), XPATH_SRW_CONTEXT_LIST_MEMBER + "/item"));
     }
 
     /**
@@ -470,8 +470,8 @@ public class RetrieveMembersTest extends ContextTestBase {
         assertXmlValidSrwResponse(members);
         assertEquals("Content type filter doesn't work!", noOfItemsOfCTPersistent4, getNoOfSelections(
             EscidocAbstractTest.getDocument(members), XPATH_SRW_CONTEXT_LIST_MEMBER + "/item"));
-        assertEquals("Content type doesn't work!", noOfContainersOfCTPersistent4, getNoOfSelections(
-            EscidocAbstractTest.getDocument(members), XPATH_SRW_CONTEXT_LIST_MEMBER + "/container"));
+        assertEquals("Content type doesn't work!", noOfContainersOfCTPersistent4, getNoOfSelections(EscidocAbstractTest
+            .getDocument(members), XPATH_SRW_CONTEXT_LIST_MEMBER + "/container"));
     }
 
     /**
@@ -510,8 +510,8 @@ public class RetrieveMembersTest extends ContextTestBase {
         String members = retrieveMembers(contextId, filterParams);
 
         assertXmlValidSrwResponse(members);
-        assertEquals("Content type doesn't work!", noOfContainersOfCTPersistent4, getNoOfSelections(
-            EscidocAbstractTest.getDocument(members), XPATH_SRW_CONTEXT_LIST_MEMBER + "/container"));
+        assertEquals("Content type doesn't work!", noOfContainersOfCTPersistent4, getNoOfSelections(EscidocAbstractTest
+            .getDocument(members), XPATH_SRW_CONTEXT_LIST_MEMBER + "/container"));
     }
 
     /**
@@ -699,8 +699,7 @@ public class RetrieveMembersTest extends ContextTestBase {
         NodeList items =
             selectNodeList(EscidocAbstractTest.getDocument(list), XPATH_SRW_CONTEXT_LIST_MEMBER + "/item/@objid");
         NodeList containers =
-            selectNodeList(EscidocAbstractTest.getDocument(list), XPATH_SRW_CONTEXT_LIST_MEMBER
-                + "/container/@objid");
+            selectNodeList(EscidocAbstractTest.getDocument(list), XPATH_SRW_CONTEXT_LIST_MEMBER + "/container/@objid");
 
         for (int count = containers.getLength() - 1; count >= 0; count--) {
             Node node = containers.item(count);

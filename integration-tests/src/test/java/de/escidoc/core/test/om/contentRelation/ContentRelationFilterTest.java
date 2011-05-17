@@ -70,8 +70,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
 
         assertXmlValidSrwResponse(result);
 
-        NodeList relations =
-            selectNodeList(EscidocAbstractTest.getDocument(result), XPATH_SRW_RELATION_LIST_RELATION);
+        NodeList relations = selectNodeList(EscidocAbstractTest.getDocument(result), XPATH_SRW_RELATION_LIST_RELATION);
 
         assertTrue("Wrong number of content relations matched filter criteria, " + "expected 1, but was "
             + relations.getLength(), relations.getLength() == 1);
@@ -98,8 +97,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
 
         assertXmlValidSrwResponse(result);
 
-        NodeList relations =
-            selectNodeList(EscidocAbstractTest.getDocument(result), XPATH_SRW_RELATION_LIST_RELATION);
+        NodeList relations = selectNodeList(EscidocAbstractTest.getDocument(result), XPATH_SRW_RELATION_LIST_RELATION);
 
         assertTrue("Wrong number of content relations matched filter criteria, " + "expected 0, but was "
             + relations.getLength(), relations.getLength() == 0);

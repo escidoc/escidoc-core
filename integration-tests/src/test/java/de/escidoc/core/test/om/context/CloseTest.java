@@ -129,8 +129,7 @@ public class CloseTest extends ContextTestBase {
         close(id, getTaskParam(lastModified));
 
         String xmlData =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         Document itemDoc = EscidocAbstractTest.getDocument(xmlData);
 
         String contextId = null;
@@ -160,8 +159,7 @@ public class CloseTest extends ContextTestBase {
         String opened = retrieve(contextId);
 
         String xmlData =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         Document itemDoc = EscidocAbstractTest.getDocument(xmlData);
 
         String contextIdRef = null;

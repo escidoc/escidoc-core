@@ -69,8 +69,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     @Before
     public void setUp() throws Exception {
         itemXml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         createdItem = EscidocAbstractTest.getDocument(create(itemXml));
         itemId = getObjidValue(createdItem);
         componentNo = 1;

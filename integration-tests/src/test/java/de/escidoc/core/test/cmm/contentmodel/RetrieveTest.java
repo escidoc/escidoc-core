@@ -55,8 +55,8 @@ public class RetrieveTest extends ContentModelTestBase {
     @Before
     public void setUp() throws Exception {
         Document contentModel =
-            EscidocAbstractTest
-                    .getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-all-for-create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+                "content-model-all-for-create.xml");
         contentModelXml = toString(contentModel, false);
         contentModelXml = create(contentModelXml);
         contentModelId = getObjidValue(contentModelXml);

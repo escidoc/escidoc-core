@@ -71,8 +71,7 @@ public class ItemLifecycleTest extends ItemTestBase {
     public void setUp() throws Exception {
         // create an item and save the id
         String xmlData =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(theItemXml);
     }
@@ -649,8 +648,8 @@ public class ItemLifecycleTest extends ItemTestBase {
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising failed with unexpected exception. ",
+                InvalidStatusException.class, e);
         }
     }
 
@@ -686,8 +685,8 @@ public class ItemLifecycleTest extends ItemTestBase {
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising failed with unexpected exception. ",
+                InvalidStatusException.class, e);
         }
     }
 
@@ -725,8 +724,8 @@ public class ItemLifecycleTest extends ItemTestBase {
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Revising failed with unexpected exception. ", InvalidStatusException.class, e);
+            EscidocAbstractTest.assertExceptionType("Revising failed with unexpected exception. ",
+                InvalidStatusException.class, e);
         }
     }
 
@@ -746,7 +745,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Revising unknown item failed with unexpected exception. ",
-                    ItemNotFoundException.class, e);
+                ItemNotFoundException.class, e);
         }
     }
 
@@ -766,7 +765,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Revising without id failed with unexpected exception. ",
-                    MissingMethodParameterException.class, e);
+                MissingMethodParameterException.class, e);
         }
     }
 
@@ -788,7 +787,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Revising without id failed with unexpected exception. ",
-                    MissingMethodParameterException.class, e);
+                MissingMethodParameterException.class, e);
         }
     }
 
@@ -809,9 +808,9 @@ public class ItemLifecycleTest extends ItemTestBase {
             EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Revising without last modification date failed with unexpected exception. ",
-                            MissingMethodParameterException.class, e);
+            EscidocAbstractTest.assertExceptionType(
+                "Revising without last modification date failed with unexpected exception. ",
+                MissingMethodParameterException.class, e);
         }
     }
 
@@ -832,9 +831,9 @@ public class ItemLifecycleTest extends ItemTestBase {
             EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Revising without last modification date failed with unexpected exception. ",
-                            XmlCorruptedException.class, e);
+            EscidocAbstractTest.assertExceptionType(
+                "Revising without last modification date failed with unexpected exception. ",
+                XmlCorruptedException.class, e);
         }
     }
 
@@ -855,8 +854,8 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(
-                    "Revising with outdated last modification date failed with unexpected exception. ",
-                    OptimisticLockingException.class, e);
+                "Revising with outdated last modification date failed with unexpected exception. ",
+                OptimisticLockingException.class, e);
         }
     }
 
@@ -872,7 +871,8 @@ public class ItemLifecycleTest extends ItemTestBase {
             // create and submit item by a depositor
             PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
             final String toBeCreatedXml =
-                EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+                EscidocAbstractTest
+                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
             theItemXml = create(toBeCreatedXml);
             theItemId = getObjidValue(theItemXml);
 
@@ -896,25 +896,24 @@ public class ItemLifecycleTest extends ItemTestBase {
                 theItemXml = retrieve(theItemId);
             }
             catch (final Exception e) {
-                EscidocAbstractTest
-                        .failException("Retrieving the revised item by the depositor failed with exception. ", e);
+                EscidocAbstractTest.failException(
+                    "Retrieving the revised item by the depositor failed with exception. ", e);
             }
             theItemXml.replaceFirst("", "");
             try {
                 theItemXml = update(theItemId, theItemXml);
             }
             catch (final Exception e) {
-                EscidocAbstractTest
-                        .failException("Updating the revised item by the depositor failed with exception. ", e);
+                EscidocAbstractTest.failException("Updating the revised item by the depositor failed with exception. ",
+                    e);
             }
             param = getTheLastModificationParam(false);
             try {
                 submit(theItemId, param);
             }
             catch (final Exception e) {
-                EscidocAbstractTest
-                        .failException("Submitting the revised, updated item by the depositor failed with exception. ",
-                                e);
+                EscidocAbstractTest.failException(
+                    "Submitting the revised, updated item by the depositor failed with exception. ", e);
             }
 
         }

@@ -173,8 +173,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             EscidocAbstractTest.failMissingException(StagingFileNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                .assertExceptionType("Unexpected exception, ", StagingFileNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Unexpected exception, ", StagingFileNotFoundException.class, e);
         }
     }
 
@@ -191,8 +190,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             EscidocAbstractTest.failMissingException(StagingFileNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                .assertExceptionType("Unexpected exception, ", StagingFileNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Unexpected exception, ", StagingFileNotFoundException.class, e);
         }
     }
 
@@ -227,13 +225,12 @@ public abstract class StagingFileTest extends StagingFileTestBase {
 
         try {
             httpRes = retrieveStagingFile(objidValue);
-            EscidocAbstractTest.failMissingException(
-                    "Upload Servlet's get method did not decline" + " repeated retrieval of a staging file, ",
-                    StagingFileNotFoundException.class);
+            EscidocAbstractTest.failMissingException("Upload Servlet's get method did not decline"
+                + " repeated retrieval of a staging file, ", StagingFileNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Upload Servlet's get method did not decline" +
-                    " repeated retrieval of a staging file, correctly, ", StagingFileNotFoundException.class, e);
+            EscidocAbstractTest.assertExceptionType("Upload Servlet's get method did not decline"
+                + " repeated retrieval of a staging file, correctly, ", StagingFileNotFoundException.class, e);
         }
 
     }

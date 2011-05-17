@@ -77,8 +77,8 @@ public class AdminDescriptorsTest extends ContextTestBase {
                 getTheLastModificationParam(true, contextId, "comment", lastModificationDate));
 
             String filename = "escidoc_item_198_for_create.xml";
-            createItem(toString(substitute(
-                    EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", filename), "/item/properties/context/@href", "/ir/context/" + contextId), true));
+            createItem(toString(substitute(EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
+                filename), "/item/properties/context/@href", "/ir/context/" + contextId), true));
         }
     }
 

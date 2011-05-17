@@ -199,8 +199,8 @@ public class ReportTest extends ReportTestBase {
      */
     private void triggerPreprocessing(final String aggrDefinitionId, final String date) throws Exception {
         String preprocessingInformationXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_PREPROCESSING_INFO_PATH, "escidoc_preprocessing_information1.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_PREPROCESSING_INFO_PATH,
+                "escidoc_preprocessing_information1.xml");
         Document doc = EscidocAbstractTest.getDocument(preprocessingInformationXml);
         substitute(doc, "/preprocessing-information/start-date", date);
         substitute(doc, "/preprocessing-information/end-date", date);
@@ -312,12 +312,12 @@ public class ReportTest extends ReportTestBase {
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
         try {
             retrieve("Corrupted");
-            EscidocAbstractTest.failMissingException("Retrieving report with providing corrupted xml not declined.", ec);
+            EscidocAbstractTest
+                .failMissingException("Retrieving report with providing corrupted xml not declined.", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Retrieving report with providing corrupted xml not declined," + " properly.",
-                            ec, e);
+            EscidocAbstractTest.assertExceptionType("Retrieving report with providing corrupted xml not declined,"
+                + " properly.", ec, e);
         }
     }
 
@@ -335,8 +335,8 @@ public class ReportTest extends ReportTestBase {
             EscidocAbstractTest.failMissingException("Retrieving report without providing xml not declined.", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                    "Retrieving report without providing corrupted xml not declined," + " properly.", ec, e);
+            EscidocAbstractTest.assertExceptionType("Retrieving report without providing corrupted xml not declined,"
+                + " properly.", ec, e);
         }
     }
 

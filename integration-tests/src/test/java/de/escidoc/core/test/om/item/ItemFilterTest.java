@@ -68,8 +68,7 @@ public class ItemFilterTest extends ItemTestBase {
     public void testFilterCreatedBy() throws Exception {
         theItemId = createItem();
 
-        String createdBy =
-            getObjidValue(EscidocAbstractTest.getDocument(theItemXml), "/item/properties/created-by");
+        String createdBy = getObjidValue(EscidocAbstractTest.getDocument(theItemXml), "/item/properties/created-by");
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + theItemId + " and "
@@ -302,9 +301,10 @@ public class ItemFilterTest extends ItemTestBase {
             // create container and item hierarchy
             String containerXml =
                 EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
-                        "create_container_WithoutMembers_v1.1.xml");
+                    "create_container_WithoutMembers_v1.1.xml");
             String itemXml =
-                EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+                EscidocAbstractTest
+                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
             String c1 = createContainer();
 
             getContainerClient().createItem(c1, itemXml);
@@ -593,8 +593,8 @@ public class ItemFilterTest extends ItemTestBase {
      */
     private String createContainer() throws Exception {
         String xmlData =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
+                "create_container_WithoutMembers_v1.1.xml");
         String theContainerXml = handleXmlResult(getContainerClient().create(xmlData));
 
         return getObjidValue(theContainerXml);
@@ -608,8 +608,7 @@ public class ItemFilterTest extends ItemTestBase {
      */
     private String createItem() throws Exception {
         String xmlData =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(EscidocAbstractTest.getDocument(theItemXml));
         return theItemId;

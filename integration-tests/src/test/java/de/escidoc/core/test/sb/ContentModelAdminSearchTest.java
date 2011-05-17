@@ -341,8 +341,7 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
             if (creatorHandle != null) {
                 PWCallback.setHandle(creatorHandle);
             }
-            Document xmlData =
-                EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_SB_CONTENT_MODEL_PATH, templateName);
+            Document xmlData = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_SB_CONTENT_MODEL_PATH, templateName);
             String xml = contentModel.create(toString(xmlData, false));
             String objectId = getId(xml);
 

@@ -73,8 +73,7 @@ public class ItemMetadataTest extends ItemTestBase {
         }
 
         // add md-record with name dc
-        Document mdRecordDC =
-            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "md-record.xml");
+        Document mdRecordDC = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "md-record.xml");
         Node newMdRecord = selectSingleNode(mdRecordDC, "/md-record");
 
         Node importedNde = curItem.importNode(newMdRecord, true);

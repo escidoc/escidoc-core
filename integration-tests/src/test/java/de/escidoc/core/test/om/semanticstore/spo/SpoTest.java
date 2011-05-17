@@ -198,7 +198,7 @@ public class SpoTest extends SpoTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("InvalidTripleStoreQueryException excpected.",
-                    InvalidTripleStoreQueryException.class, e);
+                InvalidTripleStoreQueryException.class, e);
         }
     }
 
@@ -215,7 +215,7 @@ public class SpoTest extends SpoTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("InvalidTripleStoreOutputFormatException excpected.",
-                    InvalidTripleStoreOutputFormatException.class, e);
+                InvalidTripleStoreOutputFormatException.class, e);
         }
 
     }
@@ -303,8 +303,8 @@ public class SpoTest extends SpoTestBase {
         OmTestBase testBase = new OmTestBase();
         String taskParam =
             "<param last-modification-date=\""
-                + getLastModificationDateValue(
-                    EscidocAbstractTest.getDocument(handleXmlResult(testBase.getItemClient().retrieve(sourceId)))) + "\">";
+                + getLastModificationDateValue(EscidocAbstractTest.getDocument(handleXmlResult(testBase
+                    .getItemClient().retrieve(sourceId)))) + "\">";
         taskParam = taskParam + "<relation><targetId>" + targetId + "</targetId>";
         taskParam = taskParam + "<predicate>";
         if (predicate != null) {

@@ -79,8 +79,8 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // full Content Model
         cmXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-all-for-create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+                "content-model-all-for-create.xml");
         createdXML = create(cmXml);
         contentModelId = getObjidValue(createdXML);
 
@@ -350,8 +350,8 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 1
         String contentModelXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-all-for-create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+                "content-model-all-for-create.xml");
         String cmV1E1 = create(contentModelXml);
 
         Document cmDocV1E1 = getDocument(cmV1E1);

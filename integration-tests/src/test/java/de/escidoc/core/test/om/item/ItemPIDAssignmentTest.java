@@ -117,8 +117,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         assertXmlValidItem(itemXml);
 
         if (!getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            Node itemObjectPidNode =
-                selectSingleNode(EscidocAbstractTest.getDocument(itemXml), XPATH_ITEM_OBJECT_PID);
+            Node itemObjectPidNode = selectSingleNode(EscidocAbstractTest.getDocument(itemXml), XPATH_ITEM_OBJECT_PID);
             assertNotNull(itemObjectPidNode);
             Node returnedPid = selectSingleNode(EscidocAbstractTest.getDocument(objectPid), XPATH_RESULT_PID);
 
@@ -342,8 +341,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             itemXml = retrieve(versionId);
             // FIXME pid is not assigned; exception was expected
             returnedPid = selectSingleNode(EscidocAbstractTest.getDocument(pidXml), XPATH_RESULT_PID);
-            Node currentVersionPid =
-                selectSingleNode(EscidocAbstractTest.getDocument(itemXml), XPATH_ITEM_VERSION_PID);
+            Node currentVersionPid = selectSingleNode(EscidocAbstractTest.getDocument(itemXml), XPATH_ITEM_VERSION_PID);
             assertNotNull(currentVersionPid);
             assertEquals(returnedPid.getTextContent(), currentVersionPid.getTextContent());
         }
@@ -383,9 +381,8 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         // get last-modification-date
         String pidParam =
-            "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocAbstractTest.getDocument(itemXml)) + "\" >"
-                + "<url>http://escidoc.de</url>" + "</param>";
+            "<param last-modification-date=\"" + getLastModificationDateValue(EscidocAbstractTest.getDocument(itemXml))
+                + "\" >" + "<url>http://escidoc.de</url>" + "</param>";
 
         // test if no pid is assigned already
         Node node = selectSingleNode(EscidocAbstractTest.getDocument(itemXml), "/item/properties/version/pid");
@@ -458,9 +455,8 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         itemXml = update(itemId, newItemXml);
 
         pidParam =
-            "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocAbstractTest.getDocument(itemXml)) + "\" >"
-                + "<url>http://escidoc.de</url>" + "</param>";
+            "<param last-modification-date=\"" + getLastModificationDateValue(EscidocAbstractTest.getDocument(itemXml))
+                + "\" >" + "<url>http://escidoc.de</url>" + "</param>";
         assignObjectPid(itemId, pidParam);
         pidParam =
             "<param last-modification-date=\"" + getTheLastModificationDate(itemId) + "\" >"
@@ -516,8 +512,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         // create item
         final String toBeCreatedXml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdXml = null;
         try {
             createdXml = create(toBeCreatedXml);
@@ -590,9 +585,8 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         // get last-modification-date
         String pidParam =
-            "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocAbstractTest.getDocument(itemXml)) + "\" >"
-                + "<url>http://escidoc.de/" + System.nanoTime() + "</url>" + "</param>";
+            "<param last-modification-date=\"" + getLastModificationDateValue(EscidocAbstractTest.getDocument(itemXml))
+                + "\" >" + "<url>http://escidoc.de/" + System.nanoTime() + "</url>" + "</param>";
 
         // test if no pid is assigned already
         Node node = selectSingleNode(EscidocAbstractTest.getDocument(itemXml), "/item/properties/version/pid");
@@ -629,8 +623,8 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             pidParam =
                 "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(itemVersionId)))
-                    + "\" >" + "<url>http://escidoc.de/" + System.nanoTime() + "</url>" + "</param>";
+                    + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(itemVersionId))) + "\" >"
+                    + "<url>http://escidoc.de/" + System.nanoTime() + "</url>" + "</param>";
 
             pid = assignVersionPid(itemVersionId, pidParam);
             String versionHistory = retrieveVersionHistory(itemId);
@@ -652,8 +646,8 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             pidParam =
                 "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(itemVersionId)))
-                    + "\" >" + "<url>http://escidoc.de/" + System.nanoTime() + "</url>" + "</param>";
+                    + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(itemVersionId))) + "\" >"
+                    + "<url>http://escidoc.de/" + System.nanoTime() + "</url>" + "</param>";
 
             pid = assignVersionPid(itemVersionId, pidParam);
             fail("InvalidStatusException expected.");
@@ -723,8 +717,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
             if (i == versionNumberPid) {
                 returnedPid = selectSingleNode(EscidocAbstractTest.getDocument(pid), XPATH_RESULT_PID);
-                currentVersionPid =
-                    selectSingleNode(EscidocAbstractTest.getDocument(itemXml), XPATH_ITEM_VERSION_PID);
+                currentVersionPid = selectSingleNode(EscidocAbstractTest.getDocument(itemXml), XPATH_ITEM_VERSION_PID);
                 assertNotNull(currentVersionPid);
                 assertEquals(returnedPid.getTextContent(), currentVersionPid.getTextContent());
 
@@ -1617,8 +1610,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         String retrievedItem = retrieve(versionId);
 
         // check versionPid
-        Node versionPidNode =
-            selectSingleNode(EscidocAbstractTest.getDocument(retrievedItem), XPATH_ITEM_VERSION_PID);
+        Node versionPidNode = selectSingleNode(EscidocAbstractTest.getDocument(retrievedItem), XPATH_ITEM_VERSION_PID);
         // "/item/properties/version[number=1]/pid"
         assertNotNull(versionPidNode);
         Node returnedPid = selectSingleNode(EscidocAbstractTest.getDocument(versionPid), XPATH_RESULT_PID);
@@ -1702,8 +1694,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     private String createItem() throws Exception {
 
         String xmlData =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         return (create(xmlData));
     }

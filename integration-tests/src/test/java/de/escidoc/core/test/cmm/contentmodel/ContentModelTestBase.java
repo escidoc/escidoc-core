@@ -261,7 +261,7 @@ public class ContentModelTestBase extends CmmTestBase {
                 // behavior
                 String itemXml =
                     EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
-                            "item-minimal-for-content-model.xml");
+                        "item-minimal-for-content-model.xml");
                 itemXml = itemXml.replace("##CONTENT_MODEL_ID##", id);
                 OmTestBase omBase = new OmTestBase();
                 itemXml = handleXmlResult(omBase.getItemClient().create(itemXml));
@@ -292,7 +292,7 @@ public class ContentModelTestBase extends CmmTestBase {
                 // behavior
                 String containerXml =
                     EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
-                            "container-minimal-for-content-model.xml");
+                        "container-minimal-for-content-model.xml");
                 containerXml = containerXml.replace("##CONTENT_MODEL_ID##", id);
                 OmTestBase omBase = new OmTestBase();
                 containerXml = handleXmlResult(omBase.getContainerClient().create(containerXml));

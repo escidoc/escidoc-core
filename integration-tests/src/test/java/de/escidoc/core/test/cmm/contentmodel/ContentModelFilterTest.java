@@ -59,8 +59,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
     public void testFilterCreatedBy() throws Exception {
         String xml = createContentModel();
         String modelId = getObjidValue(xml);
-        String createdBy =
-            getObjidValue(EscidocAbstractTest.getDocument(xml), "/content-model/properties/created-by");
+        String createdBy = getObjidValue(EscidocAbstractTest.getDocument(xml), "/content-model/properties/created-by");
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_IDENTIFIER + "\"=" + modelId + " and "

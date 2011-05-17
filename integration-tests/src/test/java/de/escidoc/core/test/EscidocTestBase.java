@@ -886,8 +886,7 @@ public abstract class EscidocTestBase {
 
     public static final String XPATH_GRANT_ROLE_OBJID = XPATH_GRANT_ROLE + "/@" + NAME_OBJID;
 
-    public static final String XPATH_GRANT_OBJECT =
-        XPATH_GRANT_PROPERTIES + "/" + EscidocAbstractTest.NAME_ASSIGNED_ON;
+    public static final String XPATH_GRANT_OBJECT = XPATH_GRANT_PROPERTIES + "/" + EscidocAbstractTest.NAME_ASSIGNED_ON;
 
     public static final String XPATH_GRANT_OBJECT_XLINK_TITLE = XPATH_GRANT_OBJECT + PART_XLINK_TITLE;
 
@@ -1467,8 +1466,7 @@ public abstract class EscidocTestBase {
     public static void assertXmlEquals(final String message, final InputStream expected, final String toBeAsserted)
         throws Exception {
 
-        Document expectedDoc =
-            EscidocAbstractTest.getDocument(ResourceProvider.getContentsFromInputStream(expected));
+        Document expectedDoc = EscidocAbstractTest.getDocument(ResourceProvider.getContentsFromInputStream(expected));
         Document assertedDoc = EscidocAbstractTest.getDocument(toBeAsserted);
         assertXmlEquals(message, expectedDoc, assertedDoc);
     }
@@ -2296,14 +2294,14 @@ public abstract class EscidocTestBase {
 
         if (timestamp != null) {
             final Node document =
-                substitute(EscidocAbstractTest
-                        .getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH, "task_param_last_modification_date.xml"), "/param/@last-modification-date", timestamp);
+                substitute(EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH,
+                    "task_param_last_modification_date.xml"), "/param/@last-modification-date", timestamp);
             result = toString(document, false);
         }
         else {
             result =
-                EscidocAbstractTest
-                        .getTemplateAsString(TEMPLATE_OM_COMMON_PATH, "task_param_last_modification_date.xml");
+                EscidocAbstractTest.getTemplateAsString(TEMPLATE_OM_COMMON_PATH,
+                    "task_param_last_modification_date.xml");
         }
         return result;
     }
@@ -2324,13 +2322,13 @@ public abstract class EscidocTestBase {
         if (timestamp != null) {
             result =
                 toString(substitute(substitute(EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH,
-                        "task_param_withdraw_last_modification_date.xml"), "/param/@last-modification-date", timestamp),
+                    "task_param_withdraw_last_modification_date.xml"), "/param/@last-modification-date", timestamp),
                     "/param/withdraw-comment", comment), false);
         }
         else {
             result =
                 toString(substitute(EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH,
-                        "task_param_withdraw_last_modification_date.xml"), "/param/withdraw-comment", comment), false);
+                    "task_param_withdraw_last_modification_date.xml"), "/param/withdraw-comment", comment), false);
         }
         return result;
     }
@@ -2469,8 +2467,7 @@ public abstract class EscidocTestBase {
         final String contentType) throws Exception {
 
         Document filter =
-            EscidocAbstractTest
-                .getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH, "filterRetrieveMembersOfContext.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH, "filterRetrieveMembersOfContext.xml");
         if ((members != null) && (members.size() > 0)) {
             for (int i = 0; i < 5; ++i) {
                 String value = null;

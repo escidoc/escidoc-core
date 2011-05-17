@@ -169,9 +169,8 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             lock(theContentRelationId, param);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .failException("Unlocking content relation can not be tested, locking failed" + " with exception.",
-                            e);
+            EscidocAbstractTest.failException("Unlocking content relation can not be tested, locking failed"
+                + " with exception.", e);
         }
 
         try {
@@ -218,8 +217,8 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             lock(theContentRelationId, param);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .failException("Unlocking item can not be tested, locking failed" + " with exception.", e);
+            EscidocAbstractTest.failException("Unlocking item can not be tested, locking failed" + " with exception.",
+                e);
         }
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -269,9 +268,8 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             lock(theContentRelationId, param);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .failException("Unlocking content relation can not be tested, locking failed" + " with exception.",
-                            e);
+            EscidocAbstractTest.failException("Unlocking content relation can not be tested, locking failed"
+                + " with exception.", e);
         }
 
         String handle = login(this.user[1], Constants.DEFAULT_USER_PASSWORD, true);

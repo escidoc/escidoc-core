@@ -594,7 +594,7 @@ public final class HttpHelper {
                 // correct values have been sent, user account is deactived.
                 // page with info about deactivated account is presented
                 EscidocAbstractTest.assertHttpStatus("Wrong status for expected 'Deactivated User Account' page.",
-                        HttpServletResponse.SC_OK, httpRes);
+                    HttpServletResponse.SC_OK, httpRes);
                 assertNull(httpRes.getFirstHeader("Location"));
 
                 // FIXME: add assertion for page content

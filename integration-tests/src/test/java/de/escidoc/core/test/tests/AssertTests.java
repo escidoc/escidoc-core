@@ -54,7 +54,8 @@ public class AssertTests extends OmTestBase {
             String containerXml = handleXmlResult(getContainerClient().create(xmlData));
 
             String tempItemXml =
-                EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+                EscidocAbstractTest
+                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
             String containerId = getObjidValue(containerXml);
             String itemXml = handleXmlResult(getContainerClient().createItem(containerId, tempItemXml));

@@ -92,8 +92,8 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
 
         // create item with this content model
         String itemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "item-minimal-for-content-model.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+                "item-minimal-for-content-model.xml");
         itemXml = itemXml.replace("##CONTENT_MODEL_ID##", contentModelId);
         OmTestBase omBase = new OmTestBase();
         itemXml = handleXmlResult(omBase.getItemClient().create(itemXml));

@@ -120,8 +120,8 @@ public class OaipmhSearchTest extends SearchTestBase {
             containerIds = new String[Constants.NUM_OAIPMH_CONTAINERS];
             for (int i = 0; i < Constants.NUM_OAIPMH_CONTAINERS; i++) {
                 String xmlData =
-                    EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH,
-                            "escidoc_search_container" + i + "_rest.xml");
+                    EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH, "escidoc_search_container"
+                        + i + "_rest.xml");
                 String xml = container.create(xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 containerIds[i] = getId(xml);
@@ -153,8 +153,8 @@ public class OaipmhSearchTest extends SearchTestBase {
             for (int i = 0; i < Constants.NUM_OAIPMH_ITEMS; i++) {
                 // Create Item submit and release it //////////////////////////
                 String xmlData =
-                    EscidocAbstractTest
-                            .getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i + "_rest.xml");
+                    EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i
+                        + "_rest.xml");
                 String xml = container.createItem(containerIds[0], xmlData);
                 String lastModDate = getLastModificationDate(xml);
                 itemIds[i] = getId(xml);

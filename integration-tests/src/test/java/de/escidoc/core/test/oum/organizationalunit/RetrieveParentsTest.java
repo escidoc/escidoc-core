@@ -57,8 +57,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
         String id = getObjidValue(xml);
         String parentOus = retrieveParents(id);
         assertXmlValidOrganizationalUnit(parentOus);
-        assertParentOus(id, EscidocAbstractTest.getDocument(parentOus), new HashMap<String, String>(),
-            startTimestamp);
+        assertParentOus(id, EscidocAbstractTest.getDocument(parentOus), new HashMap<String, String>(), startTimestamp);
     }
 
     /**

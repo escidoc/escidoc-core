@@ -71,8 +71,8 @@ public class PreprocessingTest extends PreprocessingTestBase {
     @Test
     public void testSMPRE1() throws Exception {
         String xml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_PREPROCESSING_INFO_PATH, "escidoc_preprocessing_information1.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_PREPROCESSING_INFO_PATH,
+                "escidoc_preprocessing_information1.xml");
         try {
             preprocess("escidoc:aggdef2", xml);
         }

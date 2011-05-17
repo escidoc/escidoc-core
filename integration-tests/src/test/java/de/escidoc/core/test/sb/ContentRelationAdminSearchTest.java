@@ -443,8 +443,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
             if (creatorHandle != null) {
                 PWCallback.setHandle(creatorHandle);
             }
-            Document xmlData =
-                EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
+            Document xmlData = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
             String contextHref =
                 de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
             substitute(xmlData, "/item/properties/context/@href", contextHref);

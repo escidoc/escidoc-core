@@ -68,7 +68,8 @@ public class TripleStoreValue {
          * non representation values
          */
         // retrieve frameworkj version from running instance
-        EscidocAbstractTest etb = new EscidocAbstractTest(){};
+        EscidocAbstractTest etb = new EscidocAbstractTest() {
+        };
         String coreVersion = etb.obtainFrameworkVersion();
 
         // check build number
@@ -200,7 +201,8 @@ public class TripleStoreValue {
          * non representation values
          */
         // retrieve frameworkj version from running instance
-        EscidocAbstractTest etb = new EscidocAbstractTest(){};
+        EscidocAbstractTest etb = new EscidocAbstractTest() {
+        };
         String coreVersion = etb.obtainFrameworkVersion();
 
         // check build number
@@ -253,8 +255,8 @@ public class TripleStoreValue {
                     + i + "]/@href");
             ouId = EscidocAbstractTest.getObjidFromHref(ou.getTextContent());
 
-            compareValuesWithTripleStore(EscidocAbstractTest.getObjidValue(xmlContext), "<info:fedora/" + ouId
-                + ">", "/RDF/Description/organizational-unit",
+            compareValuesWithTripleStore(EscidocAbstractTest.getObjidValue(xmlContext), "<info:fedora/" + ouId + ">",
+                "/RDF/Description/organizational-unit",
                 "<http://escidoc.de/core/01/structural-relations/organizational-unit>");
         }
     }

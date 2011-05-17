@@ -78,8 +78,8 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     @Test
     public void testCmCreateAll() throws Exception {
         Document contentModel =
-            EscidocAbstractTest
-                    .getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-all-for-create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+                "content-model-all-for-create.xml");
 
         String title = getContentModelTitle(contentModel);
         String description = getContentModelDescription(contentModel);
@@ -108,8 +108,8 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     public void testCmmCCm1() throws Exception {
 
         Document contentModel =
-            EscidocAbstractTest
-                    .getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-asRetrieved.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+                "content-model-asRetrieved.xml");
         String cmXml = toString(contentModel, false);
         String createdXML = create(cmXml);
 
@@ -129,8 +129,8 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     public void testCreateFromRetrieve() throws Exception {
 
         Document contentModel =
-            EscidocAbstractTest
-                    .getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-all-for-create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+                "content-model-all-for-create.xml");
         String title = getContentModelTitle(contentModel);
         String description = getContentModelDescription(contentModel);
         Map<String, String> mdRecordDefinitions = getContentModelMdRecordDefinitions(contentModel);
@@ -211,8 +211,8 @@ public class ContentModelCreateTest extends ContentModelTestBase {
 
         String xPath = "/content-model/resource-definitions/resource-definition[@name='trans']/md-record-name";
         Document contentModel =
-            EscidocAbstractTest
-                    .getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest", "content-model-all-for-create.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+                "content-model-all-for-create.xml");
 
         String mdRecordName = "blafasel" + System.nanoTime();
         substitute(contentModel, xPath, mdRecordName);

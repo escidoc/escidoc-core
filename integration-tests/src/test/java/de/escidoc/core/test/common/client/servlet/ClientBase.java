@@ -812,8 +812,8 @@ public abstract class ClientBase {
     protected void logRestServiceCall(
         final String method, final String HttpResponse, final String url, final Object body) {
         String message =
-            '[' + method + "] Calling eSciDoc with URL='" + url + "' and http method='"
-                + HttpResponse.toUpperCase() + "'";
+            '[' + method + "] Calling eSciDoc with URL='" + url + "' and http method='" + HttpResponse.toUpperCase()
+                + "'";
         // if ((Constants.HTTP_METHOD_POST.equals(HttpResponse.toUpperCase()))
         // || (Constants.HTTP_METHOD_PUT.equals(HttpResponse.toUpperCase()))) {
         // message += " body='" + body + "'";
@@ -1358,14 +1358,14 @@ public abstract class ClientBase {
 
         if (timestamp != null) {
             final Node document =
-                substitute(EscidocAbstractTest
-                        .getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH, "task_param_last_modification_date.xml"), "/param/@last-modification-date", timestamp);
+                substitute(EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH,
+                    "task_param_last_modification_date.xml"), "/param/@last-modification-date", timestamp);
             result = toString(document, false);
         }
         else {
             result =
-                EscidocAbstractTest
-                        .getTemplateAsString(TEMPLATE_OM_COMMON_PATH, "task_param_last_modification_date.xml");
+                EscidocAbstractTest.getTemplateAsString(TEMPLATE_OM_COMMON_PATH,
+                    "task_param_last_modification_date.xml");
         }
         return result;
     }

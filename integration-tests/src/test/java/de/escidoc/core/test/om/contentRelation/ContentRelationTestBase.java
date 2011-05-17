@@ -659,7 +659,7 @@ public class ContentRelationTestBase extends OmTestBase {
         // set content-relation-manager grant to user
         String grantXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_BASE_PATH + "/om/template/aa/user-account/rest",
-                    "create_content_relation_manager_grant.xml");
+                "create_content_relation_manager_grant.xml");
 
         try {
             handleXmlResult(uac.createGrant(userId, grantXml));
@@ -686,7 +686,7 @@ public class ContentRelationTestBase extends OmTestBase {
         // set content-relation-manager grant to user
         String grantXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_BASE_PATH + "/om/template/aa/user-account/rest",
-                    "create_content_relation_modifier_grant.xml");
+                "create_content_relation_modifier_grant.xml");
         // set objid/href of user to template
         grantXml = grantXml.replace("###USER_ID###", userId);
 

@@ -93,8 +93,8 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
 
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
@@ -140,8 +140,8 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testCreateSurrogateItemWithInheritedMandatoryMdRecord() throws Exception {
 
         String itemXml =
-            create(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
         String originalXlinkTitle = null;
         Document createdItemDocument = getDocument(itemXml);
@@ -160,8 +160,8 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
         Document surrogateDocument = getDocument(replaced);
@@ -195,12 +195,12 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testCreateSurrogateItemWithOwnAndInheritedContentRelations() throws Exception {
         String itemXml1 =
-            create(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_create.xml"));
 
         String itemXml2 =
-            create(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_create.xml"));
 
         String createdItemId1 = getIdFromRootElement(itemXml1);
         String createdItemId2 = getIdFromRootElement(itemXml2);
@@ -209,8 +209,8 @@ public class SurrogateItemTest extends ItemTestBase {
         String href2 = "/ir/item/" + createdItemId2;
 
         String itemForCreateWithRelationsXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_createWithRelations.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_createWithRelations.xml");
 
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID1##", createdItemId1);
         itemForCreateWithRelationsXml = itemForCreateWithRelationsXml.replaceAll("##ITEM_ID2##", createdItemId2);
@@ -247,8 +247,8 @@ public class SurrogateItemTest extends ItemTestBase {
         release(itemId, param);
 
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
         String replaced = surrogateItemXml.replaceAll("##ITEMID##", itemHref);
 
         // create surrogate for release item with relations and no components
@@ -276,8 +276,7 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testCreateSurrogateItemWithOwnMdRecordLatestReleasePublicStatusPending() throws Exception {
         String itemXml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -312,8 +311,8 @@ public class SurrogateItemTest extends ItemTestBase {
         assertEquals("version status must be 'pending'", "pending", versionStatus);
         assertEquals(2, selectNodeList(updatedDocument, "/item/md-records/md-record").getLength());
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
         String createdSurrogateItem = create(replaced);
@@ -338,8 +337,7 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testDecleaningCreateSurrogateItemWithFixedReferenceToUnreleasedVersion() throws Exception {
         String itemXml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -374,8 +372,8 @@ public class SurrogateItemTest extends ItemTestBase {
         assertEquals("version status must be 'pending'", "pending", versionStatus);
         assertEquals(2, selectNodeList(updatedDocument, "/item/md-records/md-record").getLength());
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref + ":2");
 
         try {
@@ -399,14 +397,13 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testDecleaningCreateSurrogateItemWithReferenceToUnreleasedItem() throws Exception {
         String itemXml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref + ":2");
 
         try {
@@ -429,8 +426,7 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testDecleaningCreateSurrogateItemWithReferenceToWithdrawnItem() throws Exception {
         String itemXml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -448,8 +444,8 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(true, itemId, "withdraw");
         withdraw(itemId, param);
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref + ":2");
 
         try {
@@ -473,8 +469,8 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testDecleaningCreateSurrogateItemWithNotExistingReference() throws Exception {
 
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", "bla");
         try {
             create(replaced);
@@ -497,8 +493,8 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testDecleaningCreateSurrogateItemWithReferenceToSurrogateItem() throws Exception {
         String itemXml =
-            create(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -514,8 +510,8 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
 
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
@@ -535,8 +531,8 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, surrogateId, null);
         release(surrogateId, param);
         String surrogate2ItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
         String replaced2 = surrogate2ItemXml.replaceAll("##ITEMHREF##", surrogateHref);
         try {
             create(replaced2);
@@ -559,8 +555,8 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testUpdateSurrogateItemWithInheritedMandatoryMdRecord() throws Exception {
         String itemXml =
-            create(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -576,8 +572,8 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
 
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
         Document surrogateDocument = getDocument(replaced);
@@ -615,8 +611,8 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testUpdateSurrogateItemWithOwnMandatoryMdRecord() throws Exception {
         String itemXml =
-            create(EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -632,8 +628,8 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
 
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
@@ -672,7 +668,7 @@ public class SurrogateItemTest extends ItemTestBase {
 
         Document itemXml =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                    "escidoc_item_198_for_create_3content-streams.xml");
+                "escidoc_item_198_for_create_3content-streams.xml");
         Node withoutFirstContentStream = deleteElement(itemXml, "/item/content-streams/content-stream[1]");
         String item = toString(withoutFirstContentStream, false);
         String createdItem = create(item);
@@ -690,8 +686,8 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
 
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
@@ -721,8 +717,7 @@ public class SurrogateItemTest extends ItemTestBase {
     @Test
     public void testChangeSurrogateItemRepresentationWhileOriginalRelease() throws Exception {
         String itemXml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
@@ -758,8 +753,8 @@ public class SurrogateItemTest extends ItemTestBase {
         assertEquals(2, selectNodeList(updatedDocument, "/item/md-records/md-record").getLength());
 
         String surrogateItemXml =
-            EscidocAbstractTest
-                    .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "surrogate_escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                "surrogate_escidoc_item_198_for_create.xml");
         String replaced = surrogateItemXml.replaceAll("##ITEMHREF##", itemHref);
 
         String createdSurrogateItem = create(replaced);

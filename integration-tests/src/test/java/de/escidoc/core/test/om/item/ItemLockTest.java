@@ -125,8 +125,8 @@ public class ItemLockTest extends ItemTestBase {
             lock(theItemId, param);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .failException("Unlocking item can not be tested, locking failed" + " with exception.", e);
+            EscidocAbstractTest.failException("Unlocking item can not be tested, locking failed" + " with exception.",
+                e);
         }
 
         try {
@@ -171,8 +171,8 @@ public class ItemLockTest extends ItemTestBase {
             lock(theItemId, param);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .failException("Unlocking item can not be tested, locking failed" + " with exception.", e);
+            EscidocAbstractTest.failException("Unlocking item can not be tested, locking failed" + " with exception.",
+                e);
         }
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -221,8 +221,8 @@ public class ItemLockTest extends ItemTestBase {
             lock(theItemId, param);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .failException("Unlocking item can not be tested, locking failed" + " with exception.", e);
+            EscidocAbstractTest.failException("Unlocking item can not be tested, locking failed" + " with exception.",
+                e);
         }
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
@@ -340,8 +340,7 @@ public class ItemLockTest extends ItemTestBase {
         // create an item and save the id
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
         String xmlData =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId = getObjidValue(EscidocAbstractTest.getDocument(theItemXml));
 

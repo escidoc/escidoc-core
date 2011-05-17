@@ -65,8 +65,8 @@ public class ItemContentTransformationTest extends ItemTestBase {
     public void setUp() throws Exception {
         if (itemId == null) {
             itemXml =
-                EscidocAbstractTest
-                        .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_for_image_transformation.xml");
+                EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
+                    "escidoc_item_for_image_transformation.xml");
 
             createdItem = EscidocAbstractTest.getDocument(create(itemXml));
             itemId = getObjidValue(createdItem);

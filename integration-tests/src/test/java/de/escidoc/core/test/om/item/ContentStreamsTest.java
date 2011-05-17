@@ -64,7 +64,7 @@ public class ContentStreamsTest extends ItemTestBase {
         try {
             String itemXml =
                 create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                        "escidoc_item_198_for_create_3content-streams.xml"));
+                    "escidoc_item_198_for_create_3content-streams.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
             assertXmlValidItem(itemXml);
@@ -100,7 +100,7 @@ public class ContentStreamsTest extends ItemTestBase {
         try {
             String itemXml =
                 create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                        "escidoc_item_198_for_create_3content-streams.xml"));
+                    "escidoc_item_198_for_create_3content-streams.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
 
@@ -127,7 +127,7 @@ public class ContentStreamsTest extends ItemTestBase {
         try {
             String itemXml =
                 create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                        "escidoc_item_198_for_create_3content-streams.xml"));
+                    "escidoc_item_198_for_create_3content-streams.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
 
@@ -161,7 +161,7 @@ public class ContentStreamsTest extends ItemTestBase {
         try {
             String itemXml =
                 create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                        "escidoc_item_198_for_create_3content-streams.xml"));
+                    "escidoc_item_198_for_create_3content-streams.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
             assertXmlValidItem(itemXml);
@@ -243,7 +243,7 @@ public class ContentStreamsTest extends ItemTestBase {
         try {
             String itemXml =
                 create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                        "escidoc_item_198_for_create_inline_content-stream.xml"));
+                    "escidoc_item_198_for_create_inline_content-stream.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
             assertXmlValidItem(itemXml);
@@ -278,7 +278,7 @@ public class ContentStreamsTest extends ItemTestBase {
         try {
             String itemXml =
                 create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                        "escidoc_item_198_for_create_inline_content-stream.xml"));
+                    "escidoc_item_198_for_create_inline_content-stream.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
             assertXmlValidItem(itemXml);
@@ -340,7 +340,7 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         String itemXml =
             create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                    "escidoc_item_198_for_create_3content-streams.xml"));
+                "escidoc_item_198_for_create_3content-streams.xml"));
 
         createdItemId = getIdFromRootElement(itemXml);
         assertXmlValidItem(itemXml);
@@ -390,7 +390,7 @@ public class ContentStreamsTest extends ItemTestBase {
         try {
             String itemXml =
                 create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                        "escidoc_item_for_create_3content-streams.xml"));
+                    "escidoc_item_for_create_3content-streams.xml"));
 
             createdItemId = getIdFromRootElement(itemXml);
             assertXmlValidItem(itemXml);

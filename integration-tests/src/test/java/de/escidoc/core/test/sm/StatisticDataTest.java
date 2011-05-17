@@ -109,8 +109,7 @@ public class StatisticDataTest extends StatisticDataTestBase {
      */
     @Test
     public void testSMSD3() throws Exception {
-        String xml =
-            EscidocAbstractTest.getTemplateAsString(TEMPLATE_STAT_DATA_PATH, "escidoc_statistic_data1.xml");
+        String xml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_STAT_DATA_PATH, "escidoc_statistic_data1.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);

@@ -86,8 +86,7 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi1a() throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
         delete(this.theItemId);
@@ -108,8 +107,7 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testDeleteItemWithAllComponentsFromAllItemVersions() throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
         Document curItem = EscidocAbstractTest.getDocument(itemXml);
@@ -148,8 +146,7 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi2a() throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
         String param = getTheLastModificationParam(false);
@@ -174,12 +171,11 @@ public class ItemDeleteTest extends ItemTestBase {
         Class<?> ec = InvalidStatusException.class;
         try {
             delete(this.theItemId);
-            EscidocAbstractTest
-                .failMissingException("Deleting an item in status 'released' was not declined. ", ec);
+            EscidocAbstractTest.failMissingException("Deleting an item in status 'released' was not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Deleting an item in status 'released' raised wrong exception. ", ec, e);
+            EscidocAbstractTest.assertExceptionType("Deleting an item in status 'released' raised wrong exception. ",
+                ec, e);
         }
 
     }
@@ -192,8 +188,7 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi2b() throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
         String param = getTheLastModificationParam(false);
@@ -201,12 +196,11 @@ public class ItemDeleteTest extends ItemTestBase {
         Class<?> ec = InvalidStatusException.class;
         try {
             delete(this.theItemId);
-            EscidocAbstractTest
-                .failMissingException("Deleting an item in status 'released' was not declined. ", ec);
+            EscidocAbstractTest.failMissingException("Deleting an item in status 'released' was not declined. ", ec);
         }
         catch (final Exception e) {
-            EscidocAbstractTest
-                    .assertExceptionType("Deleting an item in status 'released' raised " + "wrong exception. ", ec, e);
+            EscidocAbstractTest.assertExceptionType("Deleting an item in status 'released' raised "
+                + "wrong exception. ", ec, e);
         }
     }
 
@@ -253,8 +247,7 @@ public class ItemDeleteTest extends ItemTestBase {
     @Test
     public void testOMDi5() throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);

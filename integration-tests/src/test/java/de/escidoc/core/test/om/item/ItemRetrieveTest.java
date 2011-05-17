@@ -57,8 +57,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testRetrieveResources() throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         String itemId = getObjidValue(itemXml);
 
@@ -76,7 +75,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     public void testRetrieveItemWithoutComponentValidStatus() throws Exception {
         String xml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                    "escidoc_item_198_for_create_ComponentWithoutValidStatus.xml");
+                "escidoc_item_198_for_create_ComponentWithoutValidStatus.xml");
         String itemXml = create(xml);
         String itemId = getObjidValue(itemXml);
         String componentId =
@@ -97,8 +96,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testOMRi1a() throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         String itemId = getObjidValue(itemXml);
 
@@ -134,8 +132,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testOMRi5() throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         String itemXml = create(xml);
         String componentId = null;
@@ -177,8 +174,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testRetrieveAnonymous() throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         // PWCallback.setHandle(PWCallback.DEPOSITOR_LIB_HANDLE);
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
         String itemXml = create(xml);
@@ -206,8 +202,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testRetrieveAuthor() throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         // PWCallback.setHandle(PWCallback.DEPOSITOR_LIB_HANDLE);
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
         String itemXml = create(xml);
@@ -235,8 +230,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testRetrieveOtherDepositor() throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
         String itemXml = create(xml);
         String itemId = getObjidValue(itemXml);
@@ -405,8 +399,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      */
     private void retrieveMdRecord(final boolean resourceId, final String name) throws Exception {
         String xml =
-            EscidocAbstractTest
-                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String resourceXml = create(xml);
         String itemId = getObjidValue(resourceXml);
         if (!resourceId) {

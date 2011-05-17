@@ -225,7 +225,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("ReferencedResourceNotFoundException.",
-                    ReferencedResourceNotFoundException.class, e);
+                ReferencedResourceNotFoundException.class, e);
         }
     }
 
@@ -259,7 +259,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("RelationPredicateNotFoundException.",
-                    RelationPredicateNotFoundException.class, e);
+                RelationPredicateNotFoundException.class, e);
         }
 
     }
@@ -387,7 +387,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("ContentRelationNotFoundException expected.",
-                    ContentRelationNotFoundException.class, e);
+                ContentRelationNotFoundException.class, e);
         }
     }
 
@@ -422,7 +422,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("ContentRelationNotFoundException expected.",
-                    ContentRelationNotFoundException.class, e);
+                ContentRelationNotFoundException.class, e);
         }
 
     }
