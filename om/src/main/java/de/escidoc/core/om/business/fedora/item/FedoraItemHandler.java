@@ -172,6 +172,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     /**
      * The policy decision point used to check access privileges.
      */
+    @Autowired
+    @Qualifier("service.PolicyDecisionPoint")
     private PolicyDecisionPointInterface pdp;
 
     @Autowired

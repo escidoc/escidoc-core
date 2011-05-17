@@ -912,7 +912,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @see UserAccountDaoInterface #update(de.escidoc.core.aa.business.persistence.UserAttribute)
      */
     @Override
-     public void update(final UserAttribute attribute) throws SqlDatabaseSystemException {
+    public void update(final UserAttribute attribute) throws SqlDatabaseSystemException {
 
         super.update(attribute);
     }
