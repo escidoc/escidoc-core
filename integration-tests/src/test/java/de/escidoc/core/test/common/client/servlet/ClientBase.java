@@ -221,6 +221,8 @@ public abstract class ClientBase {
 
     public static final String METHOD_UPDATE_PROPERTIES = "updateProperties";
 
+    public static final String METHOD_RETRIEVE_RESOURCE = "retrieveResource";
+
     public static final String METHOD_RETRIEVE_RESOURCES = "retrieveResources";
 
     public static final String METHOD_RETRIEVE_ROLES = "retrieveRoles";
