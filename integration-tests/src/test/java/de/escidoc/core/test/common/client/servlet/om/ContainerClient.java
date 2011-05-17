@@ -276,6 +276,20 @@ public class ContainerClient extends ClientBase
     }
 
     /**
+     * Retrieve the list of virtual Resources available for a Container.
+     *
+     * @param id The id of the container.
+     * @param methodName The name of the method.
+     * @return The HttpMethod after the service call .
+     * @throws Exception If the service call fails.
+     */
+    public Object retrieveResource(final String id, final String methodName) throws Exception {
+
+        return callEsciDoc("Container.retrieveResource", METHOD_RETRIEVE_RESOURCE, Constants.HTTP_METHOD_GET,
+            Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_RESOURCES, methodName });
+    }
+
+    /**
      * Retrieve the list of Relations available for a Container.
      *
      * @param id The id of the container.
