@@ -490,8 +490,6 @@ public class Datastream {
                     .toArray(new String[alternateIDs.size()]), this.label, true, this.getStream(), sync);
         }
 
-
-
         return this.timestamp;
     }
 
