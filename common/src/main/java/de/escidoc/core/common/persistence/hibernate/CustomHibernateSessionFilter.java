@@ -31,11 +31,13 @@ public class CustomHibernateSessionFilter extends OpenSessionInViewFilter {
     protected Session getSession(SessionFactory sessionFactory) throws DataAccessResourceFailureException {
         Session session = super.getSession(sessionFactory);
         session.setFlushMode(FlushMode.COMMIT);
+        session.getTransaction().begin();
         return session;
     }
 
     protected void closeSession(Session session, SessionFactory factory) {
         session.flush();
+        session.getTransaction().commit();
         super.closeSession(session, factory);
     }
 }
