@@ -40,6 +40,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -105,6 +106,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
      * See Interface for functional description.
      */
     @Override
+    @Transactional
     public void save(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
         if (stagingFile != null) {
@@ -121,6 +123,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
      * See Interface for functional description.
      */
     @Override
+    @Transactional
     public void update(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
         if (stagingFile != null) {
@@ -138,6 +141,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
      * See Interface for functional description.
      */
     @Override
+    @Transactional
     public void saveOrUpdate(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
         if (stagingFile != null) {
@@ -154,6 +158,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
      * See Interface for functional description.
      */
     @Override
+    @Transactional
     public void delete(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
         if (stagingFile != null) {
@@ -170,6 +175,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
      * See Interface for functional description.
      */
     @Override
+    @Transactional
     public void delete(final StagingFile[] stagingFiles) throws SqlDatabaseSystemException {
 
         if (stagingFiles != null) {

@@ -337,7 +337,6 @@ public class Login extends HttpServlet {
             if (userAccount != null) {
                 // clear cached userGroups
                 PoliciesCache.clearUserGroups(userAccount.getId());
-                doLoginOfExistingUser(request, response, userAccount);
             }
             else {
                 userAccount = new UserAccount();
@@ -352,7 +351,6 @@ public class Login extends HttpServlet {
                 // FIXME: set "random" password (until password is removed)
                 userAccount.setPassword(String.valueOf(random.nextLong()) + now);
                 dao.save(userAccount);
-                doLoginOfExistingUser(request, response, userAccount);
             }
 
             // delete old external user attributes
@@ -372,6 +370,7 @@ public class Login extends HttpServlet {
                     throw new ServletException(e);
                 }
             }
+            doLoginOfExistingUser(request, response, userAccount);
         }
         catch (final SystemException e) {
             throw new ServletException(e.getMessage(), e);
@@ -731,7 +730,7 @@ public class Login extends HttpServlet {
         // the application (similar to Shibboleth's Browser/Post profile)?
         response.setStatus(HttpServletResponse.SC_SEE_OTHER);
         response.setHeader("Location", redirectUrl);
-        response.flushBuffer();
+        //        response.flushBuffer();
     }
 
     /**

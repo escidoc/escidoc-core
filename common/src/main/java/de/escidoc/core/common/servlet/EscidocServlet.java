@@ -415,7 +415,6 @@ public class EscidocServlet extends HttpServlet {
             httpResponse.getWriter().println(result.getContent());
 
             httpResponse.setStatus(HttpServletResponse.SC_FOUND);
-            httpResponse.flushBuffer();
         }
         else {
             doDeclineHttpRequest(httpResponse, new WebserverSystemException(StringUtility.format(
@@ -506,7 +505,6 @@ public class EscidocServlet extends HttpServlet {
             httpResponse.getWriter().println(text);
         }
         httpResponse.setStatus(status);
-        httpResponse.flushBuffer();
     }
 
     /**
@@ -536,7 +534,6 @@ public class EscidocServlet extends HttpServlet {
             body = XmlUtility.DOCUMENT_START + exception.toXmlString();
         }
         httpResponse.getWriter().println(body);
-        httpResponse.flushBuffer();
     }
 
     /**
