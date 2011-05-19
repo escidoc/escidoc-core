@@ -28,6 +28,14 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
@@ -40,13 +48,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.service.UserContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Handle the Item within the ResourceCache.
@@ -85,31 +86,6 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
         WebserverSystemException {
         for (final ResourceListener itemListener : this.itemListeners) {
             itemListener.resourceCreated(id, xmlData);
-        }
-    }
-
-    /**
-     * Notify the listeners that an item was modified.
-     *
-     * @param id item id
-     * @throws ComponentNotFoundException Thrown if a component of an item with the provided id does not exist in the
-     *                                    framework.
-     * @throws ItemNotFoundException      Thrown if an item with the provided id does not exist in the framework.
-     * @throws SystemException            One of the listeners threw an exception.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
-     */
-    protected void fireItemModified(final String id) throws ComponentNotFoundException, ItemNotFoundException,
-        SystemException, WebserverSystemException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException {
-        setItem(id);
-        final String xml = render();
-        for (final ResourceListener itemListener : this.itemListeners) {
-            itemListener.resourceModified(id, xml);
         }
     }
 

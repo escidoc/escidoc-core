@@ -37,6 +37,7 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedExcepti
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
@@ -56,6 +57,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -187,7 +190,19 @@ public class ItemHandlerPid extends ItemHandlerContent {
         getItem().persist();
 
         if (getItem().isLatestVersion()) {
-            fireItemModified(getItem().getId());
+            final String message =
+                "You cannot access a full surrogate item representation"
+                    + " because you have no access rights on the item " + getOriginId()
+                    + " . You can access subressourcess owned by a " + "surrogate item using retrieve methods on "
+                    + "subresources.";
+            try {
+                loadOrigin(message);
+            }
+            catch (AuthorizationException e) {
+                throw new SystemException(e);
+            }
+
+            fireItemModified(getItem().getId(), render());
         }
 
         return prepareResponse(pid);
@@ -254,7 +269,18 @@ public class ItemHandlerPid extends ItemHandlerContent {
         getItem().persist();
 
         if (getItem().isLatestVersion()) {
-            fireItemModified(getItem().getId());
+            final String message =
+                "You cannot access a full surrogate item representation"
+                    + " because you have no access rights on the item " + getOriginId()
+                    + " . You can access subressourcess owned by a " + "surrogate item using retrieve methods on "
+                    + "subresources.";
+            try {
+                loadOrigin(message);
+            }
+            catch (AuthorizationException e) {
+                throw new SystemException(e);
+            }
+            fireItemModified(getItem().getId(), render());
         }
 
         return prepareResponse(pid);

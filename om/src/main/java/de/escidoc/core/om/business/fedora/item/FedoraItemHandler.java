@@ -28,7 +28,31 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
-import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.xml.stream.XMLStreamException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
@@ -118,29 +142,6 @@ import de.escidoc.core.om.business.stax.handler.item.ComponentUpdateHandler;
 import de.escidoc.core.om.business.stax.handler.item.ContentStreamHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
-
-import javax.xml.stream.XMLStreamException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * The retrieve, update, create and delete methods implement the {@link ItemHandlerInterface ItemHandlerInterface}.
@@ -168,13 +169,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     private FedoraContentRelationHandler contentRelationHandler;
 
     private static final String NO_UPDATE_ALLOWED_MSG = "No update allowed.";
-
-    /**
-     * The policy decision point used to check access privileges.
-     */
-    @Autowired
-    @Qualifier("service.PolicyDecisionPoint")
-    private PolicyDecisionPointInterface pdp;
 
     @Autowired
     @Qualifier("de.escidoc.core.common.business.filter.SRURequest")
@@ -682,7 +676,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             makeVersion("Item.updateMedataRecord");
             getItem().persist();
             try {
-                fireItemModified(getItem().getId());
+                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
             }
             catch (final ComponentNotFoundException e) {
                 throw new SystemException(e);
@@ -779,6 +773,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final String newMdRecord;
         try {
             newMdRecord = retrieveMdRecord(getItem().getId(), name);
+            fireItemModified(getItem().getId(), retrieve(getItem().getId()));
         }
         catch (final ItemNotFoundException e) {
             throw new IntegritySystemException("After succesfully create metadata.", e);
@@ -789,7 +784,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         catch (final MissingMethodParameterException e) {
             throw new IntegritySystemException("After succesfully create metadata.", e);
         }
-        fireItemModified(getItem().getId());
 
         return newMdRecord;
     }
@@ -948,7 +942,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         if (!startTimestamp.equals(endTimestamp)) {
             makeVersion("Item.updateComponents");
             getItem().persist();
-            fireItemModified(getItem().getId());
+            try {
+                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
+            }
+            catch (final AuthorizationException e) {
+                throw new SystemException(e);
+            }
         }
 
         return updatedXmlData;
@@ -1095,7 +1094,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         makeVersion("Item.deleteComponent");
         getItem().persist();
 
-        fireItemModified(getItem().getId());
+        try {
+            fireItemModified(getItem().getId(), retrieve(getItem().getId()));
+        }
+        catch (final AuthorizationException e) {
+            throw new SystemException(e);
+        }
     }
 
     /**
@@ -1139,7 +1143,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         makeVersion("Component added.");
         getItem().persist();
 
-        fireItemModified(getItem().getId());
+        try {
+            fireItemModified(getItem().getId(), retrieve(getItem().getId()));
+        }
+        catch (final AuthorizationException e) {
+            throw new SystemException(e);
+        }
 
         return addedComponent;
     }
@@ -1211,7 +1220,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             makeVersion("Item.updateComponent");
             getItem().persist();
 
-            fireItemModified(getItem().getId());
+            fireItemModified(getItem().getId(), retrieve(getItem().getId()));
         }
 
         return updatedXmlData;
@@ -1251,7 +1260,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // notify indexer
             // getUtility().notifyIndexerAddPublication(getItem().getHref());
-            fireItemModified(getItem().getId());
+            try {
+                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
+            }
+            catch (final AuthorizationException e) {
+                throw new SystemException(e);
+            }
             // find surrogate items which reference this item by a floating
             // reference, recache them and if necessary reindex them.
             final List<String> surrogateItemIds = getTripleStoreUtility().getSurrogates(getItem().getId());
@@ -1302,7 +1316,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED);
             getItem().persist();
 
-            fireItemModified(getItem().getId());
+            try {
+                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
+            }
+            catch (final AuthorizationException e) {
+                throw new SystemException(e);
+            }
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
@@ -1331,7 +1350,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             makeVersion(taskParameter.getComment(), Constants.STATUS_IN_REVISION);
             getItem().persist();
 
-            fireItemModified(getItem().getId());
+            try {
+                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
+            }
+            catch (final AuthorizationException e) {
+                throw new SystemException(e);
+            }
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
@@ -1380,7 +1404,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // getUtility().notifyIndexerDeletePublication(getItem().getHref());
 
-            fireItemModified(getItem().getId());
+            try {
+                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
+            }
+            catch (final AuthorizationException e) {
+                throw new SystemException(e);
+            }
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
@@ -1463,7 +1492,15 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             makeVersion("Item.addContentRelations");
             getItem().persist();
 
-            fireItemModified(getItem().getId());
+            try {
+                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
+            }
+            catch (final MissingMethodParameterException e) {
+                throw new SystemException(e);
+            }
+            catch (final AuthorizationException e) {
+                throw new SystemException(e);
+            }
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
@@ -1567,7 +1604,15 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 getItem().persist();
             }
 
-            fireItemModified(getItem().getId());
+            try {
+                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
+            }
+            catch (final AuthorizationException e) {
+                throw new SystemException(e);
+            }
+            catch (final MissingMethodParameterException e) {
+                throw new SystemException(e);
+            }
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
@@ -1595,7 +1640,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             // to lock/unlock is no modification of the object, don't update
             // timestamp
 
-            fireItemModified(getItem().getId());
+            try {
+                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
+            }
+            catch (final AuthorizationException e) {
+                throw new SystemException(e);
+            }
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
@@ -1619,7 +1669,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             // to lock/unlock is no modification of the object, don't update
             // timestamp
 
-            fireItemModified(getItem().getId());
+            try {
+                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
+            }
+            catch (final AuthorizationException e) {
+                throw new SystemException(e);
+            }
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
@@ -2273,93 +2328,4 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         }
     }
 
-    /**
-     * Obtain right version of origin Item.
-     *
-     * @throws ItemNotFoundException Thrown if no Item with this objid exits.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     */
-    private void prepareAndSetOriginItem() throws ItemNotFoundException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException {
-
-        final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
-        final String originId;
-
-        final String originVersionId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN_VERSION);
-
-        if (originVersionId == null) {
-            final String latestReleaseNumber =
-                getTripleStoreUtility().getPropertiesElements(originObjectId,
-                    Constants.RELEASE_NS_URI + Elements.ELEMENT_NUMBER);
-            setOriginId(originObjectId);
-            originId = originObjectId + ':' + latestReleaseNumber;
-        }
-        else {
-            originId = originObjectId + ':' + originVersionId;
-            setOriginId(originId);
-        }
-        setOriginItem(originId);
-    }
-
-    /**
-     * Check if the user has priviliges to access the origin Item.
-     *
-     * @param origin Objid of the origin Item
-     * @return true if user has permission on origin Item, false if access with provided userid is forbidden.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    private boolean checkUserRights(final String origin) throws WebserverSystemException {
-
-        final List<String> id = new ArrayList<String>();
-        id.add(origin);
-
-        final List<String> ids;
-        try {
-            ids = this.pdp.evaluateRetrieve("item", id);
-        }
-        catch (final Exception e) {
-            throw new WebserverSystemException(e);
-        }
-
-        return !(ids == null || ids.isEmpty());
-
-    }
-
-    /**
-     * Load origin Item. User permissions are checked.
-     *
-     * @param errorMessage The error message if failure occurs because of permission restriction.
-     * @return true if origin Item was loaded, false otherwise
-     * @throws ItemNotFoundException  Thrown if Item with provided objid not exits.
-     * @throws AuthorizationException Thrown if user has no permission to use origin Item.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     */
-    private boolean loadOrigin(final String errorMessage) throws ItemNotFoundException, AuthorizationException,
-        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException,
-        XmlParserSystemException {
-
-        final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
-        boolean origin = false;
-
-        if (originObjectId != null) {
-            origin = true;
-            prepareAndSetOriginItem();
-            if (!checkUserRights(getOriginItem().getFullId())) {
-                throw new AuthorizationException(errorMessage);
-            }
-        }
-        else {
-            resetOriginItem();
-        }
-
-        return origin;
-    }
 }

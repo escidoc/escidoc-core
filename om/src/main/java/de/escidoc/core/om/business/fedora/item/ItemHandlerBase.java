@@ -28,6 +28,23 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.HandlerBase;
@@ -41,31 +58,22 @@ import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundExcept
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.FileSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.factory.ItemXmlProvider;
 import de.escidoc.core.common.util.xml.factory.RelationsXmlProvider;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlItemFoXmlRenderer;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Contains base functionality of FedoraItemHandler. Is extended at least by FedoraItemHandler.
@@ -90,6 +98,13 @@ public class ItemHandlerBase extends HandlerBase {
     private String originId;
 
     private ItemFoXmlRendererInterface foxmlRenderer;
+
+    /**
+     * The policy decision point used to check access privileges.
+     */
+    @Autowired
+    @Qualifier("service.PolicyDecisionPoint")
+    private PolicyDecisionPointInterface pdp;
 
     /**
      * Upload the content (a base64 encoded byte stream) to the staging area.
@@ -175,6 +190,96 @@ public class ItemHandlerBase extends HandlerBase {
         catch (final ResourceNotFoundException e) {
             throw new ItemNotFoundException(e.getMessage(), e);
         }
+    }
+
+    /**
+     * Load origin Item. User permissions are checked.
+     *
+     * @param errorMessage The error message if failure occurs because of permission restriction.
+     * @return true if origin Item was loaded, false otherwise
+     * @throws ItemNotFoundException  Thrown if Item with provided objid not exits.
+     * @throws AuthorizationException Thrown if user has no permission to use origin Item.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     */
+    final boolean loadOrigin(final String errorMessage) throws ItemNotFoundException, AuthorizationException,
+        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException,
+        XmlParserSystemException {
+
+        final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
+        boolean origin = false;
+
+        if (originObjectId != null) {
+            origin = true;
+            prepareAndSetOriginItem();
+            if (!checkUserRights(getOriginItem().getFullId())) {
+                throw new AuthorizationException(errorMessage);
+            }
+        }
+        else {
+            resetOriginItem();
+        }
+
+        return origin;
+    }
+
+    /**
+     * Obtain right version of origin Item.
+     *
+     * @throws ItemNotFoundException Thrown if no Item with this objid exits.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     */
+    final void prepareAndSetOriginItem() throws ItemNotFoundException, TripleStoreSystemException,
+        WebserverSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+
+        final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
+        final String originId;
+
+        final String originVersionId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN_VERSION);
+
+        if (originVersionId == null) {
+            final String latestReleaseNumber =
+                getTripleStoreUtility().getPropertiesElements(originObjectId,
+                    Constants.RELEASE_NS_URI + Elements.ELEMENT_NUMBER);
+            setOriginId(originObjectId);
+            originId = originObjectId + ':' + latestReleaseNumber;
+        }
+        else {
+            originId = originObjectId + ':' + originVersionId;
+            setOriginId(originId);
+        }
+        setOriginItem(originId);
+    }
+
+    /**
+     * Check if the user has priviliges to access the origin Item.
+     *
+     * @param origin Objid of the origin Item
+     * @return true if user has permission on origin Item, false if access with provided userid is forbidden.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     */
+    final boolean checkUserRights(final String origin) throws WebserverSystemException {
+
+        final List<String> id = new ArrayList<String>();
+        id.add(origin);
+
+        final List<String> ids;
+        try {
+            ids = this.pdp.evaluateRetrieve("item", id);
+        }
+        catch (final Exception e) {
+            throw new WebserverSystemException(e);
+        }
+
+        return !(ids == null || ids.isEmpty());
+
     }
 
     /**
