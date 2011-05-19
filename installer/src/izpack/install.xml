@@ -109,11 +109,12 @@
       <variable name="EscidocHost" value="localhost" />
       <!-- Bind port for JBoss Application Server -->
       <variable name="EscidocPort" value="8080" />
-      <!-- Bind address for JBoss Application Server -->
-      <!-- variable name="jboss.bind.address" value="0.0.0.0" / -->
       <!-- eSciDoc version and build -->
-      <variable name="EscidocVersion" value="${project.version}" />
       <!-- make sure to add the appropriate separator as prefix (usually a dot) if needed, e.g. a ".build345" -->
+      <variable name="EscidocVersion" value="${project.version}" />
+     
+      <variable name="AdminToolVersion" value="${admin-tool.version}" />
+      <variable name="MigrationToolVersion" value="${migration-tool.version}" />
 
       <!-- JDK checks -->
       <variable name="JDKPathPanel.minVersion" value="1.6.0" />
@@ -459,12 +460,12 @@
 
         <pack name="Admin Tool" parent="Additional Services and Tools" required="no">
             <description>Administration Client for the eSciDoc Infrastructure</description>
-            <file src="packages/admin-tool/AdminTool-${admin-tool.version}.war" targetdir="$INSTALL_PATH/tools" />
+            <file src="packages/admin-tool/AdminTool-${AdminToolVersion}.war" targetdir="$INSTALL_PATH/tools" />
         </pack>
 
         <pack name="Migration Tool" parent="Additional Services and Tools" required="yes" condition="upgradeEscidoc">
             <description>Migration Tool for the eSciDoc Infrastructure</description>
-            <file src="packages/migration-tool/migration-tool-${migration-tool.version}.zip" targetdir="$INSTALL_PATH/tools" />
+            <file src="packages/migration-tool/migration-tool-${MigrationToolVersion}.zip" targetdir="$INSTALL_PATH/tools" />
         </pack>
 
         <!--pack name="Documentation" required="no">
