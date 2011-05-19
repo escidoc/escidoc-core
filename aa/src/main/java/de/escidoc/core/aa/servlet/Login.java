@@ -699,13 +699,8 @@ public class Login extends HttpServlet {
     private static void sendResponse(final HttpServletResponse response, final String page, final int statusCode)
         throws IOException {
         final PrintWriter writer = response.getWriter();
-        try {
-            writer.print(page);
-            response.setStatus(statusCode);
-        }
-        finally {
-            IOUtils.closeWriter(writer);
-        }
+        writer.print(page);
+        response.setStatus(statusCode);
     }
 
     /**
