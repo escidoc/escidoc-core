@@ -55,23 +55,8 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
      */
     @Override
     public List<String> getNextPids(final int noOfPids) throws FedoraSystemException {
-        List<String> returnValue = new ArrayList<String>(0);
-        Future<PidListTO> futurePIDList = fedoraServiceClient.getNextPIDAsync("escidoc", noOfPids);
-        PidListTO pidListTO = null;
-        try {
-            pidListTO = futurePIDList.get(60, TimeUnit.SECONDS);
-            returnValue = pidListTO.getPid();
-        }
-        catch (InterruptedException e) {
-            LOGGER.warn("Interrupted exception on requesting PIDs.", e);
-        }
-        catch (ExecutionException e) {
-            LOGGER.warn("Execution exception on requesting PIDs.", e);
-        }
-        catch (TimeoutException e) {
-            LOGGER.warn("Timeout on requesting PIDs.", e);
-        }
-        return returnValue;
+        final PidListTO pidListTO = fedoraServiceClient.getNextPID("escidoc", noOfPids);
+        return pidListTO.getPid();
     }
 
 }

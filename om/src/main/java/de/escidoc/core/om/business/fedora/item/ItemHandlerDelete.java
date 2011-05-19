@@ -46,10 +46,17 @@ import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.foxml.ComponentIdsInItemFoxmlHandler;
+import org.escidoc.core.services.fedora.DigitalObjectTO;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.GetObjectXMLPathParam;
+import org.escidoc.core.services.fedora.GetObjectXMLQueryParam;
+import org.esidoc.core.utils.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import javax.validation.constraints.NotNull;
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -63,6 +70,9 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
     @Autowired
     @Qualifier("common.CommonMethodMapper")
     private MethodMapper methodMapper;
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     /**
      * Removes an item from repository.
@@ -126,10 +136,10 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
             }
         }
 
-        // delete every component, even those referred from old versions
-        final byte[] foxml = getFedoraUtility().getObjectFoxml(getItem().getId());
-        final ByteArrayInputStream in = new ByteArrayInputStream(foxml);
-
+        final GetObjectXMLPathParam path = new GetObjectXMLPathParam();
+        path.setPid(getItem().getId());
+        final GetObjectXMLQueryParam query = new GetObjectXMLQueryParam();
+        final InputStream in = this.fedoraServiceClient.getObjectXMLAsStream(path, query);
         final StaxParser sp = new StaxParser();
         final ComponentIdsInItemFoxmlHandler cih = new ComponentIdsInItemFoxmlHandler(sp);
         sp.addHandler(cih);
@@ -140,12 +150,15 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
         catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
+        finally {
+            IOUtils.closeInputStream(in);
+        }
         final List<String> componentIds = cih.getComponentIds();
         for (final String componentId : componentIds) {
-            getFedoraUtility().deleteObject(componentId, false);
+            this.getFedoraServiceClient().deleteObject(componentId);
         }
-
-        getFedoraUtility().deleteObject(getItem().getId(), true);
+        this.getFedoraServiceClient().deleteObject(getItem().getId());
+        getFedoraUtility().sync();
     }
 
 }

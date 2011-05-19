@@ -269,29 +269,6 @@ public class FedoraUtility {
     }
 
     /**
-     * The method returns the foxml of the Fedora object with provided id via Fedora APIM-Webservice export().
-     * 
-     * @param pid
-     *            Fedora object pid.
-     * @return content of the fedora object foxml as byte []
-     * @throws FedoraSystemException
-     *             Thrown if retrieving FOXML of object failed.
-     */
-    public byte[] getObjectFoxml(final String pid) throws FedoraSystemException {
-
-        final FedoraAPIM apim = borrowApim();
-        try {
-            return apim.export(pid, FOXML_FORMAT, "public");
-        }
-        catch (final RemoteException e) {
-            throw new FedoraSystemException("APIM export failure: " + e.getMessage(), e);
-        }
-        finally {
-            returnApim(apim);
-        }
-    }
-
-    /**
      * The method sets the data stream status to a provided value.
      * 
      * @param pid
@@ -368,147 +345,6 @@ public class FedoraUtility {
     }
 
     /**
-     * The method modifies the named xml datastream of the Object with the given Pid. New Datastream-content is the
-     * given byte[] datastream
-     * 
-     * @param pid
-     *            id of the Object
-     * @param datastreamName
-     *            datastreamName
-     * @param datastreamLabel
-     *            datastreamLabel
-     * @param datastream
-     *            datastream
-     * @param syncTripleStore
-     *            whether the triples should be flushed
-     * @return The timestamp of the modified datastream.
-     * @throws FedoraSystemException
-     *             Thrown if Fedora access failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     */
-    public String modifyDatastream(
-        final String pid, final String datastreamName, final String datastreamLabel, final byte[] datastream,
-        final boolean syncTripleStore) throws FedoraSystemException, WebserverSystemException {
-
-        String timestamp = null;
-        final FedoraAPIM apim = borrowApim();
-        try {
-            timestamp =
-                apim.modifyDatastreamByValue(pid, datastreamName, new String[0], datastreamLabel,
-                    de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML, null, datastream,
-                    null, null, null, true);
-        }
-        catch (final Exception e) {
-            preventWrongLogging(e);
-            throw new FedoraSystemException(e.toString(), e);
-        }
-        finally {
-            returnApim(apim);
-            if (syncTripleStore) {
-                sync();
-            }
-        }
-        return timestamp;
-    }
-
-    /**
-     * The method modifies the named datastream of the Object with the given Pid. New Datastream-content is the given
-     * byte[] datastream
-     * 
-     * @param pid
-     *            id of the Object
-     * @param datastreamName
-     *            datastreamName
-     * @param datastreamLabel
-     *            datastreamLabel
-     * @param mimeType
-     *            mimeType
-     * @param altIDs
-     *            Vector with alternate Ids.
-     * @param url
-     *            url
-     * @param syncTripleStore
-     *            whether the triples should be flushed
-     * @return The timestamp of the modified datastream.
-     * @throws FedoraSystemException
-     *             Thrown if request to Fedora failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     */
-    public String modifyDatastream(
-        final String pid, final String datastreamName, final String datastreamLabel, final String mimeType,
-        final String[] altIDs, final String url, final boolean syncTripleStore) throws FedoraSystemException,
-        WebserverSystemException {
-
-        String timestamp = null;
-        final FedoraAPIM apim = borrowApim();
-        try {
-            timestamp =
-                apim.modifyDatastreamByReference(pid, datastreamName, altIDs, datastreamLabel, mimeType, null, url,
-                    null, null, "Modified by reference.", true);
-        }
-        catch (final Exception e) {
-            throw new FedoraSystemException("Failed to modify Fedora datastream by reference: " + url, e);
-        }
-        finally {
-            returnApim(apim);
-            if (syncTripleStore) {
-                sync();
-            }
-        }
-        return timestamp;
-    }
-
-    /**
-     * The method modifies the named xml datastream of the Object with the given Pid. New Datastream-content is the
-     * given byte[] datastream
-     * 
-     * @param pid
-     *            id of the Object
-     * @param datastreamName
-     *            datastreamName
-     * @param datastreamLabel
-     *            datastreamLabel
-     * @param mimeType
-     *            The MIME Type of the datastream.
-     * @param alternateIDs
-     *            String array of alternateIDs of the datastream
-     * @param datastream
-     *            datastream
-     * @param syncTripleStore
-     *            whether the triples should be flushed
-     * @return The new timestamp of the modified datastream.
-     * @throws FedoraSystemException
-     *             Thrown if request to Fedora failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     */
-    public String modifyDatastream(
-        final String pid, final String datastreamName, final String datastreamLabel, final String mimeType,
-        final String[] alternateIDs, final byte[] datastream, final boolean syncTripleStore)
-        throws FedoraSystemException, WebserverSystemException {
-
-        String timestamp = null;
-        final FedoraAPIM apim = borrowApim();
-        try {
-            timestamp =
-                apim.modifyDatastreamByValue(pid, datastreamName, alternateIDs, datastreamLabel, mimeType, null,
-                    datastream, null, null, null, true);
-        }
-        catch (final Exception e) {
-            throw new FedoraSystemException("Failed to modify Fedora datastream.", e);
-        }
-        finally {
-            returnApim(apim);
-            if (syncTripleStore) {
-                sync();
-            }
-        }
-        return timestamp;
-    }
-
-    /**
      * Purge all versions of datastreams between timestamps.
      * 
      * @param pid
@@ -535,37 +371,6 @@ public class FedoraUtility {
         finally {
             returnApim(apim);
         }
-    }
-
-    /**
-     * The method modifies the named xml datastream of the Object with the given Pid. New Datastream-content is the
-     * given byte[] datastream
-     * 
-     * @param pid
-     *            id of the Object
-     * @param datastreamName
-     *            datastreamName
-     * @param datastreamLabel
-     *            datastreamLabel
-     * @param alternateIDs
-     *            String array of alternateIDs of the datastream
-     * @param datastream
-     *            datastream
-     * @param syncTripleStore
-     *            whether the triples should be flushed
-     * @return The timestamp of the modified datastream.
-     * @throws FedoraSystemException
-     *             Thrown if request to Fedora failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     */
-    public String modifyDatastream(
-        final String pid, final String datastreamName, final String datastreamLabel, final String[] alternateIDs,
-        final byte[] datastream, final boolean syncTripleStore) throws FedoraSystemException, WebserverSystemException {
-
-        return modifyDatastream(pid, datastreamName, datastreamLabel,
-            de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML, alternateIDs, datastream,
-            syncTripleStore);
     }
 
     /**
@@ -1012,37 +817,6 @@ public class FedoraUtility {
     }
 
     /**
-     * Delete the Object with the given pid.
-     * 
-     * @param pid
-     *            id of the Object
-     * @param syncTripleStore
-     *            whether the triples should be flushed
-     * @throws FedoraSystemException
-     *             Thrown if Fedora request failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     */
-    public void deleteObject(final String pid, final boolean syncTripleStore) throws FedoraSystemException,
-        WebserverSystemException {
-        final String msg = "Deleted object " + pid + '.';
-
-        final FedoraAPIM apim = borrowApim();
-        try {
-            apim.purgeObject(pid, msg, false);
-        }
-        catch (final RemoteException e) {
-            throw new FedoraSystemException("While deleting: ", e);
-        }
-        finally {
-            returnApim(apim);
-            if (syncTripleStore) {
-                sync();
-            }
-        }
-    }
-
-    /**
      * Send a risearch request to fedora repository with flag flush set to true.
      * Call reinialize() in order to reset a Table Manager for the Triple Store.
      * 
@@ -1071,49 +845,6 @@ public class FedoraUtility {
         finally {
             returnFedoraClient(fc);
         }
-    }
-
-    /**
-     * Get the last-modification-date for the Fedora object.
-     * 
-     * @param pid
-     *            Fedora objectId.
-     * @return last-modification-date
-     * @throws FedoraSystemException
-     *             Thrown if connection to and retrieving data from Fedora fails.
-     */
-    public String getLastModificationDate(final String pid) throws FedoraSystemException {
-
-        ObjectProfile op;
-        FedoraAPIA apia = borrowApia();
-
-        try {
-            op = apia.getObjectProfile(pid, null);
-        }
-        catch (final RemoteException e) {
-            // Workaround
-            invalidateApiaObject(apia);
-            apia = borrowApia();
-
-            try {
-                op = apia.getObjectProfile(pid, null);
-            }
-            catch (final RemoteException e1) {
-                final String message = "Error on retrieve object profile (pid='" + pid + "') ";
-                LOGGER.warn(message);
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug(message, e1);
-                }
-                throw new FedoraSystemException(message, e);
-            }
-
-            throw new FedoraSystemException(e);
-        }
-        finally {
-            returnApia(apia);
-        }
-
-        return op.getObjLastModDate();
     }
 
     /**

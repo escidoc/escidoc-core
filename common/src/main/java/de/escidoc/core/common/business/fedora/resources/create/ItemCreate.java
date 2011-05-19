@@ -49,6 +49,11 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.escidoc.core.services.fedora.DeleteObjectPathParam;
+import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
+import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +61,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,6 +96,9 @@ public class ItemCreate extends GenericResourceCreate {
     private EscidocIdProvider idProvider;
 
     private String dcXml;
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     // define pattern
     // taken from method handleFedoraUploadError
@@ -258,12 +267,22 @@ public class ItemCreate extends GenericResourceCreate {
 
             // update RELS-EXT with timestamp
             final String relsExt = renderRelsExt();
-            getFedoraUtility().modifyDatastream(getObjid(), Datastream.RELS_EXT_DATASTREAM,
-                Datastream.RELS_EXT_DATASTREAM_LABEL, relsExt.getBytes(XmlUtility.CHARACTER_ENCODING), false);
+            final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+            path.setPid(getObjid());
+            path.setDsID(Datastream.RELS_EXT_DATASTREAM);
+            final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+            query.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
+            org.esidoc.core.utils.io.Datastream datastream = new org.esidoc.core.utils.io.Datastream();
+            try {
+                datastream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
+            }
+            catch (IOException e) {
+                throw new WebserverSystemException(e);
+            }
+            this.fedoraServiceClient.modifyDatastream(path, query, datastream);
             if (forceSync) {
                 getFedoraUtility().sync();
             }
-
         }
         catch (final Exception e) {
 
@@ -393,7 +412,8 @@ public class ItemCreate extends GenericResourceCreate {
         if (comp != null) {
             for (int i = 0; i < comp.size(); i++) {
                 try {
-                    getFedoraUtility().deleteObject(getComponents().get(i).getObjid(), true);
+                    this.fedoraServiceClient.deleteObject(getComponents().get(i).getObjid());
+                    getFedoraUtility().sync();
                 }
                 catch (final Exception e2) {
                     if (LOGGER.isWarnEnabled()) {
@@ -407,7 +427,8 @@ public class ItemCreate extends GenericResourceCreate {
         }
         // now the object it self (maybe it doesn't exists)
         try {
-            getFedoraUtility().deleteObject(getObjid(), true);
+            this.fedoraServiceClient.deleteObject(getObjid());
+            getFedoraUtility().sync();
         }
         catch (final Exception e2) {
             if (LOGGER.isWarnEnabled()) {
@@ -734,7 +755,7 @@ public class ItemCreate extends GenericResourceCreate {
         for (final String componentId : componentIds) {
             LOGGER.debug("Rollback Component create (" + componentId + ").");
             try {
-                getFedoraUtility().deleteObject(componentId, false);
+                this.fedoraServiceClient.deleteObject(componentId);
             }
             catch (final Exception e2) {
                 if (LOGGER.isWarnEnabled()) {

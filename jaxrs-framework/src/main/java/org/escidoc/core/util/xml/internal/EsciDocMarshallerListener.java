@@ -22,8 +22,6 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
 public class EsciDocMarshallerListener extends Marshaller.Listener {
 
     public final static Logger LOG = LoggerFactory.getLogger(EsciDocUnmarshallerListener.class);
@@ -49,15 +47,15 @@ public class EsciDocMarshallerListener extends Marshaller.Listener {
         return this.filteringXmlStreamWriter;
     }
 
-    public void addMarshallerListener(@NotNull final MarshallerListener marshallerListener) {
+    public void addMarshallerListener(final MarshallerListener marshallerListener) {
         this.marshallerListeners.add(marshallerListener);
     }
 
-    public void removeMarshallerListener(@NotNull final MarshallerListener marshallerListener) {
+    public void removeMarshallerListener(final MarshallerListener marshallerListener) {
         this.marshallerListeners.remove(marshallerListener);
     }
 
-    public void beforeMarshal(@NotNull final Object source) {
+    public void beforeMarshal(final Object source) {
         if (source instanceof Datastream) {
             final Datastream datastream = (Datastream) source;
             try {

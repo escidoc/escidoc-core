@@ -9,6 +9,7 @@ import de.escidoc.core.purge.PurgeRequest;
 import de.escidoc.core.purge.PurgeService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ import org.springframework.stereotype.Service;
 public class PurgeServiceImpl implements PurgeService {
 
     private static final Log LOGGER = LogFactory.getLog(PurgeServiceImpl.class);
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     @Autowired
     private FedoraUtility fedoraUtility;
@@ -48,9 +52,9 @@ public class PurgeServiceImpl implements PurgeService {
                 UserContext.runAsInternalUser();
             }
             for (final String componentId : this.tripleStoreUtility.getComponents(purgeRequest.getResourceId())) {
-                this.fedoraUtility.deleteObject(componentId, false);
+                this.fedoraServiceClient.deleteObject(componentId);
             }
-            this.fedoraUtility.deleteObject(purgeRequest.getResourceId(), false);
+            this.fedoraServiceClient.deleteObject(purgeRequest.getResourceId());
             // synchronize triple store
             this.fedoraUtility.sync();
 

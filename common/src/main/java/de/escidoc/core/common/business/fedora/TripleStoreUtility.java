@@ -436,29 +436,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     /**
-     * @param objid         The id of the resource to get the last modification date for.
-     * @param fedoraUtility The {@link FedoraUtility} data access object to use if access to data storage is needed.
-     * @return Returns the last modification date as s {@link String}.
-     * @throws TripleStoreSystemException If access to the triple store/storage back end fails.
-     */
-    public String getLastModificationDate(final String objid, final FedoraUtility fedoraUtility)
-        throws TripleStoreSystemException {
-
-        // may use getPropertiesElements(pid,
-
-        final String date;
-
-        // use fedora to avoid TripleStore syncs
-        try {
-            date = fedoraUtility.getLastModificationDate(objid);
-        }
-        catch (final FedoraSystemException e) {
-            throw new TripleStoreSystemException("While redirect call to FedoraUtility: ", e);
-        }
-        return date;
-    }
-
-    /**
      * Get creation date (the Fedora creation date) from resource.
      *
      * @param pid Objid of resource.

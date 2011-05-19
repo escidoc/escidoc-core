@@ -116,6 +116,12 @@ import de.escidoc.core.om.business.stax.handler.MetadataHandler;
 import de.escidoc.core.om.business.stax.handler.container.BuildRelsExtMemberEntriesFromTaskParamHandlerNew;
 import de.escidoc.core.om.business.stax.handler.container.ContainerPropertiesHandler;
 import de.escidoc.core.om.business.stax.handler.container.StructMapCreateHandler;
+import org.escidoc.core.services.fedora.DeleteObjectPathParam;
+import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
+import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -201,6 +207,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")
     private FedoraUtility fedoraUtility;
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
@@ -465,13 +474,20 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final String relsExtNew =
             getFoxmlContainerRenderer().renderRelsExt(properties, structMapEntries, containerId, lastModifiedDate,
                 relationsData, createComment, propertiesAsReferences);
+        final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+        path.setPid(containerId);
+        path.setDsID(Datastream.RELS_EXT_DATASTREAM);
+        final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+        query.setDsLabel("RELS_EXT DATASTREAM");
+        org.esidoc.core.utils.io.Datastream datastream = new org.esidoc.core.utils.io.Datastream();
         try {
-            getFedoraUtility().modifyDatastream(containerId, Datastream.RELS_EXT_DATASTREAM, "RELS_EXT Datastream",
-                relsExtNew.getBytes(XmlUtility.CHARACTER_ENCODING), true);
+            datastream.write(relsExtNew.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
-        catch (final UnsupportedEncodingException e) {
-            throw new EncodingSystemException(e);
+        catch (IOException e) {
+            throw new WebserverSystemException(e);
         }
+        this.fedoraServiceClient.modifyDatastream(path, query, datastream);
+        getFedoraUtility().sync();
         String result = null;
 
         try {
@@ -560,7 +576,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         }
 
         // purge container
-        getFedoraUtility().deleteObject(getContainer().getId(), true);
+        this.fedoraServiceClient.deleteObject(getContainer().getId());
+        getFedoraUtility().sync();
         fireContainerDeleted(getContainer().getId());
     }
 

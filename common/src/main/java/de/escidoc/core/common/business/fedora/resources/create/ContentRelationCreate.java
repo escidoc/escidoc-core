@@ -30,9 +30,15 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContentRelationFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
+import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.escidoc.core.services.fedora.access.ObjectProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +47,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -48,6 +55,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -63,6 +71,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
     private static final long serialVersionUID = -2959419814324564197L;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationCreate.class);
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")
@@ -568,7 +579,8 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         this.fedoraUtility.storeObjectInFedora(foxml, false);
 
         // creation /last-modification date
-        final String lastModificationDate = this.fedoraUtility.getLastModificationDate(getObjid());
+        final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(getObjid());
+        final String lastModificationDate = Iso8601Util.getIso8601(objectProfile.getObjLastModDate().toDate());
         getProperties().setCreationDate(lastModificationDate);
         getProperties().setLastModificationDate(lastModificationDate);
     }
@@ -619,18 +631,23 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      */
     public void persistProperties(final boolean sync) throws SystemException, FedoraSystemException,
         WebserverSystemException {
-
         final String relsExt = ContentRelationFoXmlProvider.getInstance().getRelsExt(this);
+        final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+        path.setPid(getObjid());
+        path.setDsID(Datastream.RELS_EXT_DATASTREAM);
+        final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+        query.setDsLabel("RELS_EXT DATASTREAM");
+        org.esidoc.core.utils.io.Datastream datastream = new org.esidoc.core.utils.io.Datastream();
         try {
-            final String lmd =
-                this.fedoraUtility.modifyDatastream(getObjid(), Datastream.RELS_EXT_DATASTREAM,
-                    Datastream.RELS_EXT_DATASTREAM_LABEL, relsExt.getBytes(XmlUtility.CHARACTER_ENCODING), false);
-            getProperties().setLastModificationDate(lmd);
+            datastream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
-        catch (final UnsupportedEncodingException e) {
-            throw new SystemException(e);
-
+        catch (IOException e) {
+            throw new WebserverSystemException(e);
         }
+        final DatastreamProfileTO datastreamProfile =
+            this.fedoraServiceClient.modifyDatastream(path, query, datastream);
+        final String lmd = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
+        getProperties().setLastModificationDate(lmd);
         if (sync) {
             this.fedoraUtility.sync();
         }
@@ -664,8 +681,21 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
         }
-        this.fedoraUtility.modifyDatastream(getObjid(), mdRecord.getName(), mdRecord.getLabel(),
-            mdRecord.getMimeType(), altIds, content, false);
+        final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+        path.setPid(getObjid());
+        path.setDsID(mdRecord.getName());
+        final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+        query.setDsLabel(mdRecord.getLabel());
+        query.setMimeType(mdRecord.getMimeType());
+        query.setAltIDs(Arrays.asList(altIds));
+        org.esidoc.core.utils.io.Datastream datastream = new org.esidoc.core.utils.io.Datastream();
+        try {
+            datastream.write(content);
+        }
+        catch (IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        this.fedoraServiceClient.modifyDatastream(path, query, datastream);
         mdRecord.getRepositoryIndicator().setResourceChanged(false);
     }
 

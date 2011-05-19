@@ -22,8 +22,6 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
 public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
 
     public final static Logger LOG = LoggerFactory.getLogger(EsciDocUnmarshallerListener.class);
@@ -32,7 +30,7 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
 
     private ElementStreamFilter elementStreamFilter;
 
-    public EsciDocUnmarshallerListener(@NotNull final InputStream inputStream) {
+    public EsciDocUnmarshallerListener(final InputStream inputStream) {
         this.elementStreamFilter = new ElementStreamFilter(inputStream);
         init();
     }
@@ -54,15 +52,15 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
         return this.elementStreamFilter.getFilteredXmlStreamReader();
     }
 
-    public void addUnmarshallerListener(@NotNull final UnmarshallerListener unmarshallerListener) {
+    public void addUnmarshallerListener(final UnmarshallerListener unmarshallerListener) {
         this.unmarshallerListeners.add(unmarshallerListener);
     }
 
-    public void removeUnmarshallerListener(@NotNull final UnmarshallerListener unmarshallerListener) {
+    public void removeUnmarshallerListener(final UnmarshallerListener unmarshallerListener) {
         this.unmarshallerListeners.remove(unmarshallerListener);
     }
 
-    public void beforeUnmarshal(@NotNull final Object target, final Object parent) {
+    public void beforeUnmarshal(final Object target, final Object parent) {
         if (target instanceof DatastreamHolder) {
             final DatastreamHolder contentTO = (DatastreamHolder) target;
             beforeUnmarshalContentTO(contentTO);
@@ -72,7 +70,7 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
         }
     }
 
-    public void afterUnmarshal(@NotNull final Object target, final Object parent) {
+    public void afterUnmarshal(final Object target, final Object parent) {
         if (target instanceof DatastreamHolder) {
             final DatastreamHolder contentTO = (DatastreamHolder) target;
             afterUnmarshalContentTO(contentTO);

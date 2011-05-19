@@ -70,6 +70,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.PIDSystem;
 import de.escidoc.core.common.persistence.PIDSystemFactory;
+import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
@@ -79,6 +80,10 @@ import de.escidoc.core.common.util.xml.factory.ContentRelationXmlProvider;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 import de.escidoc.core.om.business.interfaces.ContentRelationHandlerInterface;
 import de.escidoc.core.om.business.stax.handler.item.ContentRelationHandler;
+import org.escidoc.core.services.fedora.DeleteObjectPathParam;
+import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,6 +130,9 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     @Autowired
     @Qualifier("business.LockHandler")
     private LockHandler lockHandler;
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     private PIDSystemFactory pidGenFactory;
 
@@ -350,11 +358,10 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     @Override
     public void delete(final String id) throws ContentRelationNotFoundException, SystemException, LockingException,
         FedoraSystemException, WebserverSystemException, IntegritySystemException, TripleStoreSystemException {
-
         final ContentRelationCreate cr = setContentRelation(id);
         checkLocked(cr);
-
-        getFedoraUtility().deleteObject(cr.getObjid(), true);
+        this.fedoraServiceClient.deleteObject(cr.getObjid());
+        getFedoraUtility().sync();
         fireContentRelationDeleted(cr);
     }
 
@@ -765,7 +772,9 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         }
 
         // be aware some of them are triple store requests, which are expensive
-        cr.getProperties().setLastModificationDate(getFedoraUtility().getLastModificationDate(id));
+        final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(id);
+        final String lastModificationDate = Iso8601Util.getIso8601(objectProfile.getObjLastModDate().toDate());
+        cr.getProperties().setLastModificationDate(lastModificationDate);
 
         return cr;
     }

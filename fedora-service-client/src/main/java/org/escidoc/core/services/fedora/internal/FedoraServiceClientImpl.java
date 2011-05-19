@@ -4,6 +4,8 @@ import com.googlecode.ehcache.annotations.Cacheable;
 import com.googlecode.ehcache.annotations.KeyGenerator;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 import net.sf.oval.guard.Guarded;
+import org.apache.cxf.jaxrs.client.Client;
+import org.apache.cxf.jaxrs.client.WebClient;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.CreateObjectPathParam;
@@ -33,8 +35,10 @@ import org.escidoc.core.services.fedora.UpdateObjectPathParam;
 import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
 import org.esidoc.core.utils.io.Datastream;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +48,8 @@ import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.Response;
+import java.io.InputStream;
 import java.util.concurrent.Future;
 
 import static org.esidoc.core.utils.Preconditions.checkNotNull;
@@ -111,34 +117,38 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     @Override
     @Cacheable(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.GetObjectProfileKeyGenerator"))
-    public ObjectProfileTO getObjectProfile(@NotNull final GetObjectProfilePathParam path,
-                                            @NotNull final GetObjectProfileQueryParam query) {
+    public ObjectProfileTO getObjectProfile(@NotNull final String pid) {
+        final GetObjectProfilePathParam path = new GetObjectProfilePathParam();
+        path.setPid(pid);
+        final GetObjectProfileQueryParam query = new GetObjectProfileQueryParam();
         return this.fedoraService.getObjectProfile(path, query);
     }
 
     @Override
     @Async
-    public Future<ObjectProfileTO> getObjectProfileAsync(@NotNull final GetObjectProfilePathParam path,
-                                                         @NotNull final GetObjectProfileQueryParam query) {
-        return new AsyncResult<ObjectProfileTO>(getObjectProfile(path, query));
+    @Cacheable(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectProfileKeyGenerator"))
+    public Future<ObjectProfileTO> getObjectProfileAsync(@NotNull final String pid) {
+        return new AsyncResult<ObjectProfileTO>(getObjectProfile(pid));
     }
 
     @Override
     @TriggersRemove(cacheName = "Fedora.DatastreamsLists", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.AddDatastreamKeyGenerator"))
-    public void addDatastream(@NotNull final AddDatastreamPathParam path,
+    public DatastreamProfileTO addDatastream(@NotNull final AddDatastreamPathParam path,
                               @NotNull final AddDatastreamQueryParam query,
                               final Datastream datastream) {
-        this.fedoraService.addDatastream(path, query, datastream);
+        return this.fedoraService.addDatastream(path, query, datastream);
     }
 
     @Override
     @Async
-    public Future<VoidObject> addDatastreamAsync(@NotNull final AddDatastreamPathParam path,
+    @TriggersRemove(cacheName = "Fedora.DatastreamsLists", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.AddDatastreamKeyGenerator"))
+    public Future<DatastreamProfileTO> addDatastreamAsync(@NotNull final AddDatastreamPathParam path,
                                      @NotNull final AddDatastreamQueryParam query,
                                      final Datastream datastream) {;
-        addDatastream(path, query, datastream);
-        return new AsyncResult<VoidObject>(VoidObject.getInstance());
+        return new AsyncResult<DatastreamProfileTO>(addDatastream(path, query, datastream));
     }
 
     @Override
@@ -151,6 +161,8 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
+    @Cacheable(cacheName = "Fedora.Datastreams", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamKeyGenerator"))
     public Future<Datastream> getDatastreamAsync(@NotNull final GetDatastreamPathParam path,
                                                  @NotNull final GetDatastreamQueryParam query) {
         return new AsyncResult<Datastream>(getDatastream(path, query));
@@ -159,19 +171,20 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     @Override
     @TriggersRemove(cacheName = "Fedora.Datastreams", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.ModifyDatastreamKeyGenerator"))
-    public void modifyDatastream(@NotNull final ModifiyDatastreamPathParam path,
+    public DatastreamProfileTO modifyDatastream(@NotNull final ModifiyDatastreamPathParam path,
                                  @NotNull final ModifyDatastreamQueryParam query,
-                                 @NotNull final Datastream datastream) {
-        this.fedoraService.modifyDatastream(path, query, datastream);
+                                 final Datastream datastream) {
+        return this.fedoraService.modifyDatastream(path, query, datastream);
     }
 
     @Override
     @Async
-    public Future modifyDatastreamAsync(@NotNull final ModifiyDatastreamPathParam path,
+    @TriggersRemove(cacheName = "Fedora.Datastreams", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.ModifyDatastreamKeyGenerator"))
+    public Future<DatastreamProfileTO> modifyDatastreamAsync(@NotNull final ModifiyDatastreamPathParam path,
                                         @NotNull final ModifyDatastreamQueryParam query,
-                                        @NotNull final Datastream datastream) {
-        modifyDatastreamAsync(path, query, datastream);
-        return new AsyncResult<VoidObject>(VoidObject.getInstance());
+                                        final Datastream datastream) {
+        return new AsyncResult<DatastreamProfileTO>(modifyDatastream(path, query, datastream));
     }
 
     @Override
@@ -184,6 +197,7 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
+
     public Future<ObjectDatastreamsTO> listDatastreamsAsync(@NotNull final ListDatastreamsPathParam path,
                                                             @NotNull final ListDatastreamsQueryParam query) {
         return new AsyncResult<ObjectDatastreamsTO>(listDatastreams(path, query));
@@ -209,16 +223,18 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     @Override
     @TriggersRemove(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.DeleteObjectKeyGenerator"))
-    public void deleteObject(@NotNull final DeleteObjectPathParam path, @NotNull final DeleteObjectQueryParam query) {
+    public void deleteObject(@NotNull final String pid) {
+        final DeleteObjectPathParam path = new DeleteObjectPathParam();
+        path.setPid(pid);
+        final DeleteObjectQueryParam query = new DeleteObjectQueryParam();
         this.fedoraService.deleteObject(path, query);
     }
 
     @Override
     @TriggersRemove(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.DeleteObjectKeyGenerator"))
-    public Future<VoidObject> deleteObjectAsync(@NotNull final DeleteObjectPathParam path,
-                                    @NotNull final DeleteObjectQueryParam query) {
-        deleteObject(path, query);
+    public Future<VoidObject> deleteObjectAsync(@NotNull final String pid) {
+        deleteObject(pid);
         return new AsyncResult<VoidObject>(VoidObject.getInstance());
     }
 
@@ -248,6 +264,21 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     public Future<DigitalObjectTO> getObjectXMLAsync(@NotNull final GetObjectXMLPathParam path,
                                                      @NotNull final GetObjectXMLQueryParam query) {
         return new AsyncResult<DigitalObjectTO>(getObjectXML(path, query));
+    }
+
+    public InputStream getObjectXMLAsStream(@NotNull final GetObjectXMLPathParam path,
+                                            @NotNull final GetObjectXMLQueryParam query) {
+        final WebClient client = WebClient.fromClient(WebClient.client(this.fedoraService));
+        final Response response = client.path("/objects/" + path.getPid() + "/objectXML").accept(MimeTypes.TEXT_XML)
+                .type(MimeTypes.TEXT_XML).get();
+        return (InputStream)response.getEntity();
+    }
+
+    @Override
+    @Async
+    public Future<InputStream> getObjectXMLAsStreamAsync(@NotNull final GetObjectXMLPathParam path,
+                                                         @NotNull final GetObjectXMLQueryParam query) {
+        return new AsyncResult<InputStream>(getObjectXMLAsStream(path, query));
     }
 
 }

@@ -17,9 +17,8 @@ public final class DeleteObjectKeyGenerator implements CacheKeyGenerator<String>
 
     public String generateKey(final Object... objects) {
         if (objects.length > 0) {
-            if (objects[0] instanceof DeleteObjectPathParam) {
-                final DeleteObjectPathParam deleteObjectPathParam = (DeleteObjectPathParam) objects[0];
-                return deleteObjectPathParam.getPid();
+            if (objects[0] instanceof String) {
+                return (String)objects[0];
             }
         }
         return null;

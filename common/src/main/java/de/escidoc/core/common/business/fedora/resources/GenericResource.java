@@ -38,12 +38,17 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.ItemRelsExtUpdateHandler;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.GetObjectProfilePathParam;
+import org.escidoc.core.services.fedora.GetObjectProfileQueryParam;
+import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,6 +87,9 @@ public class GenericResource implements FedoraResource {
     @Autowired
     @Qualifier("business.Utility")
     private Utility utility;
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")
@@ -260,7 +268,8 @@ public class GenericResource implements FedoraResource {
         try {
             lastModificationDate = getResourceProperties().get(PropertyMapKeys.LAST_MODIFICATION_DATE);
             if (lastModificationDate == null) {
-                lastModificationDate = this.fedoraUtility.getLastModificationDate(this.id);
+                final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(this.id);
+                lastModificationDate = Iso8601Util.getIso8601(objectProfile.getObjLastModDate().toDate());
                 setLastModificationDate(lastModificationDate);
             }
         }
@@ -296,7 +305,8 @@ public class GenericResource implements FedoraResource {
      */
     @Override
     public String getLastFedoraModificationDate() throws FedoraSystemException {
-        return this.fedoraUtility.getLastModificationDate(this.id);
+        final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(this.id);
+        return Iso8601Util.getIso8601(objectProfile.getObjLastModDate().toDate());
     }
 
     /**

@@ -32,12 +32,16 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.FileSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.ControlGroup;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
+import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.io.IOUtils;
 import org.fcrepo.client.FedoraClient;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
@@ -380,61 +384,56 @@ public class Datastream {
             catch (final IOException e) {
                 throw new WebserverSystemException(e);
             }
-            try {
-                this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
-                    this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false);
-            }
-            catch (final FedoraSystemException e) {
-                if (LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Error on modifing datastream.");
-                }
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error on modifing datastream.", e);
-                }
-                this.fedoraUtility.setDatastreamState(this.parentId, this.name, "A");
-                this.timestamp =
-                    this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
-                        this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false);
-            }
+            final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+            path.setPid(this.parentId);
+            path.setDsID(this.name);
+            final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+            query.setDsLabel(this.label);
+            query.setMimeType(this.mimeType);
+            query.setAltIDs(this.alternateIDs);
+            query.setDsLocation(loc);
+            this.fedoraServiceClient.modifyDatastream(path, query, null);
         }
         else if (this.getStream() != null) {
             if ("X".equals(this.getControlGroup())) {
+                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+                path.setPid(this.parentId);
+                path.setDsID(this.name);
+                final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+                query.setDsLabel(this.label);
+                query.setMimeType(this.mimeType);
+                query.setAltIDs(this.alternateIDs);
+                org.esidoc.core.utils.io.Datastream datastream = new org.esidoc.core.utils.io.Datastream();
                 try {
-                    this.timestamp =
-                        this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
-                            this.alternateIDs.toArray(new String[alternateIDs.size()]), this.getStream(), false);
+                    datastream.write(this.getStream());
                 }
-                catch (final FedoraSystemException e) {
-                    LOGGER.debug("Error on modifing datastream.", e);
-                    this.fedoraUtility.setDatastreamState(this.parentId, this.name, "A");
-                    this.timestamp =
-                        this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
-                            this.alternateIDs.toArray(new String[alternateIDs.size()]), this.getStream(), false);
+                catch (IOException e) {
+                    throw new WebserverSystemException(e);
                 }
+                final DatastreamProfileTO datastreamProfile =
+                    this.fedoraServiceClient.modifyDatastream(path, query, datastream);
+                this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
             }
             else if (this.getControlGroup().equals(CONTROL_GROUP_MANAGED)) {
                 String tempURI = null;
                 try {
-                    try {
-                        tempURI = this.utility.upload(this.getStream(), this.parentId + this.name, MIME_TYPE_TEXT_XML);
-                    }
-                    catch (final FileSystemException e) {
-                        throw new WebserverSystemException("Error while uploading of content of datastream '"
-                            + this.name + "' of the fedora object with id '" + this.parentId
-                            + "' to the staging area. ", e);
-                    }
-                    this.timestamp =
-                        this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
-                            this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI, false);
+                    tempURI = this.utility.upload(this.getStream(), this.parentId + this.name, MIME_TYPE_TEXT_XML);
                 }
-                catch (final FedoraSystemException e) {
-                    LOGGER.debug("Error on modifing datastream.", e);
-                    this.fedoraUtility.setDatastreamState(this.parentId, this.name, "A");
-                    this.timestamp =
-                        this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
-                            this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI, false);
+                catch (final FileSystemException e) {
+                    throw new WebserverSystemException("Error while uploading of content of datastream '" + this.name
+                        + "' of the fedora object with id '" + this.parentId + "' to the staging area. ", e);
                 }
-
+                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+                path.setPid(this.parentId);
+                path.setDsID(this.name);
+                final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+                query.setDsLabel(this.label);
+                query.setMimeType(this.mimeType);
+                query.setAltIDs(this.alternateIDs);
+                query.setDsLocation(tempURI);
+                final DatastreamProfileTO datastreamProfile =
+                    this.fedoraServiceClient.modifyDatastream(path, query, null);
+                this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
             }
         }
         return this.timestamp;
@@ -504,9 +503,21 @@ public class Datastream {
         try {
             // TODO: check of the 'concurrent' flag have to be done too
             if (MIME_TYPE_TEXT_XML.equals(this.mimeType)) {
-
-                this.fedoraUtility.modifyDatastream(this.parentId, this.name, this.label, Constants.MIME_TYPE_DELETED,
-                    this.alternateIDs.toArray(new String[alternateIDs.size()]), this.getStream(), false);
+                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+                path.setPid(this.parentId);
+                path.setDsID(this.name);
+                final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+                query.setDsLabel(this.label);
+                query.setMimeType(Constants.MIME_TYPE_DELETED);
+                query.setAltIDs(this.alternateIDs);
+                org.esidoc.core.utils.io.Datastream datastream = new org.esidoc.core.utils.io.Datastream();
+                try {
+                    datastream.write(this.getStream());
+                }
+                catch (IOException e) {
+                    throw new WebserverSystemException(e);
+                }
+                this.fedoraServiceClient.modifyDatastream(path, query, datastream);
                 this.fedoraUtility
                     .setDatastreamState(this.parentId, this.name, FedoraUtility.DATASTREAM_STATUS_DELETED);
                 init();

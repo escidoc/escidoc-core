@@ -59,8 +59,13 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
+import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -80,6 +85,9 @@ import java.util.Map.Entry;
 public class ItemHandlerUpdate extends ItemHandlerDelete {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandlerUpdate.class);
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     /**
      * Update the components of an item.
@@ -397,11 +405,16 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 // update content and check by checksum if it is really changed
                 // and in case remove content PID if exists
                 final String contentChecksum = component.getChecksum();
-
+                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+                path.setPid(component.getId());
+                path.setDsID("content");
+                final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+                query.setDsLocation(url);
                 try {
-                    getFedoraUtility().modifyDatastream(component.getId(), "content", null, null, null, url, true);
+                    this.fedoraServiceClient.modifyDatastream(path, query, null);
+                    getFedoraUtility().sync();
                 }
-                catch (final FedoraSystemException e) {
+                catch (final Exception e) {
                     handleFedoraUploadError(url, e);
                 }
 
@@ -427,10 +440,17 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                     + " 'content' was set to 'external-url' or " + "'external-managed' while create.");
             }
             final String url = uploadBase64EncodedContent(componentBinary.get("content"), fileName, mimeType);
+            final String contentChecksum = component.getChecksum();
+            final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+            path.setPid(component.getId());
+            path.setDsID("content");
+            final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+            query.setDsLocation(url);
             try {
-                getFedoraUtility().modifyDatastream(component.getId(), "content", null, null, null, url, true);
+                this.fedoraServiceClient.modifyDatastream(path, query, null);
+                getFedoraUtility().sync();
             }
-            catch (final FedoraSystemException e) {
+            catch (final Exception e) {
                 handleFedoraUploadError(url, e);
             }
         }

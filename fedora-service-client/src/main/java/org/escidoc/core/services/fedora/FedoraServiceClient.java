@@ -2,10 +2,12 @@ package org.escidoc.core.services.fedora;
 
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
 import org.esidoc.core.utils.io.Datastream;
 
 import javax.validation.constraints.NotNull;
+import java.io.InputStream;
 import java.util.concurrent.Future;
 
 /**
@@ -29,18 +31,15 @@ public interface FedoraServiceClient {
     Future<VoidObject> createObjectAsync(@NotNull CreateObjectPathParam path,
                                          @NotNull CreateObjectQueryParam query);
 
-    ObjectProfileTO getObjectProfile(@NotNull GetObjectProfilePathParam path,
-                                     @NotNull GetObjectProfileQueryParam
-            query);
+    ObjectProfileTO getObjectProfile(@NotNull String pid);
 
-    Future<ObjectProfileTO> getObjectProfileAsync(@NotNull GetObjectProfilePathParam path,
-                                                  @NotNull GetObjectProfileQueryParam query);
+    Future<ObjectProfileTO> getObjectProfileAsync(@NotNull String pid);
 
-    void addDatastream(@NotNull AddDatastreamPathParam path,
+    DatastreamProfileTO addDatastream(@NotNull AddDatastreamPathParam path,
                        @NotNull AddDatastreamQueryParam query,
                        Datastream outputStream);
 
-    Future<VoidObject> addDatastreamAsync(@NotNull AddDatastreamPathParam path,
+    Future<DatastreamProfileTO> addDatastreamAsync(@NotNull AddDatastreamPathParam path,
                                           @NotNull AddDatastreamQueryParam query,
                                           Datastream outputStream);
 
@@ -50,13 +49,13 @@ public interface FedoraServiceClient {
     Future<Datastream> getDatastreamAsync(@NotNull GetDatastreamPathParam path,
                                           @NotNull GetDatastreamQueryParam query);
 
-    void modifyDatastream(@NotNull ModifiyDatastreamPathParam path,
+    DatastreamProfileTO modifyDatastream(@NotNull ModifiyDatastreamPathParam path,
                           @NotNull ModifyDatastreamQueryParam query,
-                          @NotNull Datastream outputStream);
+                          Datastream outputStream);
 
-    Future<VoidObject> modifyDatastreamAsync(@NotNull ModifiyDatastreamPathParam path,
+    Future<DatastreamProfileTO> modifyDatastreamAsync(@NotNull ModifiyDatastreamPathParam path,
                                  @NotNull ModifyDatastreamQueryParam query,
-                                 @NotNull Datastream outputStream);
+                                 Datastream outputStream);
 
     ObjectDatastreamsTO listDatastreams(@NotNull ListDatastreamsPathParam path,
                                         @NotNull ListDatastreamsQueryParam query);
@@ -70,11 +69,9 @@ public interface FedoraServiceClient {
     Future<VoidObject> updateObjectAsync(@NotNull UpdateObjectPathParam path,
                                          @NotNull UpdateObjectQueryParam query);
 
-    void deleteObject(@NotNull DeleteObjectPathParam path,
-                      @NotNull DeleteObjectQueryParam query);
+    void deleteObject(@NotNull String pid);
 
-    Future<VoidObject> deleteObjectAsync(@NotNull DeleteObjectPathParam path,
-                                         @NotNull DeleteObjectQueryParam query);
+    Future<VoidObject> deleteObjectAsync(@NotNull String pid);
 
     String ingest(@NotNull IngestPathParam path,
                   @NotNull IngestQueryParam query,
@@ -89,5 +86,11 @@ public interface FedoraServiceClient {
 
     Future<DigitalObjectTO> getObjectXMLAsync(@NotNull GetObjectXMLPathParam path,
                                               @NotNull GetObjectXMLQueryParam query);
+
+    InputStream getObjectXMLAsStream(@NotNull GetObjectXMLPathParam path,
+                                     @NotNull GetObjectXMLQueryParam query);
+
+    Future<InputStream> getObjectXMLAsStreamAsync(@NotNull GetObjectXMLPathParam path,
+                                          @NotNull GetObjectXMLQueryParam query);
 
 }

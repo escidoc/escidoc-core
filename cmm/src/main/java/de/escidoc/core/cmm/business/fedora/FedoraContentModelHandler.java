@@ -86,6 +86,12 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
+import org.escidoc.core.services.fedora.DeleteObjectPathParam;
+import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
+import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +135,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")
     private FedoraUtility fedoraUtility;
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     @PostConstruct
     private void init() {
@@ -389,8 +398,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         }
 
         // delete every behavior (sdef, sdep) even those from old versions
-
-        getFedoraUtility().deleteObject(getContentModel().getId(), true);
+        this.fedoraServiceClient.deleteObject(getContentModel().getId());
+        getFedoraUtility().sync();
         fireContentModelDeleted(getContentModel().getId());
     }
 
@@ -589,10 +598,15 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
                     }
                 }
                 else {
-                    // update xslt
-                    fedoraUtility.modifyDatastream(sdefId, "xslt", "Transformation instructions for operation '"
-                        + resourceDefinition.getName() + "'.", Datastream.MIME_TYPE_TEXT_XML, new String[0],
-                        resourceDefinition.getXsltHref(), false);
+                    final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+                    path.setPid(sdefId);
+                    path.setDsID("xslt");
+                    final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+                    query.setDsLabel("Transformation instructions for operation '" + resourceDefinition.getName()
+                        + "'.");
+                    query.setMimeType(MimeTypes.TEXT_XML);
+                    query.setDsLocation(resourceDefinition.getXsltHref());
+                    this.fedoraServiceClient.modifyDatastream(path, query, null);
                 }
             }
             else {

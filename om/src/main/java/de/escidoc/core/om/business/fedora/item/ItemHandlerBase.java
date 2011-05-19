@@ -561,8 +561,8 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws FileNotFoundException Thrown if access to remote resource failed.
      * @throws FedoraSystemException Thrown if Fedora reports an error.
      */
-    static final void handleFedoraUploadError(final String url, final FedoraSystemException e)
-        throws FileNotFoundException, FedoraSystemException {
+    static final void handleFedoraUploadError(final String url, final Exception e) throws FileNotFoundException,
+        FedoraSystemException {
 
         final Matcher matcherErrorGetting = PATTERN_ERROR_GETTING.matcher(e.getMessage());
         final Matcher matcherMalformedUrl = PATTERN_MALFORMED_URL.matcher(e.getMessage());
@@ -590,7 +590,7 @@ public class ItemHandlerBase extends HandlerBase {
         finally {
             client.getConnectionManager().shutdown();
         }
-        throw e;
+        throw new FedoraSystemException(e);
     }
 
     /**

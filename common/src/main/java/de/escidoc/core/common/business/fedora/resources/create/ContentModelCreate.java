@@ -34,12 +34,18 @@ import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.ContentModelFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
+import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.joda.time.DateTime;
 import org.joda.time.ReadableInstant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,6 +62,11 @@ import java.util.Map;
  */
 @Configurable
 public class ContentModelCreate extends GenericResourceCreate {
+
+    public final static Logger LOG = LoggerFactory.getLogger(ContentModelCreate.class);
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")
@@ -186,13 +197,22 @@ public class ContentModelCreate extends GenericResourceCreate {
 
             // update RELS-EXT with timestamp
             final String relsExt = renderRelsExt();
-            this.fedoraUtility.modifyDatastream(getObjid(), Datastream.RELS_EXT_DATASTREAM, "RELS_EXT DATASTREAM",
-                relsExt.getBytes(XmlUtility.CHARACTER_ENCODING), false);
-
+            final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
+            path.setPid(getObjid());
+            path.setDsID(Datastream.RELS_EXT_DATASTREAM);
+            final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+            query.setDsLabel("RELS_EXT DATASTREAM");
+            org.esidoc.core.utils.io.Datastream datastream = new org.esidoc.core.utils.io.Datastream();
+            try {
+                datastream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
+            }
+            catch (IOException e) {
+                throw new WebserverSystemException(e);
+            }
+            this.fedoraServiceClient.modifyDatastream(path, query, datastream);
             if (forceSync) {
                 this.fedoraUtility.sync();
             }
-
         }
         catch (final UnsupportedEncodingException e) {
             // TODO rollback

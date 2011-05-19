@@ -24,6 +24,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -44,6 +45,9 @@ import java.net.URL;
  * @author Torsten Tetteroo
  */
 public abstract class HandlerBase {
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")
@@ -87,24 +91,17 @@ public abstract class HandlerBase {
         }
     }
 
+    protected FedoraServiceClient getFedoraServiceClient() {
+        return fedoraServiceClient;
+    }
+
     /**
      * Gets the {@link FedoraUtility}.
      *
      * @return FedoraUtility Returns the {@link FedoraUtility} object.
      */
     protected FedoraUtility getFedoraUtility() {
-
         return this.fedoraUtility;
-    }
-
-    /**
-     * Injects the {@link FedoraUtility}.
-     *
-     * @param fedoraUtility The {@link FedoraUtility} to set
-     */
-    public void setFedoraUtility(final FedoraUtility fedoraUtility) {
-
-        this.fedoraUtility = fedoraUtility;
     }
 
     /**
@@ -113,18 +110,7 @@ public abstract class HandlerBase {
      * @return TripleStoreUtility Returns the {@link TripleStoreUtility} object.
      */
     protected TripleStoreUtility getTripleStoreUtility() {
-
         return this.tripleStoreUtility;
-    }
-
-    /**
-     * Injects the {@link TripleStoreUtility}.
-     *
-     * @param tripleStoreUtility The {@link TripleStoreUtility} to set
-     */
-    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
-
-        this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**
@@ -133,18 +119,7 @@ public abstract class HandlerBase {
      * @return Returns the {@link EscidocIdProvider} object.
      */
     protected EscidocIdProvider getIdProvider() {
-
         return this.idProvider;
-    }
-
-    /**
-     * Injects the {@link EscidocIdProvider}.
-     *
-     * @param idProvider The {@link EscidocIdProvider} to set.
-     */
-    public void setIdProvider(final EscidocIdProvider idProvider) {
-
-        this.idProvider = idProvider;
     }
 
     /**

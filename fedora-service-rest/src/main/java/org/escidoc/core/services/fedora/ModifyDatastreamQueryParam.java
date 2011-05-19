@@ -1,13 +1,21 @@
 package org.escidoc.core.services.fedora;
 
+import net.sf.oval.guard.Guarded;
+
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
+@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
+        assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
 public final class ModifyDatastreamQueryParam {
 
     private String dsLocation;
-    private String altIDs;
     private String dsLabel;
+    private List<String> altIDs =new ArrayList<String>();
     private Boolean versionable;
     private DatastreamState dsState;
     private String formatURI;
@@ -25,11 +33,11 @@ public final class ModifyDatastreamQueryParam {
         this.dsLocation = dsLocation;
     }
 
-    public String getAltIDs() {
+    public List<String> getAltIDs() {
         return altIDs;
     }
 
-    public void setAltIDs(final String altIDs) {
+    public void setAltIDs(@NotNull final List<String> altIDs) {
         this.altIDs = altIDs;
     }
 

@@ -18,9 +18,8 @@ public final class GetObjectProfileKeyGenerator implements CacheKeyGenerator<Str
 
     public String generateKey(final Object... objects) {
         if (objects.length > 0) {
-            if (objects[0] instanceof GetObjectProfilePathParam) {
-                final GetObjectProfilePathParam getObjectProfilePathParam = (GetObjectProfilePathParam) objects[0];
-                return getObjectProfilePathParam.getPid();
+            if (objects[0] instanceof String) {
+                return (String)objects[0];
             }
         }
         return null;

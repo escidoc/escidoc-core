@@ -2,6 +2,7 @@ package org.escidoc.core.services.fedora;
 
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.io.Datastream;
 import org.esidoc.core.utils.io.MimeTypes;
 
@@ -49,7 +50,7 @@ public interface FedoraServiceRESTEndpoint {
     @Path("/{pid}/datastreams/{dsID}")
     @Produces(MimeTypes.ALL)
     @Consumes(MimeTypes.TEXT_XML)
-    void addDatastream(@NotNull @PathParam("") AddDatastreamPathParam path,
+    DatastreamProfileTO addDatastream(@NotNull @PathParam("") AddDatastreamPathParam path,
                        @NotNull @QueryParam("") AddDatastreamQueryParam query,
                        @NotNull Datastream inputStream);
 
@@ -64,7 +65,7 @@ public interface FedoraServiceRESTEndpoint {
     @Path("/{pid}/datastreams/{dsID}")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.ALL)
-    void modifyDatastream(@NotNull @PathParam("") ModifiyDatastreamPathParam path,
+    DatastreamProfileTO modifyDatastream(@NotNull @PathParam("") ModifiyDatastreamPathParam path,
                           @NotNull @QueryParam("") ModifyDatastreamQueryParam query,
                           @NotNull Datastream datastream);
 

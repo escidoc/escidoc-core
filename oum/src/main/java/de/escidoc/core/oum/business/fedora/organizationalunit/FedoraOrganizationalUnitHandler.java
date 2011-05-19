@@ -76,6 +76,7 @@ import de.escidoc.core.oum.business.handler.OrganizationalUnitParentsHandler;
 import de.escidoc.core.oum.business.handler.OrganizationalUnitPredecessorsHandler;
 import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.oum.business.utility.OumUtility;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -351,7 +352,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         checkInState("deleted", Constants.STATUS_OU_CREATED);
         checkWithoutChildren("deleted");
 
-        getFedoraUtility().deleteObject(id, true);
+        this.getFedoraServiceClient().deleteObject(id);
+        getFedoraUtility().sync();
         fireOuDeleted(id);
 
         // update property hasChildren of all parents in Lucene
