@@ -439,7 +439,12 @@ public class Datastream {
                 query.setDsLocation(tempURI);
                 final DatastreamProfileTO datastreamProfile =
                     this.fedoraServiceClient.modifyDatastream(path, query, null);
-                this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
+                if (datastreamProfile.getDateTime() != null) {
+                    this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
+                }
+                else {
+                    this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDsCreateDate().toDate());
+                }
             }
         }
         return this.timestamp;

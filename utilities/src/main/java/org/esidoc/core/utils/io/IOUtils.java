@@ -16,7 +16,7 @@ import java.nio.charset.Charset;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
 public final class IOUtils {
 
     private final static Logger LOG = LoggerFactory.getLogger(IOUtils.class);

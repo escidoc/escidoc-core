@@ -52,7 +52,7 @@ public interface FedoraServiceRESTEndpoint {
     @Consumes(MimeTypes.TEXT_XML)
     DatastreamProfileTO addDatastream(@NotNull @PathParam("") AddDatastreamPathParam path,
                        @NotNull @QueryParam("") AddDatastreamQueryParam query,
-                       @NotNull Datastream inputStream);
+                       Datastream inputStream);
 
     @GET
     @Path("/{pid}/datastreams/{dsID}/content")

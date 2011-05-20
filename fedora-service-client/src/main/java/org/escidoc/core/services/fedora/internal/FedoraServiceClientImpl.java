@@ -62,7 +62,7 @@ import static org.esidoc.core.utils.Preconditions.checkState;
  */
 @Service("fedoraServiceClient")
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
 public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     public final static Logger LOG = LoggerFactory.getLogger(FedoraServiceClientImpl.class);
@@ -174,7 +174,11 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     public DatastreamProfileTO modifyDatastream(@NotNull final ModifiyDatastreamPathParam path,
                                  @NotNull final ModifyDatastreamQueryParam query,
                                  final Datastream datastream) {
-        return this.fedoraService.modifyDatastream(path, query, datastream);
+        if(datastream != null) {
+            return this.fedoraService.modifyDatastream(path, query, datastream);
+        } else {
+            return this.fedoraService.modifyDatastream(path, query, new Datastream());
+        }
     }
 
     @Override

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
 public final class GetObjectXMLPathParam {
 
     @NotNull

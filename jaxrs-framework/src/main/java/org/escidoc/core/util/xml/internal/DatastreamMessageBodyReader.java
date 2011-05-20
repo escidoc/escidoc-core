@@ -25,7 +25,7 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  */
 @Provider
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
 public class DatastreamMessageBodyReader implements MessageBodyReader<Datastream> {
 
 
