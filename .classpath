@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
+	<classpathentry kind="src" output="fedora-service-rest/target/classes" path="fedora-service-rest/target/generated-sources/java"/>
 	<classpathentry excluding="**" kind="src" output="utilities/target/test-classes" path="utilities/src/test/resources"/>
 	<classpathentry kind="src" output="utilities/target/test-classes" path="utilities/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="utilities/target/classes" path="utilities/src/main/resources"/>
