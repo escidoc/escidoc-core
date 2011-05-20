@@ -41,8 +41,12 @@ public final class AddDatastreamQueryParam {
         return altIDs;
     }
 
-    public void setAltIDs(@NotNull final List<String> altIDs) {
-        this.altIDs = altIDs;
+    public void setAltIDs(final List<String> altIDs) {
+        if(altIDs == null) {
+            this.altIDs = new ArrayList<String>();
+        } else {
+           this.altIDs = new ArrayList<String>(altIDs);
+        }
     }
 
     public String getDsLabel() {

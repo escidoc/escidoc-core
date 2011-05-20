@@ -412,7 +412,13 @@ public class Datastream {
                 }
                 final DatastreamProfileTO datastreamProfile =
                     this.fedoraServiceClient.modifyDatastream(path, query, datastream);
-                this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
+                if (datastreamProfile.getDateTime() != null) {
+                    this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
+                }
+                else {
+                    this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDsCreateDate().toDate());
+                }
+
             }
             else if (this.getControlGroup().equals(CONTROL_GROUP_MANAGED)) {
                 String tempURI = null;

@@ -62,7 +62,6 @@ import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
-import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

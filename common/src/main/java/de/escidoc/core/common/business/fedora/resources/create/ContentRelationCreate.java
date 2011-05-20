@@ -646,7 +646,13 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         }
         final DatastreamProfileTO datastreamProfile =
             this.fedoraServiceClient.modifyDatastream(path, query, datastream);
-        final String lmd = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
+        final String lmd;
+        if (datastreamProfile.getDateTime() != null) {
+            lmd = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
+        }
+        else {
+            lmd = Iso8601Util.getIso8601(datastreamProfile.getDsCreateDate().toDate());
+        }
         getProperties().setLastModificationDate(lmd);
         if (sync) {
             this.fedoraUtility.sync();

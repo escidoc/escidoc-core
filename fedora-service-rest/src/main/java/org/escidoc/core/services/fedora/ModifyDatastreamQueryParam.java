@@ -9,13 +9,11 @@ import java.util.List;
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = true, checkInvariants=true, inspectInterfaces = true)
 public final class ModifyDatastreamQueryParam {
 
     private String dsLocation;
     private String dsLabel;
-    private List<String> altIDs =new ArrayList<String>();
+    private List<String> altIDs = new ArrayList<String>();
     private Boolean versionable;
     private DatastreamState dsState;
     private String formatURI;
@@ -37,8 +35,12 @@ public final class ModifyDatastreamQueryParam {
         return altIDs;
     }
 
-    public void setAltIDs(@NotNull final List<String> altIDs) {
-        this.altIDs = altIDs;
+    public void setAltIDs(final List<String> altIDs) {
+        if(altIDs == null) {
+            this.altIDs = new ArrayList<String>();
+        } else {
+           this.altIDs = new ArrayList<String>(altIDs);
+        }
     }
 
     public String getDsLabel() {
