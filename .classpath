@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
-	<!-- hibernate3 generated sources must be in classpath (why not other generated sources? maven, plugin weakness?) -->
+	<classpathentry excluding="**" kind="src" output="utilities/target/test-classes" path="utilities/src/test/resources"/>
+	<classpathentry kind="src" output="utilities/target/test-classes" path="utilities/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="utilities/target/classes" path="utilities/src/main/resources"/>
+	<classpathentry kind="src" output="utilities/target/classes" path="utilities/src/main/java"/>
+	<classpathentry kind="src" output="fedora-service-rest/target/test-classes" path="fedora-service-rest/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="fedora-service-rest/target/classes" path="fedora-service-rest/src/main/resources"/>
+	<classpathentry kind="src" output="fedora-service-rest/target/classes" path="fedora-service-rest/src/main/java"/>
+	<classpathentry kind="src" output="fedora-service-client/target/test-classes" path="fedora-service-client/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="fedora-service-client/target/classes" path="fedora-service-client/src/main/resources"/>
+	<classpathentry kind="src" output="fedora-service-client/target/classes" path="fedora-service-client/src/main/java"/>
 	<classpathentry kind="src" path="aa/target/hibernate3/generated-sources"/>
 	<classpathentry kind="src" path="common/target/hibernate3/generated-sources"/>
 	<classpathentry kind="src" path="oai/target/hibernate3/generated-sources"/>
 	<classpathentry kind="src" path="sm/target/hibernate3/generated-sources"/>
 	<classpathentry kind="src" path="st/target/hibernate3/generated-sources"/>
-	<!-- needed for integration tests using RemoteExceptions -->
 	<classpathentry kind="src" path="integration-tests/target/generated-sources"/>
 	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources"/>
 	<classpathentry kind="src" output="common/target/classes" path="common/src/main/java"/>
@@ -34,7 +42,6 @@
 	<classpathentry excluding="**" kind="src" output="st/target/classes" path="st/src/main/resources"/>
 	<classpathentry kind="src" output="tme/target/classes" path="tme/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="tme/target/classes" path="tme/src/main/resources"/>
-	<classpathentry excluding="**" kind="src" output="common-remote/target/classes" path="common-remote/src/main/resources"/>
 	<classpathentry excluding="**" kind="src" output="escidoc-core.ear/target/classes" path="escidoc-core.ear/src/main/resources"/>
 	<classpathentry kind="src" output="integration-tests/target/test-classes" path="integration-tests/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="integration-tests/target/test-classes" path="integration-tests/src/test/resources"/>
