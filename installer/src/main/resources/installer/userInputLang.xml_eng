@@ -1,4 +1,48 @@
-﻿<langpack>
-  <str id="userdata.database" txt="Relational Database:"/>
-  <str id="authentication" txt="Authentication Method:"/>
+<langpack>
+  <str id="installOrUpgrade" txt="Install / Upgrade"/>
+  <str id="installOrUpgradeQuestion" txt="Would you like to install a new eSciDoc Infrastructure or rather upgrade an existing one?"/>
+  <str id="installOrUpgradeChoiceInstall" txt="Install new eSciDoc infrastructure"/>
+  <str id="installOrUpgradeChoiceUpgrade" txt="Upgrade existing eSciDoc infrastructure"/>
+
+  <str id="escidocHostAndPort" txt="eSciDoc host name and port number"/>
+  <str id="escidocHost" txt="The host name of the server you are about to install the eSciDoc Infrastructure onto. You may use a fully qualified host name. Please make sure not to append a port."/>
+  <str id="escidocHostAlternative" txt="Alternativly, you may provide the IP address instead of host name and domain name. Keeping the default value 'localhost' will prohibit access from remote hosts."/>
+  <str id="escidocHostText" txt="Host name:"/>
+  <str id="escidocHostValidator" txt="Host name must not be empty string."/>
+  <str id="escidocPort" txt="The port number of the server you are about to install the eSciDoc Infrastructure onto."/>
+  <str id="escidocPortText" txt="Port number:"/>
+  <str id="escidocPortValidator" txt="Port number must be a free port on localhost."/>
+
+  <str id="RelationalDatabase" txt="Relational Database Management System"/>
+  <str id="RelationalDatabaseDescription" txt="eSciDoc requires a relational database system. Currently, only Oracle and PostgreSQL are supported. The database will only hold internal data (e.g. user rights), but not the actual content."/>
+
+  <str id="OracleDriver" txt="Oracle Driver Selection"/>
+  <str id="OracleDriverDescription" txt="You have chosen to use an Oracle database. Please configure where to find the Oracle JDBC driver."/>
+  <str id="OracleDriverText" txt="Oracle JDBC driver"/>
+
+  <str id="PostgresDatabase" txt="PostgreSQL Database Connection"/>
+  <str id="DatabaseHost"  txt="Database host:"/>
+  <str id="DatabaseHostValidator" txt="Database host must not be empty string."/>
+  <str id="DatabasePort"  txt="Database port:"/>
+  <str id="DatabasePortValidator" txt="Database port must not be empty string."/>
+  <str id="DatabaseDriver"  txt="Database driver class:"/>
+  <str id="DatabaseDriverValidator" txt="Database driver class must not be empty string."/>
+  <str id="PostgresRootDatabase" txt="During the installation of PostgreSQL, you have set a name for the root database. If you accepted the default value, you do not need to edit this field."/>
+  <str id="PostgresRootDatabaseText" txt="Root Database Name:"/>
+  <str id="DatabaseNameValidator" txt="Database name must not be empty string."/>
+
+  <str id="OracleDatabase" txt="Oracle Database Connection"/>
+  <str id="OracleRootDatabase" txt="During the installation of Oracle, you have set a name for the database (SID). If you accepted the default value, you do not need to edit this field."/>
+  <str id="OracleRootDatabaseText" txt="Database SID:"/>
+
+  <str id="UserCredentials" txt="User Credentials for Database and Role Creation"/>
+  <str id="UserCredentialsText" txt="The installer will create the necessary databases and roles for you. In common database setups, this requires a privileged user."/>
+  <str id="UserCredentialsText2" txt="Please provide the user credentials of an appropriate database user with sufficient privileges. This user will not be stored in any configuration file and will not be used once the necessary databases and roles have been created."/>
+  <str id="DatabaseAdminUsername" txt="Database Admin Username:"/>
+  <str id="DatabaseAdminUsernameValidator" txt="Database admin username must not be an empty string."/>
+  <str id="DatabaseAdminPassword" txt="Database Admin Password:"/>
+  <str id="RetypeDatabaseAdminPassword" txt="Retype Admin Password:"/>
+  <str id="DatabaseAdminPasswordValidator" txt="Database admin password must not be an empty string."/>
+  <str id="DatabaseAdminPasswordEqualityValidator" txt="Both database admin passwords must match."/>
+
 </langpack>

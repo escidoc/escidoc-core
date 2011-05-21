@@ -72,7 +72,7 @@
     -->
     <locale>
         <langpack iso3="eng"/>
-        <!--langpack iso3="deu"/-->
+        <langpack iso3="deu"/>
     </locale>
 
     <!-- 
@@ -82,13 +82,16 @@
     <resources>
         <res id="HTMLHelloPanel.info" src="installer/welcome.html" />
         <res id="HTMLLicencePanel.licence" src="installer/license.html" />
-        <res id="HTMLInfoPanel.info" src="installer/prerequisites.html" />
+        <res id="HTMLInfoPanel.info"     src="installer/prerequisites.html" />
+        <res id="HTMLInfoPanel.info_deu" src="installer/prerequisites.html_deu" />
         <res id="HTMLInfoPanel.installInfo" src="installer/nextstepsAfterInstall.html" parse="yes" type="plain" />
         <res id="HTMLInfoPanel.upgradeInfo" src="installer/nextstepsAfterUpgrade.html" parse="yes" type="plain" />
         <res id="Heading.image" src="installer/escidoc-logo-small.jpg" />
         <res id="Splash.image" src="installer/splash.jpg" />
+        <res id="installer.langsel.img" src="installer/splash.jpg" />
         <res id="userInputSpec.xml" src="installer/userInputSpec.xml" />
         <res id="userInputLang.xml_eng" src="installer/userInputLang.xml_eng" />
+        <res id="userInputLang.xml_deu" src="installer/userInputLang.xml_deu" />
         <res id="AntActionsSpec.xml" src="installer/EscidocAntActionSpec.xml" />
         <res id="CustomLangpack.xml_eng" src="installer/CustomLangpack_eng.xml"/>
         <res id="ProcessPanel.Spec.xml" src="installer/EscidocProcessPanelSpec.xml" />

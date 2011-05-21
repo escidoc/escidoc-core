@@ -4,13 +4,13 @@
 
     <panel order="0" id="Install or upgrade eSciDoc">
       <createForPack name="eSciDoc" />
-      <field type="title" txt="Install / Upgrade" bold="true" size="1" />
+      <field type="title" id="installOrUpgrade" bold="true" size="1" />
       <field type="divider" align="top" />
       <field type="radio" variable="InstallationType">
-        <description align="left" txt="Would you like to install a new eSciDoc Infrastructure or rather upgrade an existing one?" />
+        <description align="left" id="installOrUpgradeQuestion" />
         <spec>
-          <choice txt="Install new eSciDoc infrastructure" value="install" set="true" />
-          <choice txt="Upgrade existing eSciDoc infrastructure" value="upgrade" />
+          <choice id="installOrUpgradeChoiceInstall" value="install" set="true" />
+          <choice id="installOrUpgradeChoiceUpgrade" value="upgrade" />
         </spec>
       </field>
       <field type="space"/>
@@ -19,21 +19,21 @@
 
     <panel order="1" id="Select eSciDoc host name and port number">
         <createForPack name="eSciDoc" />
-        <field type="title" txt="eSciDoc host name and port number" bold="true" size="1" />
+        <field type="title" id="escidocHostAndPort" bold="true" size="1" />
         <field type="divider" align="top"/>
         <!-- Hostname of the system onto which eSciDoc will be installed -->
-        <field type="staticText" align="left" txt="The host name of the server you are about to install the eSciDoc Infrastructure onto. You may use a fully qualified host name. Please make sure not to append a port." />
-        <field type="staticText" align="left" txt="Alternativly, you may provide the IP address instead of host name and domain name. Keeping the default value 'localhost' will prohibit access from remote hosts." />
+        <field type="staticText" align="left" id="escidocHost" />
+        <field type="staticText" align="left" id="escidocHostAlternative" />
         <field type="text" align="left" variable="EscidocHost">
-          <spec txt="Host name:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Host name must not be empty string."/>
+          <spec id="escidocHostText" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="escidocHostValidator"/>
         </field>
         <!-- Port number of the system onto which eSciDoc will be installed -->
         <field type="space"/>
-        <field type="staticText" align="left" txt="The port number of the server you are about to install the eSciDoc Infrastructure onto." />
+        <field type="staticText" align="left" id="escidocPort" />
         <field type="text" align="left" variable="EscidocPort">
-          <spec txt="Port number:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.PortValidator" txt="Port number must be a free port on localhost."/>
+          <spec id="escidocPortText" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.PortValidator" id="escidocPortValidator"/>
         </field>
         <!-- Bind address of the system onto which eSciDoc will be installed -->
         <!-- field type="space"/>
@@ -47,12 +47,12 @@
 
     <panel order="2" id="Select RDBMS for eSciDoc and Fedora">
         <createForPack name="eSciDoc" />
-        <field type="title" txt="Select Relational Database Management System" bold="true" size="1" />
+        <field type="title" id="RelationalDatabase" bold="true" size="1" />
         <field type="divider" align="top"/>
         <!-- Underlying RDBMS -->
         <field type="radio" variable="Database">
-          <description>eSciDoc requires a relational database system. Currently, only Oracle and PostgreSQL are supported. The database will only hold internal data (e.g. user rights), but not the actual content.</description>
-          <spec txt="Relational Database:" id="userdata.database">
+          <description id="RelationalDatabaseDescription" />
+          <spec>
             <choice txt="Oracle" value="Oracle"/>
             <choice txt="PostgreSQL" value="PostgreSQL" set="true"/>
           </spec>
@@ -62,12 +62,12 @@
     </panel>
 
     <panel order="3" id="Oracle JDBC driver">
-        <field type="title" txt="Oracle Driver Selection" bold="true" size="1" />
+        <field type="title" id="OracleDriver" bold="true" size="1" />
         <field type="divider" align="top"/>
         <field type="space"/>
-        <field type="staticText" txt="You have chosen to use an Oracle database. Please configure where to find the Oracle JDBC driver."/>
+        <field type="staticText" id="OracleDriverDescription"/>
         <field type="file" align="left" variable="jdbc.driver.oracle">
-            <spec txt="Oracle JDBC driver jar:" size="25" set="" fileext="jar" fileextdesc="Oracle JDBC driver jar"/>
+            <spec id="OracleDriverText" size="25" set="" fileext="jar" fileextdesc="Oracle JDBC driver jar"/>
         </field>
         <field type="space"/>
         <field type="divider" align="bottom"/>
@@ -75,29 +75,29 @@
 
     <panel order="4" id="Postgres connection">
         <createForPack name="eSciDoc" />
-        <field type="title" txt="PostgreSQL Database Connection" bold="true" size="1" />
+        <field type="title" id="PostgresDatabase" bold="true" size="1" />
         <field type="divider" align="top"/>
         <field type="space"/>
         <field type="text" align="left" variable="DatabaseHost">
-          <spec txt="JDBC Database Host:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database host must not be empty string."/>
+          <spec id="DatabaseHost" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseHostValidator"/>
         </field>
         <field type="text" align="left" variable="DatabasePortPostgres">
-          <spec txt="JDBC Database Port:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database port must not be empty string."/>
+          <spec id="DatabasePort" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabasePortValidator"/>
         </field>
         <field type="space"/>
         <!-- Database Driver Class -->
         <field type="text" align="left" variable="DatabaseDriverClassPostgres">
-          <spec txt="JDBC Database Driver Class:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database driver class must not be empty string."/>
+          <spec id="DatabaseDriver" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseDriverValidator"/>
         </field>
         <field type="space"/>
         <!-- Default Database Name -->
         <field type="text" align="left" variable="RootDatabaseName">
-          <description>During the installation of PostgreSQL, you have set a name for the root database. If you accepted the default value, you do not need to edit this field.</description>
-          <spec txt="Root Database Name:" size="25" set="${RootDatabaseNamePostgres}"/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Default database name must not be empty string."/>
+          <description id="PostgresRootDatabase" />
+          <spec id="PostgresRootDatabaseText" size="25" set="${RootDatabaseNamePostgres}"/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseNameValidator"/>
         </field>
         <field type="space"/>
         <field type="divider" align="bottom"/>
@@ -105,29 +105,29 @@
 
     <panel order="5" id="Oracle connection">
         <createForPack name="eSciDoc" />
-        <field type="title" txt="Oracle Database Connection" bold="true" size="1" />
+        <field type="title" id="OracleDatabase" bold="true" size="1" />
         <field type="divider" align="top"/>
         <field type="space"/>
         <field type="text" align="left" variable="DatabaseHost">
-          <spec txt="JDBC Database Host:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database host must not be empty string."/>
+          <spec id="DatabaseHost" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseHostValidator"/>
         </field>
         <field type="text" align="left" variable="DatabasePortOracle">
-          <spec txt="JDBC Database Port:" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database port must not be empty string."/>
+          <spec id="DatabasePort" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabasePortValidator"/>
         </field>
         <field type="space"/>
         <!-- Database Driver Class -->
         <field type="text" align="left" variable="DatabaseDriverClassOracle">
-          <spec txt="JDBC Database Driver Class:" size="25" set="" />
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database driver class must not be empty string."/>
+          <spec id="DatabaseDriver" size="25" set="" />
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseDriverValidator"/>
         </field>
         <field type="space"/>
         <!-- Default Database Name -->
         <field type="text" align="left" variable="RootDatabaseName">
-          <description>During the installation of Oracle, you have set a name for the database (SID). If you accepted the default value, you do not need to edit this field.</description>
-          <spec txt="Database SID:" size="25" set="${RootDatabaseNameOracle}"/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database name must not be empty string."/>
+          <description id="OracleRootDatabase"/>
+          <spec id="OracleRootDatabaseText" size="25" set="${RootDatabaseNameOracle}"/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator"  id="DatabaseNameValidator"/>
         </field>
         <field type="space"/>
         <field type="divider" align="bottom"/>
@@ -135,26 +135,26 @@
 
     <panel order="6" id="Postgres admin user">
         <createForPack name="Database Creation" />
-        <field type="title" txt="User Credentials for Database and Role Creation" bold="true" size="1" />
+        <field type="title" id="UserCredentials" bold="true" size="1" />
         <field type="divider" align="top"/>
         <!-- Username -->
-        <field type="staticText" align="left" txt="The installer will create the necessary databases and roles for you. In common database setups, this requires a privileged user." />
+        <field type="staticText" align="left" id="UserCredentialsText" />
         <field type="space"/>
-        <field type="staticText" align="left" txt="Please provide the user creadentials of an appropriate database user with sufficient privileges. This user will not be stored in any configuration file and will not be used once the necessary databases and roles have been created." />
+        <field type="staticText" align="left" id="UserCredentialsText2" />
         <field type="space"/>
         <field type="text" align="left" variable="DatabaseAdminUsernamePostgres">
-          <spec txt="Database Admin Username:" size="25" set="" />
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin username must not be an empty string."/>
+          <spec id="DatabaseAdminUsername" size="25" set="" />
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseAdminUsernameValidator"/>
         </field>
         <field type="space"/>
         <!-- Password -->
         <field type="password" align="left" variable="DatabaseAdminPassword">
           <spec>
-            <pwd txt="Database Admin Password:" size="25" set="" />
-            <pwd txt="Retype Admin Password:" size="25" set="" />
+            <pwd id="DatabaseAdminPassword" size="25" set="" />
+            <pwd id="RetypeDatabaseAdminPassword" size="25" set="" />
           </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin password must not be an empty string."/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database admin passwords must match."/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseAdminPasswordValidator"/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
         </field>
         <field type="space"/>
         <field type="divider" align="bottom"/>
@@ -162,26 +162,26 @@
 
     <panel order="7" id="Oracle admin user">
         <createForPack name="Database Creation" />
-        <field type="title" txt="User Credentials for Database and Role Creation" bold="true" size="1" />
+        <field type="title" id="UserCredentials" bold="true" size="1" />
         <field type="divider" align="top"/>
         <!-- Username -->
-        <field type="staticText" align="left" txt="The installer will create the necessary databases and roles for you. In common database setups, this requires a privileged user." />
+        <field type="staticText" align="left" id="UserCredentialsText" />
         <field type="space"/>
-        <field type="staticText" align="left" txt="Please provide the user creadentials of an appropriate database user with sufficient privileges. This user will not be stored in any configuration file and will not be used once the necessary databases and roles have been created." />
+        <field type="staticText" align="left" id="UserCredentialsText2" />
         <field type="space"/>
         <field type="text" align="left" variable="DatabaseAdminUsernameOracle">
-          <spec txt="Database Admin Username:" size="25" set="" />
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin username must not be an empty string."/>
+          <spec id="DatabaseAdminUsername" size="25" set="" />
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseAdminUsernameValidator"/>
         </field>
         <field type="space"/>
         <!-- Password -->
         <field type="password" align="left" variable="DatabaseAdminPassword">
           <spec>
-            <pwd txt="Database Admin Password:" size="25" set="" />
-            <pwd txt="Retype Admin Password:" size="25" set="" />
+            <pwd id="DatabaseAdminPassword" size="25" set="" />
+            <pwd id="RetypeDatabaseAdminPassword" size="25" set="" />
           </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin password must not be an empty string."/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database admin passwords must match."/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseAdminPasswordValidator"/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
         </field>
         <field type="space"/>
         <field type="divider" align="bottom"/>
@@ -206,7 +206,7 @@
             <pwd txt="Retype Password:" size="25" set=""/>
           </spec>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database password must not be empty string."/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database passwords must match."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
         </field>
         <field type="space"/>
         <field type="divider" align="bottom"/>
@@ -231,7 +231,7 @@
             <pwd txt="Retype Password:" size="25" set=""/>
           </spec>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database password must not be empty string."/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database passwords must match."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
         </field>
         <field type="space"/>
         <!-- Default tablespace -->
@@ -270,7 +270,7 @@
             <pwd txt="Retype Password:" size="25" set=""/>
           </spec>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Fedora admin password must not be an empty string."/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both Fedora passwords must match."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
         </field>
         <field type="space"/>
         <!-- eMail Address -->
@@ -303,7 +303,7 @@
             <pwd txt="Retype Password:" size="25" set=""/>
           </spec>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Fedora admin password must not be an empty string."/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both Fedora passwords must match."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
         </field>
         <field type="space"/>
         <!-- Default tablespace -->
@@ -346,7 +346,7 @@
             <pwd txt="Database Password:" size="25" set=""/>
           </spec>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database password must not be an empty string."/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database passwords must match."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
         </field>
         <field type="space"/>
         <!-- Default tablespace -->
@@ -401,7 +401,7 @@
             <pwd txt="Retype Password:" size="25" set="" />
           </spec>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="System administrator password must not be an empty string."/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both system administrator passwords must match."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
         </field>
         <field type="space"/>
         <!-- eMail Address -->
@@ -432,7 +432,7 @@
             <pwd txt="Retype Password:" size="25" set="" />
           </spec>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="System Inspector password must not be an empty string."/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both System Inspector passwords must match."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
         </field>
         <field type="space"/>
         <!-- eMail Address -->
@@ -463,7 +463,7 @@
             <pwd txt="Retype Password:" size="25" set="" />
           </spec>
           <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Depositor password must not be an empty string."/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both Depositor passwords must match."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
         </field>
         <field type="space"/>
         <field type="divider" align="bottom"/>
