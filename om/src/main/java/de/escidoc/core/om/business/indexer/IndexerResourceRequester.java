@@ -28,6 +28,25 @@
  */
 package de.escidoc.core.om.business.indexer;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import com.googlecode.ehcache.annotations.Cacheable;
+import com.googlecode.ehcache.annotations.KeyGenerator;
+import com.googlecode.ehcache.annotations.PartialCacheKey;
+import com.googlecode.ehcache.annotations.Property;
+import com.googlecode.ehcache.annotations.TriggersRemove;
+
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.MIMETypedStream;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -37,49 +56,22 @@ import de.escidoc.core.common.servlet.invocation.BeanMethod;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
 import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.ConnectionUtility;
-import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
-import net.sf.ehcache.config.CacheConfiguration;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.ehcache.EhCacheFactoryBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * @author Michael Hoppe
  *         <p/>
- *         Singleton for caching Resources (items, container, fulltexts) For indexing by fedoragsearch
+ *         Class gets resources for indexer, 
+ *         either from eSciDocCore-Framework or from external URL.
  */
 @Service
-public class IndexerResourceCache implements ApplicationContextAware {
+public class IndexerResourceRequester {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IndexerResourceCache.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(IndexerResourceRequester.class);
 
     private static final int BUFFER_SIZE = 0xFFFF;
-
-    private ApplicationContext applicationContext;
 
     @Autowired
     @Qualifier("common.CommonMethodMapper")
@@ -93,16 +85,23 @@ public class IndexerResourceCache implements ApplicationContextAware {
     @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
     private ConnectionUtility connectionUtility;
 
-    private Cache resourcesCache;
-
-    @Override
-    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
-
-    @PostConstruct
-    protected void init() {
-        this.resourcesCache = (Cache) applicationContext.getBean("resourcesCache");
+    /**
+     * Get resource with given identifier.
+     *
+     * @param identifier identifier
+     * @return Object resource-object
+     * @throws SystemException e
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     */
+    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public Object getResource(final String identifier) throws SystemException, TripleStoreSystemException {
+        final String href = getHref(identifier);
+        if (identifier.startsWith("http")) {
+            return getExternalResource(href);
+        }
+        else {
+            return getInternalResource(href);
+        }
     }
 
     /**
@@ -113,99 +112,47 @@ public class IndexerResourceCache implements ApplicationContextAware {
      * @throws SystemException e
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    public Object getResource(final String identifier) throws SystemException, TripleStoreSystemException {
+    public Object getResourceUncached(final String identifier) throws SystemException, TripleStoreSystemException {
         final String href = getHref(identifier);
-        if (getResourceWithInternalKey(href) == null) {
-            if (identifier.startsWith("http")) {
-                cacheExternalResource(href);
-            }
-            else {
-                cacheInternalResource(href);
-            }
+        if (identifier.startsWith("http")) {
+            return getExternalResource(href);
         }
-        return getResourceWithInternalKey(href);
-    }
-
-    /**
-     * Set resource with given identifier.
-     *
-     * @param identifier identifier
-     * @param resource   resource-object
-     * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     */
-    public void setResource(final String identifier, final Object resource) throws SystemException,
-        TripleStoreSystemException {
-        final String href = getHref(identifier);
-        final Element element = new Element(href, resource);
-        resourcesCache.put(element);
-    }
-
-    /**
-     * Get resource with given identifier.
-     *
-     * @param identifier identifier
-     * @return Resource with required identifier.
-     * @throws SystemException e
-     */
-    private Object getResourceWithInternalKey(final String identifier) throws SystemException {
-        final Element element = resourcesCache.get(identifier);
-        return element != null ? element.getObjectValue() : null;
-    }
-
-    /**
-     * delete resource with given identifier.
-     *
-     * @param identifier identifier
-     * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     */
-    public void deleteResource(final String identifier) throws SystemException, TripleStoreSystemException {
-        final String href = getHref(identifier);
-        final Collection<String> keys = new ArrayList<String>();
-        for (final Object key : resourcesCache.getKeys()) {
-            final String keyAsString = (String) key;
-            if (keyAsString.startsWith(href)) {
-                keys.add(keyAsString);
-            }
-        }
-        for (final String key : keys) {
-            resourcesCache.remove(key);
+        else {
+            return getInternalResource(href);
         }
     }
 
     /**
-     * delete resource with given identifier.
+     * Set resource with given identifier in cache.
      *
      * @param identifier identifier
-     * @param resource
-     * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @param resource resource-object
+     * @return Object resource-object
      */
-    public void replaceResource(final String identifier, final Object resource) throws SystemException,
-        TripleStoreSystemException {
-        final String href = getHref(identifier);
-        final Collection<String> keys = new ArrayList<String>();
-        for (final Object key : resourcesCache.getKeys()) {
-            final String keyAsString = (String) key;
-            if (keyAsString.startsWith(href)) {
-                keys.add(keyAsString);
-            }
-        }
-        for (final String key : keys) {
-            resourcesCache.remove(key);
-        }
-        final Element element = new Element(href, resource);
-        resourcesCache.put(element);
+    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public Object setResource(@PartialCacheKey
+    final String identifier, final Object resource) {
+        return resource;
     }
 
     /**
-     * get resource with given identifier from framework and write it into cache.
+     * Set resource with given identifier in cache.
+     *
+     * @param identifier identifier
+     * @param resource resource-object
+     * @return Object resource-object
+     */
+    @TriggersRemove(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public void deleteResource(final String identifier) {
+    }
+
+    /**
+     * get resource with given identifier from framework.
      *
      * @param identifier identifier
      * @throws SystemException e
      */
-    private void cacheInternalResource(final String identifier) throws SystemException {
+    private Object getInternalResource(final String identifier) throws SystemException {
         try {
             final BeanMethod method = methodMapper.getMethod(identifier, null, null, "GET", "");
             final Object content = method.invokeWithProtocol(null);
@@ -222,7 +169,7 @@ public class IndexerResourceCache implements ApplicationContextAware {
                     out.flush();
                     final MIMETypedStream stream =
                         new MIMETypedStream(escidocBinaryContent.getMimeType(), out.toByteArray(), null);
-                    setResource(identifier, stream);
+                    return stream;
                 }
                 catch (final Exception e) {
                     throw new SystemException(e);
@@ -234,7 +181,7 @@ public class IndexerResourceCache implements ApplicationContextAware {
             }
             else if (content != null) {
                 final String xml = (String) content;
-                setResource(identifier, xml);
+                return xml;
             }
         }
         catch (final InvocationTargetException e) {
@@ -254,6 +201,7 @@ public class IndexerResourceCache implements ApplicationContextAware {
         catch (final Exception e) {
             throw new SystemException(e);
         }
+        return null;
     }
 
     /**
@@ -262,7 +210,7 @@ public class IndexerResourceCache implements ApplicationContextAware {
      * @param identifier identifier
      * @throws SystemException e
      */
-    private void cacheExternalResource(final String identifier) throws SystemException {
+    private Object getExternalResource(final String identifier) throws SystemException {
         ByteArrayOutputStream out = null;
         InputStream in = null;
         try {
@@ -282,7 +230,7 @@ public class IndexerResourceCache implements ApplicationContextAware {
                     out.write(byteval);
                 }
                 final MIMETypedStream stream = new MIMETypedStream(mimeType, out.toByteArray(), null);
-                setResource(identifier, stream);
+                return stream;
             }
         }
         catch (final Exception e) {
@@ -297,6 +245,7 @@ public class IndexerResourceCache implements ApplicationContextAware {
             IOUtils.closeStream(in);
             IOUtils.closeStream(out);
         }
+        return null;
     }
 
     /**

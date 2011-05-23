@@ -119,15 +119,15 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
     }
 
     /**
-     * replaces the given pid in the cache with the given xml.
+     * retrieves the given pid not from cache.
      *
      * @param pid uri to the resource.
-     * @param xml xml-representation of the object.
+     * @return String String with the fedora-object as escidoc-xml
      * @throws Exception ex
      */
     @Override
-    public void replaceInCache(final String pid, final String xml) throws Exception {
-        handler.replaceInCache(pid, xml);
+    public String retrieveUncached(final String pid) throws Exception {
+        return handler.retrieveUncached(pid);
     }
 
 }

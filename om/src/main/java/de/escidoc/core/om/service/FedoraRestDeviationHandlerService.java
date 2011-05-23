@@ -31,9 +31,8 @@ public interface FedoraRestDeviationHandlerService extends Remote {
 
     void removeFromCache(String pid, String authHandle, Boolean restAccess) throws Exception, RemoteException;
 
-    void replaceInCache(String pid, String xml, SecurityContext securityContext) throws Exception, RemoteException;
+    String retrieveUncached(String pid, SecurityContext securityContext) throws Exception, RemoteException;
 
-    void replaceInCache(String pid, String xml, String authHandle, Boolean restAccess) throws Exception,
-        RemoteException;
+    String retrieveUncached(String pid, String authHandle, Boolean restAccess) throws Exception, RemoteException;
 
 }

@@ -33,12 +33,15 @@ import de.escidoc.core.common.business.fedora.MIMETypedStream;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.om.business.indexer.IndexerResourceCache;
+import de.escidoc.core.om.business.indexer.IndexerResourceRequester;
 import de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.googlecode.ehcache.annotations.Cacheable;
+import com.googlecode.ehcache.annotations.KeyGenerator;
 
 import java.io.ByteArrayInputStream;
 import java.util.Map;
@@ -52,7 +55,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
     private static final Logger LOGGER = LoggerFactory.getLogger(FedoraRestDeviationHandler.class);
 
     @Autowired
-    private IndexerResourceCache indexerResourceCache;
+    private IndexerResourceRequester indexerResourceRequester;
 
     /**
      * @param pid        unused.
@@ -70,10 +73,9 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid + ", DSID:" + dsID);
         }
-        // Try to get EscidocBinaryContent from IndexerResourceCache/////////////////
         EscidocBinaryContent escidocBinaryContent = null;
         try {
-            final MIMETypedStream mimeTypedStream = (MIMETypedStream) this.indexerResourceCache.getResource(dsID);
+            final MIMETypedStream mimeTypedStream = (MIMETypedStream) this.indexerResourceRequester.getResource(dsID);
             if (mimeTypedStream != null && mimeTypedStream.getStream() != null) {
                 escidocBinaryContent = new EscidocBinaryContent();
                 escidocBinaryContent.setMimeType(mimeTypedStream.getMIMEType());
@@ -93,7 +95,6 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
             return escidocBinaryContent;
         }
         LOGGER.error(StringUtility.format("could not get resource for cache", dsID));
-        // /////////////////////////////////////////////////////////////////////
 
         return null;
     }
@@ -113,9 +114,8 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
         }
         final String xml;
 
-        // Try to get xml from IndexerResourceCache/////////////////
         try {
-            xml = (String) this.indexerResourceCache.getResource(pid);
+            xml = (String) this.indexerResourceRequester.getResource(pid);
         }
         catch (final Exception e) {
             LOGGER.error(e.toString());
@@ -136,7 +136,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      */
     @Override
     public void cache(final String pid, final String xml) throws SystemException, TripleStoreSystemException {
-        this.indexerResourceCache.setResource(pid, xml);
+        this.indexerResourceRequester.setResource(pid, xml);
     }
 
     /**
@@ -146,18 +146,17 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      */
     @Override
     public void removeFromCache(final String pid) throws SystemException, TripleStoreSystemException {
-        this.indexerResourceCache.deleteResource(pid);
+        this.indexerResourceRequester.deleteResource(pid);
     }
 
     /**
-     * replaces the given pid in the cache with the given xml.
+     * retreives the given pid not from cache.
      *
      * @param pid uri to the resource.
-     * @param xml xml-representation of the object.
      */
     @Override
-    public void replaceInCache(final String pid, final String xml) throws SystemException, TripleStoreSystemException {
-        this.indexerResourceCache.replaceResource(pid, xml);
+    public String retrieveUncached(final String pid) throws SystemException, TripleStoreSystemException {
+        return (String) this.indexerResourceRequester.getResourceUncached(pid);
     }
 
 }

@@ -21,12 +21,16 @@
 package de.escidoc.core.common.business.indexing;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.IndexerCacheHandler;
+import de.escidoc.core.common.util.stax.handler.SrwScanResponseHandler;
 import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Handler for handling cache for indexing.
@@ -44,27 +48,40 @@ public class IndexingCacheHandler {
      * removes object + subobjects with given id from cache.
      *
      * @param id resource id
-     * @throws SystemException The resource could not be removed.
-     */
-    public void removeIdFromCache(final String id) throws SystemException {
-        try {
-            fedoraRestDeviationHandler.removeFromCache(id);
-        }
-        catch (final Exception e) {
-            throw new SystemException(e);
-        }
-    }
-
-    /**
-     * removes object + subobjects with given id from cache.
-     *
-     * @param id  resource id
      * @param xml xml
      * @throws SystemException The resource could not be removed.
      */
-    public void replaceObjectInCache(final String id, final String xml) throws SystemException {
+    public void removeObjectFromCache(final String id, final String xml) throws SystemException {
         try {
-            fedoraRestDeviationHandler.replaceInCache(id, xml);
+            String reXml = xml;
+            String reId = id;
+            if (reId.matches(".*?:.*?:.*")) {
+                reId = reId.substring(0, reId.lastIndexOf(":"));
+            }
+            if (reXml == null || reXml.equals("")) {
+                reXml = fedoraRestDeviationHandler.retrieveUncached(reId);
+            }
+            final StaxParser sp = new StaxParser();
+            final IndexerCacheHandler handler = new IndexerCacheHandler(sp);
+            sp.addHandler(handler);
+            sp.parse(reXml);
+            int version = handler.getLastVersion();
+            Set<String> components = handler.getComponents();
+            fedoraRestDeviationHandler.removeFromCache(id);
+            for (String componentHref : components) {
+                fedoraRestDeviationHandler.removeFromCache(componentHref);
+                fedoraRestDeviationHandler.removeFromCache(componentHref.replaceFirst("/", ""));
+            }
+            if (version > -1) {
+                for (int i = 1; i <= version; i++) {
+                    fedoraRestDeviationHandler.removeFromCache(reId + ":" + i);
+                    for (String componentHref : components) {
+                        componentHref = componentHref.replaceAll(reId, reId + ":" + i);
+                        fedoraRestDeviationHandler.removeFromCache(componentHref);
+                        fedoraRestDeviationHandler.removeFromCache(componentHref.replaceFirst("/", ""));
+                    }
+                }
+            }
         }
         catch (final Exception e) {
             throw new SystemException(e);

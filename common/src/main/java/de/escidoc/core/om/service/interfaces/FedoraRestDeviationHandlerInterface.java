@@ -74,12 +74,12 @@ public interface FedoraRestDeviationHandlerInterface {
     void removeFromCache(final String pid) throws Exception;
 
     /**
-     * replaces the given pid in the cache with the given xml.
+     * retrieves given object. Not cached.
      *
      * @param pid uri to the resource.
-     * @param xml xml-representation of the object.
+     * @return String with the fedora-object as escidoc-xml
      * @throws Exception ex
      */
-    void replaceInCache(final String pid, final String xml) throws Exception;
+    String retrieveUncached(final String pid) throws Exception;
 
 }
