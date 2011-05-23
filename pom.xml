@@ -203,7 +203,6 @@
           <sourcepath>${basedir}/aa/src/main/java${path.separator}
             ${basedir}/adm/src/main/java${path.separator}
             ${basedir}/cmm/src/main/java${path.separator}
-            ${basedir}/common-remote/src/main/java${path.separator}
             ${basedir}/common/src/main/java${path.separator}
             ${basedir}/http-client/src/main/java${path.separator}
             ${basedir}/index-service-impl/src/main/java${path.separator}
@@ -1716,11 +1715,6 @@
             <dependency>
                 <groupId>org.escidoc.core</groupId>
                 <artifactId>tme</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.escidoc.core</groupId>
-                <artifactId>common-remote</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
