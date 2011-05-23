@@ -203,7 +203,7 @@
     with the object identifier <literal>escidoc:5</literal> (using the
     REST-style API):</para>
 
-    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?operation=searchRetrieve&amp;query=<quote>/id</quote>=escidoc:5</programlisting></para>
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?operation=searchRetrieve&amp;query=&quot;/id&quot;=escidoc:5</programlisting></para>
 
     <para>This example consists of three parts: <itemizedlist
         mark="opencircle" spacing="compact">
@@ -226,7 +226,7 @@
         <listitem>
            parameter ( 
 
-          <literal>query=<quote>/id</quote>=escidoc:5</literal>
+          <literal>query=&quot;/id&quot;=escidoc:5</literal>
 
            ) 
         </listitem>
@@ -272,7 +272,7 @@
           and a search term.</para>
 
           <para>Example:
-          <literal>query=<quote>/id</quote>=escidoc:5</literal></para>
+          <literal>query=&quot;/id&quot;=escidoc:5</literal></para>
 
           <para>EBNF:</para>
 
@@ -358,7 +358,7 @@
     <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items</programlisting></para>
 
     <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?operation=searchRetrieve&amp;version=1.1
-&amp;query=<quote>/id</quote>=escidoc:5&amp;maximumRecords=20&amp;startRecord=100</programlisting></para>
+&amp;query=&quot;/id&quot;=escidoc:5&amp;maximumRecords=20&amp;startRecord=100</programlisting></para>
 
   </section>
 
@@ -376,7 +376,7 @@
     <literal>&lt;public-status&gt;</literal>. In order to match the value of
     the element <literal>&lt;public-status&gt;</literal>, the filter name
     should be set to
-    <literal><quote>/properties/public-status</quote></literal>. Filter names
+    <literal>&quot;/properties/public-status&quot;</literal>. Filter names
     constructed from local names always include at least one slash, which has
     a special meaning in CQL. Therefore, such filter names must be enclosed by
     quotation marks when used in a query.</para>
@@ -439,7 +439,7 @@
            
 
           <literal>
-            <quote>/last-modification-date</quote>
+            &quot;/last-modification-date&quot;
           </literal>
 
            : the timestamp of the latest modification of a resource 
@@ -484,7 +484,7 @@
            
 
           <literal>
-            <quote>type</quote>
+            &quot;type&quot;
           </literal>
 
            : the resource type of the resource the filter query should be limited to. 
@@ -496,7 +496,7 @@
            
 
           <literal>
-            <quote>item</quote>
+            &quot;item&quot;
           </literal>
 
            : Item 
@@ -508,7 +508,7 @@
            
 
           <literal>
-            <quote>organizational-unit</quote>
+            &quot;organizational-unit&quot;
           </literal>
 
            : Organizational Unit 
@@ -526,18 +526,18 @@
     <title>Filter Criteria</title>
 
     <para>The combination of the filter name, the relation, and the search
-    term is called <quote>filter criteria</quote>. Each filter request may
+    term is called &quot;filter criteria&quot;. Each filter request may
     contain several filter criteria, combined by the Boolean operators
-    <quote>and</quote> and <quote>or</quote>. Allowed relations are
-    <quote>&lt;</quote>, <quote>&lt;=</quote>, <quote>=</quote>,
-    <quote>&gt;=</quote>, <quote>&gt;</quote> and <quote>&lt;&gt;</quote>. You
+    &quot;and&quot; and &quot;or&quot;. Allowed relations are
+    &quot;&lt;&quot;, &quot;&lt;=&quot;, &quot;=&quot;,
+    &quot;&gt;=&quot;, &quot;&gt;&quot; and &quot;&lt;&gt;&quot;. You
     may use parentheses to ensure the correct evaluation order of the logical
     expression in your query. The following example searches for Items with
     either the term ‘cat’ in the title or the term ‘dog’ in the
     description:</para>
 
-    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query=<quote>/title</quote>=cat or
-    <quote>/description</quote>=dog</programlisting></para>
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query=&quot;/title&quot;=cat or
+    &quot;/description&quot;=dog</programlisting></para>
 
     <para>Please note that you should URL-encode your query, especially when
     using a web browser as front-end. However, for better readability, we show
@@ -559,8 +559,8 @@
     <para>The following example shows the sort operator in the context of a
     complete filter request:</para>
 
-    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query=<quote>/title</quote>=cat
-    sortby <quote>/id</quote>
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query=&quot;/title&quot;=cat
+    sortby &quot;/id&quot;
     /sort.descending</programlisting></para>
   </section>
 
@@ -588,7 +588,7 @@
     <literal>startRecord</literal> to a multiple of
     <literal>maximumRecords</literal> + 1 and keep the value of
     <literal>maximumRecords</literal> fix. By doing so, you navigate through
-    the complete result list <quote>page by page</quote>.</para>
+    the complete result list &quot;page by page&quot;.</para>
 
     <para>All filter methods return an XML document, complying to the SRW/U
     schema. The XML document includes the SRW/U version
@@ -610,7 +610,7 @@
     <para>Generic template for filter requests:</para>
 
     <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/&lt;service-group&gt;/&lt;method&gt;?version=1.1
-    &amp;operation=searchRetrieve&amp;query=<quote>&lt;CQL&gt;</quote>&amp;maximumRecords=20
+    &amp;operation=searchRetrieve&amp;query=&quot;&lt;CQL&gt;&quot;&amp;maximumRecords=20
     &amp;startRecord=1</programlisting></para>
 
     <para>In the following, we will just focus on the actual query, which is
@@ -618,16 +618,16 @@
     template for filter requests.</para>
 
     <para>Get a list of all submitted resources with the permissions of user
-    <quote>escidoc:42</quote>:</para>
+    &quot;escidoc:42&quot;:</para>
 
-    <para><programlisting><quote>/properties/public-status</quote>=submitted and user=escidoc:42</programlisting></para>
+    <para><programlisting>&quot;/properties/public-status&quot;=submitted and user=escidoc:42</programlisting></para>
 
     <para>Get a list of all resources in status ‘pending’ or ‘submitted’,
     sorted by their ID:</para>
 
-    <para><programlisting><quote>/properties/public-status</quote>=pending or
-<quote>/properties/public-status</quote>=submitted
-sortby <quote>/id</quote>/sort.ascending</programlisting></para>
+    <para><programlisting>&quot;/properties/public-status&quot;=pending or
+&quot;/properties/public-status&quot;=submitted
+sortby &quot;/id&quot;/sort.ascending</programlisting></para>
 
     <para>Get the resource with identifier <literal>escidoc:5</literal>, given
     as Java code snippet using the SOAP API:</para>
