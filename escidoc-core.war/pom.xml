@@ -21,7 +21,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.4.3</version>
 				<executions>
 					<execution>
 						<id>copy-schemas</id>
@@ -30,7 +29,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>target/${project.build.finalName}/xsd
+							<outputDirectory>${project.build.directory}/${project.build.finalName}/xsd
 							</outputDirectory>
 							<resources>
 								<resource>
@@ -86,7 +85,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
 				<configuration>
 					<webResources>
 						<webResource>

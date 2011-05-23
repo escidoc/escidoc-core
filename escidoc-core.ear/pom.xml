@@ -30,15 +30,15 @@
 	</profiles>
 
 	<dependencies>
-        <dependency>
+		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>jaxrs-framework</artifactId>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>cache</artifactId>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>jms-server</artifactId>
 			<exclusions>
@@ -48,7 +48,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>fedora-service-client</artifactId>
 		</dependency>
@@ -152,10 +152,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache-core</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>jaxen</groupId>
 			<artifactId>jaxen</artifactId>
@@ -192,11 +192,11 @@
 			<artifactId>trippi</artifactId>
 			<classifier>mptstore</classifier>
 		</dependency>
-      	<dependency>
-        	<groupId>mptstore</groupId>
-        	<artifactId>mptstore-oracle</artifactId>
-        	<version>0.9.4</version>
-      	</dependency>
+		<dependency>
+			<groupId>mptstore</groupId>
+			<artifactId>mptstore-oracle</artifactId>
+			<version>0.9.4</version>
+		</dependency>
 
 		<!-- DEPENDENCIES FOR FEDORAGSEARCH + SRW -->
 		<dependency>
@@ -238,7 +238,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
- 		<dependency>
+		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-ja</artifactId>
 			<version>${lucene.version}</version>
@@ -427,8 +427,8 @@
 					<artifactId>owlapi</artifactId>
 				</exclusion>
 				<exclusion>
-		           <groupId>gnu.getopt</groupId>
- 		           <artifactId>java-getopt</artifactId>
+					<groupId>gnu.getopt</groupId>
+					<artifactId>java-getopt</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -471,27 +471,26 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- <dependency> <groupId>org.fcrepo</groupId> <artifactId>fcrepo-server</artifactId> 
-			</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>fedora-commons</groupId> -->
-<!-- 			<artifactId>fedora-rest-client</artifactId> -->
-<!-- 			<version>0.1.3.1</version> -->
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>com.hp.hpl.jena</groupId> -->
-<!-- 					<artifactId>iri</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>com.hp.hpl.jena</groupId> -->
-<!-- 					<artifactId>jena</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>com.sun.jersey.contribs</groupId> -->
-<!-- 					<artifactId>jersey-multipart</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> <groupId>org.fcrepo</groupId> <artifactId>fcrepo-server</artifactId> </dependency> -->
+		<dependency>
+			<groupId>fedora-commons</groupId>
+			<artifactId>fedora-rest-client</artifactId>
+			<version>0.1.3.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.hp.hpl.jena</groupId>
+					<artifactId>iri</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.hp.hpl.jena</groupId>
+					<artifactId>jena</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jersey.contribs</groupId>
+					<artifactId>jersey-multipart</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-jaxrpc_1.1_spec</artifactId>
@@ -513,8 +512,7 @@
 			<artifactId>axis-saaj</artifactId>
 			<version>1.4</version>
 		</dependency>
-		<!-- <dependency> <groupId>com.sun.xml.stream</groupId> <artifactId>sjsxp</artifactId> 
-			<version>1.0.1</version> </dependency> -->
+		<!-- <dependency> <groupId>com.sun.xml.stream</groupId> <artifactId>sjsxp</artifactId> <version>1.0.1</version> </dependency> -->
 		<dependency>
 			<groupId>wsdl4j</groupId>
 			<artifactId>wsdl4j</artifactId>
@@ -572,25 +570,19 @@
 			<artifactId>sen</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.apache.abdera</groupId> <artifactId>abdera-bundle</artifactId> 
-			<version>1.1</version> <exclusions> <exclusion> <groupId>org.apache.derby</groupId> 
-			<artifactId>derby</artifactId> </exclusion> <exclusion> <groupId>com.google.code</groupId> 
-			<artifactId>couchdb4j</artifactId> </exclusion> <exclusion> <groupId>org.apache.lucene</groupId> 
-			<artifactId>lucene-core</artifactId> </exclusion> <exclusion> <groupId>javax.servlet</groupId> 
-			<artifactId>servlet-api</artifactId> </exclusion> <exclusion> <groupId>javax.mail</groupId> 
-			<artifactId>mail</artifactId> </exclusion> <exclusion> <groupId>xml-security</groupId> 
-			<artifactId>xmlsec</artifactId> </exclusion> <exclusion> <groupId>org.codehaus.woodstox</groupId> 
-			<artifactId>wstx-asl</artifactId> </exclusion> <exclusion> <groupId>commons-logging</groupId> 
-			<artifactId>commons-logging</artifactId> </exclusion> <exclusion> <groupId>org.apache.jackrabbit</groupId> 
-			<artifactId>jackrabbit-core</artifactId> </exclusion> <exclusion> <groupId>org.apache.jackrabbit</groupId> 
-			<artifactId>jackrabbit-api</artifactId> </exclusion> <exclusion> <groupId>org.apache.jackrabbit</groupId> 
-			<artifactId>jackrabbit-spi-commons</artifactId> </exclusion> <exclusion> 
-			<groupId>org.apache.jackrabbit</groupId> <artifactId>jackrabbit-jcr-commons</artifactId> 
-			</exclusion> <exclusion> <groupId>org.apache.jackrabbit</groupId> <artifactId>jackrabbit-spi</artifactId> 
-			</exclusion> <exclusion> <groupId>org.apache.jackrabbit</groupId> <artifactId>jackrabbit-text-extractors</artifactId> 
-			</exclusion> <exclusion> <groupId>commons-httpclient</groupId> <artifactId>commons-httpclient</artifactId> 
-			</exclusion> <exclusion> <groupId>org.apache.geronimo.specs</groupId> <artifactId>geronimo-activation_1.0.2_spec</artifactId> 
-			</exclusion> </exclusions> </dependency> -->
+		<!-- <dependency> <groupId>org.apache.abdera</groupId> <artifactId>abdera-bundle</artifactId> <version>1.1</version> <exclusions> 
+			<exclusion> <groupId>org.apache.derby</groupId> <artifactId>derby</artifactId> </exclusion> <exclusion> <groupId>com.google.code</groupId> 
+			<artifactId>couchdb4j</artifactId> </exclusion> <exclusion> <groupId>org.apache.lucene</groupId> <artifactId>lucene-core</artifactId> 
+			</exclusion> <exclusion> <groupId>javax.servlet</groupId> <artifactId>servlet-api</artifactId> </exclusion> <exclusion> <groupId>javax.mail</groupId> 
+			<artifactId>mail</artifactId> </exclusion> <exclusion> <groupId>xml-security</groupId> <artifactId>xmlsec</artifactId> </exclusion> 
+			<exclusion> <groupId>org.codehaus.woodstox</groupId> <artifactId>wstx-asl</artifactId> </exclusion> <exclusion> <groupId>commons-logging</groupId> 
+			<artifactId>commons-logging</artifactId> </exclusion> <exclusion> <groupId>org.apache.jackrabbit</groupId> <artifactId>jackrabbit-core</artifactId> 
+			</exclusion> <exclusion> <groupId>org.apache.jackrabbit</groupId> <artifactId>jackrabbit-api</artifactId> </exclusion> <exclusion> 
+			<groupId>org.apache.jackrabbit</groupId> <artifactId>jackrabbit-spi-commons</artifactId> </exclusion> <exclusion> <groupId>org.apache.jackrabbit</groupId> 
+			<artifactId>jackrabbit-jcr-commons</artifactId> </exclusion> <exclusion> <groupId>org.apache.jackrabbit</groupId> <artifactId>jackrabbit-spi</artifactId> 
+			</exclusion> <exclusion> <groupId>org.apache.jackrabbit</groupId> <artifactId>jackrabbit-text-extractors</artifactId> </exclusion> 
+			<exclusion> <groupId>commons-httpclient</groupId> <artifactId>commons-httpclient</artifactId> </exclusion> <exclusion> <groupId>org.apache.geronimo.specs</groupId> 
+			<artifactId>geronimo-activation_1.0.2_spec</artifactId> </exclusion> </exclusions> </dependency> -->
 
 		<!-- ADDITIONALLY FOR SRW -->
 		<dependency>
@@ -643,7 +635,6 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-ear-plugin</artifactId>
-				<version>2.4.2</version>
 				<configuration>
 					<defaultLibBundleDir>META-INF/lib</defaultLibBundleDir>
 					<displayName>eSciDoc-Core</displayName>
@@ -676,7 +667,7 @@
 							<bundleFileName>03_saxon.war</bundleFileName>
 							<bundleDir>/</bundleDir>
 						</webModule>
-                        <webModule>
+						<webModule>
 							<groupId>org.escidoc.core</groupId>
 							<artifactId>escidoc-core-war</artifactId>
 							<bundleFileName>03_escidoc-core.war</bundleFileName>

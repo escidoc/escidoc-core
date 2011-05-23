@@ -126,7 +126,7 @@
 
       <!-- database connection -->
       <!-- Postgres -->
-      <variable name="jdbc.driver.postgres" value="lib/postgresql-${jdbc.postgresql.version}.jar" />
+      <variable name="jdbc.driver.postgres" value="lib/postgresql-${escidoc.postgres.jdbc.version}.jar" />
       <variable name="DatabaseAdminUsernamePostgres" value="postgres" />
       <variable name="DatabaseDriverClassPostgres" value="org.postgresql.Driver" />
       <variable name="DatabasePortPostgres" value="5432" />
@@ -413,7 +413,7 @@
         
         <pack name="Fedora Repository" parent="eSciDoc" required="yes">
             <description>Fedora Commons ${fcrepo.version}</description>
-            <file src="../fedora-fedora.zip" targetdir="$INSTALL_PATH/install.tmp" />
+            <file src="fedora-fedora.zip" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="../fedora/install/fedora.war" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="lib/${OracleDDLGenerator}" targetdir="$INSTALL_PATH/install.tmp/WEB-INF/lib" />
             <!-- Configuration files -->
@@ -536,7 +536,7 @@
     <jar src="lib/ant-nodeps-${ant-nodeps.version}.jar" stage="install" />
     <jar src="lib/ant-launcher-${ant-launcher.version}.jar" stage="install" />
     <jar src="lib/ant-contrib-${ant-contrib.version}.jar" stage="install" />
-    <jar src="lib/postgresql-${jdbc.postgresql.version}.jar" stage="install" />
+    <jar src="lib/postgresql-${escidoc.postgres.jdbc.version}.jar" stage="install" />
     <jar src="escidoc-validators.jar" stage="install" />
 
     <native type="3rdparty" name="COIOSHelper.dll" stage="both">
