@@ -403,16 +403,6 @@ public abstract class ClientBase {
      */
 
     /**
-     * Index of resource id in params vector (SOAP).
-     */
-    public static final int RESOURCE_ID_INDEX = 0;
-
-    /**
-     * Index of first subresource id in params vector (SOAP).
-     */
-    public static final int SUB_RESOURCE_ID_INDEX = 1;
-
-    /**
      * Indicating method needs no xml data.
      */
     public static final String NOXML = "method without xml data parameter";
@@ -820,36 +810,6 @@ public abstract class ClientBase {
         // || (Constants.HTTP_METHOD_PUT.equals(HttpResponse.toUpperCase()))) {
         // message += " body='" + body + "'";
         // }
-        LOGGER.debug(message);
-    }
-
-    /**
-     * Log the execution of an soap service call.
-     * 
-     * @param method
-     *            The executed resource method.
-     * @param params
-     *            The parameter values.
-     * @deprecated
-     */
-    @Deprecated
-    protected void logSoapServiceCall(final String method, final Collection<Object> params) {
-
-        String message = '[' + method + " ( " + params + " )] Calling eSciDoc service method.";
-        LOGGER.debug(message);
-    }
-
-    /**
-     * Log the execution of an soap service call.
-     * 
-     * @param method
-     *            The executed resource method.
-     * @param params
-     *            The parameter values.
-     */
-    protected void logSoapServiceCall(final String method, final Object[] params) {
-
-        String message = "[SOAP] [" + method + " ( " + params + " )] Calling eSciDoc service method.";
         LOGGER.debug(message);
     }
 
