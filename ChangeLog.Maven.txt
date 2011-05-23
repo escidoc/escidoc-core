@@ -14,3 +14,15 @@ updates (security)
 
 hibernate configuration 
 	- username and password is hard coded
+
+# Changes in rebuild of build processes by MVO
+
+- installer-module uses phases prepare-package and package only
+- integration-tests-module uses phases pre-integration-test, integration-test, post-integration-test only
+- site should no longer fail if called like: mvn site clean install
+
+- Options
+  -Ddebug         start cargo container in debug mode (usage: mvn cargo:start -Ddebug)
+  -Ddatabase      choose database to use for integration-test and installer build
+                  - postgres
+                  - oracle
