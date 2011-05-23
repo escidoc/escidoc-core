@@ -35,6 +35,7 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.apache.cxf.jaxrs.client.ServerWebApplicationException;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.ControlGroup;
@@ -410,15 +411,27 @@ public class Datastream {
                 catch (IOException e) {
                     throw new WebserverSystemException(e);
                 }
-                final DatastreamProfileTO datastreamProfile =
-                    this.fedoraServiceClient.modifyDatastream(path, query, datastream);
-                if (datastreamProfile.getDateTime() != null) {
-                    this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
+                try {
+                    modifyDatastream(path, query, datastream);
                 }
-                else {
-                    this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDsCreateDate().toDate());
+                catch (final ServerWebApplicationException e) {
+                    LOGGER.debug("Error on modifing datastream.", e);
+                    final AddDatastreamPathParam addPath = new AddDatastreamPathParam();
+                    addPath.setPid(this.parentId);
+                    addPath.setDsID(this.name);
+                    final AddDatastreamQueryParam addQuery = new AddDatastreamQueryParam();
+                    addQuery.setDsLabel(this.label);
+                    addQuery.setMimeType(this.mimeType);
+                    addQuery.setAltIDs(this.alternateIDs);
+                    DatastreamProfileTO datastreamProfile =
+                        this.fedoraServiceClient.addDatastream(addPath, addQuery, datastream);
+                    if (datastreamProfile.getDateTime() != null) {
+                        this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
+                    }
+                    else {
+                        this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDsCreateDate().toDate());
+                    }
                 }
-
             }
             else if (this.getControlGroup().equals(CONTROL_GROUP_MANAGED)) {
                 String tempURI = null;
@@ -437,17 +450,23 @@ public class Datastream {
                 query.setMimeType(this.mimeType);
                 query.setAltIDs(this.alternateIDs);
                 query.setDsLocation(tempURI);
-                final DatastreamProfileTO datastreamProfile =
-                    this.fedoraServiceClient.modifyDatastream(path, query, null);
-                if (datastreamProfile.getDateTime() != null) {
-                    this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
-                }
-                else {
-                    this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDsCreateDate().toDate());
-                }
+                modifyDatastream(path, query, null);
             }
         }
         return this.timestamp;
+    }
+
+    private void modifyDatastream(
+        final ModifiyDatastreamPathParam path, final ModifyDatastreamQueryParam query,
+        final org.esidoc.core.utils.io.Datastream datastream) {
+        final DatastreamProfileTO datastreamProfile =
+            this.fedoraServiceClient.modifyDatastream(path, query, datastream);
+        if (datastreamProfile.getDateTime() != null) {
+            this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
+        }
+        else {
+            this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDsCreateDate().toDate());
+        }
     }
 
     /**
