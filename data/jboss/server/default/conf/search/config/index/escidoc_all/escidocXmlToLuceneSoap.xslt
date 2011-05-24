@@ -545,7 +545,7 @@
 	</xsl:variable>
 	
 	<!-- USER DEFINED INDEX FIELDS -->
-	<xsl:variable name="userdefined-indexes">
+	<xsl:variable name="userdefined-indexes" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<userdefined-index name="metadata">
 			<xsl:attribute name="context">
 				<xsl:value-of select="$CONTEXTNAME"/>
@@ -800,8 +800,25 @@
 			<xsl:variable name="fields">
 				<xsl:copy-of select="$ITEM_METADATAPATH//*[local-name()='title']"/>
 				<xsl:copy-of select="$ITEM_METADATAPATH//*[local-name()='alternative']"/>
+				<xsl:copy-of select="/*[local-name()='item']/@xlink:title"/>
 				<xsl:copy-of select="$CONTAINER_METADATAPATH//*[local-name()='title']"/>
 				<xsl:copy-of select="$CONTAINER_METADATAPATH//*[local-name()='alternative']"/>
+				<xsl:copy-of select="/*[local-name()='container']/@xlink:title"/>
+			</xsl:variable>
+			<xsl:for-each select="xalan:nodeset($fields)/*">
+				<xsl:variable name="name" select="name()"/>
+                <element index="TOKENIZED">
+                    <xsl:value-of select="."/>
+                </element>
+  			</xsl:for-each>
+		</userdefined-index>
+		<userdefined-index name="title">
+			<xsl:attribute name="context">
+				<xsl:value-of select="$CONTEXTNAME"/>
+			</xsl:attribute>
+			<xsl:variable name="fields">
+				<xsl:copy-of select="/*[local-name()='item']/@xlink:title"/>
+				<xsl:copy-of select="/*[local-name()='container']/@xlink:title"/>
 			</xsl:variable>
 			<xsl:for-each select="xalan:nodeset($fields)/*">
 				<xsl:variable name="name" select="name()"/>
