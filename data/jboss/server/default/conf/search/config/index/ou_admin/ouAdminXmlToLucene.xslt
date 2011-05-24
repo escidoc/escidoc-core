@@ -136,7 +136,8 @@ Notes:
         <xsl:for-each select="./*">
         	<xsl:for-each select="./@*">
             	<xsl:if test="string(.) and normalize-space(.)!=''
-                        and namespace-uri()!='http://www.w3.org/1999/xlink'">
+                        and (namespace-uri()!='http://www.w3.org/1999/xlink' 
+                        or (namespace-uri()='http://www.w3.org/1999/xlink' and local-name()='title'))">
         			<xsl:call-template name="writeIndexField">
             			<xsl:with-param name="context" select="$CONTEXTNAME"/>
             			<xsl:with-param name="fieldname" select="local-name()"/>

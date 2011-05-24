@@ -347,7 +347,7 @@ Notes:
 	</xsl:variable>
 	
 	<!-- USER DEFINED INDEX FIELDS -->
-	<xsl:variable name="userdefined-indexes">
+	<xsl:variable name="userdefined-indexes" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<userdefined-index name="metadata">
 			<xsl:attribute name="context">
 				<xsl:value-of select="$CONTEXTNAME"/>
@@ -436,6 +436,14 @@ Notes:
                 <xsl:value-of select="/*[local-name()='organizational-unit']/@last-modification-date"/>
             </element>
         </userdefined-index>
+		<userdefined-index name="title">
+			<xsl:attribute name="context">
+				<xsl:value-of select="$CONTEXTNAME"/>
+			</xsl:attribute>
+            <element index="TOKENIZED">
+                <xsl:value-of select="/*[local-name()='organizational-unit']/@xlink:title"/>
+            </element>
+		</userdefined-index>
 	</xsl:variable>
 
 </xsl:stylesheet>	
