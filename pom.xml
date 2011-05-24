@@ -919,7 +919,7 @@
 		</repository>
 		<repository>
 			<id>jboss2</id>
-			<url>http://repository.jboss.org/maven2</url>
+			<url>http://repository.jboss.org/</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
