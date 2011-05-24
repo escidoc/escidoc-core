@@ -513,12 +513,12 @@
 							<value>test-log4j.xml</value>
 						</property>
 					</systemproperties>
-					<redirectTestOutputToFile>{project.build.directory}/test-output.log</redirectTestOutputToFile>
+					<redirectTestOutputToFile>${project.build.directory}/test-output.log</redirectTestOutputToFile>
 					<!-- failsafe plugin runs per default only intergration tests (*IT.java). 
 						So make sure our (old) tests are included too. -->
 					<includes>
 						<include>**/*Test.java</include>
-						<include>{project.build.directory}/generated-sources/</include>
+						<include>${project.build.directory}/generated-sources/</include>
 					</includes>
 					<excludes>
 						<exclude>**/*TestBase*</exclude>
