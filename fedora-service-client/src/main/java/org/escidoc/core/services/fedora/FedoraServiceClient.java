@@ -35,6 +35,14 @@ public interface FedoraServiceClient {
 
     Future<ObjectProfileTO> getObjectProfileAsync(@NotNull String pid);
 
+    DigitalObjectTO getObjectXML(@NotNull final String pid);
+
+    Future<DigitalObjectTO> getObjectXMLAsync(@NotNull final String pid);
+
+    InputStream getObjectXMLAsStream(@NotNull final String pid);
+
+    Future<InputStream> getObjectXMLAsStreamAsync(@NotNull final String pid);
+
     DatastreamProfileTO addDatastream(@NotNull AddDatastreamPathParam path,
                        @NotNull AddDatastreamQueryParam query,
                        Datastream outputStream);
@@ -80,17 +88,5 @@ public interface FedoraServiceClient {
     Future<String> ingestAsync(@NotNull IngestPathParam path,
                                @NotNull IngestQueryParam query,
                                @NotNull DigitalObjectTypeTOExtension digitalObjectTO);
-
-    DigitalObjectTO getObjectXML(@NotNull GetObjectXMLPathParam path,
-                                 @NotNull GetObjectXMLQueryParam query);
-
-    Future<DigitalObjectTO> getObjectXMLAsync(@NotNull GetObjectXMLPathParam path,
-                                              @NotNull GetObjectXMLQueryParam query);
-
-    InputStream getObjectXMLAsStream(@NotNull GetObjectXMLPathParam path,
-                                     @NotNull GetObjectXMLQueryParam query);
-
-    Future<InputStream> getObjectXMLAsStreamAsync(@NotNull GetObjectXMLPathParam path,
-                                          @NotNull GetObjectXMLQueryParam query);
 
 }

@@ -135,11 +135,7 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                     + ". Container can not be deleted.", e);
             }
         }
-
-        final GetObjectXMLPathParam path = new GetObjectXMLPathParam();
-        path.setPid(getItem().getId());
-        final GetObjectXMLQueryParam query = new GetObjectXMLQueryParam();
-        final InputStream in = this.fedoraServiceClient.getObjectXMLAsStream(path, query);
+        final InputStream in = this.fedoraServiceClient.getObjectXMLAsStream(getItem().getId());
         final StaxParser sp = new StaxParser();
         final ComponentIdsInItemFoxmlHandler cih = new ComponentIdsInItemFoxmlHandler(sp);
         sp.addHandler(cih);

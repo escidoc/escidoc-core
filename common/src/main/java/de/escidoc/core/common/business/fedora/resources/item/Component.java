@@ -296,7 +296,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      */
     @Override
     public void setMdRecords(final Map<String, Datastream> ds) throws FedoraSystemException, WebserverSystemException,
-        EncodingSystemException, IntegritySystemException {
+        EncodingSystemException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException {
         // compare
         // with
         // Item.setMdRecords
@@ -329,10 +329,6 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 modified = true;
             }
         }
-
-        // FIXME: What is mdRecordsToAdd for?
-        final Map<String, Datastream> mdRecordsToAdd = new HashMap<String, Datastream>();
-
         final Iterator<Entry<String, Datastream>> nameIt = ds.entrySet().iterator();
         // create/activate data streams which are in mdRecords but not in fedora
         while (nameIt.hasNext()) {
@@ -344,11 +340,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 nameIt.remove();
             }
         }
-
         if (modified) {
             getFedoraUtility().touchObject(this.parent, true);
         }
-        this.mdRecords.putAll(mdRecordsToAdd);
     }
 
     /*
@@ -373,7 +367,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      */
     @Override
     public void setMdRecord(final String name, final Datastream ds) throws WebserverSystemException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException {
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException {
         // check if the metadata datastream is set, is equal to ds and save to
         // fedora
 
@@ -470,12 +465,14 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    public void setDc(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
+    public void setDc(final Datastream ds) throws FedoraSystemException, WebserverSystemException,
+        TripleStoreSystemException, XmlParserSystemException {
         final Datastream curDs = getDc();
         if (!ds.equals(curDs)) {
             this.dc = ds;
             ds.merge();
             // FedoraUtility.getInstance().sync();
+            getSomeValuesFromFedora();
             getFedoraUtility().touchObject(this.parent, true);
         }
     }
