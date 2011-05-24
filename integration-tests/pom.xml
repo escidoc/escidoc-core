@@ -631,6 +631,26 @@
           <groupId>gnu.getopt</groupId>
           <artifactId>java-getopt</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>trippi-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>openrdf-sesame-onejar</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>jai_codec</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>jai_core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.mail</groupId>
+          <artifactId>mail</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
