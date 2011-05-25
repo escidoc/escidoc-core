@@ -963,6 +963,17 @@
 			</snapshots>
 		</repository>
 		<repository>
+			<id>repo.aduna-software.org</id>
+			<name>Aduna Repository</name>
+			<url>http://repo.aduna-software.org/maven2/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
 			<id>MVNSearch</id>
 			<url>http://www.mvnsearch.org/maven2</url>
 		</repository>
