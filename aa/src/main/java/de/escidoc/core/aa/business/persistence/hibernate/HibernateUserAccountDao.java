@@ -464,25 +464,20 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
     public void delete(final UserAccount userAccount) throws SqlDatabaseSystemException {
         // remove User from Cache
         if ((userAccount.getEscidocRolesByCreatorId() != null && !userAccount.getEscidocRolesByCreatorId().isEmpty())
-            || 
-            (userAccount.getEscidocRolesByModifiedById() != null && !userAccount.getEscidocRolesByModifiedById().isEmpty()) 
-            || 
-            (userAccount.getRoleGrantsByCreatorId() != null && !userAccount.getRoleGrantsByCreatorId().isEmpty())
-            || 
-            (userAccount.getRoleGrantsByRevokerId() != null && !userAccount.getRoleGrantsByRevokerId().isEmpty())
-            || 
-            (userAccount.getUserAccountsByCreatorId() != null && !userAccount.getUserAccountsByCreatorId().isEmpty()
-                && (userAccount.getUserAccountsByCreatorId().size() > 1 
-                    || !((UserAccount)userAccount.getUserAccountsByCreatorId().iterator().next()).getId().equals(userAccount.getId())))
-            || 
-            (userAccount.getUserAccountsByModifiedById() != null 
-                && !userAccount.getUserAccountsByModifiedById().isEmpty()
-                && (userAccount.getUserAccountsByModifiedById().size() > 1 
-                    || !((UserAccount)userAccount.getUserAccountsByModifiedById().iterator().next()).getId().equals(userAccount.getId()))) 
-            || 
-            (userAccount.getUserGroupsByCreatorId() != null && !userAccount.getUserGroupsByCreatorId().isEmpty()) 
-            || 
-            (userAccount.getUserGroupsByModifiedById() != null && !userAccount.getUserGroupsByModifiedById().isEmpty())) {
+            || (userAccount.getEscidocRolesByModifiedById() != null && !userAccount
+                .getEscidocRolesByModifiedById().isEmpty())
+            || (userAccount.getRoleGrantsByCreatorId() != null && !userAccount.getRoleGrantsByCreatorId().isEmpty())
+            || (userAccount.getRoleGrantsByRevokerId() != null && !userAccount.getRoleGrantsByRevokerId().isEmpty())
+            || (userAccount.getUserAccountsByCreatorId() != null && !userAccount.getUserAccountsByCreatorId().isEmpty() && (userAccount
+                .getUserAccountsByCreatorId().size() > 1 || !((UserAccount) userAccount
+                .getUserAccountsByCreatorId().iterator().next()).getId().equals(userAccount.getId())))
+            || (userAccount.getUserAccountsByModifiedById() != null
+                && !userAccount.getUserAccountsByModifiedById().isEmpty() && (userAccount
+                .getUserAccountsByModifiedById().size() > 1 || !((UserAccount) userAccount
+                .getUserAccountsByModifiedById().iterator().next()).getId().equals(userAccount.getId())))
+            || (userAccount.getUserGroupsByCreatorId() != null && !userAccount.getUserGroupsByCreatorId().isEmpty())
+            || (userAccount.getUserGroupsByModifiedById() != null && !userAccount
+                .getUserGroupsByModifiedById().isEmpty())) {
             throw new SqlDatabaseSystemException("UserAccount has references to other tables");
         }
         clearUserDetailsCache(userAccount.getId());
