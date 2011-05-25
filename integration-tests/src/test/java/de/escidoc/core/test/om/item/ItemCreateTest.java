@@ -49,16 +49,10 @@ public class ItemCreateTest extends ItemTestBase {
      *
      * @throws Exception Thrown if creation of example Item failed.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testEmptyCreate01() throws Exception {
 
-        try {
-            create("");
-        }
-        catch (final Exception e) {
-            Class<?> ec = MissingMethodParameterException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
+        create("");
     }
 
     /**
@@ -142,20 +136,14 @@ public class ItemCreateTest extends ItemTestBase {
      *
      * @throws Exception Thrown if behavior is not as expected.
      */
-    @Test
+    @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
 
         /*
          * The infrastructure has thrown an unexpected parser exception during
          * creation if a non XML datastructur is send (e.g. String).
          */
-        try {
-            create("laber-rababer");
-            fail("Missing Invalid XML exception");
-        }
-        catch (final InvalidXmlException e) {
-            // that's ok
-        }
+        create("laber-rababer");
     }
 
 }
