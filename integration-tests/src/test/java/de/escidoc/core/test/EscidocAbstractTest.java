@@ -2357,7 +2357,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      *             Thrown if the file with the provided name was not found under the location of example files or if
      *             reading the file content to String failed.
      */
-    public String getExampleTemplate(final String filename) throws Exception {
+    public static String getExampleTemplate(final String filename) throws Exception {
 
         File f = getTemplatePath(TEMPLATE_EXAMPLE_PATH + "/rest", filename);
         InputStream fis = new FileInputStream(f);
