@@ -509,268 +509,268 @@
 				<inherited>false</inherited>
 				<!-- need to define all dependencies and versions here as well. DependencyManagement does not apply to plugins (!) -->
 
-				<dependencies>
-					<dependency>
-						<groupId>org.apache.xmlgraphics</groupId>
-						<artifactId>fop</artifactId>
-						<version>1.0</version>
-					</dependency>
-					<dependency>
-						<groupId>ant-contrib</groupId>
-						<artifactId>ant-contrib</artifactId>
-						<version>1.0b3</version>
-						<exclusions>
-							<exclusion>
-								<groupId>ant</groupId>
-								<artifactId>ant</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>javax.servlet</groupId>
-						<artifactId>servlet-api</artifactId>
-						<version>2.5</version>
-					</dependency>
-					<dependency>
-						<groupId>xalan</groupId>
-						<artifactId>xalan</artifactId>
-						<version>2.7.1</version>
-					</dependency>
-					<dependency>
-						<groupId>org.codehaus.woodstox</groupId>
-						<artifactId>woodstox-core-asl</artifactId>
-						<version>4.0.9</version>
-					</dependency>
-					<dependency>
-						<groupId>org.apache.httpcomponents</groupId>
-						<artifactId>httpclient</artifactId>
-						<version>4.1.1</version>
-					</dependency>
-					<dependency>
-						<groupId>org.apache.camel</groupId>
-						<artifactId>camel-jms</artifactId>
-						<version>${camel.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.apache.camel</groupId>
-						<artifactId>camel-jaxb</artifactId>
-						<version>${camel.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>commons-lang</groupId>
-						<artifactId>commons-lang</artifactId>
-						<version>2.5</version>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework.security</groupId>
-						<artifactId>spring-security-core</artifactId>
-						<version>2.0.5.RELEASE</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>org.springframework</groupId>
-								<artifactId>spring-support</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-core</artifactId>
-						<version>${spring.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-beans</artifactId>
-						<version>${spring.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-context</artifactId>
-						<version>${spring.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-aop</artifactId>
-						<version>${spring.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-aspects</artifactId>
-						<version>${spring.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-tx</artifactId>
-						<version>${spring.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-jdbc</artifactId>
-						<version>${spring.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-orm</artifactId>
-						<version>${spring.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-jms</artifactId>
-						<version>${spring.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-webmvc</artifactId>
-						<version>${spring.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>commons-logging</groupId>
-								<artifactId>commons-logging</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.fcrepo</groupId>
-						<artifactId>fcrepo-common</artifactId>
-						<version>${fcrepo.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>org.openrdf.sesame</groupId>
-								<artifactId>sesame-model</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>org.fcrepo</groupId>
-								<artifactId>fcrepo-generate</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>org.fcrepo</groupId>
-								<artifactId>sunxacml</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>org.apache.lucene</groupId>
-								<artifactId>lucene-core</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>org.slf4j</groupId>
-								<artifactId>slf4j-api</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>org.fcrepo</groupId>
-								<artifactId>jta</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>org.slf4j</groupId>
-								<artifactId>log4j-over-slf4j</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>org.fcrepo</groupId>
-								<artifactId>axis</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>org.fcrepo</groupId>
-								<artifactId>mulgara-core</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>wsdl4j</groupId>
-								<artifactId>wsdl4j</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-						<groupId>org.fcrepo</groupId>
-						<artifactId>fcrepo-client-admin</artifactId>
-						<version>${fcrepo.version}</version>
-						<exclusions>
-							<exclusion>
-								<groupId>org.openrdf.sesame</groupId>
-								<artifactId>sesame-model</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>batik</groupId>
-								<artifactId>batik-swing</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>org.fcrepo</groupId>
-								<artifactId>mulgara-core</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>org.fcrepo</groupId>
-								<artifactId>sunxacml</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>owlapi</groupId>
-								<artifactId>owlapi</artifactId>
-							</exclusion>
-							<exclusion>
-								<groupId>gnu.getopt</groupId>
-								<artifactId>java-getopt</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-				</dependencies>
+<!-- 				<dependencies> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.apache.xmlgraphics</groupId> -->
+<!-- 						<artifactId>fop</artifactId> -->
+<!-- 						<version>1.0</version> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>ant-contrib</groupId> -->
+<!-- 						<artifactId>ant-contrib</artifactId> -->
+<!-- 						<version>1.0b3</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>ant</groupId> -->
+<!-- 								<artifactId>ant</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>javax.servlet</groupId> -->
+<!-- 						<artifactId>servlet-api</artifactId> -->
+<!-- 						<version>2.5</version> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>xalan</groupId> -->
+<!-- 						<artifactId>xalan</artifactId> -->
+<!-- 						<version>2.7.1</version> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.codehaus.woodstox</groupId> -->
+<!-- 						<artifactId>woodstox-core-asl</artifactId> -->
+<!-- 						<version>4.0.9</version> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.apache.httpcomponents</groupId> -->
+<!-- 						<artifactId>httpclient</artifactId> -->
+<!-- 						<version>4.1.1</version> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.apache.camel</groupId> -->
+<!-- 						<artifactId>camel-jms</artifactId> -->
+<!-- 						<version>${camel.version}</version> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.apache.camel</groupId> -->
+<!-- 						<artifactId>camel-jaxb</artifactId> -->
+<!-- 						<version>${camel.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>commons-lang</groupId> -->
+<!-- 						<artifactId>commons-lang</artifactId> -->
+<!-- 						<version>2.5</version> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.springframework.security</groupId> -->
+<!-- 						<artifactId>spring-security-core</artifactId> -->
+<!-- 						<version>2.0.5.RELEASE</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.springframework</groupId> -->
+<!-- 								<artifactId>spring-support</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.springframework</groupId> -->
+<!-- 						<artifactId>spring-core</artifactId> -->
+<!-- 						<version>${spring.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.springframework</groupId> -->
+<!-- 						<artifactId>spring-beans</artifactId> -->
+<!-- 						<version>${spring.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.springframework</groupId> -->
+<!-- 						<artifactId>spring-context</artifactId> -->
+<!-- 						<version>${spring.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.springframework</groupId> -->
+<!-- 						<artifactId>spring-aop</artifactId> -->
+<!-- 						<version>${spring.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.springframework</groupId> -->
+<!-- 						<artifactId>spring-aspects</artifactId> -->
+<!-- 						<version>${spring.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.springframework</groupId> -->
+<!-- 						<artifactId>spring-tx</artifactId> -->
+<!-- 						<version>${spring.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.springframework</groupId> -->
+<!-- 						<artifactId>spring-jdbc</artifactId> -->
+<!-- 						<version>${spring.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.springframework</groupId> -->
+<!-- 						<artifactId>spring-orm</artifactId> -->
+<!-- 						<version>${spring.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.springframework</groupId> -->
+<!-- 						<artifactId>spring-jms</artifactId> -->
+<!-- 						<version>${spring.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.springframework</groupId> -->
+<!-- 						<artifactId>spring-webmvc</artifactId> -->
+<!-- 						<version>${spring.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>commons-logging</groupId> -->
+<!-- 								<artifactId>commons-logging</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.fcrepo</groupId> -->
+<!-- 						<artifactId>fcrepo-common</artifactId> -->
+<!-- 						<version>${fcrepo.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.openrdf.sesame</groupId> -->
+<!-- 								<artifactId>sesame-model</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.fcrepo</groupId> -->
+<!-- 								<artifactId>fcrepo-generate</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.fcrepo</groupId> -->
+<!-- 								<artifactId>sunxacml</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.apache.lucene</groupId> -->
+<!-- 								<artifactId>lucene-core</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.slf4j</groupId> -->
+<!-- 								<artifactId>slf4j-api</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.fcrepo</groupId> -->
+<!-- 								<artifactId>jta</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.slf4j</groupId> -->
+<!-- 								<artifactId>log4j-over-slf4j</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.fcrepo</groupId> -->
+<!-- 								<artifactId>axis</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.fcrepo</groupId> -->
+<!-- 								<artifactId>mulgara-core</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>wsdl4j</groupId> -->
+<!-- 								<artifactId>wsdl4j</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.fcrepo</groupId> -->
+<!-- 						<artifactId>fcrepo-client-admin</artifactId> -->
+<!-- 						<version>${fcrepo.version}</version> -->
+<!-- 						<exclusions> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.openrdf.sesame</groupId> -->
+<!-- 								<artifactId>sesame-model</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>batik</groupId> -->
+<!-- 								<artifactId>batik-swing</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.fcrepo</groupId> -->
+<!-- 								<artifactId>mulgara-core</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>org.fcrepo</groupId> -->
+<!-- 								<artifactId>sunxacml</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>owlapi</groupId> -->
+<!-- 								<artifactId>owlapi</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 							<exclusion> -->
+<!-- 								<groupId>gnu.getopt</groupId> -->
+<!-- 								<artifactId>java-getopt</artifactId> -->
+<!-- 							</exclusion> -->
+<!-- 						</exclusions> -->
+<!-- 					</dependency> -->
+<!-- 				</dependencies> -->
 				<executions>
 					<execution>
 						<phase>site</phase>
