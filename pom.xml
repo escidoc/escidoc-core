@@ -698,6 +698,10 @@
 						<version>${fcrepo.version}</version>
 						<exclusions>
 							<exclusion>
+								<groupId>org.openrdf.sesame</groupId>
+								<artifactId>sesame-model</artifactId>
+							</exclusion>
+							<exclusion>
 								<groupId>org.fcrepo</groupId>
 								<artifactId>fcrepo-generate</artifactId>
 							</exclusion>
@@ -740,6 +744,10 @@
 						<artifactId>fcrepo-client-admin</artifactId>
 						<version>${fcrepo.version}</version>
 						<exclusions>
+							<exclusion>
+								<groupId>org.openrdf.sesame</groupId>
+								<artifactId>sesame-model</artifactId>
+							</exclusion>
 							<exclusion>
 								<groupId>batik</groupId>
 								<artifactId>batik-swing</artifactId>
