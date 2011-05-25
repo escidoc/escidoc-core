@@ -42,6 +42,7 @@
 		  <!-- Copy SQL files to local project and filter them. This could be 
             done with sql-maven-plugin version 1.4 but this version has issues. -->
       <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
           <execution>
@@ -100,24 +101,7 @@
           </execution>
         </executions>
       </plugin>
-			<!-- [02] -->
-			<plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>add-test-source</goal>
-            </goals>
-            <configuration>
-              <sources>
-                <source>target/generated-sources</source>
-              </sources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+	<!-- [02] -->
       <!-- [03] -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -229,68 +213,13 @@
 					    <goal>process</goal>
 						</goals>
 						<configuration>
-	            <skip>${skipITs}</skip>
+	            			<skip>${skipITs}</skip>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
       <!-- [05] -->
-			<plugin>
-				<groupId>org.codehaus.cargo</groupId>
-				<artifactId>cargo-maven2-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>start-container</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>start</goal>
-						</goals>
-						<configuration>
-							<wait>false</wait>
-						</configuration>
-					</execution>
-					<execution>
-						<id>stop-container</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-				  <skip>${skipITs}</skip>
-				  
-					<container>
-						<containerId>jboss42x</containerId>
-						<home>${project.build.directory}/escidoc/jboss</home>
-						<timeout>600000</timeout>
-					</container>
-
-					<configuration>
-						<type>standalone</type>
-						<properties>
-							<cargo.hostname>localhost</cargo.hostname>
-							<cargo.protocol>http</cargo.protocol>
-							<cargo.servlet.port>${escidoc.server.port}</cargo.servlet.port>
-							<cargo.rmi.port>1099</cargo.rmi.port>
-							<cargo.logging>medium</cargo.logging>
-							<cargo.jvmargs>${cargo.jvmargs} ${cargo.jvmdebug}</cargo.jvmargs>
-						</properties>
-						<deployables>
-							<deployable>
-								<groupId>org.escidoc</groupId>
-								<artifactId>testdata</artifactId>
-								<type>war</type>
-								<properties>
-									<context>testdata</context>
-								</properties>
-							</deployable>
-						</deployables>
-					</configuration>
-				</configuration>
-			</plugin>
-			<!-- [06] -->
-			<plugin>
+	<plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>sql-maven-plugin</artifactId>
         <dependencies>
@@ -487,6 +416,89 @@
           </execution>
         </executions>
       </plugin>
+			<!-- [06] -->
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>start-container</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<wait>false</wait>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-container</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+				  <skip>${skipITs}</skip>
+				  
+					<container>
+						<containerId>jboss42x</containerId>
+						<home>${project.build.directory}/escidoc/jboss</home>
+						<timeout>600000</timeout>
+					</container>
+
+					<configuration>
+						<type>standalone</type>
+						<properties>
+							<cargo.hostname>localhost</cargo.hostname>
+							<cargo.protocol>http</cargo.protocol>
+							<cargo.servlet.port>${escidoc.server.port}</cargo.servlet.port>
+							<cargo.rmi.port>1099</cargo.rmi.port>
+							<cargo.logging>medium</cargo.logging>
+							<cargo.jvmargs>${cargo.jvmargs} ${cargo.jvmdebug}</cargo.jvmargs>
+						</properties>
+						<deployables>
+							<deployable>
+								<groupId>org.escidoc</groupId>
+								<artifactId>testdata</artifactId>
+								<type>war</type>
+								<properties>
+									<context>testdata</context>
+								</properties>
+							</deployable>
+						</deployables>
+					</configuration>
+				</configuration>
+			</plugin>
+      
+      			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>compile-it-sources</id>
+			            <phase>pre-integration-test</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<source>${java.source.version}</source>
+					<target>${java.target.version}</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+					<verbose>true</verbose>
+					<fork>true</fork>
+					<meminitial>128m</meminitial>
+					<maxmem>512m</maxmem>
+					<debug>true</debug>
+					<optimize>false</optimize>
+				</configuration>
+			</plugin>
+      
+      
 			<!-- [07] -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -494,12 +506,14 @@
 				<executions>
 					<execution>
 						<id>integration-test</id>
+						<phase>integration-test</phase>
 						<goals>
 							<goal>integration-test</goal>
 						</goals>
 					</execution>
 					<execution>
 						<id>verify</id>
+						<phase>verify</phase>
 						<goals>
 							<goal>verify</goal>
 						</goals>
@@ -508,7 +522,7 @@
 				<configuration>
 					<systemproperties>
 						<property>
-							<!-- Specific log4j config for tests -->
+							Specific log4j config for tests
 							<name>log4j.configuration</name>
 							<value>test-log4j.xml</value>
 						</property>
@@ -517,6 +531,7 @@
 					<!-- failsafe plugin runs per default only intergration tests (*IT.java). 
 						So make sure our (old) tests are included too. -->
 					<includes>
+						<include>**/*IT.java</include>
 						<include>**/*Test.java</include>
 						<include>${project.build.directory}/generated-sources/</include>
 					</includes>
@@ -526,14 +541,8 @@
 					</excludes>
 					<forkMode>always</forkMode>
 					<argLine>-Xmx1024m -XX:MaxPermSize=640m</argLine>
+					<failIfNoTests>true</failIfNoTests>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>junit</groupId>
-						<artifactId>junit</artifactId>
-						<version>${junit.version}</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
