@@ -660,6 +660,10 @@
           <groupId>javax.mail</groupId>
           <artifactId>mail</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>trippi-mulgara</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -674,6 +678,10 @@
         <exclusion>
           <groupId>org.slf4j</groupId>
           <artifactId>log4j-over-slf4j</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>mulgara-core</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
