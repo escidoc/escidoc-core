@@ -101,7 +101,7 @@
           </execution>
         </executions>
       </plugin>
-	<!-- [02] -->
+			<!-- [02] -->
       <!-- [03] -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -522,7 +522,7 @@
 				<configuration>
 					<systemproperties>
 						<property>
-							Specific log4j config for tests
+							<!-- Specific log4j config for tests -->
 							<name>log4j.configuration</name>
 							<value>test-log4j.xml</value>
 						</property>
@@ -543,6 +543,13 @@
 					<argLine>-Xmx1024m -XX:MaxPermSize=640m</argLine>
 					<failIfNoTests>true</failIfNoTests>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>junit</groupId>
+						<artifactId>junit</artifactId>
+						<version>${junit.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
