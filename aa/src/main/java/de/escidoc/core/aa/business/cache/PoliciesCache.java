@@ -114,13 +114,13 @@ public class PoliciesCache {
      * @param roleIsGranted The {@link EvaluationResult} holding the result of the {@link XacmlFunctionRoleIsGranted}
      *                      for the provided values.
      */
-    @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, EvaluationResult>> putRoleIsGrantedEvaluationResult(@PartialCacheKey
     final String userOrGroupId, final Map<String, Map<String, EvaluationResult>> roleIsGranted) {
         return roleIsGranted;
     }
 
-    @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, EvaluationResult>> getRoleIsGrantedEvaluationResultCached(@PartialCacheKey
     final String userOrGroupId) {
         return new HashMap<String, Map<String, EvaluationResult>>();
@@ -135,12 +135,12 @@ public class PoliciesCache {
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices, or
      *         <code>null</code>.
      */
-    @Cacheable(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet getUserPolicies(final String userId) {
         return null;
     }
 
-    @Cacheable(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet putUserPolicies(@PartialCacheKey
     final String userId, final XacmlPolicySet policySet) {
         return policySet;
@@ -155,12 +155,12 @@ public class PoliciesCache {
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the group's polices, or
      *         <code>null</code>.
      */
-    @Cacheable(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet getGroupPolicies(final String groupId) {
         return null;
     }
 
-    @Cacheable(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet putGroupPolicies(@PartialCacheKey
     final String groupId, final XacmlPolicySet policySet) {
         return policySet;
@@ -172,7 +172,7 @@ public class PoliciesCache {
      * @param userId The user ID to use as key for HashMap.
      * @return The grants of the user in a <code>Map</code>, or <code>null</code>.
      */
-    @Cacheable(cacheName = "userGrantsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "userGrantsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, List<RoleGrant>>> getUserGrants(final String userId)
         throws UserAccountNotFoundException, SystemException {
         return userAccountHandler.retrieveCurrentGrantsAsMap(userId);
@@ -184,7 +184,7 @@ public class PoliciesCache {
      * @param groupId The group ID to use as key for HashMap.
      * @return The grants of the group in a <code>Map</code>, or <code>null</code>.
      */
-    @Cacheable(cacheName = "groupGrantsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "groupGrantsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, List<RoleGrant>>> getGroupGrants(final String groupId)
         throws ResourceNotFoundException, SystemException {
         return userGroupHandler.retrieveCurrentGrantsAsMap(groupId);
@@ -196,7 +196,7 @@ public class PoliciesCache {
      * @param handle The handle to use as key for HashMap.
      * @return The details of the user as <code>UserDetails</code>, or <code>null</code>.
      */
-    @Cacheable(cacheName = "userDetailsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "userDetailsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public UserDetails getUserDetails(final String handle) throws SqlDatabaseSystemException {
         EscidocUserDetails result = null;
         final UserAccount userAccount = userAccountDao.retrieveUserAccountByHandle(handle);
@@ -216,7 +216,7 @@ public class PoliciesCache {
      * @throws SystemException 
      * @throws UserAccountNotFoundException 
      */
-    @Cacheable(cacheName = "userGroupsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "userGroupsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Set<String> getUserGroups(final String userId) throws UserAccountNotFoundException, SystemException {
         return userGroupHandler.retrieveGroupsForUser(userId, true);
     }
@@ -228,7 +228,7 @@ public class PoliciesCache {
      * @return Returns the <code>PolicyFinderResult</code> containing the policy set of the addressed role.
      * @throws WebserverSystemException 
      */
-    @Cacheable(cacheName = "rolePoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "rolePoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet getRolePolicySet(@PartialCacheKey
     final URI idReference, final EscidocRole role) throws WebserverSystemException {
         if (role == null) {
@@ -243,7 +243,7 @@ public class PoliciesCache {
      * @param roleId The role identifier.
      * @return Returns the <code>EscidocRole</code> for the provided key.
      */
-    @Cacheable(cacheName = "rolesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "rolesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public EscidocRole getRole(final String roleId) {
         EscidocRole role = null;
         try {
@@ -268,7 +268,7 @@ public class PoliciesCache {
      *
      * @param userId The user ID to remove policies from the cache for
      */
-    @TriggersRemove(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearRoleIsGranted(@PartialCacheKey
     final String userOrGroupId) {
     }
@@ -289,7 +289,7 @@ public class PoliciesCache {
      *
      * @param userId The user ID to remove policies from the cache for
      */
-    @TriggersRemove(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearUserPolicies(final String userId) {
     }
 
@@ -309,7 +309,7 @@ public class PoliciesCache {
      *
      * @param userId The user ID to remove policies from the cache for
      */
-    @TriggersRemove(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearGroupPolicies(final String groupId) {
     }
 
@@ -329,7 +329,7 @@ public class PoliciesCache {
      *
      * @param userId The user ID to remove policies from the cache for
      */
-    @TriggersRemove(cacheName = "userGrantsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "userGrantsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearUserGrants(final String userId) {
     }
 
@@ -349,7 +349,7 @@ public class PoliciesCache {
      *
      * @param userId The user ID to remove policies from the cache for
      */
-    @TriggersRemove(cacheName = "groupGrantsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "groupGrantsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearGroupGrants(final String groupId) {
     }
 
@@ -369,7 +369,7 @@ public class PoliciesCache {
      *
      * @param userId The user ID to remove policies from the cache for
      */
-    @TriggersRemove(cacheName = "userDetailsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "userDetailsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearUserDetails(final String handle) {
     }
 
@@ -389,7 +389,7 @@ public class PoliciesCache {
      *
      * @param userId The user ID to remove policies from the cache for
      */
-    @TriggersRemove(cacheName = "userGroupsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "userGroupsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearUserGroups(final String userId) {
     }
 
@@ -409,7 +409,7 @@ public class PoliciesCache {
      *
      * @param userId The user ID to remove policies from the cache for
      */
-    @TriggersRemove(cacheName = "rolePoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "rolePoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearRolePolicies(final URI idReference) {
     }
 
@@ -429,7 +429,7 @@ public class PoliciesCache {
      *
      * @param userId The user ID to remove policies from the cache for
      */
-    @TriggersRemove(cacheName = "rolesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "rolesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearRoles(final String roleId) {
     }
 

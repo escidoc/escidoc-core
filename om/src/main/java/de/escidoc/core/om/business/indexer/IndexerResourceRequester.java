@@ -93,7 +93,7 @@ public class IndexerResourceRequester {
      * @throws SystemException e
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Object getResource(final String identifier) throws SystemException, TripleStoreSystemException {
         final String href = getHref(identifier);
         if (identifier.startsWith("http")) {
@@ -129,7 +129,7 @@ public class IndexerResourceRequester {
      * @param resource resource-object
      * @return Object resource-object
      */
-    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Object setResource(@PartialCacheKey
     final String identifier, final Object resource) {
         return resource;
@@ -142,7 +142,7 @@ public class IndexerResourceRequester {
      * @param resource resource-object
      * @return Object resource-object
      */
-    @TriggersRemove(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void deleteResource(final String identifier) {
     }
 
