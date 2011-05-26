@@ -7,6 +7,58 @@
 	maxElementsInMemory="1000" 
 	eternal="false" 
 	overflowToDisk="false" 
-	timeToIdleSeconds="300" 
-	timeToLiveSeconds="600"/>
+	timeToIdleSeconds="600"/>
+<cache 
+	name="roleIsGrantedCache" 
+	maxElementsInMemory="1000" 
+	eternal="false" 
+	overflowToDisk="false" 
+	timeToIdleSeconds="1200"/>
+<cache 
+	name="userPoliciesCache" 
+	maxElementsInMemory="1000" 
+	eternal="false" 
+	overflowToDisk="false" 
+	timeToIdleSeconds="1200"/>
+<cache 
+	name="userGrantsCache" 
+	maxElementsInMemory="1000" 
+	eternal="false" 
+	overflowToDisk="false" 
+	timeToIdleSeconds="1200"/>
+<cache 
+	name="userDetailsCache" 
+	maxElementsInMemory="1000" 
+	eternal="false" 
+	overflowToDisk="false" 
+	timeToIdleSeconds="1200"/>
+<cache 
+	name="userGroupsCache" 
+	maxElementsInMemory="1000" 
+	eternal="false" 
+	overflowToDisk="false" 
+	timeToIdleSeconds="1200"/>
+<cache 
+	name="rolePoliciesCache" 
+	maxElementsInMemory="100" 
+	eternal="true" 
+	overflowToDisk="false"/>
+<cache 
+	name="rolesCache" 
+	maxElementsInMemory="100" 
+	eternal="true" 
+	overflowToDisk="false"/>
+<cache 
+	name="groupGrantsCache" 
+	maxElementsInMemory="1000" 
+	eternal="false" 
+	overflowToDisk="false" 
+	timeToIdleSeconds="1200"/>
+<cache 
+	name="groupPoliciesCache" 
+	maxElementsInMemory="1000" 
+	eternal="false" 
+	overflowToDisk="false" 
+	timeToIdleSeconds="1200"/>
+	
 </ehcache>

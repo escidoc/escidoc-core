@@ -28,28 +28,42 @@
  */
 package de.escidoc.core.aa.business.cache;
 
-import com.sun.xacml.cond.EvaluationResult;
-import de.escidoc.core.aa.business.persistence.EscidocRole;
-import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
-import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
-import net.sf.ehcache.config.CacheConfiguration;
-import org.apache.commons.collections.map.LRUMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.userdetails.UserDetails;
-
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.commons.collections.map.LRUMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+import com.googlecode.ehcache.annotations.Cacheable;
+import com.googlecode.ehcache.annotations.KeyGenerator;
+import com.googlecode.ehcache.annotations.PartialCacheKey;
+import com.googlecode.ehcache.annotations.Property;
+import com.googlecode.ehcache.annotations.TriggersRemove;
+import com.sun.xacml.cond.EvaluationResult;
+
+import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
+import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
+import de.escidoc.core.aa.business.persistence.EscidocRole;
+import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
+import de.escidoc.core.aa.business.persistence.RoleGrant;
+import de.escidoc.core.aa.business.persistence.UserAccount;
+import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
+import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
+import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.service.EscidocUserDetails;
 
 /**
  * Class to cache policies retrieved from the database for the XACML engine.<br> This class caches different policy
@@ -64,183 +78,26 @@ import java.util.Set;
  *
  * @author Roland Werner (Accenture)
  */
-public final class PoliciesCache {
+@Service("security.PoliciesCache")
+public class PoliciesCache {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PoliciesCacheProxy.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PoliciesCache.class);
 
-    /**
-     * Fall back value if reading property {@link <code>EscidocConfiguration.AA_CACHE_ROLES_SIZE</code>} fails.
-     */
-    private static final int ROLES_CACHE_SIZE_FALL_BACK = 20;
+    @Autowired
+    @Qualifier("business.UserAccountHandler")
+    private UserAccountHandlerInterface userAccountHandler;
 
-    /**
-     * Fall back value if reading property {@link <code>EscidocConfiguration.AA_CACHE_USERS_SIZE</code>} fails.
-     */
-    private static final int USERS_CACHE_SIZE_FALL_BACK = 50;
+    @Autowired
+    @Qualifier("business.UserGroupHandler")
+    private UserGroupHandlerInterface userGroupHandler;
 
-    /**
-     * Fall back value if reading property {@link <code>EscidocConfiguration.AA_CACHE_GROUPS_SIZE</code>} fails.
-     */
-    private static final int GROUPS_CACHE_SIZE_FALL_BACK = 200;
+    @Autowired
+    @Qualifier("persistence.UserAccountDao")
+    private UserAccountDaoInterface userAccountDao;
 
-    /**
-     * Fall back value if reading property {@link <code>EscidocConfiguration.AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE</code>}
-     * fails.
-     */
-    private static final int AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE_FALL_BACK = 20;
-
-    /**
-     * The user policies cache is implemented as an <code>LRUMap</code> (least-recently-used map), so it can only grow
-     * to a certain size.
-     */
-    private static Cache userPoliciesCache;
-
-    /**
-     * The user grants cache is implemented as an <code>LRUMap</code> (least-recently-used map), so it can only grow to
-     * a certain size.
-     */
-    private static Cache userGrantsCache;
-
-    /**
-     * The user details cache is implemented as an <code>LRUMap</code> (least-recently-used map), so it can only grow to
-     * a certain size.
-     */
-    private static Cache userDetailsCache;
-
-    /**
-     * The group grants cache is implemented as an <code>LRUMap</code> (least-recently-used map), so it can only grow to
-     * a certain size.
-     */
-    private static Cache groupPoliciesCache;
-
-    /**
-     * The group grants cache is implemented as an <code>LRUMap</code> (least-recently-used map), so it can only grow to
-     * a certain size.
-     */
-    private static Cache groupGrantsCache;
-
-    /**
-     * The group grants cache is implemented as an <code>LRUMap</code> (least-recently-used map), so it can only grow to
-     * a certain size.
-     */
-    private static Cache userGroupsCache;
-
-    /**
-     * The role policies cache is implemented as a <code>LRUMap</code> (least-recently-used map), so it can only grow to
-     * a certain size.
-     */
-    private static Cache rolePoliciesCache;
-
-    /**
-     * The roles cache is implemented as a <code>LRUMap</code> (least-recently-used map), so it can only grow to a
-     * certain size.
-     */
-    private static Cache rolesCache;
-
-    /**
-     * The roleIsGranted result cache is implemented as a <code>LRUMap</code> (least-recently-used map) (addressed by
-     * user-id) of a <code>LRUMap</code> (addressed by role-name) of a <code>LRUMap</code> (addressed by resource-id or
-     * <code>null</code>) , so it can only grow to a certain size.
-     */
-    private static Cache roleIsGrantedCache;
-
-    private static int resourcesInXacmlFunctionRoleIsGrantedCacheSize;
-
-    static {
-        initCaches();
-    }
-
-    /**
-     * Private constructor to prevent class from being instantiated.
-     */
-    private PoliciesCache() {
-    }
-
-    /**
-     * Initializes the caches.<br/>The cache sizes are fetched from the eSciDoc Configuration. If this fails, the
-     * default values are used as fall back.
-     */
-    private static void initCaches() {
-
-        int rolesCacheSize;
-        try {
-            rolesCacheSize =
-                Integer.parseInt(EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_ROLES_SIZE));
-        }
-        catch (final Exception e) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on parsing roles cache size.");
-            }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on parsing roles cache size.", e);
-            }
-            rolesCacheSize = ROLES_CACHE_SIZE_FALL_BACK;
-        }
-        int usersCacheSize;
-        try {
-            usersCacheSize =
-                Integer.parseInt(EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_USERS_SIZE));
-        }
-        catch (final Exception e) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on parsing users cache size.");
-            }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on parsing users cache size.", e);
-            }
-            usersCacheSize = USERS_CACHE_SIZE_FALL_BACK;
-        }
-        int groupsCacheSize;
-        try {
-            groupsCacheSize =
-                Integer.parseInt(EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_GROUPS_SIZE));
-        }
-        catch (final Exception e) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on parsing groups cache size.");
-            }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on parsing groups cache size.", e);
-            }
-            groupsCacheSize = GROUPS_CACHE_SIZE_FALL_BACK;
-        }
-        try {
-            resourcesInXacmlFunctionRoleIsGrantedCacheSize =
-                Integer.parseInt(EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE));
-        }
-        catch (final Exception e) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on parsing resources cache size.");
-            }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on parsing resources cache size.", e);
-            }
-            resourcesInXacmlFunctionRoleIsGrantedCacheSize = AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE_FALL_BACK;
-        }
-        final CacheManager cacheManager = CacheManager.create();
-        rolesCache = new Cache(new CacheConfiguration("rolesCache", rolesCacheSize));
-        cacheManager.addCache(rolesCache);
-        rolePoliciesCache = new Cache(new CacheConfiguration("rolePoliciesCache", rolesCacheSize));
-        cacheManager.addCache(rolePoliciesCache);
-        userGrantsCache = new Cache(new CacheConfiguration("userGrantsCache", usersCacheSize));
-        cacheManager.addCache(userGrantsCache);
-        userPoliciesCache = new Cache(new CacheConfiguration("userPoliciesCache", usersCacheSize));
-        cacheManager.addCache(userPoliciesCache);
-        groupGrantsCache = new Cache(new CacheConfiguration("groupGrantsCache", groupsCacheSize));
-        cacheManager.addCache(groupGrantsCache);
-        groupPoliciesCache = new Cache(new CacheConfiguration("groupPoliciesCache", groupsCacheSize));
-        cacheManager.addCache(groupPoliciesCache);
-        userDetailsCache = new Cache(new CacheConfiguration("userDetailsCache", usersCacheSize));
-        cacheManager.addCache(userDetailsCache);
-        userGroupsCache = new Cache(new CacheConfiguration("userGroupsCache", usersCacheSize));
-        cacheManager.addCache(userGroupsCache);
-        roleIsGrantedCache = new Cache(new CacheConfiguration("roleIsGrantedCache", usersCacheSize));
-        cacheManager.addCache(roleIsGrantedCache);
-    }
+    @Autowired
+    @Qualifier("persistence.EscidocRoleDao")
+    private EscidocRoleDaoInterface roleDao;
 
     /**
      * Stores the provided {@link EvaluationResult} for {@link XacmlFunctionRoleIsGranted} result using the user ID, the
@@ -257,169 +114,16 @@ public final class PoliciesCache {
      * @param roleIsGranted The {@link EvaluationResult} holding the result of the {@link XacmlFunctionRoleIsGranted}
      *                      for the provided values.
      */
-    public static void putRoleIsGrantedEvaluationResult(
-        final String userOrGroupId, final String roleId, final String resourceId, final EvaluationResult roleIsGranted) {
-
-        if (userOrGroupId == null || roleId == null) {
-            return;
-        }
-
-        final Element element = roleIsGrantedCache.get(userOrGroupId);
-        if (element != null) {
-            final Map<String, Map<String, EvaluationResult>> roleMap =
-                (Map<String, Map<String, EvaluationResult>>) element.getObjectValue();
-            final Element roleElement = new Element(userOrGroupId, roleMap);
-            roleIsGrantedCache.put(roleElement);
-            Map<String, EvaluationResult> resourceMap = roleMap.get(roleId);
-            if (resourceMap == null) {
-                resourceMap = new LRUMap(resourcesInXacmlFunctionRoleIsGrantedCacheSize);
-                roleMap.put(roleId, resourceMap);
-            }
-            resourceMap.put(resourceId, roleIsGranted);
-        }
+    @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public Map<String, Map<String, EvaluationResult>> putRoleIsGrantedEvaluationResult(@PartialCacheKey
+    final String userOrGroupId, final Map<String, Map<String, EvaluationResult>> roleIsGranted) {
+        return roleIsGranted;
     }
 
-    /**
-     * Stores the provided user's policy set using the provided user ID as key. <br> The user's policy set has to be
-     * provided within a <code>XacmlPolicySet</code>. <br> Realized as an outer HashMap that uses user ID as key and
-     * which has an inner HashMap as value. The inner HashMap has action as key and the list of policies as value.
-     *
-     * @param userId       The user ID to use as key for HashMap. This must not be <code>null</code>. If
-     *                     <code>null</code> is provided, nothing is done.
-     * @param userPolicies The user policy set contained in a <code>XacmlPolicySet</code>.
-     */
-    public static void putUserPolicies(final String userId, final XacmlPolicySet userPolicies) {
-        if (userId == null) {
-            return;
-        }
-        getUserPoliciesCache().put(new Element(userId, userPolicies));
-    }
-
-    /**
-     * Stores the provided group's policy set using the provided group ID as key. <br> The group's policy set has to be
-     * provided within a <code>XacmlPolicySet</code>. <br> Realized as an outer HashMap that uses group ID as key and
-     * which has an inner HashMap as value. The inner HashMap has action as key and the list of policies as value.
-     *
-     * @param groupId       The group ID to use as key for HashMap. This must not be <code>null</code>. If
-     *                      <code>null</code> is provided, nothing is done.
-     * @param groupPolicies The group policy set contained in a <code>XacmlPolicySet</code>.
-     */
-    public static void putGroupPolicies(final String groupId, final XacmlPolicySet groupPolicies) {
-        if (groupId == null) {
-            return;
-        }
-        getGroupPoliciesCache().put(new Element(groupId, groupPolicies));
-    }
-
-    /**
-     * Stores the provided user's grants using the provided user ID as key. <br>
-     *
-     * @param userId     The user ID to use as key for HashMap. This must not be <code>null</code>. If <code>null</code>
-     *                   is provided, nothing is done.
-     * @param userGrants The grants of the user contained in a <code>Map</code>.
-     */
-    public static void putUserGrants(final String userId, final Map userGrants) {
-        if (userId == null) {
-            return;
-        }
-        getUserGrantsCache().put(new Element(userId, userGrants));
-    }
-
-    /**
-     * Stores the provided group's grants using the provided group ID as key. <br>
-     *
-     * @param groupId     The group ID to use as key for HashMap. This must not be <code>null</code>. If
-     *                    <code>null</code> is provided, nothing is done.
-     * @param groupGrants The grants of the group contained in a <code>Map</code>.
-     */
-    public static void putGroupGrants(final String groupId, final Map groupGrants) {
-        if (groupId == null) {
-            return;
-        }
-        getGroupGrantsCache().put(new Element(groupId, groupGrants));
-    }
-
-    /**
-     * Stores the provided user's details using the provided user ID as key. <br>
-     *
-     * @param handle      The handle to use as key for HashMap. This must not be <code>null</code>. If <code>null</code>
-     *                    is provided, nothing is done.
-     * @param userDetails The details of the user contained in a <code>Map</code>.
-     */
-    public static void putUserDetails(final String handle, final UserDetails userDetails) {
-        if (handle == null) {
-            return;
-        }
-        getUserDetailsCache().put(new Element(handle, userDetails));
-    }
-
-    /**
-     * Stores the groups the user with given userId belongs to. <br>
-     *
-     * @param userId     The userId to use as key for HashMap. This must not be <code>null</code>. If <code>null</code>
-     *                   is provided, nothing is done.
-     * @param userGroups The groups of the user contained in a <code>Set</code>.
-     */
-    public static void putUserGroups(final String userId, final Set<String> userGroups) {
-        if (userId == null) {
-            return;
-        }
-        final Element element =
-            userGroups == null ? new Element(userId, new HashSet<String>()) : new Element(userId, userGroups);
-        getUserGroupsCache().put(element);
-    }
-
-    /**
-     * Stores the provided list of policies using the provided role as key.
-     *
-     * @param idReference  The reference of the role's policies set.
-     * @param rolePolicies The policy set of the role referenced by the provided id in a <code>PolicyFinderResult</code>
-     */
-    public static void putRolePolicySet(final URI idReference, final XacmlPolicySet rolePolicies) {
-        getRolePoliciesCache().put(new Element(idReference, rolePolicies));
-    }
-
-    /**
-     * Stores the provided role using the role id as key.
-     *
-     * @param roleId Identifier of the role.
-     * @param role   The role to cache.
-     */
-    public static void putRole(final String roleId, final EscidocRole role) {
-        getRolesCache().put(new Element(roleId, role));
-    }
-
-    /**
-     * Gets the {@link EvaluationResult} for {@link XacmlFunctionRoleIsGranted} result using the user ID, the role ID
-     * and (optional) the resource ID as key. <br> Realized as an outer {@link LRUMap} that uses user ID as key and
-     * which has an inner {@link LRUMap} as value, that uses the role ID as key and has an inner {@link LRUMap} as value
-     * that uses the resource id or <code>null</code> as key and has an {@link EvaluationResult} object as value.
-     *
-     * @param userOrGroupId The user ID to use as key for {@link LRUMap}. This must not be <code>null</code>. If
-     *                      <code>null</code> is provided, nothing is done.
-     * @param roleId        The role ID to use as key for {@link LRUMap}. This must not be <code>null</code>. If
-     *                      <code>null</code> is provided, nothing is done.
-     * @param resourceId    The resource ID to use as key for {@link LRUMap}. This may be <code>null</code>.
-     * @return
-     */
-    public static EvaluationResult getRoleIsGrantedEvaluationResult(
-        final String userOrGroupId, final String roleId, final String resourceId) {
-        final Element element = roleIsGrantedCache.get(userOrGroupId);
-        if (element != null) {
-            final Map<String, Map<String, EvaluationResult>> roleMap =
-                (Map<String, Map<String, EvaluationResult>>) element.getObjectValue();
-            if (roleMap == null) {
-                return null;
-            }
-            final Map<String, EvaluationResult> resourceMap = roleMap.get(roleId);
-            if (resourceMap == null) {
-                return null;
-            }
-            return resourceMap.get(resourceId);
-        }
-        else {
-            return null;
-        }
+    @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public Map<String, Map<String, EvaluationResult>> getRoleIsGrantedEvaluationResultCached(@PartialCacheKey
+    final String userOrGroupId) {
+        return new HashMap<String, Map<String, EvaluationResult>>();
     }
 
     /**
@@ -431,9 +135,15 @@ public final class PoliciesCache {
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices, or
      *         <code>null</code>.
      */
-    public static XacmlPolicySet getUserPolicies(final String userId) {
-        final Element element = getUserPoliciesCache().get(userId);
-        return element != null ? (XacmlPolicySet) element.getObjectValue() : null;
+    @Cacheable(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public XacmlPolicySet getUserPolicies(final String userId) {
+        return null;
+    }
+
+    @Cacheable(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public XacmlPolicySet putUserPolicies(@PartialCacheKey
+    final String userId, final XacmlPolicySet policySet) {
+        return policySet;
     }
 
     /**
@@ -445,9 +155,15 @@ public final class PoliciesCache {
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the group's polices, or
      *         <code>null</code>.
      */
-    public static XacmlPolicySet getGroupPolicies(final String groupId) {
-        final Element element = getGroupPoliciesCache().get(groupId);
-        return element != null ? (XacmlPolicySet) element.getObjectValue() : null;
+    @Cacheable(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public XacmlPolicySet getGroupPolicies(final String groupId) {
+        return null;
+    }
+
+    @Cacheable(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public XacmlPolicySet putGroupPolicies(@PartialCacheKey
+    final String groupId, final XacmlPolicySet policySet) {
+        return policySet;
     }
 
     /**
@@ -456,9 +172,10 @@ public final class PoliciesCache {
      * @param userId The user ID to use as key for HashMap.
      * @return The grants of the user in a <code>Map</code>, or <code>null</code>.
      */
-    public static Map getUserGrants(final String userId) {
-        final Element element = getUserGrantsCache().get(userId);
-        return element != null ? (Map) element.getObjectValue() : null;
+    @Cacheable(cacheName = "userGrantsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public Map<String, Map<String, List<RoleGrant>>> getUserGrants(final String userId)
+        throws UserAccountNotFoundException, SystemException {
+        return userAccountHandler.retrieveCurrentGrantsAsMap(userId);
     }
 
     /**
@@ -467,9 +184,10 @@ public final class PoliciesCache {
      * @param groupId The group ID to use as key for HashMap.
      * @return The grants of the group in a <code>Map</code>, or <code>null</code>.
      */
-    public static Map getGroupGrants(final String groupId) {
-        final Element element = getGroupGrantsCache().get(groupId);
-        return element != null ? (Map) element.getObjectValue() : null;
+    @Cacheable(cacheName = "groupGrantsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public Map<String, Map<String, List<RoleGrant>>> getGroupGrants(final String groupId)
+        throws ResourceNotFoundException, SystemException {
+        return userGroupHandler.retrieveCurrentGrantsAsMap(groupId);
     }
 
     /**
@@ -478,20 +196,29 @@ public final class PoliciesCache {
      * @param handle The handle to use as key for HashMap.
      * @return The details of the user as <code>UserDetails</code>, or <code>null</code>.
      */
-    public static UserDetails getUserDetails(final String handle) {
-        final Element element = getUserDetailsCache().get(handle);
-        return element != null ? (UserDetails) element.getObjectValue() : null;
+    @Cacheable(cacheName = "userDetailsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public UserDetails getUserDetails(final String handle) throws SqlDatabaseSystemException {
+        EscidocUserDetails result = null;
+        final UserAccount userAccount = userAccountDao.retrieveUserAccountByHandle(handle);
+        if (userAccount != null) {
+            result = new EscidocUserDetails();
+            result.setId(userAccount.getId());
+            result.setRealName(userAccount.getName());
+        }
+        return result;
     }
 
     /**
      * Gets the the user groups for the provided userId.<br>
      *
-     * @param userId The userId to use as key for HashMap.
+     * @param userId The userId.
      * @return The groups of the user as <code>Set</code>, or <code>null</code>.
+     * @throws SystemException 
+     * @throws UserAccountNotFoundException 
      */
-    public static Set<String> getUserGroups(final String userId) {
-        final Element element = getUserGroupsCache().get(userId);
-        return element != null ? (Set<String>) element.getObjectValue() : null;
+    @Cacheable(cacheName = "userGroupsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public Set<String> getUserGroups(final String userId) throws UserAccountNotFoundException, SystemException {
+        return userGroupHandler.retrieveGroupsForUser(userId, true);
     }
 
     /**
@@ -499,10 +226,15 @@ public final class PoliciesCache {
      *
      * @param idReference The reference of the role's policies set.
      * @return Returns the <code>PolicyFinderResult</code> containing the policy set of the addressed role.
+     * @throws WebserverSystemException 
      */
-    public static XacmlPolicySet getRolePolicySet(final URI idReference) {
-        final Element element = getRolePoliciesCache().get(idReference);
-        return element != null ? (XacmlPolicySet) element.getObjectValue() : null;
+    @Cacheable(cacheName = "rolePoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public XacmlPolicySet getRolePolicySet(@PartialCacheKey
+    final URI idReference, final EscidocRole role) throws WebserverSystemException {
+        if (role == null) {
+            return null;
+        }
+        return (XacmlPolicySet) role.getXacmlPolicySet();
     }
 
     /**
@@ -511,9 +243,23 @@ public final class PoliciesCache {
      * @param roleId The role identifier.
      * @return Returns the <code>EscidocRole</code> for the provided key.
      */
-    public static EscidocRole getRole(final String roleId) {
-        final Element element = getRolesCache().get(roleId);
-        return element != null ? (EscidocRole) element.getObjectValue() : null;
+    @Cacheable(cacheName = "rolesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public EscidocRole getRole(final String roleId) {
+        EscidocRole role = null;
+        try {
+            role = roleDao.retrieveRole(roleId);
+            role.isLimited();
+        }
+        catch (SqlDatabaseSystemException e) {
+            final String message = "Error on retrieving role '" + roleId + '\'';
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn(message);
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(message, e);
+            }
+        }
+        return role;
     }
 
     /**
@@ -522,165 +268,179 @@ public final class PoliciesCache {
      *
      * @param userId The user ID to remove policies from the cache for
      */
-    public static void clearUserPolicies(final String userId) {
-        getUserPoliciesCache().remove(userId);
-        getRoleIsGrantedCache().remove(userId);
-        getUserGrantsCache().remove(userId);
+    @TriggersRemove(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public void clearRoleIsGranted(@PartialCacheKey
+    final String userOrGroupId) {
     }
 
     /**
-     * Removes all stored policies for the provided group ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific group (e.g. when a new role has been assigned to this group).
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
      *
-     * @param groupId The group ID to remove policies from the cache for
+     * @param userId The user ID to remove policies from the cache for
      */
-    public static void clearGroupPolicies(final String groupId) {
-        getGroupPoliciesCache().remove(groupId);
-        getRoleIsGrantedCache().remove(groupId);
-        getGroupGrantsCache().remove(groupId);
+    @TriggersRemove(cacheName = "roleIsGrantedCache", removeAll = true)
+    public void clearRoleIsGranted() {
     }
 
     /**
-     * Removes all stored details for the provided handle from the cache.<br> Has to be called whenever data changes for
-     * a specific user (e.g. when a new handle is assigned).
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
      *
-     * @param handle The handle to remove from the cache for
+     * @param userId The user ID to remove policies from the cache for
      */
-    public static void clearUserDetails(final String handle) {
-        getUserDetailsCache().remove(handle);
+    @TriggersRemove(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public void clearUserPolicies(final String userId) {
     }
 
     /**
-     * Removes everything from the userGroupsCache.
-     */
-    public static void clearUserGroups() {
-        getUserGroupsCache().removeAll();
-    }
-
-    /**
-     * Removes groups of specified user from the userGroupsCache.
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
      *
-     * @param userId id of the user
+     * @param userId The user ID to remove policies from the cache for
      */
-    public static void clearUserGroups(final String userId) {
-        getUserGroupsCache().remove(userId);
+    @TriggersRemove(cacheName = "userPoliciesCache", removeAll = true)
+    public void clearUserPolicies() {
     }
 
     /**
-     * Removes all data stored in the cache for the role identified by the provided role id from the cache.<br> Has to
-     * be called whenever the role changes or has been deleted.
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
      *
-     * @param roleId The id of the role to remove from the cache.
-     * @throws SystemException e
+     * @param userId The user ID to remove policies from the cache for
      */
-    public static void clearRole(final String roleId) throws SystemException {
-        try {
-            getRolePoliciesCache().remove(new URI(roleId));
-        }
-        catch (final URISyntaxException e) {
-            throw new SystemException(e);
-        }
-
-        // FIXME: roles may be cached by name, not id. As a quick fix, the
-        // cache is completely cleared. This should be optimized
-        getRolesCache().removeAll();
-
-        // The user policies cache still holds policies for the removed role.
-        // To avoid usage of invalidated roles, the caches are cleared.
-        getUserPoliciesCache().removeAll();
-
-        // iterate over all maps stored in roleIsGrantedCache to remove the ones
-        // relevant for the provided role id.
-        final List roleIsGrantedKeys = getRoleIsGrantedCache().getKeys();
-        final List<Map<String, Map<String, EvaluationResult>>> roleIsGrantedValues =
-            new ArrayList<Map<String, Map<String, EvaluationResult>>>();
-        for (final Object key : roleIsGrantedKeys) {
-            final Element element = getRoleIsGrantedCache().get(key);
-            if (element != null) {
-                roleIsGrantedValues.add((Map<String, Map<String, EvaluationResult>>) element.getObjectValue());
-            }
-        }
-        for (final Map<String, Map<String, EvaluationResult>> userCache : roleIsGrantedValues) {
-            userCache.remove(roleId);
-        }
+    @TriggersRemove(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public void clearGroupPolicies(final String groupId) {
     }
 
     /**
-     * Removes all stored policies from the cache.
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
      */
-    public static void clear() {
-        getRolePoliciesCache().removeAll();
-        getRolesCache().removeAll();
-        getUserPoliciesCache().removeAll();
-        getRoleIsGrantedCache().removeAll();
-        getUserGrantsCache().removeAll();
-        getUserDetailsCache().removeAll();
-        getGroupPoliciesCache().removeAll();
-        getGroupGrantsCache().removeAll();
-        getUserGroupsCache().removeAll();
+    @TriggersRemove(cacheName = "groupPoliciesCache", removeAll = true)
+    public void clearGroupPolicies() {
     }
 
     /**
-     * @return the rolePoliciesCache
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
      */
-    private static Cache getRolePoliciesCache() {
-        return rolePoliciesCache;
+    @TriggersRemove(cacheName = "userGrantsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public void clearUserGrants(final String userId) {
     }
 
     /**
-     * @return the rolesCache
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
      */
-    private static Cache getRolesCache() {
-        return rolesCache;
+    @TriggersRemove(cacheName = "userGrantsCache", removeAll = true)
+    public void clearUserGrants() {
     }
 
     /**
-     * @return the userGrantsCache
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
      */
-    private static Cache getUserGrantsCache() {
-        return userGrantsCache;
+    @TriggersRemove(cacheName = "groupGrantsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public void clearGroupGrants(final String groupId) {
     }
 
     /**
-     * @return the userPoliciesCache
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
      */
-    private static Cache getUserPoliciesCache() {
-        return userPoliciesCache;
+    @TriggersRemove(cacheName = "groupGrantsCache", removeAll = true)
+    public void clearGroupGrants() {
     }
 
     /**
-     * @return the userDetailsCache
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
      */
-    private static Cache getUserDetailsCache() {
-        return userDetailsCache;
+    @TriggersRemove(cacheName = "userDetailsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public void clearUserDetails(final String handle) {
     }
 
     /**
-     * @return the groupGrantsCache
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
      */
-    private static Cache getGroupGrantsCache() {
-        return groupGrantsCache;
+    @TriggersRemove(cacheName = "userDetailsCache", removeAll = true)
+    public void clearUserDetails() {
     }
 
     /**
-     * @return the groupPoliciesCache
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
      */
-    private static Cache getGroupPoliciesCache() {
-        return groupPoliciesCache;
+    @TriggersRemove(cacheName = "userGroupsCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public void clearUserGroups(final String userId) {
     }
 
     /**
-     * @return the userGroupsCache
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
      */
-    private static Cache getUserGroupsCache() {
-        return userGroupsCache;
+    @TriggersRemove(cacheName = "userGroupsCache", removeAll = true)
+    public void clearUserGroups() {
     }
 
     /**
-     * @return the roleIsGrantedCache
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
      */
-    private static Cache getRoleIsGrantedCache() {
-        return roleIsGrantedCache;
+    @TriggersRemove(cacheName = "rolePoliciesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public void clearRolePolicies(final URI idReference) {
+    }
+
+    /**
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
+     */
+    @TriggersRemove(cacheName = "rolePoliciesCache", removeAll = true)
+    public void clearRolePolicies() {
+    }
+
+    /**
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
+     */
+    @TriggersRemove(cacheName = "rolesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public void clearRoles(final String roleId) {
+    }
+
+    /**
+     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     *
+     * @param userId The user ID to remove policies from the cache for
+     */
+    @TriggersRemove(cacheName = "rolesCache", removeAll = true)
+    public void clearRoles() {
     }
 
 }

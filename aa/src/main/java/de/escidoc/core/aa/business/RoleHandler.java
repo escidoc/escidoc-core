@@ -29,7 +29,7 @@
 package de.escidoc.core.aa.business;
 
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
-import de.escidoc.core.aa.business.cache.PoliciesCache;
+import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.aa.business.filter.AccessRights;
 import de.escidoc.core.aa.business.filter.RoleFilter;
 import de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface;
@@ -123,6 +123,10 @@ public class RoleHandler implements RoleHandlerInterface {
     @Qualifier("convert.XacmlParser")
     private XacmlParser xacmlParser;
 
+    @Autowired
+    @Qualifier("security.SecurityHelper")
+    private SecurityHelper securityHelper;
+
     /**
      * See Interface for functional description.
      *
@@ -204,7 +208,7 @@ public class RoleHandler implements RoleHandlerInterface {
         roleDao.deleteRole(role);
 
         // delete role from policy cache
-        PoliciesCache.clearRole(id);
+        securityHelper.clearRole(id);
 
         // delete role from resource cache
         accessRights.deleteAccessRight(id);
@@ -320,7 +324,7 @@ public class RoleHandler implements RoleHandlerInterface {
         roleDao.saveOrUpdate(role);
 
         // delete role from policy cache
-        PoliciesCache.clearRole(id);
+        securityHelper.clearRole(id);
 
         // update role in resource cache
         updateRole(role);

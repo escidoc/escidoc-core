@@ -29,7 +29,7 @@
 package de.escidoc.core.aa.mbean;
 
 import de.escidoc.core.aa.business.UserHandleCleaner;
-import de.escidoc.core.aa.business.cache.PoliciesCache;
+import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,6 +56,10 @@ public class AAManager {
     @Qualifier("eSciDoc.core.aa.UserHandleCleaner")
     private UserHandleCleaner userHandleCleaner;
 
+    @Autowired
+    @Qualifier("security.SecurityHelper")
+    private SecurityHelper securityHelper;
+
     /**
      * Cleans up the eSciDoc user handles.<br> This delegates to {@link UserHandleCleaner}.cleanUp.
      */
@@ -71,7 +75,7 @@ public class AAManager {
     @ManagedOperation(description = "remove everything from the PoliciesCache.")
     public void clearPoliciesCache() {
 
-        PoliciesCache.clear();
+        securityHelper.clear();
     }
 
     /**

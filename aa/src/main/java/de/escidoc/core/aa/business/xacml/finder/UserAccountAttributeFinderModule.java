@@ -28,6 +28,22 @@
  */
 package de.escidoc.core.aa.business.xacml.finder;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.attr.AttributeDesignator;
 import com.sun.xacml.attr.AttributeValue;
@@ -35,10 +51,11 @@ import com.sun.xacml.attr.BagAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
 import com.sun.xacml.finder.AttributeFinderModule;
+
 import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
-import de.escidoc.core.aa.business.cache.PoliciesCacheProxy;
+import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.aa.business.cache.RequestAttributesCache;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.aa.business.persistence.UserAccount;
@@ -59,21 +76,6 @@ import de.escidoc.core.common.util.list.ListSorting;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Implementation of an XACML attribute finder module that is responsible for the attributes related to an user
@@ -201,8 +203,8 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
         Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "role-grant:(.*?):assigned-on");
 
     @Autowired
-    @Qualifier("resource.PoliciesCacheProxy")
-    private PoliciesCacheProxy policiesCacheProxy;
+    @Qualifier("security.SecurityHelper")
+    private SecurityHelper securityHelper;
 
     @Autowired
     @Qualifier("persistence.UserAccountDao")
@@ -446,7 +448,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
 
         final EvaluationResult result;
 
-        final Set<String> userGroups = policiesCacheProxy.getUserGroups(userAccountId);
+        final Set<String> userGroups = securityHelper.getUserGroups(userAccountId);
 
         if (userGroups == null || userGroups.isEmpty()) {
             result = CustomEvaluationResultBuilder.createEmptyEvaluationResult();
@@ -471,7 +473,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private EvaluationResult fetchRoleScopes(final String userAccountId, final CharSequence attributeId)
-        throws SqlDatabaseSystemException {
+        throws SqlDatabaseSystemException, SystemException {
 
         // get role to fetch
         final Matcher roleMatcher = PATTERN_PARSE_ROLE_GRANT_ROLE.matcher(attributeId);
@@ -483,7 +485,14 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
 
-        final Set<String> userGroups = policiesCacheProxy.getUserGroups(userAccountId);
+        Set<String> userGroups = null;
+        try {
+            userGroups = securityHelper.getUserGroups(userAccountId);
+        }
+        catch (UserAccountNotFoundException e) {
+            // The caller doesn't expect to get an exception from here if
+            // the user doesn't exist.
+        }
         final Map<String, HashSet<String>> criterias = new HashMap<String, HashSet<String>>();
         final HashSet<String> roles = new HashSet<String>();
         roles.add(roleName);
@@ -610,15 +619,6 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     private UserAccountDaoInterface getUserAccountDao() throws WebserverSystemException {
 
         return this.userAccountDao;
-    }
-
-    /**
-     * Injects the policies cache proxy.
-     *
-     * @param policiesCacheProxy the {@link PoliciesCacheProxy} to inject.
-     */
-    public void setPoliciesCacheProxy(final PoliciesCacheProxy policiesCacheProxy) {
-        this.policiesCacheProxy = policiesCacheProxy;
     }
 
     /**

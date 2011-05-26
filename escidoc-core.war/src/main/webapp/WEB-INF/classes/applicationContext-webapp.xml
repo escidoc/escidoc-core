@@ -23,6 +23,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
           <entry key="persistence.UserAccountDao" value-ref="persistence.UserAccountDao"/>
           <entry key="common.business.indexing.GsearchHandler" value-ref="common.business.indexing.GsearchHandler"/>
           <entry key="common.business.indexing.IndexingHandler" value-ref="common.business.indexing.IndexingHandler"/>
+          <entry key="security.SecurityHelper" value-ref="security.SecurityHelper"/>
         </map>
       </property>
     </bean>

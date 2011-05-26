@@ -38,10 +38,13 @@ import com.sun.xacml.cond.EvaluationResult;
 import com.sun.xacml.cond.FunctionBase;
 import com.sun.xacml.finder.PolicyFinderResult;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
-import de.escidoc.core.aa.business.cache.PoliciesCache;
+import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -65,6 +68,10 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      * The name of this function.
      */
     public static final String NAME = AttributeIds.FUNCTION_PREFIX + "role-in-list";
+
+    @Autowired
+    @Qualifier("security.SecurityHelper")
+    private SecurityHelper securityHelper;
 
     /**
      * The constructor.
@@ -91,7 +98,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
 
             // Get the roles of the user
             final PolicyFinderResult policyFinderResult =
-                new PolicyFinderResult(PoliciesCache.getUserPolicies(getUserId()));
+                new PolicyFinderResult(securityHelper.getUserPolicies(getUserId(), null));
             final Collection<String> roleNames = getRoleNames(policyFinderResult.getPolicy(), new ArrayList<String>());
 
             // Compare roles of user with roles in List

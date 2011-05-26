@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.aa.business;
 
-import de.escidoc.core.aa.business.cache.PoliciesCache;
+import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.aa.business.filter.PermissionsQuery;
 import de.escidoc.core.aa.business.filter.RoleGrantFilter;
 import de.escidoc.core.aa.business.filter.UserAccountFilter;
@@ -219,6 +219,10 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Autowired
     @Qualifier("common.business.indexing.IndexingHandler")
     private IndexingHandler indexingHandler;
+
+    @Autowired
+    @Qualifier("security.SecurityHelper")
+    private SecurityHelper securityHelper;
 
     /**
      * See Interface for functional description.
@@ -1557,11 +1561,11 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws SqlDatabaseSystemException   In case of a database error.
      * @throws WebserverSystemException     Thrown in case of an internal error.
      */
-    private static void sendUserAccountUpdateEvent(final String userId) throws SqlDatabaseSystemException,
+    private void sendUserAccountUpdateEvent(final String userId) throws SqlDatabaseSystemException,
         UserAccountNotFoundException, WebserverSystemException {
 
-        PoliciesCache.clearUserPolicies(userId);
-        PoliciesCache.clearUserGroups(userId);
+        securityHelper.clearUserPoliciesCaches(userId);
+        securityHelper.clearUserGroups(userId);
     }
 
     /**
@@ -1575,7 +1579,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     private void sendUserAttributeUpdateEvent(final String userId) throws SqlDatabaseSystemException,
         UserAccountNotFoundException, WebserverSystemException {
 
-        PoliciesCache.clearUserGroups(userId);
+        securityHelper.clearUserGroups(userId);
         retrieveUserAccountById(userId).touch();
     }
 

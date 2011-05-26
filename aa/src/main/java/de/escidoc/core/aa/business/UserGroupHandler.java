@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.aa.business;
 
-import de.escidoc.core.aa.business.cache.PoliciesCache;
+import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.aa.business.filter.UserGroupFilter;
 import de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
@@ -159,6 +159,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     @Autowired
     @Qualifier("business.PolicyDecisionPoint")
     private PolicyDecisionPointInterface pdp;
+
+    @Autowired
+    @Qualifier("security.SecurityHelper")
+    private SecurityHelper securityHelper;
 
     private static final String MSG_UNEXPECTED_EXCEPTION = "Unexpected exception in ";
 
@@ -1551,9 +1555,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param groupId The id of the updated user group.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void sendUserGroupUpdateEvent(final String groupId) throws WebserverSystemException {
+    private void sendUserGroupUpdateEvent(final String groupId) throws WebserverSystemException {
 
-        PoliciesCache.clearGroupPolicies(groupId);
+        securityHelper.clearGroupPoliciesCaches(groupId);
     }
 
     /**
@@ -1562,9 +1566,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param groupId The id of the updated user group.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void sendUserGroupMemberUpdateEvent(final String groupId) throws WebserverSystemException {
+    private void sendUserGroupMemberUpdateEvent(final String groupId) throws WebserverSystemException {
 
-        PoliciesCache.clearUserGroups();
+        securityHelper.clearUserGroups();
     }
 
     /**

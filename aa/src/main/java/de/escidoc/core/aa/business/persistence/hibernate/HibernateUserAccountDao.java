@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.aa.business.persistence.hibernate;
 
-import de.escidoc.core.aa.business.cache.PoliciesCache;
+import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.aa.business.filter.RoleGrantFilter;
 import de.escidoc.core.aa.business.filter.UserAccountFilter;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
@@ -57,6 +57,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.userdetails.UserDetails;
 
@@ -109,6 +111,10 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
     private UserAccountFilter userAccountFilter;
 
     private RoleGrantFilter roleGrantFilter;
+
+    @Autowired
+    @Qualifier("security.SecurityHelper")
+    private SecurityHelper securityHelper;
 
     /**
      * Constructor to initialize filter-names with RoleFilter-Class.
@@ -463,16 +469,21 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
     @Override
     public void delete(final UserAccount userAccount) throws SqlDatabaseSystemException {
         // remove User from Cache
-        if (userAccount.getEscidocRolesByCreatorId() != null && !userAccount.getEscidocRolesByCreatorId().isEmpty()
-            || userAccount.getEscidocRolesByModifiedById() != null
-            && !userAccount.getEscidocRolesByModifiedById().isEmpty() || userAccount.getRoleGrantsByCreatorId() != null
-            && !userAccount.getRoleGrantsByCreatorId().isEmpty() || userAccount.getRoleGrantsByRevokerId() != null
-            && !userAccount.getRoleGrantsByRevokerId().isEmpty() || userAccount.getUserAccountsByCreatorId() != null
-            && !userAccount.getUserAccountsByCreatorId().isEmpty()
-            || userAccount.getUserAccountsByModifiedById() != null
-            && !userAccount.getUserAccountsByModifiedById().isEmpty() || userAccount.getUserGroupsByCreatorId() != null
-            && !userAccount.getUserGroupsByCreatorId().isEmpty() || userAccount.getUserGroupsByModifiedById() != null
-            && !userAccount.getUserGroupsByModifiedById().isEmpty()) {
+        if ((userAccount.getEscidocRolesByCreatorId() != null && !userAccount.getEscidocRolesByCreatorId().isEmpty())
+            || (userAccount.getEscidocRolesByModifiedById() != null && !userAccount
+                .getEscidocRolesByModifiedById().isEmpty())
+            || (userAccount.getRoleGrantsByCreatorId() != null && !userAccount.getRoleGrantsByCreatorId().isEmpty())
+            || (userAccount.getRoleGrantsByRevokerId() != null && !userAccount.getRoleGrantsByRevokerId().isEmpty())
+            || (userAccount.getUserAccountsByCreatorId() != null && !userAccount.getUserAccountsByCreatorId().isEmpty() && (userAccount
+                .getUserAccountsByCreatorId().size() > 1 || !((UserAccount) userAccount
+                .getUserAccountsByCreatorId().iterator().next()).getId().equals(userAccount.getId())))
+            || (userAccount.getUserAccountsByModifiedById() != null
+                && !userAccount.getUserAccountsByModifiedById().isEmpty() && (userAccount
+                .getUserAccountsByModifiedById().size() > 1 || !((UserAccount) userAccount
+                .getUserAccountsByModifiedById().iterator().next()).getId().equals(userAccount.getId())))
+            || (userAccount.getUserGroupsByCreatorId() != null && !userAccount.getUserGroupsByCreatorId().isEmpty())
+            || (userAccount.getUserGroupsByModifiedById() != null && !userAccount
+                .getUserGroupsByModifiedById().isEmpty())) {
             throw new SqlDatabaseSystemException("UserAccount has references to other tables");
         }
         clearUserDetailsCache(userAccount.getId());
@@ -980,35 +991,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
 
         EscidocUserDetails result = null;
         if (handle != null) {
-
-            // Check if UserDetails is already cached
-            result = (EscidocUserDetails) PoliciesCache.getUserDetails(handle);
-            if (result != null) {
-                return result;
-            }
-            try {
-                final UserAccount userAccount = retrieveUserAccountByHandle(handle);
-                if (userAccount != null) {
-                    result = new EscidocUserDetails();
-                    result.setId(userAccount.getId());
-                    result.setRealName(userAccount.getName());
-
-                    // Put Object in UserDetails-Cache
-                    PoliciesCache.putUserDetails(handle, result);
-                }
-            }
-            catch (final DataAccessException e) {
-                throw new SqlDatabaseSystemException(e);
-            }
-            catch (final IllegalStateException e) {
-                throw new SqlDatabaseSystemException(e);
-            }
-            catch (final HibernateException e) {
-                //noinspection ThrowableResultOfMethodCallIgnored
-                throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
-            }
+            result = (EscidocUserDetails) securityHelper.getUserDetails(handle);
         }
-
         return result;
     }
 
@@ -1020,7 +1004,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
     @Override
     public void saveOrUpdate(final UserLoginData data) throws SqlDatabaseSystemException {
         // remove UserDetails from Cache
-        PoliciesCache.clearUserDetails(data.getHandle());
+        securityHelper.clearUserDetails(data.getHandle());
         super.saveOrUpdate(data);
     }
 
@@ -1032,7 +1016,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
     @Override
     public void delete(final UserLoginData data) throws SqlDatabaseSystemException {
         // remove UserData from Cache
-        PoliciesCache.clearUserDetails(data.getHandle());
+        securityHelper.clearUserDetails(data.getHandle());
         super.delete(data);
     }
 
@@ -1042,7 +1026,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
     @Override
     public void deleteUserLoginData(final String handle) throws SqlDatabaseSystemException {
         // remove UserData from Cache
-        PoliciesCache.clearUserDetails(handle);
+        securityHelper.clearUserDetails(handle);
         super.delete(retrieveUserLoginDataByHandle(handle));
     }
 
@@ -1104,7 +1088,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
         UserLoginData result = data;
         if (result != null && isExpired(result)) {
             delete(result);
-            PoliciesCache.clearUserDetails(data.getHandle());
+            securityHelper.clearUserDetails(data.getHandle());
             result = null;
         }
         return result;
@@ -1122,7 +1106,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
         if (userAccount != null && userAccount.getUserLoginDatas() != null
             && !userAccount.getUserLoginDatas().isEmpty()) {
             for (final UserLoginData userLoginData : userAccount.getUserLoginDatas()) {
-                PoliciesCache.clearUserDetails(userLoginData.getHandle());
+                securityHelper.clearUserDetails(userLoginData.getHandle());
             }
         }
     }

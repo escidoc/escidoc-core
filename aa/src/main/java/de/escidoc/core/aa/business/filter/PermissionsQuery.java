@@ -28,20 +28,6 @@
  */
 package de.escidoc.core.aa.business.filter;
 
-import de.escidoc.core.aa.business.cache.PoliciesCacheProxy;
-import de.escidoc.core.aa.business.persistence.RoleGrant;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,6 +36,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import de.escidoc.core.aa.business.SecurityHelper;
+import de.escidoc.core.aa.business.persistence.RoleGrant;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Encapsulate the work which has to be done to get the permission filter queries for Lucene filtering.
@@ -73,8 +74,8 @@ public class PermissionsQuery {
     private AccessRights accessRights;
 
     @Autowired
-    @Qualifier("resource.PoliciesCacheProxy")
-    private PoliciesCacheProxy policiesCacheProxy;
+    @Qualifier("security.SecurityHelper")
+    private SecurityHelper securityHelper;
 
     @Autowired
     @Qualifier("business.TripleStoreUtility")
@@ -276,7 +277,20 @@ public class PermissionsQuery {
      */
     private Map<String, Map<String, List<RoleGrant>>> getUserGrants(final String userId) {
 
-        Map<String, Map<String, List<RoleGrant>>> result = policiesCacheProxy.getUserGrants(userId);
+        Map<String, Map<String, List<RoleGrant>>> result = null;
+        try {
+            result = securityHelper.getUserGrants(userId);
+        }
+        catch (Exception e) {
+            // The caller doesn't expect to get an exception from here if
+            // the group doesn't exist.
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on retrieving grants.");
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on retrieving grants.", e);
+            }
+        }
         if (result == null) {
             result = new HashMap<String, Map<String, List<RoleGrant>>>();
         }
@@ -298,12 +312,12 @@ public class PermissionsQuery {
         final Map<String, Map<String, List<RoleGrant>>> result = new HashMap<String, Map<String, List<RoleGrant>>>();
         if (userId != null && userId.length() > 0) {
             try {
-                final Set<String> groupIds = policiesCacheProxy.getUserGroups(userId);
+                final Set<String> groupIds = securityHelper.getUserGroups(userId);
 
                 if (groupIds != null) {
                     for (final String groupId : groupIds) {
                         final Map<String, Map<String, List<RoleGrant>>> currentRoleGrantMap =
-                            policiesCacheProxy.getGroupGrants(groupId);
+                            securityHelper.getGroupGrants(groupId);
 
                         if (currentRoleGrantMap != null) {
                             for (final Entry<String, Map<String, List<RoleGrant>>> entry : currentRoleGrantMap
@@ -339,7 +353,7 @@ public class PermissionsQuery {
 
         if (userId != null && userId.length() > 0) {
             try {
-                result = policiesCacheProxy.getUserGroups(userId);
+                result = securityHelper.getUserGroups(userId);
             }
             catch (final Exception e) {
                 LOGGER.error("", e);
@@ -357,21 +371,4 @@ public class PermissionsQuery {
         this.accessRights = accessRights;
     }
 
-    /**
-     * Injects the policies cache proxy.
-     *
-     * @param policiesCacheProxy the {@link PoliciesCacheProxy} to inject.
-     */
-    public void setPoliciesCacheProxy(final PoliciesCacheProxy policiesCacheProxy) {
-        this.policiesCacheProxy = policiesCacheProxy;
-    }
-
-    /**
-     * Injects the TripleStore utility.
-     *
-     * @param tripleStoreUtility TripleStoreUtility from Spring
-     */
-    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
-        this.tripleStoreUtility = tripleStoreUtility;
-    }
 }

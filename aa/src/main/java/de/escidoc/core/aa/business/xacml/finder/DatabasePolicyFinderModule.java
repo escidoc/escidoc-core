@@ -28,48 +28,40 @@
  */
 package de.escidoc.core.aa.business.xacml.finder;
 
-import com.sun.xacml.AbstractPolicy;
-import com.sun.xacml.EvaluationCtx;
-import com.sun.xacml.PolicyReference;
-import com.sun.xacml.UnknownIdentifierException;
-import com.sun.xacml.combine.OrderedPermitOverridesPolicyAlg;
-import com.sun.xacml.ctx.Status;
-import com.sun.xacml.finder.PolicyFinder;
-import com.sun.xacml.finder.PolicyFinderModule;
-import com.sun.xacml.finder.PolicyFinderResult;
-import de.escidoc.core.aa.business.authorisation.Constants;
-import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
-import de.escidoc.core.aa.business.authorisation.CustomStatusBuilder;
-import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
-import de.escidoc.core.aa.business.cache.PoliciesCache;
-import de.escidoc.core.aa.business.cache.PoliciesCacheProxy;
-import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
-import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
-import de.escidoc.core.aa.business.persistence.EscidocRole;
-import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
-import de.escidoc.core.aa.business.persistence.RoleGrant;
-import de.escidoc.core.aa.business.xacml.XacmlPolicyReference;
-import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
-import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.string.StringUtility;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.regex.Pattern;
+import com.sun.xacml.AbstractPolicy;
+import com.sun.xacml.EvaluationCtx;
+import com.sun.xacml.PolicyReference;
+import com.sun.xacml.UnknownIdentifierException;
+import com.sun.xacml.ctx.Status;
+import com.sun.xacml.finder.PolicyFinder;
+import com.sun.xacml.finder.PolicyFinderModule;
+import com.sun.xacml.finder.PolicyFinderResult;
+
+import de.escidoc.core.aa.business.authorisation.Constants;
+import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
+import de.escidoc.core.aa.business.authorisation.CustomStatusBuilder;
+import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
+import de.escidoc.core.aa.business.SecurityHelper;
+import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
+import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.service.UserContext;
+import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * Custom implementation of a PolicyFinderModule.
@@ -99,22 +91,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     public static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
 
     @Autowired
-    @Qualifier("business.UserAccountHandler")
-    private UserAccountHandlerInterface userAccountHandler;
-
-    @Autowired
-    @Qualifier("business.UserGroupHandler")
-    private UserGroupHandlerInterface userGroupHandler;
-
-    @Autowired
-    @Qualifier("persistence.EscidocRoleDao")
-    private EscidocRoleDaoInterface roleDao;
-
-    private AbstractPolicy defaultPolicies;
-
-    @Autowired
-    @Qualifier("resource.PoliciesCacheProxy")
-    private PoliciesCacheProxy policiesCacheProxy;
+    @Qualifier("security.SecurityHelper")
+    private SecurityHelper securityHelper;
 
     private PolicyFinder policyFinder;
 
@@ -156,8 +134,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      */
     @Override
     public void invalidateCache() {
-
-        PoliciesCache.clear();
+        securityHelper.clear();
     }
 
     /**
@@ -193,56 +170,14 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
             return createProcessingError("Error during resolving policy reference. ", e1);
         }
 
-        XacmlPolicySet result = PoliciesCache.getRolePolicySet(roleIdentifierUri);
-
-        if (result == null) {
-            EscidocRole role = PoliciesCache.getRole(roleIdentifier.toString());
-            if (role == null) {
-                try {
-                    role = roleDao.retrieveRole(roleIdentifier.toString());
-                    role.isLimited();
-                    PoliciesCache.putRole(role.getId(), role);
-                }
-                catch (final SqlDatabaseSystemException e) {
-                    final String message = "Error on retrieving role '" + roleIdentifier + '\'';
-                    if (LOGGER.isWarnEnabled()) {
-                        LOGGER.warn(message);
-                    }
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(message, e);
-                    }
-                    role = null;
-                }
-            }
-            if (role == null) {
-                return new PolicyFinderResult();
-            }
-
-            try {
-                result = (XacmlPolicySet) role.getXacmlPolicySet();
-            }
-            catch (final WebserverSystemException e) {
-                return createProcessingError("Error during resolving policy reference. ", e);
-            }
-
-            if (LOGGER.isDebugEnabled()) {
-                try {
-                    LOGGER.debug(role.getXacmlPolicySet().toString());
-                }
-                catch (final WebserverSystemException e) {
-                    final String message =
-                        StringUtility.format("Fetching of role's policy set failed.", role.toString());
-                    if (LOGGER.isWarnEnabled()) {
-                        LOGGER.warn(message);
-                    }
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(message, e);
-                    }
-                }
-            }
-
-            PoliciesCache.putRolePolicySet(roleIdentifierUri, result);
+        XacmlPolicySet result = null;
+        try {
+            result = securityHelper.getRolePolicySet(roleIdentifierUri);
         }
+        catch (final WebserverSystemException e) {
+            return createProcessingError("Error during resolving policy reference. ", e);
+        }
+
         try {
             result = CustomPolicyBuilder.regeneratePolicySet(result, idReference.toString());
         }
@@ -324,40 +259,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      */
     private XacmlPolicySet getUserPolicies(final String userId) throws UnknownIdentifierException, URISyntaxException,
         WebserverSystemException {
-
-        // first check the cache
-        XacmlPolicySet result = PoliciesCache.getUserPolicies(userId);
-
-        // if no policies found in the cache, get them from the database
-        if (result == null) {
-
-            final List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
-
-            // retrieve user's roles policies
-            final XacmlPolicySet rolesPolicySet = retrieveUserRolesPolicies(userId);
-            if (rolesPolicySet != null) {
-                policies.add(rolesPolicySet);
-            }
-
-            // add the default policies
-            final AbstractPolicy defPolicies = retrieveDefaultPolicies();
-            if (defPolicies != null) {
-                policies.add(defPolicies);
-            }
-
-            result =
-                new XacmlPolicySet("Policies-" + userId,
-                    XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES, null, policies);
-
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(result.toString());
-            }
-
-            PoliciesCache.putUserPolicies(userId, result);
-        }
-
-        return result;
-
+        return securityHelper.getUserPolicies(userId, this.policyFinder);
     }
 
     /**
@@ -371,40 +273,29 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @throws com.sun.xacml.UnknownIdentifierException
      */
     private XacmlPolicySet getUserGroupPolicies(final String userId) throws UnknownIdentifierException,
-        URISyntaxException, WebserverSystemException {
+        URISyntaxException, WebserverSystemException, SystemException {
 
         final List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
         // get groups the user belongs to
-        final Set<String> userGroups = policiesCacheProxy.getUserGroups(userId);
-        if (userGroups != null && !userGroups.isEmpty()) {
-            final List<String> nonCachedGroupPolicies = new ArrayList<String>();
-            for (final String groupId : userGroups) {
-                final XacmlPolicySet groupPolicySet = PoliciesCache.getGroupPolicies(groupId);
-                if (groupPolicySet == null) {
-                    nonCachedGroupPolicies.add(groupId);
-                }
-                else {
-                    if (groupPolicySet.getChildren() != null && !groupPolicySet.getChildren().isEmpty()) {
-                        policies.add(groupPolicySet);
-                    }
-                }
+        Set<String> userGroups = null;
+        try {
+            userGroups = securityHelper.getUserGroups(userId);
+        }
+        catch (UserAccountNotFoundException e) {
+            // The caller doesn't expect to get an exception from here if
+            // the user doesn't exist.
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on retrieving user-groups.");
             }
-            if (!nonCachedGroupPolicies.isEmpty()) {
-                // retrieve group's roles policies
-                final Map<String, XacmlPolicySet> groupsPolicies = retrieveGroupRolesPolicies(nonCachedGroupPolicies);
-                for (final String groupId : nonCachedGroupPolicies) {
-                    XacmlPolicySet thisGroupPolicySet = groupsPolicies.get(groupId);
-                    if (thisGroupPolicySet == null) {
-                        thisGroupPolicySet =
-                            new XacmlPolicySet("roles-" + groupId,
-                                XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES, null,
-                                new ArrayList<AbstractPolicy>());
-                    }
-
-                    PoliciesCache.putGroupPolicies(groupId, thisGroupPolicySet);
-                    if (thisGroupPolicySet.getChildren() != null && !thisGroupPolicySet.getChildren().isEmpty()) {
-                        policies.add(thisGroupPolicySet);
-                    }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on retrieving ser-groups.", e);
+            }
+        }
+        if (userGroups != null && !userGroups.isEmpty()) {
+            for (final String groupId : userGroups) {
+                final XacmlPolicySet groupPolicySet = securityHelper.getGroupPolicies(groupId, this.policyFinder);
+                if (groupPolicySet.getChildren() != null && !groupPolicySet.getChildren().isEmpty()) {
+                    policies.add(groupPolicySet);
                 }
             }
         }
@@ -431,155 +322,6 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     }
 
     /**
-     * Retrieves the default policies that are granted to every user.<br> The policies are fetched for the dummy role
-     * "Default". They are set in the field <code>defaultPolicies</code>.
-     *
-     * @return Returns an <code>XacmlPolicyReference</code> referencing the set of default policies.
-     * @throws WebserverSystemException Thrown in case of an internal error.
-     */
-    private AbstractPolicy retrieveDefaultPolicies() throws WebserverSystemException {
-
-        if (this.defaultPolicies == null) {
-            try {
-                this.defaultPolicies =
-                    new XacmlPolicyReference(new URI(EscidocRole.DEFAULT_USER_ROLE_ID),
-                        PolicyReference.POLICYSET_REFERENCE, this.policyFinder);
-            }
-            catch (final Exception e) {
-                throw new WebserverSystemException(e);
-            }
-        }
-        return this.defaultPolicies;
-    }
-
-    /**
-     * Retrieve all policies given to the user by his/her (restricted) roles <br> The policies are returned in a
-     * <code>XacmlPolicySet</code> with the policy combining algorithm set to ordered-permit-overrides.
-     *
-     * @param userId The internal id of the user, used to identify the user account.
-     * @return Returns a <code>PolicySet</code> with the policy combining algorithm set to ordered-permit-overrides or
-     *         <code>null</code>. The policy set is built up by policy references to the role policy sets. If the
-     *         provided user id matches the anonymous user, <code>null</code> is returned.
-     * @throws WebserverSystemException In case of an internal error.
-     */
-    private XacmlPolicySet retrieveUserRolesPolicies(final String userId) throws WebserverSystemException {
-
-        if (UserContext.isIdOfAnonymousUser(userId)) {
-            return null;
-        }
-
-        try {
-            final Map<String, Map<String, List<RoleGrant>>> roleGrants =
-                userAccountHandler.retrieveCurrentGrantsAsMap(userId);
-            // cache grants for later retrieval during policy evaluation
-            PoliciesCache.putUserGrants(userId, roleGrants);
-
-            if (roleGrants == null || roleGrants.isEmpty()) {
-                return null;
-            }
-
-            return retrieveRolesPolicies(roleGrants, userId, true);
-        }
-        catch (final Exception e) {
-            throw new WebserverSystemException(e);
-        }
-    }
-
-    /**
-     * Retrieve all policies given to the groups by their (restricted) roles <br> The policies are returned in a
-     * <code>XacmlPolicySet</code> with the policy combining algorithm set to ordered-permit-overrides.
-     *
-     * @param groupIds The internal ids of the groups, used to identify the user groups.
-     * @return Returns a <code>PolicySet</code> with the policy combining algorithm set to ordered-permit-overrides or
-     *         <code>null</code>. The policy set is built up by policy references to the role policy sets. If the
-     *         provided user id matches the anonymous user, <code>null</code> is returned.
-     * @throws WebserverSystemException In case of an internal error.
-     */
-    private Map<String, XacmlPolicySet> retrieveGroupRolesPolicies(final List<String> groupIds)
-        throws WebserverSystemException {
-
-        final Map<String, XacmlPolicySet> ret = new HashMap<String, XacmlPolicySet>();
-        try {
-            final Map<String, Map<String, Map<String, List<RoleGrant>>>> roleGrants =
-                userGroupHandler.retrieveManyCurrentGrantsAsMap(groupIds);
-            // cache grants for later retrieval during policy evaluation
-            if (roleGrants != null) {
-                for (final Entry<String, Map<String, Map<String, List<RoleGrant>>>> entry : roleGrants.entrySet()) {
-                    PoliciesCache.putGroupGrants(entry.getKey(), entry.getValue());
-                    if (entry.getValue() != null && !entry.getValue().isEmpty()) {
-                        final XacmlPolicySet policies = retrieveRolesPolicies(entry.getValue(), entry.getKey(), false);
-                        if (policies != null) {
-                            ret.put(entry.getKey(), policies);
-                        }
-                    }
-                }
-            }
-            return ret;
-        }
-        catch (final Exception e) {
-            throw new WebserverSystemException(e);
-        }
-    }
-
-    /**
-     * Retrieve all policies given to the user/group by his/her (restricted) roles <br> The policies are returned in a
-     * <code>XacmlPolicySet</code> with the policy combining algorithm set to ordered-permit-overrides.
-     *
-     * @param roleGrants    map with current grants of the user/group.
-     * @param userOrGroupId The internal id of the user/group, used to identify the user account/user group.
-     * @param isUser        boolean if user-roles are requested
-     * @return Returns a <code>PolicySet</code> with the policy combining algorithm set to ordered-permit-overrides or
-     *         <code>null</code>. The policy set is built up by policy references to the role policy sets. If the
-     *         provided user id matches the anonymous user, <code>null</code> is returned.
-     * @throws WebserverSystemException In case of an internal error.
-     */
-    private XacmlPolicySet retrieveRolesPolicies(final Map roleGrants, final String userOrGroupId, final boolean isUser)
-        throws WebserverSystemException {
-
-        String userOrGroupIdentifier = "user";
-        if (!isUser) {
-            userOrGroupIdentifier = "group";
-        }
-        final List<AbstractPolicy> rolesPolicies = new ArrayList<AbstractPolicy>();
-        try {
-            for (final Object o : roleGrants.keySet()) {
-                final String roleId = (String) o;
-                EscidocRole role = PoliciesCache.getRole(roleId);
-                if (role == null) {
-                    role = roleDao.retrieveRole(roleId);
-                    role.isLimited();
-                    PoliciesCache.putRole(roleId, role);
-                }
-                // The policyId is concatenated String
-                // containing <roleName>/<user or group>/<userOrGroupId>
-                final URI policySetId =
-                    new URI(role.getPolicySetId().toString() + '/' + userOrGroupIdentifier + '/' + userOrGroupId);
-                rolesPolicies.add(new XacmlPolicyReference(policySetId, PolicyReference.POLICYSET_REFERENCE,
-                    this.policyFinder));
-            }
-
-            if (!rolesPolicies.isEmpty()) {
-                return new XacmlPolicySet("roles-" + userOrGroupId, OrderedPermitOverridesPolicyAlg.algId, null,
-                    rolesPolicies);
-            }
-
-        }
-        catch (final Exception e) {
-            throw new WebserverSystemException(e);
-        }
-        return null;
-    }
-
-    /**
-     * Injects the policies cache proxy.
-     *
-     * @param policiesCacheProxy the {@link PoliciesCacheProxy} to inject.
-     */
-    public void setPoliciesCacheProxy(final PoliciesCacheProxy policiesCacheProxy) {
-        this.policiesCacheProxy = policiesCacheProxy;
-    }
-
-    /**
      * Sets the policy finder.
      *
      * @param policyFinder The <code>PolicyFinder</code> object to set.
@@ -590,36 +332,6 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
             throw new IllegalArgumentException("Policy finder must be provided.");
         }
         this.policyFinder = policyFinder;
-    }
-
-    /**
-     * Injects the role data access object.
-     *
-     * @param roleDao The {@link EscidocRoleDaoInterface} implementation.
-     */
-    public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
-
-        this.roleDao = roleDao;
-    }
-
-    /**
-     * Injects the user account handler.
-     *
-     * @param userAccountHandler The {@link UserAccountHandlerInterface} implementation.
-     */
-    public void setUserAccountHandler(final UserAccountHandlerInterface userAccountHandler) {
-
-        this.userAccountHandler = userAccountHandler;
-    }
-
-    /**
-     * Injects the user group handler.
-     *
-     * @param userGroupHandler The {@link UserGroupHandlerInterface} implementation.
-     */
-    public void setUserGroupHandler(final UserGroupHandlerInterface userGroupHandler) {
-
-        this.userGroupHandler = userGroupHandler;
     }
 
 }

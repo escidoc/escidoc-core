@@ -143,26 +143,9 @@ public final class EscidocConfiguration {
     private static final String ONE = "1";
 
     /**
-     * This property should be set to the number of policy sets of roles that should be cached.
-     */
-    public static final String ESCIDOC_CORE_AA_CACHE_ROLES_SIZE = "escidoc-core.aa.cache.roles.size";
-
-    /**
      * This property should be set to the number of expected concurrent users.
      */
     public static final String ESCIDOC_CORE_AA_CACHE_USERS_SIZE = "escidoc-core.aa.cache.users.size";
-
-    /**
-     * This property should be set to the number of expected concurrent users.
-     */
-    public static final String ESCIDOC_CORE_AA_CACHE_GROUPS_SIZE = "escidoc-core.aa.cache.groups.size";
-
-    /**
-     * This property should be set to the number of expected resources, for that the result of @ link
-     * XacmlFunctionRoleIsGranted} shall be cached (for each user and role).
-     */
-    public static final String ESCIDOC_CORE_AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE =
-        "escidoc-core.aa.cache.resources-in-role-is-granted.size";
 
     /**
      * This property should be set to the number of system objects that should be cached for a request at one point of

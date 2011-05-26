@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
 
-import de.escidoc.core.aa.business.cache.PoliciesCache;
+import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.aa.business.persistence.UserAccount;
 import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
 import de.escidoc.core.aa.business.persistence.UserAttribute;
@@ -167,6 +167,11 @@ public class Login extends HttpServlet {
     private transient UserAccountDaoInterface dao;
 
     /**
+     * The Policies-Cache object.
+     */
+    private transient SecurityHelper securityHelper;
+
+    /**
      * Random generator used for setting random password of new users. FIXME: remove this after password has been
      * removed.
      */
@@ -181,6 +186,7 @@ public class Login extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         this.dao = (UserAccountDaoInterface) this.getServletContext().getAttribute("persistence.UserAccountDao");
+        this.securityHelper = (SecurityHelper) this.getServletContext().getAttribute("security.SecurityHelper");
         try {
             initFileContent(AUTHENTICATED_FILENAME);
             initFileContent(AUTHENTICATED_REDIRECT_FILENAME);
@@ -336,7 +342,7 @@ public class Login extends HttpServlet {
 
             if (userAccount != null) {
                 // clear cached userGroups
-                PoliciesCache.clearUserGroups(userAccount.getId());
+                securityHelper.clearUserGroups(userAccount.getId());
             }
             else {
                 userAccount = new UserAccount();

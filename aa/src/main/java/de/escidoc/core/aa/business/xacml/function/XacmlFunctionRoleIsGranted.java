@@ -28,33 +28,28 @@
  */
 package de.escidoc.core.aa.business.xacml.function;
 
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.attr.AttributeValue;
 import com.sun.xacml.attr.BooleanAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
+import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionBase;
+
 import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
-import de.escidoc.core.aa.business.cache.PoliciesCache;
-import de.escidoc.core.aa.business.cache.PoliciesCacheProxy;
+import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
-import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
-import de.escidoc.core.aa.business.persistence.ScopeDef;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import java.net.URI;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Implementation of an XACML (target) function that checks if a role has been granted to the current user (for an
@@ -72,17 +67,6 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     private static final Pattern SPLIT_PATTERN = Pattern.compile("/");
 
     /**
-     * The pattern to find the position to insert the "-new" marker in attribute ids for new resources.
-     */
-    private static final Pattern PATTERN_FIND_PLACE_FOR_MARKER =
-        Pattern.compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX + "[^:]*:[^:]*)(:{0,1}.*)");
-
-    /**
-     * The replacement pattern to insert the "-new" marker at the found position.
-     */
-    private static final String PATTERN_INSERT_MARKER = "$1" + AttributeIds.MARKER + "$2";
-
-    /**
      * The pattern used to check if a role name is the name of the dummy roles holding the default policies.
      */
     private static final Pattern PATTERN_DEFAULT_USER_ROLE_ID = Pattern.compile(EscidocRole.DEFAULT_USER_ROLE_ID);
@@ -93,12 +77,8 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     public static final String NAME = AttributeIds.FUNCTION_PREFIX + "role-is-granted";
 
     @Autowired
-    @Qualifier("resource.PoliciesCacheProxy")
-    private PoliciesCacheProxy policiesCacheProxy;
-
-    @Autowired
-    @Qualifier("persistence.EscidocRoleDao")
-    private EscidocRoleDaoInterface roleDao;
+    @Qualifier("security.SecurityHelper")
+    private SecurityHelper securityHelper;
 
     /**
      * The constructor.
@@ -152,14 +132,9 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
             // Fetch the role identified by the role name
             // FIXME: maybe it is better to use the role ids in the policies
             // instead of the names?
-            EscidocRole role = PoliciesCache.getRole(roleId);
-            if (role == null) {
-                role = getRoleDao().retrieveRole(roleId);
-                role.isLimited();
-                PoliciesCache.putRole(role.getId(), role);
-            }
+            EscidocRole role = securityHelper.getRole(roleId);
 
-            return getUserGroupEvaluationResult(userOrGroupId, resourceId, role, ctx);
+            return securityHelper.getRoleIsGrantedEvaluationResult(userOrGroupId, role.getId(), resourceId, role, ctx);
 
         }
         catch (final ResourceNotFoundException e) {
@@ -170,215 +145,4 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
         }
     }
 
-    /**
-     * Tries to fetch an {@link EvaluationResult} for the provided values of a user.
-     *
-     * @param userOrGroupId The id of the user account for that the result shall be determined. This value must not be
-     *                      <code>null</code>.
-     * @param resourceId    The id of the resource for that the result shall be determined. This may be
-     *                      <code>null</code>.
-     * @param role          The role for that the result shall be determined. This value must not be <code>null</code>.
-     * @param ctx           The EvaluationCtx.
-     * @return Returns the {@link EvaluationResult} found in the cache or <code>null</code>.
-     */
-    private EvaluationResult getUserGroupEvaluationResult(
-        final String userOrGroupId, final String resourceId, final EscidocRole role, final EvaluationCtx ctx) {
-        try {
-            // try to find result in cache
-            final EvaluationResult result = fetchFromCache(userOrGroupId, role.getId(), resourceId);
-            if (result != null) {
-                // TODO: one problem exists. The cached result can be invalid,
-                // because the addressed resource does not exists anymore, or
-                // the cached result belongs to a resource of another object
-                // type.
-                // But both situations should be detected by the business logic
-                // or by further attribute resolving and the
-                // ResourceNotFoundException will be thrown, then. Therefore, it
-                // is not checked, here.
-                return result;
-            }
-
-            // No result found in cache, needs to be evaluated
-            // try getting role grants of the user
-            Map roleGrants = policiesCacheProxy.getUserGrants(userOrGroupId);
-            if (roleGrants == null) {
-                // try getting roleGrants for group
-                roleGrants = policiesCacheProxy.getGroupGrants(userOrGroupId);
-            }
-
-            // check if role is granted to the user or one of his groups
-            final Map grantsOfRole = (Map) roleGrants.get(role.getId());
-            if (grantsOfRole == null) {
-                // No grant of the role is found, i.e. the role has not been
-                // granted to the user. Therefore, false is returned.
-                return createCachedResult(userOrGroupId, role.getId(), null, false);
-            }
-            // At least one grant of the role is owned by the user.
-            else if (!role.isLimited()) {
-                // The role has been granted to the user. As this is an
-                // unlimited role, this grant is valid for all objects,
-                // therefore true is returned.
-                return createCachedResult(userOrGroupId, role.getId(), null, true);
-            }
-            else {
-                // The role has been granted to the user. As this is a limited
-                // role, further checks have to be performed.
-
-                // Get the object type from the context
-                final String objectType =
-                    FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_OBJECT_TYPE, true);
-
-                if (role.getObjectTypes().contains(objectType)) {
-                    // role is defined for the object type. Find the related
-                    // scope definition
-                    for (final ScopeDef scopeDef : role.getScopeDefs()) {
-                        if (scopeDef.getObjectType().equals(objectType)) {
-                            // scope definition for the current object type has
-                            // been found
-                            String scopeDefAttributeId = scopeDef.getAttributeId();
-                            if (scopeDefAttributeId == null) {
-                                // The role is a limited one, but it is valid
-                                // for all objects of the object type.
-                                // Therefore, true is returned here, as the role
-                                // has been granted to the user.
-                                return createCachedResult(userOrGroupId, role.getId(), resourceId, true);
-                            }
-                            else {
-                                // The role is a limited one and is limited to
-                                // objects related to the object identified by
-                                // the scope definition's attribute id (for that
-                                // the role is granted)
-
-                                // Get the current resource id
-
-                                // Resolve the scope definition's attribute
-                                final Set<String> resolvedAttributeValues;
-                                if (FinderModuleHelper.isNewResourceId(resourceId)) {
-                                    final Matcher matcher = PATTERN_FIND_PLACE_FOR_MARKER.matcher(scopeDefAttributeId);
-                                    if (matcher.find()) {
-                                        scopeDefAttributeId = matcher.replaceAll(PATTERN_INSERT_MARKER);
-                                    }
-                                    resolvedAttributeValues =
-                                        FinderModuleHelper.retrieveMultiResourceAttribute(ctx, new URI(
-                                            scopeDefAttributeId), false);
-
-                                }
-                                else {
-                                    // for existing resources, the existing
-                                    // attribute is resolved
-                                    resolvedAttributeValues =
-                                        FinderModuleHelper.retrieveMultiResourceAttribute(ctx, new URI(
-                                            scopeDefAttributeId), false);
-                                }
-
-                                // the resolved attribute may be empty, e.g.
-                                // in case of a context-id and creation of a new
-                                // context. As for a non-existing resource no
-                                // role can be granted, false has to be returned
-                                // in this case (see issue 529). Otherwise, it
-                                // has to be checked if the user has a grant
-                                // for the addressed object.
-                                if (resolvedAttributeValues != null && !resolvedAttributeValues.isEmpty()) {
-                                    for (final String resolvedAttributeValue : resolvedAttributeValues) {
-                                        final Collection grantsOfRoleAndObject =
-                                            (Collection) grantsOfRole.get(resolvedAttributeValue);
-                                        if (grantsOfRoleAndObject != null && !grantsOfRoleAndObject.isEmpty()) {
-                                            return createCachedResult(userOrGroupId, role.getId(), resourceId, true);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else {
-                            // scope definitions for other object types than the
-                            // object type of the current resource are skipped.
-                            continue;
-                        }
-                    }
-                }
-                return createCachedResult(userOrGroupId, role.getId(), resourceId, false);
-            }
-        }
-        catch (final ResourceNotFoundException e) {
-            return CustomEvaluationResultBuilder.createResourceNotFoundResult(e);
-        }
-        catch (final Exception e) {
-            return CustomEvaluationResultBuilder.createProcessingErrorResult(e);
-        }
-
-    }
-
-    /**
-     * Tries to fetch an {@link EvaluationResult} for the provided values from the {@link PoliciesCache}.
-     *
-     * @param userId     The id of the user account for that the result shall be determined. This value must not be
-     *                   <code>null</code>.
-     * @param roleId     The id of the role for that the result shall be determined. This value must not be
-     *                   <code>null</code>.
-     * @param resourceId The id of the resource for that the result shall be determined. This may be <code>null</code>.
-     * @return Returns the {@link EvaluationResult} found in the cache or <code>null</code>.
-     */
-    private static EvaluationResult fetchFromCache(final String userId, final String roleId, final String resourceId) {
-
-        // try to get a result for unlimited role or role not granted to the
-        // user (resource-id = null)
-        EvaluationResult result = PoliciesCache.getRoleIsGrantedEvaluationResult(userId, roleId, null);
-        if (result == null) {
-            // try to get a result for limited role
-            result = PoliciesCache.getRoleIsGrantedEvaluationResult(userId, roleId, resourceId);
-        }
-        return result;
-    }
-
-    /**
-     * Creates and caches an {@link EvaluationResult} for the provided values.<br> The result is only cached if the
-     * resource id is not the id of a new resource that shall be created, as this would lead to fetching wrong results
-     * from the cache for the next new resource.
-     *
-     * @param userId        The id of the user account for that the result has been determined. This value must not be
-     *                      <code>null</code>.
-     * @param roleId        The id of the role for that the result has been determined. This value must not be
-     *                      <code>null</code>.
-     * @param resourceId    The id of the resource for that the result has been determined. This may be
-     *                      <code>null</code>.
-     * @param roleIsGranted Flag indicating if the role has been granted to the user (optional: for the provided
-     *                      resource).
-     * @return
-     */
-    private static EvaluationResult createCachedResult(
-        final String userId, final String roleId, final String resourceId, final boolean roleIsGranted) {
-
-        final EvaluationResult result = EvaluationResult.getInstance(roleIsGranted);
-        if (!FinderModuleHelper.isNewResourceId(resourceId)) {
-            PoliciesCache.putRoleIsGrantedEvaluationResult(userId, roleId, resourceId, result);
-        }
-        return result;
-    }
-
-    /**
-     * Gets the data access object bean used to access role data from the database.<br>
-     * @return
-     */
-    private EscidocRoleDaoInterface getRoleDao() {
-
-        return this.roleDao;
-    }
-
-    /**
-     * Injects the role dao.
-     *
-     * @param roleDao the {@link EscidocRoleDaoInterface} implementation to inject.
-     */
-    public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
-        this.roleDao = roleDao;
-    }
-
-    /**
-     * Injects the policies cache proxy.
-     *
-     * @param policiesCacheProxy the {@link PoliciesCacheProxy} to inject.
-     */
-    public void setPoliciesCacheProxy(final PoliciesCacheProxy policiesCacheProxy) {
-        this.policiesCacheProxy = policiesCacheProxy;
-    }
 }
