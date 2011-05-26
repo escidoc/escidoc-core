@@ -9,7 +9,8 @@ import java.io.InputStream;
 
 import static org.esidoc.core.utils.Preconditions.checkNotNull;
 
-@Guarded
+@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
+        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
 public class VersionFilter extends EsciDocUnmarshallerListener {
 
     private DateTime versionDate;

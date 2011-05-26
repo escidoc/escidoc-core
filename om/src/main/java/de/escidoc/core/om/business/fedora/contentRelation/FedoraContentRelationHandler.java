@@ -1088,9 +1088,14 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         if (mdRecords != null) {
             for (final MdRecordCreate mdRecord : mdRecords) {
                 if (mdRecord.getContent() == null) {
+                    DateTime versionDate = cr.getProperties().getVersionDate();
+                    String timestamp = null;
+                    if (versionDate != null) {
+                        timestamp = versionDate.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    }
                     final Datastream ds =
-                        new Datastream(mdRecord.getName(), cr.getObjid(), mdRecord.getMimeType(), mdRecord
-                            .getDatastreamLocation(), mdRecord.getControlGroup(), cr.getProperties().getVersionDate());
+                        new Datastream(mdRecord.getName(), cr.getObjid(), timestamp, mdRecord.getMimeType(), mdRecord
+                            .getDatastreamLocation(), mdRecord.getControlGroup());
                     mdRecord.setContent(new String(ds.getStream(), Charset.forName("UTF-8")));
                 }
             }

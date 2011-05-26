@@ -115,8 +115,8 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @Cacheable(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectProfileKeyGenerator"))
+    /*@Cacheable(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectProfileKeyGenerator"))*/
     public ObjectProfileTO getObjectProfile(@NotNull final String pid) {
         final GetObjectProfilePathParam path = new GetObjectProfilePathParam();
         path.setPid(pid);
@@ -126,15 +126,15 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @Cacheable(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectProfileKeyGenerator"))
+    /*@Cacheable(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectProfileKeyGenerator"))*/
     public Future<ObjectProfileTO> getObjectProfileAsync(@NotNull final String pid) {
         return new AsyncResult<ObjectProfileTO>(getObjectProfile(pid));
     }
 
     @Override
-    @Cacheable(cacheName = "Fedora.DigitalObjects", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))
+    /*@Cacheable(cacheName = "Fedora.DigitalObjects", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))*/
     public DigitalObjectTO getObjectXML(@NotNull final String pid) {
         final GetObjectXMLPathParam path = new GetObjectXMLPathParam();
         path.setPid(pid);
@@ -144,8 +144,8 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @Cacheable(cacheName = "Fedora.DigitalObjects", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))
+    /*@Cacheable(cacheName = "Fedora.DigitalObjects", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))*/
     public Future<DigitalObjectTO> getObjectXMLAsync(@NotNull final String pid) {
         return new AsyncResult<DigitalObjectTO>(getObjectXML(pid));
     }
@@ -165,8 +165,8 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))
+    /*@Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))*/
     public ObjectDatastreamsTO listDatastreams(@NotNull final ListDatastreamsPathParam path,
                                                @NotNull final ListDatastreamsQueryParam query) {
         return this.fedoraService.listDatastreams(path, query);
@@ -174,8 +174,8 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))
+    /*@Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))*/
     public Future<ObjectDatastreamsTO> listDatastreamsAsync(@NotNull final ListDatastreamsPathParam path,
                                                             @NotNull final ListDatastreamsQueryParam query) {
         return new AsyncResult<ObjectDatastreamsTO>(listDatastreams(path, query));
