@@ -64,6 +64,26 @@
             </configuration>
           </execution>
           <execution>
+            <id>copy-filtered-test-config</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/test/filtered-resources</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>escidoc.properties</include>
+                    <include>client.wsdd</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
             <id>copy-filtered-resources</id>
             <phase>pre-integration-test</phase>
             <goals>
@@ -75,6 +95,10 @@
                 <resource>
                   <directory>src/test/filtered-resources</directory>
                   <filtering>true</filtering>
+                  <excludes>
+          			<exclude>escidoc.properties</exclude>
+          			<exclude>client.wsdd</exclude>
+          		  </excludes>
                 </resource>
               </resources>
             </configuration>
@@ -478,7 +502,6 @@
 				<executions>
 					<execution>
 						<id>compile-it-sources</id>
-			            <phase>pre-integration-test</phase>
 						<goals>
 							<goal>testCompile</goal>
 						</goals>
@@ -498,6 +521,22 @@
 				</configuration>
 			</plugin>
       
+      <!-- skip compiling integration test source because axis is to generate 
+				first (but compiling test-sources comes first in standard lifecycle) -->
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>junit</groupId>
+						<artifactId>junit</artifactId>
+						<version>${junit.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
       
 			<!-- [07] -->
 			<plugin>
@@ -533,7 +572,6 @@
 					<includes>
 						<include>**/*IT.java</include>
 						<include>**/*Test.java</include>
-						<include>${project.build.directory}/generated-sources/</include>
 					</includes>
 					<excludes>
 						<exclude>**/*TestBase*</exclude>
@@ -650,6 +688,10 @@
         <exclusion>
           <groupId>org.fcrepo</groupId>
           <artifactId>trippi-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>mulgara-core</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.fcrepo</groupId>
