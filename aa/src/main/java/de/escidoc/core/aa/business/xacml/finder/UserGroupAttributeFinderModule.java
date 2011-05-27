@@ -34,6 +34,7 @@ import com.sun.xacml.cond.EvaluationResult;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.aa.business.cache.RequestAttributesCache;
+import de.escidoc.core.aa.business.persistence.UserAccount;
 import de.escidoc.core.aa.business.persistence.UserGroup;
 import de.escidoc.core.aa.business.persistence.UserGroupDaoInterface;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
@@ -131,7 +132,8 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
             }
 
             // ask cache for previously cached results
-            result = getFromCache(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue, ctx);
+            result =
+                (EvaluationResult) getFromCache(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue, ctx);
 
             if (result == null) {
                 final UserGroup userGroup = retrieveUserGroup(ctx, userGroupId);
@@ -192,8 +194,7 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
     private UserGroup retrieveUserGroup(final EvaluationCtx ctx, final String userGroupId)
         throws WebserverSystemException, UserGroupNotFoundException {
 
-        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, userGroupId);
-        UserGroup userGroup = (UserGroup) RequestAttributesCache.get(ctx, key.toString());
+        UserGroup userGroup = (UserGroup) getFromCache(XmlUtility.NAME_ID, null, null, userGroupId, ctx);
         if (userGroup == null) {
             try {
                 userGroup = userGroupDao.retrieveUserGroup(userGroupId);
@@ -206,7 +207,7 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
 
         assertUserGroup(userGroupId, userGroup);
 
-        RequestAttributesCache.put(ctx, key.toString(), userGroup);
+        putInCache(XmlUtility.NAME_ID, null, null, userGroupId, ctx, userGroup);
         return userGroup;
     }
 

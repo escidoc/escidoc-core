@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.aa.business.stax.handler;
 
+import java.util.HashMap;
+
 import com.sun.xacml.EvaluationCtx;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -39,7 +41,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  * Stax handler implementation that handles the attributes that have to be fetched from an component Xml representation
  * or the component's properties Xml representation.<br> This handler extracts the attributes
  * ...:item:component:valid-status, ...:item:component:visibility, ...:item:component:content-category, and
- * ...:item:component:created-by. The attributes found are stored in the <code>RequestAttributesCache</code>.
+ * ...:item:component:created-by. The attributes found are stored in the HashMap.
  *
  * @author Torsten Tetteroo
  */
@@ -50,11 +52,15 @@ public class ComponentStaxHandler extends DefaultHandler {
     private final String componentId;
 
     /**
+     * contains the extracted Attributes.
+     */
+    private HashMap<String, String> attributes = new HashMap<String, String>();
+
+    /**
      * The constructor.
      *
-     * @param ctx         The <code>EvaluationCtx</code> for that the item xml representation shall be parsed. Found
-     *                    attributes are cached using this context as part of the key.
-     * @param componentId The id of the item's component. Used as part of the cache key.
+     * @param ctx         The <code>EvaluationCtx</code> for that the item xml representation shall be parsed.
+     * @param componentId The id of the item's component.
      */
     public ComponentStaxHandler(final EvaluationCtx ctx, final String componentId) {
 
@@ -73,8 +79,8 @@ public class ComponentStaxHandler extends DefaultHandler {
         if (isNotReady()) {
             final String localName = element.getLocalName();
             if (XmlUtility.NAME_CREATED_BY.equals(localName)) {
-                AbstractResourceAttributeStaxHandler.cacheAttribute(this.ctx, this.componentId,
-                    AttributeIds.URN_ITEM_COMPONENT_CREATED_BY_ATTR, XmlUtility.getIdFromStartElement(element));
+                attributes.put(AttributeIds.URN_ITEM_COMPONENT_CREATED_BY_ATTR, XmlUtility
+                    .getIdFromStartElement(element));
             }
         }
 
@@ -93,21 +99,38 @@ public class ComponentStaxHandler extends DefaultHandler {
             super.characters(data, element);
             final String localName = element.getLocalName();
             if (XmlUtility.NAME_VALID_STATUS.equals(localName)) {
-
-                AbstractResourceAttributeStaxHandler.cacheAttribute(this.ctx, this.componentId,
-                    AttributeIds.URN_ITEM_COMPONENT_VALID_STATUS_ATTR, data);
+                attributes.put(AttributeIds.URN_ITEM_COMPONENT_VALID_STATUS_ATTR, data);
             }
             else if (XmlUtility.NAME_VISIBILITY.equals(localName)) {
-                AbstractResourceAttributeStaxHandler.cacheAttribute(this.ctx, this.componentId,
-                    AttributeIds.URN_ITEM_COMPONENT_VISIBILITY_ATTR, data);
+                attributes.put(AttributeIds.URN_ITEM_COMPONENT_VISIBILITY_ATTR, data);
             }
             else if (XmlUtility.NAME_CONTENT_CATEGORY.equals(localName)) {
-                AbstractResourceAttributeStaxHandler.cacheAttribute(this.ctx, this.componentId,
-                    AttributeIds.URN_ITEM_COMPONENT_CONTENT_CATEGORY_ATTR, data);
+                attributes.put(AttributeIds.URN_ITEM_COMPONENT_CONTENT_CATEGORY_ATTR, data);
             }
         }
 
         return data;
+    }
+
+    /**
+     * @return the attributes
+     */
+    public HashMap<String, String> getAttributes() {
+        return attributes;
+    }
+
+    /**
+     * @return the ctx
+     */
+    public EvaluationCtx getCtx() {
+        return ctx;
+    }
+
+    /**
+     * @return the componentId
+     */
+    public String getComponentId() {
+        return componentId;
     }
 
 }

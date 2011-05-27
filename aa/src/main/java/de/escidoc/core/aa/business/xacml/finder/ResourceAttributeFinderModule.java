@@ -28,10 +28,22 @@
  */
 package de.escidoc.core.aa.business.xacml.finder;
 
+import java.io.ByteArrayInputStream;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import com.sun.xacml.EvaluationCtx;
+import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
+
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
-import de.escidoc.core.aa.business.cache.RequestAttributesCache;
 import de.escidoc.core.aa.business.stax.handler.ComponentStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.ContainerStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.ItemStaxHandler;
@@ -52,13 +64,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.StaxParser;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import java.io.ByteArrayInputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class to retrieve an attribute values from eSciDoc resources.<br> This finder module is a fall back if an attribute
@@ -191,15 +196,16 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
         SystemException, UniqueConstraintViolationException, ItemNotFoundException, InvalidXmlException,
         ContainerNotFoundException, WebserverSystemException {
 
-        final String localCacheKey = StringUtility.concatenateWithColonToString(resourceId, resolvedAttributeIdValue);
         // A previous parse process could have stored the found
         // attributes in the cache. Here, we try to get it from the cache.
-        EvaluationResult result = (EvaluationResult) RequestAttributesCache.get(ctx, localCacheKey);
+        EvaluationResult result =
+            (EvaluationResult) getFromCache(resourceId, null, null, resolvedAttributeIdValue, ctx);
         if (result == null) {
             if (attributeIdValue.startsWith(AttributeIds.ITEM_ATTR_PREFIX)) {
                 final String itemXml = retrieveItem(ctx, resourceId);
                 final StaxParser sp = new StaxParser(XmlUtility.NAME_ITEM);
-                sp.addHandler(new ItemStaxHandler(ctx, resourceId));
+                ItemStaxHandler itemStaxHandler = new ItemStaxHandler(ctx, resourceId);
+                sp.addHandler(itemStaxHandler);
                 try {
                     sp.parse(new ByteArrayInputStream(itemXml.getBytes(XmlUtility.CHARACTER_ENCODING)));
                 }
@@ -222,11 +228,13 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
                     throw new WebserverSystemException(StringUtility.format("Error during parsing item XML", e
                         .getMessage()), e);
                 }
+                handleCache(itemStaxHandler);
             }
             else if (attributeIdValue.startsWith(AttributeIds.CONTAINER_ATTR_PREFIX)) {
                 final String containerXml = retrieveContainer(ctx, resourceId);
                 final StaxParser sp = new StaxParser(XmlUtility.NAME_CONTAINER);
-                sp.addHandler(new ContainerStaxHandler(ctx, resourceId));
+                ContainerStaxHandler containerStaxHandler = new ContainerStaxHandler(ctx, resourceId);
+                sp.addHandler(containerStaxHandler);
                 try {
                     sp.parse(new ByteArrayInputStream(containerXml.getBytes(XmlUtility.CHARACTER_ENCODING)));
                 }
@@ -249,13 +257,13 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
                     throw new WebserverSystemException(StringUtility.format("Error during parsing container XML", e
                         .getMessage()), e);
                 }
-
+                handleCache(containerStaxHandler);
             }
 
             // The parse process in one of the steps above stores the found
             // attributes in the cache. Here, we try to get it from the
             // cache, again.
-            result = (EvaluationResult) RequestAttributesCache.get(ctx, localCacheKey);
+            result = (EvaluationResult) getFromCache(resourceId, null, null, resolvedAttributeIdValue, ctx);
         }
         return result;
     }
@@ -287,15 +295,15 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
         // to resolve a component attribute, the id of the component
         // must be known
         final String componentId = fetchSingleResourceAttribute(ctx, "", AttributeIds.URN_COMPONENT_ID);
-        final String localCacheKey = StringUtility.concatenateWithColonToString(componentId, attributeIdValue);
         // A previous parse process could have stored the found
         // attributes in the cache. Here, we try to get it from the
         // cache.
-        EvaluationResult result = (EvaluationResult) RequestAttributesCache.get(ctx, localCacheKey);
+        EvaluationResult result = (EvaluationResult) getFromCache(componentId, null, null, attributeIdValue, ctx);
         if (result == null) {
             final String componentXml = retrieveComponent(ctx, itemId, componentId);
             final StaxParser sp = new StaxParser(XmlUtility.NAME_COMPONENT);
-            sp.addHandler(new ComponentStaxHandler(ctx, componentId));
+            ComponentStaxHandler componentStaxHandler = new ComponentStaxHandler(ctx, componentId);
+            sp.addHandler(componentStaxHandler);
             try {
                 sp.parse(new ByteArrayInputStream(componentXml.getBytes(XmlUtility.CHARACTER_ENCODING)));
             }
@@ -318,12 +326,13 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
                 throw new WebserverSystemException(StringUtility.format("Error during parsing component XML", e
                     .getMessage()), e);
             }
+            handleCache(componentStaxHandler);
 
             // The parse process stores the found
             // attributes in the cache. Here, we try to get it from the
             // cache, again. If it is not found, an empty result is created
             // and cached.
-            result = (EvaluationResult) RequestAttributesCache.get(ctx, localCacheKey);
+            result = (EvaluationResult) getFromCache(componentId, null, null, attributeIdValue, ctx);
         }
         return result;
     }
@@ -340,12 +349,11 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     private String retrieveItem(final EvaluationCtx ctx, final String itemId) throws WebserverSystemException,
         ItemNotFoundException {
 
-        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, itemId);
-        String itemXml = (String) RequestAttributesCache.get(ctx, key.toString());
+        String itemXml = (String) getFromCache(XmlUtility.NAME_ID, null, null, itemId, ctx);
         if (itemXml == null) {
             try {
                 itemXml = itemHandler.retrieve(itemId);
-                RequestAttributesCache.put(ctx, key.toString(), itemXml);
+                putInCache(XmlUtility.NAME_ID, null, null, itemId, ctx, itemXml);
             }
             catch (final ItemNotFoundException e) {
                 throw e;
@@ -373,8 +381,7 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     private String retrieveComponent(final EvaluationCtx ctx, final String itemId, final String componentId)
         throws WebserverSystemException, ItemNotFoundException, ComponentNotFoundException {
 
-        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, componentId);
-        String componentXml = (String) RequestAttributesCache.get(ctx, key.toString());
+        String componentXml = (String) getFromCache(XmlUtility.NAME_ID, null, null, componentId, ctx);
         if (componentXml == null) {
             try {
                 componentXml = itemHandler.retrieveComponent(itemId, componentId);
@@ -406,12 +413,11 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     private String retrieveContainer(final EvaluationCtx ctx, final String containerId)
         throws WebserverSystemException, ContainerNotFoundException {
 
-        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, containerId);
-        String containerXml = (String) RequestAttributesCache.get(ctx, key.toString());
+        String containerXml = (String) getFromCache(XmlUtility.NAME_ID, null, null, containerId, ctx);
         if (containerXml == null) {
             try {
                 containerXml = containerHandler.retrieve(containerId);
-                RequestAttributesCache.put(ctx, key.toString(), containerXml);
+                putInCache(XmlUtility.NAME_ID, null, null, containerId, ctx, containerXml);
             }
             catch (final ContainerNotFoundException e) {
                 throw e;
@@ -423,6 +429,58 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
         }
 
         return containerXml;
+    }
+
+    /**
+     * Put values from ComponentStaxHandler in Cache.
+     *
+     * @param staxHandler ComponentStaxHandler.
+     */
+    private void handleCache(final ComponentStaxHandler staxHandler) {
+        HashMap<String, String> attributes = staxHandler.getAttributes();
+        for (final Entry<String, String> entry : attributes.entrySet()) {
+            putInCache(staxHandler.getComponentId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+        }
+    }
+
+    /**
+     * Put values from ItemStaxHandler in Cache.
+     *
+     * @param staxHandler ItemStaxHandler.
+     */
+    private void handleCache(final ItemStaxHandler staxHandler) {
+        HashMap<String, String> stringAttributes = staxHandler.getStringAttributes();
+        for (final Entry<String, String> entry : stringAttributes.entrySet()) {
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+        }
+        HashMap<String, String> superAttributes = staxHandler.getSuperAttributes();
+        for (final Entry<String, String> entry : superAttributes.entrySet()) {
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+        }
+        HashMap<String, Collection<StringAttribute>> attributeAttributes = staxHandler.getAttributeAttributes();
+        for (final Entry<String, Collection<StringAttribute>> entry : attributeAttributes.entrySet()) {
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+        }
+    }
+
+    /**
+     * Put values from ContainerStaxHandler in Cache.
+     *
+     * @param staxHandler ContainerStaxHandler.
+     */
+    private void handleCache(final ContainerStaxHandler staxHandler) {
+        HashMap<String, String> stringAttributes = staxHandler.getStringAttributes();
+        for (final Entry<String, String> entry : stringAttributes.entrySet()) {
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+        }
+        HashMap<String, String> superAttributes = staxHandler.getSuperAttributes();
+        for (final Entry<String, String> entry : superAttributes.entrySet()) {
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+        }
+        HashMap<String, Collection<StringAttribute>> attributeAttributes = staxHandler.getAttributeAttributes();
+        for (final Entry<String, Collection<StringAttribute>> entry : attributeAttributes.entrySet()) {
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+        }
     }
 
     /**

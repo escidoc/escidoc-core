@@ -130,8 +130,6 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
             final String resourceId = FinderModuleHelper.getResourceId(ctx);
 
             // Fetch the role identified by the role name
-            // FIXME: maybe it is better to use the role ids in the policies
-            // instead of the names?
             EscidocRole role = securityHelper.getRole(roleId);
 
             return securityHelper.getRoleIsGrantedEvaluationResult(userOrGroupId, role.getId(), resourceId, role, ctx);

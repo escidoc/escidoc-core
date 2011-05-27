@@ -38,11 +38,12 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * Stax handler implementation that handles the attributes that have to be fetched from an item Xml representation.<br>
  * This handler extracts the attributes ...:item:component, ...:item:version-status, and ...:item:version-status. The
- * attributes found are stored in the <code>RequestAttributesCache</code>.
+ * attributes found are stored in the HashMaps.
  *
  * @author Torsten Tetteroo
  */
@@ -51,11 +52,21 @@ public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
     private final Collection<StringAttribute> componentIds = new ArrayList<StringAttribute>();
 
     /**
+     * contains the extracted Attributes that have value type String
+     */
+    private HashMap<String, String> stringAttributes = new HashMap<String, String>();
+
+    /**
+     * contains the extracted Attributes that have value type StringAttribute
+     */
+    private HashMap<String, Collection<StringAttribute>> attributeAttributes =
+        new HashMap<String, Collection<StringAttribute>>();
+
+    /**
      * The constructor.
      *
-     * @param ctx        The <code>EvaluationCtx</code> for that the item xml representation shall be parsed. Found
-     *                   attributes are cached using this context as part of the key.
-     * @param resourceId The id of the item resource. Used as part of the cache key.
+     * @param ctx        The <code>EvaluationCtx</code> for that the item xml representation shall be parsed.
+     * @param resourceId The id of the item resource.
      */
     public ItemStaxHandler(final EvaluationCtx ctx, final String resourceId) {
 
@@ -79,7 +90,7 @@ public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
                 componentIds.add(new StringAttribute(XmlUtility.getIdFromStartElement(element)));
             }
             else if (XmlUtility.NAME_LOCK_OWNER.equals(localName)) {
-                cacheAttribute(AttributeIds.URN_ITEM_LOCK_OWNER_ATTR, XmlUtility.getIdFromStartElement(element));
+                stringAttributes.put(AttributeIds.URN_ITEM_LOCK_OWNER_ATTR, XmlUtility.getIdFromStartElement(element));
             }
         }
 
@@ -96,11 +107,25 @@ public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
 
         super.endElement(element);
         if (isNotReady() && !isInMetadata() && XmlUtility.NAME_COMPONENTS.equals(element.getLocalName())) {
-            cacheAttribute(AttributeIds.URN_ITEM_COMPONENT_ATTR, this.componentIds);
+            attributeAttributes.put(AttributeIds.URN_ITEM_COMPONENT_ATTR, this.componentIds);
             setReady();
         }
 
         return element;
+    }
+
+    /**
+     * @return the stringAttributes
+     */
+    public HashMap<String, String> getStringAttributes() {
+        return stringAttributes;
+    }
+
+    /**
+     * @return the attributeAttributes
+     */
+    public HashMap<String, Collection<StringAttribute>> getAttributeAttributes() {
+        return attributeAttributes;
     }
 
 }

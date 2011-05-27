@@ -2,63 +2,102 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
     <defaultCache eternal="true" maxElementsInMemory="1000" overflowToDisk="false"/>
+
+<!-- caches resources for the indexer. 
+Used by de.escidoc.core.om.business.indexer.IndexerResourceRequester -->
 <cache 
 	name="resourcesCache" 
 	maxElementsInMemory="1000" 
 	eternal="false" 
 	overflowToDisk="false" 
 	timeToIdleSeconds="600"/>
+
+<!-- caches roleIsGrantedEvaluationResults. (EvaluationResults for user/group,role,scope)
+Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
 <cache 
 	name="roleIsGrantedCache" 
 	maxElementsInMemory="1000" 
 	eternal="false" 
 	overflowToDisk="false" 
 	timeToIdleSeconds="1200"/>
+
+<!-- caches XACML-Policies for Users
+Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
 <cache 
 	name="userPoliciesCache" 
 	maxElementsInMemory="1000" 
 	eternal="false" 
 	overflowToDisk="false" 
 	timeToIdleSeconds="1200"/>
+
+<!-- caches Grants of Roles with Scope for Users
+Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
 <cache 
 	name="userGrantsCache" 
 	maxElementsInMemory="1000" 
 	eternal="false" 
 	overflowToDisk="false" 
 	timeToIdleSeconds="1200"/>
+
+<!-- caches Details for Users
+Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
 <cache 
 	name="userDetailsCache" 
 	maxElementsInMemory="1000" 
 	eternal="false" 
 	overflowToDisk="false" 
 	timeToIdleSeconds="1200"/>
+
+<!-- caches Group-membership for Users
+Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
 <cache 
 	name="userGroupsCache" 
 	maxElementsInMemory="1000" 
 	eternal="false" 
 	overflowToDisk="false" 
 	timeToIdleSeconds="1200"/>
+
+<!-- caches XACML-Policies for Roles
+Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
 <cache 
 	name="rolePoliciesCache" 
 	maxElementsInMemory="100" 
 	eternal="true" 
 	overflowToDisk="false"/>
+
+<!-- caches Roles
+Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
 <cache 
 	name="rolesCache" 
 	maxElementsInMemory="100" 
 	eternal="true" 
 	overflowToDisk="false"/>
+
+<!-- caches Grants of Roles with Scope for Groups
+Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
 <cache 
 	name="groupGrantsCache" 
 	maxElementsInMemory="1000" 
 	eternal="false" 
 	overflowToDisk="false" 
 	timeToIdleSeconds="1200"/>
+
+<!-- caches XACML-Policies for Groups
+Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
 <cache 
 	name="groupPoliciesCache" 
 	maxElementsInMemory="1000" 
 	eternal="false" 
 	overflowToDisk="false" 
 	timeToIdleSeconds="1200"/>
+
+<!-- caches Attributes for XACML-Evaluation
+Used by de.escidoc.core.aa.business.cache.RequestAttributesCache -->
+<cache 
+	name="attributesCache" 
+	maxElementsInMemory="1000" 
+	eternal="false" 
+	overflowToDisk="false" 
+	timeToIdleSeconds="10"/>
 	
 </ehcache>

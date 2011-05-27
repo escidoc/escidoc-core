@@ -67,12 +67,16 @@ import de.escidoc.core.common.util.service.EscidocUserDetails;
 
 /**
  * Class to cache policies retrieved from the database for the XACML engine.<br> This class caches different policy
- * types: <ul> <li>The policies of a role, provided as <code>PolicySet</code>, are cached using the role id as the key.
- * <li>The built policies of a user (depending on his/her roles and stored user specific policies), provided as a
- * <code>List</code> of <code>PolicySet</code> or <code>Policy</code> objects, are cached using the user id and the
- * action id as keys. <li>The policies of a user, provided as a <code>List</code> of <code>Policy</code> objects, are
- * temporarily cached using the user id and the action id as keys. These are cleared when the built properties for the
- * same user and action are stored. <li>The roles are cached using the role name as the key.</li>
+ * types: <ul> 
+ * <li>Cache: roleIsGrantedCache, Key: user or group ID. The information if a specific role is granted to a user or group for a specific resource (scope-definitions).</li>
+ * <li>Cache: userPoliciesCache, Key: user ID. The policy-set of all policies of a specific user.</li>
+ * <li>Cache: groupPoliciesCache, Key: group ID. The policy-set of all policies of a specific group.</li>
+ * <li>Cache: userGrantsCache, Key: user ID. The grants of a user as map with key:roleId, value: map with key:scopeId, value:RoleGrant.</li>
+ * <li>Cache: groupGrantsCache, Key: group ID. The grants of a group as map with key:roleId, value: map with key:scopeId, value:RoleGrant.</li>
+ * <li>Cache: userDetailsCache, Key: user ID. The details of a specific user</li>
+ * <li>Cache: userGroupsCache, Key: user ID. The groups of a specific user</li>
+ * <li>Cache: rolePoliciesCache, Key: URI idReference. The policies of a specific role</li>
+ * <li>Cache: rolesCache, Key: role ID. The Role-Object of a specific role ID</li>
  * <p/>
  * </ul>
  *
@@ -100,19 +104,10 @@ public class PoliciesCache {
     private EscidocRoleDaoInterface roleDao;
 
     /**
-     * Stores the provided {@link EvaluationResult} for {@link XacmlFunctionRoleIsGranted} result using the user ID, the
-     * role ID and (optional) the resource ID as key. <br> Realized as an outer {@link LRUMap} that uses user ID as key
-     * and which has an inner {@link LRUMap} as value, that uses the role ID as key and has an inner {@link LRUMap} as
-     * value that uses the resource id or <code>null</code> as key and has an {@link EvaluationResult} object as
-     * value.
+     * Stores the provided roleIsGranted Map for {@link XacmlFunctionRoleIsGranted} result using the user- or group ID as key.
      *
-     * @param userOrGroupId The user or group ID to use as key for {@link LRUMap}. This must not be <code>null</code>.
-     *                      If <code>null</code> is provided, nothing is done.
-     * @param roleId        The role ID to use as key for {@link LRUMap}. This must not be <code>null</code>. If
-     *                      <code>null</code> is provided, nothing is done.
-     * @param resourceId    The resource ID to use as key for {@link LRUMap}. This may be <code>null</code>.
-     * @param roleIsGranted The {@link EvaluationResult} holding the result of the {@link XacmlFunctionRoleIsGranted}
-     *                      for the provided values.
+     * @param userOrGroupId The user or group ID..
+     * @param roleIsGranted  The Map with key: role ID, value: map with key: resource ID, value: EvaluationResult.
      */
     @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, EvaluationResult>> putRoleIsGrantedEvaluationResult(@PartialCacheKey
@@ -120,6 +115,12 @@ public class PoliciesCache {
         return roleIsGranted;
     }
 
+    /**
+     * Gets the provided roleIsGranted Map for {@link XacmlFunctionRoleIsGranted} result using the user- or group ID as key.
+     *
+     * @param userOrGroupId The user or group ID..
+     * @return Map.  The Map with key: role ID, value: map with key: resource ID, value: EvaluationResult.
+     */
     @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, EvaluationResult>> getRoleIsGrantedEvaluationResultCached(@PartialCacheKey
     final String userOrGroupId) {
@@ -127,9 +128,9 @@ public class PoliciesCache {
     }
 
     /**
-     * Gets the the user policy set for the provided user ID.<br>
+     * Gets the user policy set for the provided user ID.<br>
+     * If no policy-Set is stored for the given user, return null.
      * <p/>
-     * Realisation see method put.
      *
      * @param userId The user ID to use as key for HashMap.
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices, or
@@ -140,6 +141,14 @@ public class PoliciesCache {
         return null;
     }
 
+    /**
+     * Puts the user policy set for the provided user ID.<br>
+     * <p/>
+     *
+     * @param userId The user ID to use as key for HashMap.
+     * @param The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices.
+     * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices.
+     */
     @Cacheable(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet putUserPolicies(@PartialCacheKey
     final String userId, final XacmlPolicySet policySet) {
@@ -148,8 +157,8 @@ public class PoliciesCache {
 
     /**
      * Gets the the group policy set for the provided group ID.<br>
+     * If no policy-Set is stored for the given group, return null.
      * <p/>
-     * Realisation see method put.
      *
      * @param groupId The group ID to use as key for HashMap.
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the group's polices, or
@@ -160,6 +169,14 @@ public class PoliciesCache {
         return null;
     }
 
+    /**
+     * Puts the group policy set for the provided group ID.<br>
+     * <p/>
+     *
+     * @param groupId The group ID to use as key for HashMap.
+     * @param The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices.
+     * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices.
+     */
     @Cacheable(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet putGroupPolicies(@PartialCacheKey
     final String groupId, final XacmlPolicySet policySet) {
@@ -225,6 +242,7 @@ public class PoliciesCache {
      * Gets the policies for the provided role.
      *
      * @param idReference The reference of the role's policies set.
+     * @param role The role-object.
      * @return Returns the <code>PolicyFinderResult</code> containing the policy set of the addressed role.
      * @throws WebserverSystemException 
      */
@@ -263,10 +281,10 @@ public class PoliciesCache {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all EvaluationResult-Objects (roles granted to a user or group) for the provided user ID from the cache.
+     * <br> Has to be called whenever grants of a user change.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param userOrGroupId The user- or group ID to remove policies from the cache for
      */
     @TriggersRemove(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearRoleIsGranted(@PartialCacheKey
@@ -274,10 +292,8 @@ public class PoliciesCache {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all EvaluationResult-Objects (roles granted to a user or group) from the cache.
      *
-     * @param userId The user ID to remove policies from the cache for
      */
     @TriggersRemove(cacheName = "roleIsGrantedCache", removeAll = true)
     public void clearRoleIsGranted() {
@@ -294,98 +310,84 @@ public class PoliciesCache {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * Removes all stored policies from the cache.<br> Has to be called whenever new policies
      * come into effect for a specific user (e.g. when a new role has been assigned to this user).
      *
-     * @param userId The user ID to remove policies from the cache for
      */
     @TriggersRemove(cacheName = "userPoliciesCache", removeAll = true)
     public void clearUserPolicies() {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored policies for the provided group ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific group (e.g. when a new role has been assigned to this group).
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param groupId The group ID to remove policies from the cache for
      */
     @TriggersRemove(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearGroupPolicies(final String groupId) {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored policies from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific group (e.g. when a new role has been assigned to this group).
      *
-     * @param userId The user ID to remove policies from the cache for
      */
     @TriggersRemove(cacheName = "groupPoliciesCache", removeAll = true)
     public void clearGroupPolicies() {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored grants for the provided user ID from the cache.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param userId The user ID to remove grants from the cache for
      */
     @TriggersRemove(cacheName = "userGrantsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearUserGrants(final String userId) {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored grants of all users.
      *
-     * @param userId The user ID to remove policies from the cache for
      */
     @TriggersRemove(cacheName = "userGrantsCache", removeAll = true)
     public void clearUserGrants() {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored grants for the provided group ID from the cache.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param groupId The group ID to remove policies from the cache for
      */
     @TriggersRemove(cacheName = "groupGrantsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearGroupGrants(final String groupId) {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
-     *
-     * @param userId The user ID to remove policies from the cache for
+     * Removes all stored grants of all groups.
      */
     @TriggersRemove(cacheName = "groupGrantsCache", removeAll = true)
     public void clearGroupGrants() {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored user-details from the cache.<br> Has to be called whenever user-data changes.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param handle The handle of the user to remove details from the cache for
      */
     @TriggersRemove(cacheName = "userDetailsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearUserDetails(final String handle) {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
-     *
-     * @param userId The user ID to remove policies from the cache for
+     * Removes all stored user-details from the cache.
      */
     @TriggersRemove(cacheName = "userDetailsCache", removeAll = true)
     public void clearUserDetails() {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored groups of the given user from the cache.
      *
      * @param userId The user ID to remove policies from the cache for
      */
@@ -394,50 +396,40 @@ public class PoliciesCache {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
-     *
-     * @param userId The user ID to remove policies from the cache for
+     * Removes all stored groups from the cache.
      */
     @TriggersRemove(cacheName = "userGroupsCache", removeAll = true)
     public void clearUserGroups() {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored policies for the provided role from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific role.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param idReference The role to remove policies from the cache for
      */
     @TriggersRemove(cacheName = "rolePoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearRolePolicies(final URI idReference) {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
-     *
-     * @param userId The user ID to remove policies from the cache for
+     * Removes all stored policies from the cache.
      */
     @TriggersRemove(cacheName = "rolePoliciesCache", removeAll = true)
     public void clearRolePolicies() {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes stored role with the provided role ID from the cache.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param roleId The role ID to remove.
      */
     @TriggersRemove(cacheName = "rolesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void clearRoles(final String roleId) {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
-     *
-     * @param userId The user ID to remove policies from the cache for
+     * Removes all stored roles from the cache.
      */
     @TriggersRemove(cacheName = "rolesCache", removeAll = true)
     public void clearRoles() {

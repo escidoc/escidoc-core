@@ -178,15 +178,14 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     private EscidocRole retrieveRole(final EvaluationCtx ctx, final String roleId) throws WebserverSystemException,
         RoleNotFoundException {
 
-        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, roleId);
-        EscidocRole role = (EscidocRole) RequestAttributesCache.get(ctx, key.toString());
+        EscidocRole role = (EscidocRole) getFromCache(XmlUtility.NAME_ID, null, null, roleId, ctx);
         if (role == null) {
             try {
                 role = roleDao.retrieveRole(roleId);
                 if (role == null) {
                     throw new RoleNotFoundException(StringUtility.format("Role not found", roleId));
                 }
-                RequestAttributesCache.put(ctx, key.toString(), role);
+                putInCache(XmlUtility.NAME_ID, null, null, roleId, ctx, role);
             }
             catch (final SqlDatabaseSystemException e) {
                 throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the role", e

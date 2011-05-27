@@ -339,8 +339,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      */
     private RoleGrant getUserGroupGrant(final EvaluationCtx ctx, final String grantId) throws WebserverSystemException,
         GrantNotFoundException {
-        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, grantId);
-        RoleGrant grant = (RoleGrant) RequestAttributesCache.get(ctx, key.toString());
+        RoleGrant grant = (RoleGrant) getFromCache(XmlUtility.NAME_ID, null, null, grantId, ctx);
         if (grant == null) {
             try {
                 grant = userGroupDao.retrieveGrant(grantId);
@@ -352,7 +351,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         }
         assertGrant(grantId, grant);
 
-        RequestAttributesCache.put(ctx, key.toString(), grant);
+        putInCache(XmlUtility.NAME_ID, null, null, grantId, ctx, grant);
         return grant;
     }
 
@@ -368,8 +367,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      */
     private RoleGrant getUserAccountGrant(final EvaluationCtx ctx, final String userId, final String grantId)
         throws WebserverSystemException, GrantNotFoundException {
-        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, grantId);
-        RoleGrant grant = (RoleGrant) RequestAttributesCache.get(ctx, key.toString());
+        RoleGrant grant = (RoleGrant) getFromCache(XmlUtility.NAME_ID, null, null, grantId, ctx);
         if (grant == null) {
             try {
                 grant = userAccountDao.retrieveGrant(userId, grantId);
@@ -381,7 +379,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         }
         assertGrant(grantId, grant);
 
-        RequestAttributesCache.put(ctx, key.toString(), grant);
+        putInCache(XmlUtility.NAME_ID, null, null, grantId, ctx, grant);
         return grant;
     }
 

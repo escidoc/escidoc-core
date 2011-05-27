@@ -65,6 +65,7 @@ import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
  *         <p/>
  *         Class gets resources for indexer, 
  *         either from eSciDocCore-Framework or from external URL.
+ *         Caches resources in resourcesCache.
  */
 @Service
 public class IndexerResourceRequester {
@@ -136,11 +137,9 @@ public class IndexerResourceRequester {
     }
 
     /**
-     * Set resource with given identifier in cache.
+     * delete resource with given identifier from cache.
      *
      * @param identifier identifier
-     * @param resource resource-object
-     * @return Object resource-object
      */
     @TriggersRemove(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void deleteResource(final String identifier) {
@@ -205,7 +204,7 @@ public class IndexerResourceRequester {
     }
 
     /**
-     * get resource with given URL and write it into cache.
+     * get resource from given URL.
      *
      * @param identifier identifier
      * @throws SystemException e

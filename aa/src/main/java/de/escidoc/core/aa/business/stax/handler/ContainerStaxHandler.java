@@ -38,12 +38,13 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * Stax handler implementation that handles the attributes that have to be fetched from a container Xml
  * representation.<br> This handler extracts the attributes ...:container:member, ...:container:current-version-status,
  * and ...:container:current-version-status. The attributes found are stored in the
- * <code>RequestAttributesCache</code>.
+ * HashMaps.
  *
  * @author Torsten Tetteroo
  */
@@ -55,11 +56,21 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
     private final Collection<StringAttribute> itemIds = new ArrayList<StringAttribute>();
 
     /**
+     * contains the extracted Attributes that have value type String
+     */
+    private HashMap<String, String> stringAttributes = new HashMap<String, String>();
+
+    /**
+     * contains the extracted Attributes that have value type StringAttribute
+     */
+    private HashMap<String, Collection<StringAttribute>> attributeAttributes =
+        new HashMap<String, Collection<StringAttribute>>();
+
+    /**
      * The constructor.
      *
-     * @param ctx        The <code>EvaluationCtx</code> for that the container xml representation shall be parsed. Found
-     *                   attributes are cached using this context as part of the key.
-     * @param resourceId The id of the item resource. Used as part of the cache key.
+     * @param ctx        The <code>EvaluationCtx</code> for that the container xml representation shall be parsed.
+     * @param resourceId The id of the item resource.
      */
     public ContainerStaxHandler(final EvaluationCtx ctx, final String resourceId) {
 
@@ -87,7 +98,8 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
                 containerIds.add(new StringAttribute(XmlUtility.getIdFromStartElement(element)));
             }
             else if (XmlUtility.NAME_LOCK_OWNER.equals(localName)) {
-                cacheAttribute(AttributeIds.URN_CONTAINER_LOCK_OWNER_ATTR, XmlUtility.getIdFromStartElement(element));
+                stringAttributes.put(AttributeIds.URN_CONTAINER_LOCK_OWNER_ATTR, XmlUtility
+                    .getIdFromStartElement(element));
             }
         }
 
@@ -108,11 +120,25 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
                 new ArrayList<StringAttribute>(containerIds.size() + itemIds.size());
             memberIds.addAll(this.containerIds);
             memberIds.addAll(this.itemIds);
-            cacheAttribute(AttributeIds.URN_CONTAINER_MEMBER_ATTR, memberIds);
+            attributeAttributes.put(AttributeIds.URN_CONTAINER_MEMBER_ATTR, memberIds);
 
             setReady();
         }
         return element;
+    }
+
+    /**
+     * @return the stringAttributes
+     */
+    public HashMap<String, String> getStringAttributes() {
+        return stringAttributes;
+    }
+
+    /**
+     * @return the attributeAttributes
+     */
+    public HashMap<String, Collection<StringAttribute>> getAttributeAttributes() {
+        return attributeAttributes;
     }
 
 }

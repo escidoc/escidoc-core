@@ -39,6 +39,7 @@ import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.aa.business.cache.RequestAttributesCache;
+import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
@@ -56,6 +57,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 /**
  * Abstract class for an attribute finder module.<br> Sub classes of this class must implement the method
  * <code>resolveLocalPart</code>. They may override the methods <code>assertAttribute</code>,
@@ -65,6 +69,10 @@ import java.util.regex.Pattern;
  * @author Torsten Tetteroo
  */
 public abstract class AbstractAttributeFinderModule extends AttributeFinderModule {
+
+    @Autowired
+    @Qualifier("security.RequestAttributesCache")
+    private RequestAttributesCache requestAttributesCache;
 
     static final String RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX =
         ResourceNotFoundException.class.getPackage().getName() + '.';
@@ -191,25 +199,26 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
     }
 
     /**
-     * Gets a {@link EvaluationResult} from the cache identified by the provided values.
+     * Gets a Object from the requestAttributesCache identified by the provided values.
      *
      * @param resourceId            The resource Id.
      * @param resourceObjid         The resource objid.
      * @param resourceVersionNumber The resource version number.
      * @param attributeIdValue      The id of the attribute for that the result has been cached.
      * @param ctx                   The {@link EvaluationCtx} for that the result has been cached.
-     * @return Returns the cached {@link EvaluationResult} or <code>null</code>.
+     * @return Returns the cached Object or <code>null</code>.
      */
-    protected final EvaluationResult getFromCache(
+    protected final Object getFromCache(
         final String resourceId, final String resourceObjid, final String resourceVersionNumber,
         final String attributeIdValue, final EvaluationCtx ctx) {
 
         final String cacheKey = getCacheKey(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue);
-        return (EvaluationResult) RequestAttributesCache.get(ctx, cacheKey);
+        Object attribute = requestAttributesCache.getAttribute(ctx, cacheKey);
+        return attribute;
     }
 
     /**
-     * Puts the provided {@link EvaluationResult} into the cache using the other provided keys to construct the cache
+     * Puts the provided Object into the requestAttributesCache using the other provided keys to construct the cache
      * key.
      *
      * @param resourceId            The resource Id.
@@ -217,14 +226,16 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param resourceVersionNumber The resource version number.
      * @param attributeIdValue      The id of the attribute for that the result shall be cached.
      * @param ctx                   The {@link EvaluationCtx} for that the result shall be cached.
-     * @param result                The {@link EvaluationResult to cache}
+     * @param result                The Object to cache
      */
     protected final void putInCache(
         final String resourceId, final String resourceObjid, final String resourceVersionNumber,
-        final String attributeIdValue, final EvaluationCtx ctx, final EvaluationResult result) {
+        final String attributeIdValue, final EvaluationCtx ctx, final Object cacheObject) {
 
         final String cacheKey = getCacheKey(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue);
-        RequestAttributesCache.put(ctx, cacheKey, result);
+
+        requestAttributesCache.clearAttribute(ctx, cacheKey);
+        requestAttributesCache.putAttribute(ctx, cacheKey, cacheObject);
     }
 
     /**
@@ -325,7 +336,8 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
             }
 
             // try to get it from the cache
-            result = getFromCache(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue, ctx);
+            result =
+                (EvaluationResult) getFromCache(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue, ctx);
             if (result != null) {
                 return result;
             }

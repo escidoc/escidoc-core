@@ -32,6 +32,7 @@ import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.cond.EvaluationResult;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.cache.RequestAttributesCache;
+import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -273,10 +274,9 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
     private String retrieveAggregationDefinition(final EvaluationCtx ctx, final String aggregationDefinitionId)
         throws WebserverSystemException, AggregationDefinitionNotFoundException {
 
-        final StringBuilder key =
-            new StringBuilder(XmlUtility.NAME_AGGREGATION_DEFINITION).append(':').append(XmlUtility.NAME_ID).append(
-                aggregationDefinitionId);
-        String aggregationDefinitionXml = (String) RequestAttributesCache.get(ctx, key.toString());
+        final StringBuilder key = new StringBuilder(XmlUtility.NAME_ID).append(aggregationDefinitionId);
+        String aggregationDefinitionXml =
+            (String) getFromCache(XmlUtility.NAME_AGGREGATION_DEFINITION, null, null, key.toString(), ctx);
         if (aggregationDefinitionXml == null) {
             try {
                 aggregationDefinitionXml = aggregationDefinitionHandler.retrieve(aggregationDefinitionId);
@@ -284,7 +284,8 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                     throw new AggregationDefinitionNotFoundException(StringUtility.format(
                         "Aggregation definition not found", aggregationDefinitionId));
                 }
-                RequestAttributesCache.put(ctx, key.toString(), aggregationDefinitionXml);
+                putInCache(XmlUtility.NAME_AGGREGATION_DEFINITION, null, null, key.toString(), ctx,
+                    aggregationDefinitionXml);
             }
             catch (final MissingMethodParameterException e) {
                 throw new WebserverSystemException(StringUtility.format(
@@ -316,10 +317,9 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
     private String retrieveReportDefinition(final EvaluationCtx ctx, final String reportDefinitionId)
         throws WebserverSystemException, ReportDefinitionNotFoundException {
 
-        final StringBuilder key =
-            new StringBuilder(XmlUtility.NAME_REPORT_DEFINITION).append(':').append(XmlUtility.NAME_ID).append(
-                reportDefinitionId);
-        String reportDefinitionXml = (String) RequestAttributesCache.get(ctx, key.toString());
+        final StringBuilder key = new StringBuilder(XmlUtility.NAME_ID).append(reportDefinitionId);
+        String reportDefinitionXml =
+            (String) getFromCache(XmlUtility.NAME_REPORT_DEFINITION, null, null, key.toString(), ctx);
         if (reportDefinitionXml == null) {
             try {
                 reportDefinitionXml = reportDefinitionHandler.retrieve(reportDefinitionId);
@@ -327,7 +327,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                     throw new ReportDefinitionNotFoundException(StringUtility.format("Report definition not found",
                         reportDefinitionId));
                 }
-                RequestAttributesCache.put(ctx, key.toString(), reportDefinitionXml);
+                putInCache(XmlUtility.NAME_REPORT_DEFINITION, null, null, key.toString(), ctx, reportDefinitionXml);
             }
             catch (final MissingMethodParameterException e) {
                 throw new WebserverSystemException(StringUtility.format("Exception during report definition retrieval",
@@ -358,16 +358,15 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
     private String retrieveScope(final EvaluationCtx ctx, final String scopeId) throws WebserverSystemException,
         ScopeNotFoundException {
 
-        final StringBuilder key =
-            new StringBuilder(XmlUtility.NAME_SCOPE).append(':').append(XmlUtility.NAME_ID).append(scopeId);
-        String scopeXml = (String) RequestAttributesCache.get(ctx, key.toString());
+        final StringBuilder key = new StringBuilder(XmlUtility.NAME_ID).append(scopeId);
+        String scopeXml = (String) getFromCache(XmlUtility.NAME_SCOPE, null, null, key.toString(), ctx);
         if (scopeXml == null) {
             try {
                 scopeXml = scopeHandler.retrieve(scopeId);
                 if (scopeXml == null) {
                     throw new ScopeNotFoundException(StringUtility.format("Scope not found", scopeId));
                 }
-                RequestAttributesCache.put(ctx, key.toString(), scopeXml);
+                putInCache(XmlUtility.NAME_SCOPE, null, null, key.toString(), ctx, scopeXml);
             }
             catch (final MissingMethodParameterException e) {
                 throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the scope", e

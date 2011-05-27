@@ -34,6 +34,7 @@ import de.escidoc.core.aa.business.ObjectAttributeResolver;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.aa.business.cache.RequestAttributesCache;
+import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -46,6 +47,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,7 +168,8 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
     private Object[] resolveObjectTypeNew(final String attributeIdValue, final EvaluationCtx ctx)
         throws ResourceNotFoundException {
 
-        EvaluationResult result = (EvaluationResult) RequestAttributesCache.get(ctx, AttributeIds.URN_OBJECT_TYPE_NEW);
+        EvaluationResult result =
+            (EvaluationResult) getFromCache(AttributeIds.URN_OBJECT_TYPE_NEW, null, null, null, ctx);
         if (result != null) {
             return new Object[] { result, attributeIdValue };
         }
@@ -188,7 +192,7 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
             return null;
         }
         result = CustomEvaluationResultBuilder.createSingleStringValueResult(objectType);
-        RequestAttributesCache.put(ctx, AttributeIds.URN_OBJECT_TYPE_NEW, result);
+        putInCache(AttributeIds.URN_OBJECT_TYPE_NEW, null, null, null, ctx, result);
         return new Object[] { result, attributeIdValue };
     }
 

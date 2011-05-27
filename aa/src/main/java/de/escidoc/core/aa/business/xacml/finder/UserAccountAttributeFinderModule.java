@@ -52,11 +52,10 @@ import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
 import com.sun.xacml.finder.AttributeFinderModule;
 
+import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
-import de.escidoc.core.aa.business.SecurityHelper;
-import de.escidoc.core.aa.business.cache.RequestAttributesCache;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.aa.business.persistence.UserAccount;
 import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
@@ -292,7 +291,8 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
         }
         // ask cache for previously cached results
         EvaluationResult result =
-            getFromCache(resourceId, resourceObjid, resourceVersionNumber, internalAttributeIdValue, ctx);
+            (EvaluationResult) getFromCache(resourceId, resourceObjid, resourceVersionNumber, internalAttributeIdValue,
+                ctx);
 
         String resolvedAttributeIdValue = null;
         if (result == null) {
@@ -533,8 +533,8 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     private Set retrieveUserHandle(final EvaluationCtx ctx, final String userAccountId, final String attributeIdValue)
         throws WebserverSystemException, UserAccountNotFoundException {
 
-        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_HANDLE, userAccountId);
-        Set<AttributeValue> result = (Set<AttributeValue>) RequestAttributesCache.get(ctx, key.toString());
+        Set<AttributeValue> result =
+            (Set<AttributeValue>) getFromCache(XmlUtility.NAME_HANDLE, null, null, userAccountId, ctx);
         if (result == null) {
             final List userHandles;
             try {
@@ -560,7 +560,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
                     result.add(new StringAttribute(userLoginData.getHandle()));
                 }
             }
-            RequestAttributesCache.put(ctx, key.toString(), result);
+            putInCache(XmlUtility.NAME_HANDLE, null, null, userAccountId, ctx, result);
         }
         return result;
     }
@@ -577,8 +577,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     private UserAccount retrieveUserAccount(final EvaluationCtx ctx, final String userAccountId)
         throws WebserverSystemException, UserAccountNotFoundException {
 
-        final StringBuffer key = StringUtility.concatenateWithColon(XmlUtility.NAME_ID, userAccountId);
-        UserAccount userAccount = (UserAccount) RequestAttributesCache.get(ctx, key.toString());
+        UserAccount userAccount = (UserAccount) getFromCache(XmlUtility.NAME_ID, null, null, userAccountId, ctx);
         if (userAccount == null) {
             try {
                 userAccount = getUserAccountDao().retrieveUserAccount(userAccountId);
@@ -591,7 +590,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
 
         assertUserAccount(userAccountId, userAccount);
 
-        RequestAttributesCache.put(ctx, key.toString(), userAccount);
+        putInCache(XmlUtility.NAME_ID, null, null, userAccountId, ctx, userAccount);
         return userAccount;
     }
 

@@ -39,7 +39,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.collections.map.LRUMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,17 +72,11 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 
 /**
- * Class to cache policies retrieved from the database for the XACML engine.<br> This class caches different policy
- * types: <ul> <li>The policies of a role, provided as <code>PolicySet</code>, are cached using the role id as the key.
- * <li>The built policies of a user (depending on his/her roles and stored user specific policies), provided as a
- * <code>List</code> of <code>PolicySet</code> or <code>Policy</code> objects, are cached using the user id and the
- * action id as keys. <li>The policies of a user, provided as a <code>List</code> of <code>Policy</code> objects, are
- * temporarily cached using the user id and the action id as keys. These are cleared when the built properties for the
- * same user and action are stored. <li>The roles are cached using the role name as the key.</li>
- * <p/>
- * </ul>
+ * Class Proxies PoliciesCache.
+ * Contains methods that get User- or Group-Policies, grantedRoles, Roles, userDetails, userGroups, rolePolicies.
+ * Contains calls to PoliciesCache to get cached Objects or chche Objects.
  *
- * @author Roland Werner (Accenture)
+ * @author Michael Hoppe
  */
 @Service("security.SecurityHelper")
 public class SecurityHelper {
@@ -107,39 +100,16 @@ public class SecurityHelper {
      */
     private static final String PATTERN_INSERT_MARKER = "$1" + AttributeIds.MARKER + "$2";
 
-    //    /**
-    //     * Fall back value if reading property {@link <code>EscidocConfiguration.AA_CACHE_ROLES_SIZE</code>} fails.
-    //     */
-    //    private static final int ROLES_CACHE_SIZE_FALL_BACK = 20;
-    //
-    //    /**
-    //     * Fall back value if reading property {@link <code>EscidocConfiguration.AA_CACHE_USERS_SIZE</code>} fails.
-    //     */
-    //    private static final int USERS_CACHE_SIZE_FALL_BACK = 50;
-    //
-    //    /**
-    //     * Fall back value if reading property {@link <code>EscidocConfiguration.AA_CACHE_GROUPS_SIZE</code>} fails.
-    //     */
-    //    private static final int GROUPS_CACHE_SIZE_FALL_BACK = 200;
-    //
-    //    /**
-    //     * Fall back value if reading property {@link <code>EscidocConfiguration.AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE</code>}
-    //     * fails.
-    //     */
-    //    private static final int AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE_FALL_BACK = 20;
-
     /**
      * Gets the {@link EvaluationResult} for {@link XacmlFunctionRoleIsGranted} result using the user ID, the role ID
-     * and (optional) the resource ID as key. <br> Realized as an outer {@link LRUMap} that uses user ID as key and
-     * which has an inner {@link LRUMap} as value, that uses the role ID as key and has an inner {@link LRUMap} as value
-     * that uses the resource id or <code>null</code> as key and has an {@link EvaluationResult} object as value.
+     * and (optional) the resource ID as key. <br> 
+     * Answers the question if user or group has assigned the given role 
+     * and if resourceId is in scope of that role (if role has scope-definitions).
      *
-     * @param userOrGroupId The user ID to use as key for {@link LRUMap}. This must not be <code>null</code>. If
-     *                      <code>null</code> is provided, nothing is done.
-     * @param roleId        The role ID to use as key for {@link LRUMap}. This must not be <code>null</code>. If
-     *                      <code>null</code> is provided, nothing is done.
-     * @param resourceId    The resource ID to use as key for {@link LRUMap}. This may be <code>null</code>.
-     * @return
+     * @param userOrGroupId The user ID or Group ID.
+     * @param roleId        The role ID.
+     * @param resourceId    The resource ID. This may be <code>null</code>.
+     * @return EvaluationResult EvaluationResult for given user- or groupId, roleId and resourceId.
      */
     public EvaluationResult getRoleIsGrantedEvaluationResult(
         final String userOrGroupId, final String roleId, final String resourceId, final EscidocRole role,
@@ -302,9 +272,8 @@ public class SecurityHelper {
     /**
      * Gets the the user policy set for the provided user ID.<br>
      * <p/>
-     * Realisation see method put.
      *
-     * @param userId The user ID to use as key for HashMap.
+     * @param userId The user ID .
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices, or
      *         <code>null</code>.
      */
@@ -343,7 +312,6 @@ public class SecurityHelper {
     /**
      * Gets the the group policy set for the provided group ID.<br>
      * <p/>
-     * Realisation see method put.
      *
      * @param groupId The group ID to use as key for HashMap.
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the group's polices, or
@@ -432,20 +400,18 @@ public class SecurityHelper {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all EvaluationResult-Objects (roles granted to a user or group) for the provided user ID from the cache.
+     * <br> Has to be called whenever grants of a user change.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param userOrGroupId The user- or group ID to remove policies from the cache for
      */
     public void clearRoleIsGranted(final String userOrGroupId) {
         policiesCache.clearRoleIsGranted(userOrGroupId);
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all EvaluationResult-Objects (roles granted to a user or group) from the cache.
      *
-     * @param userId The user ID to remove policies from the cache for
      */
     public void clearRoleIsGranted() {
         policiesCache.clearRoleIsGranted();
@@ -462,98 +428,84 @@ public class SecurityHelper {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
+     * Removes all stored policies from the cache.<br> Has to be called whenever new policies
      * come into effect for a specific user (e.g. when a new role has been assigned to this user).
      *
-     * @param userId The user ID to remove policies from the cache for
      */
     public void clearUserPolicies() {
         policiesCache.clearUserPolicies();
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored policies for the provided group ID from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific group (e.g. when a new role has been assigned to this group).
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param groupId The group ID to remove policies from the cache for
      */
     public void clearGroupPolicies(final String groupId) {
         policiesCache.clearGroupPolicies(groupId);
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored policies from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific group (e.g. when a new role has been assigned to this group).
      *
-     * @param userId The user ID to remove policies from the cache for
      */
     public void clearGroupPolicies() {
         policiesCache.clearGroupPolicies();
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored grants for the provided user ID from the cache.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param userId The user ID to remove grants from the cache for
      */
     public void clearUserGrants(final String userId) {
         policiesCache.clearUserGrants(userId);
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored grants of all users.
      *
-     * @param userId The user ID to remove policies from the cache for
      */
     public void clearUserGrants() {
         policiesCache.clearUserGrants();
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored grants for the provided group ID from the cache.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param groupId The group ID to remove policies from the cache for
      */
     public void clearGroupGrants(final String groupId) {
         policiesCache.clearGroupGrants(groupId);
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
-     *
-     * @param userId The user ID to remove policies from the cache for
+     * Removes all stored grants of all groups.
      */
     public void clearGroupGrants() {
         policiesCache.clearGroupGrants();
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored user-details from the cache.<br> Has to be called whenever user-data changes.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param handle The handle of the user to remove details from the cache for
      */
     public void clearUserDetails(final String handle) {
         policiesCache.clearUserDetails(handle);
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
-     *
-     * @param userId The user ID to remove policies from the cache for
+     * Removes all stored user-details from the cache.
      */
     public void clearUserDetails() {
         policiesCache.clearUserDetails();
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored groups of the given user from the cache.
      *
      * @param userId The user ID to remove policies from the cache for
      */
@@ -562,50 +514,40 @@ public class SecurityHelper {
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
-     *
-     * @param userId The user ID to remove policies from the cache for
+     * Removes all stored groups from the cache.
      */
     public void clearUserGroups() {
         policiesCache.clearUserGroups();
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes all stored policies for the provided role from the cache.<br> Has to be called whenever new policies
+     * come into effect for a specific role.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param idReference The role to remove policies from the cache for
      */
     public void clearRolePolicies(final URI idReference) {
         policiesCache.clearRolePolicies(idReference);
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
-     *
-     * @param userId The user ID to remove policies from the cache for
+     * Removes all stored policies from the cache.
      */
     public void clearRolePolicies() {
         policiesCache.clearRolePolicies();
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
+     * Removes stored role with the provided role ID from the cache.
      *
-     * @param userId The user ID to remove policies from the cache for
+     * @param roleId The role ID to remove.
      */
     public void clearRoles(final String roleId) {
         policiesCache.clearRoles(roleId);
     }
 
     /**
-     * Removes all stored policies for the provided user ID from the cache.<br> Has to be called whenever new policies
-     * come into effect for a specific user (e.g. when a new role has been assigned to this user).
-     *
-     * @param userId The user ID to remove policies from the cache for
+     * Removes all stored roles from the cache.
      */
     public void clearRoles() {
         policiesCache.clearRoles();
@@ -682,6 +624,7 @@ public class SecurityHelper {
      * <code>XacmlPolicySet</code> with the policy combining algorithm set to ordered-permit-overrides.
      *
      * @param userId The internal id of the user, used to identify the user account.
+     * @param policyFinder the policyFinder to use.
      * @return Returns a <code>PolicySet</code> with the policy combining algorithm set to ordered-permit-overrides or
      *         <code>null</code>. The policy set is built up by policy references to the role policy sets. If the
      *         provided user id matches the anonymous user, <code>null</code> is returned.
@@ -714,6 +657,7 @@ public class SecurityHelper {
      *
      * @param roleGrants    map with current grants of the user/group.
      * @param userOrGroupId The internal id of the user/group, used to identify the user account/user group.
+     * @param policyFinder the policyFinder to use.
      * @param isUser        boolean if user-roles are requested
      * @return Returns a <code>PolicySet</code> with the policy combining algorithm set to ordered-permit-overrides or
      *         <code>null</code>. The policy set is built up by policy references to the role policy sets. If the
@@ -757,6 +701,7 @@ public class SecurityHelper {
      * Retrieves the default policies that are granted to every user.<br> The policies are fetched for the dummy role
      * "Default". They are set in the field <code>defaultPolicies</code>.
      *
+     * @param policyFinder the policyFinder to use.
      * @return Returns an <code>XacmlPolicyReference</code> referencing the set of default policies.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
@@ -776,10 +721,11 @@ public class SecurityHelper {
     }
 
     /**
-     * Retrieve all policies given to the groups by their (restricted) roles <br> The policies are returned in a
+     * Retrieve all policies given to the group by their (restricted) roles <br> The policies are returned in a
      * <code>XacmlPolicySet</code> with the policy combining algorithm set to ordered-permit-overrides.
      *
-     * @param groupIds The internal ids of the groups, used to identify the user groups.
+     * @param groupId The internal id of the group.
+     * @param policyFinder the policyFinder to use.
      * @return Returns a <code>PolicySet</code> with the policy combining algorithm set to ordered-permit-overrides or
      *         <code>null</code>. The policy set is built up by policy references to the role policy sets. If the
      *         provided user id matches the anonymous user, <code>null</code> is returned.
