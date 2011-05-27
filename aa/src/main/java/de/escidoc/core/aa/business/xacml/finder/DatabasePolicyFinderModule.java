@@ -196,15 +196,6 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * the search to only policies that have this <code>subject-id</code> and <code>action-id</code> in their target
      * part. This is done via the method <code>retrieveSingleAttribute</code>.</li>
      * <p/>
-     * <li>Check whether the policies for <code>subject-id</code> and <code>action-id</code> are already contained in
-     * the <code>PoliciesCache</code>. This is done via the method <code>retrievePoliciesFromCache</code>.</li>
-     * <p/>
-     * <li>Only if the policies are not in the cache, they will be fetched from the database. For this method
-     * <code>retrieveFlatPolicies</code> is called.</li>
-     * <p/>
-     * <li>Any retrieved policies will now be stored in the <code>PoliciesCache</code> so they will be available for the
-     * next request </li>
-     * <p/>
      * <li>The retrieved policies are checked for matching against the current <code>EvaluationCtx</code>.</li>
      * <p/>
      * <li>If a matching policy is found, it is returned.</li> </ul>
@@ -212,7 +203,6 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @param context the representation of the request data
      * @return the result of trying to find an applicable policy
      * @see FinderModuleHelper#retrieveSingleResourceAttribute
-     * @see PoliciesCache
      */
     @Override
     public PolicyFinderResult findPolicy(final EvaluationCtx context) {

@@ -70,7 +70,7 @@ public class AAManager {
     }
 
     /**
-     * Removes all objects dstored in the PoliciesCache.<br>
+     * Removes all objects stored in the PoliciesCache.<br>
      */
     @ManagedOperation(description = "remove everything from the PoliciesCache.")
     public void clearPoliciesCache() {
