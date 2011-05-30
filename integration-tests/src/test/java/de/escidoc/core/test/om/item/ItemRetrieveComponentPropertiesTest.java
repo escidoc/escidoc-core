@@ -59,8 +59,6 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
 
     private static String componentId = null;
 
-    private static int componentNo = 2;
-
     /**
      * Set up servlet test.
      *
@@ -72,13 +70,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         createdItem = EscidocAbstractTest.getDocument(create(itemXml));
         itemId = getObjidValue(createdItem);
-        componentNo = 1;
         componentId = getObjidValue(createdItem, "/item/components/component[1]");
-        // getComponentObjidValue(createdItem, 1);
-        Node node = selectSingleNode(createdItem, "/item/components/component[1]/properties/description");
-        if (node == null) {
-            componentNo = 2;
-        }
     }
 
     /**
