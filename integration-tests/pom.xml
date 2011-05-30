@@ -567,16 +567,6 @@
 						</property>
 					</systemproperties>
 					<redirectTestOutputToFile>${project.build.directory}/test-output.log</redirectTestOutputToFile>
-					<!-- failsafe plugin runs per default only intergration tests (*IT.java). 
-						So make sure our (old) tests are included too. -->
-					<includes>
-						<include>**/*IT.java</include>
-						<include>**/*Test.java</include>
-					</includes>
-					<excludes>
-						<exclude>**/*TestBase*</exclude>
-						<exclude>**/*AbstractTest*</exclude>
-					</excludes>
 					<forkMode>always</forkMode>
 					<argLine>-Xmx1024m -XX:MaxPermSize=640m</argLine>
 					<failIfNoTests>true</failIfNoTests>

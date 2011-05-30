@@ -117,7 +117,7 @@ public class Client {
      */
     public String getDatastreamContent(final String datastreamId, final String pid) throws FedoraSystemException {
 
-        MIMETypedStream datastream  = null;
+        MIMETypedStream datastream = null;
         String content = null;
         // get content of data stream with provided ID from
         // Fedora object with provided id
@@ -164,7 +164,7 @@ public class Client {
      */
     public MIMETypedStream getDatastreamDissemination(final String dataStreamId, final String pid)
         throws FedoraSystemException {
-        MIMETypedStream datastream  = null;
+        MIMETypedStream datastream = null;
         try {
             datastream = apia.getDatastreamDissemination(pid, dataStreamId, null);
         }

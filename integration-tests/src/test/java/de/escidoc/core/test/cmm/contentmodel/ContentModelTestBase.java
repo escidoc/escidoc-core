@@ -311,8 +311,10 @@ public class ContentModelTestBase extends CmmTestBase {
 
                 // check behavior
                 HttpResponse httpRes =
-                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getFrameworkUrl() + "/ir/container/"
-                        + getObjidValue(getDocument(containerXml)) + "/resources/trans", null, MimeTypes.TEXT_XML, null);
+                    HttpHelper
+                        .executeHttpRequest(Constants.HTTP_METHOD_GET, getFrameworkUrl() + "/ir/container/"
+                            + getObjidValue(getDocument(containerXml)) + "/resources/trans", null, MimeTypes.TEXT_XML,
+                            null);
                 String resultCheckString = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
                 Document resultCheckDoc = getDocument(resultCheckString);
                 selectSingleNodeAsserted(resultCheckDoc, "/result[. = 'check']");
