@@ -119,7 +119,7 @@ public class Context extends GenericResource implements ContextInterface {
      *             If datastream is not accessible.
      */
     public Datastream getResources() throws StreamNotFoundException, FedoraSystemException {
-        // if properties is unset, instantiate the Datastream
+        // if properties is unset, instantiate the Stream
         if (this.resources == null) {
             this.resources = new Datastream("resources", getId(), null);
         }
@@ -161,7 +161,7 @@ public class Context extends GenericResource implements ContextInterface {
      */
     @Override
     public Datastream getProperties() throws StreamNotFoundException, FedoraSystemException {
-        // if properties is unset, instantiate the Datastream
+        // if properties is unset, instantiate the Stream
         if (this.properties == null) {
             this.properties = new Datastream("properties", getId(), null);
         }
@@ -172,7 +172,7 @@ public class Context extends GenericResource implements ContextInterface {
      * (non-Javadoc)
      * 
      * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface #
-     * setProperties(de.escidoc.core.common.business.fedora.datastream.Datastream )
+     * setProperties(de.escidoc.core.common.business.fedora.datastream.Stream )
      */
     @Override
     public void setProperties(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
@@ -301,7 +301,7 @@ public class Context extends GenericResource implements ContextInterface {
      * (non-Javadoc)
      * 
      * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
-     * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
+     * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     public void setDc(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
         WebserverSystemException, TripleStoreSystemException {
@@ -379,7 +379,7 @@ public class Context extends GenericResource implements ContextInterface {
      * (non-Javadoc)
      * 
      * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
-     * #setAdminDescriptor(de.escidoc.core.common.business.fedora.datastream. Datastream)
+     * #setAdminDescriptor(de.escidoc.core.common.business.fedora.datastream. Stream)
      */
     @Override
     public void setAdminDescriptor(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
@@ -424,7 +424,7 @@ public class Context extends GenericResource implements ContextInterface {
      * Add an AdminDescriptor to Context.
      * 
      * @param adm
-     *            Admin Descriptor Datastream
+     *            Admin Descriptor Stream
      */
     public void addAdminDescriptor(final Datastream adm) {
 

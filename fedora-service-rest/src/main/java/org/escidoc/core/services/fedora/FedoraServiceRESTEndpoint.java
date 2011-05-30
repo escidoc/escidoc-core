@@ -3,7 +3,7 @@ package org.escidoc.core.services.fedora;
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
-import org.esidoc.core.utils.io.Datastream;
+import org.esidoc.core.utils.io.Stream;
 import org.esidoc.core.utils.io.MimeTypes;
 
 import javax.validation.constraints.NotNull;
@@ -46,36 +46,6 @@ public interface FedoraServiceRESTEndpoint {
     ObjectProfileTO getObjectProfile(@NotNull @PathParam("") GetObjectProfilePathParam path,
                                      @NotNull @QueryParam("") GetObjectProfileQueryParam query);
 
-    @POST
-    @Path("/{pid}/datastreams/{dsID}")
-    @Produces(MimeTypes.ALL)
-    @Consumes(MimeTypes.TEXT_XML)
-    DatastreamProfileTO addDatastream(@NotNull @PathParam("") AddDatastreamPathParam path,
-                       @NotNull @QueryParam("") AddDatastreamQueryParam query,
-                       Datastream inputStream);
-
-    @GET
-    @Path("/{pid}/datastreams/{dsID}/content")
-    @Produces(MimeTypes.TEXT_XML)
-    @Consumes(MimeTypes.ALL)
-    Datastream getDatastream(@NotNull @PathParam("") GetDatastreamPathParam path,
-                             @NotNull @QueryParam("") GetDatastreamQueryParam query);
-
-    @PUT
-    @Path("/{pid}/datastreams/{dsID}")
-    @Produces(MimeTypes.TEXT_XML)
-    @Consumes(MimeTypes.ALL)
-    DatastreamProfileTO modifyDatastream(@NotNull @PathParam("") ModifiyDatastreamPathParam path,
-                          @NotNull @QueryParam("") ModifyDatastreamQueryParam query,
-                          @NotNull Datastream datastream);
-
-    @GET
-    @Path("/{pid}/datastreams")
-    @Produces(MimeTypes.TEXT_XML)
-    @Consumes(MimeTypes.TEXT_XML)
-    ObjectDatastreamsTO listDatastreams(@NotNull @PathParam("") ListDatastreamsPathParam path,
-                                        @NotNull @QueryParam("") ListDatastreamsQueryParam query);
-
     @PUT
     @Path("{pid}")
     @Produces(MimeTypes.TEXT_XML)
@@ -101,8 +71,50 @@ public interface FedoraServiceRESTEndpoint {
     @Path("{pid}")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
-    String ingest(@NotNull @PathParam("") IngestPathParam path,
-                  @NotNull @QueryParam("") IngestQueryParam query,
+    String ingest(@NotNull @PathParam("") IngestPathParam path, @NotNull @QueryParam("") IngestQueryParam query,
                   @NotNull DigitalObjectTypeTOExtension digitalObjectTO);
+
+    @POST
+    @Path("/{pid}/datastreams/{dsID}")
+    @Produces(MimeTypes.ALL)
+    @Consumes(MimeTypes.TEXT_XML)
+    DatastreamProfileTO addDatastream(@NotNull @PathParam("") AddDatastreamPathParam path,
+                                      @NotNull @QueryParam("") AddDatastreamQueryParam query, Stream inputStream);
+
+    @GET
+    @Path("/{pid}/datastreams/{dsID}/content")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.ALL)
+    Stream getDatastream(@NotNull @PathParam("") GetDatastreamPathParam path,
+                         @NotNull @QueryParam("") GetDatastreamQueryParam query);
+
+    @GET
+    @Path("/{pid}/datastreams/{dsID}")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.TEXT_XML)
+    DatastreamProfileTO getDatastreamProfile(@NotNull @PathParam("") GetDatastreamProfilePathParam path,
+                                             @NotNull @QueryParam("") GetDatastreamProfileQueryParam query);
+
+    @PUT
+    @Path("/{pid}/datastreams/{dsID}")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.ALL)
+    DatastreamProfileTO modifyDatastream(@NotNull @PathParam("") ModifiyDatastreamPathParam path,
+                                         @NotNull @QueryParam("") ModifyDatastreamQueryParam query,
+                                         @NotNull Stream stream);
+
+    @DELETE
+    @Path("/{pid}/datastreams/{dsID}")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.APPLICATION_JSON)
+    void deleteDatastream(@NotNull @PathParam("") DeleteDatastreamPathParam path,
+                          @NotNull @QueryParam("") DeleteDatastreamQueryParam query);
+
+    @GET
+    @Path("/{pid}/datastreams")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.TEXT_XML)
+    ObjectDatastreamsTO listDatastreams(@NotNull @PathParam("") ListDatastreamsPathParam path,
+                                        @NotNull @QueryParam("") ListDatastreamsQueryParam query);
 
 }

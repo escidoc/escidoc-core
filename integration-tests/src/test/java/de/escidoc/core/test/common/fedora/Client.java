@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.remote.system.FedoraSystemException;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.apache.axis.types.NonNegativeInteger;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.client.FedoraClient;
 import org.fcrepo.server.access.FedoraAPIA;
 import org.fcrepo.server.management.FedoraAPIM;
@@ -116,7 +117,7 @@ public class Client {
      */
     public String getDatastreamContent(final String datastreamId, final String pid) throws FedoraSystemException {
 
-        MIMETypedStream datastream = null;
+        MIMETypedStream datastream  = null;
         String content = null;
         // get content of data stream with provided ID from
         // Fedora object with provided id
@@ -158,12 +159,12 @@ public class Client {
      *
      * @param pid          pid of the fedora object
      * @param dataStreamId id of the datastream
-     * @return MIMETypedStream datastream content
+     * @return MIMETypedStream stream  content
      * @throws FedoraSystemException Thrown if access to Fedora failed.
      */
     public MIMETypedStream getDatastreamDissemination(final String dataStreamId, final String pid)
         throws FedoraSystemException {
-        MIMETypedStream datastream = null;
+        MIMETypedStream datastream  = null;
         try {
             datastream = apia.getDatastreamDissemination(pid, dataStreamId, null);
         }
@@ -175,7 +176,7 @@ public class Client {
     }
 
     /**
-     * @param dataStreamId Id of Datastream
+     * @param dataStreamId Id of Stream
      * @param pid          Fedora object id.
      * @return Map with stream and MIME type.
      * @throws FedoraSystemException Thrown if access to Fedora failed.
@@ -198,7 +199,7 @@ public class Client {
     }
 
     /**
-     * The method modifies the named xml datastream of the Object with the given Pid. New Datastream-content is the
+     * The method modifies the named xml datastream of the Object with the given Pid. New Stream-content is the
      * given byte[] datastream
      *
      * @param pid             id of the Object
@@ -211,7 +212,7 @@ public class Client {
         final String pid, final String datastreamName, final String datastreamLabel, final byte[] datastream)
         throws FedoraSystemException {
         try {
-            apim.modifyDatastreamByValue(pid, datastreamName, new String[0], datastreamLabel, "text/xml", null,
+            apim.modifyDatastreamByValue(pid, datastreamName, new String[0], datastreamLabel, MimeTypes.TEXT_XML, null,
                 datastream, "A", null, "eSciDoc test environment", true);
         }
         catch (final Exception e) {
@@ -221,7 +222,7 @@ public class Client {
     }
 
     /**
-     * The method modifies the named datastream of the Object with the given Pid. New Datastream-content is the given
+     * The method modifies the named datastream of the Object with the given Pid. New Stream-content is the given
      * byte[] datastream
      *
      * @param pid             id of the Object
@@ -245,7 +246,7 @@ public class Client {
     }
 
     /**
-     * The method modifies the named datastream of the Object with the given Pid. New Datastream-content is the given
+     * The method modifies the named datastream of the Object with the given Pid. New Stream-content is the given
      * byte[] datastream
      *
      * @param pid             id of the Object
@@ -269,7 +270,7 @@ public class Client {
     }
 
     /**
-     * The method modifies the named xml datastream of the Object with the given Pid. New Datastream-content is the
+     * The method modifies the named xml datastream of the Object with the given Pid. New Stream-content is the
      * given byte[] datastream
      *
      * @param pid             id of the Object
@@ -283,7 +284,7 @@ public class Client {
         final String pid, final String datastreamName, final String datastreamLabel, final String[] alternateIDs,
         final byte[] datastream) throws FedoraSystemException {
         try {
-            apim.modifyDatastreamByValue(pid, datastreamName, alternateIDs, datastreamLabel, "text/xml", null,
+            apim.modifyDatastreamByValue(pid, datastreamName, alternateIDs, datastreamLabel, MimeTypes.TEXT_XML, null,
                 datastream, "A", null, "eSciDoc test environment", true);
         }
         catch (final Exception e) {
@@ -470,7 +471,7 @@ public class Client {
      * The method retrieves metadata for all datastreams of the fedora object with provided id as Array.
      *
      * @param pid provided id
-     * @return Fedora Datastream array with information about all datastreams of the Fedora object.
+     * @return Fedora Stream array with information about all datastreams of the Fedora object.
      * @throws FedoraSystemException Thrown if access to Fedora failed.
      */
     public Datastream[] getDatastreamsInformation(final String pid) throws FedoraSystemException {
@@ -544,7 +545,7 @@ public class Client {
         throws FedoraSystemException {
         long start = System.currentTimeMillis();
         String result =
-            addDatastream(pid, name, altIDs, label, true, "text/xml", null,
+            addDatastream(pid, name, altIDs, label, true, MimeTypes.TEXT_XML, null,
                 "http://localhost:8082/fop/images/dummy.xml", "X", "A", "created");
         long end = System.currentTimeMillis();
         if (LOGGER.isDebugEnabled()) {
@@ -573,7 +574,7 @@ public class Client {
     }
 
     /**
-     * Add Datastream to Fedora (Fedora >= 2.2).
+     * Add Stream to Fedora (Fedora >= 2.2).
      *
      * @return id of datastream
      * @throws FedoraSystemException Thrown if access to Fedora failed.

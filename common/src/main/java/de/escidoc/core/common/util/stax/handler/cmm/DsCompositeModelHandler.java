@@ -73,8 +73,7 @@ public class DsCompositeModelHandler extends DefaultHandler {
                 dtm.setName(element.getAttributeValue(null, ATTRIBUTE_ID));
             }
             catch (final NoSuchAttributeException e) {
-                throw new IntegritySystemException(
-                    "Datastream type model must have an attribute " + ATTRIBUTE_ID + '.', e);
+                throw new IntegritySystemException("Stream type model must have an attribute " + ATTRIBUTE_ID + '.', e);
             }
         }
         else if (parser.getCurPath().equals(DS_TYPE_MODEL_EXTENSIONS_PATH)) {

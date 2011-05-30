@@ -44,7 +44,7 @@ public interface ContentRelationInterface extends FedoraResource {
      * Sets the RELS-EXT datastream and saves it in fedora. If the datastream is already set and unchanged, nothing will
      * be done.
      *
-     * @param ds A Datastream representing the Fedora RELS-EXT datastream.
+     * @param ds A Stream representing the Fedora RELS-EXT datastream.
      * @throws StreamNotFoundException    If there is no RELS-EXT datastream of a fedora object with <code>id</code>.
      *                                    This is probably an error cause a fedora object have to have this datastream.
      * @throws LockingException           Thrown if resource is locked.

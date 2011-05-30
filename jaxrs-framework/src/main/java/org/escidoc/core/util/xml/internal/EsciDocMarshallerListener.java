@@ -1,11 +1,9 @@
 package org.escidoc.core.util.xml.internal;
 
-import net.sf.oval.guard.Guarded;
-import org.esidoc.core.utils.io.Datastream;
+import org.esidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.Marshaller;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -56,8 +54,8 @@ public class EsciDocMarshallerListener extends Marshaller.Listener {
     }
 
     public void beforeMarshal(final Object source) {
-        if (source instanceof Datastream) {
-            final Datastream datastream = (Datastream) source;
+        if (source instanceof Stream) {
+            final Stream stream  = (Stream) source;
             try {
                 filteringXmlStreamWriter.writeCharacters(EMPTY_STRING);
                 filteringXmlStreamWriter.flush();
@@ -65,7 +63,7 @@ public class EsciDocMarshallerListener extends Marshaller.Listener {
                 LOG.debug("Error on writing XML stream.", e);
             }
             try {
-                datastream.writeCacheTo(outputStream);
+                stream.writeCacheTo(outputStream);
             } catch (IOException e) {
                 LOG.debug("Error on writing content to stream.", e);
             }

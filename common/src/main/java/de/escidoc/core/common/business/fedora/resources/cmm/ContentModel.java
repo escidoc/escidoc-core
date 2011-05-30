@@ -42,7 +42,11 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.DcReadHandler;
 import de.escidoc.core.common.util.stax.handler.cmm.DsCompositeModelHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -164,7 +168,10 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         if (this.dc == null) {
             final Datastream ds;
             try {
-                ds = new Datastream("DC", getId(), getVersionDate());
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
+                ds = new Datastream("DC", getId(), versionDate);
             }
             catch (final StreamNotFoundException e) {
                 throw new WebserverSystemException(e);
@@ -246,26 +253,35 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
             final Datastream ds;
             if (altIDs.contains("content-stream")) {
                 // found content-stream
-                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
+                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.contentStreams.put(name, ds);
             }
             else if (name.equals(DATASTREAM_DS_COMPOSITE_MODEL)) {
-                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
+                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.dsCompositeModel = ds;
             }
             else if (!(name.equals(Datastream.RELS_EXT_DATASTREAM) || "DC".equals(name) || name.equals(DATASTREAM_WOV))) {
-                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
+                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.otherStreams.put(name, ds);
             }
             else {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Datastream " + getId() + '/' + name + " not instanziated in ContentModel.<init>.");
+                    LOGGER.debug("Stream " + getId() + '/' + name + " not instanziated in ContentModel.<init>.");
                 }
             }
         }
@@ -441,7 +457,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         try {
             final Datastream ds =
                 new Datastream("DS-COMPOSITE-MODEL", getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING),
-                    Datastream.MIME_TYPE_TEXT_XML);
+                    MimeTypes.TEXT_XML);
             setDsCompositeModel(ds);
         }
         catch (final UnsupportedEncodingException e) {

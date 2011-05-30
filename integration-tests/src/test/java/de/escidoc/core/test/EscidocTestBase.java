@@ -49,6 +49,7 @@ import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.junit.After;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1156,7 +1157,7 @@ public abstract class EscidocTestBase {
      *            The http method.
      */
     public static void assertContentTypeTextXmlUTF8OfMethod(final String message, final HttpResponse httpRes) {
-        assertContentType(message, "text/xml", "utf-8", httpRes);
+        assertContentType(message, MimeTypes.TEXT_XML, "utf-8", httpRes);
     }
 
     public static void assertContentType(

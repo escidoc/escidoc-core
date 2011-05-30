@@ -35,13 +35,21 @@ import net.sf.oval.guard.Guarded;
 import org.apache.cxf.jaxrs.client.ServerWebApplicationException;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
+import org.escidoc.core.services.fedora.ControlGroup;
+import org.escidoc.core.services.fedora.DatastreamState;
+import org.escidoc.core.services.fedora.DeleteDatastreamPathParam;
+import org.escidoc.core.services.fedora.DeleteDatastreamQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.GetDatastreamProfilePathParam;
+import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.esidoc.core.utils.io.Stream;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.fcrepo.server.types.gen.MIMETypedStream;
-import org.joda.time.ReadableDateTime;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,8 +86,6 @@ public class Datastream {
 
     public static final String RELS_EXT_DATASTREAM_LABEL = "RELS_EXT DATASTREAM";
 
-    public static final String MIME_TYPE_TEXT_XML = "text/xml";
-
     public static final String CONTROL_GROUP_EXTERNAL_REFERENCE = "E";
 
     public static final String CONTROL_GROUP_REDIRECT = "R";
@@ -94,7 +100,7 @@ public class Datastream {
 
     private final String parentId;
 
-    private String timestamp;
+    private DateTime timestamp;
 
     private List<String> alternateIDs = new ArrayList<String>();
 
@@ -116,6 +122,8 @@ public class Datastream {
 
     private String checksum;
 
+    private DatastreamState state = DatastreamState.A;
+
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
 
@@ -133,7 +141,7 @@ public class Datastream {
     private boolean contentUnchanged;
 
     /**
-     * Constructs the Datastream identified by name and parentId. The version of the stream identified by timestamp is
+     * Constructs the Stream identified by name and parentId. The version of the stream identified by timestamp is
      * retrieved from Fedora. If timestamp is <code>null</code> the latest version is retrieved.
      *
      * @param name      The name of the datastream.
@@ -144,50 +152,15 @@ public class Datastream {
      */
     public Datastream(@NotNull
     final String name, @NotNull
-    final String parentId, final String timestamp) throws FedoraSystemException, StreamNotFoundException {
+    final String parentId, final DateTime timestamp) throws FedoraSystemException, StreamNotFoundException {
         this.name = name;
         this.parentId = parentId;
         this.timestamp = timestamp;
-        initDatastreamWithDataFromFedora();
+        loadDataFromFedora();
     }
 
     /**
-     * Retrieves a datastream identified by the name and the parentId from Fedora.
-     *
-     * @throws StreamNotFoundException If the datastream could not be retrieved from Fedora.
-     * @throws FedoraSystemException   Thrown in case of an internal system error caused by failed fedora access.
-     */
-    private void initDatastreamWithDataFromFedora() throws StreamNotFoundException, FedoraSystemException {
-        final org.fcrepo.server.types.gen.Datastream fedoraDatastream;
-        try {
-            fedoraDatastream = this.fedoraUtility.getDatastreamInformation(this.parentId, this.name, this.timestamp);
-        }
-        catch (final FedoraSystemException e1) {
-            throw new StreamNotFoundException("Fedora datastream '" + this.name + "' not found.", e1);
-        }
-        if (fedoraDatastream == null) {
-            throw new StreamNotFoundException("Datastream informations are 'null' after retrieving "
-                + "datastream from Fedora without exception.");
-        }
-        this.mimeType = fedoraDatastream.getMIMEType();
-        this.location = fedoraDatastream.getLocation();
-        this.label = fedoraDatastream.getLabel();
-        final DatastreamControlGroup controlGroup = fedoraDatastream.getControlGroup();
-        this.controlGroupValue = controlGroup.getValue();
-
-        final String[] altIDs = fedoraDatastream.getAltIDs();
-        this.alternateIDs.addAll(Arrays.asList(altIDs));
-
-        final String checksumMethodTmp = fedoraDatastream.getChecksumType();
-        if (!"disabled".equalsIgnoreCase(checksumMethodTmp)) {
-            this.checksumMethod = checksumMethodTmp;
-            this.checksum = fedoraDatastream.getChecksum();
-        }
-        this.md5Hash = null;
-    }
-
-    /**
-     * Constructs the Datastream identified by name and parentId. The version of the stream identified by timestamp is
+     * Constructs the Stream identified by name and parentId. The version of the stream identified by timestamp is
      * retrieved from Fedora. If timestamp is <code>null</code> the latest version is retrieved.
      *
      * @param name              The name of the datastream.
@@ -199,7 +172,7 @@ public class Datastream {
      */
     public Datastream(@NotNull
     final String name, @NotNull
-    final String parentId, final String timestamp, final String mimeType, final String location,
+    final String parentId, final DateTime timestamp, final String mimeType, final String location,
         final String controlGroupValue) {
         this.name = name;
         this.parentId = parentId;
@@ -210,7 +183,7 @@ public class Datastream {
     }
 
     /**
-     * Constructs the Datastream identified by name and parentId. The version of the stream identified by timestamp is
+     * Constructs the Stream identified by name and parentId. The version of the stream identified by timestamp is
      * retrieved from Fedora. If timestamp is <code>null</code> the latest version is retrieved.
      *
      * @param name              The name of the datastream.
@@ -224,7 +197,7 @@ public class Datastream {
      */
     public Datastream(@NotNull
     final String name, @NotNull
-    final String parentId, final String timestamp, final String mimeType, final String location,
+    final String parentId, final DateTime timestamp, final String mimeType, final String location,
         final String controlGroupValue, final String checksumMethod, final String checksum) {
         this.name = name;
         this.parentId = parentId;
@@ -239,7 +212,7 @@ public class Datastream {
     }
 
     /**
-     * Constructs a Datastream of the given parameters. The stream may be concurrent with the datastream saved in Fedora
+     * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora
      * or not. Maybe there is no such datastream in Fedora.
      *
      * @param name      The name of this datastream
@@ -259,7 +232,7 @@ public class Datastream {
     }
 
     /**
-     * Constructs a Datastream of the given parameters. The stream may be concurrent with the datastream saved in Fedora
+     * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora
      * or not. Maybe there is no such datastream in Fedora.
      *
      * @param name     The name of this datastream
@@ -288,7 +261,7 @@ public class Datastream {
     }
 
     /**
-     * Constructs a Datastream of the given parameters. The stream may be concurrent with the datastream saved in Fedora
+     * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora
      * or not. Maybe there is no such datastream in Fedora.
      *
      * @param name       The name of this datastream
@@ -307,6 +280,31 @@ public class Datastream {
         updateMD5Hash(stream);
         this.mimeType = mimeType;
         this.properties = properties;
+    }
+
+    private void loadDataFromFedora() {
+        final GetDatastreamProfilePathParam path = new GetDatastreamProfilePathParam(this.parentId, this.name);
+        final GetDatastreamProfileQueryParam query = new GetDatastreamProfileQueryParam();
+        query.setAsOfDateTime(this.timestamp);
+        final DatastreamProfileTO datastreamProfileTO = this.fedoraServiceClient.getDatastreamProfile(path, query);
+        updateDatastream(datastreamProfileTO);
+    }
+
+    private void updateDatastream(DatastreamProfileTO datastreamProfileTO) {
+        this.mimeType = datastreamProfileTO.getDsMIME();
+        this.location = datastreamProfileTO.getDsLocation();
+        this.label = datastreamProfileTO.getDsLabel();
+        this.state = DatastreamState.valueOf(datastreamProfileTO.getDsState());
+        this.controlGroupValue = datastreamProfileTO.getDsControlGroup();
+        this.alternateIDs = new ArrayList<String>(datastreamProfileTO.getDsAltID());
+        this.checksumMethod = datastreamProfileTO.getDsChecksumType();
+        this.checksum = datastreamProfileTO.getDsChecksum();
+        if (datastreamProfileTO.getDateTime() != null) {
+            this.timestamp = datastreamProfileTO.getDateTime();
+        }
+        else {
+            this.timestamp = datastreamProfileTO.getDsCreateDate();
+        }
     }
 
     private void updateMD5Hash(final byte[] stream) {
@@ -350,54 +348,49 @@ public class Datastream {
             catch (final IOException e) {
                 throw new WebserverSystemException(e);
             }
-            final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
-            path.setPid(this.parentId);
-            path.setDsID(this.name);
+            final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(this.parentId, this.name);
             final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
             query.setDsLabel(this.label);
             query.setMimeType(this.mimeType);
             query.setAltIDs(this.alternateIDs);
             query.setDsLocation(loc);
-            this.fedoraServiceClient.modifyDatastream(path, query, null);
+            final DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.modifyDatastream(path, query, null);
+            this.updateDatastream(datastreamProfile);
         }
         else if (this.getStream() != null) {
             if ("X".equals(this.getControlGroup())) {
-                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
-                path.setPid(this.parentId);
-                path.setDsID(this.name);
+                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(this.parentId, this.name);
                 final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                 query.setDsLabel(this.label);
                 query.setMimeType(this.mimeType);
                 query.setAltIDs(this.alternateIDs);
-                org.esidoc.core.utils.io.Datastream datastream = new org.esidoc.core.utils.io.Datastream();
+                Stream stream = new Stream();
                 try {
-                    datastream.write(this.getStream());
+                    stream.write(this.getStream());
                 }
                 catch (IOException e) {
                     throw new WebserverSystemException(e);
                 }
                 try {
                     final DatastreamProfileTO datastreamProfile =
-                        this.fedoraServiceClient.modifyDatastream(path, query, datastream);
-                    updateTimestamp(datastreamProfile);
+                        this.fedoraServiceClient.modifyDatastream(path, query, stream);
+                    updateDatastream(datastreamProfile);
                 }
                 catch (final ServerWebApplicationException e) {
                     LOGGER.debug("Error on modifing datastream.", e);
-                    addDatastream(datastream);
+                    addDatastream(stream);
                 }
             }
             else if (this.getControlGroup().equals(CONTROL_GROUP_MANAGED)) {
                 String tempURI = null;
                 try {
-                    tempURI = this.utility.upload(this.getStream(), this.parentId + this.name, MIME_TYPE_TEXT_XML);
+                    tempURI = this.utility.upload(this.getStream(), this.parentId + this.name, MimeTypes.TEXT_XML);
                 }
                 catch (final FileSystemException e) {
                     throw new WebserverSystemException("Error while uploading of content of datastream '" + this.name
                         + "' of the fedora object with id '" + this.parentId + "' to the staging area. ", e);
                 }
-                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
-                path.setPid(this.parentId);
-                path.setDsID(this.name);
+                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(this.parentId, this.name);
                 final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                 query.setDsLabel(this.label);
                 query.setMimeType(this.mimeType);
@@ -405,31 +398,20 @@ public class Datastream {
                 query.setDsLocation(tempURI);
                 final DatastreamProfileTO datastreamProfile =
                     this.fedoraServiceClient.modifyDatastream(path, query, null);
-                updateTimestamp(datastreamProfile);
+                this.updateDatastream(datastreamProfile);
             }
         }
-        return this.timestamp;
+        return this.timestamp.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
     }
 
-    private void updateTimestamp(final DatastreamProfileTO datastreamProfile) {
-        if (datastreamProfile.getDateTime() != null) {
-            this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
-        }
-        else {
-            this.timestamp = Iso8601Util.getIso8601(datastreamProfile.getDsCreateDate().toDate());
-        }
-    }
-
-    private void addDatastream(final org.esidoc.core.utils.io.Datastream datastream) {
-        final AddDatastreamPathParam addPath = new AddDatastreamPathParam();
-        addPath.setPid(this.parentId);
-        addPath.setDsID(this.name);
+    private void addDatastream(final Stream stream) {
+        final AddDatastreamPathParam addPath = new AddDatastreamPathParam(this.parentId, this.name);
         final AddDatastreamQueryParam addQuery = new AddDatastreamQueryParam();
         addQuery.setDsLabel(this.label);
         addQuery.setMimeType(this.mimeType);
         addQuery.setAltIDs(this.alternateIDs);
-        DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.addDatastream(addPath, addQuery, datastream);
-        updateTimestamp(datastreamProfile);
+        DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.addDatastream(addPath, addQuery, stream);
+        updateDatastream(datastreamProfile);
     }
 
     /**
@@ -441,9 +423,7 @@ public class Datastream {
      * @throws WebserverSystemException Thrown if getting Fedora instance fails.
      */
     public String persist(final boolean sync) throws FedoraSystemException, WebserverSystemException {
-        /*final AddDatastreamPathParam path = new AddDatastreamPathParam();
-        path.setPid(this.parentId);
-        path.setDsID(this.name);
+        final AddDatastreamPathParam path = new AddDatastreamPathParam(this.parentId, this.name);
         final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
         query.setAltIDs(this.alternateIDs);
         query.setDsLabel(this.label);
@@ -455,7 +435,7 @@ public class Datastream {
         }
         else if (this.getStream() != null) {
             query.setVersionable(true);
-            org.esidoc.core.utils.io.Datastream stream = new org.esidoc.core.utils.io.Datastream();
+            org.esidoc.core.utils.io.Stream stream = new org.esidoc.core.utils.io.Stream();
             try {
                 stream.write(this.getStream());
                 stream.lock();
@@ -463,26 +443,13 @@ public class Datastream {
             catch (IOException e) {
                 e.printStackTrace();
             }
-            this.fedoraServiceClient.addDatastream(path, query, stream);
+            final DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.addDatastream(path, query, stream);
+            this.updateDatastream(datastreamProfile);
         }
-        // TODO: Timestamp auslesen!
         if (sync) {
             this.fedoraUtility.sync();
-        }*/
-
-        if (this.getStream() == null && this.location != null) {
-            this.timestamp =
-                this.fedoraUtility.addDatastream(this.parentId, this.name, this.alternateIDs
-                    .toArray(new String[alternateIDs.size()]), this.label, this.location, this.mimeType,
-                    this.controlGroupValue, sync);
         }
-        else if (this.getStream() != null) {
-            this.timestamp =
-                this.fedoraUtility.addDatastream(this.parentId, this.name, this.alternateIDs
-                    .toArray(new String[alternateIDs.size()]), this.label, true, this.getStream(), sync);
-        }
-
-        return this.timestamp;
+        return this.timestamp.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
     }
 
     /**
@@ -493,32 +460,9 @@ public class Datastream {
      * @throws WebserverSystemException If an error ocurres.
      */
     public void delete() throws FedoraSystemException, WebserverSystemException {
-        try {
-            // TODO: check of the 'concurrent' flag have to be done too
-            if (MIME_TYPE_TEXT_XML.equals(this.mimeType)) {
-                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
-                path.setPid(this.parentId);
-                path.setDsID(this.name);
-                final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
-                query.setDsLabel(this.label);
-                query.setMimeType(Constants.MIME_TYPE_DELETED);
-                query.setAltIDs(this.alternateIDs);
-                org.esidoc.core.utils.io.Datastream datastream = new org.esidoc.core.utils.io.Datastream();
-                try {
-                    datastream.write(this.getStream());
-                }
-                catch (IOException e) {
-                    throw new WebserverSystemException(e);
-                }
-                this.fedoraServiceClient.modifyDatastream(path, query, datastream);
-                this.fedoraUtility
-                    .setDatastreamState(this.parentId, this.name, FedoraUtility.DATASTREAM_STATUS_DELETED);
-                initDatastreamWithDataFromFedora();
-            }
-        }
-        catch (final StreamNotFoundException e) {
-            throw new FedoraSystemException("Datastream.delete: ", e);
-        }
+        final DatastreamProfileTO datastreamProfileTO =
+            this.fedoraServiceClient.setDatastreamState(this.parentId, this.name, DatastreamState.D);
+        this.updateDatastream(datastreamProfileTO);
     }
 
     /**
@@ -527,8 +471,7 @@ public class Datastream {
      * @return true/false
      */
     public boolean isDeleted() {
-
-        return this.mimeType.equals(Constants.MIME_TYPE_DELETED);
+        return DatastreamState.D.equals(this.state);
     }
 
     /**
@@ -554,7 +497,7 @@ public class Datastream {
      * Adds an alternate ID to the {@link java.util.List List} of the alternate IDs of this datastream. A subsequent
      * call with the same string have no effect. A value off <code>null</code> may be forbidden.
      *
-     * @param alternateId An alternate ID to add to this Datastream.
+     * @param alternateId An alternate ID to add to this Stream.
      */
     public void addAlternateId(final String alternateId) {
         this.alternateIDs.add(alternateId);
@@ -564,7 +507,7 @@ public class Datastream {
      * Replaces an alternate ID in the {@link java.util.List List} of the alternate IDs of this datastream. A
      * subsequent call with the same string have no effect. A value off <code>null</code> may be forbidden.
      *
-     * @param alternateId An alternate ID to add to this Datastream.
+     * @param alternateId An alternate ID to add to this Stream.
      * @param index       position to insert ID
      */
     public void replaceAlternateId(final String alternateId, final int index) {
@@ -600,9 +543,15 @@ public class Datastream {
         // Workaround for the issue INFR666, now the content of a data stream
         // with a managed content should be pulled
         if (this.stream == null && ("X".equals(this.controlGroupValue) || "M".equals(this.controlGroupValue))) {
-            final MIMETypedStream datastream;
+            final MIMETypedStream mimeTypedStream;
             try {
-                datastream = this.fedoraUtility.getDatastreamWithMimeType(this.name, this.parentId, this.timestamp);
+                String timestampString = null;
+                if (this.timestamp != null) {
+                    timestampString =
+                        this.timestamp.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                }
+                mimeTypedStream =
+                    this.fedoraUtility.getDatastreamWithMimeType(this.name, this.parentId, timestampString);
             }
             catch (final FedoraSystemException e) {
                 throw new WebserverSystemException(StringUtility.format("Content of datastream could not be retrieved "
@@ -610,13 +559,13 @@ public class Datastream {
                     this.timestamp), e);
             }
 
-            if (datastream == null) {
-                throw new WebserverSystemException("Datastream is 'null' after retrieving "
+            if (mimeTypedStream == null) {
+                throw new WebserverSystemException("Stream is 'null' after retrieving "
                     + "datastream from Fedora without exception.");
             }
 
-            this.stream = datastream.getStream();
-            updateMD5Hash(stream);
+            this.stream = mimeTypedStream.getStream();
+            updateMD5Hash(this.stream);
         }
 
         return this.stream;
@@ -632,9 +581,9 @@ public class Datastream {
     }
 
     /**
-     * Return a String representation of the Datastream using UTF-8 encoding.
+     * Return a String representation of the Stream using UTF-8 encoding.
      *
-     * @return The String representation of the Datastream.
+     * @return The String representation of the Stream.
      * @throws EncodingSystemException  If the charset UTF-8 is not supported.
      * @throws WebserverSystemException If an error ocurres.
      */
@@ -646,7 +595,7 @@ public class Datastream {
     /**
      * See Interface for functional description.<br> This implementation calls <code>toStringUTF8</code>.
      *
-     * @return The String representation of the Datastream.
+     * @return The String representation of the Stream.
      */
     @Override
     public String toString() {
@@ -654,26 +603,26 @@ public class Datastream {
             return toStringUTF8();
         }
         catch (final EncodingSystemException e) {
-            LOGGER.debug("Can not convert Datastream to string.", e);
+            LOGGER.debug("Can not convert Stream to string.", e);
             return super.toString();
         }
         catch (final WebserverSystemException e) {
-            LOGGER.debug("Can not convert Datastream to string.", e);
+            LOGGER.debug("Can not convert Stream to string.", e);
             return super.toString();
         }
     }
 
     /**
-     * Return a String representation of the Datastream.
+     * Return a String representation of the Stream.
      *
      * @param charset The character encoding.
-     * @return The String representation of the Datastream.
+     * @return The String representation of the Stream.
      * @throws EncodingSystemException  If the charset is not supported.
      * @throws WebserverSystemException If an error ocurres.
      */
     public String toString(final String charset) throws EncodingSystemException, WebserverSystemException {
         try {
-            return new String(getStream(), XmlUtility.CHARACTER_ENCODING);
+            return new String(getStream(), charset);
         }
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException("Charset " + charset + "is not supported!", e);
@@ -758,30 +707,18 @@ public class Datastream {
         this.controlGroupValue = controlGroup;
     }
 
-    /**
-     * @return the mimeType
-     */
     public String getMimeType() {
         return this.mimeType;
     }
 
-    /**
-     * @return the location
-     */
     public String getLocation() {
         return this.location;
     }
 
-    /**
-     * @return The method by which the checksum was calculated.
-     */
     public String getChecksumMethod() {
         return this.checksumMethod;
     }
 
-    /**
-     * @return The checksum of the stream.
-     */
     public String getChecksum() {
         return this.checksum;
     }

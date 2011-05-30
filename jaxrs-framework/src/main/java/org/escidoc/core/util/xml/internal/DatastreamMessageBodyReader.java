@@ -1,7 +1,7 @@
 package org.escidoc.core.util.xml.internal;
 
 import net.sf.oval.guard.Guarded;
-import org.esidoc.core.utils.io.Datastream;
+import org.esidoc.core.utils.io.Stream;
 import org.esidoc.core.utils.io.IOUtils;
 
 import javax.validation.constraints.NotNull;
@@ -19,28 +19,28 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
 
 
 /**
- * {@link MessageBodyReader} for {@link org.esidoc.core.utils.io.Datastream}.
+ * {@link MessageBodyReader} for {@link org.esidoc.core.utils.io.Stream}.
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Provider
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
         assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
-public class DatastreamMessageBodyReader implements MessageBodyReader<Datastream> {
+public class DatastreamMessageBodyReader implements MessageBodyReader<Stream> {
 
 
     public boolean isReadable(final Class<?> type, final Type genericType,
                               final Annotation[] annotations, final MediaType mediaType) {
-        return Datastream.class.isAssignableFrom(type);
+        return Stream.class.isAssignableFrom(type);
     }
 
-    public Datastream readFrom(final Class<Datastream> type,
+    public Stream readFrom(final Class<Stream> type,
                                final Type genericType,
                                final Annotation[] annotations,
                                final MediaType mediaType,
                                final MultivaluedMap<String, String> httpHeaders,
                                @NotNull final InputStream entityStream) throws IOException, WebApplicationException {
-        final Datastream cachedOutputStream = new Datastream();
+        final Stream cachedOutputStream = new Stream();
         IOUtils.copyAndCloseInput(entityStream, cachedOutputStream);
         cachedOutputStream.lock();
         return cachedOutputStream;

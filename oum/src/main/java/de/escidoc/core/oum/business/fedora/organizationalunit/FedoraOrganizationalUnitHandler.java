@@ -77,6 +77,7 @@ import de.escidoc.core.oum.business.handler.OrganizationalUnitPredecessorsHandle
 import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.oum.business.utility.OumUtility;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -709,7 +710,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         WebserverSystemException, TripleStoreSystemException, IntegritySystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
-        content.setMimeType(Constants.DEFAULT_MIME_TYPE);
+        content.setMimeType(MimeTypes.TEXT_XML);
 
         try {
             if ("relations".equals(resourceName)) {

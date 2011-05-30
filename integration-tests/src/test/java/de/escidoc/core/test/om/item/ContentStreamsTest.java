@@ -38,6 +38,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -197,9 +198,8 @@ public class ContentStreamsTest extends ItemTestBase {
                     + selectSingleNodeAsserted(itemDoc,
                         "/item/content-streams/content-stream[@name = 'internal_xml']/@href").getNodeValue();
             substitute(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']/@href", newHref);
-            String newMimeType = "text/xml";
             substitute(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']/@mime-type",
-                newMimeType);
+                MimeTypes.TEXT_XML);
 
             String updateXml = toString(itemDoc, false);
             String updatedXml = update(createdItemId, updateXml);
@@ -224,7 +224,7 @@ public class ContentStreamsTest extends ItemTestBase {
             selectSingleNodeAsserted(updatedDoc,
                 "/item/content-streams/content-stream[@storage = 'external-managed' and @title = '" + newTitle + "']");
             selectSingleNodeAsserted(updatedDoc,
-                "/item/content-streams/content-stream[@storage = 'external-managed' and @mime-type = '" + newMimeType
+                "/item/content-streams/content-stream[@storage = 'external-managed' and @mime-type = '" + MimeTypes.TEXT_XML
                     + "']");
         }
         finally {

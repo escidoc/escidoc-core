@@ -76,6 +76,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 import de.escidoc.core.om.business.stax.handler.context.ContextPropertiesUpdateHandler;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -546,7 +547,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             dc = getContext().getDc();
         }
         catch (final StreamNotFoundException e1) {
-            throw new IntegritySystemException("Datastream dc not found.", e1);
+            throw new IntegritySystemException("Stream dc not found.", e1);
         }
         final ByteArrayInputStream dcIs = new ByteArrayInputStream(dc.getStream());
         byte[] dcNewBytes = null;
@@ -753,7 +754,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             final Datastream oldDs = getContext().getDc();
             final Datastream newDs =
                 new Datastream("DC", getContext().getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING),
-                    Datastream.MIME_TYPE_TEXT_XML);
+                    MimeTypes.TEXT_XML);
             if (!oldDs.equals(newDs)) {
                 // TODO check if update is allowed
                 getContext().setDc(newDs);
@@ -790,10 +791,10 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 final Datastream oldDs = adminDescriptors.get(name);
                 final Datastream newDs =
                     new Datastream(name, getContext().getId(),
-                        ((ByteArrayOutputStream) entry.getValue()).toByteArray(), Datastream.MIME_TYPE_TEXT_XML);
+                        ((ByteArrayOutputStream) entry.getValue()).toByteArray(), MimeTypes.TEXT_XML);
                 newDs.addAlternateId(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID);
 
-                if (oldDs.equals(newDs) && Datastream.MIME_TYPE_TEXT_XML.equals(oldDs.getMimeType())) {
+                if (oldDs.equals(newDs) && MimeTypes.TEXT_XML.equals(oldDs.getMimeType())) {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Datastreams identical; updated of Context " + getContext().getId()
                             + " with admin-descriptor " + name + " skipped.");

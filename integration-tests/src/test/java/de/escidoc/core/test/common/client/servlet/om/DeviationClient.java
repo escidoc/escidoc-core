@@ -68,7 +68,7 @@ public class DeviationClient extends ClientBase {
      *            the id of the resource.
      * @param componentId
      *            the id of the component.
-     * @return The Datastream as String.
+     * @return The Stream as String.
      * @throws Exception
      *             If the service call fails.
      */

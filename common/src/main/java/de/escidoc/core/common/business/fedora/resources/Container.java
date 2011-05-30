@@ -41,6 +41,10 @@ import de.escidoc.core.common.util.stax.handler.DcReadHandler;
 import de.escidoc.core.common.util.stax.handler.RelsExtContentRelationsReadHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -194,7 +198,9 @@ public class Container extends GenericVersionableResourcePid implements Containe
     public Datastream getCts() throws StreamNotFoundException, FedoraSystemException {
         if (this.cts == null) {
             try {
-                this.cts = new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getId(), getVersionDate());
+                final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
+                this.cts = new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getId(), versionDate);
             }
             catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
@@ -267,7 +273,9 @@ public class Container extends GenericVersionableResourcePid implements Containe
         }
         for (final String name : names) {
             try {
-                final Datastream newDs = new Datastream(name, getId(), getVersionDate());
+                final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
+                final Datastream newDs = new Datastream(name, getId(), versionDate);
                 result.put(name, newDs);
             }
             catch (final StreamNotFoundException e) {
@@ -352,7 +360,9 @@ public class Container extends GenericVersionableResourcePid implements Containe
             // retrieve from fedora and add to map
             final Datastream ds;
             try {
-                ds = new Datastream(name, getId(), getVersionDate());
+                final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
+                ds = new Datastream(name, getId(), versionDate);
             }
             catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
@@ -407,7 +417,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
                                 try {
                                     dcNew =
                                         new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML);
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
@@ -471,7 +481,9 @@ public class Container extends GenericVersionableResourcePid implements Containe
                     setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), null));
                 }
                 else {
-                    setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getVersionDate()));
+                    final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                    final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
+                    setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), versionDate));
                 }
             }
             catch (final WebserverSystemException e) {
@@ -489,7 +501,6 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws StreamNotFoundException  Thrown if the datastream was not found.
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown in case of internal failure.
-     * @see FedoraResource#setRelsExt(Datastream)
      */
     public void setEscidocRelsExt(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
         WebserverSystemException {
@@ -583,7 +594,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
             datastreamWithRelations = getVersionNumber() == null ? getRelsExt() : getEscidocRelsExt();
         }
         catch (final StreamNotFoundException e1) {
-            throw new IntegritySystemException("Datastream not found.", e1);
+            throw new IntegritySystemException("Stream not found.", e1);
         }
         final byte[] datastreamWithRelationsContent = datastreamWithRelations.getStream();
 
@@ -620,8 +631,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
             }
             else {
                 this.escidocRelsExt =
-                    new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getRelsExt().getStream(),
-                        Datastream.MIME_TYPE_TEXT_XML);
+                    new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getRelsExt().getStream(), MimeTypes.TEXT_XML);
                 escidocRelsExt.setControlGroup("M");
                 setEscidocRelsExt(this.escidocRelsExt);
 
@@ -638,7 +648,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * 
      * @see
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
-     * #setDc(de.escidoc.core.common.business.fedora.datastream.Datastream)
+     * #setDc(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     public void setDc(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
         WebserverSystemException, TripleStoreSystemException {
@@ -674,7 +684,9 @@ public class Container extends GenericVersionableResourcePid implements Containe
     public Datastream getDc() throws StreamNotFoundException, FedoraSystemException {
         if (this.dc == null) {
             try {
-                this.dc = new Datastream(Datastream.DC_DATASTREAM, getId(), getVersionDate());
+                final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
+                this.dc = new Datastream(Datastream.DC_DATASTREAM, getId(), versionDate);
             }
             catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);

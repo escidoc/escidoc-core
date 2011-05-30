@@ -66,6 +66,7 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -223,7 +224,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
         TripleStoreSystemException, IntegritySystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
-        content.setMimeType(Datastream.MIME_TYPE_TEXT_XML);
+        content.setMimeType(MimeTypes.TEXT_XML);
 
         if ("members".equals(resourceName)) {
             try {

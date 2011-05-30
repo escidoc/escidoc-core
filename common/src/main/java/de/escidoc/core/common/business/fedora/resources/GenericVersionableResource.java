@@ -44,7 +44,11 @@ import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -693,7 +697,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     public void setWov(final byte[] ds) throws StreamNotFoundException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
-        setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), ds, Datastream.MIME_TYPE_TEXT_XML));
+        setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), ds, MimeTypes.TEXT_XML));
 
     }
 
@@ -778,7 +782,6 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     @Override
     public Datastream getRelsExt() throws StreamNotFoundException, FedoraSystemException {
-
         if (this.relsExt == null) {
             try {
                 // Workaround until framework uses only one RELS-EXT per update
@@ -786,8 +789,9 @@ public class GenericVersionableResource extends GenericResourcePid {
                     setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), null));
                 }
                 else {
-
-                    setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), getVersionDate()));
+                    final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                    final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
+                    setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), versionDate));
                 }
             }
             catch (final WebserverSystemException e) {
@@ -807,7 +811,12 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws FedoraSystemException   Thrown in case of internal error.
      */
     public Datastream getRelsExt(final String timestamp) throws StreamNotFoundException, FedoraSystemException {
-        return new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), timestamp);
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+        DateTime timestampDateTime = null;
+        if (timestamp != null) {
+            timestampDateTime = dateTimeFormatter.parseDateTime(timestamp);
+        }
+        return new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), timestampDateTime);
     }
 
     // --------------------------------------------------------------------------
@@ -924,7 +933,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     /**
-     * Write WOV (Whole Object Versioning Datastream) to Fedora.
+     * Write WOV (Whole Object Versioning Stream) to Fedora.
      *
      * @return The new timestamp of the WOV data stream or null if not written to Fedora.
      * @throws FedoraSystemException    Thrown if connection to Fedora failed.
@@ -956,7 +965,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             String tmpWov = new String(b, XmlUtility.CHARACTER_ENCODING);
             tmpWov = tmpWov.replaceAll(XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, timestamp);
             setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), tmpWov
-                .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML));
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
         }
         catch (final Exception e1) {
             throw new WebserverSystemException(e1);
@@ -1048,7 +1057,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                     "(<" + Constants.WOV_NAMESPACE_PREFIX + ":events[^>]*>)", "$1" + newEventEntry);
 
             setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), newWovString
-                .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML));
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);
@@ -1207,7 +1216,8 @@ public class GenericVersionableResource extends GenericResourcePid {
             final String location = datastreamInfo.getLocation();
 
             Datastream ds;
-
+            final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+            final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
             // RELS-EXT
             if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
                 // The RELS-EXT in the Fedora repository is newer than the
@@ -1215,7 +1225,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 // versions are timestamps (version/date, release/date).
                 ds =
                     isLatestVersion() ? new Datastream(name, getId(), null, mimeType, location, controlGroupValue) : new Datastream(
-                        name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
+                        name, getId(), versionDate, mimeType, location, controlGroupValue);
 
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
@@ -1223,7 +1233,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             }
             // DC
             else if ("DC".equals(name) && this.dc == null) {
-                ds = new Datastream("DC", getId(), getVersionDate(), mimeType, location, controlGroupValue);
+                ds = new Datastream("DC", getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.dc = ds;
@@ -1237,7 +1247,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             }
             else {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Datastream " + getId() + '/' + name
+                    LOGGER.debug("Stream " + getId() + '/' + name
                         + " not instanziated in GenericVersionableResource.<init>.");
                 }
             }

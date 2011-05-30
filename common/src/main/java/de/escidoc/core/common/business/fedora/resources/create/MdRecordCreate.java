@@ -28,6 +28,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -64,7 +65,7 @@ public class MdRecordCreate implements Serializable {
 
     private String schema;
 
-    private String mimeType = Constants.DEFAULT_MIME_TYPE;
+    private String mimeType = MimeTypes.TEXT_XML;
 
     /*
      * Storage (Fedora) specific values
@@ -75,7 +76,7 @@ public class MdRecordCreate implements Serializable {
 
     private boolean checksumEnabled;
 
-    private String controlGroup; // Datastream.CONTROL_GROUP_MANAGED;
+    private String controlGroup; // Stream.CONTROL_GROUP_MANAGED;
 
     private String datastreamLocation;
 

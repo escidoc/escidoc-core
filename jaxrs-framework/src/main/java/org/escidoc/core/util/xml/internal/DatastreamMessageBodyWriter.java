@@ -1,7 +1,7 @@
 package org.escidoc.core.util.xml.internal;
 
 import net.sf.oval.guard.Guarded;
-import org.esidoc.core.utils.io.Datastream;
+import org.esidoc.core.utils.io.Stream;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.WebApplicationException;
@@ -17,23 +17,23 @@ import java.lang.reflect.Type;
 import static org.esidoc.core.utils.Preconditions.checkNotNull;
 
 /**
- * {@link MessageBodyWriter} for {@link org.esidoc.core.utils.io.Datastream}.
+ * {@link MessageBodyWriter} for {@link org.esidoc.core.utils.io.Stream}.
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Provider
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
         assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
-public class DatastreamMessageBodyWriter implements MessageBodyWriter<Datastream> {
+public class DatastreamMessageBodyWriter implements MessageBodyWriter<Stream> {
 
     public boolean isWriteable(final Class<?> type,
                                final Type genericType,
                                final Annotation[] annotations,
                                final MediaType mediaType) {
-        return Datastream.class.isAssignableFrom(type);
+        return Stream.class.isAssignableFrom(type);
     }
 
-    public long getSize(final Datastream cachedOutputStream,
+    public long getSize(final Stream cachedOutputStream,
                         final Class<?> type,
                         final Type genericType,
                         final Annotation[] annotations,
@@ -41,7 +41,7 @@ public class DatastreamMessageBodyWriter implements MessageBodyWriter<Datastream
         return cachedOutputStream.size();
     }
 
-    public void writeTo(final Datastream cachedOutputStream,
+    public void writeTo(final Stream cachedOutputStream,
                         final Class<?> type,
                         final Type genericType,
                         final Annotation[] annotations,

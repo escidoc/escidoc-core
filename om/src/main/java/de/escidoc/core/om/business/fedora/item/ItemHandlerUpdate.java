@@ -62,6 +62,7 @@ import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -256,8 +257,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 mdProperties.put("nsUri", escidocMdRecordnsUri);
             }
             final Datastream ds =
-                new Datastream(stringByteArrayOutputStreamEntry.getKey(), c.getId(), xmlBytes,
-                    Datastream.MIME_TYPE_TEXT_XML, mdProperties);
+                new Datastream(stringByteArrayOutputStreamEntry.getKey(), c.getId(), xmlBytes, MimeTypes.TEXT_XML,
+                    mdProperties);
             final Map<String, String> mdRecordAttributes =
                 mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
@@ -307,7 +308,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         try {
             final Datastream newRelsExt =
                 new Datastream(Datastream.RELS_EXT_DATASTREAM, id, getComponentRelsExtWithVelocity(id, properties,
-                    false).getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML);
+                    false).getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
             component.setRelsExt(newRelsExt);
             component.persist();
         }
@@ -335,7 +336,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             final Datastream oldDs = getItem().getCts();
             final Datastream newDs =
                 new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getItem().getId(), xml
-                    .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML);
+                    .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
 
             if (oldDs == null || !oldDs.equals(newDs)) {
                 getItem().setCts(newDs);
@@ -404,9 +405,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 // update content and check by checksum if it is really changed
                 // and in case remove content PID if exists
                 final String contentChecksum = component.getChecksum();
-                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
-                path.setPid(component.getId());
-                path.setDsID("content");
+                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(component.getId(), "content");
                 final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                 query.setDsLocation(url);
                 try {
@@ -440,9 +439,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             }
             final String url = uploadBase64EncodedContent(componentBinary.get("content"), fileName, mimeType);
             final String contentChecksum = component.getChecksum();
-            final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
-            path.setPid(component.getId());
-            path.setDsID("content");
+            final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(component.getId(), "content");
             final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
             query.setDsLocation(url);
             try {

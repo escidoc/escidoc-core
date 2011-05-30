@@ -21,21 +21,21 @@ import java.io.PipedOutputStream;
 
 @SuppressWarnings({"JavaDoc", "JavaDoc"})
 @XmlAccessorType(XmlAccessType.FIELD)
-public final class Datastream extends OutputStream {
+public final class Stream extends OutputStream {
 
-    public final static Logger LOG = LoggerFactory.getLogger(Datastream.class);
+    public final static Logger LOG = LoggerFactory.getLogger(Stream.class);
 
     private static final File DEFAULT_TEMP_DIR;
     private static final int DEFAULT_THRESHOLD;
 
     static {
-        final String thresholdString = System.getProperty("Datastream.Threshold", "-1");
+        final String thresholdString = System.getProperty("Stream.Threshold", "-1");
         int threshold = Integer.parseInt(thresholdString);
         if (threshold <= 0) {
             threshold = 64 * 1024;
         }
         DEFAULT_THRESHOLD = threshold;
-        final String outputDirectoryString = System.getProperty("Datastream.OutputDirectory");
+        final String outputDirectoryString = System.getProperty("Stream.OutputDirectory");
         if (outputDirectoryString != null) {
             final File outputDirectory = new File(outputDirectoryString);
             if (outputDirectory.exists() && outputDirectory.isDirectory()) {
@@ -75,17 +75,17 @@ public final class Datastream extends OutputStream {
     @XmlTransient
     private boolean allowDeleteOfFile = true;
 
-    public Datastream(final PipedInputStream stream) throws IOException {
+    public Stream(final PipedInputStream stream) throws IOException {
         this.currentStream = new PipedOutputStream(stream);
         this.setInMemory(true);
     }
 
-    public Datastream() {
+    public Stream() {
         this.currentStream = new LoadingByteArrayOutputStream(2048);
         this.setInMemory(true);
     }
 
-    public Datastream(final long threshold) {
+    public Stream(final long threshold) {
         this.threshold = threshold;
         this.currentStream = new LoadingByteArrayOutputStream(2048);
         this.setInMemory(true);
@@ -178,8 +178,8 @@ public final class Datastream extends OutputStream {
         if (out == null) {
             out = new ByteArrayOutputStream();
         }
-        if (this.currentStream instanceof Datastream) {
-            final Datastream ac = (Datastream) this.currentStream;
+        if (this.currentStream instanceof Stream) {
+            final Stream ac = (Stream) this.currentStream;
             final InputStream in = ac.getInputStream();
             IOUtils.copyAndCloseInput(in, out);
         } else {
@@ -434,7 +434,7 @@ public final class Datastream extends OutputStream {
 
     @Override
     public String toString() {
-        return "Datastream{" +
+        return "Stream{" +
                 "inMemory=" + inMemory +
                 ", threshold=" + threshold +
                 ", totalLength=" + totalLength +

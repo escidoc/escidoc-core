@@ -207,7 +207,7 @@ public abstract class XmlTemplateProvider {
     public static final String SUCCESSOR_FORM = "FORM";
 
     /*
-     * Datastream
+     * Stream
      */
     public static final String CONTROL_GROUP = "CONTROL_GROUP";
 

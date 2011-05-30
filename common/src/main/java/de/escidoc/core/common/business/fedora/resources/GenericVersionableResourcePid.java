@@ -47,6 +47,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import javax.xml.stream.XMLStreamException;
@@ -422,7 +423,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             sp.parse(new ByteArrayInputStream(getWov().getStream()));
             final ByteArrayOutputStream wovExtNew = addNewSubtreesHandler.getOutputStreams();
             final byte[] wovNewBytes = wovExtNew.toByteArray();
-            setWov(new Datastream(DATASTREAM_WOV, getId(), wovNewBytes, Datastream.MIME_TYPE_TEXT_XML));
+            setWov(new Datastream(DATASTREAM_WOV, getId(), wovNewBytes, MimeTypes.TEXT_XML));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);
@@ -728,7 +729,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             relsExt = getRelsExt();
         }
         catch (final StreamNotFoundException e1) {
-            throw new IntegritySystemException("Datastream not found.", e1);
+            throw new IntegritySystemException("Stream not found.", e1);
         }
         final byte[] relsExtContent = relsExt.getStream();
 
@@ -767,7 +768,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             relsExt = getRelsExt();
         }
         catch (final StreamNotFoundException e1) {
-            throw new IntegritySystemException("Datastream not found.", e1);
+            throw new IntegritySystemException("Stream not found.", e1);
         }
         final ByteArrayInputStream relsExtInputStream = new ByteArrayInputStream(relsExt.getStream());
 

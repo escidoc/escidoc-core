@@ -37,6 +37,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.joda.time.ReadableInstant;
 import org.slf4j.Logger;
@@ -197,19 +198,18 @@ public class ContentModelCreate extends GenericResourceCreate {
 
             // update RELS-EXT with timestamp
             final String relsExt = renderRelsExt();
-            final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
-            path.setPid(getObjid());
-            path.setDsID(Datastream.RELS_EXT_DATASTREAM);
+            final ModifiyDatastreamPathParam path =
+                new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
             final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
-            query.setDsLabel("RELS_EXT DATASTREAM");
-            org.esidoc.core.utils.io.Datastream datastream = new org.esidoc.core.utils.io.Datastream();
+            query.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
+            Stream stream = new Stream();
             try {
-                datastream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
+                stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
             }
             catch (IOException e) {
                 throw new WebserverSystemException(e);
             }
-            this.fedoraServiceClient.modifyDatastream(path, query, datastream);
+            this.fedoraServiceClient.modifyDatastream(path, query, stream);
             if (forceSync) {
                 this.fedoraUtility.sync();
             }

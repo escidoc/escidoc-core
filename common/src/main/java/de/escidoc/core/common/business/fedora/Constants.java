@@ -57,7 +57,7 @@ public final class Constants {
 
     public static final Pattern TABULATOR = Pattern.compile("\\S+");
 
-    public static final String MIME_TYPE_DELETED = "deleted";
+    public static final String MIME_TYPE_DELETED = "application/deleted";
 
     /**
      * Private constructor to avoid instanziation.

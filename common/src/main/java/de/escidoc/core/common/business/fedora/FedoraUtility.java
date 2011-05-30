@@ -60,6 +60,7 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.client.FedoraClient;
 import org.fcrepo.client.HttpInputStream;
 import org.fcrepo.server.access.FedoraAPIA;
@@ -98,8 +99,6 @@ import java.util.regex.Pattern;
  */
 @ManagedResource(objectName = "eSciDocCore:name=FedoraUtility", description = "The utility class to access the fedora repository.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class FedoraUtility {
-
-    public static final String DATASTREAM_STATUS_DELETED = "D";
 
     public static final int SYNC_RETRIES = 10;
 
@@ -266,36 +265,6 @@ public class FedoraUtility {
     public void clearFedoraClientPool() {
 
         fedoraClientPool.clear();
-    }
-
-    /**
-     * The method sets the data stream status to a provided value.
-     * 
-     * @param pid
-     *            The Fedora object id.
-     * @param dsName
-     *            The name of the datastream
-     * @param dsState
-     *            The status of the datastream.
-     * @return Timestamp of the datastream.
-     * @throws FedoraSystemException
-     *             Thrown if set datastream at Fedora failed.
-     */
-    public String setDatastreamState(final String pid, final String dsName, final String dsState)
-        throws FedoraSystemException {
-
-        String timestamp = null;
-        final FedoraAPIM apim = borrowApim();
-        try {
-            timestamp = apim.setDatastreamState(pid, dsName, dsState, "ds state is changed.");
-        }
-        catch (final RemoteException e) {
-            throw new FedoraSystemException("APIM setDatastreamState failure: " + e.getMessage(), e);
-        }
-        finally {
-            returnApim(apim);
-        }
-        return timestamp;
     }
 
     /**
@@ -600,18 +569,15 @@ public class FedoraUtility {
         WebserverSystemException {
         final String tempURI;
         try {
-            tempURI =
-                this.utility.upload(stream, pid + name,
-                    de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML);
+            tempURI = this.utility.upload(stream, pid + name, MimeTypes.TEXT_XML);
         }
         catch (final FileSystemException e) {
             throw new WebserverSystemException("Error while uploading of content of datastream '" + name
                 + "' of the fedora object with id '" + pid + "' to the staging area. ", e);
         }
         final String datastreamID =
-            addDatastream(pid, name, altIDs, label, versionable,
-                de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML, null, tempURI,
-                controlGroup, "A", "created");
+            addDatastream(pid, name, altIDs, label, versionable, MimeTypes.TEXT_XML, null, tempURI, controlGroup, "A",
+                "created");
 
         if (syncTripleStore) {
             sync();
@@ -625,7 +591,7 @@ public class FedoraUtility {
      * @param pid
      *            Fedora object id.
      * @param name
-     *            Datastream ID
+     *            Stream ID
      * @param altIDs
      *            Alt IDs
      * @param label
@@ -636,7 +602,7 @@ public class FedoraUtility {
      *            byte[] information dataset
      * @param syncTripleStore
      *            whether the triples should be flushed
-     * @return Fedora Identifier of added Datastream.
+     * @return Fedora Identifier of added Stream.
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      * @throws WebserverSystemException
@@ -648,18 +614,14 @@ public class FedoraUtility {
 
         final String tempURI;
         try {
-            tempURI =
-                this.utility.upload(stream, pid + name,
-                    de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML);
+            tempURI = this.utility.upload(stream, pid + name, MimeTypes.TEXT_XML);
         }
         catch (final FileSystemException e) {
             throw new WebserverSystemException("Error while uploading of content of datastream '" + name
                 + "' of the fedora object with id '" + pid + "' to the staging area. ", e);
         }
         final String datastreamID =
-            addDatastream(pid, name, altIDs, label, versionable,
-                de.escidoc.core.common.business.fedora.datastream.Datastream.MIME_TYPE_TEXT_XML, null, tempURI, "X",
-                "A", "created");
+            addDatastream(pid, name, altIDs, label, versionable, MimeTypes.TEXT_XML, null, tempURI, "X", "A", "created");
 
         if (syncTripleStore) {
             sync();
@@ -668,12 +630,12 @@ public class FedoraUtility {
     }
 
     /**
-     * Add datastream to Fedora object. Datastream is versionated by default.
+     * Add datastream to Fedora object. Stream is versionated by default.
      * 
      * @param pid
      *            Fedora object id.
      * @param name
-     *            Datastream ID
+     *            Stream ID
      * @param altIDs
      *            Alt IDs
      * @param label
@@ -681,7 +643,7 @@ public class FedoraUtility {
      * @param stream
      *            byte[] information dataset
      * @param syncTripleStore
-     * @return Fedora Identifier of added Datastream.
+     * @return Fedora Identifier of added Stream.
      * @throws FedoraSystemException
      *             Thrown if add of datastream failed during Fedora communication.
      * @throws WebserverSystemException
@@ -702,7 +664,7 @@ public class FedoraUtility {
      * @param pid
      *            Fedora object id.
      * @param name
-     *            Datastream ID
+     *            Stream ID
      * @param altIDs
      *            Alt IDs
      * @param label
@@ -715,7 +677,7 @@ public class FedoraUtility {
      *            Defines the datastream storage type. (See Fedora ControlGroups)
      * @param syncTripleStore
      *            whether the triples should be flushed
-     * @return Fedora Identifier of added Datastream.
+     * @return Fedora Identifier of added Stream.
      * @throws FedoraSystemException
      *             Thrown if adding datastream to Fedora failed.
      * @throws WebserverSystemException

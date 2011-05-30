@@ -501,7 +501,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             try {
                 newDs =
                     new Datastream("DC", getContentModel().getId(), dcNew.getBytes(XmlUtility.CHARACTER_ENCODING),
-                        Datastream.MIME_TYPE_TEXT_XML);
+                        MimeTypes.TEXT_XML);
             }
             catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
@@ -575,8 +575,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             getContentModel().setOtherStream(
                 name + "_xsd",
                 new Datastream(name + "_xsd", getContentModel().getId(), xsdUrl,
-                    de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED,
-                    Datastream.MIME_TYPE_TEXT_XML));
+                    de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED, MimeTypes.TEXT_XML));
         }
 
         // Resource Definitions
@@ -598,9 +597,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
                     }
                 }
                 else {
-                    final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
-                    path.setPid(sdefId);
-                    path.setDsID("xslt");
+                    final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(sdefId, "xslt");
                     final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                     query.setDsLabel("Transformation instructions for operation '" + resourceDefinition.getName()
                         + "'.");
@@ -683,8 +680,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     }
 
     /**
-     * Creates Datastream objects from the values in <code>contentStreamMap</code> and calls Item.setContentStreams with
-     * a HashMap which contains the metadata datastreams as Datastream objects.
+     * Creates Stream objects from the values in <code>contentStreamMap</code> and calls Item.setContentStreams with
+     * a HashMap which contains the metadata datastreams as Stream objects.
      * @param contentStreams
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException

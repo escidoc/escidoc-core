@@ -48,6 +48,10 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlItemFoXmlRenderer;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,12 +100,6 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @param parentId  The id of the parent object.
      * @param timestamp The timestamp which specifies the version of the datastreams to retrieve.
      * @throws ResourceNotFoundException Thrown if the Component resource was not found.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public Component(final String id, final String parentId, final String timestamp) throws ResourceNotFoundException,
         ItemNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
@@ -129,7 +127,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      */
     private void initDatastreams() throws FedoraSystemException {
 
-        // initialize datastreams with Fedora Datastream Informations
+        // initialize datastreams with Fedora Stream Informations
         final org.fcrepo.server.types.gen.Datastream[] datastreamInfos =
             getFedoraUtility().getDatastreamsInformation(getId(), this.parentVersionDate);
 
@@ -147,7 +145,10 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             final Datastream ds;
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
-                ds = new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue);
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
+                ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.mdRecords.put(name, ds);
@@ -155,29 +156,38 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             else {
                 // RELS-EXT
                 if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
-                    ds = new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue);
+                    final DateTimeFormatter dateTimeFormatter =
+                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
+                    ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.relsExt = ds;
                 }
                 // DC
                 else if ("DC".equals(name)) {
-                    ds = new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue);
+                    final DateTimeFormatter dateTimeFormatter =
+                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
+                    ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.dc = ds;
                 }
                 // content
                 else if ("content".equals(name)) {
+                    final DateTimeFormatter dateTimeFormatter =
+                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
                     ds =
-                        new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue,
+                        new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue,
                             datastreamInfo.getChecksumType(), datastreamInfo.getChecksum());
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.content = ds;
                 }
                 else {
-                    LOGGER.warn("Datastream " + getId() + '/' + name + " not instanziated in Item.<init>.");
+                    LOGGER.warn("Stream " + getId() + '/' + name + " not instanziated in Item.<init>.");
                 }
             }
 
@@ -233,7 +243,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     }
 
     /**
-     * Get Content as Datastream.
+     * Get Content as Stream.
      *
      * @return content
      */
@@ -250,7 +260,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * 
      * @see
      * de.escidoc.core.common.business.fedora.resources.GenericResource#setRelsExt
-     * (de.escidoc.core.common.business.fedora.datastream.Datastream)
+     * (de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     @Override
     public void setRelsExt(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
@@ -312,14 +322,14 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 final Datastream fedoraDs = getMdRecord(nameInFedora);
                 fedoraDs.delete();
                 if ("escidoc".equals(fedoraDs.getName())) {
-                    // Datastream dcDs = getDc();
+                    // Stream dcDs = getDc();
                     final ItemFoXmlRendererInterface iri = new VelocityXmlItemFoXmlRenderer();
                     final String dcContent = iri.renderDefaultDc(getId());
                     final Datastream newDc;
                     try {
                         newDc =
                             new Datastream("DC", getId(), dcContent.getBytes(XmlUtility.CHARACTER_ENCODING),
-                                Datastream.MIME_TYPE_TEXT_XML);
+                                MimeTypes.TEXT_XML);
                     }
                     catch (final UnsupportedEncodingException e) {
                         throw new EncodingSystemException(e);
@@ -363,7 +373,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @see
      * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
      * #setMdRecord(java.lang.String,
-     * de.escidoc.core.common.business.fedora.datastream.Datastream)
+     * de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     @Override
     public void setMdRecord(final String name, final Datastream ds) throws WebserverSystemException,
@@ -422,7 +432,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                                 try {
                                     dcNew =
                                         new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML);
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
@@ -463,7 +473,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * 
      * @see
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
-     * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
+     * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     public void setDc(final Datastream ds) throws FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException, XmlParserSystemException {
@@ -516,13 +526,6 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @param xml    The XML with properties section of Component.
      * @param itemId The id of the Item.
      * @return Map of Component properties.
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public Map<String, String> setProperties(final String xml, final String itemId) throws InvalidContentException,
         ComponentNotFoundException, TripleStoreSystemException, EncodingSystemException, FedoraSystemException,

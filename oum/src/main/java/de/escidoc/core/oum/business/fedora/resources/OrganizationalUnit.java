@@ -44,6 +44,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.oum.business.fedora.resources.interfaces.OrganizationalUnitInterface;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -436,7 +437,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
                             if (dcNewContent != null && dcNewContent.trim().length() > 0) {
                                 try {
                                     setDc(new Datastream(Datastream.DC_DATASTREAM, getId(), dcNewContent
-                                        .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML));
+                                        .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e.getMessage(), e);
@@ -520,7 +521,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
                 }
                 getFedoraUtility().addDatastream(getId(), stringDatastreamEntry.getKey(), altIDs,
                     XmlUtility.NAME_MDRECORD, false, stream, false);
-                // TODO should new Datastream be put in list of md-records of this OU?
+                // TODO should new Stream be put in list of md-records of this OU?
             }
         }
     }

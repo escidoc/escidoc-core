@@ -21,8 +21,6 @@
 package de.escidoc.core.common.business.fedora.resources.create;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -49,16 +47,14 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.escidoc.core.services.fedora.DeleteObjectPathParam;
-import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.esidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -267,19 +263,18 @@ public class ItemCreate extends GenericResourceCreate {
 
             // update RELS-EXT with timestamp
             final String relsExt = renderRelsExt();
-            final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam();
-            path.setPid(getObjid());
-            path.setDsID(Datastream.RELS_EXT_DATASTREAM);
+            final ModifiyDatastreamPathParam path =
+                new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
             final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
             query.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
-            org.esidoc.core.utils.io.Datastream datastream = new org.esidoc.core.utils.io.Datastream();
+            Stream stream = new Stream();
             try {
-                datastream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
+                stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
             }
             catch (IOException e) {
                 throw new WebserverSystemException(e);
             }
-            this.fedoraServiceClient.modifyDatastream(path, query, datastream);
+            this.fedoraServiceClient.modifyDatastream(path, query, stream);
             if (forceSync) {
                 getFedoraUtility().sync();
             }

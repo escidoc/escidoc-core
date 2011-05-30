@@ -76,7 +76,7 @@ public class UserFilter {
         }
         else {
             // A work around until Fedora makes restrictions on the FOXML-size:
-            // RELS-EXT is now unversioned and therefore a Datastream
+            // RELS-EXT is now unversioned and therefore a Stream
             // Escidoc_RELS_EXT
             // with a managed content must be parsed to fetch values for old
             // Container

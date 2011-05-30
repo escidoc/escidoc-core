@@ -1,12 +1,10 @@
 package org.escidoc.core.util.xml.internal;
 
-import net.sf.oval.guard.Guarded;
-import org.esidoc.core.utils.io.Datastream;
+import org.esidoc.core.utils.io.Stream;
 import org.esidoc.core.utils.xml.DatastreamHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamReader;
@@ -90,7 +88,7 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
         lockStream(datastreamHolder.getDatastream());
     }
 
-    private void lockStream(Datastream stream) {
+    private void lockStream(Stream stream) {
         try {
             stream.lock();
         } catch (final IOException e) {

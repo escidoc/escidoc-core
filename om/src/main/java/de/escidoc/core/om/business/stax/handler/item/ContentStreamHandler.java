@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import org.esidoc.core.utils.io.MimeTypes;
 
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.stream.XMLStreamException;
@@ -84,7 +85,7 @@ public class ContentStreamHandler extends WriteHandler {
         if (this.inContentStreams
             && this.contentStreamName != null
             && getWriter() != null
-            && "text/xml".equals(contentStreams.get(this.contentStreamName).get(
+            && MimeTypes.TEXT_XML.equals(contentStreams.get(this.contentStreamName).get(
                 Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
             getWriter().writeCharacters(data);
         }
@@ -221,7 +222,7 @@ public class ContentStreamHandler extends WriteHandler {
                     }
 
                     if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
-                        if ("text/xml".equals(contentStreams.get(this.contentStreamName).get(
+                        if (MimeTypes.TEXT_XML.equals(contentStreams.get(this.contentStreamName).get(
                             Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
 
                             // check if control group is changed

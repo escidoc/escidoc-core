@@ -43,7 +43,7 @@ public interface VersionableResource extends Resource {
     boolean isNewVersion();
 
     /**
-     * Get Whole Object Version (WOV) Datastream.
+     * Get Whole Object Version (WOV) Stream.
      *
      * @return WOV datastream
      * @throws StreamNotFoundException Thrown if datastream was not found.
@@ -84,7 +84,7 @@ public interface VersionableResource extends Resource {
     void setVersionStatus(final String versionStatus) throws IntegritySystemException;
 
     /**
-     * Set the Whole Object Version (WOV) Datastream.
+     * Set the Whole Object Version (WOV) Stream.
      *
      * @param ds WOV datastream.
      * @throws StreamNotFoundException Thrown if datastream was not found.

@@ -67,6 +67,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
 import org.apache.xpath.XPathAPI;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.BeanFactory;
@@ -1031,7 +1032,7 @@ public class Utility {
                         + versionEntry);
             final Datastream ds =
                 new Datastream("version-history", resource.getId(), newWov.getBytes(XmlUtility.CHARACTER_ENCODING),
-                    Datastream.MIME_TYPE_TEXT_XML);
+                    MimeTypes.TEXT_XML);
             resource.setWov(ds);
         }
         catch (final StreamNotFoundException e) {
@@ -1074,7 +1075,7 @@ public class Utility {
                     "(<" + Constants.WOV_NAMESPACE_PREFIX + ":events[^>]*>)", "$1" + newEventEntry);
 
             resource.setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, resource.getId(), newWovString
-                .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML));
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);
@@ -1110,7 +1111,7 @@ public class Utility {
                 relsExtContent = resource.getRelsExt().getStream();
             }
             catch (final StreamNotFoundException e1) {
-                throw new IntegritySystemException("Datastream not found.", e1);
+                throw new IntegritySystemException("Stream not found.", e1);
             }
         }
         else {

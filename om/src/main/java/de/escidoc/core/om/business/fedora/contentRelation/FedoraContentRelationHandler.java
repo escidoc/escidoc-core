@@ -80,6 +80,7 @@ import de.escidoc.core.common.util.xml.factory.ContentRelationXmlProvider;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 import de.escidoc.core.om.business.interfaces.ContentRelationHandlerInterface;
 import de.escidoc.core.om.business.stax.handler.item.ContentRelationHandler;
+import org.escidoc.core.services.fedora.DatastreamState;
 import org.escidoc.core.services.fedora.DeleteObjectPathParam;
 import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
@@ -739,10 +740,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws ContentRelationNotFoundException
      *                         If there is no item with <code>id</code> in the repository.
      * @throws SystemException Thrown in case of an internal system error.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected ContentRelationCreate setContentRelation(final String id) throws ContentRelationNotFoundException,
         SystemException, TripleStoreSystemException, IntegritySystemException, FedoraSystemException,
@@ -818,8 +815,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException Thrown in case of internal failure.
      * @throws ContentRelationNotFoundException
      *                         Thrown if resource with provided id could not be found in Fedora repository.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     private static void setRelsExtValues(final ContentRelationCreate cr) throws SystemException,
         ContentRelationNotFoundException, FedoraSystemException, WebserverSystemException {
@@ -965,7 +960,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
 
             // add meta data
             if (contains(datastreamInfo.getAltIDs(), Datastream.METADATA_ALTERNATE_ID) > -1
-                && !datastreamInfo.getState().equals(FedoraUtility.DATASTREAM_STATUS_DELETED)) {
+                && !datastreamInfo.getState().equals(DatastreamState.D.value())) {
                 // check if status of stream is not deleted
                 final MdRecordCreate mdRecord = new MdRecordCreate();
 
@@ -1035,9 +1030,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws InvalidContentException        Thrown if content is invalid
      * @throws MissingAttributeValueException Thrown if attribute value is missing
      * @throws SystemException                Thrown if internal error occur
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private static ContentRelationCreate parseContentRelation(final String xml) throws MissingAttributeValueException,
         InvalidContentException, SystemException, XmlParserSystemException, WebserverSystemException,
@@ -1088,14 +1080,9 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         if (mdRecords != null) {
             for (final MdRecordCreate mdRecord : mdRecords) {
                 if (mdRecord.getContent() == null) {
-                    DateTime versionDate = cr.getProperties().getVersionDate();
-                    String timestamp = null;
-                    if (versionDate != null) {
-                        timestamp = versionDate.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
-                    }
                     final Datastream ds =
-                        new Datastream(mdRecord.getName(), cr.getObjid(), timestamp, mdRecord.getMimeType(), mdRecord
-                            .getDatastreamLocation(), mdRecord.getControlGroup());
+                        new Datastream(mdRecord.getName(), cr.getObjid(), cr.getProperties().getVersionDate(), mdRecord
+                            .getMimeType(), mdRecord.getDatastreamLocation(), mdRecord.getControlGroup());
                     mdRecord.setContent(new String(ds.getStream(), Charset.forName("UTF-8")));
                 }
             }
@@ -1169,7 +1156,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @param cr      Content Relation
      * @param xmlData complete content relation XML
      * @throws SystemException One of the listeners threw an exception.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireContentRelationModified(final ContentRelationCreate cr, final String xmlData)
         throws SystemException, WebserverSystemException {
@@ -1184,7 +1170,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @param cr      content relation
      * @param xmlData complete content relation XML
      * @throws SystemException One of the listeners threw an exception.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireContentRelationCreated(final ContentRelationCreate cr, final String xmlData)
         throws SystemException, WebserverSystemException {

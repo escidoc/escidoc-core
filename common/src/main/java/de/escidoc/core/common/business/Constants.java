@@ -38,8 +38,6 @@ public final class Constants {
      */
     public static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
-    public static final String DEFAULT_MIME_TYPE = "text/xml";
-
     public static final String UNKNOWN = "unknown";
 
     public static final String DEFAULT_ALTID_TYPE = UNKNOWN;

@@ -64,6 +64,7 @@ import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -673,8 +674,7 @@ public class ConnectionUtility {
 
         final HttpResponse httpResponse;
         try {
-            final HttpEntity entity =
-                new StringEntity(body, Constants.DEFAULT_MIME_TYPE, XmlUtility.CHARACTER_ENCODING);
+            final HttpEntity entity = new StringEntity(body, MimeTypes.TEXT_XML, XmlUtility.CHARACTER_ENCODING);
             final HttpPut httpPut = new HttpPut(url);
             httpPut.setEntity(entity);
             httpResponse = getHttpClient(url).execute(httpPut);

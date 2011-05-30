@@ -394,21 +394,6 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     // TODO ContentModelHandlerRetrieve ?
     private Map<String, Object> getMdRecordDefinitionsValues(final ContentModel contentModel)
         throws IntegritySystemException, WebserverSystemException {
-
-        // get name and schema-href for every md-record datastream definition
-        // from DC_COMPOSITE datastream
-
-        // <dsCompositeModel
-        // xmlns="info:fedora/fedora-system:def/dsCompositeModel#"
-        // xmlns:schema="http://ecm.sourceforge.net/types/dscompositeschema/0/1/#">
-        // <dsTypeModel ID="escidoc">
-        // <form MIME="text/xml"/>
-        // <extensions name="SCHEMA">
-        // <schema:schema type="xsd" datastream="escidoc_xsd"/>
-        // </extensions>
-        // </dsTypeModel>
-        // </dsCompositeModel>
-
         final Map<String, Object> values = new HashMap<String, Object>();
         final Collection<Map<String, String>> mdRecordDefinitions = new ArrayList<Map<String, String>>();
 

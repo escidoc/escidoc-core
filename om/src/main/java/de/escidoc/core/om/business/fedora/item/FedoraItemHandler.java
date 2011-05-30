@@ -45,6 +45,7 @@ import java.util.TreeMap;
 
 import javax.xml.stream.XMLStreamException;
 
+import org.esidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,7 +150,7 @@ import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
  * system or get xmlData from the system.
  * <p/>
  * The private set methods take strings of xmlData as parameter and handling objects of type {@link Datastream
- * Datastream} that hold the xmlData in an Item or Component object.
+ * Stream} that hold the xmlData in an Item or Component object.
  * <p/>
  * To split incoming xmlData into the datastreams it consists of, the {@link StaxParser StaxParser} is used. In order to
  * modify datastreams or handle values provided in datastreams more than one Handler (implementations of {@link
@@ -758,7 +759,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
-        final Datastream newMDS = new Datastream(name, getItem().getId(), xmlDataBytes, Datastream.MIME_TYPE_TEXT_XML);
+        final Datastream newMDS = new Datastream(name, getItem().getId(), xmlDataBytes, MimeTypes.TEXT_XML);
         newMDS.addAlternateId(Datastream.METADATA_ALTERNATE_ID); // this is the
         // reason for
         // setMdRecord etc.
@@ -975,7 +976,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         EncodingSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
-        content.setMimeType(Datastream.MIME_TYPE_TEXT_XML);
+        content.setMimeType(MimeTypes.TEXT_XML);
 
         if ("version-history".equals(resourceName)) {
             try {
@@ -1910,36 +1911,13 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     private static void setMetadataRecord(final String name, final String xml, final Map<String, String> mdAttributes)
         throws SystemException {
-
         // this method must be reimplemented to use set-method in item
         throw new SystemException("Not yet implemented.");
-        // Datastream oldDs = null;
-        // Datastream newDs = null;
-        //
-        // byte[] xmlBytes = null;
-        // try {
-        // xmlBytes = xml.getBytes(XmlUtility.CHARACTER_ENCODING);
-        // }
-        // catch (final UnsupportedEncodingException e) {
-        // throw new EncodingSystemException(e.getMessage(), e);
-        // }
-        //
-        // newDs = new Datastream(name, getItem().getId(), xmlBytes,
-        // "text/xml");
-        // newDs.addAlternateId("metadata");
-        // newDs.addAlternateId(mdAttributes.get("type"));
-        // newDs.addAlternateId(mdAttributes.get("schema"));
-        //
-        // oldDs = getItem().getMdRecord(name);
-        //
-        // if (!oldDs.equals(newDs)) { // TODO check if update is allowed
-        // getItem().setMdRecord(name, newDs);
-        // }
     }
 
     /**
-     * Creates Datastream objects from the ByteArrayOutputStreams in <code>mdMap</code> and calls Item.setMdRecords with
-     * a HashMap which contains the metadata datastreams as Datastream objects.
+     * Creates Stream objects from the ByteArrayOutputStreams in <code>mdMap</code> and calls Item.setMdRecords with
+     * a HashMap which contains the metadata datastreams as Stream objects.
      *
      * @param mdMap           A HashMap which contains the metadata datastreams as ByteArrayOutputStream.
      * @param mdAttributesMap A HashMap which contains the metadata attributes.
@@ -1970,7 +1948,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
                 }
                 final Datastream ds =
-                    new Datastream(name, getItem().getId(), xmlBytes, Datastream.MIME_TYPE_TEXT_XML, mdProperties);
+                    new Datastream(name, getItem().getId(), xmlBytes, MimeTypes.TEXT_XML, mdProperties);
                 final Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
                 ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
                 ds.addAlternateId(mdRecordAttributes.get("type"));
@@ -1982,8 +1960,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     /**
-     * Creates Datastream objects from the values in <code>contentStreamMap</code> and calls Item.setContentStreams with
-     * a HashMap which contains the metadata datastreams as Datastream objects.
+     * Creates Stream objects from the values in <code>contentStreamMap</code> and calls Item.setContentStreams with
+     * a HashMap which contains the metadata datastreams as Stream objects.
      *
      * @param contentStreamMap A HashMap which contains the metadata datastreams as ByteArrayOutputStream.
      * @throws IntegritySystemException e
@@ -2079,8 +2057,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 LOGGER.debug("New Items has to be in public-status '" + StatusType.PENDING + "'.");
             }
             item.getProperties().getObjectProperties().setStatus(StatusType.PENDING);
-            // item.getProperties().getObjectProperties().setStatusComment(
-            // "Object created");
         }
     }
 

@@ -49,6 +49,7 @@ import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.GetObjectProfilePathParam;
 import org.escidoc.core.services.fedora.GetObjectProfileQueryParam;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -466,7 +467,7 @@ public class GenericResource implements FedoraResource {
 
         // TODO for resources that don't use versions could the RELS-EXT set to
         // override mode
-        setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, this.id, relsExt, Datastream.MIME_TYPE_TEXT_XML));
+        setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, this.id, relsExt, MimeTypes.TEXT_XML));
     }
 
     /**
@@ -781,7 +782,7 @@ public class GenericResource implements FedoraResource {
     // -------------------------------------------------------------------------
 
     /**
-     * Get a new, virgin Datastream.
+     * Get a new, virgin Stream.
      *
      * @return datastream
      * @throws StreamNotFoundException Thrown if the datastream was not found.
@@ -796,7 +797,7 @@ public class GenericResource implements FedoraResource {
     }
 
     /**
-     * Set Datastream to the resource.
+     * Set Stream to the resource.
      *
      * @param ds The datastream.
      * @throws StreamNotFoundException Thrown if the datastream was not found.
@@ -813,7 +814,7 @@ public class GenericResource implements FedoraResource {
         }
         // check if datastream is set, is equal to ds and save to fedora
         try {
-            // FIXME the getDatastream method delivers an virgin Datastream. Is
+            // FIXME the getDatastream method delivers an virgin Stream. Is
             // this compare really necessary (Ok, this prevents writing of
             // unused data streams.)?
             final Datastream curDs = getDatastream();
@@ -833,7 +834,7 @@ public class GenericResource implements FedoraResource {
 
         // // don't forget to update
         // // TODO check if the new introduced return value of the
-        // Datastream.merge
+        // Stream.merge
         // // method makes this update redundant!
         // setLastModificationDate(getFedoraUtility().getLastModificationDate(
         // this.id));
@@ -1150,8 +1151,8 @@ public class GenericResource implements FedoraResource {
             }
             else {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Datastream " + getId() + '/' + name + " not instanziated in GenericResource.<init>"
-                        + '.');
+                    LOGGER
+                        .debug("Stream " + getId() + '/' + name + " not instanziated in GenericResource.<init>" + '.');
                 }
             }
         }

@@ -168,7 +168,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 bin.setRedirectUrl(content.getLocation());
             }
             else {
-                // bin content can be got with the Datastream (getContent()),
+                // bin content can be got with the Stream (getContent()),
                 // but try to stream
                 String fedoraLocalUrl = "/get/" + component.getId() + "/content";
                 if (getItem().getVersionDate() != null) {

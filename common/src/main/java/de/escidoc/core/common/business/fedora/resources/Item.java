@@ -53,7 +53,11 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -410,7 +414,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         if (this.dc == null) {
             final Datastream ds;
             try {
-                ds = new Datastream("DC", getId(), getVersionDate());
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
+                ds = new Datastream("DC", getId(), versionDate);
             }
             catch (final StreamNotFoundException e) {
                 throw new WebserverSystemException(e);
@@ -429,7 +436,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * (non-Javadoc)
      * 
      * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
-     * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
+     * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     public void setDc(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
         // TODO should lock only be checked in handler?
@@ -571,7 +578,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * (non-Javadoc)
      * 
      * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource #setMdRecord(java.lang.String,
-     * de.escidoc.core.common.business.fedora.datastream.Datastream)
+     * de.escidoc.core.common.business.fedora.datastream.Stream)
      */
 
     @Override
@@ -633,7 +640,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                                 try {
                                     dcNew =
                                         new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML);
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
@@ -932,28 +939,37 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             final Datastream ds;
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
-                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
+                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.mdRecords.put(name, ds);
             }
             else if (altIDs.contains("content-stream")) {
                 // found content-stream
-                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
+                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.contentStreams.put(name, ds);
             }
             // content-model-specific
             else if ("content-model-specific".equals(name)) {
-                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
+                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.cts = ds;
             }
             else {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Datastream " + getId() + '/' + name + " not instanziated in Item.<init>.");
+                    LOGGER.debug("Stream " + getId() + '/' + name + " not instanziated in Item.<init>.");
                 }
             }
         }

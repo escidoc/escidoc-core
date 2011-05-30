@@ -45,6 +45,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit;
+import org.esidoc.core.utils.io.MimeTypes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -82,7 +83,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
 
         // iterate over md-record names (keys) with
         for (final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : xml.entrySet()) {
-            // for every retrieved md-record XML create a Datastream
+            // for every retrieved md-record XML create a Stream
             Map<String, String> mdProperties = null;
             if (stringByteArrayOutputStreamEntry.getKey().equals(OrganizationalUnit.ESCIDOC)) {
                 mdProperties = new HashMap<String, String>();
@@ -90,8 +91,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
             }
             final Datastream ds =
                 new Datastream(stringByteArrayOutputStreamEntry.getKey(), getOrganizationalUnit().getId(),
-                    stringByteArrayOutputStreamEntry.getValue().toByteArray(), Datastream.MIME_TYPE_TEXT_XML,
-                    mdProperties);
+                    stringByteArrayOutputStreamEntry.getValue().toByteArray(), MimeTypes.TEXT_XML, mdProperties);
             final Map<String, String> mdRecordAttributes =
                 mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
@@ -118,7 +118,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
 
         getOrganizationalUnit().setDc(
             new Datastream(Datastream.DC_DATASTREAM, getOrganizationalUnit().getId(), dc
-                .getBytes(XmlUtility.CHARACTER_ENCODING), Datastream.MIME_TYPE_TEXT_XML));
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
     }
 
     /**

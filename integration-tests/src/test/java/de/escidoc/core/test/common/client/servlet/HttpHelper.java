@@ -56,6 +56,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.esidoc.core.utils.io.MimeTypes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
@@ -81,8 +82,6 @@ public final class HttpHelper {
     private static final String ESCIDOC_COOKIE = "escidocCookie";
 
     public static final String HTTP_HEADER_CONTENT_TYPE = "Content-Type";
-
-    public static final String HTTP_DEFAULT_CONTENT_TYPE = "text/xml";
 
     public static final String HTTP_DEFAULT_CHARSET = "UTF-8";
 
@@ -223,7 +222,7 @@ public final class HttpHelper {
         final HttpPost httpPost = new HttpPost(url);
         HttpEntity requestEntity = null;
         if (body instanceof String) {
-            requestEntity = new StringEntity((String) body, HTTP_DEFAULT_CONTENT_TYPE, HTTP_DEFAULT_CHARSET);
+            requestEntity = new StringEntity((String) body, MimeTypes.TEXT_XML, HTTP_DEFAULT_CHARSET);
         }
         else if (body instanceof InputStream) {
             requestEntity = new InputStreamEntity((InputStream) body, -1);
@@ -257,7 +256,7 @@ public final class HttpHelper {
         final HttpPut httpPut = new HttpPut(url);
         HttpEntity requestEntity = null;
         if (body instanceof String) {
-            requestEntity = new StringEntity((String) body, HTTP_DEFAULT_CONTENT_TYPE, HTTP_DEFAULT_CHARSET);
+            requestEntity = new StringEntity((String) body, MimeTypes.TEXT_XML, HTTP_DEFAULT_CHARSET);
 
         }
         else if (body instanceof InputStream) {
