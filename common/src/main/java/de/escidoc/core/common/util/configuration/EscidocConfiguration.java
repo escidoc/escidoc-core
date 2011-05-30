@@ -143,17 +143,6 @@ public final class EscidocConfiguration {
     private static final String ONE = "1";
 
     /**
-     * This property should be set to the number of expected concurrent users.
-     */
-    public static final String ESCIDOC_CORE_AA_CACHE_USERS_SIZE = "escidoc-core.aa.cache.users.size";
-
-    /**
-     * This property should be set to the number of system objects that should be cached for a request at one point of
-     * time.
-     */
-    public static final String ESCIDOC_CORE_AA_CACHE_ATTRIBUTES_SIZE = "escidoc-core.aa.cache.attributes.size";
-
-    /**
      * This property should be set to the name of the user-attribute that defines the organizational unit the user
      * belongs to .
      */
@@ -170,11 +159,6 @@ public final class EscidocConfiguration {
      */
     public static final String ESCIDOC_CORE_AA_PERSISTENT_ID_ATTRIBUTE_NAME =
         "escidoc-core.aa.attribute-name.persistent-id";
-
-    /**
-     * This property should be set to the number of system objects that should be cached for the indexer.
-     */
-    public static final String ESCIDOC_CORE_INDEXER_CACHE_SIZE = "escidoc-core.om.indexer.cache.size";
 
     /**
      * Digilib Server (URL).

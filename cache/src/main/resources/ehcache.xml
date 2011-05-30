@@ -116,4 +116,12 @@ Used by de.escidoc.core.aa.security.cache.SecurityInterceptorCache -->
 	eternal="true" 
 	overflowToDisk="false"/>
 	
+<!-- caches eSciDoc Schema-Objects
+Used by de.escidoc.core.common.util.xml.cache.SchemasCache -->
+<cache 
+	name="schemasCache" 
+	maxElementsInMemory="100" 
+	eternal="true" 
+	overflowToDisk="false"/>
+	
 </ehcache>

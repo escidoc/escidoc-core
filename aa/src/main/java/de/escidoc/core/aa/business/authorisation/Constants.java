@@ -28,13 +28,11 @@
  */
 package de.escidoc.core.aa.business.authorisation;
 
-import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
-
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
+
+import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 
 /**
  * Some constants used in the AA component.
@@ -49,8 +47,6 @@ public final class Constants {
     public static final Pattern PATTERN_PARSE_RESOURCE_ID = Pattern.compile("([^:]*:[^:]*)(:([^:]*)){0,1}");
 
     public static final String XMLSCHEMA_STRING = "http://www.w3.org/2001/XMLSchema#string";
-
-    private static final Map<String, URI> URI_MAP = new HashMap<String, URI>();
 
     public static final URI URI_ACTION_ID;
 
@@ -101,23 +97,20 @@ public final class Constants {
     public static final String MULTI_VALUE_DELIMITER = "|";
 
     /**
-     * Gets the URI from the URI cache. Creates new URI, if it does not exists. If the provided URI string causes an
+     * Gets the URI from the given String. If the provided URI string causes an
      * error, <code>null</code> is returned.
      *
      * @param uriString The string defining the URI.
      * @return Returns the URI for the provided string or <code>null</code>.
      */
-    public static URI getURI(final String uriString) {
+    private static URI getURI(final String uriString) {
 
-        URI uri = URI_MAP.get(uriString);
-        if (uri == null) {
-            try {
-                uri = new URI(uriString);
-                URI_MAP.put(uriString, uri);
-            }
-            catch (final URISyntaxException e) {
-                uri = null;
-            }
+        URI uri;
+        try {
+            uri = new URI(uriString);
+        }
+        catch (final URISyntaxException e) {
+            uri = null;
         }
         return uri;
     }
