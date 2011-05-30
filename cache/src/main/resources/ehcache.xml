@@ -100,4 +100,20 @@ Used by de.escidoc.core.aa.business.cache.RequestAttributesCache -->
 	overflowToDisk="false" 
 	timeToIdleSeconds="10"/>
 	
+<!-- caches eSciDoc-XML resources for XACML-Evaluation
+Used by de.escidoc.core.common.util.security.cache.DocumentsCache -->
+<cache 
+	name="documentsCache" 
+	maxElementsInMemory="20" 
+	eternal="true" 
+	overflowToDisk="false"/>
+	
+<!-- caches eSciDoc Method Mappings
+Used by de.escidoc.core.aa.security.cache.SecurityInterceptorCache -->
+<cache 
+	name="mappingsCache" 
+	maxElementsInMemory="500" 
+	eternal="true" 
+	overflowToDisk="false"/>
+	
 </ehcache>

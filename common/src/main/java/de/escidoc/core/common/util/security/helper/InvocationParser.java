@@ -20,37 +20,8 @@
 
 package de.escidoc.core.common.util.security.helper;
 
-import com.sun.xacml.EvaluationCtx;
-import com.sun.xacml.attr.StringAttribute;
-import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.security.persistence.InvocationMapping;
-import de.escidoc.core.common.util.security.persistence.MethodMapping;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import org.apache.commons.collections.map.LRUMap;
-import org.apache.xpath.XPathAPI;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -58,6 +29,33 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.xml.transform.TransformerException;
+
+import org.apache.xpath.XPathAPI;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import com.sun.xacml.EvaluationCtx;
+import com.sun.xacml.attr.StringAttribute;
+
+import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.security.cache.DocumentsCache;
+import de.escidoc.core.common.util.security.persistence.InvocationMapping;
+import de.escidoc.core.common.util.security.persistence.MethodMapping;
+import de.escidoc.core.common.util.service.UserContext;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * @author Roland Werner (Accenture)
@@ -77,58 +75,9 @@ public class InvocationParser {
 
     private static final Matcher matcherSubresource = PATTERN_SUBRESOURCE.matcher("");
 
-    private static final int CACHE_SIZE = 20;
-
-    private final DocumentCache documentCache = new DocumentCache(CACHE_SIZE);
-
-    /**
-     * Cache for xml <code>Document</code> objects.<br> This cache is used to avoid multiple parsing of the same
-     * document. It provides an method to retrieve a document with creation of not found documents. It uses a
-     * <code>LRUMap</code> that is synchronized (via {@link Collections}.synchronizedMap({@link Map})).
-     *
-     * @author Torsten Tetteroo
-     */
-    private static final class DocumentCache {
-
-        private final Map<Object, Document> map;
-
-        /**
-         * Creates cache of specified size.
-         *
-         * @param size The number of elements in the cache.
-         */
-        @SuppressWarnings("unchecked")
-        private DocumentCache(final int size) {
-
-            this.map = Collections.synchronizedMap(new LRUMap(size));
-        }
-
-        /**
-         * Retrieves the document for the provided document data.<br> If it does not exist in the cache, it will be
-         * created from the document data and saved.
-         *
-         * @param documentData The object to get the xml document for, or <code>null</code> in case of an error.
-         * @return Returns the xml <code>Document</code> object representing the provided xml data.
-         * @throws IOException                  Thrown in case of an i/o error.
-         * @throws ParserConfigurationException Thrown in case of an error in parser configuration
-         * @throws SAXException                 Thrown in case of a parse error
-         * @throws java.io.UnsupportedEncodingException
-         */
-        public Document retrieveDocument(final Object documentData) throws IOException, ParserConfigurationException,
-            SAXException, UnsupportedEncodingException {
-
-            Document document = map.get(documentData);
-            if (document == null) {
-                final DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-                document =
-                    builder.parse(new ByteArrayInputStream(((String) documentData)
-                        .getBytes(XmlUtility.CHARACTER_ENCODING)));
-                map.put(documentData, document);
-            }
-
-            return document;
-        }
-    }
+    @Autowired
+    @Qualifier("security.DocumentsCache")
+    private DocumentsCache documentsCache;
 
     /**
      * Builds a {@link List} of {@link Map} objects that are holding the attributes for a authorization request to the
@@ -353,7 +302,7 @@ public class InvocationParser {
                 // fetch the value from XML document
                 final Document document;
                 try {
-                    document = documentCache.retrieveDocument(currentObject);
+                    document = documentsCache.retrieveDocument(currentObject);
                 }
                 catch (final SAXException e) {
                     throw new XmlCorruptedException(StringUtility.format("Parsing of provided XML data failed. ", e

@@ -28,18 +28,21 @@
  */
 package de.escidoc.core.aa.security.cache;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import com.googlecode.ehcache.annotations.Cacheable;
+import com.googlecode.ehcache.annotations.KeyGenerator;
+import com.googlecode.ehcache.annotations.Property;
+
+import de.escidoc.core.aa.security.aop.SecurityInterceptor;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.security.persistence.MethodMappingList;
 import de.escidoc.core.common.util.security.persistence.RequestMappingDaoInterface;
 import de.escidoc.core.common.util.string.StringUtility;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Cache used in the {@link SecurityInterceptor} to avoid accesses to the database.<br>
@@ -50,24 +53,11 @@ import java.util.TreeMap;
 public class SecurityInterceptorCache {
 
     /**
-     * Cache for method mappings.
-     */
-    private final Map<String, MethodMappingList> mappingsCache = new TreeMap<String, MethodMappingList>();
-
-    /**
      * The data access object to access request mappings.
      */
     @Autowired
     @Qualifier("persistence.HibernateRequestMappingDao")
     private RequestMappingDaoInterface requestMappingDao;
-
-    /**
-     * Clears the cache.
-     */
-    public final void clear() {
-
-        mappingsCache.clear();
-    }
 
     /**
      * Gets the method mapping for the provided class name and method name. <br> If the mappings are not stored within
@@ -78,25 +68,21 @@ public class SecurityInterceptorCache {
      * @return Returns the method mappings.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public synchronized MethodMappingList getMethodMappings(final String className, final String methodName)
+    @Cacheable(cacheName = "mappingsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public MethodMappingList getMethodMappings(final String className, final String methodName)
         throws WebserverSystemException {
+        MethodMappingList methodMappings;
+        try {
+            methodMappings = retrieveMethodMappings(className, methodName);
+        }
+        catch (final Exception e) {
+            throw new WebserverSystemException("Exception during method mappings retrieval. ", e);
+        }
 
-        final String key = StringUtility.concatenateWithColon(className, methodName).toString();
-        MethodMappingList methodMappings = mappingsCache.get(key);
-
-        if (methodMappings == null) {
-            try {
-                methodMappings = retrieveMethodMappings(className, methodName);
-            }
-            catch (final Exception e) {
-                throw new WebserverSystemException("Exception during method mappings retrieval. ", e);
-            }
-
-            if (methodMappings == null || methodMappings.sizeBefore() == 0 && methodMappings.sizeAfter() == 0) {
-                final String errorMsg = StringUtility.format("No mapping found for key", key);
-                throw new WebserverSystemException(errorMsg);
-            }
-            mappingsCache.put(key, methodMappings);
+        if (methodMappings == null || methodMappings.sizeBefore() == 0 && methodMappings.sizeAfter() == 0) {
+            final String errorMsg =
+                StringUtility.format("No mapping found for class ", className, " and method ", methodName);
+            throw new WebserverSystemException(errorMsg);
         }
         return methodMappings;
     }
