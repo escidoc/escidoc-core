@@ -1,6 +1,7 @@
 package org.escidoc.core.services.fedora;
 
 import net.sf.oval.guard.Guarded;
+import org.esidoc.core.utils.io.MimeTypes;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public final class ModifyDatastreamQueryParam {
     private DatastreamState dsState;
     private String formatURI;
     private ChecksumType checksumType;
-    private String mimeType;
+    private String mimeType = MimeTypes.TEXT_XML;
     private String logMessage;
     private Boolean ignoreContent;
     private String lastModifiedDate;
