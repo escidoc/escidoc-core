@@ -53,7 +53,6 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.om.service.result.EscidocServiceRedirect;
@@ -140,34 +139,30 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             throw new AuthorizationException("The Content of the component " + componentId
                 + " has visibility 'private'.");
         }
-        final Datastream content = component.getContent();
-
-        final String storage = content.getControlGroup();
         final EscidocBinaryContent bin = new EscidocBinaryContent();
 
         final Map<String, String> properties = component.getResourceProperties();
-        String fileName;
 
-        if (component.getMdRecords().containsKey(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
-            && !component.getMdRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING).isDeleted()) {
-            fileName = properties.get(Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
-            if (fileName == null || fileName.length() == 0) {
-                fileName = "Content of component " + componentId;
-            }
+        // set file name
+        final String fileName = properties.get(Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
+        if (fileName != null && fileName.length() > 0) {
+            bin.setFileName(fileName);
         }
         else {
-            fileName = "Content of component " + componentId;
+            bin.setFileName("Content of component " + componentId);
         }
-        bin.setFileName(fileName);
 
-        final String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
-        bin.setMimeType(mimeType);
+        // set mime type
+        bin.setMimeType(properties.get(TripleStoreUtility.PROP_MIME_TYPE));
 
-        try {
-            if ("R".equals(storage)) {
-                bin.setRedirectUrl(content.getLocation());
-            }
-            else {
+        final Datastream content = component.getContent();
+        final String storage = content.getControlGroup();
+
+        if ("R".equals(storage)) {
+            bin.setRedirectUrl(content.getLocation());
+        }
+        else {
+            try {
                 // bin content can be got with the Stream (getContent()),
                 // but try to stream
                 String fedoraLocalUrl = "/get/" + component.getId() + "/content";
@@ -176,9 +171,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 }
                 bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
             }
-        }
-        catch (final Exception e) {
-            throw new WebserverSystemException(e);
+            catch (final Exception e) {
+                throw new WebserverSystemException(e);
+            }
         }
 
         return bin;
@@ -222,7 +217,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         final String visibility = component.getResourceProperties().get(TripleStoreUtility.PROP_VISIBILITY);
 
         if ("private".equals(visibility) && UserContext.isRetrieveRestrictedToReleased()) {
-            throw new AuthorizationException("The Content of the component " + componentId
+            throw new AuthorizationException("The content of the component " + componentId
                 + " has visibility 'private'.");
         }
         final Datastream content = component.getContent();
@@ -242,9 +237,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             throw new WebserverSystemException("Internal content URL corrupt.", e1);
         }
 
-        final String fileName = component.getResourceProperties().get(TripleStoreUtility.PROP_FILENAME);
-
-        getBinaryContent(bin, url, fileName);
+        bin.setContent(getFedoraUtility().requestFedoraURL(url.toString()));
+        bin.setFileName(component.getResourceProperties().get(
+            de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
 
         return bin;
     }
