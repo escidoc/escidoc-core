@@ -40,9 +40,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.sun.xacml.EvaluationCtx;
+import com.sun.xacml.attr.BagAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
 
+import de.escidoc.core.aa.business.authorisation.Constants;
+import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.aa.business.stax.handler.ComponentStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.ContainerStaxHandler;
@@ -439,7 +442,8 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     private void handleCache(final ComponentStaxHandler staxHandler) {
         HashMap<String, String> attributes = staxHandler.getAttributes();
         for (final Entry<String, String> entry : attributes.entrySet()) {
-            putInCache(staxHandler.getComponentId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+            putInCache(staxHandler.getComponentId(), null, null, entry.getKey(), staxHandler.getCtx(),
+                CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
     }
 
@@ -451,15 +455,18 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     private void handleCache(final ItemStaxHandler staxHandler) {
         HashMap<String, String> stringAttributes = staxHandler.getStringAttributes();
         for (final Entry<String, String> entry : stringAttributes.entrySet()) {
-            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
+                CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
         HashMap<String, String> superAttributes = staxHandler.getSuperAttributes();
         for (final Entry<String, String> entry : superAttributes.entrySet()) {
-            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
+                CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
         HashMap<String, Collection<StringAttribute>> attributeAttributes = staxHandler.getAttributeAttributes();
         for (final Entry<String, Collection<StringAttribute>> entry : attributeAttributes.entrySet()) {
-            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
+                new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, entry.getValue())));
         }
     }
 
@@ -471,15 +478,18 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     private void handleCache(final ContainerStaxHandler staxHandler) {
         HashMap<String, String> stringAttributes = staxHandler.getStringAttributes();
         for (final Entry<String, String> entry : stringAttributes.entrySet()) {
-            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
+                CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
         HashMap<String, String> superAttributes = staxHandler.getSuperAttributes();
         for (final Entry<String, String> entry : superAttributes.entrySet()) {
-            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
+                CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
         HashMap<String, Collection<StringAttribute>> attributeAttributes = staxHandler.getAttributeAttributes();
         for (final Entry<String, Collection<StringAttribute>> entry : attributeAttributes.entrySet()) {
-            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(), entry.getValue());
+            putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
+                new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, entry.getValue())));
         }
     }
 
