@@ -627,7 +627,10 @@ public class Container extends GenericVersionableResourcePid implements Containe
         // old timestamp instead of null.
         try {
             if (this.escidocRelsExt != null) {
-                this.escidocRelsExt.setStream(getRelsExt().getStream());
+                boolean updated = this.escidocRelsExt.updateStream(getRelsExt().getStream());
+                if (updated) {
+                    this.escidocRelsExt.merge();
+                }
             }
             else {
                 this.escidocRelsExt =

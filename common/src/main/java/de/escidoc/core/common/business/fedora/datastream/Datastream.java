@@ -112,7 +112,7 @@ public class Datastream {
 
     private String md5Hash;
 
-    private String controlGroupValue = "X";
+    private String controlGroupValue = CONTROL_GROUP_INTERNAL_XML;
 
     private Map<String, String> properties;
 
@@ -212,13 +212,13 @@ public class Datastream {
     }
 
     /**
-     * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora
-     * or not. Maybe there is no such datastream in Fedora.
+     * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora or
+     * not. Maybe there is no such datastream in Fedora.
      *
-     * @param name      The name of this datastream
-     * @param parentId  The ID of the parent of this datastream.
-     * @param stream The string representing the content of this datastream.
-     * @param mimeType  TODO
+     * @param name     The name of this datastream
+     * @param parentId The ID of the parent of this datastream.
+     * @param stream   The string representing the content of this datastream.
+     * @param mimeType TODO
      */
     public Datastream(@NotNull
     final String name, @NotNull
@@ -226,14 +226,13 @@ public class Datastream {
     final byte[] stream, final String mimeType) {
         this.name = name;
         this.parentId = parentId;
-        this.stream = stream;
-        updateMD5Hash(stream);
+        this.setStream(stream);
         this.mimeType = mimeType;
     }
 
     /**
-     * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora
-     * or not. Maybe there is no such datastream in Fedora.
+     * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora or
+     * not. Maybe there is no such datastream in Fedora.
      *
      * @param name     The name of this datastream
      * @param parentId The ID of the parent of this datastream.
@@ -261,12 +260,12 @@ public class Datastream {
     }
 
     /**
-     * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora
-     * or not. Maybe there is no such datastream in Fedora.
+     * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora or
+     * not. Maybe there is no such datastream in Fedora.
      *
      * @param name       The name of this datastream
      * @param parentId   The ID of the parent of this datastream.
-     * @param stream  The string representing the content of this datastream.
+     * @param stream     The string representing the content of this datastream.
      * @param mimeType   The MIME type of this datastream.
      * @param properties Map with properties of this datastream
      */
@@ -276,8 +275,7 @@ public class Datastream {
     final byte[] stream, final String mimeType, final Map<String, String> properties) {
         this.name = name;
         this.parentId = parentId;
-        this.stream = stream;
-        updateMD5Hash(stream);
+        this.setStream(stream);
         this.mimeType = mimeType;
         this.properties = properties;
     }
@@ -304,18 +302,6 @@ public class Datastream {
         }
         else {
             this.timestamp = datastreamProfileTO.getDsCreateDate();
-        }
-    }
-
-    private void updateMD5Hash(final byte[] stream) {
-        try {
-            this.md5Hash = XmlUtility.getMd5Hash(stream);
-        }
-        catch (ParserConfigurationException e) {
-            throw new RuntimeException("Error on initialising MD5 hash.", e);
-        }
-        catch (SAXException e) {
-            throw new RuntimeException("Error on initialising MD5 hash.", e);
         }
     }
 
@@ -358,7 +344,7 @@ public class Datastream {
             this.updateDatastream(datastreamProfile);
         }
         else if (this.getStream() != null) {
-            if ("X".equals(this.getControlGroup())) {
+            if (CONTROL_GROUP_INTERNAL_XML.equals(this.getControlGroup())) {
                 final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(this.parentId, this.name);
                 final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                 query.setDsLabel(this.label);
@@ -381,7 +367,7 @@ public class Datastream {
                     addDatastream(stream);
                 }
             }
-            else if (this.getControlGroup().equals(CONTROL_GROUP_MANAGED)) {
+            else if (CONTROL_GROUP_MANAGED.equals(this.getControlGroup())) {
                 String tempURI = null;
                 try {
                     tempURI = this.utility.upload(this.getStream(), this.parentId + this.name, MimeTypes.TEXT_XML);
@@ -484,8 +470,8 @@ public class Datastream {
     }
 
     /**
-     * Returns a {@link java.util.Set Set} of the alternate IDs of this datastream. Metadata datastreams have the alternate ID
-     * "metadata".
+     * Returns a {@link java.util.Set Set} of the alternate IDs of this datastream. Metadata datastreams have the
+     * alternate ID "metadata".
      *
      * @return The alternate IDs of this datastream.
      */
@@ -504,8 +490,8 @@ public class Datastream {
     }
 
     /**
-     * Replaces an alternate ID in the {@link java.util.List List} of the alternate IDs of this datastream. A
-     * subsequent call with the same string have no effect. A value off <code>null</code> may be forbidden.
+     * Replaces an alternate ID in the {@link java.util.List List} of the alternate IDs of this datastream. A subsequent
+     * call with the same string have no effect. A value off <code>null</code> may be forbidden.
      *
      * @param alternateId An alternate ID to add to this Stream.
      * @param index       position to insert ID
@@ -539,36 +525,91 @@ public class Datastream {
      * @return The string which is the datastream in Fedora.
      * @throws WebserverSystemException If an error ocurres.
      */
-    public byte[] getStream() throws WebserverSystemException {
+    public byte[] getStream() {
         // Workaround for the issue INFR666, now the content of a data stream
         // with a managed content should be pulled
         if (this.stream == null && ("X".equals(this.controlGroupValue) || "M".equals(this.controlGroupValue))) {
-            final MIMETypedStream mimeTypedStream;
             try {
-                String timestampString = null;
-                if (this.timestamp != null) {
-                    timestampString =
-                        this.timestamp.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
-                }
-                mimeTypedStream =
-                    this.fedoraUtility.getDatastreamWithMimeType(this.name, this.parentId, timestampString);
+                loadStreamFromFedora();
             }
-            catch (final FedoraSystemException e) {
-                throw new WebserverSystemException(StringUtility.format("Content of datastream could not be retrieved "
-                    + "from Fedora after succesfully get " + "datastream information", this.name, this.parentId,
-                    this.timestamp), e);
+            catch (WebserverSystemException e) {
+                throw new RuntimeException("Error on loading datastream from Fedora.");
             }
-
-            if (mimeTypedStream == null) {
-                throw new WebserverSystemException("Stream is 'null' after retrieving "
-                    + "datastream from Fedora without exception.");
-            }
-
-            this.stream = mimeTypedStream.getStream();
-            updateMD5Hash(this.stream);
         }
-
         return this.stream;
+    }
+
+    private void loadStreamFromFedora() throws WebserverSystemException {
+        final MIMETypedStream mimeTypedStream;
+        try {
+            String timestampString = null;
+            if (this.timestamp != null) {
+                timestampString = this.timestamp.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+            }
+            mimeTypedStream = this.fedoraUtility.getDatastreamWithMimeType(this.name, this.parentId, timestampString);
+        }
+        catch (final FedoraSystemException e) {
+            throw new WebserverSystemException(StringUtility.format("Content of datastream could not be retrieved "
+                + "from Fedora after succesfully get " + "datastream information", this.name, this.parentId,
+                this.timestamp), e);
+        }
+        if (mimeTypedStream == null) {
+            throw new WebserverSystemException("Stream is 'null' after retrieving "
+                + "datastream from Fedora without exception.");
+        }
+        this.setStream(mimeTypedStream.getStream());
+    }
+
+    public void setStream(final byte[] stream) {
+        this.stream = stream;
+        this.updateMd5Hash();
+    }
+
+    /**
+     * Updates the string representing the datastream. The datastream may not be concurrent with Fedora unless
+     * <code>save()</code> is called.
+     *
+     * @param stream The string representing the content of this datastream.
+     */
+    public boolean updateStream(final byte[] stream) {
+        final String newMd5 = calculateMd5Hash(stream);
+        if (!getMd5Hash().equals(newMd5)) {
+            this.setStream(stream);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns the md5 checksum of the content of this datastream. The {@link de.escidoc.core.common.util.stax.XMLHashHandler
+     * XMLHashHandler} is used to generate a comparable string from the xml data and calculate the checksum.
+     *
+     * @return The md5 hash of the content of this datastream.
+     */
+    private String getMd5Hash() {
+        if (this.md5Hash == null) {
+            updateMd5Hash();
+        }
+        return this.md5Hash;
+    }
+
+    private void updateMd5Hash() {
+        this.md5Hash = calculateMd5Hash(this.getStream());
+    }
+
+    private String calculateMd5Hash(final byte[] stream) {
+        if (stream == null) {
+            return null;
+        }
+        try {
+            return XmlUtility.getMd5Hash(stream);
+        }
+        catch (ParserConfigurationException e) {
+            throw new RuntimeException("Error on creating checksum of datastream..", e);
+        }
+        catch (SAXException e) {
+            throw new RuntimeException("Error on creating checksum of datastream.", e);
+        }
     }
 
     /**
@@ -630,35 +671,6 @@ public class Datastream {
     }
 
     /**
-     * Sets the string representing the datastream. The datastream may not be concurrent with Fedora unless
-     * <code>save()</code> is called.
-     *
-     * @param stream The string representing the content of this datastream.
-     * @throws FedoraSystemException    If an error ocurres in Fedora.
-     * @throws WebserverSystemException Thrown in case of an internal error.
-     * @throws StreamNotFoundException  If the stream can not be retrieved.
-     */
-    public void setStream(final byte[] stream) throws FedoraSystemException, WebserverSystemException,
-        StreamNotFoundException {
-
-        try {
-            final String newMd5 = XmlUtility.getMd5Hash(stream);
-            if (!getMd5Hash().equals(newMd5)) {
-                this.stream = stream;
-                this.md5Hash = newMd5;
-                merge();
-            }
-        }
-        catch (final ParserConfigurationException e) {
-            throw new WebserverSystemException("Creating checksum of datastream fails.", e);
-        }
-        catch (final SAXException e) {
-            throw new WebserverSystemException("Creating checksum of datastream fails.", e);
-        }
-
-    }
-
-    /**
      * Returns the label of this datastream.
      *
      * @return The label of this datastream.
@@ -668,25 +680,13 @@ public class Datastream {
     }
 
     /**
+     *
      * Sets the label of this datastream.
      *
      * @param label The label of this datastream.
      */
     public void setLabel(final String label) {
         this.label = label;
-    }
-
-    /**
-     * Returns the md5 checksum of the content of this datastream. The {@link de.escidoc.core.common.util.stax.XMLHashHandler
-     * XMLHashHandler} is used to generate a comparable string from the xml data and calculate the checksum.
-     *
-     * @return The md5 hash of the content of this datastream.
-     * @throws ParserConfigurationException by (SAXParserFactory).newSAXParser()
-     * @throws SAXException                 by (SAXParserFactory).newSAXParser() and (SAXParser).parser()
-     * @throws WebserverSystemException     If an error ocurres.
-     */
-    public String getMd5Hash() throws ParserConfigurationException, SAXException, WebserverSystemException {
-        return this.md5Hash;
     }
 
     /**
@@ -735,19 +735,16 @@ public class Datastream {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         final Datastream that = (Datastream) o;
-
-        if (md5Hash != null ? !md5Hash.equals(that.md5Hash) : that.md5Hash != null) {
-            return false;
-        }
         if (!name.equals(that.name)) {
             return false;
         }
         if (!parentId.equals(that.parentId)) {
             return false;
         }
-
+        if (getMd5Hash() != null ? !getMd5Hash().equals(that.getMd5Hash()) : that.getMd5Hash() != null) {
+            return false;
+        }
         return true;
     }
 
@@ -755,7 +752,7 @@ public class Datastream {
     public int hashCode() {
         int result = name.hashCode();
         result = 31 * result + parentId.hashCode();
-        result = 31 * result + (md5Hash != null ? md5Hash.hashCode() : 0);
+        result = 31 * result + (getMd5Hash() != null ? getMd5Hash().hashCode() : 0);
         return result;
     }
 }
