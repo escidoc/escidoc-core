@@ -53,7 +53,6 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.om.service.result.EscidocServiceRedirect;
@@ -71,7 +70,7 @@ import java.util.regex.Pattern;
 
 /**
  * Content relevant methods for Item.
- *
+ * 
  * @author Steffen Wagner
  */
 public class ItemHandlerContent extends ItemHandlerUpdate {
@@ -96,7 +95,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     private final Map<String, String> templates = new HashMap<String, String>();
 
     /**
-     * @param id objid of Item
+     * @param id
+     *            objid of Item
      * @param componentId
      * @return EscidocBinaryContent
      * @see ItemHandlerInterface#retrieveContent(String, String)
@@ -140,34 +140,30 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             throw new AuthorizationException("The Content of the component " + componentId
                 + " has visibility 'private'.");
         }
-        final Datastream content = component.getContent();
-
-        final String storage = content.getControlGroup();
         final EscidocBinaryContent bin = new EscidocBinaryContent();
 
         final Map<String, String> properties = component.getResourceProperties();
-        String fileName;
 
-        if (component.getMdRecords().containsKey(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
-            && !component.getMdRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING).isDeleted()) {
-            fileName = properties.get(Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
-            if (fileName == null || fileName.length() == 0) {
-                fileName = "Content of component " + componentId;
-            }
+        // set file name
+        final String fileName = properties.get(Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
+        if (fileName != null && fileName.length() > 0) {
+            bin.setFileName(fileName);
         }
         else {
-            fileName = "Content of component " + componentId;
+            bin.setFileName("Content of component " + componentId);
         }
-        bin.setFileName(fileName);
 
-        final String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
-        bin.setMimeType(mimeType);
+        // set mime type
+        bin.setMimeType(properties.get(TripleStoreUtility.PROP_MIME_TYPE));
 
-        try {
-            if ("R".equals(storage)) {
-                bin.setRedirectUrl(content.getLocation());
-            }
-            else {
+        final Datastream content = component.getContent();
+        final String storage = content.getControlGroup();
+
+        if ("R".equals(storage)) {
+            bin.setRedirectUrl(content.getLocation());
+        }
+        else {
+            try {
                 // bin content can be got with the Datastream (getContent()),
                 // but try to stream
                 String fedoraLocalUrl = "/get/" + component.getId() + "/content";
@@ -176,9 +172,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 }
                 bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
             }
-        }
-        catch (final Exception e) {
-            throw new WebserverSystemException(e);
+            catch (final Exception e) {
+                throw new WebserverSystemException(e);
+            }
         }
 
         return bin;
@@ -186,11 +182,15 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
     /**
      * Retrieve Content filtered by a transformation service (Image Scaler, Graphic generator, ..).
-     *
-     * @param id          The id of the Item.
-     * @param componentId The id of the Component.
-     * @param transformer The name of the transformation (service).
-     * @param param       The transformation parameter as HTTP GET String.
+     * 
+     * @param id
+     *            The id of the Item.
+     * @param componentId
+     *            The id of the Component.
+     * @param transformer
+     *            The name of the transformation (service).
+     * @param param
+     *            The transformation parameter as HTTP GET String.
      * @return EscidocBinaryContent of the transformed content.
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
@@ -222,7 +222,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         final String visibility = component.getResourceProperties().get(TripleStoreUtility.PROP_VISIBILITY);
 
         if ("private".equals(visibility) && UserContext.isRetrieveRestrictedToReleased()) {
-            throw new AuthorizationException("The Content of the component " + componentId
+            throw new AuthorizationException("The content of the component " + componentId
                 + " has visibility 'private'.");
         }
         final Datastream content = component.getContent();
@@ -242,9 +242,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             throw new WebserverSystemException("Internal content URL corrupt.", e1);
         }
 
-        final String fileName = component.getResourceProperties().get(TripleStoreUtility.PROP_FILENAME);
-
-        getBinaryContent(bin, url, fileName);
+        bin.setContent(getFedoraUtility().requestFedoraURL(url.toString()));
+        bin.setFileName(component.getResourceProperties().get(
+            de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
 
         return bin;
     }
@@ -252,11 +252,15 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     /**
      * Redirect to a content service. The framework can redirect to a content service (like digilib digimage) to provide
      * a convenient REST user interface.
-     *
-     * @param id            The id of the Item.
-     * @param componentId   The id of the component.
-     * @param transformer   The name of the transformation service.
-     * @param clientService The client name of the transformation service.
+     * 
+     * @param id
+     *            The id of the Item.
+     * @param componentId
+     *            The id of the component.
+     * @param transformer
+     *            The name of the transformation service.
+     * @param clientService
+     *            The client name of the transformation service.
      * @return A HTTP/HTML redirect to the client service.
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
@@ -328,9 +332,10 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
     /**
      * Get the URL of the digilib scaler.
-     *
+     * 
      * @return digilib scaler URL.
-     * @throws SystemException Thrown if the URL could not be obtained from configuration.
+     * @throws SystemException
+     *             Thrown if the URL could not be obtained from configuration.
      */
     private static String getDigilibScalerUrl() throws SystemException {
 
@@ -347,10 +352,12 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
     /**
      * Get the URL of the digilib client (GUI) (digimage).
-     *
-     * @param service The name of the requested service.
+     * 
+     * @param service
+     *            The name of the requested service.
      * @return digilib scaler URL.
-     * @throws SystemException Thrown if the URL could not be obtained from configuration.
+     * @throws SystemException
+     *             Thrown if the URL could not be obtained from configuration.
      */
     private static String getServiceUrl(final String service) throws SystemException {
 
@@ -376,10 +383,12 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
     /**
      * Get a HTTP/HTML redirect page. The redirect is set to the redirectUrl parameter.
-     *
-     * @param redirectUrl The redirect URL.
+     * 
+     * @param redirectUrl
+     *            The redirect URL.
      * @return The HTML page with the redirect command.
-     * @throws WebserverSystemException Thrown if creating of the redirect page failed.
+     * @throws WebserverSystemException
+     *             Thrown if creating of the redirect page failed.
      */
     private String getServiceRedirect(final String redirectUrl) throws WebserverSystemException {
 
@@ -390,10 +399,12 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
     /**
      * Get content of template file.
-     *
-     * @param templateFileName The name of the template.
+     * 
+     * @param templateFileName
+     *            The name of the template.
      * @return content of file as String
-     * @throws WebserverSystemException Thrown if reading of file failed.
+     * @throws WebserverSystemException
+     *             Thrown if reading of file failed.
      */
     private String getFileContent(final String templateFileName) throws WebserverSystemException {
 
@@ -412,12 +423,14 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     }
 
     /**
-     * Get the content of the template file as <code>String</code>.<br> The content is stored in a <code>Map</code> to
-     * prevent unnecessary file resource accesses
-     *
-     * @param templateFileName The file name of the template that shall be retrieved/loaded.
+     * Get the content of the template file as <code>String</code>.<br>
+     * The content is stored in a <code>Map</code> to prevent unnecessary file resource accesses
+     * 
+     * @param templateFileName
+     *            The file name of the template that shall be retrieved/loaded.
      * @return content of template file
-     * @throws IOException Thrown in case of an I/O error.
+     * @throws IOException
+     *             Thrown in case of an I/O error.
      * @throws java.io.UnsupportedEncodingException
      */
     private String initFileContent(final String templateFileName) throws IOException, UnsupportedEncodingException {
@@ -446,8 +459,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     /*
      * (non-Javadoc)
      * 
-     * @seede.escidoc.core.om.business.interfaces.ItemHandlerInterface#
-     * createContentStream(java.lang.String, java.lang.String)
+     * @seede.escidoc.core.om.business.interfaces.ItemHandlerInterface# createContentStream(java.lang.String,
+     * java.lang.String)
      */
     @Deprecated
     public String createContentStream(final String itemId, final String xmlData) {
@@ -485,8 +498,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     /*
      * (non-Javadoc)
      * 
-     * @seede.escidoc.core.om.business.interfaces.ItemHandlerInterface#
-     * retrieveContentStream(java.lang.String, java.lang.String)
+     * @seede.escidoc.core.om.business.interfaces.ItemHandlerInterface# retrieveContentStream(java.lang.String,
+     * java.lang.String)
      */
     @Deprecated
     public String retrieveContentStream(final String itemId, final String name) throws ItemNotFoundException,
@@ -520,8 +533,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     /*
      * (non-Javadoc)
      * 
-     * @seede.escidoc.core.om.business.interfaces.ItemHandlerInterface#
-     * retrieveContentStreams(java.lang.String)
+     * @seede.escidoc.core.om.business.interfaces.ItemHandlerInterface# retrieveContentStreams(java.lang.String)
      */
     @Deprecated
     public String retrieveContentStreams(final String itemId) throws ItemNotFoundException, AuthorizationException,
@@ -560,14 +572,20 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
     /**
      * Build the Url for the binary content.
-     *
-     * @param componentId The Id of the component.
-     * @param versionDate The version date.
-     * @param transformer The name of the transformation service.
-     * @param param       The parameter for the transformation service as GET parameter.
+     * 
+     * @param componentId
+     *            The Id of the component.
+     * @param versionDate
+     *            The version date.
+     * @param transformer
+     *            The name of the transformation service.
+     * @param param
+     *            The parameter for the transformation service as GET parameter.
      * @return The Url of the binary content responding to the version.
-     * @throws MalformedURLException Thrown id created Url string is now valid URL.
-     * @throws SystemException       Thrown in case of internal configuration failure.
+     * @throws MalformedURLException
+     *             Thrown id created Url string is now valid URL.
+     * @throws SystemException
+     *             Thrown in case of internal configuration failure.
      */
     private URL getContentUrl(
         final String componentId, final String versionDate, final String transformer, final String param)
@@ -593,20 +611,6 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         }
 
         return url;
-    }
-
-    /**
-     *
-     * @param bin
-     * @param url
-     * @param fileName
-     * @throws WebserverSystemException
-     */
-    private void getBinaryContent(final EscidocBinaryContent bin, final URL url, final String fileName)
-        throws WebserverSystemException {
-
-        bin.setContent(getFedoraUtility().requestFedoraURL(url.toString()));
-        bin.setFileName(fileName);
     }
 
 }
