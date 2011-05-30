@@ -30,7 +30,7 @@ package de.escidoc.core.test.om.item;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
@@ -74,6 +74,13 @@ public class ItemRetrieveContentTest extends ContentTestBase {
     private static final int MAX_RETRIEVES = 30;
 
     private static final String TRANSFORM_SERVICE_DIGILIB = "digilib";
+
+    /**
+     * @param transport The transport identifier.
+     */
+    public ItemRetrieveContentTest(final int transport) {
+        super(transport);
+    }
 
     /**
      * Test retrieving the binary content of an Item.
@@ -144,7 +151,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
             //
             // String componentXml = createComponent(itemId, prepComponent);
             // Document componentDoc =
-            // EscidocAbstractTest.getDocument(componentXml);
+            // EscidocRestSoapTestBase.getDocument(componentXml);
             // String componentId = getObjidValue(componentDoc);
             // itemComponent.put(componentId, nextFile);
             components += prepareComponentAsItem(nextFile, nextUrl);
@@ -152,14 +159,15 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // create Item
         String xmlData =
-            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_create_content.xml");
-        Document itemDoc = EscidocAbstractTest.getDocument(xmlData);
+            EscidocRestSoapTestBase
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_create_content.xml");
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(xmlData);
 
         Document newItem = (Document) substitute(itemDoc, "/item/components", "######");
         xmlData = toString(newItem, false);
         xmlData = xmlData.replace("######", components);
         String itemXml = create(xmlData);
-        itemDoc = EscidocAbstractTest.getDocument(itemXml);
+        itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         submit(itemId, getTheLastModificationParam(false, itemId));
@@ -555,8 +563,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // create Item with an image as content and set mime-type and filename 
         String itemXml =
-            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_component_metadata.xml");
-        Document itemDoc = EscidocAbstractTest.getDocument(create(itemXml));
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_component_metadata.xml");
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(create(itemXml));
 
         // release Item to avoid authentication
         String itemId = getObjidValue(itemDoc);

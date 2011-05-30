@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocItem:item xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+
+	<escidocItem:properties>
+		<srel:context xlink:href="/ir/context/escidoc:persistent3" />
+		<srel:content-model xlink:href="/cmm/content-model/escidoc:persistent4" />
+	</escidocItem:properties>
+
+	<escidocMetadataRecords:md-records>
+		<escidocMetadataRecords:md-record
+			name="escidoc">
+			<metadata />
+		</escidocMetadataRecords:md-record>
+
+	</escidocMetadataRecords:md-records>
+
+	<escidocComponents:components>
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+				<prop:mime-type>image/jpeg</prop:mime-type>
+			</escidocComponents:properties>
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+			<escidocMetadataRecords:md-records>
+				<escidocMetadataRecords:md-record
+					name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+					<md2-content />
+				</escidocMetadataRecords:md-record>
+				<escidocMetadataRecords:md-record
+					schema="http://www.escidoc-project.de/metadata/schema/0.1" name="escidoc">
+					<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+						<dc:title>Example Component</dc:title>
+						<dc:description>Description of Component</dc:description>
+					</metadata>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+
+		</escidocComponents:component>
+
+	</escidocComponents:components>
+
+</escidocItem:item>
+
