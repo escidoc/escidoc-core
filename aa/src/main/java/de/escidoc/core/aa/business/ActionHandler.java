@@ -71,6 +71,10 @@ public class ActionHandler implements ActionHandlerInterface {
     @Qualifier("business.Utility")
     private Utility utility;
 
+    @Autowired
+    @Qualifier("common.xml.XmlUtility")
+    private XmlUtility xmlUtility;
+
     /**
      * See Interface for functional description.
      */
@@ -155,10 +159,10 @@ public class ActionHandler implements ActionHandlerInterface {
      * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
      * @throws WebserverSystemException     Thrown in case of any other failure.
      */
-    private static ByteArrayInputStream validateUnsecuredActions(final String xmlData) throws XmlCorruptedException,
+    private ByteArrayInputStream validateUnsecuredActions(final String xmlData) throws XmlCorruptedException,
         WebserverSystemException, XmlSchemaValidationException {
 
-        return XmlUtility.createValidatedByteArrayInputStream(xmlData, XmlUtility.getUnsecuredActionsSchemaLocation());
+        return xmlUtility.createValidatedByteArrayInputStream(xmlData, XmlUtility.getUnsecuredActionsSchemaLocation());
     }
 
     /**

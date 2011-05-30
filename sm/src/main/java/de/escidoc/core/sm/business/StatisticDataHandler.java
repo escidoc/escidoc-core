@@ -59,7 +59,11 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
     @Autowired
     @Qualifier("business.sm.XmlUtility")
-    private SmXmlUtility xmlUtility;
+    private SmXmlUtility smXmlUtility;
+
+    @Autowired
+    @Qualifier("common.xml.XmlUtility")
+    private XmlUtility xmlUtility;
 
     @Autowired
     @Qualifier("statisticServiceSpecCamelContext")
@@ -102,9 +106,9 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
-        XmlUtility.validate(xmlData, XmlUtility.getStatisticDataSchemaLocation());
+        xmlUtility.validate(xmlData, XmlUtility.getStatisticDataSchemaLocation());
 
-        final String scopeId = xmlUtility.getScopeId(xmlData);
+        final String scopeId = smXmlUtility.getScopeId(xmlData);
 
         if (scopeId == null || scopeId.length() == 0) {
             throw new ScopeNotFoundException("scopeId is null");
@@ -139,7 +143,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      * @param xmlUtility The xmlUtility to set.
      */
     public final void setXmlUtility(final SmXmlUtility xmlUtility) {
-        this.xmlUtility = xmlUtility;
+        this.smXmlUtility = xmlUtility;
     }
 
     public void setCamelContext(final CamelContext camelContext) {

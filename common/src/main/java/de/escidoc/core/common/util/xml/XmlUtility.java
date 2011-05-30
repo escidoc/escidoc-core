@@ -20,43 +20,21 @@
 
 package de.escidoc.core.common.util.xml;
 
-import com.ctc.wstx.exc.WstxParsingException;
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.XMLHashHandler;
-import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.common.util.xml.stax.StaxAttributeEscapingWriterFactory;
-import de.escidoc.core.common.util.xml.stax.StaxTextEscapingWriterFactory;
-import de.escidoc.core.common.util.xml.stax.events.AbstractElement;
-import de.escidoc.core.common.util.xml.stax.events.StartElement;
-import de.escidoc.core.common.util.xml.stax.handler.CheckRootElementStaxHandler;
-import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import de.escidoc.core.common.util.xml.transformer.PoolableTransformerFactory;
-import org.apache.commons.pool.impl.StackKeyedObjectPool;
-import org.codehaus.stax2.XMLOutputFactory2;
-import org.joda.time.ReadableDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.naming.directory.NoSuchAttributeException;
-import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -69,23 +47,44 @@ import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.apache.commons.pool.impl.StackKeyedObjectPool;
+import org.codehaus.stax2.XMLOutputFactory2;
+import org.joda.time.ReadableDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
+import com.ctc.wstx.exc.WstxParsingException;
+
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.XMLHashHandler;
+import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.cache.SchemasCache;
+import de.escidoc.core.common.util.xml.stax.StaxAttributeEscapingWriterFactory;
+import de.escidoc.core.common.util.xml.stax.StaxTextEscapingWriterFactory;
+import de.escidoc.core.common.util.xml.stax.events.AbstractElement;
+import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.CheckRootElementStaxHandler;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import de.escidoc.core.common.util.xml.transformer.PoolableTransformerFactory;
 
 /**
  * Helper class to support Xml stuff in eSciDoc.<br> This class provides the validation of XML data using specified
@@ -94,8 +93,12 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
-@Service
+@Service("common.xml.XmlUtility")
 public final class XmlUtility {
+
+    @Autowired
+    @Qualifier("common.xml.SchemasCache")
+    private SchemasCache schemasCache;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(XmlUtility.class);
 
@@ -104,11 +107,6 @@ public final class XmlUtility {
      */
     public static final Pattern PATTERN_RESOURCE_OBJECT_TYPE =
         Pattern.compile('^' + Constants.RESOURCES_NS_URI + ".*$");
-
-    /**
-     * The cache storing the compiled schemas.
-     */
-    private static final Map<String, Schema> SCHEMA_CACHE = new HashMap<String, Schema>();
 
     /**
      * The UTF-8 character encoding used in eSciDoc.
@@ -484,12 +482,6 @@ public final class XmlUtility {
 
     private static final StackKeyedObjectPool TRANSFORMER_POOL =
         new StackKeyedObjectPool(new PoolableTransformerFactory());
-
-    /**
-     * Private constructor to prevent initialization.
-     */
-    private XmlUtility() {
-    }
 
     /**
      * Simple proxy method that can decide about the resource type and return the matching schema location.
@@ -1102,29 +1094,9 @@ public final class XmlUtility {
      * @throws IOException              Thrown in case of an I/O error.
      * @throws WebserverSystemException Thrown if schema can not be parsed.
      */
-    public static Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException,
-        MalformedURLException {
+    public Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException, MalformedURLException {
 
-        Schema schema = SCHEMA_CACHE.get(schemaUri);
-        if (schema == null) {
-            final URLConnection conn = new URL(schemaUri).openConnection();
-            final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-
-            // set resource resolver to change schema-location-host
-            sf.setResourceResolver(new SchemaBaseResourceResolver());
-
-            schema = null;
-            try {
-                schema = sf.newSchema(new SAXSource(new InputSource(conn.getInputStream())));
-            }
-            catch (final SAXException e) {
-                throw new WebserverSystemException("Problem with schema " + schemaUri + ". ", e);
-            }
-
-            SCHEMA_CACHE.put(schemaUri, schema);
-
-        }
-        return schema;
+        return schemasCache.getSchema(schemaUri);
     }
 
     /**
@@ -1138,7 +1110,7 @@ public final class XmlUtility {
      * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
      * @throws WebserverSystemException     Thrown in case of any other failure.
      */
-    public static ByteArrayInputStream createValidatedByteArrayInputStream(final String xmlData, final String schemaUri)
+    public ByteArrayInputStream createValidatedByteArrayInputStream(final String xmlData, final String schemaUri)
         throws XmlCorruptedException, WebserverSystemException, XmlSchemaValidationException {
 
         final ByteArrayInputStream byteArrayInputStream = convertToByteArrayInputStream(xmlData);
@@ -1157,7 +1129,7 @@ public final class XmlUtility {
      * @throws XmlSchemaValidationException Thrown if both validation fail or only one validation is executed and fails
      * @throws WebserverSystemException     Thrown in any other case.
      */
-    public static void validate(final ByteArrayInputStream byteArrayInputStream, final String schemaUri)
+    public void validate(final ByteArrayInputStream byteArrayInputStream, final String schemaUri)
         throws XmlCorruptedException, XmlSchemaValidationException, WebserverSystemException {
 
         try {
@@ -1196,8 +1168,8 @@ public final class XmlUtility {
      * @throws WebserverSystemException     Thrown in any other case.
      * @throws XmlParserSystemException     Thrown if the expected root element raise an unexpected error.
      */
-    public static void validate(final String xmlData, final String schemaUri, final String root)
-        throws XmlCorruptedException, XmlSchemaValidationException, WebserverSystemException, XmlParserSystemException {
+    public void validate(final String xmlData, final String schemaUri, final String root) throws XmlCorruptedException,
+        XmlSchemaValidationException, WebserverSystemException, XmlParserSystemException {
 
         if (root.length() > 0) {
             checkRootElement(xmlData, root);
@@ -1246,7 +1218,7 @@ public final class XmlUtility {
      * @throws XmlSchemaValidationException Thrown if both validation fail or only one validation is executed and fails
      * @throws WebserverSystemException     Thrown in any other case.
      */
-    public static void validate(final String xmlData, final String schemaUri) throws XmlCorruptedException,
+    public void validate(final String xmlData, final String schemaUri) throws XmlCorruptedException,
         XmlSchemaValidationException, WebserverSystemException {
 
         validate(convertToByteArrayInputStream(xmlData), schemaUri);
@@ -1262,7 +1234,7 @@ public final class XmlUtility {
      *                                      fails
      * @throws WebserverSystemException     Thrown in any other case.
      */
-    public static void validate(final String xmlData, final ResourceType resourceType) throws XmlCorruptedException,
+    public void validate(final String xmlData, final ResourceType resourceType) throws XmlCorruptedException,
         XmlSchemaValidationException, WebserverSystemException {
         validate(xmlData, getSchemaLocationForResource(resourceType));
 

@@ -28,25 +28,17 @@
  */
 package de.escidoc.core.common.util.xml.cache;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Collections;
-import java.util.Map;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -56,7 +48,6 @@ import com.googlecode.ehcache.annotations.Property;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.SchemaBaseResourceResolver;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Cache for xml <code>Schema</code> objects.<br> This cache is used to avoid multiple parsing of the same
@@ -64,7 +55,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  *
  * @author Michael Hoppe
  */
-@Service("xml.SchemasCache")
+@Service("common.xml.SchemasCache")
 public class SchemasCache {
 
     /**
@@ -77,8 +68,7 @@ public class SchemasCache {
      * @throws WebserverSystemException Thrown if schema can not be parsed.
      */
     @Cacheable(cacheName = "schemasCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
-    public static Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException,
-        MalformedURLException {
+    public Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException, MalformedURLException {
 
         Schema schema = null;
         final URLConnection conn = new URL(schemaUri).openConnection();

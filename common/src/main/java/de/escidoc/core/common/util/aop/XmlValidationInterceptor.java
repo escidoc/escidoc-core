@@ -20,21 +20,25 @@
 
 package de.escidoc.core.common.util.aop;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.Ordered;
+
 import de.escidoc.core.common.annotation.Validate;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.core.Ordered;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
+import de.escidoc.core.statistic.StatisticService;
 
 /**
  * Interceptor to validate incoming XML documents. The validation takes only place if the called method is annotated
@@ -44,6 +48,8 @@ import java.lang.reflect.Method;
  */
 @Aspect
 public class XmlValidationInterceptor implements Ordered {
+
+    private XmlUtility xmlUtility;
 
     /**
      * See Interface for functional description.
@@ -102,10 +108,10 @@ public class XmlValidationInterceptor implements Ordered {
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      */
-    private static void validate(final String xml, final String resolvingMethod, final String root)
+    private void validate(final String xml, final String resolvingMethod, final String root)
         throws WebserverSystemException, XmlParserSystemException, XmlSchemaValidationException, XmlCorruptedException {
 
-        XmlUtility.validate(xml, getSchemaLocation(resolvingMethod), root);
+        xmlUtility.validate(xml, getSchemaLocation(resolvingMethod), root);
     }
 
     /**
@@ -126,4 +132,12 @@ public class XmlValidationInterceptor implements Ordered {
         }
     }
 
+    /**
+     * Injects the xml-utility.
+     *
+     * @param xmlUtility The {@link XmlUtility}.
+     */
+    public void setXmlUtility(final XmlUtility xmlUtility) {
+        this.xmlUtility = xmlUtility;
+    }
 }

@@ -35,6 +35,9 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidation
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.IngestValidator;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -44,6 +47,10 @@ import org.springframework.stereotype.Service;
  */
 @Service("business.ingestValidator")
 public class XmlIngestValidator implements IngestValidator {
+
+    @Autowired
+    @Qualifier("common.xml.XmlUtility")
+    private XmlUtility xmlUtility;
 
     /**
      * Check if the given resource is valid. If it is not valid, an Exception gets thrown
@@ -56,7 +63,7 @@ public class XmlIngestValidator implements IngestValidator {
     public boolean isResourceValid(final String xmlData, final ResourceType type) throws WebserverSystemException,
         XmlCorruptedException, InvalidResourceException {
         try {
-            XmlUtility.validate(xmlData, type);
+            xmlUtility.validate(xmlData, type);
         }
         catch (final XmlSchemaValidationException e) {
             throw new InvalidResourceException(e);

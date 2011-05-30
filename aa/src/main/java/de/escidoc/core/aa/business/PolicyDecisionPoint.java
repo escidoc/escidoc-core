@@ -182,6 +182,10 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     @Qualifier("convert.XacmlParser")
     private XacmlParser xacmlParser;
 
+    @Autowired
+    @Qualifier("common.xml.XmlUtility")
+    private XmlUtility xmlUtility;
+
     private final Map<String, String> handlerClassNames = new HashMap<String, String>();
 
     private final Map<String, URI> uriCache = new HashMap<String, URI>();
@@ -324,7 +328,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     public String evaluate(final String requestsXml) throws ResourceNotFoundException, XmlSchemaValidationException,
         XmlCorruptedException, SystemException, WebserverSystemException {
 
-        XmlUtility.validate(requestsXml, XmlUtility.getPdpRequestsSchemaLocation());
+        xmlUtility.validate(requestsXml, XmlUtility.getPdpRequestsSchemaLocation());
 
         final List<ResponseCtx> responseCtxs = doEvaluate(requestsXml);
 
