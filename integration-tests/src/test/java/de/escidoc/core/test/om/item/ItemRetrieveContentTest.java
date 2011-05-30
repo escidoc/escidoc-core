@@ -27,13 +27,19 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.item.contentTools.ContentTestBase;
 import de.escidoc.core.test.om.item.contentTools.ImageProperties;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.HttpResponse;
+import org.apache.http.Header;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Ignore;
@@ -50,18 +56,16 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Test the retrieve of binary content. These class tests especially the transformation of images with digilib.
  *
  * @author Steffen Wagner
  */
-@Ignore
 // DigiLib Tests sollen laut Matthias bis auf weiteres deaktiviert werden.
 public class ItemRetrieveContentTest extends ContentTestBase {
 
@@ -77,6 +81,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
+    @Ignore
     public void testOmRtrEscidocCnt1() throws Exception {
         String itemId = "escidoc:ex5";
         String componentId = "escidoc:ex6";
@@ -106,6 +111,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
+    @Ignore
     public void testOmRtrEscidocCnt2() throws Exception {
 
         for (int i = 0; i < MAX_RETRIEVES; i++) {
@@ -119,6 +125,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
+    @Ignore
     public void testOmRtrEscidocCnt3() throws Exception {
 
         String components = "";
@@ -215,6 +222,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
+    @Ignore
     public void testOmRtrEscidocDigilibCnt3() throws Exception {
 
         String transformParams = "ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300";
@@ -295,6 +303,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
+    @Ignore
     public void testOmRtrEscidocDigilibCnt4() throws Exception {
 
         for (int i = 0; i < MAX_RETRIEVES; i++) {
@@ -308,6 +317,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception Thrown if anythings failed.
      */
     @Test
+    @Ignore
     public void testOmRtrCntJakarta01() throws Exception {
 
         String transformParams = "ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300";
@@ -398,6 +408,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
+    @Ignore
     public void testDigilibRtrCnt1() throws Exception {
 
         String transformParams = "ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300";
@@ -453,6 +464,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
+    @Ignore
     public void testDigilibRtrCnt2() throws Exception {
 
         for (int i = 0; i < MAX_RETRIEVES; i++) {
@@ -466,6 +478,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
+    @Ignore
     public void testFedoraRtrCnt1() throws Exception {
 
         String componentId = "escidoc:ex6";
@@ -524,11 +537,62 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
+    @Ignore
     public void testFedoraRtrCnt2() throws Exception {
 
         for (int i = 0; i < MAX_RETRIEVES; i++) {
             testFedoraRtrCnt1();
         }
+    }
+
+    /**
+     * Test if filename and mime-type are well set.
+     * 
+     * @throws Exception If anything is not at expected
+     */
+    @Test
+    public void contentFilenameAndMimeType() throws Exception {
+
+        // create Item with an image as content and set mime-type and filename 
+        String itemXml =
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "item_component_metadata.xml");
+        Document itemDoc = EscidocAbstractTest.getDocument(create(itemXml));
+
+        // release Item to avoid authentication
+        String itemId = getObjidValue(itemDoc);
+        submit(itemId, getTheLastModificationParam(false, itemId));
+        assignObjectPid(itemId, getPidParam(itemId, "http://localhost/" + itemId));
+        assignVersionPid(itemId, getPidParam(itemId, "http://localhost/" + itemId));
+        release(itemId, getTheLastModificationParam(false, itemId));
+
+        // get URL to content
+        String hrefContent = selectSingleNode(itemDoc, "/item/components/component/content/@href").getNodeValue();
+
+        // get md-record title
+        String mdRecordTitle =
+            selectSingleNode(itemDoc, "/item/components/component/md-records/md-record/metadata/title")
+                .getTextContent();
+
+        // get filename
+        String filename = selectSingleNode(itemDoc, "/item/components/component/properties/file-name").getTextContent();
+
+        // get mime-type
+        String mimeType = selectSingleNode(itemDoc, "/item/components/component/properties/mime-type").getTextContent();
+
+        String baseUrl = selectSingleNode(itemDoc, "/item/@base").getNodeValue();
+
+        // get HTTP Header
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet(baseUrl + hrefContent);
+        HttpResponse response = httpclient.execute(httpget);
+
+        Header[] headerCType = response.getHeaders("Content-Type");
+        assertTrue(headerCType.length == 1);
+        assertEquals(mimeType, headerCType[0].getValue());
+
+        Header[] headerDisp = response.getHeaders("Content-Disposition");
+        assertTrue(headerDisp.length == 1);
+        assertEquals("inline;filename=\"" + filename + "\"", headerDisp[0].getValue());
     }
 
 }
