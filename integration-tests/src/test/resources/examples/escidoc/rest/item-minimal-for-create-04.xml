@@ -50,6 +50,7 @@
 				<prop:valid-status>valid</prop:valid-status>
 				<prop:visibility>public</prop:visibility>
 				<prop:content-category>pre-print</prop:content-category>
+				<prop:mime-type>image/jpeg</prop:mime-type>
 			</escidocComponents:properties>
 
 			<!--
@@ -72,6 +73,10 @@
 				</escidocMetadataRecords:md-record>
 
 				<!-- This meta data record contains DC meta data -->
+				<!-- 
+					Setting filename happens via md-record. If a title element could be obtained 
+					from the meta data, than is the file name as the title. 
+				-->
 				<escidocMetadataRecords:md-record
 					schema="http://www.escidoc-project.de/metadata/schema/0.1" name="escidoc">
 					<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
