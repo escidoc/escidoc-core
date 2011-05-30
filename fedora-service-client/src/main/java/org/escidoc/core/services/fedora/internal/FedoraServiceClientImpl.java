@@ -35,8 +35,6 @@ import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.NextPIDPathParam;
 import org.escidoc.core.services.fedora.NextPIDQueryParam;
 import org.escidoc.core.services.fedora.PidListTO;
-import org.escidoc.core.services.fedora.SetDatastreamStatePathParam;
-import org.escidoc.core.services.fedora.SetDatastreamStateQueryParam;
 import org.escidoc.core.services.fedora.UpdateObjectPathParam;
 import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
@@ -45,6 +43,7 @@ import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
 import org.esidoc.core.utils.io.Stream;
 import org.esidoc.core.utils.io.MimeTypes;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -68,6 +67,8 @@ import static org.esidoc.core.utils.Preconditions.checkState;
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
         assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
 public class FedoraServiceClientImpl implements FedoraServiceClient {
+
+    public static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
     public final static Logger LOG = LoggerFactory.getLogger(FedoraServiceClientImpl.class);
 
@@ -169,8 +170,10 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     @Override
     /*@Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))*/
-    public ObjectDatastreamsTO listDatastreams( final ListDatastreamsPathParam path,
-                                                final ListDatastreamsQueryParam query) {
+    public ObjectDatastreamsTO listDatastreams( final String pid, final DateTime timestamp) {
+        ListDatastreamsPathParam path = new ListDatastreamsPathParam(pid);
+        ListDatastreamsQueryParam query = new ListDatastreamsQueryParam();
+        query.setAsOfDateTime(timestamp.toString(TIMESTAMP_FORMAT));
         return this.fedoraService.listDatastreams(path, query);
     }
 
@@ -178,9 +181,9 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     @Async
     /*@Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
             name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))*/
-    public Future<ObjectDatastreamsTO> listDatastreamsAsync( final ListDatastreamsPathParam path,
-                                                             final ListDatastreamsQueryParam query) {
-        return new AsyncResult<ObjectDatastreamsTO>(listDatastreams(path, query));
+    public Future<ObjectDatastreamsTO> listDatastreamsAsync( final String pid,
+                                                             final DateTime timestamp) {
+        return new AsyncResult<ObjectDatastreamsTO>(listDatastreams(pid, timestamp));
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
+import org.joda.time.DateTime;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
@@ -95,9 +96,7 @@ public interface FedoraServiceClient {
     Future<DatastreamProfileTO> setDatastreamStateAsync(@NotNull String pid, @NotNull @NotEmpty String dsID,
                                                         @NotNull @NotEmpty DatastreamState state);
 
-    ObjectDatastreamsTO listDatastreams(@NotNull ListDatastreamsPathParam path,
-                                        @NotNull ListDatastreamsQueryParam query);
+    ObjectDatastreamsTO listDatastreams(@NotNull String pid, @NotNull DateTime timestamp);
 
-    Future<ObjectDatastreamsTO> listDatastreamsAsync(@NotNull ListDatastreamsPathParam path,
-                                                     @NotNull ListDatastreamsQueryParam query);
+    Future<ObjectDatastreamsTO> listDatastreamsAsync(@NotNull String pid, @NotNull DateTime timestamp);
 }
