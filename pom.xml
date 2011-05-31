@@ -1936,7 +1936,7 @@
 				<groupId>org.escidoc</groupId>
 				<artifactId>fedoragsearch</artifactId>
 				<type>war</type>
-				<version>1.4.0</version>
+				<version>1.4.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.escidoc</groupId>
