@@ -28,8 +28,6 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.FileSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.date.Iso8601Util;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import net.sf.oval.guard.Guarded;
 import org.apache.cxf.jaxrs.client.ServerWebApplicationException;
@@ -37,18 +35,15 @@ import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.ControlGroup;
 import org.escidoc.core.services.fedora.DatastreamState;
-import org.escidoc.core.services.fedora.DeleteDatastreamPathParam;
-import org.escidoc.core.services.fedora.DeleteDatastreamQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.GetDatastreamProfilePathParam;
 import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.esidoc.core.utils.io.IOUtils;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
-import org.fcrepo.server.types.gen.DatastreamControlGroup;
-import org.fcrepo.server.types.gen.MIMETypedStream;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,10 +54,10 @@ import org.xml.sax.SAXException;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -283,7 +278,9 @@ public class Datastream {
     private void loadDataFromFedora() {
         final GetDatastreamProfilePathParam path = new GetDatastreamProfilePathParam(this.parentId, this.name);
         final GetDatastreamProfileQueryParam query = new GetDatastreamProfileQueryParam();
-        query.setAsOfDateTime(this.timestamp);
+        if (this.timestamp != null) {
+            query.setAsOfDateTime(this.timestamp.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT));
+        }
         final DatastreamProfileTO datastreamProfileTO = this.fedoraServiceClient.getDatastreamProfile(path, query);
         updateDatastream(datastreamProfileTO);
     }
@@ -529,38 +526,26 @@ public class Datastream {
         // Workaround for the issue INFR666, now the content of a data stream
         // with a managed content should be pulled
         if (this.stream == null && ("X".equals(this.controlGroupValue) || "M".equals(this.controlGroupValue))) {
-            try {
-                loadStreamFromFedora();
-            }
-            catch (WebserverSystemException e) {
-                throw new RuntimeException("Error on loading datastream from Fedora.");
-            }
+            loadStreamFromFedora();
         }
         return this.stream;
     }
 
-    private void loadStreamFromFedora() throws WebserverSystemException {
-        final MIMETypedStream mimeTypedStream;
-        try {
-            String timestampString = null;
-            if (this.timestamp != null) {
-                timestampString = this.timestamp.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
-            }
-            mimeTypedStream = this.fedoraUtility.getDatastreamWithMimeType(this.name, this.parentId, timestampString);
-        }
-        catch (final FedoraSystemException e) {
-            throw new WebserverSystemException(StringUtility.format("Content of datastream could not be retrieved "
-                + "from Fedora after succesfully get " + "datastream information", this.name, this.parentId,
-                this.timestamp), e);
-        }
-        if (mimeTypedStream == null) {
-            throw new WebserverSystemException("Stream is 'null' after retrieving "
+    private void loadStreamFromFedora() {
+        Stream stream = this.fedoraServiceClient.getDatastream(this.parentId, this.name, this.timestamp);
+        if (stream == null) {
+            throw new RuntimeException("Stream is 'null' after retrieving "
                 + "datastream from Fedora without exception.");
         }
-        this.setStream(mimeTypedStream.getStream());
+        try {
+            this.setStream(stream.getBytes());
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Error loading datastream.", e);
+        }
     }
 
-    public void setStream(final byte[] stream) {
+    private void setStream(byte[] stream) {
         this.stream = stream;
         this.updateMd5Hash();
     }

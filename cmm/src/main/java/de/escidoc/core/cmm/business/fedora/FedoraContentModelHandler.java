@@ -460,7 +460,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             || !description.equals(cmph.getProperties().getObjectProperties().getDescription())) {
             // update DC (title, description)
             final Datastream dc = getContentModel().getDc();
-            final ByteArrayInputStream dcIs = new ByteArrayInputStream(dc.getStream());
             final StaxParser dcParser = new StaxParser();
 
             final TreeMap<String, StartElementWithText> updateElementsDc = new TreeMap<String, StartElementWithText>();
@@ -482,7 +481,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             dcParser.addHandler(me);
             final byte[] dcNewBytes;
             try {
-                dcParser.parse(dcIs);
+                dcParser.parse(dc.getStream());
                 final ByteArrayOutputStream dcUpdated = (ByteArrayOutputStream) me.getOutputStreams().get("dc");
                 dcNewBytes = dcUpdated.toByteArray();
             }

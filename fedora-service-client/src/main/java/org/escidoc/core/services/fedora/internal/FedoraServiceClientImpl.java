@@ -2,7 +2,6 @@ package org.escidoc.core.services.fedora.internal;
 
 import com.googlecode.ehcache.annotations.KeyGenerator;
 import com.googlecode.ehcache.annotations.TriggersRemove;
-import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.guard.Guarded;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
@@ -41,6 +40,7 @@ import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
+import org.esidoc.core.utils.io.IOUtils;
 import org.esidoc.core.utils.io.Stream;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
@@ -52,6 +52,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.Future;
 
@@ -187,16 +188,23 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    public Stream getDatastream( final GetDatastreamPathParam path,
-                                     final GetDatastreamQueryParam query) {
-        return this.fedoraService.getDatastream(path, query);
+    public Stream getDatastream(@NotNull final String pid,
+                                               @NotNull final String dsID,
+                                               final DateTime timestamp) {
+       final GetDatastreamPathParam path = new GetDatastreamPathParam(pid, dsID);
+       final GetDatastreamQueryParam query = new GetDatastreamQueryParam();
+       if(timestamp != null) {
+            query.setAsOfDateTime(timestamp.toString(TIMESTAMP_FORMAT));
+       }
+       return this.fedoraService.getDatastream(path, query);
     }
 
     @Override
     @Async
-    public Future<Stream> getDatastreamAsync( final GetDatastreamPathParam path,
-                                                  final GetDatastreamQueryParam query) {
-        return new AsyncResult<Stream>(getDatastream(path, query));
+    public Future<Stream> getDatastreamAsync(@NotNull final String pid,
+                                               @NotNull final String dsID,
+                                               final DateTime timestamp) {
+        return new AsyncResult<Stream>(getDatastream(pid, dsID, timestamp));
     }
 
     @Override

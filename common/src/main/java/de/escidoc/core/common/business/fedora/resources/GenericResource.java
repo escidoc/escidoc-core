@@ -48,6 +48,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.GetObjectProfilePathParam;
 import org.escidoc.core.services.fedora.GetObjectProfileQueryParam;
+import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
@@ -1111,6 +1112,7 @@ public class GenericResource implements FedoraResource {
 
     protected org.fcrepo.server.types.gen.Datastream[] getDatastreamInfos() throws WebserverSystemException,
         FedoraSystemException {
+        ObjectDatastreamsTO objectDatastreamsTO = this.fedoraServiceClient.listDatastreams(getId(), null);
         return this.fedoraUtility.getDatastreamsInformation(getId(), null);
     }
 

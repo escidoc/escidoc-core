@@ -31,15 +31,15 @@ import org.joda.time.DateTime;
         assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class GetDatastreamProfileQueryParam {
 
-    private DateTime asOfDateTime;
+    private String asOfDateTime;
     private String format = MimeTypes.TEXT_XML;
     private String validateChecksum;
 
-    public DateTime getAsOfDateTime() {
+    public String getAsOfDateTime() {
         return asOfDateTime;
     }
 
-    public void setAsOfDateTime(final DateTime asOfDateTime) {
+    public void setAsOfDateTime(final String asOfDateTime) {
         this.asOfDateTime = asOfDateTime;
     }
 

@@ -5,16 +5,10 @@ import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
-import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import java.io.InputStream;
 import java.util.concurrent.Future;
 
@@ -69,9 +63,10 @@ public interface FedoraServiceClient {
     Future<DatastreamProfileTO> addDatastreamAsync(@NotNull AddDatastreamPathParam path,
                                                    @NotNull AddDatastreamQueryParam query, Stream outputStream);
 
-    Stream getDatastream(@NotNull GetDatastreamPathParam path, @NotNull GetDatastreamQueryParam query);
+    Stream getDatastream(@NotNull final String pid, @NotNull final String dsID, final DateTime timestamp);
 
-    Future<Stream> getDatastreamAsync(@NotNull GetDatastreamPathParam path, @NotNull GetDatastreamQueryParam query);
+    Future<Stream> getDatastreamAsync(@NotNull final String pid, @NotNull final String dsID,
+                                               final DateTime timestamp);
 
     DatastreamProfileTO getDatastreamProfile(@NotNull GetDatastreamProfilePathParam path,
                                              @NotNull GetDatastreamProfileQueryParam query);
@@ -96,7 +91,7 @@ public interface FedoraServiceClient {
     Future<DatastreamProfileTO> setDatastreamStateAsync(@NotNull String pid, @NotNull @NotEmpty String dsID,
                                                         @NotNull @NotEmpty DatastreamState state);
 
-    ObjectDatastreamsTO listDatastreams(@NotNull String pid, @NotNull DateTime timestamp);
+    ObjectDatastreamsTO listDatastreams(@NotNull String pid, DateTime timestamp);
 
-    Future<ObjectDatastreamsTO> listDatastreamsAsync(@NotNull String pid, @NotNull DateTime timestamp);
+    Future<ObjectDatastreamsTO> listDatastreamsAsync(@NotNull String pid, DateTime timestamp);
 }
