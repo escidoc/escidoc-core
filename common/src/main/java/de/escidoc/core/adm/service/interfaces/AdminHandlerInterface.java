@@ -36,7 +36,18 @@ public interface AdminHandlerInterface {
     /**
      * Delete a list of objects given by their object ids from Fedora. In case of Items this method will also delete all
      * depending Components of the given Items. The deletion runs asynchronously and returns some useful information to
-     * the user, e.g. the total number of objects to delete.
+     * the user, e.g. the total number of objects to delete. <b>Example:</b><br/> <br/>
+     * <p/>
+     * <pre>
+     * {@code
+     * <?xml version="1.0" encoding="UTF-8"?>
+     * <param>
+     *   <id>escidoc:1</id>
+     *   <id>escidoc:2</id>
+     *   <id>escidoc:3</id>
+     * </param>
+     * }
+     * </pre>
      *
      * @param taskParam list of object ids to delete<br/> boolean value to signal if the search index and the Resource
      *                  cache have to be kept in sync. If this value is set to false then the re-indexing and re-caching
