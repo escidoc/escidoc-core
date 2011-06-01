@@ -82,18 +82,27 @@
     <resources>
         <res id="HTMLHelloPanel.info" src="installer/welcome.html" />
         <res id="HTMLLicencePanel.licence" src="installer/license.html" />
-        <res id="HTMLInfoPanel.info"     src="installer/prerequisites.html" />
+
+        <res id="HTMLInfoPanel.info_eng" src="installer/prerequisites.html_eng" />
         <res id="HTMLInfoPanel.info_deu" src="installer/prerequisites.html_deu" />
-        <res id="HTMLInfoPanel.installInfo" src="installer/nextstepsAfterInstall.html" parse="yes" type="plain" />
-        <res id="HTMLInfoPanel.upgradeInfo" src="installer/nextstepsAfterUpgrade.html" parse="yes" type="plain" />
+
+        <res id="HTMLInfoPanel.installInfo_eng" src="installer/nextstepsAfterInstall.html_eng" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.installInfo_deu" src="installer/nextstepsAfterInstall.html_deu" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.upgradeInfo_eng" src="installer/nextstepsAfterUpgrade.html_eng" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.upgradeInfo_deu" src="installer/nextstepsAfterUpgrade.html_deu" parse="yes" type="plain" />
+
         <res id="Heading.image" src="installer/escidoc-logo-small.jpg" />
         <res id="Splash.image" src="installer/splash.jpg" />
         <res id="installer.langsel.img" src="installer/splash.jpg" />
+
         <res id="userInputSpec.xml" src="installer/userInputSpec.xml" />
         <res id="userInputLang.xml_eng" src="installer/userInputLang.xml_eng" />
         <res id="userInputLang.xml_deu" src="installer/userInputLang.xml_deu" />
+
+        <res id="CustomLangpack.xml_eng" src="installer/CustomLangpack.xml_eng"/>
+        <res id="CustomLangpack.xml_deu" src="installer/CustomLangpack.xml_deu"/>
+
         <res id="AntActionsSpec.xml" src="installer/EscidocAntActionSpec.xml" />
-        <res id="CustomLangpack.xml_eng" src="installer/CustomLangpack_eng.xml"/>
         <res id="ProcessPanel.Spec.xml" src="installer/EscidocProcessPanelSpec.xml" />
         <res id="TargetPanel.dir.windows" src="installer/TargetDir.windows" />
     </resources>
@@ -116,6 +125,9 @@
       <!-- make sure to add the appropriate separator as prefix (usually a dot) if needed, e.g. a ".build345" -->
       <variable name="EscidocVersion" value="${project.version}" />
      
+      <variable name="JBossVersion" value="${jboss.version}" />
+      <variable name="FedoraVersion" value="${fcrepo.version}" />
+
       <variable name="AdminToolVersion" value="${admin-tool.version}" />
       <variable name="MigrationToolVersion" value="${migration-tool.version}" />
 
@@ -278,12 +290,6 @@
       <variable name="ShibbolethOut" value="" condition="authMethodIsShibboleth" />
       <variable name="UpgradeEscidoc" value="true" condition="upgradeEscidoc" />
       <variable name="DatabaseIsOracle" value="true" condition="databaseIsOracle" />
-      <!-- static texts dependent on install/upgrade for user input panels -->
-      <variable name="EscidocDatabaseUserText" value="The datebase user specified here will be created by the installer and will be used at runtime for eSciDoc. This user should not have administrative privileges. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!" condition="installEscidoc" />
-      <variable name="EscidocDatabaseUserText" value="The datebase user specified here will be used at runtime for eSciDoc. This user should not have administrative privileges." condition="upgradeEscidoc" />
-      <variable name="SystemInspectorText" value="The System Inspector user is a read-only user, who may access all resources in the system. The System Inspector user is needed for infrastructure-internal purposes like indexing." condition="installEscidoc" />
-      <variable name="SystemInspectorText" value="Please enter the credentials of the System Inspector user." condition="upgradeEscidoc" />
-
     </dynamicvariables>
     
     <conditions>
@@ -379,14 +385,14 @@
         We specify here our packs.
     -->
     <packs>
-        <pack name="eSciDoc" required="yes">
-            <description>eSciDoc Core Services</description>
+        <pack name="eSciDoc" id="escidoc.package" required="yes">
+            <description/>
             <file src="installer/readme.html" targetdir="$INSTALL_PATH" />
             <parsable targetfile="$INSTALL_PATH/readme.html" />
         </pack>
         
-        <pack name="Install Scripts" parent="eSciDoc" required="yes">
-            <description>Necessary installation scripts and configuration files</description>
+        <pack name="Install Scripts" id="scripts.package" parent="escidoc.package" required="yes">
+            <description/>
             <!-- Ant scripts, need to be in the first pack under "eSciDoc" to be availble for "afterpack" actions -->
             <singlefile src="installer/unpack-core.xml" target="$INSTALL_PATH/install.tmp/unpack-core.xml" override="true" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/unpack-core.xml" />
@@ -395,9 +401,9 @@
             <parsable targetfile="$INSTALL_PATH/install.tmp/escidoc-core.custom.properties" />
         </pack>
         
-        <pack name="JBoss Application Server" parent="eSciDoc" required="yes">
-            <description>JBoss Application Server ${jboss.version}</description>
-            <file src="packages/jboss/jboss-${jboss.version}.zip" targetdir="$INSTALL_PATH/install.tmp" />
+        <pack name="JBoss Application Server" id="jboss.package" parent="escidoc.package" required="yes">
+            <description/>
+            <file src="packages/jboss/jboss-${JBossVersion}.zip" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="../../../assembly/target/escidoc-core-${project.version}-jboss-patch.zip" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="${jdbc.driver.postgres}" targetdir="$INSTALL_PATH/install.tmp" condition="installEscidoc+databaseIsPostgres" />
             <!--file src="${jdbc.driver.mysql}" targetdir="$INSTALL_PATH/install.tmp" /-->
@@ -411,8 +417,8 @@
             <parsable targetfile="$INSTALL_PATH/install.tmp/shutdown.sh" />
         </pack>
         
-        <pack name="Fedora Repository" parent="eSciDoc" required="yes">
-            <description>Fedora Commons ${fcrepo.version}</description>
+        <pack name="Fedora Repository" id="fedora.package" parent="escidoc.package" required="yes">
+            <description/>
             <file src="fedora-fedora.zip" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="../fedora/install/fedora.war" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="lib/${OracleDDLGenerator}" targetdir="$INSTALL_PATH/install.tmp/WEB-INF/lib" />
@@ -429,83 +435,68 @@
             <file src="config/fedora/deny-everything-if-not-administrator.xml" targetdir="$INSTALL_PATH/install.tmp" />
         </pack>
         
-        <pack name="eSciDoc Infrastructure" parent="eSciDoc" required="yes">
-            <description>Required services of the eSciDoc Infrastructure</description>
+        <pack name="eSciDoc Infrastructure" id="core.package" parent="escidoc.package" required="yes">
+            <description/>
             <file src="../../../assembly/target/escidoc-core-${project.version}-bin.zip" targetdir="$INSTALL_PATH/install.tmp" />
         </pack>
         
-        <!-- pack name="Examples" parent="eSciDoc" required="yes">
-            <description>Example objects for the eSciDoc Core services</description>
+        <!-- pack name="Examples" id="examples.package" parent="escidoc.package" required="yes">
+            <description/>
             <file src="packages/escidoc/core/escidoc-examples-${EscidocVersion}.zip" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="config/escidoc/core/readme.txt" targetdir="$INSTALL_PATH/install.tmp" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/readme.txt" />
         </pack -->
         
-        <pack name="Additional Services and Tools" required="no">
-            <description>Additional Services and Tools complementing the eSciDoc Infrastructure Core Services</description>
+        <pack name="Additional Services and Tools" id="tools.package" required="no">
+            <description/>
         </pack>
         
-        <!--pack name="Digilib" parent="Additional Services and Tools" required="no">
-            <description>Digilib Image Manipulation and Display Service</description>
+        <!--pack name="Digilib" id="digilib.package" parent="tools.package" required="no">
+            <description/>
             <file src="packages/escidoc/services/DigilibClient.war" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="packages/escidoc/services/DigilibServer.war" targetdir="$INSTALL_PATH/install.tmp" />
-        </pack -->
+        </pack>
         
-        <!--pack name="Duplication Check" parent="Additional Services and Tools" required="no">
-            <description>Service calculating the probability of a document to be a duplicate of one or more documents within the repository, based on the full-text and/or metadata.</description>
+        <pack name="Duplication Check" id="duplication.package" parent="tools.package" required="no">
+            <description/>
             <file src="tools/docsim.zip" targetdir="$INSTALL_PATH/tools" />
         </pack>
         
-        <pack name="PID Manager" parent="Additional Services and Tools" required="no">
-            <description>Persistent Identifier Service, defaulting to use Handle(tm) System </description>
+        <pack name="PID Manager" id="pidmanager.package" parent="tools.package" required="no">
+            <description/>
             <file src="tools/escidoc-pid-manager-release.zip" targetdir="$INSTALL_PATH/tools" />
         </pack-->
 
-        <pack name="Admin Tool" parent="Additional Services and Tools" required="no">
-            <description>Administration Client for the eSciDoc Infrastructure</description>
+        <pack name="Admin Tool" id="admintool.package" parent="tools.package" required="no">
+            <description/>
             <file src="packages/admin-tool/AdminTool-${AdminToolVersion}.war" targetdir="$INSTALL_PATH/tools" />
         </pack>
 
-        <pack name="Migration Tool" parent="Additional Services and Tools" required="yes" condition="upgradeEscidoc">
-            <description>Migration Tool for the eSciDoc Infrastructure</description>
+        <pack name="Migration Tool" id="migrationtool.package" parent="tools.package" required="yes" condition="upgradeEscidoc">
+            <description/>
             <file src="packages/migration-tool/migration-tool-${MigrationToolVersion}.zip" targetdir="$INSTALL_PATH/tools" />
         </pack>
 
-        <!--pack name="Documentation" required="no">
-          <description>eSciDoc Infrastructure Docomentation</description>
+        <!--pack name="Documentation" id="doc.package" required="no">
+          <description/>
         </pack>
         
-        <pack name="API Documentation" parent="Documentation" required="no">
-            <description>eSciDoc Infrastructure API Documentation</description>
+        <pack name="API Documentation" id="apidoc.package" parent="doc.package" required="no">
+            <description/>
             <file src="doc/escidoc-core-doc-${EscidocVersion}.zip" targetdir="$INSTALL_PATH/doc/api" />
         </pack>
         
-        <pack name="License" parent="Documentation" required="no">
-            <description>Open Source License for eSciDoc Infrastructure</description>
-            <file src="doc/License.txt" targetdir="$INSTALL_PATH/doc/license" />
-        </pack>
-        
-        <pack name="Concepts" parent="Documentation" required="no">
-            <description>Conceptual Documentation for the eSciDoc Infrastructure</description>
-            <file src="doc/GuideToProgramming.pdf" targetdir="$INSTALL_PATH/doc/license" />
-        </pack>
-        
-        <pack name="Installation" parent="Documentation" required="no">
-            <description>eSciDoc Infrastructure Installation Guide</description>
-            <file src="doc/Installation.pdf" targetdir="$INSTALL_PATH/doc/license" />
-        </pack-->
-        
-        <!--pack name="Sources" required="no">
-            <description>Java source code for eSciDoc Infrastructure services</description>
+        <pack name="Sources" id="source.package" required="no">
+            <description/>
             <file src="packages/escidoc/core/escidoc-core-src-${EscidocVersion}.zip" targetdir="$INSTALL_PATH/install.tmp" />
         </pack-->
         
-        <pack name="Configuration and Initialization" required="yes" condition="installEscidoc">
-            <description>Scripts and procedures to configure the system, initialize the database, and a first set of user accounts.</description>
+        <pack name="Configuration and Initialization" id="configuration.package" required="yes" condition="installEscidoc">
+            <description/>
         </pack>
         
-        <pack name="Database Creation" id="db.create" parent="Configuration and Initialization" required="yes" condition="installEscidoc">
-            <description>Creates the necessary databases and system roles</description>
+        <pack name="Database Creation" id="databasecreation.package" parent="configuration.package" required="yes" condition="installEscidoc">
+            <description/>
             <file src="config/escidoc/core/database.properties" targetdir="$INSTALL_PATH/install.tmp" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/database.properties" />
             <file src="config/escidoc/core/database-init.xml" targetdir="$INSTALL_PATH/install.tmp" />
@@ -515,13 +506,13 @@
             <file src="config/escidoc/core/aa.init.grants.common.sql" targetdir="$INSTALL_PATH/install.tmp" />
         </pack>
         
-        <pack name="Database Initialization" id="db.init" parent="Configuration and Initialization" required="yes" condition="installEscidoc">
-            <description>Creates the necessary databases tables</description>
+        <pack name="Database Initialization" id="databaseinitialization.package" parent="configuration.package" required="yes" condition="installEscidoc">
+            <description/>
             <depends packname="Database Creation" />
         </pack>
         
-        <pack name="Roles and Users Creation" id="db.roles" parent="Configuration and Initialization" required="yes" condition="authMethodIsFormBased+installEscidoc">
-            <description>Creates basic user accounts and necessary roles</description>
+        <pack name="Roles and Users Creation" id="roles.package" parent="configuration.package" required="yes" condition="authMethodIsFormBased+installEscidoc">
+            <description/>
             <depends packname="Database Creation" />
             <depends packname="Database Initialization" />
         </pack>

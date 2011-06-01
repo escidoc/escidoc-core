@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>Gl&uuml;ckwunsch!</title>
+    <style type="text/css">
+      h1 { font-family: 'trebuchet ms', verdana, helvetica, sans-serif; }
+      p, li { font-size: 12pt; font-family: 'trebuchet ms', verdana, helvetica, sans-serif; }
+    </style>
+  </head>
+  
+  <body>
+  	<h1>Gl&uuml;ckwunsch!</h1>
+  	<p>Sie haben die eSciDoc-Infrastruktur erfolgreich installiert! Bitte &ouml;ffnen Sie readme.html mit einem Web-Browser Ihrer Wahl.
+  		Sie finden das Dokument im Installationsverzeichnis, das Sie f&uuml;r diese Installation ausgew&auml;hlt haben. Das Dokument 
+  		beschreibt die empfohlenen n&auml;chsten Schritte, um die Software und ihre Funktionalit&auml;t zu erkunden, einschlie&szlig;lich
+  		<ul>
+  			<li>Test Ihrer eSciDoc-Installation,</li>
+  			<li>Laden der Beispiele,</li>
+  			<li>Objekte mit Ihrem Web-Browser ansehen.</li>
+  		</ul>  
+  	</p>	
+    <p>Wir hoffen, da&szlig; Sie eSciDoc als interessante und n&uuml;tzliche e-Research-Umgebung entdecken werden.</p>
+  </body>
+</html>

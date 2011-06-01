@@ -2,7 +2,7 @@
  
 <processing>
  
-  <job name="Database Migration">
+  <job name="Migration">
     <executefile name="ant">
       <arg>-f</arg>
       <arg>${INSTALL_PATH}/tools/migration/build.xml</arg>

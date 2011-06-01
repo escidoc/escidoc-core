@@ -39,10 +39,59 @@
   <str id="UserCredentialsText" txt="The installer will create the necessary databases and roles for you. In common database setups, this requires a privileged user."/>
   <str id="UserCredentialsText2" txt="Please provide the user credentials of an appropriate database user with sufficient privileges. This user will not be stored in any configuration file and will not be used once the necessary databases and roles have been created."/>
   <str id="DatabaseAdminUsername" txt="Database Admin Username:"/>
-  <str id="DatabaseAdminUsernameValidator" txt="Database admin username must not be an empty string."/>
+  <str id="UsernameValidator" txt="Username must not be an empty string."/>
   <str id="DatabaseAdminPassword" txt="Database Admin Password:"/>
-  <str id="RetypeDatabaseAdminPassword" txt="Retype Admin Password:"/>
-  <str id="DatabaseAdminPasswordValidator" txt="Database admin password must not be an empty string."/>
-  <str id="DatabaseAdminPasswordEqualityValidator" txt="Both database admin passwords must match."/>
+  <str id="RetypePassword" txt="Retype Password:"/>
+  <str id="PasswordValidator" txt="Password must not be an empty string."/>
+  <str id="PasswordEqualityValidator" txt="Both database passwords must match."/>
 
+  <str id="EscidocDatabaseUser" txt="eSciDoc Database User"/>
+  <str id="EscidocDatabaseUserText" txt="The datebase user specified here will be created by the installer during the first installation and will be used at runtime for eSciDoc. This user should not have administrative privileges."/>
+
+  <str id="TablespaceValidator" txt="Tablespace must not be empty string."/>
+
+  <str id="DatabaseUsername" txt="Database Username:"/>
+  <str id="DatabasePassword" txt="Database Password:"/>
+
+  <str id="DatabaseDefaultTablespace" txt="Database Default Tablespace:"/>
+  <str id="DatabaseTemporaryTablespace" txt="Database Temporary Tablespace:"/>
+
+  <str id="FedoraUsername" txt="Fedora Username:"/>
+  <str id="FedoraPassword" txt="Fedora Password:"/>
+
+  <str id="EmailAddress" txt="eMail Address:"/>
+  <str id="EmailValidator" txt="eMail address must not be an empty string."/>
+
+  <str id="FedoraAdminUser" txt="Fedora Administration User"/>
+  <str id="FedoraAdminUserText" txt="The Fedora Administration User will be used to directly log on to Fedora and as an additional database user for Fedora-specific tables."/>
+  <str id="FedoraAdminUserText2" txt="Typically, you will never need this user. The Fedora Administration User is mainly used within the eSciDoc Infrastructure. The email address may be used by Fedora to send error messages."/>
+
+  <str id="TriplestoreDatabaseUser" txt="Triplestore Database User"/>
+  <str id="TriplestoreDatabaseUserText" txt="The database user specified here will be created by the installer and will be used at runtime to access the riTriples database. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!"/>
+
+  <str id="SystemAdministratorCredentials" txt="User Credentials for System Administrator User"/>
+  <str id="SystemAdministratorCredentialsText" txt="The System Administrator user has access to all resources in the eSciDoc Infrastructure. He can create other users and grant roles and privileges to them."/>
+  <str id="SystemAdministratorUsername" txt="System Administrator Username:"/>
+  <str id="SystemAdministratorPassword" txt="System Administrator Password:"/>
+
+  <str id="SystemInspectorCredentials" txt="User Credentials for System Inspector User"/>
+  <str id="SystemInspectorCredentialsText" txt="The System Inspector user is a read-only user, who may access all resources in the system. The System Inspector user is needed for infrastructure-internal purposes like indexing."/>
+  <str id="SystemInspectorUsername" txt="System Inspector Username:"/>
+  <str id="SystemInspectorPassword" txt="System Inspector Password:"/>
+
+  <str id="DepositorCredentials" txt="User Credentials for Depositor User"/>
+  <str id="DepositorCredentialsText" txt="The Depositor user is entitled to create new resources within the eSciDoc Infrastructure. This is the user for most of the day-to-day work."/>
+  <str id="DepositorUsername" txt="Depositor Username:"/>
+  <str id="DepositorPassword" txt="Depositor Password:"/>
+
+  <str id="Backup" txt="Backup"/>
+  <str id="BackupText" txt="If you don't have a recent backup of your database and Fedora files we strongly recommend to stop here and make a backup now. This ensures you will not loose data if the migration fails."/>
+
+  <str id="Migration" txt="Migration"/>
+  <str id="MigrationText" txt="Now you may run the migration. Please stop the infrastructure for this."/>
+  <str id="MigrationText2" txt="Keep an eye on the tool's output to see if the migration run successfully."/>
+  <str id="StartMigration" txt="Run the migration now."/>
+  <str id="CreatorText" txt="Some database scripts contain a placeholder for the id of the creator's user account."/>
+  <str id="CreatorId" txt="Creator Userid:"/>
+  <str id="UseridValidator" txt="Userid must not be an empty string."/>
 </langpack>
