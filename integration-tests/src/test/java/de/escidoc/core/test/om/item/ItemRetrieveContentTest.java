@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.item.contentTools.ContentTestBase;
@@ -44,6 +45,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -78,8 +81,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
     /**
      * @param transport The transport identifier.
      */
-    public ItemRetrieveContentTest(final int transport) {
-        super(transport);
+    public ItemRetrieveContentTest() {
+        super(Constants.TRANSPORT_REST);
     }
 
     /**
