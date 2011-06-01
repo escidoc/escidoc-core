@@ -29,7 +29,7 @@ import org.aopalliance.intercept.MethodInvocation;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-public class GetObjectXMLKeyGenerator implements CacheKeyGenerator<String> {
+public final class GetObjectXMLKeyGenerator implements CacheKeyGenerator<String> {
 
     public String generateKey(final MethodInvocation methodInvocation) {
         return this.generateKey(methodInvocation.getArguments());

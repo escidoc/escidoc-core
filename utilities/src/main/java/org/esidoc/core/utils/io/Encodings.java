@@ -25,7 +25,7 @@ package org.esidoc.core.utils.io;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-public class Encodings {
+public final class Encodings {
 
     public final static String UTF8 = "UTF-8";
 

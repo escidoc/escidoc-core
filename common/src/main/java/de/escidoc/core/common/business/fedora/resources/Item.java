@@ -941,7 +941,11 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                 // found md-record
                 final DateTimeFormatter dateTimeFormatter =
                     DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
-                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
+                DateTime versionDate = null;
+                String versionDateString = this.getVersionDate();
+                if(versionDateString != null) {
+                    versionDate = dateTimeFormatter.parseDateTime(versionDateString);
+                }
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);

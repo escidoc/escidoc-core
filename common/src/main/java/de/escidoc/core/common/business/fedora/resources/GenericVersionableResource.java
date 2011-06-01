@@ -1217,7 +1217,11 @@ public class GenericVersionableResource extends GenericResourcePid {
 
             Datastream ds;
             final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
-            final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
+            DateTime versionDate = null;
+            String versionDateString = getVersionDate();
+            if (versionDateString != null) {
+                versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
+            }
             // RELS-EXT
             if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
                 // The RELS-EXT in the Fedora repository is newer than the
