@@ -267,7 +267,8 @@
 							<driver>org.postgresql.Driver</driver>
 							<!-- need another database to drop the targeted one -->
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-							<settingsKey>escidoc-core-db-admin</settingsKey>
+                                                        <username>${escidoc.postgres.database.admin.user}</username>
+                                                        <password>${escidoc.postgres.database.admin.password}</password>
 							<autocommit>true</autocommit>
 							<sqlCommand>DROP DATABASE IF EXISTS "${escidoc.database.name}"</sqlCommand>
 							<onError>continue</onError>
@@ -305,7 +306,8 @@
 							<driver>org.postgresql.Driver</driver>
 							<!-- need another database to drop the targeted one -->
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-							<settingsKey>escidoc-core-db-admin</settingsKey>
+                                                        <username>${escidoc.postgres.database.admin.user}</username>
+                                                        <password>${escidoc.postgres.database.admin.password}</password>
 							<autocommit>true</autocommit>
 							<sqlCommand>DROP ROLE IF EXISTS "${escidoc.database.user}"</sqlCommand>
 							<onError>continue</onError>
@@ -323,7 +325,8 @@
 							<driver>org.postgresql.Driver</driver>
 							<!-- need another database to drop the targeted one -->
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-							<settingsKey>escidoc-core-db-admin</settingsKey>
+                                                        <username>${escidoc.postgres.database.admin.user}</username>
+                                                        <password>${escidoc.postgres.database.admin.password}</password>
 							<autocommit>true</autocommit>
 							<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database.name}"</sqlCommand>
 							<onError>continue</onError>
@@ -340,7 +343,8 @@
 							<driver>org.postgresql.Driver</driver>
 							<!-- need another database to drop the targeted one -->
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-							<settingsKey>escidoc-core-db-admin</settingsKey>
+                                                        <username>${escidoc.postgres.database.admin.user}</username>
+                                                        <password>${escidoc.postgres.database.admin.password}</password>
 							<autocommit>true</autocommit>
 							<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database.name}"</sqlCommand>
 							<onError>continue</onError>
@@ -357,7 +361,8 @@
 							<driver>org.postgresql.Driver</driver>
 							<!-- need another database to drop the targeted one -->
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-							<settingsKey>escidoc-core-db-admin</settingsKey>
+                                                        <username>${escidoc.postgres.database.admin.user}</username>
+                                                        <password>${escidoc.postgres.database.admin.password}</password>
 							<autocommit>true</autocommit>
 							<sqlCommand>DROP ROLE IF EXISTS "${fedora.database.user}"</sqlCommand>
 							<onError>continue</onError>
@@ -395,7 +400,6 @@
 							<skip>${escidoc.postgres.skip}</skip>
 							<driver>org.postgresql.Driver</driver>
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/${escidoc.database.name}</url>
-							<settingsKey>escidoc-core-db-admin</settingsKey>
 							<username>${escidoc.database.user}</username>
 							<password>${escidoc.database.password}</password>
 							<autocommit>true</autocommit>
