@@ -943,7 +943,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                     DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
                 DateTime versionDate = null;
                 String versionDateString = this.getVersionDate();
-                if(versionDateString != null) {
+                if (versionDateString != null) {
                     versionDate = dateTimeFormatter.parseDateTime(versionDateString);
                 }
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);

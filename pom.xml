@@ -715,7 +715,7 @@
 					<dependency>
 					    <groupId>org.openid4java</groupId>
 					    <artifactId>openid4java</artifactId>
-					    <version>0.9.3</version>
+					    <version>0.9.5</version>
 					</dependency>
 					<dependency>
 						<groupId>org.fcrepo</groupId>
@@ -1846,7 +1846,7 @@
 			<dependency>
 			    <groupId>org.openid4java</groupId>
 			    <artifactId>openid4java</artifactId>
-			    <version>0.9.3</version>
+			    <version>0.9.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.velocity</groupId>
