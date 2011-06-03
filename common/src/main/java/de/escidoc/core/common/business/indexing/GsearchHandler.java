@@ -86,10 +86,11 @@ public class GsearchHandler {
         StringBuffer exceptions = new StringBuffer();
         if (index == null || index.equals("")) {
             indexNames.addAll(getIndexConfigurations().keySet());
-        } else {
+        }
+        else {
             indexNames.add(index);
         }
-        for(String indexName : indexNames) {
+        for (String indexName : indexNames) {
             String updateIndexParams =
                 Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_UPDATE_INDEX_PARAMS).replaceFirst(indexName);
             updateIndexParams = Constants.VALUE_MATCHER.reset(updateIndexParams).replaceFirst(resource);
@@ -97,11 +98,13 @@ public class GsearchHandler {
                 final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
 
                 String stylesheetParameters =
-                    Constants.SUPPORTED_MIMETYPES_MATCHER.reset(Constants.GSEARCH_STYLESHEET_PARAMS).replaceFirst(
-                        URLEncoder.encode(getRepositoryInfo().get("SupportedMimeTypes"), XmlUtility.CHARACTER_ENCODING));
+                    Constants.SUPPORTED_MIMETYPES_MATCHER
+                        .reset(Constants.GSEARCH_STYLESHEET_PARAMS).replaceFirst(
+                            URLEncoder.encode(getRepositoryInfo().get("SupportedMimeTypes"),
+                                XmlUtility.CHARACTER_ENCODING));
                 stylesheetParameters =
-                    pidSuffix == null || pidSuffix.length() == 0 ? Constants.PID_VERSION_IDENTIFIER_TOTAL_MATCHER.reset(
-                        stylesheetParameters).replaceFirst("") : Constants.PID_VERSION_IDENTIFIER_MATCHER.reset(
+                    pidSuffix == null || pidSuffix.length() == 0 ? Constants.PID_VERSION_IDENTIFIER_TOTAL_MATCHER
+                        .reset(stylesheetParameters).replaceFirst("") : Constants.PID_VERSION_IDENTIFIER_MATCHER.reset(
                         stylesheetParameters).replaceFirst(pidSuffix);
                 stylesheetParameters =
                     indexFulltextVisibilities == null || indexFulltextVisibilities.length() == 0 ? Constants.INDEX_FULLTEXT_VISIBILITIES_TOTAL_MATCHER
@@ -115,7 +118,8 @@ public class GsearchHandler {
                     LOGGER.debug("requesting " + updateIndexParams + " from " + gsearchUrl);
                 }
 
-                final String response = connectionUtility.getRequestURLAsString(new URL(gsearchUrl + updateIndexParams));
+                final String response =
+                    connectionUtility.getRequestURLAsString(new URL(gsearchUrl + updateIndexParams));
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("response: " + response);
                 }
@@ -133,8 +137,7 @@ public class GsearchHandler {
             }
         }
         if (exceptions.length() > 0) {
-            throw new ApplicationServerSystemException(
-                "Error while indexing resource." +  exceptions.toString());
+            throw new ApplicationServerSystemException("Error while indexing resource." + exceptions.toString());
         }
         return responses.toString();
     }
@@ -164,10 +167,11 @@ public class GsearchHandler {
         }
         if (index == null || index.equals("")) {
             indexNames.addAll(getIndexConfigurations().keySet());
-        } else {
+        }
+        else {
             indexNames.add(index);
         }
-        for(String indexName : indexNames) {
+        for (String indexName : indexNames) {
             String deleteIndexParams =
                 Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_DELETE_INDEX_PARAMS).replaceFirst(indexName);
             deleteIndexParams =
@@ -180,7 +184,8 @@ public class GsearchHandler {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("requesting " + deleteIndexParams + " from " + gsearchUrl);
                 }
-                final String response = connectionUtility.getRequestURLAsString(new URL(gsearchUrl + deleteIndexParams));
+                final String response =
+                    connectionUtility.getRequestURLAsString(new URL(gsearchUrl + deleteIndexParams));
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("response: " + response);
                 }
@@ -272,10 +277,11 @@ public class GsearchHandler {
         StringBuffer exceptions = new StringBuffer();
         if (index == null || index.equals("")) {
             indexNames.addAll(getIndexConfigurations().keySet());
-        } else {
+        }
+        else {
             indexNames.add(index);
         }
-        for(String indexName : indexNames) {
+        for (String indexName : indexNames) {
             final String optimizeIndexParams =
                 Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_OPTIMIZE_INDEX_PARAMS).replaceFirst(indexName);
             try {
@@ -284,7 +290,8 @@ public class GsearchHandler {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("requesting " + optimizeIndexParams + " from " + gsearchUrl);
                 }
-                final String response = connectionUtility.getRequestURLAsString(new URL(gsearchUrl + optimizeIndexParams));
+                final String response =
+                    connectionUtility.getRequestURLAsString(new URL(gsearchUrl + optimizeIndexParams));
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("response: " + response);
                 }

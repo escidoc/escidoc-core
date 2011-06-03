@@ -837,7 +837,8 @@
 							<driver>org.postgresql.Driver</driver>
 							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
 							</url>
-							<settingsKey>escidoc-core-db-admin</settingsKey>
+                                                        <username>${escidoc.postgres.database.admin.user}</username>
+                                                        <password>${escidoc.postgres.database.admin.password}</password>
 						</configuration>
 						<executions>
 							<execution>
@@ -1096,7 +1097,8 @@
 							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
 							</url>
 							<!-- use your settings.xml to configure username and password -->
-							<settingsKey>escidoc-core-db-admin</settingsKey>
+                                                        <username>${escidoc.postgres.database.admin.user}</username>
+                                                        <password>${escidoc.postgres.database.admin.password}</password>
 						</configuration>
 						<executions>
 							<execution>

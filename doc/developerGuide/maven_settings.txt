@@ -46,18 +46,22 @@ Changes in mavens settings.xml file:
       <password>PASSWORD</password>
     </server>
 
-- SuperUser Account for your PostgreSQL database (because database and user are created/dropped during tests)
-    <server>
-      <id>escidoc-core-db-admin</id>
-      <username>SUPERUSER</username>
-      <password>PASSWORD</password>
-    </server>
+- SuperUser Account for your Oracle/PostgreSQL database (because database and user are created/dropped during tests)
+    <profile>
+      <id>inject-variables</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <escidoc.oracle.database.admin.user>USERNAME</escidoc.oracle.database.admin.user>
+        <escidoc.oracle.database.admin.password>PASSWORD</escidoc.oracle.database.admin.password>
+        <fedora.oracle.database.admin.user>USERNAME</fedora.oracle.database.admin.user>
+        <fedora.oracle.database.admin.password>PASSWORD</fedora.oracle.database.admin.password>
+        <escidoc.postgres.database.admin.user>USERNAME</escidoc.postgres.database.admin.user>
+        <escidoc.postgres.database.admin.password>PASSWORD</escidoc.postgres.database.admin.password>
+      </properties>
+    </profile>
 
-    <server>
-      <id>escidoc-core.db</id>
-      <username>USERNAME</username>
-      <password>PASSWORD</password>
-    </server>
 
 - build variables for eSciDoc Core
     <profile>

@@ -34,8 +34,8 @@
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.6">
 <userInput>
-<entry key="DatabaseAdminPassword" value="postgres"/>
-<entry key="DatabaseAdminUsernamePostgres" value="postgres"/>
+<entry key="DatabaseAdminPassword" value="${escidoc.postgres.database.admin.password}"/>
+<entry key="DatabaseAdminUsernamePostgres" value="${escidoc.postgres.database.admin.user}"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.7">
