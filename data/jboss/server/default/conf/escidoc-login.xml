@@ -183,6 +183,31 @@ default-lazy-init="false">
     
     -->
     <!--###########################################################################################################################-->
+    <!--########OPENID-LOGIN###################################################################################################################-->
+    
+    <!-- Uncomment this to enable login using openId.-->
+    <!-- 
+    <security:http auto-config="false"
+        path-type="regex">
+        <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
+        <security:intercept-url pattern="/.*" filters="none" />
+        <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
+        <security:openid-login user-service-ref="openidUserDetailsService"/>
+    </security:http>
+
+    <bean id="openidInitializer" class="de.escidoc.core.aa.openid.EscidocOpenidInitializer" />
+	<bean id="openidUserDetailsService" class="de.escidoc.core.aa.openid.EscidocOpenidUserDetailsService" />
+ 
+    <security:authentication-provider>
+        <security:jdbc-user-service
+            id="jdbcUserService"
+            data-source-ref="escidoc-core.DataSource"
+            users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+            authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+    </security:authentication-provider>
+    -->
+    
+    <!--###########################################################################################################################-->
     <!--########HTTP-AUTH-LOGIN###################################################################################################################-->
 
     <!-- Uncomment this to enable http basic auth. login using the internal 
