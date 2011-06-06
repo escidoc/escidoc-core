@@ -52,7 +52,7 @@ public final class Constants {
 
     public static final int SORT_FIELD_COUNT = 83;
 
-    public static final int ITEM_CONTAINER_ADMIN_INDEX_FIELD_COUNT = 181;
+    public static final int ITEM_CONTAINER_ADMIN_INDEX_FIELD_COUNT = 182;
 
     public static final int ITEM_CONTAINER_ADMIN_SORT_FIELD_COUNT = 178;
 
@@ -60,7 +60,7 @@ public final class Constants {
 
     public static final int CONTENT_MODEL_ADMIN_SORT_FIELD_COUNT = 24;
 
-    public static final int CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT = 17;
+    public static final int CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT = 18;
 
     public static final int CONTENT_RELATION_ADMIN_SORT_FIELD_COUNT = 16;
 
