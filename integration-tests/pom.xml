@@ -37,7 +37,7 @@
 						</goals>
 						<configuration>
 							<source>
-								def server = settings.servers.find{ it.id.equals('postgres.localhost') };
+								def server = settings.servers.find{ it.id.equals('escidoc-core-db-admin') };
 								project.properties['escidoc.postgres.database.admin.user'] = server.username
 								project.properties['escidoc.postgres.database.admin.password'] = server.password
               </source>
