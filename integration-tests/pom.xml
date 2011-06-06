@@ -27,6 +27,25 @@
 		<plugins>
 			<!-- EXTRA -->
 			<plugin>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<source>
+								def server = settings.servers.find{ it.id.equals('postgres.localhost') };
+								project.properties['escidoc.postgres.database.admin.user'] = server.username
+								project.properties['escidoc.postgres.database.admin.password'] = server.password
+              </source>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
 				<artifactId>maven-java-formatter-plugin</artifactId>
 				<executions>
@@ -39,8 +58,8 @@
 				</executions>
 			</plugin>
 			<!-- [01] -->
-			<!-- Copy SQL files to local project and filter them. This could be done with sql-maven-plugin version 1.4 but this version 
-				has issues. -->
+			<!-- Copy SQL files to local project and filter them. This could be done 
+				with sql-maven-plugin version 1.4 but this version has issues. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -267,8 +286,7 @@
 							<driver>org.postgresql.Driver</driver>
 							<!-- need another database to drop the targeted one -->
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-                                                        <username>${escidoc.postgres.database.admin.user}</username>
-                                                        <password>${escidoc.postgres.database.admin.password}</password>
+							<settingsKey>escidoc-core-db-admin</settingsKey>
 							<autocommit>true</autocommit>
 							<sqlCommand>DROP DATABASE IF EXISTS "${escidoc.database.name}"</sqlCommand>
 							<onError>continue</onError>
@@ -306,8 +324,7 @@
 							<driver>org.postgresql.Driver</driver>
 							<!-- need another database to drop the targeted one -->
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-                                                        <username>${escidoc.postgres.database.admin.user}</username>
-                                                        <password>${escidoc.postgres.database.admin.password}</password>
+							<settingsKey>escidoc-core-db-admin</settingsKey>
 							<autocommit>true</autocommit>
 							<sqlCommand>DROP ROLE IF EXISTS "${escidoc.database.user}"</sqlCommand>
 							<onError>continue</onError>
@@ -325,8 +342,7 @@
 							<driver>org.postgresql.Driver</driver>
 							<!-- need another database to drop the targeted one -->
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-                                                        <username>${escidoc.postgres.database.admin.user}</username>
-                                                        <password>${escidoc.postgres.database.admin.password}</password>
+							<settingsKey>escidoc-core-db-admin</settingsKey>
 							<autocommit>true</autocommit>
 							<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database.name}"</sqlCommand>
 							<onError>continue</onError>
@@ -343,10 +359,10 @@
 							<driver>org.postgresql.Driver</driver>
 							<!-- need another database to drop the targeted one -->
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-                                                        <username>${escidoc.postgres.database.admin.user}</username>
-                                                        <password>${escidoc.postgres.database.admin.password}</password>
+							<settingsKey>escidoc-core-db-admin</settingsKey>
 							<autocommit>true</autocommit>
-							<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database.name}"</sqlCommand>
+							<sqlCommand>DROP DATABASE IF EXISTS
+								"${triplestore.database.name}"</sqlCommand>
 							<onError>continue</onError>
 						</configuration>
 					</execution>
@@ -361,8 +377,7 @@
 							<driver>org.postgresql.Driver</driver>
 							<!-- need another database to drop the targeted one -->
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-                                                        <username>${escidoc.postgres.database.admin.user}</username>
-                                                        <password>${escidoc.postgres.database.admin.password}</password>
+							<settingsKey>escidoc-core-db-admin</settingsKey>
 							<autocommit>true</autocommit>
 							<sqlCommand>DROP ROLE IF EXISTS "${fedora.database.user}"</sqlCommand>
 							<onError>continue</onError>
@@ -400,12 +415,12 @@
 							<skip>${escidoc.postgres.skip}</skip>
 							<driver>org.postgresql.Driver</driver>
 							<url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/${escidoc.database.name}</url>
-							<username>${escidoc.database.user}</username>
-							<password>${escidoc.database.password}</password>
+							<settingsKey>escidoc-core-db-admin</settingsKey>
 							<autocommit>true</autocommit>
 							<srcFiles>
-								<!-- the initialize phase allows no filtering. Furthermore is creating database part of the test phase. That's why 
-									here should only be these tables are generated where hibernate depends on. -->
+								<!-- the initialize phase allows no filtering. Furthermore is creating 
+									database part of the test phase. That's why here should only be these tables 
+									are generated where hibernate depends on. -->
 								<srcFile>${project.build.directory}/sql-resources/postgres/test/test.aa.init.roles.sql</srcFile>
 								<srcFile>${project.build.directory}/sql-resources/postgres/test/test.aa.init.users.sql</srcFile>
 								<srcFile>${project.build.directory}/sql-resources/postgres/test/test.aa.init.groups.sql</srcFile>
@@ -464,7 +479,7 @@
 				</executions>
 				<configuration>
 					<skip>${skipITs}</skip>
-          <wait>${cargo.wait}</wait>
+					<wait>${cargo.wait}</wait>
 					<container>
 						<containerId>jboss42x</containerId>
 						<home>${project.build.directory}/escidoc/jboss</home>
@@ -520,8 +535,8 @@
 				</configuration>
 			</plugin>
 
-			<!-- skip compiling integration test source because axis is to generate first (but compiling test-sources comes first 
-				in standard lifecycle) -->
+			<!-- skip compiling integration test source because axis is to generate 
+				first (but compiling test-sources comes first in standard lifecycle) -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.8.1</version>
@@ -578,30 +593,30 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			
-		<!-- [08] -->
-		  <plugin>
-           <groupId>org.apache.jmeter</groupId>
-           <artifactId>maven-jmeter-plugin</artifactId>
-           <version>1.0-GA</version>
-           <executions>
-               <execution>
-                   <id>jmeter-tests</id>
-                   <phase>integration-test</phase>
-                   <goals>
-                       <goal>jmeter</goal>
-                   </goals>
-                   <configuration>
-                       <reportDir>${project.build.directory}/jmeter-reports</reportDir>
-						<jmeterUserProperties>
-					   		<hostname>localhost</hostname>
-			       	  	   	<port>${escidoc.server.port}</port>
-       	  	  	  		</jmeterUserProperties>
-                   </configuration>
-               </execution>
-           </executions>
-       </plugin>
-       
+
+			<!-- [08] -->
+			<plugin>
+				<groupId>org.apache.jmeter</groupId>
+				<artifactId>maven-jmeter-plugin</artifactId>
+				<version>1.0-GA</version>
+				<executions>
+					<execution>
+						<id>jmeter-tests</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>jmeter</goal>
+						</goals>
+						<configuration>
+							<reportDir>${project.build.directory}/jmeter-reports</reportDir>
+							<jmeterUserProperties>
+								<hostname>localhost</hostname>
+								<port>${escidoc.server.port}</port>
+							</jmeterUserProperties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -646,7 +661,8 @@
 			<artifactId>httpcore</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- TODO: Remove as soon as all external libraries (Fedora) migration to new http client. -->
+		<!-- TODO: Remove as soon as all external libraries (Fedora) migration 
+			to new http client. -->
 		<dependency>
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
@@ -779,8 +795,8 @@
 			<groupId>xerces</groupId>
 			<artifactId>xercesImpl</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId> <version>1.4</version> <type>jar</type> <scope>test</scope> 
-			</dependency> -->
+		<!-- <dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId> 
+			<version>1.4</version> <type>jar</type> <scope>test</scope> </dependency> -->
 
 		<!-- for SB -->
 		<dependency>
