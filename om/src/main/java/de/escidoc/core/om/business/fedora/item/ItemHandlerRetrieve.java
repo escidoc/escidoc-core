@@ -48,7 +48,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.WovContentRelationsRetrieveHandler;
 import de.escidoc.core.common.util.xml.Elements;
@@ -64,7 +63,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -1079,17 +1077,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         values.put(XmlTemplateProvider.HREF, getItem().getHref());
 
         try {
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util.getIso8601(Iso8601Util
-                .parseIso8601(item.getLastModificationDate())));
-        }
-        catch (final ParseException e) {
-            try {
-                throw new WebserverSystemException("Unable to parse last-modification-date '"
-                    + item.getLastModificationDate() + "' of item '" + item.getId() + "'!", e);
-            }
-            catch (final FedoraSystemException e1) {
-                throw new WebserverSystemException(e1);
-            }
+            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(item
+                .getLastModificationDate()));
         }
         catch (final FedoraSystemException e) {
             throw new WebserverSystemException(e);

@@ -20,10 +20,7 @@
 
 package de.escidoc.core.common.util.date;
 
-import de.escidoc.core.common.util.string.StringUtility;
-
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -86,44 +83,4 @@ public final class Iso8601Util {
             preformatted.length() - "+0000".length()) + 'Z' : preformatted.substring(0, preformatted.length() - 2)
             + ':' + preformatted.substring(preformatted.length() - 2, preformatted.length());
     }
-
-    /**
-     * Parses the provided date and time in ISO8601 format yyyy-MM-ddThh:mm:ss.sssZ, yyyy-MM-dd-Thh:mm:ss.sss+hh:mm, or
-     * yyyy-MM-dd-Thh:mm:ss.sss-hh:mm.
-     *
-     * @param dateText The date and time to parse.
-     * @return Returns a <code>Date</code> object representing the provided date and time.
-     * @throws ParseException Thrown if the parsing fails.
-     */
-    @Deprecated
-    public static Date parseIso8601(final String dateText) throws ParseException {
-
-        if (dateText == null || dateText.length() == 0) {
-            throw new ParseException("Could not parse text: [null]", 0);
-        }
-
-        final String tmpDateText;
-        if (dateText.endsWith("Z")) {
-            // FIXME quick workaround (FRS)
-            tmpDateText =
-                dateText.length() == 20 ? dateText.substring(0, dateText.length() - 1) + ".0+0000" : dateText
-                    .substring(0, dateText.length() - 1)
-                    + "+0000";
-        }
-        else {
-            final int pos = dateText.length() - SIX;
-            final char c = dateText.charAt(pos);
-            if ((int) c == (int) '+' || (int) c == (int) '-') {
-                tmpDateText =
-                    dateText.substring(0, dateText.length() - FOUR) + dateText.substring(dateText.length() - 2);
-            }
-            else {
-                throw new ParseException(StringUtility.format("Could not parse date text", dateText), pos);
-            }
-        }
-        final DateFormat inputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
-        inputDateFormat.setLenient(false);
-        return inputDateFormat.parse(tmpDateText);
-    }
-
 }

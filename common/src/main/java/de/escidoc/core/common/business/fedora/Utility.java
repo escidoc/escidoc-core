@@ -231,7 +231,7 @@ public class Utility {
      * @throws OptimisticLockingException Thrown if a change of the object is not permitted.
      * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    public boolean checkOptimisticLockingCriteria(
+    public static boolean checkOptimisticLockingCriteria(
         final String fedoraLatestVersionDate, final String updateLatestVersionDate, final String label)
         throws OptimisticLockingException, WebserverSystemException {
 

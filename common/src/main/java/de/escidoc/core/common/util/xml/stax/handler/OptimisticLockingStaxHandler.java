@@ -20,18 +20,19 @@
 
 package de.escidoc.core.common.util.xml.stax.handler;
 
-import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.util.date.Iso8601Util;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import java.util.Date;
+
+import javax.naming.directory.NoSuchAttributeException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.naming.directory.NoSuchAttributeException;
-import java.text.ParseException;
-import java.util.Date;
+import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.common.util.xml.stax.events.StartElement;
 
 /**
  * Stax handler that handles the last modification attribute and checks the optimistic locking criteria.
@@ -82,14 +83,10 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
                     element.getAttributeValue(null, XmlUtility.NAME_LAST_MODIFICATION_DATE);
 
                 try {
-                    final Date lastModificationDate = Iso8601Util.parseIso8601(lastModificationDateValue);
-                    if (this.expectedLastModificationDate != null
-                        && !lastModificationDate.equals(this.expectedLastModificationDate)) {
-                        throw new OptimisticLockingException(StringUtility.format("Optimistic locking error",
-                            Iso8601Util.getIso8601(this.expectedLastModificationDate), lastModificationDateValue));
-                    }
+                    Utility.checkOptimisticLockingCriteria(expectedLastModificationDate.toString(),
+                        lastModificationDateValue, "resource");
                 }
-                catch (final ParseException e) {
+                catch (final WebserverSystemException e) {
                     // this should not happen as the date format has been
                     // validated during schema validation.
                     if (LOGGER.isWarnEnabled()) {

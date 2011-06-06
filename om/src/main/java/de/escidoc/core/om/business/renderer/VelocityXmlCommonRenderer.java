@@ -28,6 +28,16 @@
  */
 package de.escidoc.core.om.business.renderer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.GenericVersionableResourcePid;
@@ -36,19 +46,8 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class VelocityXmlCommonRenderer {
@@ -146,16 +145,9 @@ public class VelocityXmlCommonRenderer {
             throw new WebserverSystemException(e1);
         }
 
-        try {
+        final String n = XmlUtility.normalizeDate(lmd);
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, n);
 
-            final String n = Iso8601Util.getIso8601(Iso8601Util.parseIso8601(lmd));
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, n);
-        }
-        catch (final ParseException e) {
-            throw new WebserverSystemException("Unable to parse last-modification-date '" + lmd + "' of resource '"
-                + resource.getId() + "'!", e);
-        }
         addXlinkValues(values);
-
     }
 }

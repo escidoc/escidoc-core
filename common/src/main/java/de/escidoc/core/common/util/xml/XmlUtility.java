@@ -51,6 +51,8 @@ import javax.xml.validation.Validator;
 
 import org.apache.commons.pool.impl.StackKeyedObjectPool;
 import org.codehaus.stax2.XMLOutputFactory2;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.ReadableDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1384,6 +1386,18 @@ public final class XmlUtility {
 
         final Matcher matcher = PATTERN_NAME_FROM_XML.matcher(resourceXml);
         return matcher.find() ? matcher.group(1).trim() : null;
+    }
+
+    /**
+     * Convert the given date string into a XML compliant format in UTC.
+     * 
+     * @param date
+     *            date string
+     * 
+     * @return normalized date string
+     */
+    public static String normalizeDate(final String date) {
+        return new DateTime(date).withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT);
     }
 
     /**
