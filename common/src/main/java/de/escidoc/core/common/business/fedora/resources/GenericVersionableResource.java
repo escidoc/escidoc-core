@@ -47,6 +47,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -789,7 +790,8 @@ public class GenericVersionableResource extends GenericResourcePid {
                     setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), null));
                 }
                 else {
-                    final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                    final DateTimeFormatter dateTimeFormatter =
+                        DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT).withZone(DateTimeZone.UTC);
                     final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
                     setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), versionDate));
                 }
@@ -811,7 +813,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws FedoraSystemException   Thrown in case of internal error.
      */
     public Datastream getRelsExt(final String timestamp) throws StreamNotFoundException, FedoraSystemException {
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+        final DateTimeFormatter dateTimeFormatter =
+            DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT).withZone(DateTimeZone.UTC);
         DateTime timestampDateTime = null;
         if (timestamp != null) {
             timestampDateTime = dateTimeFormatter.parseDateTime(timestamp);
@@ -1216,7 +1219,8 @@ public class GenericVersionableResource extends GenericResourcePid {
             final String location = datastreamInfo.getLocation();
 
             Datastream ds;
-            final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+            final DateTimeFormatter dateTimeFormatter =
+                DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT).withZone(DateTimeZone.UTC);
             DateTime versionDate = null;
             String versionDateString = getVersionDate();
             if (versionDateString != null) {

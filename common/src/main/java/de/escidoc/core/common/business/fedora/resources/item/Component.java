@@ -50,6 +50,7 @@ import de.escidoc.core.common.util.xml.renderer.VelocityXmlItemFoXmlRenderer;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -146,7 +147,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
                 final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                        DateTimeZone.UTC);
                 final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
                 ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
@@ -157,7 +159,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 // RELS-EXT
                 if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
                     final DateTimeFormatter dateTimeFormatter =
-                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                            DateTimeZone.UTC);
                     final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
                     ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
@@ -167,7 +170,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 // DC
                 else if ("DC".equals(name)) {
                     final DateTimeFormatter dateTimeFormatter =
-                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                            DateTimeZone.UTC);
                     final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
                     ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
@@ -177,7 +181,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 // content
                 else if ("content".equals(name)) {
                     final DateTimeFormatter dateTimeFormatter =
-                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                            DateTimeZone.UTC);
                     final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
                     ds =
                         new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue,

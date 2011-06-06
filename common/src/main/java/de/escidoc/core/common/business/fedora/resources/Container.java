@@ -43,6 +43,7 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -198,7 +199,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
     public Datastream getCts() throws StreamNotFoundException, FedoraSystemException {
         if (this.cts == null) {
             try {
-                final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT).withZone(DateTimeZone.UTC);
                 final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
                 this.cts = new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getId(), versionDate);
             }
@@ -273,7 +275,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
         }
         for (final String name : names) {
             try {
-                final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT).withZone(DateTimeZone.UTC);
                 final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
                 final Datastream newDs = new Datastream(name, getId(), versionDate);
                 result.put(name, newDs);
@@ -360,7 +363,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
             // retrieve from fedora and add to map
             final Datastream ds;
             try {
-                final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT).withZone(DateTimeZone.UTC);
                 final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
                 ds = new Datastream(name, getId(), versionDate);
             }
@@ -481,7 +485,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
                     setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), null));
                 }
                 else {
-                    final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                    final DateTimeFormatter dateTimeFormatter =
+                        DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT).withZone(DateTimeZone.UTC);
                     final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
                     setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), versionDate));
                 }
@@ -687,7 +692,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
     public Datastream getDc() throws StreamNotFoundException, FedoraSystemException {
         if (this.dc == null) {
             try {
-                final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
+                final DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT).withZone(DateTimeZone.UTC);
                 final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
                 this.dc = new Datastream(Datastream.DC_DATASTREAM, getId(), versionDate);
             }

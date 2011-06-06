@@ -56,6 +56,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -415,7 +416,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             final Datastream ds;
             try {
                 final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                        DateTimeZone.UTC);
                 final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream("DC", getId(), versionDate);
             }
@@ -940,7 +942,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
                 final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                        DateTimeZone.UTC);
                 DateTime versionDate = null;
                 String versionDateString = this.getVersionDate();
                 if (versionDateString != null) {
@@ -954,7 +957,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             else if (altIDs.contains("content-stream")) {
                 // found content-stream
                 final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                        DateTimeZone.UTC);
                 final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
@@ -964,7 +968,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             // content-model-specific
             else if ("content-model-specific".equals(name)) {
                 final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                        DateTimeZone.UTC);
                 final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));

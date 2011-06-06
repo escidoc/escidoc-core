@@ -45,6 +45,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -169,7 +170,8 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
             final Datastream ds;
             try {
                 final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                        DateTimeZone.UTC);
                 final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream("DC", getId(), versionDate);
             }
@@ -254,7 +256,8 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
             if (altIDs.contains("content-stream")) {
                 // found content-stream
                 final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                        DateTimeZone.UTC);
                 final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
@@ -263,7 +266,8 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
             }
             else if (name.equals(DATASTREAM_DS_COMPOSITE_MODEL)) {
                 final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                        DateTimeZone.UTC);
                 final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
@@ -272,7 +276,8 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
             }
             else if (!(name.equals(Datastream.RELS_EXT_DATASTREAM) || "DC".equals(name) || name.equals(DATASTREAM_WOV))) {
                 final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
+                        DateTimeZone.UTC);
                 final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
