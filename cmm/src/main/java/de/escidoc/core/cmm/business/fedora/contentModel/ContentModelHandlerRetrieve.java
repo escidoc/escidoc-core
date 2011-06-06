@@ -1,5 +1,11 @@
 package de.escidoc.core.cmm.business.fedora.contentModel;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.Constants;
 import de.escidoc.core.common.business.fedora.HandlerBase;
@@ -16,17 +22,9 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContentModelXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ContentModelHandlerRetrieve extends HandlerBase {
 
@@ -203,17 +201,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.put(XmlTemplateProvider.HREF, getContentModel().getHref());
 
         try {
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util.getIso8601(Iso8601Util
-                .parseIso8601(contentModel.getLastModificationDate())));
-        }
-        catch (final ParseException e) {
-            try {
-                throw new WebserverSystemException("Unable to parse last-modification-date '"
-                    + contentModel.getLastModificationDate() + "' of content model '" + contentModel.getId() + "'!", e);
-            }
-            catch (final FedoraSystemException e1) {
-                throw new WebserverSystemException(e1);
-            }
+            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(contentModel
+                .getLastModificationDate()));
         }
         catch (final FedoraSystemException e) {
             throw new WebserverSystemException(e);
