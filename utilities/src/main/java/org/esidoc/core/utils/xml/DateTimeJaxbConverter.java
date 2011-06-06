@@ -1,6 +1,7 @@
 package org.esidoc.core.utils.xml;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Calendar;
@@ -16,7 +17,8 @@ public final class DateTimeJaxbConverter {
         if (dateString == null) {
             return null;
         }
-        return new DateTime(DatatypeConverter.parseDate(dateString).getTime());
+        final Calendar calendar = DatatypeConverter.parseDate(dateString);
+        return new DateTime(calendar.getTimeInMillis(), DateTimeZone.forTimeZone(calendar.getTimeZone()));
     }
 
     public static String printDate(final DateTime date) {
@@ -25,6 +27,7 @@ public final class DateTimeJaxbConverter {
         }
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date.toDate());
+        calendar.setTimeZone(date.getZone().toTimeZone());
         return DatatypeConverter.printDate(calendar);
     }
 }
