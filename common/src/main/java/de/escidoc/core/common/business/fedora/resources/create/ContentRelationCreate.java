@@ -34,6 +34,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.escidoc.core.services.fedora.AddDatastreamPathParam;
+import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
@@ -63,7 +65,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 /**
  * Content Relation.<br/>
  * See http://colab.mpdl.mpg.de/mediawiki/ESciDoc_Content_Relations_Concept.
- *
+ * 
  * @author Steffen Wagner
  */
 @Configurable
@@ -101,7 +103,8 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
     private String objectVersion;
 
     /**
-     * @throws WebserverSystemException Thrown if obtaining UserContext failed.
+     * @throws WebserverSystemException
+     *             Thrown if obtaining UserContext failed.
      */
     public ContentRelationCreate() throws WebserverSystemException {
 
@@ -110,8 +113,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Set ContentRelationProperties.
-     *
-     * @param properties The properties of Content Relation.
+     * 
+     * @param properties
+     *            The properties of Content Relation.
      */
     public void setProperties(final ContentRelationProperties properties) {
 
@@ -120,9 +124,11 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Add a metadata record to the Component.
-     *
-     * @param mdRecord The new MetadataRecord.
-     * @throws InvalidContentException Thrown if md-records with same name
+     * 
+     * @param mdRecord
+     *            The new MetadataRecord.
+     * @throws InvalidContentException
+     *             Thrown if md-records with same name
      */
     public void addMdRecord(final MdRecordCreate mdRecord) throws InvalidContentException {
 
@@ -138,8 +144,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Delete MdRecord with provided name.
-     *
-     * @param name Name of MdRecord which is to delete.
+     * 
+     * @param name
+     *            Name of MdRecord which is to delete.
      */
     public void deleteMdRecord(final String name) {
 
@@ -156,9 +163,11 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
     /**
      * Injects the {@link EscidocIdProvider}.
      * <p/>
-     * Attention: the spring constructor is to override in the inheritage classes
-     *
-     * @param idProvider The {@link EscidocIdProvider} to set.
+     * Attention: the spring constructor is to override in the inheritage
+     * classes
+     * 
+     * @param idProvider
+     *            The {@link EscidocIdProvider} to set.
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
 
@@ -167,8 +176,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Persist whole Content Relation to Repository and force TripleStore sync.
-     *
-     * @throws SystemException Thrown if internal error occur.
+     * 
+     * @throws SystemException
+     *             Thrown if internal error occur.
      */
     public void persist() throws SystemException {
 
@@ -177,9 +187,11 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Persist whole Content Relation to Repository.
-     *
-     * @param forceSync Set true to force synchronous sync of TripleStore.
-     * @throws SystemException Thrown if internal error occur.
+     * 
+     * @param forceSync
+     *            Set true to force synchronous sync of TripleStore.
+     * @throws SystemException
+     *             Thrown if internal error occur.
      */
     public void persist(final boolean forceSync) throws SystemException {
 
@@ -210,10 +222,12 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * Get DC (mapped from default metadata). Value is cached.
      * <p/>
      * Precondition: objid has to be set before getDC is called.
-     *
+     * 
      * @return DC or null if default metadata is missing).
-     * @throws WebserverSystemException Thrown if an error occurs during DC creation.
-     * @throws EncodingSystemException  Thrown if the conversion to default encoding failed.
+     * @throws WebserverSystemException
+     *             Thrown if an error occurs during DC creation.
+     * @throws EncodingSystemException
+     *             Thrown if the conversion to default encoding failed.
      */
     public String getDC() throws WebserverSystemException, EncodingSystemException {
 
@@ -234,7 +248,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Get vector of all MdRecords.
-     *
+     * 
      * @return All MdRecords.
      */
     public List<MdRecordCreate> getMetadataRecords() {
@@ -243,8 +257,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Set all MdRecords. The set of MdRecords will be overridden.
-     *
-     * @param mdrecords Vector with all new MdRecords of the ContentRelation
+     * 
+     * @param mdrecords
+     *            Vector with all new MdRecords of the ContentRelation
      */
     public void setMetadataRecords(final List<MdRecordCreate> mdrecords) {
         this.mdRecords = mdrecords;
@@ -252,8 +267,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Get Metadata record by name.
-     *
-     * @param name Name of MetadataRecord.
+     * 
+     * @param name
+     *            Name of MetadataRecord.
      * @return MetadataRecord with required name or null.
      */
     public MdRecordCreate getMetadataRecord(final String name) {
@@ -269,7 +285,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Get Properties of Content Relation.
-     *
+     * 
      * @return ObjectProperties
      */
     public ContentRelationProperties getProperties() {
@@ -278,8 +294,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Set relation type.
-     *
-     * @param type URI with predicate
+     * 
+     * @param type
+     *            URI with predicate
      */
     public void setType(final URI type) {
         this.type = type;
@@ -287,7 +304,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Get content relation type (URI with predicate).
-     *
+     * 
      * @return URI with predicate
      */
     public URI getType() {
@@ -296,8 +313,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Set subjects.
-     *
-     * @param subject Set list of subjects.
+     * 
+     * @param subject
+     *            Set list of subjects.
      */
     public void setSubject(final String subject) {
         this.subject = subject;
@@ -305,7 +323,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Get subjects.
-     *
+     * 
      * @return get list of subjects.
      */
     public String getSubject() {
@@ -314,8 +332,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Set objects.
-     *
-     * @param object Set list of objects.
+     * 
+     * @param object
+     *            Set list of objects.
      */
     public void setObject(final String object) {
         this.object = object;
@@ -323,7 +342,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Get version number of subject.
-     *
+     * 
      * @return version number of subject
      */
     public String getSubjectVersion() {
@@ -332,8 +351,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Set version number of subject.
-     *
-     * @param subjectVersion version number of subject
+     * 
+     * @param subjectVersion
+     *            version number of subject
      */
     public void setSubjectVersion(final String subjectVersion) {
         this.subjectVersion = subjectVersion;
@@ -341,7 +361,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Get version number of object.
-     *
+     * 
      * @return version number of object
      */
     public String getObjectVersion() {
@@ -350,8 +370,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Set version number of object.
-     *
-     * @param objectVersion version number of object
+     * 
+     * @param objectVersion
+     *            version number of object
      */
     public void setObjectVersion(final String objectVersion) {
         this.objectVersion = objectVersion;
@@ -359,7 +380,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Get objects.
-     *
+     * 
      * @return get list of objects.
      */
     public String getObject() {
@@ -368,10 +389,12 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Merge information from nCr to sCR and count the number of changed values.
-     *
-     * @param nCr The resource with the update values
+     * 
+     * @param nCr
+     *            The resource with the update values
      * @return number of changed values
-     * @throws InvalidContentException Thrown if name of meta record is not unique
+     * @throws InvalidContentException
+     *             Thrown if name of meta record is not unique
      */
     public int merge(final ContentRelationCreate nCr) throws InvalidContentException {
 
@@ -391,7 +414,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Get the repository indicator.
-     *
+     * 
      * @return RepositoryIndicator
      */
     public RepositoryIndicator getRepositoryIndicator() {
@@ -400,10 +423,13 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Merge meta data values from nCr into the object.
-     *
-     * @param nCr Resource which value are to merge
+     * 
+     * @param nCr
+     *            Resource which value are to merge
      * @return number of merges
-     * @throws InvalidContentException Thrown if name of MdRecord is not unique or other content is invalid
+     * @throws InvalidContentException
+     *             Thrown if name of MdRecord is not unique or other content is
+     *             invalid
      */
     private int mergeMdRecords(final ContentRelationCreate nCr) throws InvalidContentException {
 
@@ -464,8 +490,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Merge relation values from nCr into the object.
-     *
-     * @param nCr Resource which value are to merge
+     * 
+     * @param nCr
+     *            Resource which value are to merge
      * @return number of merges
      */
     private int mergeRelation(final ContentRelationCreate nCr) {
@@ -537,10 +564,13 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Check if the name is unique within the list of md-records.
-     *
-     * @param records Vector with md-records.
-     * @param name    The name which is o check.
-     * @throws InvalidContentException Thrown if the md-record name is not unique.
+     * 
+     * @param records
+     *            Vector with md-records.
+     * @param name
+     *            The name which is o check.
+     * @throws InvalidContentException
+     *             Thrown if the md-record name is not unique.
      */
     private static void checkUniqueName(final Iterable<MdRecordCreate> records, final String name)
         throws InvalidContentException {
@@ -557,8 +587,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Create resource in Fedora.
-     *
-     * @throws SystemException Thrown if internal error occurs.
+     * 
+     * @throws SystemException
+     *             Thrown if internal error occurs.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
@@ -588,8 +619,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Update resource in Fedora.
-     *
-     * @throws SystemException Thrown if internal error occurs.
+     * 
+     * @throws SystemException
+     *             Thrown if internal error occurs.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
@@ -624,9 +656,12 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Persist properties.
-     *
-     * @param sync Set true if TripleStore sync is to call. False otherwise.
-     * @throws SystemException Thrown if updating Fedora repository or syncing TripleStore failed.
+     * 
+     * @param sync
+     *            Set true if TripleStore sync is to call. False otherwise.
+     * @throws SystemException
+     *             Thrown if updating Fedora repository or syncing TripleStore
+     *             failed.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
@@ -637,11 +672,11 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
             new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
         final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
         query.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
-        Stream stream = new Stream();
+        final Stream stream = new Stream();
         try {
             stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         final DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.modifyDatastream(path, query, stream);
@@ -660,9 +695,11 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Mark datastream in repository as deleted.
-     *
-     * @param mdRecord Md Record which is to delete
-     * @throws FedoraSystemException Thrown if Fedora request failed.
+     * 
+     * @param mdRecord
+     *            Md Record which is to delete
+     * @throws FedoraSystemException
+     *             Thrown if Fedora request failed.
      */
     private void deleteDatastream(final MdRecordCreate mdRecord) throws FedoraSystemException {
         this.fedoraUtility.purgeDatastream(getObjid(), mdRecord.getName(), null, null);
@@ -670,10 +707,13 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Update MdRecord in repository (Fedora).
-     *
-     * @param mdRecord The MdRecord which is to update.
-     * @throws FedoraSystemException    Thrown if Fedora request failed.
-     * @throws WebserverSystemException Thrown if internal error occurs.
+     * 
+     * @param mdRecord
+     *            The MdRecord which is to update.
+     * @throws FedoraSystemException
+     *             Thrown if Fedora request failed.
+     * @throws WebserverSystemException
+     *             Thrown if internal error occurs.
      */
     private void updateDataStream(final MdRecordCreate mdRecord) throws FedoraSystemException, WebserverSystemException {
 
@@ -691,11 +731,11 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         query.setDsLabel(mdRecord.getLabel());
         query.setMimeType(mdRecord.getMimeType());
         query.setAltIDs(Arrays.asList(altIds));
-        Stream stream = new Stream();
+        final Stream stream = new Stream();
         try {
             stream.write(content);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         this.fedoraServiceClient.modifyDatastream(path, query, stream);
@@ -704,10 +744,13 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Store a new create a datastream in the repository (Fedora).
-     *
-     * @param mdRecord MdRecord
-     * @throws FedoraSystemException    Thrown if Fedora request failed.
-     * @throws WebserverSystemException Thrown if internal error occurs.
+     * 
+     * @param mdRecord
+     *            MdRecord
+     * @throws FedoraSystemException
+     *             Thrown if Fedora request failed.
+     * @throws WebserverSystemException
+     *             Thrown if internal error occurs.
      */
     private void createDatastream(final MdRecordCreate mdRecord) throws FedoraSystemException, WebserverSystemException {
 
@@ -721,19 +764,33 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
             throw new WebserverSystemException(e);
         }
 
-        this.fedoraUtility.addDatastream(getObjid(), mdRecord.getName(), altIds, mdRecord.getLabel(), false, content,
-            false);
+        final AddDatastreamPathParam path = new AddDatastreamPathParam(getObjid(), mdRecord.getName());
+        final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
+        query.setAltIDs(Arrays.asList(altIds));
+        query.setDsLabel(mdRecord.getLabel());
+        query.setVersionable(false);
+        final Stream stream = new Stream();
+        try {
+            stream.write(content);
+        }
+        catch (final IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        this.fedoraServiceClient.addDatastream(path, query, stream);
+
         mdRecord.getRepositoryIndicator().setResourceChanged(false);
         mdRecord.getRepositoryIndicator().setResourceIsNew(false);
     }
 
     /**
      * Creates and returns a copy of this object.
-     *
+     * 
      * @return a clone of this instance.
-     * @throws CloneNotSupportedException if the object's class does not support the Cloneable interface. Subclasses
-     *                                    that override the clone method can also throw this exception to indicate that
-     *                                    an instance cannot be cloned.
+     * @throws CloneNotSupportedException
+     *             if the object's class does not support the Cloneable
+     *             interface. Subclasses that override the clone method can also
+     *             throw this exception to indicate that an instance cannot be
+     *             cloned.
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -757,7 +814,8 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
             }
         }
         catch (final Exception e) {
-            final CloneNotSupportedException cnse = new CloneNotSupportedException(e.toString()); // Ignore FindBugs
+            final CloneNotSupportedException cnse = new CloneNotSupportedException(e.toString()); // Ignore
+            // FindBugs
             cnse.initCause(e);
             throw cnse;
         }

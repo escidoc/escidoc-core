@@ -20,6 +20,27 @@
 
 package de.escidoc.core.common.business.fedora.resources.create;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.escidoc.core.services.fedora.AddDatastreamPathParam;
+import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
+import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.esidoc.core.utils.io.Stream;
+import org.joda.time.DateTime;
+import org.joda.time.ReadableInstant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -34,31 +55,13 @@ import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.ContentModelFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
-import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
-import org.esidoc.core.utils.io.Stream;
-import org.joda.time.DateTime;
-import org.joda.time.ReadableInstant;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Content Model for create method.
  * <p/>
  * Attention! This is only a helper class for the transition to integrate this functionality into the ContentModel
  * class.
- *
+ * 
  * @author Frank Schwichtenberg
  */
 @Configurable
@@ -89,8 +92,9 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Set Content Model properties.
-     *
-     * @param properties The properties of Content Model.
+     * 
+     * @param properties
+     *            The properties of Content Model.
      */
     public void setProperties(final ContentModelProperties properties) {
 
@@ -99,7 +103,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Get Properties of ContentModel.
-     *
+     * 
      * @return ContentModelProperties
      */
     public ContentModelProperties getProperties() {
@@ -108,6 +112,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Set metadata record definitions.
+     * 
      * @param mdRecordDefinitions
      */
     public void setMdRecordDefinitions(final List<MdRecordDefinitionCreate> mdRecordDefinitions) {
@@ -117,6 +122,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Set resource definitions.
+     * 
      * @param resourceDefinitions
      */
     public void setResourceDefinitions(final Map<String, ResourceDefinitionCreate> resourceDefinitions) {
@@ -126,7 +132,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Get vector of all MdRecords.
-     *
+     * 
      * @return All MdRecords.
      */
     public List<MdRecordDefinitionCreate> getMetadataRecordDefinitions() {
@@ -135,10 +141,11 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Injects the {@link EscidocIdProvider}.
-     *
-     * @param idProvider The {@link EscidocIdProvider} to set.
-     *                   <p/>
-     *                   FIXME This Spring construct seams not to work.
+     * 
+     * @param idProvider
+     *            The {@link EscidocIdProvider} to set.
+     *            <p/>
+     *            FIXME This Spring construct seams not to work.
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
 
@@ -147,8 +154,9 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Persist whole ContentModel to Repository.
-     *
-     * @param forceSync Set true to force synchronous sync of TripleStore.
+     * 
+     * @param forceSync
+     *            Set true to force synchronous sync of TripleStore.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
@@ -156,72 +164,83 @@ public class ContentModelCreate extends GenericResourceCreate {
 
         // FIXME persist behavior
 
-        try {
-            // Do not set fedora object id earlier. Otherwise consumes
-            // an unsuccessful requests an objid (and time). This is redundant
-            // if rollback is implemented and gives an unused objid back to
-            // the objid pool.
-            if (getObjid() == null) {
-                try {
-                    setObjid(this.idProvider.getNextPid());
-                }
-                catch (final SystemException e) {
-                    // FIXME should be catched earlier (FRS)
-                    throw new WebserverSystemException(e);
-                }
-            }
-
-            // create service definitions and deployments
-            if (this.resourceDefinitions != null) {
-                for (final ResourceDefinitionCreate resourceDefinitionCreate : this.resourceDefinitions.values()) {
-                    final String sdefFoxml = getSDefFoXML(resourceDefinitionCreate);
-                    this.fedoraUtility.storeObjectInFedora(sdefFoxml, false);
-                    final String sdepFoxml = getSDepFoXML(resourceDefinitionCreate);
-                    this.fedoraUtility.storeObjectInFedora(sdepFoxml, false);
-                }
-            }
-
-            // serialize object without RELS-EXT and WOV to FOXML
-            final String foxml = getMinimalFoXML();
-            this.fedoraUtility.storeObjectInFedora(foxml, false);
-
-            // take timestamp and prepare RELS-EXT
-            final String lmd = getLastModificationDateByWorkaround(getObjid());
-
-            this.properties.getCurrentVersion().setDate(lmd);
-            this.properties.getLatestVersion().setDate(lmd);
-            if (this.properties.getLatestReleasedVersion() != null) {
-                this.properties.getLatestReleasedVersion().setDate(lmd);
-            }
-            this.fedoraUtility.addDatastream(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY, new String[] {},
-                "whole object versioning datastream", false, getWov().getBytes(XmlUtility.CHARACTER_ENCODING), false);
-
-            // update RELS-EXT with timestamp
-            final String relsExt = renderRelsExt();
-            final ModifiyDatastreamPathParam path =
-                new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
-            final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
-            query.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
-            Stream stream = new Stream();
+        // Do not set fedora object id earlier. Otherwise consumes
+        // an unsuccessful requests an objid (and time). This is redundant
+        // if rollback is implemented and gives an unused objid back to
+        // the objid pool.
+        if (getObjid() == null) {
             try {
-                stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
+                setObjid(this.idProvider.getNextPid());
             }
-            catch (IOException e) {
+            catch (final SystemException e) {
+                // FIXME should be catched earlier (FRS)
                 throw new WebserverSystemException(e);
             }
-            this.fedoraServiceClient.modifyDatastream(path, query, stream);
-            if (forceSync) {
-                this.fedoraUtility.sync();
+        }
+
+        // create service definitions and deployments
+        if (this.resourceDefinitions != null) {
+            for (final ResourceDefinitionCreate resourceDefinitionCreate : this.resourceDefinitions.values()) {
+                final String sdefFoxml = getSDefFoXML(resourceDefinitionCreate);
+                this.fedoraUtility.storeObjectInFedora(sdefFoxml, false);
+                final String sdepFoxml = getSDepFoXML(resourceDefinitionCreate);
+                this.fedoraUtility.storeObjectInFedora(sdepFoxml, false);
             }
         }
-        catch (final UnsupportedEncodingException e) {
-            // TODO rollback
+
+        // serialize object without RELS-EXT and WOV to FOXML
+        final String foxml = getMinimalFoXML();
+        this.fedoraUtility.storeObjectInFedora(foxml, false);
+
+        // take timestamp and prepare RELS-EXT
+        final String lmd = getLastModificationDateByWorkaround(getObjid());
+
+        this.properties.getCurrentVersion().setDate(lmd);
+        this.properties.getLatestVersion().setDate(lmd);
+        if (this.properties.getLatestReleasedVersion() != null) {
+            this.properties.getLatestReleasedVersion().setDate(lmd);
+        }
+
+        final AddDatastreamPathParam addPath =
+            new AddDatastreamPathParam(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY);
+        final AddDatastreamQueryParam addQuery = new AddDatastreamQueryParam();
+        addQuery.setDsLabel("whole object versioning datastream");
+        addQuery.setVersionable(false);
+        final Stream addStream = new Stream();
+        try {
+            addStream.write(getWov().getBytes(XmlUtility.CHARACTER_ENCODING));
+        }
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
+        }
+        this.fedoraServiceClient.addDatastream(addPath, addQuery, addStream);
+
+        // update RELS-EXT with timestamp
+        final String relsExt = renderRelsExt();
+        final ModifiyDatastreamPathParam path =
+            new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
+        final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+        query.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
+        final Stream stream = new Stream();
+        try {
+            stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
+        }
+        catch (final UnsupportedEncodingException e) {
+            throw new WebserverSystemException(e);
+        }
+        catch (final IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        this.fedoraServiceClient.modifyDatastream(path, query, stream);
+
+        if (forceSync) {
+            this.fedoraUtility.sync();
         }
     }
 
     /**
-     * @param contentStreams the contentStreams to set
+     * @param contentStreams
+     *            the contentStreams to set
      */
     public void setContentStreams(final List<ContentStreamCreate> contentStreams) {
         this.contentStreams = contentStreams;
@@ -236,9 +255,10 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Render an initial WOV.
-     *
+     * 
      * @return XML representation of Whole Object Versioning (WoV)
-     * @throws WebserverSystemException Thrown if rendering failed.
+     * @throws WebserverSystemException
+     *             Thrown if rendering failed.
      */
     private String getWov() throws WebserverSystemException {
 
@@ -284,7 +304,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * <p/>
      * WOV is excluded and RELS-EXT incomplete because of non existing timestamp (which is to add in a later step to the
      * object).
-     *
+     * 
      * @return FoXML representation of ContentModel.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
@@ -320,8 +340,9 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Render service definition FoXML.
-     *
-     * @param resourceDefinition The resource definition create object.
+     * 
+     * @param resourceDefinition
+     *            The resource definition create object.
      * @return FoXML representation of service definition.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
@@ -333,8 +354,9 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Render service deployment FoXML.
-     *
-     * @param resourceDefinition The resource definition create object.
+     * 
+     * @param resourceDefinition
+     *            The resource definition create object.
      * @return FoXML representation of service deployment.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
@@ -358,9 +380,10 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Compile all values for RELS-EXT and render XML representation.
-     *
+     * 
      * @return RELS-EXT XML snippet
-     * @throws WebserverSystemException Thrown if renderer failed.
+     * @throws WebserverSystemException
+     *             Thrown if renderer failed.
      */
     private String renderRelsExt() throws WebserverSystemException {
 
@@ -379,7 +402,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Prepare values for FOXML Template Renderer (Velocity).
-     *
+     * 
      * @return HashMap with template values.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
@@ -470,7 +493,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Getting Namespaces for RelsExt as Map.
-     *
+     * 
      * @return HashMap with namespace values for XML representation.
      */
     private static Map<String, String> getRelsExtNamespaceValues() {
@@ -505,10 +528,12 @@ public class ContentModelCreate extends GenericResourceCreate {
      * TODO remove this method if Fedora has fixed the timestamp bug (Fedora 3.0 and 3.1 do not update the object
      * timestamp during create. It happens that timestamps of steams are newer than the object timestamp. This failure
      * not occurs during a later update.).
-     *
-     * @param objid The id of the Fedora Object.
+     * 
+     * @param objid
+     *            The id of the Fedora Object.
      * @return LastModificationDate of the Object (with workaround for Fedora bug).
-     * @throws FedoraSystemException Thrown if request to Fedora failed.
+     * @throws FedoraSystemException
+     *             Thrown if request to Fedora failed.
      */
     private String getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
 
@@ -538,7 +563,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Get objid with version suffix 123:1.
-     *
+     * 
      * @return objid with version suffix.
      */
     private String getObjidWithVersionSuffix() {
@@ -548,7 +573,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Get href with version suffix.
-     *
+     * 
      * @return Put on Version suffix
      */
     @Deprecated
@@ -562,14 +587,13 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Get ContentStreams Vector/HashMap Structure for Velocity.
-     *
+     * 
      * @return Vector which contains a HashMap with all values for each ContentStream. HashMap keys are keys for
      *         Velocity template.
      */
     private List<HashMap<String, String>> getContentStreamsMap() {
         /*
-         * (has to move in an own renderer class, I know. Please feel free to
-         * create class infrastructure.).
+         * (has to move in an own renderer class, I know. Please feel free to create class infrastructure.).
          */
 
         if (this.contentStreams == null) {
