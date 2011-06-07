@@ -92,7 +92,7 @@ public class ParameterVo {
     /**
      * @return the dateValue
      */
-    public ReadableDateTime getDateValue() {
+    public DateTime getDateValue() {
         return this.dateValue;
     }
 

@@ -44,6 +44,7 @@ import org.esidoc.core.utils.io.IOUtils;
 import org.esidoc.core.utils.io.Stream;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -174,7 +175,7 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     public ObjectDatastreamsTO listDatastreams( final String pid, final DateTime timestamp) {
         ListDatastreamsPathParam path = new ListDatastreamsPathParam(pid);
         ListDatastreamsQueryParam query = new ListDatastreamsQueryParam();
-        query.setAsOfDateTime(timestamp.toString(TIMESTAMP_FORMAT));
+        query.setAsOfDateTime(timestamp.withZone(DateTimeZone.UTC).toString(TIMESTAMP_FORMAT));
         return this.fedoraService.listDatastreams(path, query);
     }
 
@@ -194,7 +195,7 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
        final GetDatastreamPathParam path = new GetDatastreamPathParam(pid, dsID);
        final GetDatastreamQueryParam query = new GetDatastreamQueryParam();
        if(timestamp != null) {
-            query.setAsOfDateTime(timestamp.toString(TIMESTAMP_FORMAT));
+            query.setAsOfDateTime(timestamp.withZone(DateTimeZone.UTC).toString(TIMESTAMP_FORMAT));
        }
        return this.fedoraService.getDatastream(path, query);
     }

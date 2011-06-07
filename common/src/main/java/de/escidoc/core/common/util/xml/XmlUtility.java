@@ -988,7 +988,7 @@ public final class XmlUtility {
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
     public static void addElement(
-        final XMLStreamWriter writer, final String elementName, final ReadableDateTime elementContent,
+        final XMLStreamWriter writer, final String elementName, final DateTime elementContent,
         final String namespaceUri, final boolean createEmpty) throws XMLStreamException {
 
         if (elementContent == null) {
@@ -998,7 +998,7 @@ public final class XmlUtility {
         }
         else {
             writer.writeStartElement(namespaceUri, elementName);
-            writer.writeCharacters(elementContent.toString(Constants.TIMESTAMP_FORMAT));
+            writer.writeCharacters(elementContent.withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
             writer.writeEndElement();
         }
     }
@@ -1012,13 +1012,13 @@ public final class XmlUtility {
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
     public static void addLastModificationDateAttribute(
-        final XMLStreamWriter writer, final ReadableDateTime modifiedDate) throws XMLStreamException {
+        final XMLStreamWriter writer, final DateTime modifiedDate) throws XMLStreamException {
 
         if (modifiedDate == null) {
             return;
         }
 
-        writer.writeAttribute("last-modification-date", modifiedDate.toString(Constants.TIMESTAMP_FORMAT));
+        writer.writeAttribute("last-modification-date", modifiedDate.withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
     }
 
     /**

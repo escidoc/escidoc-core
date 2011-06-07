@@ -42,6 +42,7 @@ import de.escidoc.core.sm.business.renderer.interfaces.ReportRendererInterface;
 import de.escidoc.core.sm.business.stax.handler.ParameterVo;
 import de.escidoc.core.sm.business.stax.handler.ReportParametersStaxHandler;
 import de.escidoc.core.sm.business.stax.handler.ReportParametersVo;
+import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -159,7 +160,8 @@ public class ReportHandler implements ReportHandlerInterface {
                     if (type != null) {
                         String replacementString = null;
                         if (parameterVo.getDateValue() != null) {
-                            replacementString = parameterVo.getDateValue().toString("yyyy-MM-dd HH:mm:ss.SSS");
+                            replacementString = parameterVo.getDateValue().withZone(DateTimeZone.UTC).toString(
+                                    de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
                         }
                         else if (parameterVo.getDecimalValue() != null) {
                             replacementString = parameterVo.getDecimalValue().toString();

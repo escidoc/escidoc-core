@@ -45,6 +45,7 @@ import org.esidoc.core.utils.io.IOUtils;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -279,7 +280,8 @@ public class Datastream {
         final GetDatastreamProfilePathParam path = new GetDatastreamProfilePathParam(this.parentId, this.name);
         final GetDatastreamProfileQueryParam query = new GetDatastreamProfileQueryParam();
         if (this.timestamp != null) {
-            query.setAsOfDateTime(this.timestamp.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT));
+            query.setAsOfDateTime(this.timestamp.withZone(DateTimeZone.UTC)
+                    .toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT));
         }
         final DatastreamProfileTO datastreamProfileTO = this.fedoraServiceClient.getDatastreamProfile(path, query);
         updateDatastream(datastreamProfileTO);
@@ -384,7 +386,7 @@ public class Datastream {
                 this.updateDatastream(datastreamProfile);
             }
         }
-        return this.timestamp.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+        return this.timestamp.withZone(DateTimeZone.UTC).toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
     }
 
     private void addDatastream(final Stream stream) {
@@ -432,7 +434,7 @@ public class Datastream {
         if (sync) {
             this.fedoraUtility.sync();
         }
-        return this.timestamp.toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+        return this.timestamp.withZone(DateTimeZone.UTC).toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
     }
 
     /**
