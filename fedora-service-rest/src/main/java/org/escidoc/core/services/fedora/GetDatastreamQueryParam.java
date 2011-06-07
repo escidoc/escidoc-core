@@ -1,6 +1,5 @@
 package org.escidoc.core.services.fedora;
 
-import org.joda.time.DateTime;
 
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
@@ -8,6 +7,7 @@ import org.joda.time.DateTime;
 public final class GetDatastreamQueryParam {
 
     private String asOfDateTime;
+
     private String download;
 
     public String getAsOfDateTime() {
