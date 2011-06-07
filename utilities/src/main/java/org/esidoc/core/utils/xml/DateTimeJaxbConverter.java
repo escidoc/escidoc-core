@@ -28,6 +28,6 @@ public final class DateTimeJaxbConverter {
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date.toDate());
         calendar.setTimeZone(date.getZone().toTimeZone());
-        return DatatypeConverter.printDate(calendar);
+        return DatatypeConverter.printDateTime(calendar);
     }
 }
