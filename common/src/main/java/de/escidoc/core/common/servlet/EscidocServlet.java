@@ -475,7 +475,7 @@ public class EscidocServlet extends HttpServlet {
                 httpResponse.setContentType(binaryContent.getMimeType());
                 if (binaryContent.getFileName() != null) {
                     httpResponse.setHeader("Content-Disposition", "inline;filename=\"" + binaryContent.getFileName()
-                        + "\"");
+                        + '\"');
                 }
                 final ServletOutputStream out = httpResponse.getOutputStream();
                 final InputStream content = binaryContent.getContent();

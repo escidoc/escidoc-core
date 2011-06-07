@@ -89,9 +89,9 @@ public class GsearchHandler {
         final String resource, String index, final String pidSuffix, final String indexFulltextVisibilities)
         throws ApplicationServerSystemException {
         Set<String> indexNames = new HashSet<String>();
-        StringBuffer responses = new StringBuffer();
-        StringBuffer exceptions = new StringBuffer();
-        if (index == null || index.equals("")) {
+        StringBuilder responses = new StringBuilder();
+        StringBuilder exceptions = new StringBuilder();
+        if (index == null || index.isEmpty()) {
             indexNames.addAll(getIndexConfigurations().keySet());
         }
         else {
@@ -134,17 +134,17 @@ public class GsearchHandler {
                 // Catch Exceptions
                 handleGsearchException(indexName, updateIndexParams, response, 0);
 
-                responses.append(response).append("\n");
+                responses.append(response).append('\n');
             }
             catch (final IOException e) {
-                exceptions.append(e.getMessage()).append("\n");
+                exceptions.append(e.getMessage()).append('\n');
             }
             catch (final WebserverSystemException e) {
-                exceptions.append(e.getMessage()).append("\n");
+                exceptions.append(e.getMessage()).append('\n');
             }
         }
         if (exceptions.length() > 0) {
-            throw new ApplicationServerSystemException("Error while indexing resource." + exceptions.toString());
+            throw new ApplicationServerSystemException("Error while indexing resource." + exceptions);
         }
         return responses.toString();
     }
@@ -167,12 +167,12 @@ public class GsearchHandler {
     public String requestDeletion(String resource, String index, final String pidSuffix)
         throws ApplicationServerSystemException {
         Set<String> indexNames = new HashSet<String>();
-        StringBuffer responses = new StringBuffer();
-        StringBuffer exceptions = new StringBuffer();
+        StringBuilder responses = new StringBuilder();
+        StringBuilder exceptions = new StringBuilder();
         if (pidSuffix != null) {
             resource = resource + ':' + pidSuffix;
         }
-        if (index == null || index.equals("")) {
+        if (index == null || index.isEmpty()) {
             indexNames.addAll(getIndexConfigurations().keySet());
         }
         else {
@@ -200,10 +200,10 @@ public class GsearchHandler {
                 // Catch Exceptions
                 handleGsearchException(indexName, deleteIndexParams, response, 0);
 
-                responses.append(response).append("\n");
+                responses.append(response).append('\n');
             }
             catch (final Exception e) {
-                exceptions.append(e.getMessage()).append("\n");
+                exceptions.append(e.getMessage()).append('\n');
             }
         }
         if (exceptions.length() > 0) {
@@ -280,9 +280,9 @@ public class GsearchHandler {
      */
     public String requestOptimize(String index) throws ApplicationServerSystemException {
         Set<String> indexNames = new HashSet<String>();
-        StringBuffer responses = new StringBuffer();
-        StringBuffer exceptions = new StringBuffer();
-        if (index == null || index.equals("")) {
+        StringBuilder responses = new StringBuilder();
+        StringBuilder exceptions = new StringBuilder();
+        if (index == null || index.isEmpty()) {
             indexNames.addAll(getIndexConfigurations().keySet());
         }
         else {
@@ -305,10 +305,10 @@ public class GsearchHandler {
                 // Catch Exceptions
                 handleGsearchException(indexName, optimizeIndexParams, response, 0);
 
-                responses.append(response).append("\n");
+                responses.append(response).append('\n');
             }
             catch (final Exception e) {
-                exceptions.append(e.getMessage()).append("\n");
+                exceptions.append(e.getMessage()).append('\n');
             }
         }
         if (exceptions.length() > 0) {

@@ -56,9 +56,9 @@ public class IndexingCacheHandler {
             String reXml = xml;
             String reId = id;
             if (reId.matches(".*?:.*?:.*")) {
-                reId = reId.substring(0, reId.lastIndexOf(":"));
+                reId = reId.substring(0, reId.lastIndexOf(':'));
             }
-            if (reXml == null || reXml.equals("")) {
+            if (reXml == null || reXml.isEmpty()) {
                 reXml = fedoraRestDeviationHandler.retrieveUncached(reId);
             }
             final StaxParser sp = new StaxParser();
@@ -74,9 +74,9 @@ public class IndexingCacheHandler {
             }
             if (version > -1) {
                 for (int i = 1; i <= version; i++) {
-                    fedoraRestDeviationHandler.removeFromCache(reId + ":" + i);
+                    fedoraRestDeviationHandler.removeFromCache(reId + ':' + i);
                     for (String componentHref : components) {
-                        componentHref = componentHref.replaceAll(reId, reId + ":" + i);
+                        componentHref = componentHref.replaceAll(reId, reId + ':' + i);
                         fedoraRestDeviationHandler.removeFromCache(componentHref);
                         fedoraRestDeviationHandler.removeFromCache(componentHref.replaceFirst("/", ""));
                     }

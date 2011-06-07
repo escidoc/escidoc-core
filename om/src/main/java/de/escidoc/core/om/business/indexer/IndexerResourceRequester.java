@@ -269,7 +269,7 @@ public class IndexerResourceRequester {
             href = this.tripleStoreUtility.getHref(objectType, identifier);
         }
         if (!href.startsWith("http") && !href.startsWith("/")) {
-            href = "/" + href;
+            href = '/' + href;
         }
         return href;
     }
