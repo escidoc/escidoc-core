@@ -1,20 +1,23 @@
 package org.escidoc.core.services.fedora;
 
+import java.io.InputStream;
+import java.util.concurrent.Future;
+
+import javax.validation.constraints.NotNull;
+
 import net.sf.oval.constraint.NotEmpty;
+
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 
-import javax.validation.constraints.NotNull;
-import java.io.InputStream;
-import java.util.concurrent.Future;
-
 /**
  * REST Client for Fedora repository.
- *
+ * 
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public interface FedoraServiceClient {
@@ -94,4 +97,10 @@ public interface FedoraServiceClient {
     ObjectDatastreamsTO listDatastreams(@NotNull String pid, DateTime timestamp);
 
     Future<ObjectDatastreamsTO> listDatastreamsAsync(@NotNull String pid, DateTime timestamp);
+    
+    DatastreamHistoryTO getDatastreamHistory(
+        @NotNull GetDatastreamHistoryPathParam path, @NotNull GetDatastreamHistoryQueryParam query);
+    
+    Future<DatastreamHistoryTO> getDatastreamHistoryAsync(
+        @NotNull GetDatastreamHistoryPathParam path, @NotNull GetDatastreamHistoryQueryParam query);
 }
