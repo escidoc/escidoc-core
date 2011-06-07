@@ -28,10 +28,9 @@
  */
 package de.escidoc.core.aa.business.persistence;
 
-import de.escidoc.core.common.util.date.Iso8601Util;
-import de.escidoc.core.common.util.xml.XmlUtility;
-
 import java.util.Date;
+
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * A grant.
@@ -85,7 +84,7 @@ public class RoleGrant extends RoleGrantBase {
         if (getCreationDate() == null) {
             return null;
         }
-        return Iso8601Util.getIso8601(getCreationDate());
+        return XmlUtility.normalizeDate(getCreationDate());
     }
 
     /**
@@ -98,7 +97,7 @@ public class RoleGrant extends RoleGrantBase {
         if (getRevocationDate() == null) {
             return null;
         }
-        return Iso8601Util.getIso8601(getRevocationDate());
+        return XmlUtility.normalizeDate(getRevocationDate());
     }
 
     /**
@@ -113,7 +112,7 @@ public class RoleGrant extends RoleGrantBase {
         if (lastModificationDate == null) {
             return null;
         }
-        return Iso8601Util.getIso8601(lastModificationDate);
+        return XmlUtility.normalizeDate(lastModificationDate);
     }
 
     /**

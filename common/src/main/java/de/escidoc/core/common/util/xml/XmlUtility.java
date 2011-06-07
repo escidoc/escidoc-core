@@ -28,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1386,6 +1387,18 @@ public final class XmlUtility {
 
         final Matcher matcher = PATTERN_NAME_FROM_XML.matcher(resourceXml);
         return matcher.find() ? matcher.group(1).trim() : null;
+    }
+
+    /**
+     * Convert the given date into a XML compliant format in UTC.
+     * 
+     * @param date
+     *            date
+     * 
+     * @return normalized date string
+     */
+    public static String normalizeDate(final Date date) {
+        return new DateTime(date).withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT);
     }
 
     /**

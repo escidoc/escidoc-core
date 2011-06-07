@@ -83,7 +83,7 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
                     element.getAttributeValue(null, XmlUtility.NAME_LAST_MODIFICATION_DATE);
 
                 try {
-                    Utility.checkOptimisticLockingCriteria(expectedLastModificationDate.toString(),
+                    Utility.checkOptimisticLockingCriteria(XmlUtility.normalizeDate(expectedLastModificationDate),
                         lastModificationDateValue, "resource");
                 }
                 catch (final WebserverSystemException e) {

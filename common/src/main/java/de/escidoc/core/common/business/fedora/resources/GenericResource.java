@@ -20,6 +20,28 @@
 
 package de.escidoc.core.common.business.fedora.resources;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
+import org.escidoc.core.services.fedora.access.ObjectProfileTO;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.fcrepo.server.types.gen.DatastreamControlGroup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.LockHandler;
 import de.escidoc.core.common.business.PropertyMapKeys;
@@ -38,37 +60,12 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.ItemRelsExtUpdateHandler;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
-import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.escidoc.core.services.fedora.GetObjectProfilePathParam;
-import org.escidoc.core.services.fedora.GetObjectProfileQueryParam;
-import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
-import org.escidoc.core.services.fedora.access.ObjectProfileTO;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.fcrepo.server.types.gen.DatastreamControlGroup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import javax.annotation.Resource;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Generic Resource supports object id, title, last modified, datastream, locking and sync mechanisms.
@@ -271,7 +268,7 @@ public class GenericResource implements FedoraResource {
             lastModificationDate = getResourceProperties().get(PropertyMapKeys.LAST_MODIFICATION_DATE);
             if (lastModificationDate == null) {
                 final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(this.id);
-                lastModificationDate = Iso8601Util.getIso8601(objectProfile.getObjLastModDate().toDate());
+                lastModificationDate = XmlUtility.normalizeDate(objectProfile.getObjLastModDate().toDate());
                 setLastModificationDate(lastModificationDate);
             }
         }
@@ -308,7 +305,7 @@ public class GenericResource implements FedoraResource {
     @Override
     public String getLastFedoraModificationDate() throws FedoraSystemException {
         final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(this.id);
-        return Iso8601Util.getIso8601(objectProfile.getObjLastModDate().toDate());
+        return XmlUtility.normalizeDate(objectProfile.getObjLastModDate().toDate());
     }
 
     /**

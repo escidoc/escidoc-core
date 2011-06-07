@@ -28,6 +28,16 @@
  */
 package de.escidoc.core.aa.business.renderer;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.persistence.EscidocPolicy;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
@@ -37,19 +47,9 @@ import de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.RoleXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Role renderer implementation using the velocity template engine.
@@ -83,7 +83,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
         values.put("isRootResources", XmlTemplateProvider.TRUE);
 
         addCommonValues(values);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util.getIso8601(role
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(role
             .getLastModificationDate()));
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
         addResourcesValues(role, values);
@@ -142,9 +142,9 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
     private static void addRoleValues(final EscidocRole role, final Map<String, Object> values)
         throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util.getIso8601(role
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(role
             .getLastModificationDate()));
-        values.put(XmlTemplateProvider.VAR_CREATION_DATE, Iso8601Util.getIso8601(role.getCreationDate()));
+        values.put(XmlTemplateProvider.VAR_CREATION_DATE, XmlUtility.normalizeDate(role.getCreationDate()));
         values.put(XmlTemplateProvider.VAR_DESCRIPTION, role.getDescription());
 
         values.put("roleId", role.getId());

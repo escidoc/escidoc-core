@@ -20,32 +20,6 @@
 
 package de.escidoc.core.common.business.fedora.resources.create;
 
-import de.escidoc.core.common.business.fedora.FedoraUtility;
-import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.business.fedora.resources.RepositoryIndicator;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
-import de.escidoc.core.common.exceptions.system.FedoraSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.persistence.EscidocIdProvider;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.date.Iso8601Util;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.ContentRelationFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
-import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
-import org.escidoc.core.services.fedora.access.ObjectProfileTO;
-import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
-import org.esidoc.core.utils.io.Stream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -59,6 +33,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
+import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.escidoc.core.services.fedora.access.ObjectProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.esidoc.core.utils.io.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import de.escidoc.core.common.business.fedora.FedoraUtility;
+import de.escidoc.core.common.business.fedora.datastream.Datastream;
+import de.escidoc.core.common.business.fedora.resources.RepositoryIndicator;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.persistence.EscidocIdProvider;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.common.util.xml.factory.ContentRelationFoXmlProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
 /**
  * Content Relation.<br/>
@@ -581,7 +581,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
         // creation /last-modification date
         final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(getObjid());
-        final String lastModificationDate = Iso8601Util.getIso8601(objectProfile.getObjLastModDate().toDate());
+        final String lastModificationDate = XmlUtility.normalizeDate(objectProfile.getObjLastModDate().toDate());
         getProperties().setCreationDate(lastModificationDate);
         getProperties().setLastModificationDate(lastModificationDate);
     }
@@ -647,10 +647,10 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         final DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.modifyDatastream(path, query, stream);
         final String lmd;
         if (datastreamProfile.getDateTime() != null) {
-            lmd = Iso8601Util.getIso8601(datastreamProfile.getDateTime().toDate());
+            lmd = XmlUtility.normalizeDate(datastreamProfile.getDateTime().toDate());
         }
         else {
-            lmd = Iso8601Util.getIso8601(datastreamProfile.getDsCreateDate().toDate());
+            lmd = XmlUtility.normalizeDate(datastreamProfile.getDsCreateDate().toDate());
         }
         getProperties().setLastModificationDate(lmd);
         if (sync) {
