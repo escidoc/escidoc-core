@@ -53,6 +53,10 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
+import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.escidoc.core.services.fedora.UpdateObjectPathParam;
+import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.joda.time.DateTime;
@@ -899,7 +903,11 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
 
         try {
             if (persistComponents()) {
-                getFedoraUtility().touchObject(getId(), true);
+                final UpdateObjectPathParam path = new UpdateObjectPathParam(getId());
+                final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
+                query.setLogMessage("touched");
+                getFedoraServiceClient().updateObject(path, query);
+                getFedoraUtility().sync();
                 this.setNeedSync(true);
             }
         }

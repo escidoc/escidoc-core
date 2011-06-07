@@ -699,40 +699,6 @@ public class FedoraUtility {
     }
 
     /**
-     * Touch the object in Fedora. The object is only modified to new version with 'touched' comment. No further update
-     * is done. As last process is the TripleStore synced.
-     * 
-     * @param pid
-     *            Fedora object id.
-     * @param syncTripleStore
-     *            Set true if the TripleStore is to sync after object modifiing. Set false otherwise.
-     * @return modified timestamp of the Fedora Objects
-     * @throws FedoraSystemException
-     *             Thrown if modifiyObject in Fedora fails.
-     * @throws WebserverSystemException
-     *             Thrown if sync TripleStore failed.
-     */
-    public String touchObject(final String pid, final boolean syncTripleStore) throws FedoraSystemException,
-        WebserverSystemException {
-
-        String timestamp = null;
-        final FedoraAPIM apim = borrowApim();
-        try {
-            timestamp = apim.modifyObject(pid, null, null, null, "touched");
-        }
-        catch (final RemoteException e) {
-            throw new FedoraSystemException(e.toString(), e);
-        }
-        finally {
-            returnApim(apim);
-            if (syncTripleStore) {
-                sync();
-            }
-        }
-        return timestamp;
-    }
-
-    /**
      * Send a risearch request to fedora repository with flag flush set to true.
      * Call reinialize() in order to reset a Table Manager for the Triple Store.
      * 

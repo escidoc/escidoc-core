@@ -163,6 +163,10 @@ public class GenericResource implements FedoraResource {
         return fedoraUtility;
     }
 
+    protected FedoraServiceClient getFedoraServiceClient() {
+        return fedoraServiceClient;
+    }
+
     /**
      * Constructor.
      *

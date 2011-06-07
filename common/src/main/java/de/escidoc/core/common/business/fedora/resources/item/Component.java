@@ -48,6 +48,8 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlItemFoXmlRenderer;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
+import org.escidoc.core.services.fedora.UpdateObjectPathParam;
+import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -272,7 +274,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
         super.setRelsExt(ds);
         if (this.isNeedSync()) {
-            getFedoraUtility().touchObject(this.parent, true);
+            final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
+            final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
+            query.setLogMessage("touched");
+            getFedoraServiceClient().updateObject(path, query);
+            getFedoraUtility().sync();
         }
     }
 
@@ -281,8 +287,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     }
 
     public void notifySetContent() throws FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
-
-        getFedoraUtility().touchObject(this.parent, true);
+        final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
+        final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
+        query.setLogMessage("touched");
+        getFedoraServiceClient().updateObject(path, query);
+        getFedoraUtility().sync();
         this.content = null;
     }
 
@@ -356,7 +365,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             }
         }
         if (modified) {
-            getFedoraUtility().touchObject(this.parent, true);
+            final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
+            final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
+            query.setLogMessage("touched");
+            getFedoraServiceClient().updateObject(path, query);
+            getFedoraUtility().sync();
         }
     }
 
@@ -460,7 +473,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 // in fedora, it may be deleted
                 this.mdRecords.put(name, ds);
                 ds.merge();
-                getFedoraUtility().touchObject(this.parent, true);
+                final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
+                final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
+                query.setLogMessage("touched");
+                getFedoraServiceClient().updateObject(path, query);
+                getFedoraUtility().sync();
             }
         }
         catch (final FedoraSystemException e) {
@@ -469,7 +486,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             ds.addAlternateId(schema);
             this.mdRecords.put(name, ds);
             ds.persist(false);
-            getFedoraUtility().touchObject(this.parent, true);
+            final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
+            final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
+            query.setLogMessage("touched");
+            getFedoraServiceClient().updateObject(path, query);
+            getFedoraUtility().sync();
         }
     }
 
@@ -488,7 +509,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             ds.merge();
             // FedoraUtility.getInstance().sync();
             getSomeValuesFromFedora();
-            getFedoraUtility().touchObject(this.parent, true);
+            final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
+            final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
+            query.setLogMessage("touched");
+            getFedoraServiceClient().updateObject(path, query);
+            getFedoraUtility().sync();
         }
     }
 
