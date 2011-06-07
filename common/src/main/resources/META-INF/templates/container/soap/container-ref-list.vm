@@ -1,5 +1,0 @@
-<${containerRefListNamespacePrefix}:container-ref-list #namespaceDecl($containerRefListNamespacePrefix $containerRefListNamespace)>
-#foreach( $entry in $containerRefs )
-<${containerRefListNamespacePrefix}:container-ref objid="${entry.containerId}"/>
-#end
-</${containerRefListNamespacePrefix}:container-ref-list>

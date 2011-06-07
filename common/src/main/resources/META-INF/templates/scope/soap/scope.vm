@@ -1,4 +1,0 @@
-#parse("common/macros.vm")<${scopeNamespacePrefix}:scope #soapInsertConditionalRoot(${isRootScope} "false" "false" ${scopeNamespacePrefix} ${scopeNamespace} ${scopeId})>
-        <${scopeNamespacePrefix}:name>#escT(${scopeName})</${scopeNamespacePrefix}:name>
-        <${scopeNamespacePrefix}:type>${scopeType}</${scopeNamespacePrefix}:type>
-</${scopeNamespacePrefix}:scope>

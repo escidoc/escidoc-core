@@ -1,7 +1,0 @@
-<${contentRelationsNamespacePrefix}:relations #soapInsertConditionalRoot(${isRootRelations} "false" "false" ${contentRelationsNamespacePrefix} ${contentRelationsNamespace} false ${LAST_MODIFICATION_DATE})>
-#if($contentRelations)
-#foreach( $entry in $contentRelations )
-<${contentRelationsNamespacePrefix}:relation predicate="${entry.predicate}" #soapLinkAttributes(${entry.targetId})/>
-#end
-#end
-</${contentRelationsNamespacePrefix}:relations>

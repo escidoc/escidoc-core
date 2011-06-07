@@ -1,7 +1,0 @@
-#if ($reportDefinitionRoles)
-    <${reportDefinitionNamespacePrefix}:allowed-roles>
-#foreach( $reportDefinitionRole in $reportDefinitionRoles )
-        #soapLink(${reportDefinitionNamespacePrefix} "allowed-role" ${reportDefinitionRole.id})
-#end
-    </${reportDefinitionNamespacePrefix}:allowed-roles>
-#end

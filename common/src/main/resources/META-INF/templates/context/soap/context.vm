@@ -1,6 +1,0 @@
-#parse("common/macros.vm")<${contextNamespacePrefix}:context #soapInsertConditionalRoot("true" "true" "true" ${contextNamespacePrefix} ${contextNamespace} ${contextId} ${LAST_MODIFICATION_DATE})>
-#parse("context/soap/properties.vm")
-##if ($admsContent)
- #parse("context/soap/admin-descriptors.vm")
-##end
-</${contextNamespacePrefix}:context>

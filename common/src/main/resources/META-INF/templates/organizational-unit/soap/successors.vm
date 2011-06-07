@@ -1,8 +1,0 @@
-#*
-  Successor
-*#
-#parse("common/macros.vm")<${organizationalUnitNamespacePrefix}:successors #soapInsertConditionalRoot(${isRoot} "false" "true" ${organizationalUnitNamespacePrefix} ${organizationalUnitNamespace} false ${LAST_MODIFICATION_DATE})>
-#foreach( ${SUCCESSOR} in ${SUCCESSORS} )
- <${structuralRelationsNamespacePrefix}:successor #soapLinkAttributes(${SUCCESSOR.OBJID}) form="${SUCCESSOR.FORM}" />
-#end
-</${organizationalUnitNamespacePrefix}:successors>

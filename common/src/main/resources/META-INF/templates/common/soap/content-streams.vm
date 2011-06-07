@@ -1,3 +1,0 @@
-<${contentStreamsNamespacePrefix}:content-streams #insertConditionalAttribute( ${ORIGIN} "inherited") xml:base="$ESCIDOC_BASE_URL" #soapInsertConditionalRoot(${isRootSubResource} "false" "false" ${contentStreamsNamespacePrefix} ${contentStreamsNamespace} false ${LAST_MODIFICATION_DATE})>
-${contentStreamsContent}
-</${contentStreamsNamespacePrefix}:content-streams>

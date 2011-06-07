@@ -1,5 +1,0 @@
-<${containerRefListNamespacePrefix}:organizational-units>
-#foreach( $entry in $organizationalUnitsRefs )
-<${containerRefListNamespacePrefix}:organizational-unit objid="${entry.organizationalUnitId}"/>
-#end
-</${containerRefListNamespacePrefix}:organizational-units>

@@ -25,7 +25,7 @@
 	<!-- start of common properties section -->
   <property file="${basedir}/build/escidoc-build.properties" />
   <property file="${basedir}/build/escidoc-build.default.properties" />
-	<property name="edition" value="filtered" description="Possible values are full and filtered. If set to filtered only the methods marked as visible are included in REST/SOAP specific chapter." />
+	<property name="edition" value="filtered" description="Possible values are full and filtered. If set to filtered only the methods marked as visible are included in REST specific chapter." />
 
 	<tstamp>
 		<format property="build.date" pattern="dd.MM.yyyy" />
@@ -57,7 +57,6 @@
   <!-- Schema directories -->
 	<property name="schemas.src.dir"      value="src/main/xsd" />
 	<property name="schemas.rest.src.dir" value="${schemas.src.dir}/rest" />
-	<property name="schemas.soap.src.dir" value="${schemas.src.dir}/soap" />
 	<property name="schemas.build.dir"    value="${documentation.dist.basedir.docbook}" />
 
 	<!-- xslt configuration -->
@@ -67,11 +66,10 @@
 	<property name="xslt.src.dir"                 value="${basedir}/escidoc-core.war/src/main/webapp/xsl" />
   <property name="interface.descriptor.dir"     value="main/resources/META-INF/servlet"/>
 
-  <!-- Prefixes, Soap/Rest and Logo name -->
+  <!-- Prefixes, Rest and Logo name -->
 	<property name="prefix.full"      value="full-" />
 	<property name="prefix.filtered"  value="" />
 	<property name="interface.rest"   value="Rest" />
-	<property name="interface.soap"   value="Soap" />
 
 
   <!-- !!! Thou shalt not touch anything below this or the entire build may break beyond repair !!! -->
@@ -332,12 +330,6 @@
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
-		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${basedir}/${component}/${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${docbook.name}" />
-			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
-			<param name="extension" value=".xsd" />
-		</antcall>
 	</target>
 	<!-- end: build of user-account/grant documentation -->
 
@@ -401,12 +393,6 @@
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
-		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${basedir}/${component}/${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${docbook.name}" />
-			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
-			<param name="extension" value=".xsd" />
-		</antcall>
 	</target>
 	<!-- end: build of scope documentation -->
 
@@ -437,12 +423,6 @@
 		<antcall target="xsd-xslt-transformation">
 			<param name="input-filename" value="${basedir}/${component}/${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
 			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.rest}${docbook.name}" />
-			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
-			<param name="extension" value=".xsd" />
-		</antcall>
-		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${basedir}/${component}/${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
@@ -488,12 +468,6 @@
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
-		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${basedir}/${component}/${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${report-definition-list.docbook.name}" />
-			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
-			<param name="extension" value=".xsd" />
-		</antcall>
 	</target>
 	<!-- end: build of report-definition documentation -->
 
@@ -524,12 +498,6 @@
 		<antcall target="xsd-xslt-transformation">
 			<param name="input-filename" value="${basedir}/${component}/${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
 			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.rest}${docbook.name}" />
-			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
-			<param name="extension" value=".xsd" />
-		</antcall>
-		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${basedir}/${component}/${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
@@ -617,8 +585,7 @@
 	<target name="build-handler-documentation">
 		<antcall target="prepare-component" />
 		<antcall target="${edition}-rest" />
-    <antcall target="${edition}-soap" />
-  </target>
+        </target>
 
 	<target name="prepare-component">
 		<copy todir="${documentation.dist.basedir.docbook}" encoding="UTF-8" outputencoding="UTF-8">
@@ -645,14 +612,6 @@
 			<param name="schemas.dir" value="${schemas.rest.src.dir}" />
 		</antcall>
 	</target>
-	<target name="full-soap">
-		<antcall target="create">
-			<param name="checkVisibility" value="false" />
-			<param name="prefix" value="${prefix.full}" />
-			<param name="interface" value="${interface.soap}" />
-			<param name="schemas.dir" value="${schemas.soap.src.dir}" />
-		</antcall>
-	</target>
 
 	<target name="filtered-rest">
 		<antcall target="create">
@@ -660,14 +619,6 @@
 			<param name="prefix" value="${prefix.filtered}" />
 			<param name="interface" value="${interface.rest}" />
 			<param name="schemas.dir" value="${schemas.rest.src.dir}" />
-		</antcall>
-	</target>
-	<target name="filtered-soap">
-		<antcall target="create">
-			<param name="checkVisibility" value="true" />
-			<param name="prefix" value="${prefix.filtered}" />
-			<param name="interface" value="${interface.soap}" />
-			<param name="schemas.dir" value="${schemas.soap.src.dir}" />
 		</antcall>
 	</target>
 

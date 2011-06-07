@@ -1,5 +1,0 @@
-#parse("common/macros.vm")<${organizationalUnitsNamespacePrefix}:organizational-unit-list #soapInsertConditionalRoot(${isRootList} "false"  "false" ${organizationalUnitsNamespacePrefix} ${organizationalUnitsNamespace} false ${LAST_MODIFICATION_DATE})>
-#foreach( $entry in $entries )
-$entry
-#end
-</${organizationalUnitsNamespacePrefix}:organizational-unit-list>

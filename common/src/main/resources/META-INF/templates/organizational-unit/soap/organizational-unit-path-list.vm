@@ -1,9 +1,0 @@
-#parse("common/macros.vm")<${organizationalUnitPathListNamespacePrefix}:organizational-unit-path-list #soapInsertConditionalRoot(${isRootList}  "false" "false" ${organizationalUnitPathListNamespacePrefix} ${organizationalUnitPathListNamespace} false ${LAST_MODIFICATION_DATE}) #namespaceDecl(${organizationalUnitRefNamespacePrefix} ${organizationalUnitRefNamespace})>
-#foreach( $path in $pathes )
-<${organizationalUnitPathListNamespacePrefix}:organizational-unit-path>
-#foreach( $entry in $path )
-#soapLink(${organizationalUnitRefNamespacePrefix} "organizational-unit-ref" $entry.id )
-#end
-</${organizationalUnitPathListNamespacePrefix}:organizational-unit-path>
-#end
-</${organizationalUnitPathListNamespacePrefix}:organizational-unit-path-list>

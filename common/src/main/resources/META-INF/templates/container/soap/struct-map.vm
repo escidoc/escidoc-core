@@ -1,9 +1,0 @@
-<${structmapNamespacePrefix}:struct-map 
-#soapInsertConditionalRoot(${isRootStructMap} ${isPropNeeded} ${isSrelNeeded} ${structmapNamespacePrefix} ${structmapNamespace} false ${LAST_MODIFICATION_DATE})>
-#foreach( $item in $items )
- <${structuralRelationsNamespacePrefix}:item objid="$item.memberId"/>
-#end
-#foreach( $container in $containers )
- <${structuralRelationsNamespacePrefix}:container objid="$container.memberId"/>
-#end 
-</${structmapNamespacePrefix}:struct-map>

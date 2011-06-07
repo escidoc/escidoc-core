@@ -1,5 +1,0 @@
-#set($unescapedName="#unesc(${MD_RECORD_NAME})")
-<${mdRecordsNamespacePrefix}:md-record name="#escA($unescapedName)" #insertConditionalAttribute( ${MD_RECORD_TYPE} "md-type") #insertConditionalAttribute( ${ORIGIN} "inherited") #insertConditionalAttribute( ${MD_RECORD_SCHEMA} "schema") #soapInsertConditionalRoot( ${isRootMdRecord} "false" "false" ${mdRecordsNamespacePrefix} ${mdRecordsNamespace} false ${LAST_MODIFICATION_DATE})>
-${MD_RECORD_CONTENT}
-</${mdRecordsNamespacePrefix}:md-record>
-
