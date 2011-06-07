@@ -20,14 +20,20 @@
 
 package de.escidoc.core.common.business.fedora;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.system.FedoraSystemException;
-import de.escidoc.core.common.exceptions.system.FileSystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import org.apache.axis.types.NonNegativeInteger;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.rpc.ServiceException;
+
 import org.apache.commons.pool.BasePoolableObjectFactory;
 import org.apache.commons.pool.PoolUtils;
 import org.apache.commons.pool.impl.StackObjectPool;
@@ -60,36 +66,27 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-import org.esidoc.core.utils.io.MimeTypes;
 import org.fcrepo.client.FedoraClient;
 import org.fcrepo.client.HttpInputStream;
 import org.fcrepo.server.access.FedoraAPIA;
 import org.fcrepo.server.management.FedoraAPIM;
 import org.fcrepo.server.types.gen.Datastream;
 import org.fcrepo.server.types.gen.MIMETypedStream;
-import org.fcrepo.server.types.gen.ObjectProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.NotWritablePropertyException;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.rpc.ServiceException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * An utility class for Fedora requests.<br />
@@ -268,6 +265,52 @@ public class FedoraUtility {
     }
 
     /**
+     * The method fetches the {@link MIMETypedStream} of the datastream with provided data stream id from Fedora-object
+     * with provided pid via Fedora APIA-Webservice getDatastreamDissemination().
+     * 
+     * @param dataStreamId
+     *            The id of the datastream.
+     * @param pid
+     *            The Fedora object id.
+     * @param timestamp
+     *            Timestamp related to datastream version to retrieve. May be null.
+     * @return Returns the {@link MIMETypedStream} representing the addressed datastream.
+     * @throws FedoraSystemException
+     *             Thrown in case of Fedora exceptions.
+     */
+    public MIMETypedStream getDatastreamWithMimeType(final String dataStreamId, final String pid, final String timestamp)
+        throws FedoraSystemException {
+
+        FedoraAPIA apia = borrowApia();
+        try {
+            return apia.getDatastreamDissemination(pid, dataStreamId, timestamp);
+        }
+        catch (final RemoteException e) {
+            // Workaround
+            LOGGER.warn("APIA getDatastreamWithMimeType(..) " + e);
+            invalidateApiaObject(apia);
+            clearApimPool();
+            apia = borrowApia();
+            try {
+                return apia.getDatastreamDissemination(pid, dataStreamId, timestamp);
+            }
+            catch (final RemoteException e1) {
+                final String message =
+                    "Error on retrieve datastream (pid='" + pid + "', dataStreamId='" + dataStreamId + "', timestamp='"
+                        + timestamp + "') ";
+                LOGGER.warn(message);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(message, e1);
+                }
+                throw new FedoraSystemException(message, e);
+            }
+        }
+        finally {
+            returnApia(apia);
+        }
+    }
+
+    /**
      * Purge all versions of datastreams between timestamps.
      * 
      * @param pid
@@ -442,35 +485,6 @@ public class FedoraUtility {
         return datastreams;
     }
 
-    /**
-     * The method retrieves metadata for the datastream with a provided name of the fedora object with provided id as
-     * Array.
-     * 
-     * @param pid
-     *            provided object id
-     * @param name
-     *            provided data stream name
-     * @param timestamp
-     *            Timestamp related to datastream version to retrieve. May be null.
-     * @return datastream information
-     * @throws FedoraSystemException
-     *             Thrown if request to Fedora failed.
-     */
-    public Datastream getDatastreamInformation(final String pid, final String name, final String timestamp)
-        throws FedoraSystemException {
-
-        final FedoraAPIM apim = borrowApim();
-        try {
-            return apim.getDatastream(pid, name, timestamp);
-        }
-        catch (final Exception e) {
-            throw new FedoraSystemException(e.toString(), e);
-        }
-        finally {
-            returnApim(apim);
-        }
-    }
-
     public byte[] getDissemination(final String pid, final String contentModelPid, final String name)
         throws FedoraSystemException {
 
@@ -517,190 +531,9 @@ public class FedoraUtility {
         return datastreams;
     }
 
-    public String addDatastream(
-        final String pid, final String name, final String[] altIDs, final String label, final boolean versionable,
-        final byte[] stream, final String controlGroup, final boolean syncTripleStore) throws FedoraSystemException,
-        WebserverSystemException {
-        final String tempURI;
-        try {
-            tempURI = this.utility.upload(stream, pid + name, MimeTypes.TEXT_XML);
-        }
-        catch (final FileSystemException e) {
-            throw new WebserverSystemException("Error while uploading of content of datastream '" + name
-                + "' of the fedora object with id '" + pid + "' to the staging area. ", e);
-        }
-        final String datastreamID =
-            addDatastream(pid, name, altIDs, label, versionable, MimeTypes.TEXT_XML, null, tempURI, controlGroup, "A",
-                "created");
-
-        if (syncTripleStore) {
-            sync();
-        }
-        return datastreamID;
-    }
-
     /**
-     * Add datastream to Fedora object.
-     * 
-     * @param pid
-     *            Fedora object id.
-     * @param name
-     *            Stream ID
-     * @param altIDs
-     *            Alt IDs
-     * @param label
-     *            Label
-     * @param versionable
-     *            Set true if Fedora has to keep old version. Set false if update overrides existing versions.
-     * @param stream
-     *            byte[] information dataset
-     * @param syncTripleStore
-     *            whether the triples should be flushed
-     * @return Fedora Identifier of added Stream.
-     * @throws FedoraSystemException
-     *             Thrown if request to Fedora failed.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     */
-    public String addDatastream(
-        final String pid, final String name, final String[] altIDs, final String label, final boolean versionable,
-        final byte[] stream, final boolean syncTripleStore) throws FedoraSystemException, WebserverSystemException {
-
-        final String tempURI;
-        try {
-            tempURI = this.utility.upload(stream, pid + name, MimeTypes.TEXT_XML);
-        }
-        catch (final FileSystemException e) {
-            throw new WebserverSystemException("Error while uploading of content of datastream '" + name
-                + "' of the fedora object with id '" + pid + "' to the staging area. ", e);
-        }
-        final String datastreamID =
-            addDatastream(pid, name, altIDs, label, versionable, MimeTypes.TEXT_XML, null, tempURI, "X", "A", "created");
-
-        if (syncTripleStore) {
-            sync();
-        }
-        return datastreamID;
-    }
-
-    /**
-     * Add datastream to Fedora object. Stream is versionated by default.
-     * 
-     * @param pid
-     *            Fedora object id.
-     * @param name
-     *            Stream ID
-     * @param altIDs
-     *            Alt IDs
-     * @param label
-     *            Label
-     * @param stream
-     *            byte[] information dataset
-     * @param syncTripleStore
-     * @return Fedora Identifier of added Stream.
-     * @throws FedoraSystemException
-     *             Thrown if add of datastream failed during Fedora communication.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     */
-    @Deprecated
-    // use addDatastream method where versionable is set explicitly
-    public String addDatastream(
-        final String pid, final String name, final String[] altIDs, final String label, final byte[] stream,
-        final boolean syncTripleStore) throws FedoraSystemException, WebserverSystemException {
-
-        return addDatastream(pid, name, altIDs, label, true, stream, syncTripleStore);
-    }
-
-    /**
-     * Add datastream to Fedora object.
-     * 
-     * @param pid
-     *            Fedora object id.
-     * @param name
-     *            Stream ID
-     * @param altIDs
-     *            Alt IDs
-     * @param label
-     *            Label
-     * @param url
-     *            URL of binary data.
-     * @param mimeType
-     *            MIME Type
-     * @param controlGroup
-     *            Defines the datastream storage type. (See Fedora ControlGroups)
-     * @param syncTripleStore
-     *            whether the triples should be flushed
-     * @return Fedora Identifier of added Stream.
-     * @throws FedoraSystemException
-     *             Thrown if adding datastream to Fedora failed.
-     * @throws WebserverSystemException
-     *             Thrown if syncing TripleStore failed.
-     */
-    public String addDatastream(
-        final String pid, final String name, final String[] altIDs, final String label, final String url,
-        final String mimeType, final String controlGroup, final boolean syncTripleStore) throws FedoraSystemException,
-        WebserverSystemException {
-
-        final String datastreamID =
-            addDatastream(pid, name, altIDs, label, true, mimeType, null, url, controlGroup, "A", "created");
-
-        if (syncTripleStore) {
-            sync();
-        }
-        return datastreamID;
-    }
-
-    /**
-     * Add datastream to the object.
-     * 
-     * @param pid
-     *            The Fedora object Id or PID.
-     * @param dsID
-     *            The id of the datastream.
-     * @param altIDs
-     *            The alternate IDs.
-     * @param dsLabel
-     *            The label of the datastream.
-     * @param versionable
-     *            Set true if datastream is verionable. False if not.
-     * @param mimeType
-     *            The MIME type of the datastream.
-     * @param formatURI
-     *            TODO
-     * @param dsLocation
-     *            TODO
-     * @param controlGroup
-     *            The Fedora Control Group Type.
-     * @param dsState
-     *            TODO
-     * @param logMessage
-     *            The Log Message.
-     * @return Id of datastream.
-     * @throws FedoraSystemException
-     *             Thrown in case of Fedora exceptions.
-     */
-    private String addDatastream(
-        final String pid, final String dsID, final String[] altIDs, final String dsLabel, final boolean versionable,
-        final String mimeType, final String formatURI, final String dsLocation, final String controlGroup,
-        final String dsState, final String logMessage) throws FedoraSystemException {
-
-        final FedoraAPIM apim = borrowApim();
-        try {
-            return apim.addDatastream(pid, dsID, altIDs, dsLabel, versionable, mimeType, formatURI, dsLocation,
-                controlGroup, dsState, null, null, logMessage);
-        }
-        catch (final Exception e) {
-            throw new FedoraSystemException(e.toString(), e);
-        }
-        finally {
-            returnApim(apim);
-        }
-    }
-
-    /**
-     * Send a risearch request to fedora repository with flag flush set to true.
-     * Call reinialize() in order to reset a Table Manager for the Triple Store.
+     * Send a risearch request to fedora repository with flag flush set to true. Call reinialize() in order to reset a
+     * Table Manager for the Triple Store.
      * 
      * @throws FedoraSystemException
      *             Thrown if TripleStore synchronization failed.
