@@ -160,7 +160,8 @@ public class ReportHandler implements ReportHandlerInterface {
                     if (type != null) {
                         String replacementString = null;
                         if (parameterVo.getDateValue() != null) {
-                            replacementString = parameterVo.getDateValue().withZone(DateTimeZone.UTC).toString(
+                            replacementString =
+                                parameterVo.getDateValue().withZone(DateTimeZone.UTC).toString(
                                     de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
                         }
                         else if (parameterVo.getDecimalValue() != null) {

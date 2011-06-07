@@ -1011,14 +1011,15 @@ public final class XmlUtility {
      * @param modifiedDate The date to set as the last modified date.
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
-    public static void addLastModificationDateAttribute(
-        final XMLStreamWriter writer, final DateTime modifiedDate) throws XMLStreamException {
+    public static void addLastModificationDateAttribute(final XMLStreamWriter writer, final DateTime modifiedDate)
+        throws XMLStreamException {
 
         if (modifiedDate == null) {
             return;
         }
 
-        writer.writeAttribute("last-modification-date", modifiedDate.withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
+        writer.writeAttribute("last-modification-date", modifiedDate.withZone(DateTimeZone.UTC).toString(
+            Constants.TIMESTAMP_FORMAT));
     }
 
     /**

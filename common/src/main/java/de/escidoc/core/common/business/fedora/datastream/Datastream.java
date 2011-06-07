@@ -280,8 +280,8 @@ public class Datastream {
         final GetDatastreamProfilePathParam path = new GetDatastreamProfilePathParam(this.parentId, this.name);
         final GetDatastreamProfileQueryParam query = new GetDatastreamProfileQueryParam();
         if (this.timestamp != null) {
-            query.setAsOfDateTime(this.timestamp.withZone(DateTimeZone.UTC)
-                    .toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT));
+            query.setAsOfDateTime(this.timestamp.withZone(DateTimeZone.UTC).toString(
+                de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT));
         }
         final DatastreamProfileTO datastreamProfileTO = this.fedoraServiceClient.getDatastreamProfile(path, query);
         updateDatastream(datastreamProfileTO);
@@ -386,7 +386,8 @@ public class Datastream {
                 this.updateDatastream(datastreamProfile);
             }
         }
-        return this.timestamp.withZone(DateTimeZone.UTC).toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+        return this.timestamp.withZone(DateTimeZone.UTC).toString(
+            de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
     }
 
     private void addDatastream(final Stream stream) {
@@ -434,7 +435,8 @@ public class Datastream {
         if (sync) {
             this.fedoraUtility.sync();
         }
-        return this.timestamp.withZone(DateTimeZone.UTC).toString(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+        return this.timestamp.withZone(DateTimeZone.UTC).toString(
+            de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
     }
 
     /**
