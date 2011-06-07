@@ -28,23 +28,22 @@
  */
 package de.escidoc.core.test.om.contentRelation;
 
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
-import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
-import de.escidoc.core.test.om.OmTestBase;
-import org.apache.http.HttpResponse;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import static org.junit.Assert.fail;
+import org.apache.http.HttpResponse;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
+import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
+import de.escidoc.core.test.om.OmTestBase;
 
 /**
  * Test the handler of the content relation resource.
@@ -339,55 +338,6 @@ public class ContentRelationTestBase extends OmTestBase {
         List<String> list = new Vector<String>();
         for (int i = nl.getLength() - 1; i >= 0; i--) {
             list.add(nl.item(i).getNodeValue());
-        }
-        return list;
-    }
-
-    /**
-     * Convert a NodeList to a List.
-     *
-     * @param nl The NodeList.
-     * @return List with resource references
-     * @throws Exception Thrown if extracting of values from XML failed.
-     */
-    public List<String> nodeListSOAP2List(final NodeList nl) throws Exception {
-
-        List<String> list = new Vector<String>();
-        for (int i = nl.getLength() - 1; i >= 0; i--) {
-
-            String value = null;
-
-            Node m = nl.item(i);
-            String nodeName = m.getNodeName();
-            NamedNodeMap nnp = m.getAttributes();
-            Node n = nnp.getNamedItem("objid");
-            String objid = n.getNodeValue();
-
-            if (nodeName.contains(":item")) {
-                value = Constants.ITEM_BASE_URI + "/" + objid;
-            }
-            else if (nodeName.contains(":container")) {
-                value = Constants.CONTAINER_BASE_URI + "/" + objid;
-            }
-            else if (nodeName.contains(":modified-by") || nodeName.contains(":created-by")) {
-                value = Constants.USER_ACCOUNT_BASE_URI + "/" + objid;
-            }
-            else if (nodeName.contains(":content-model")) {
-                value = Constants.CONTENT_MODEL_BASE_URI + "/" + objid;
-            }
-            else if (nodeName.contains(":context")) {
-                value = Constants.CONTEXT_BASE_URI + "/" + objid;
-            }
-            else {
-                if (!nodeName.contains("latest-version") && !nodeName.contains("version")) {
-                    throw new Exception("unknown resource type with node name '" + nodeName + "' and objid='" + objid
-                        + "'.");
-                }
-            }
-
-            if (value != null) {
-                list.add(value);
-            }
         }
         return list;
     }

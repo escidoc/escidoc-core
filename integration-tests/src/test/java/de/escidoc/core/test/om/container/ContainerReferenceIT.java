@@ -194,35 +194,6 @@ public class ContainerReferenceIT extends ContainerTestBase {
     }
 
     /**
-     * Check the references of an Container for the SOAP representation.
-     *
-     * @param containerXml The XML of the Container.
-     * @throws Exception Thrown if retrieve or ID extracting failed.
-     */
-    private void checkSoapReferences(final String containerXml) throws Exception {
-
-        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
-
-        NodeList objids = selectNodeList(containerDoc, "//*[@objid]");
-        List<String> refList = nodeListSOAP2List(objids);
-
-        // retrieve each single ref from framework
-        // prevent duplicate href checking
-        Vector<String> checkedRefs = new Vector<String>();
-
-        Iterator<String> refIt = refList.iterator();
-
-        while (refIt.hasNext()) {
-            String ref = refIt.next();
-
-            if (!checkedRefs.contains(ref) && !skipRefCheck(ref)) {
-                call(ref);
-                checkedRefs.add(ref);
-            }
-        }
-    }
-
-    /**
      * Check the References within the Properties section. It is not checked if the reference is retrievable. Here is
      * the logic of the id checked.
      *
@@ -250,28 +221,6 @@ public class ContainerReferenceIT extends ContainerTestBase {
         else {
             assertEquals("This version/latest-version link is wrong", latestVersion, currentVersion);
         }
-    }
-
-    /**
-     * Check the References within the Properties section. It is not checked if the reference is retrievable. Here is
-     * the logic of the id checked.
-     *
-     * @param containerXml The XML of the Container.
-     * @param id           The id which was used for the retrieve.
-     * @throws Exception Thrown if the ids within the properties section doesn't fit to the retrieve Id.
-     */
-    private void checkSoapPropertiesReferences(final String containerXml, final String id) throws Exception {
-
-        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
-
-        Node n = selectSingleNode(containerDoc, "/container/properties/version/@objid");
-        String currentVersion = n.getNodeValue();
-
-        Node n2 = selectSingleNode(containerDoc, "/container/properties/version/number");
-        String versionNumber = n2.getTextContent();
-
-        assertEquals("This version id is wrong", id + ":" + versionNumber, currentVersion);
-
     }
 
     /**

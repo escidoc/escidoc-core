@@ -28,11 +28,22 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.common.resources.ResourceProvider;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.TransformerException;
+
 import org.apache.axis.AxisFault;
 import org.apache.axis.EngineConfiguration;
 import org.apache.axis.configuration.FileProvider;
@@ -73,23 +84,11 @@ import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.rpc.ServiceException;
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.rmi.Remote;
-import java.util.Collection;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.common.resources.ResourceProvider;
 
 /**
  * Base class for access to the escidoc REST interface.
@@ -892,27 +891,6 @@ public abstract class ClientBase {
         ret.append(parts[0]);
 
         return ret.toString();
-    }
-
-    /**
-     * Check the given service address if it's base (server_host:port) is the same as the constant
-     * <code>Constants.HOST_PORT</code>. If not (server_host:port) is changed to the value configured in constant
-     * <code>Constants.HOST_PORT</code>.
-     * 
-     * @param serviceAddress
-     *            The original address.
-     * @return The resulting address.
-     */
-    protected String checkSoapAddress(final String serviceAddress) {
-        String result = serviceAddress;
-        if (!serviceAddress.startsWith(EscidocTestBase.getFrameworkUrl())) {
-            String tmp = serviceAddress.substring(7);
-            if (tmp.indexOf(":") != -1) {
-                tmp = tmp.substring(tmp.indexOf(":") + 5);
-                result = EscidocTestBase.getFrameworkUrl() + tmp;
-            }
-        }
-        return result;
     }
 
     /**
