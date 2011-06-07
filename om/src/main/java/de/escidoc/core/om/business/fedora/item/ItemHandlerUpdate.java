@@ -28,6 +28,25 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
+import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
@@ -59,27 +78,10 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
-import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
-import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Contains methods pertaining update of an item. Is extended at least by FedoraItemHandler.
- *
+ * 
  * @author Michael Schneider
  */
 public class ItemHandlerUpdate extends ItemHandlerDelete {
@@ -91,24 +93,37 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
     /**
      * Update the components of an item.
-     *
-     * @param components          The new set of components.
-     * @param mdRecordsAttributes Map with XML attributes of md-record element.
-     * @param nsUris              Map with name space URIs
-     * @throws ComponentNotFoundException   If a component could not be found in the repository.
-     * @throws InvalidStatusException       If the operation pertaining a component is not valid because of its status.
-     * @throws LockingException             If the item is locked and the current user is not the one who locked it.
-     * @throws FileNotFoundException        If binary content can not be retrieved.
-     * @throws MissingContentException      If some required content is missing.
-     * @throws InvalidContentException      If invalid content is found.
-     * @throws MissingElementValueException If an elements value is missing.
+     * 
+     * @param components
+     *            The new set of components.
+     * @param mdRecordsAttributes
+     *            Map with XML attributes of md-record element.
+     * @param nsUris
+     *            Map with name space URIs
+     * @throws ComponentNotFoundException
+     *             If a component could not be found in the repository.
+     * @throws InvalidStatusException
+     *             If the operation pertaining a component is not valid because of its status.
+     * @throws LockingException
+     *             If the item is locked and the current user is not the one who locked it.
+     * @throws FileNotFoundException
+     *             If binary content can not be retrieved.
+     * @throws MissingContentException
+     *             If some required content is missing.
+     * @throws InvalidContentException
+     *             If invalid content is found.
+     * @throws MissingElementValueException
+     *             If an elements value is missing.
      * @throws ReadonlyAttributeViolationException
-     *                                      If a read-only attribute is set.
+     *             If a read-only attribute is set.
      * @throws ReadonlyElementViolationException
-     *                                      If a read-only element is set.
-     * @throws XmlSchemaValidationException If xml schema validation fails.
-     * @throws XmlCorruptedException        If xml data is corrupt.
-     * @throws SystemException              Thrown in case of internal error.
+     *             If a read-only element is set.
+     * @throws XmlSchemaValidationException
+     *             If xml schema validation fails.
+     * @throws XmlCorruptedException
+     *             If xml data is corrupt.
+     * @throws SystemException
+     *             Thrown in case of internal error.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -174,15 +189,23 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
     /**
      * Set a component in the item.
-     *
-     * @param c                           The Component.
-     * @param streams                     The components datastreams.
-     * @param mdRecordsMetadataAttribures Map with attributes of md-records XML element
-     * @param nsUri                       Name space URI
-     * @throws InvalidContentException    If some invalid content is found in streams.
-     * @throws FileNotFoundException      If binary content can not be retrieved.
-     * @throws MissingContentException    If some required content is missing.
-     * @throws ComponentNotFoundException Thrown if Component with provided id was not found.
+     * 
+     * @param c
+     *            The Component.
+     * @param streams
+     *            The components datastreams.
+     * @param mdRecordsMetadataAttribures
+     *            Map with attributes of md-records XML element
+     * @param nsUri
+     *            Name space URI
+     * @throws InvalidContentException
+     *             If some invalid content is found in streams.
+     * @throws FileNotFoundException
+     *             If binary content can not be retrieved.
+     * @throws MissingContentException
+     *             If some required content is missing.
+     * @throws ComponentNotFoundException
+     *             Thrown if Component with provided id was not found.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -230,12 +253,17 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
     /**
      * Set md-records of Component.
-     *
-     * @param c                    Component
-     * @param mdMap                Map with md-record output streams of Component.
-     * @param mdAttributesMap      Map with XML attributes of md-record XML element.
-     * @param escidocMdRecordnsUri Name space URI
-     * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
+     * 
+     * @param c
+     *            Component
+     * @param mdMap
+     *            Map with md-record output streams of Component.
+     * @param mdAttributesMap
+     *            Map with XML attributes of md-record XML element.
+     * @param escidocMdRecordnsUri
+     *            Name space URI
+     * @throws ComponentNotFoundException
+     *             Thrown if Component with provided objid was not found.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -271,12 +299,16 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
     /**
      * Sets the properties datastream of the specified component.
-     *
-     * @param id  The unique identifier of the component.
-     * @param xml The xml representation of the datastream.
+     * 
+     * @param id
+     *            The unique identifier of the component.
+     * @param xml
+     *            The xml representation of the datastream.
      * @return The component properties in a map.
-     * @throws InvalidContentException    If xml data contains invalid content.
-     * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
+     * @throws InvalidContentException
+     *             If xml data contains invalid content.
+     * @throws ComponentNotFoundException
+     *             Thrown if Component with provided objid was not found.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -320,14 +352,21 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
     /**
      * Sets content type specific properties datastream of the item.
-     *
-     * @param xml The xml representation of the content type specific properties.
-     * @throws FedoraSystemException      If Fedora reports an error.
-     * @throws LockingException           If the item is locked and the current user is not the one who locked it.
-     * @throws WebserverSystemException   In case of an internal error.
-     * @throws TripleStoreSystemException If triple store reports an error.
-     * @throws EncodingSystemException    If encoding fails.
-     * @throws IntegritySystemException   If the integrity of the repository is violated.
+     * 
+     * @param xml
+     *            The xml representation of the content type specific properties.
+     * @throws FedoraSystemException
+     *             If Fedora reports an error.
+     * @throws LockingException
+     *             If the item is locked and the current user is not the one who locked it.
+     * @throws WebserverSystemException
+     *             In case of an internal error.
+     * @throws TripleStoreSystemException
+     *             If triple store reports an error.
+     * @throws EncodingSystemException
+     *             If encoding fails.
+     * @throws IntegritySystemException
+     *             If the integrity of the repository is violated.
      */
     @Deprecated
     protected void setContentTypeSpecificProperties(final String xml) throws FedoraSystemException, LockingException,
@@ -350,15 +389,23 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
     /**
      * /** Set the content of a component.
-     *
-     * @param component The Component.
-     * @param xml       The xml representation of the new content.
-     * @param fileName  The file name.
-     * @param mimeType  the mime type.
-     * @throws MissingContentException    If some required content of xml data is missing.
-     * @throws InvalidContentException    If some invalid content is found in xml data.
-     * @throws FileNotFoundException      If binary content can not be retrieved.
-     * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
+     * 
+     * @param component
+     *            The Component.
+     * @param xml
+     *            The xml representation of the new content.
+     * @param fileName
+     *            The file name.
+     * @param mimeType
+     *            the mime type.
+     * @throws MissingContentException
+     *             If some required content of xml data is missing.
+     * @throws InvalidContentException
+     *             If some invalid content is found in xml data.
+     * @throws FileNotFoundException
+     *             If binary content can not be retrieved.
+     * @throws ComponentNotFoundException
+     *             Thrown if Component with provided objid was not found.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
@@ -409,23 +456,18 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                 query.setDsLocation(url);
                 try {
-                    this.fedoraServiceClient.modifyDatastream(path, query, null);
+                    final DatastreamProfileTO dsProfile = this.fedoraServiceClient.modifyDatastream(path, query, null);
                     getFedoraUtility().sync();
+
+                    if (!contentChecksum.equals(dsProfile.getDsChecksum())) {
+                        if (component.hasObjectPid()) {
+                            // remove Content PID
+                            component.removeObjectPid();
+                        }
+                    }
                 }
                 catch (final Exception e) {
                     handleFedoraUploadError(url, e);
-                }
-
-                // component object is not in sync with Fedora after modifying
-                // datastream. So get new checksum from Fedora directly.
-                final String newContentChecksum =
-                    getFedoraUtility().getDatastreamInformation(component.getId(), "content", null).getChecksum();
-
-                if (!contentChecksum.equals(newContentChecksum)) {
-                    if (component.hasObjectPid()) {
-                        // remove Content PID
-                        component.removeObjectPid();
-                    }
                 }
             }
         }

@@ -28,6 +28,29 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.xml.stream.XMLStreamException;
+
+import org.escidoc.core.services.fedora.AddDatastreamPathParam;
+import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.esidoc.core.utils.io.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -76,22 +99,6 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 import de.escidoc.core.om.business.stax.handler.context.ContextPropertiesUpdateHandler;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.xml.stream.XMLStreamException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * @author Steffen Wagner
@@ -106,21 +113,30 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
     /**
      * Update Context.
-     *
-     * @param contextHandler FedoraContextHandler
-     * @param xmlData        Context update XML representation.
+     * 
+     * @param contextHandler
+     *            FedoraContextHandler
+     * @param xmlData
+     *            Context update XML representation.
      * @return if resource was udated true, false otherwise
-     * @throws ContextNotFoundException      Thrown if Context could not be found.
-     * @throws InvalidStatusException        Thrown if context is in invalid status.
-     * @throws OptimisticLockingException    Thrown if context resource is altered on update.
+     * @throws ContextNotFoundException
+     *             Thrown if Context could not be found.
+     * @throws InvalidStatusException
+     *             Thrown if context is in invalid status.
+     * @throws OptimisticLockingException
+     *             Thrown if context resource is altered on update.
      * @throws ReadonlyAttributeViolationException
-     *                                       Thrown if read-only attributes should be altered.
+     *             Thrown if read-only attributes should be altered.
      * @throws ReadonlyElementViolationException
-     *                                       Thrown if read-only elements should be altered.
-     * @throws ContextNameNotUniqueException Thrown if new name of context is not unique.
-     * @throws MissingElementValueException  Thrown if value of element is missing.
-     * @throws InvalidContentException       Thrown if the xmlData parameter has invalid content.
-     * @throws SystemException               Thrown if anything else fails.
+     *             Thrown if read-only elements should be altered.
+     * @throws ContextNameNotUniqueException
+     *             Thrown if new name of context is not unique.
+     * @throws MissingElementValueException
+     *             Thrown if value of element is missing.
+     * @throws InvalidContentException
+     *             Thrown if the xmlData parameter has invalid content.
+     * @throws SystemException
+     *             Thrown if anything else fails.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -244,15 +260,23 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
     /**
      * Set Context status to open.
-     *
-     * @param contextHandler FedoraContextHandler
-     * @param taskParam      The parameter structure.
-     * @throws ContextNotFoundException   Thrown if Context resource could not be found.
-     * @throws InvalidStatusException     Thrown if Context has invalid status.
-     * @throws OptimisticLockingException Thrown if context resource is altered on open.
-     * @throws SystemException            Thrown if anything else fails.
-     * @throws StreamNotFoundException    Thrown if RELS-EXT datastream could not be retrieved.
-     * @throws LockingException           Thrown if Context is locked.
+     * 
+     * @param contextHandler
+     *            FedoraContextHandler
+     * @param taskParam
+     *            The parameter structure.
+     * @throws ContextNotFoundException
+     *             Thrown if Context resource could not be found.
+     * @throws InvalidStatusException
+     *             Thrown if Context has invalid status.
+     * @throws OptimisticLockingException
+     *             Thrown if context resource is altered on open.
+     * @throws SystemException
+     *             Thrown if anything else fails.
+     * @throws StreamNotFoundException
+     *             Thrown if RELS-EXT datastream could not be retrieved.
+     * @throws LockingException
+     *             Thrown if Context is locked.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
@@ -336,15 +360,23 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
     /**
      * Set Context status to close.
-     *
-     * @param contextHandler FedoraContextHandler
-     * @param taskParam      The parameter structure.
-     * @throws ContextNotFoundException   Thrown if Context resource could not be found.
-     * @throws InvalidStatusException     Thrown if Context has invalid status.
-     * @throws OptimisticLockingException Thrown if context resource is altered on open.
-     * @throws SystemException            Thrown if anything else fails.
-     * @throws StreamNotFoundException    Thrown if RELS-EXT datastream could not be retrieved.
-     * @throws LockingException           Thrown if Context is locked.
+     * 
+     * @param contextHandler
+     *            FedoraContextHandler
+     * @param taskParam
+     *            The parameter structure.
+     * @throws ContextNotFoundException
+     *             Thrown if Context resource could not be found.
+     * @throws InvalidStatusException
+     *             Thrown if Context has invalid status.
+     * @throws OptimisticLockingException
+     *             Thrown if context resource is altered on open.
+     * @throws SystemException
+     *             Thrown if anything else fails.
+     * @throws StreamNotFoundException
+     *             Thrown if RELS-EXT datastream could not be retrieved.
+     * @throws LockingException
+     *             Thrown if Context is locked.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
@@ -441,9 +473,11 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
     /**
      * Update AdminDescriptor.
-     *
-     * @param contextHandler FedoraContextHandler
-     * @param xmlData        XML representation of new AdminDescriptor.
+     * 
+     * @param contextHandler
+     *            FedoraContextHandler
+     * @param xmlData
+     *            XML representation of new AdminDescriptor.
      */
     public void updateAdminDescriptor(final FedoraContextHandler contextHandler, final String xmlData) {
         // TODO implement
@@ -452,12 +486,17 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
     /**
      * Replace updated values in RELS-EXT.
-     *
-     * @param changedValues HashMap of changed values.
-     * @throws XmlParserSystemException      In case of parser error.
-     * @throws ContextNameNotUniqueException In case of context name is already in use.
-     * @throws WebserverSystemException      In case of an internal error in the webserver.
-     * @throws TripleStoreSystemException    In case of an internal error in the triple store.
+     * 
+     * @param changedValues
+     *            HashMap of changed values.
+     * @throws XmlParserSystemException
+     *             In case of parser error.
+     * @throws ContextNameNotUniqueException
+     *             In case of context name is already in use.
+     * @throws WebserverSystemException
+     *             In case of an internal error in the webserver.
+     * @throws TripleStoreSystemException
+     *             In case of an internal error in the triple store.
      */
     private void updateRelsExt(final Map<String, String> changedValues) throws XmlParserSystemException,
         ContextNameNotUniqueException, TripleStoreSystemException, WebserverSystemException {
@@ -518,13 +557,18 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
     /**
      * Replaces updated values in DC, removes/adds provided properties from/to DC and write DC datastream to Fedora.
-     *
-     * @param changedValues      HashMap of changed values.
-     * @param propertiesToRemove properties to remove.
-     * @param propertiesToAdd    properties to add.
+     * 
+     * @param changedValues
+     *            HashMap of changed values.
+     * @param propertiesToRemove
+     *            properties to remove.
+     * @param propertiesToAdd
+     *            properties to add.
      * @return true if dc was updated, false otherwise.
-     * @throws ContextNameNotUniqueException In case of context name is already in use.
-     * @throws SystemException               In case of an internal error in the webserver.
+     * @throws ContextNameNotUniqueException
+     *             In case of context name is already in use.
+     * @throws SystemException
+     *             In case of an internal error in the webserver.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -702,8 +746,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
     /**
      * A help method prepares a Map with elements to instantiate a DcUpdateHandler.
-     *
-     * @param changedValues Map of all changed values.
+     * 
+     * @param changedValues
+     *            Map of all changed values.
      * @return a Map with elements to update
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -740,8 +785,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
     /**
      * Write DC datastream.
-     *
-     * @param xml New DC representation.
+     * 
+     * @param xml
+     *            New DC representation.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
@@ -771,8 +817,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
     /**
      * Handle update of admin-descriptors datastreams.
-     *
-     * @param streams Map of Datastreams with name of admin-descriptor as key.
+     * 
+     * @param streams
+     *            Map of Datastreams with name of admin-descriptor as key.
      * @return true if admindescriptors where updated.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
@@ -812,9 +859,21 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             }
 
             if (newDS) {
-                getFedoraUtility().addDatastream(getContext().getId(), name,
-                    new String[] { de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID }, name,
-                    true, ((ByteArrayOutputStream) streams.get(name)).toByteArray(), false);
+                final AddDatastreamPathParam path = new AddDatastreamPathParam(getContext().getId(), name);
+                final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
+                query.setAltIDs(Arrays
+                    .asList(new String[] { de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID }));
+                query.setDsLabel(name);
+                query.setVersionable(true);
+                final Stream stream = new Stream();
+                try {
+                    stream.write(((ByteArrayOutputStream) streams.get(name)).toByteArray());
+                }
+                catch (IOException e) {
+                    throw new WebserverSystemException(e);
+                }
+                getFedoraServiceClient().addDatastream(path, query, stream);
+
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("add to Context " + getContext().getId() + " new admin-descriptor " + name);
                 }

@@ -46,6 +46,9 @@ import java.util.TreeMap;
 import javax.annotation.PostConstruct;
 import javax.xml.stream.XMLStreamException;
 
+import org.escidoc.core.services.fedora.AddDatastreamPathParam;
+import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
+import org.escidoc.core.services.fedora.ControlGroup;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
@@ -149,18 +152,22 @@ import de.escidoc.core.om.business.stax.handler.container.ContainerPropertiesHan
 import de.escidoc.core.om.business.stax.handler.container.StructMapCreateHandler;
 
 /**
- * The retrieve, update, create and delete methods implement the {@link ContainerHandlerInterface
- * ContainerHandlerInterface}. These methods handle strings of xmlData and use the private (get,) set and render methods
+ * The retrieve, update, create and delete methods implement the
+ * {@link ContainerHandlerInterface ContainerHandlerInterface}. These methods
+ * handle strings of xmlData and use the private (get,) set and render methods
  * to set xmlData in the system or get xmlData from the system.
  * <p/>
- * The private set methods take strings of xmlData as parameter and handling objects of type {@link Datastream
- * Stream} that hold the xmlData in Container object.
+ * The private set methods take strings of xmlData as parameter and handling
+ * objects of type {@link Datastream Stream} that hold the xmlData in Container
+ * object.
  * <p/>
- * To split incoming xmlData into the datastreams it consists of, the {@link StaxParser StaxParser} is used. In order to
- * modify datastreams or handle values provided in datastreams more than one Handler (implementations of {@link
- * DefaultHandler DefaultHandler}) can be added to the StaxParser. The {@link MultipleExtractor MultipleExtractor} have
- * to be the last Handler in the HandlerChain of a StaxParser.
- *
+ * To split incoming xmlData into the datastreams it consists of, the
+ * {@link StaxParser StaxParser} is used. In order to modify datastreams or
+ * handle values provided in datastreams more than one Handler (implementations
+ * of {@link DefaultHandler DefaultHandler}) can be added to the StaxParser. The
+ * {@link MultipleExtractor MultipleExtractor} have to be the last Handler in
+ * the HandlerChain of a StaxParser.
+ * 
  * @author Rozita Friedman
  */
 @Service("business.FedoraContainerHandler")
@@ -213,7 +220,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
-     *
+     * 
      * @return PolicyDecisionPointInterface
      */
     protected PolicyDecisionPointInterface getPdp() {
@@ -223,8 +230,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * Injects the {@link PolicyDecisionPointInterface} implementation.
-     *
-     * @param pdp the {@link PolicyDecisionPointInterface} to be injected.
+     * 
+     * @param pdp
+     *            the {@link PolicyDecisionPointInterface} to be injected.
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
@@ -233,23 +241,32 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * Create a container.
-     *
-     * @param xmlData The XML Container representation.
+     * 
+     * @param xmlData
+     *            The XML Container representation.
      * @return The XML representation of created Container.
-     * @throws ContextNotFoundException       e
-     * @throws ContentModelNotFoundException  e
-     * @throws InvalidContentException        e
+     * @throws ContextNotFoundException
+     *             e
+     * @throws ContentModelNotFoundException
+     *             e
+     * @throws InvalidContentException
+     *             e
      * @throws MissingMethodParameterException
-     *                                        e
-     * @throws MissingAttributeValueException e
-     * @throws MissingElementValueException   e
-     * @throws SystemException                e
+     *             e
+     * @throws MissingAttributeValueException
+     *             e
+     * @throws MissingElementValueException
+     *             e
+     * @throws SystemException
+     *             e
      * @throws ReferencedResourceNotFoundException
-     *                                        e
+     *             e
      * @throws RelationPredicateNotFoundException
-     *                                        e
-     * @throws InvalidStatusException         e
-     * @throws MissingMdRecordException       e
+     *             e
+     * @throws InvalidStatusException
+     *             e
+     * @throws MissingMdRecordException
+     *             e
      */
     @Override
     public String create(final String xmlData) throws ContextNotFoundException, ContentModelNotFoundException,
@@ -281,12 +298,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param xmlData  The XML Container representation.
-     * @param isCreate Set true if Container is created, Set false if Container is ingested (Ingest interface).
+     * 
+     * @param xmlData
+     *            The XML Container representation.
+     * @param isCreate
+     *            Set true if Container is created, Set false if Container is
+     *            ingested (Ingest interface).
      * @return The XML representation of created Container.
      * @throws RelationPredicateNotFoundException
-     *          cf. Interface
+     *             cf. Interface
      * @see ContainerHandlerInterface#create(String)
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
@@ -424,17 +444,26 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 XmlTemplateProvider.PLACEHOLDER, relationsData, createComment, propertiesAsReferences);
 
         getFedoraUtility().storeObjectInFedora(foxml, true);
-        try {
-            final String escidocRelsExtWithWrongLmd =
-                getFoxmlContainerRenderer().renderRelsExt(properties, structMapEntries, containerId, "bla",
-                    relationsData, createComment, propertiesAsReferences);
 
-            getFedoraUtility().addDatastream(containerId, "ESCIDOC_RELS_EXT", new String[0], "ESCIDOC_RELS_EXT Stream",
-                true, escidocRelsExtWithWrongLmd.getBytes(XmlUtility.CHARACTER_ENCODING), "M", false);
+        final String escidocRelsExtWithWrongLmd =
+            getFoxmlContainerRenderer().renderRelsExt(properties, structMapEntries, containerId, "bla", relationsData,
+                createComment, propertiesAsReferences);
+
+        final AddDatastreamPathParam addPath = new AddDatastreamPathParam(containerId, "ESCIDOC_RELS_EXT");
+        final AddDatastreamQueryParam addQuery = new AddDatastreamQueryParam();
+        addQuery.setDsLabel("ESCIDOC_RELS_EXT Stream");
+        addQuery.setVersionable(true);
+        addQuery.setControlGroup(ControlGroup.M);
+        final Stream addStream = new Stream();
+        try {
+            addStream.write(escidocRelsExtWithWrongLmd.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
-        catch (final UnsupportedEncodingException e1) {
-            throw new EncodingSystemException(e1);
+        catch (final IOException e) {
+            throw new WebserverSystemException(e);
         }
+
+        getFedoraServiceClient().addDatastream(addPath, addQuery, addStream);
+
         String lastModifiedDate = null;
         final org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
             this.fedoraUtility.getDatastreamsInformation(containerId, null);
@@ -454,13 +483,23 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final String wov =
             getFoxmlContainerRenderer().renderWov(containerId, "Version 1", "1", lastModifiedDate,
                 Constants.STATUS_PENDING, createComment);
+
+        final AddDatastreamPathParam addPathVH = new AddDatastreamPathParam(containerId, "version-history");
+        final AddDatastreamQueryParam addQueryVH = new AddDatastreamQueryParam();
+        addQueryVH.setDsLabel("whole object versioning datastream");
+        addQueryVH.setVersionable(false);
+        addQueryVH.setControlGroup(ControlGroup.M);
+        final Stream addStreamVH = new Stream();
         try {
-            getFedoraUtility().addDatastream(containerId, "version-history", new String[0],
-                "whole object versioning datastream", false, wov.getBytes(XmlUtility.CHARACTER_ENCODING), "M", false);
+            addStreamVH.write(wov.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
-        catch (final UnsupportedEncodingException e1) {
-            throw new EncodingSystemException(e1);
+        catch (final UnsupportedEncodingException e) {
+            throw new WebserverSystemException(e);
         }
+        catch (final IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        getFedoraServiceClient().addDatastream(addPathVH, addQueryVH, addStreamVH);
 
         // update time stamp within RELS-EXT and create a new
         // data stream ESCIDOC_RELS_EXT with a managed Control Group
@@ -472,11 +511,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             new ModifiyDatastreamPathParam(containerId, Datastream.RELS_EXT_DATASTREAM);
         final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
         query.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
-        Stream stream = new Stream();
+        final Stream stream = new Stream();
         try {
             stream.write(relsExtNew.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         this.fedoraServiceClient.modifyDatastream(path, query, stream);
@@ -505,12 +544,17 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id The ID of the container to delete.
-     * @throws LockingException       If container is locked.
-     * @throws InvalidStatusException If container is in invalid status for deletion.
-     * @throws AuthorizationException If further calls fail because of insufficient access rights.
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface #delete(java.lang.String)
+     * 
+     * @param id
+     *            The ID of the container to delete.
+     * @throws LockingException
+     *             If container is locked.
+     * @throws InvalidStatusException
+     *             If container is in invalid status for deletion.
+     * @throws AuthorizationException
+     *             If further calls fail because of insufficient access rights.
+     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
+     *      #delete(java.lang.String)
      */
     @Override
     public void delete(final String id) throws ContainerNotFoundException, LockingException, InvalidStatusException,
@@ -559,7 +603,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 }
                 else {
                     throw new SystemException("An error occured removing member entries for container "
-                        + getItem().getId() + ". Container can not be deleted.", cause); // Ignore FindBugs
+                        + getItem().getId() + ". Container can not be deleted.", cause); // Ignore
+                    // FindBugs
                 }
             }
             catch (final Exception e) {
@@ -576,8 +621,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface #retrieve(java.lang.String)
+     * 
+     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
+     *      #retrieve(java.lang.String)
      */
     @Override
     public String retrieve(final String id) throws ContainerNotFoundException, SystemException,
@@ -590,13 +636,20 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * Sets content model specific properties datastream of the container.
-     *
-     * @param xml The xml representation of the content model specific properties.
-     * @throws FedoraSystemException      If Fedora reports an error.
-     * @throws WebserverSystemException   In case of an internal error.
-     * @throws TripleStoreSystemException If triple store reports an error.
-     * @throws EncodingSystemException    If encoding fails.
-     * @throws StreamNotFoundException    TODO
+     * 
+     * @param xml
+     *            The xml representation of the content model specific
+     *            properties.
+     * @throws FedoraSystemException
+     *             If Fedora reports an error.
+     * @throws WebserverSystemException
+     *             In case of an internal error.
+     * @throws TripleStoreSystemException
+     *             If triple store reports an error.
+     * @throws EncodingSystemException
+     *             If encoding fails.
+     * @throws StreamNotFoundException
+     *             TODO
      */
     private void setCts(final String xml) throws StreamNotFoundException, FedoraSystemException,
         WebserverSystemException, TripleStoreSystemException, EncodingSystemException {
@@ -621,25 +674,37 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id      id
-     * @param xmlData xmlData
-     * @throws ContainerNotFoundException     e
-     * @throws LockingException               e
-     * @throws InvalidContentException        e
+     * 
+     * @param id
+     *            id
+     * @param xmlData
+     *            xmlData
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
+     * @throws InvalidContentException
+     *             e
      * @throws MissingMethodParameterException
-     *                                        e
-     * @throws InvalidXmlException            e
-     * @throws OptimisticLockingException     e
-     * @throws InvalidStatusException         e
-     * @throws SystemException                e
+     *             e
+     * @throws InvalidXmlException
+     *             e
+     * @throws OptimisticLockingException
+     *             e
+     * @throws InvalidStatusException
+     *             e
+     * @throws SystemException
+     *             e
      * @throws ReferencedResourceNotFoundException
-     *                                        e
+     *             e
      * @throws RelationPredicateNotFoundException
-     *                                        e
-     * @throws ReadonlyVersionException       cf. Interface
-     * @throws MissingAttributeValueException e
-     * @throws MissingMdRecordException       e
+     *             e
+     * @throws ReadonlyVersionException
+     *             cf. Interface
+     * @throws MissingAttributeValueException
+     *             e
+     * @throws MissingMdRecordException
+     *             e
      */
     @Override
     public String update(final String id, final String xmlData) throws ContainerNotFoundException, LockingException,
@@ -805,11 +870,14 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id         The id of the resource.
-     * @param parameters parameters from the SRU request
+     * 
+     * @param id
+     *            The id of the resource.
+     * @param parameters
+     *            parameters from the SRU request
      * @return Returns xml representation of a list of containers and items.
-     * @throws ContainerNotFoundException Thrown if the given container was not found.
+     * @throws ContainerNotFoundException
+     *             Thrown if the given container was not found.
      */
     @Override
     public String retrieveMembers(final String id, final SRURequestParameters parameters)
@@ -837,12 +905,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id         The id of the resource.
-     * @param parameters parameters from the SRU request
+     * 
+     * @param id
+     *            The id of the resource.
+     * @param parameters
+     *            parameters from the SRU request
      * @return Returns xml representation of a list of tocs.
-     * @throws ContainerNotFoundException Thrown if the given container was not found.
-     * @throws SystemException            cf. Interface
+     * @throws ContainerNotFoundException
+     *             Thrown if the given container was not found.
+     * @throws SystemException
+     *             cf. Interface
      */
     @Override
     public String retrieveTocs(final String id, final SRURequestParameters parameters)
@@ -876,15 +948,21 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param containerId containerId
-     * @param taskParam   taskParam
-     * @throws ContainerNotFoundException e
-     * @throws ContextNotFoundException   e
-     * @throws InvalidContentException    e
-     * @throws LockingException           e
+     * 
+     * @param containerId
+     *            containerId
+     * @param taskParam
+     *            taskParam
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws ContextNotFoundException
+     *             e
+     * @throws InvalidContentException
+     *             e
+     * @throws LockingException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    cf. Interface
+     *             cf. Interface
      */
     @Override
     public String moveToContext(final String containerId, final String taskParam) throws ContainerNotFoundException,
@@ -896,8 +974,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param parameters parameters from the SRU request
+     * 
+     * @param parameters
+     *            parameters from the SRU request
      * @return The list of Containers matching filter parameter.
      */
     @Override
@@ -914,7 +993,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     }
 
     /**
-     * @param itemHandler the itemHandler
+     * @param itemHandler
+     *            the itemHandler
      */
     public void setItemHandler(final FedoraItemHandler itemHandler) {
         this.itemHandler = itemHandler;
@@ -922,7 +1002,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * Retrieves item handler.
-     *
+     * 
      * @return FedoraItemHandler itemHandler
      */
     public FedoraItemHandler getItemHandler() {
@@ -933,14 +1013,19 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * See Interface for functional description.
      * <p/>
      * Deprecated because of inconsistent naming. Use createMdRecord instead of.
-     *
-     * @param id      id
-     * @param xmlData xmlData
-     * @throws ContainerNotFoundException e
-     * @throws LockingException           e
+     * 
+     * @param id
+     *            id
+     * @param xmlData
+     *            xmlData
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws InvalidXmlException        cf. Interface
+     *             e
+     * @throws InvalidXmlException
+     *             cf. Interface
      */
     @Override
     @Deprecated
@@ -953,14 +1038,19 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id      id
-     * @param xmlData xmlData
-     * @throws ContainerNotFoundException e
-     * @throws LockingException           e
+     * 
+     * @param id
+     *            id
+     * @param xmlData
+     *            xmlData
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws InvalidXmlException        cf. Interface
+     *             e
+     * @throws InvalidXmlException
+     *             cf. Interface
      */
     @Override
     public String createMdRecord(final String id, final String xmlData) throws ContainerNotFoundException,
@@ -972,12 +1062,17 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id         id
-     * @param mdRecordId mdRecordId
-     * @throws ContainerNotFoundException e
-     * @throws LockingException           e
-     * @throws MdRecordNotFoundException  e
+     * 
+     * @param id
+     *            id
+     * @param mdRecordId
+     *            mdRecordId
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
+     * @throws MdRecordNotFoundException
+     *             e
      */
     public void deleteMetadataRecord(final String id, final String mdRecordId) throws ContainerNotFoundException,
         LockingException, MdRecordNotFoundException {
@@ -988,12 +1083,17 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id         id
-     * @param mdRecordId mdRecordId
-     * @throws ContainerNotFoundException e
-     * @throws SystemException            e
-     * @throws MdRecordNotFoundException  cf. Interface
+     * 
+     * @param id
+     *            id
+     * @param mdRecordId
+     *            mdRecordId
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws MdRecordNotFoundException
+     *             cf. Interface
      */
     @Override
     public String retrieveMdRecord(final String id, final String mdRecordId) throws ContainerNotFoundException,
@@ -1005,14 +1105,20 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     }
 
     /**
-     * @param id         id
-     * @param mdRecordId mdRecordId
-     * @throws ContainerNotFoundException e
-     * @throws MdRecordNotFoundException  e
+     * @param id
+     *            id
+     * @param mdRecordId
+     *            mdRecordId
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws MdRecordNotFoundException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws SystemException            e
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#retrieveMdRecordContent(String, String)
+     *             e
+     * @throws SystemException
+     *             e
+     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#retrieveMdRecordContent(String,
+     *      String)
      */
     @Override
     public String retrieveMdRecordContent(final String id, final String mdRecordId) throws ContainerNotFoundException,
@@ -1023,12 +1129,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     }
 
     /**
-     * @param id id
-     * @throws ContainerNotFoundException e
+     * @param id
+     *            id
+     * @throws ContainerNotFoundException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws SystemException            e
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface# retrieveDcContent(java.lang.String)
+     *             e
+     * @throws SystemException
+     *             e
+     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#
+     *      retrieveDcContent(java.lang.String)
      */
     @Override
     public String retrieveDcRecordContent(final String id) throws ContainerNotFoundException,
@@ -1040,10 +1150,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param containerId containerId
-     * @throws ContainerNotFoundException e
-     * @throws SystemException            cf. Interface
+     * 
+     * @param containerId
+     *            containerId
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws SystemException
+     *             cf. Interface
      */
     @Override
     public String retrieveMdRecords(final String containerId) throws ContainerNotFoundException, SystemException,
@@ -1056,17 +1169,27 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id         id
-     * @param mdRecordId mdRecordId
-     * @param xmlData    xmlData
-     * @throws ContainerNotFoundException e
-     * @throws LockingException           e
-     * @throws MdRecordNotFoundException  e
-     * @throws SystemException            e
-     * @throws InvalidXmlException        e
-     * @throws InvalidStatusException     e
-     * @throws ReadonlyVersionException   cf. Interface
+     * 
+     * @param id
+     *            id
+     * @param mdRecordId
+     *            mdRecordId
+     * @param xmlData
+     *            xmlData
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
+     * @throws MdRecordNotFoundException
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws InvalidXmlException
+     *             e
+     * @throws InvalidStatusException
+     *             e
+     * @throws ReadonlyVersionException
+     *             cf. Interface
      */
     @Override
     public String updateMetadataRecord(final String id, final String mdRecordId, final String xmlData)
@@ -1085,17 +1208,27 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     }
 
     /**
-     * Creates Stream objects from the ByteArrayOutputStreams in <code>mdMap</code> and calls Container.setMdRecords
-     * with a HashMap which contains the metadata datastreams as Stream objects.
-     *
-     * @param mdMap                A HashMap which contains the metadata datastreams as ByteArrayOutputStream.
-     * @param mdAttributesMap      mdAttributesMap
-     * @param escidocMdRecordnsUri escidocMdRecordnsUri
-     * @throws WebserverSystemException   Thrown in case of an internal error.
-     * @throws FedoraSystemException      e
-     * @throws TripleStoreSystemException e
-     * @throws IntegritySystemException   e
-     * @throws EncodingSystemException    e
+     * Creates Stream objects from the ByteArrayOutputStreams in
+     * <code>mdMap</code> and calls Container.setMdRecords with a HashMap which
+     * contains the metadata datastreams as Stream objects.
+     * 
+     * @param mdMap
+     *            A HashMap which contains the metadata datastreams as
+     *            ByteArrayOutputStream.
+     * @param mdAttributesMap
+     *            mdAttributesMap
+     * @param escidocMdRecordnsUri
+     *            escidocMdRecordnsUri
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
+     * @throws FedoraSystemException
+     *             e
+     * @throws TripleStoreSystemException
+     *             e
+     * @throws IntegritySystemException
+     *             e
+     * @throws EncodingSystemException
+     *             e
      */
     private void setMetadataRecords(
         final Map<String, ByteArrayOutputStream> mdMap, final Map mdAttributesMap, final String escidocMdRecordnsUri)
@@ -1126,12 +1259,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id id
-     * @throws ContainerNotFoundException e
+     * 
+     * @param id
+     *            id
+     * @throws ContainerNotFoundException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws SystemException            cf. Interface
+     *             e
+     * @throws SystemException
+     *             cf. Interface
      */
     @Override
     public String retrieveRelations(final String id) throws ContainerNotFoundException,
@@ -1144,12 +1280,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id id
-     * @throws ContainerNotFoundException e
+     * 
+     * @param id
+     *            id
+     * @throws ContainerNotFoundException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws SystemException            cf. Interface
+     *             e
+     * @throws SystemException
+     *             cf. Interface
      */
     @Override
     public String retrieveResources(final String id) throws ContainerNotFoundException,
@@ -1245,12 +1384,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id id
-     * @throws ContainerNotFoundException e
+     * 
+     * @param id
+     *            id
+     * @throws ContainerNotFoundException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws SystemException            cf. Interface
+     *             e
+     * @throws SystemException
+     *             cf. Interface
      */
     @Override
     public String retrieveProperties(final String id) throws ContainerNotFoundException,
@@ -1264,13 +1406,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id The id of the Container.
+     * 
+     * @param id
+     *            The id of the Container.
      * @return The struct-map of the Container.
-     * @throws ContainerNotFoundException e
+     * @throws ContainerNotFoundException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws SystemException            e
+     *             e
+     * @throws SystemException
+     *             e
      */
     @Override
     public String retrieveStructMap(final String id) throws ContainerNotFoundException,
@@ -1283,17 +1428,25 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id    The id of the Container.
-     * @param param The task parameter structure.
-     * @throws ContainerNotFoundException Thrown if no Container could be found under the provided id.
-     * @throws LockingException           Thrown of the Container is locked through others.
+     * 
+     * @param id
+     *            The id of the Container.
+     * @param param
+     *            The task parameter structure.
+     * @throws ContainerNotFoundException
+     *             Thrown if no Container could be found under the provided id.
+     * @throws LockingException
+     *             Thrown of the Container is locked through others.
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws InvalidStatusException     e
-     * @throws SystemException            e
-     * @throws OptimisticLockingException e
-     * @throws ReadonlyVersionException   cf. Interface
+     *             e
+     * @throws InvalidStatusException
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws OptimisticLockingException
+     *             e
+     * @throws ReadonlyVersionException
+     *             cf. Interface
      */
     @Override
     public String release(final String id, final String param) throws ContainerNotFoundException, LockingException,
@@ -1342,11 +1495,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     /**
      * Calls release methods for all container members.
      * 
-     * The concept of releasing members is incomplete and create huge security holes. 
-     *
-     * @param id The objid of the parent Container.
-     * @throws OptimisticLockingException Thrown if objects altered through other processes during the release.
-     * @throws SystemException            Thrown in case of internal error.
+     * The concept of releasing members is incomplete and create huge security
+     * holes.
+     * 
+     * @param id
+     *            The objid of the parent Container.
+     * @throws OptimisticLockingException
+     *             Thrown if objects altered through other processes during the
+     *             release.
+     * @throws SystemException
+     *             Thrown in case of internal error.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -1416,14 +1574,14 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 }
                 catch (final Exception e) {
                     throw new WebserverSystemException(e);
-                    //                    if (LOGGER.isWarnEnabled()) {
-                    //                        LOGGER.warn("Error on setting item.");
-                    //                    }
-                    //                    if (LOGGER.isDebugEnabled()) {
-                    //                        LOGGER.debug("Error on setting item.", e);
-                    //                    }
-                    //                    // do nothing
-                    //                    continue;
+                    // if (LOGGER.isWarnEnabled()) {
+                    // LOGGER.warn("Error on setting item.");
+                    // }
+                    // if (LOGGER.isDebugEnabled()) {
+                    // LOGGER.debug("Error on setting item.", e);
+                    // }
+                    // // do nothing
+                    // continue;
                 }
                 final String param = "<param last-modification-date=\"" + getItem().getLastModificationDate() + "\"/>";
 
@@ -1453,17 +1611,25 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id    id
-     * @param param param
-     * @throws ContainerNotFoundException e
-     * @throws LockingException           e
+     * 
+     * @param id
+     *            id
+     * @param param
+     *            param
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws InvalidStatusException     e
-     * @throws SystemException            e
-     * @throws OptimisticLockingException e
-     * @throws ReadonlyVersionException   cf. Interface
+     *             e
+     * @throws InvalidStatusException
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws OptimisticLockingException
+     *             e
+     * @throws ReadonlyVersionException
+     *             cf. Interface
      */
     @Override
     public String submit(final String id, final String param) throws ContainerNotFoundException, LockingException,
@@ -1506,18 +1672,27 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id    id
-     * @param param param
-     * @throws ContainerNotFoundException e
-     * @throws LockingException           e
+     * 
+     * @param id
+     *            id
+     * @param param
+     *            param
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws InvalidStatusException     e
-     * @throws SystemException            e
-     * @throws OptimisticLockingException e
-     * @throws ReadonlyVersionException   cf. Interface
-     * @throws XmlCorruptedException      e
+     *             e
+     * @throws InvalidStatusException
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws OptimisticLockingException
+     *             e
+     * @throws ReadonlyVersionException
+     *             cf. Interface
+     * @throws XmlCorruptedException
+     *             e
      */
     @Override
     public String revise(final String id, final String param) throws ContainerNotFoundException, LockingException,
@@ -1559,18 +1734,27 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id    id
-     * @param param param
-     * @throws ContainerNotFoundException e
-     * @throws LockingException           e
+     * 
+     * @param id
+     *            id
+     * @param param
+     *            param
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws InvalidStatusException     e
-     * @throws SystemException            e
-     * @throws OptimisticLockingException e
-     * @throws AlreadyWithdrawnException  e
-     * @throws ReadonlyVersionException   cf. Interface
+     *             e
+     * @throws InvalidStatusException
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws OptimisticLockingException
+     *             e
+     * @throws AlreadyWithdrawnException
+     *             e
+     * @throws ReadonlyVersionException
+     *             cf. Interface
      */
     @Override
     public String withdraw(final String id, final String param) throws ContainerNotFoundException, LockingException,
@@ -1630,9 +1814,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * Calls withdraw method for all container members.
-     *
-     * @param id              id
-     * @param withdrawComment withdrawComment
+     * 
+     * @param id
+     *            id
+     * @param withdrawComment
+     *            withdrawComment
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
@@ -1719,19 +1905,27 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     }
 
     /**
-     * The Container will be locked for changes until the lockOwner (the current user) or an Administrator unlocks the
-     * Container.
-     *
-     * @param id    The id of the Container.
-     * @param param The task parameter structure.
-     * @throws ContainerNotFoundException Thrown if the Container was not found.
-     * @throws LockingException           Thrown if the Container could not been locked.
-     * @throws InvalidStatusException     e
+     * The Container will be locked for changes until the lockOwner (the current
+     * user) or an Administrator unlocks the Container.
+     * 
+     * @param id
+     *            The id of the Container.
+     * @param param
+     *            The task parameter structure.
+     * @throws ContainerNotFoundException
+     *             Thrown if the Container was not found.
+     * @throws LockingException
+     *             Thrown if the Container could not been locked.
+     * @throws InvalidStatusException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws SystemException            e
-     * @throws OptimisticLockingException e
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#lock(String, String)
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws OptimisticLockingException
+     *             e
+     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#lock(String,
+     *      String)
      */
     @Override
     public String lock(final String id, final String param) throws ContainerNotFoundException, LockingException,
@@ -1762,19 +1956,28 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     }
 
     /**
-     * The Container will be unlocked. The lockOwner or an Administrator may unlock the Container.
-     *
-     * @param id    The id of the Container.
-     * @param param The task parameter structure.
+     * The Container will be unlocked. The lockOwner or an Administrator may
+     * unlock the Container.
+     * 
+     * @param id
+     *            The id of the Container.
+     * @param param
+     *            The task parameter structure.
      * @return XML result with last-modification-date of Container as attribute.
-     * @throws ContainerNotFoundException Thrown if the Container was not found.
-     * @throws LockingException           Thrown if the Container could not been unlocked.
-     * @throws InvalidStatusException     e
+     * @throws ContainerNotFoundException
+     *             Thrown if the Container was not found.
+     * @throws LockingException
+     *             Thrown if the Container could not been unlocked.
+     * @throws InvalidStatusException
+     *             e
      * @throws MissingMethodParameterException
-     *                                    e
-     * @throws SystemException            e
-     * @throws OptimisticLockingException e
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#unlock(String, String)
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws OptimisticLockingException
+     *             e
+     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#unlock(String,
+     *      String)
      */
     @Override
     public String unlock(final String id, final String param) throws ContainerNotFoundException, LockingException,
@@ -1804,10 +2007,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id id
-     * @throws ContainerNotFoundException e
-     * @throws SystemException            cf. Interface
+     * 
+     * @param id
+     *            id
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws SystemException
+     *             cf. Interface
      */
     @Override
     public String retrieveVersionHistory(final String id) throws ContainerNotFoundException, SystemException,
@@ -1839,10 +2045,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id id
-     * @throws ContainerNotFoundException e
-     * @throws SystemException            cf. Interface
+     * 
+     * @param id
+     *            id
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws SystemException
+     *             cf. Interface
      */
     @Override
     public String retrieveParents(final String id) throws ContainerNotFoundException, SystemException,
@@ -1853,33 +2062,49 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param containerId containerId
-     * @param xmlData     xmlData
-     * @throws ContainerNotFoundException     e
-     * @throws MissingContentException        e
-     * @throws ContextNotFoundException       e
-     * @throws ContentModelNotFoundException  e
+     * 
+     * @param containerId
+     *            containerId
+     * @param xmlData
+     *            xmlData
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws MissingContentException
+     *             e
+     * @throws ContextNotFoundException
+     *             e
+     * @throws ContentModelNotFoundException
+     *             e
      * @throws ReadonlyElementViolationException
-     *                                        e
-     * @throws MissingAttributeValueException e
-     * @throws MissingElementValueException   e
+     *             e
+     * @throws MissingAttributeValueException
+     *             e
+     * @throws MissingElementValueException
+     *             e
      * @throws ReadonlyAttributeViolationException
-     *                                        e
+     *             e
      * @throws MissingMethodParameterException
-     *                                        e
-     * @throws FileNotFoundException          e
-     * @throws LockingException               e
-     * @throws InvalidContentException        e
-     * @throws InvalidContextException        e
+     *             e
+     * @throws FileNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
+     * @throws InvalidContentException
+     *             e
+     * @throws InvalidContextException
+     *             e
      * @throws RelationPredicateNotFoundException
-     *                                        e
+     *             e
      * @throws ReferencedResourceNotFoundException
-     *                                        e
-     * @throws SystemException                e
-     * @throws MissingMdRecordException       e
-     * @throws InvalidStatusException         e
-     * @throws AuthorizationException         e
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws MissingMdRecordException
+     *             e
+     * @throws InvalidStatusException
+     *             e
+     * @throws AuthorizationException
+     *             e
      */
     @Override
     public String createItem(final String containerId, final String xmlData) throws ContainerNotFoundException,
@@ -1928,28 +2153,43 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param containerId containerId
-     * @param xmlData     xmlData
+     * 
+     * @param containerId
+     *            containerId
+     * @param xmlData
+     *            xmlData
      * @throws MissingMethodParameterException
-     *                                        e
-     * @throws ContainerNotFoundException     e
-     * @throws LockingException               e
-     * @throws ContextNotFoundException       e
-     * @throws ContentModelNotFoundException  e
-     * @throws InvalidContentException        e
-     * @throws MissingAttributeValueException e
-     * @throws MissingElementValueException   e
-     * @throws AuthenticationException        e
-     * @throws AuthorizationException         e
-     * @throws InvalidContextException        e
+     *             e
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
+     * @throws ContextNotFoundException
+     *             e
+     * @throws ContentModelNotFoundException
+     *             e
+     * @throws InvalidContentException
+     *             e
+     * @throws MissingAttributeValueException
+     *             e
+     * @throws MissingElementValueException
+     *             e
+     * @throws AuthenticationException
+     *             e
+     * @throws AuthorizationException
+     *             e
+     * @throws InvalidContextException
+     *             e
      * @throws RelationPredicateNotFoundException
-     *                                        e
+     *             e
      * @throws ReferencedResourceNotFoundException
-     *                                        e
-     * @throws SystemException                cf. Interface
-     * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
-     * @throws MissingMdRecordException       e
+     *             e
+     * @throws SystemException
+     *             cf. Interface
+     * @throws InvalidStatusException
+     *             Thrown if an organizational unit is in an invalid status.
+     * @throws MissingMdRecordException
+     *             e
      */
     @Override
     public String createContainer(final String containerId, final String xmlData)
@@ -2010,16 +2250,25 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id        id
-     * @param taskParam taskParam
-     * @throws ContainerNotFoundException     e
-     * @throws LockingException               e
-     * @throws InvalidContentException        e
-     * @throws OptimisticLockingException     e
-     * @throws SystemException                e
-     * @throws InvalidContextException        e
-     * @throws MissingAttributeValueException cf. Interface
+     * 
+     * @param id
+     *            id
+     * @param taskParam
+     *            taskParam
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
+     * @throws InvalidContentException
+     *             e
+     * @throws OptimisticLockingException
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws InvalidContextException
+     *             e
+     * @throws MissingAttributeValueException
+     *             cf. Interface
      */
     @Override
     public String addMembers(final String id, final String taskParam) throws ContainerNotFoundException,
@@ -2126,16 +2375,25 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id        id
-     * @param taskParam taskParam
-     * @throws ContainerNotFoundException     e
-     * @throws LockingException               e
-     * @throws InvalidContentException        e
-     * @throws OptimisticLockingException     e
-     * @throws SystemException                e
-     * @throws InvalidContextException        e
-     * @throws MissingAttributeValueException cf. Interface
+     * 
+     * @param id
+     *            id
+     * @param taskParam
+     *            taskParam
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws LockingException
+     *             e
+     * @throws InvalidContentException
+     *             e
+     * @throws OptimisticLockingException
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws InvalidContextException
+     *             e
+     * @throws MissingAttributeValueException
+     *             cf. Interface
      * @see ContainerHandlerInterface#addMembers(String, String)
      */
     @Override
@@ -2200,16 +2458,25 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id        id
-     * @param taskParam taskParam
-     * @throws LockingException              e
-     * @throws ItemNotFoundException         e
-     * @throws InvalidContextStatusException e
-     * @throws InvalidItemStatusException    e
-     * @throws SystemException               e
-     * @throws ContainerNotFoundException    e
-     * @throws InvalidContentException       cf. Interface
+     * 
+     * @param id
+     *            id
+     * @param taskParam
+     *            taskParam
+     * @throws LockingException
+     *             e
+     * @throws ItemNotFoundException
+     *             e
+     * @throws InvalidContextStatusException
+     *             e
+     * @throws InvalidItemStatusException
+     *             e
+     * @throws SystemException
+     *             e
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws InvalidContentException
+     *             cf. Interface
      */
     @Override
     public String removeMembers(final String id, final String taskParam) throws LockingException,
@@ -2308,8 +2575,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     }
 
     /**
-     * @param comment comment
-     * @throws SystemException e
+     * @param comment
+     *            comment
+     * @throws SystemException
+     *             e
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -2324,9 +2593,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     }
 
     /**
-     * @param comment   comment
-     * @param newStatus newStatus
-     * @throws SystemException e
+     * @param comment
+     *            comment
+     * @param newStatus
+     *            newStatus
+     * @throws SystemException
+     *             e
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -2342,22 +2614,33 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id        id
-     * @param taskParam taskParam
-     * @throws SystemException              e
-     * @throws ContainerNotFoundException   e
-     * @throws OptimisticLockingException   e
+     * 
+     * @param id
+     *            id
+     * @param taskParam
+     *            taskParam
+     * @throws SystemException
+     *             e
+     * @throws ContainerNotFoundException
+     *             e
+     * @throws OptimisticLockingException
+     *             e
      * @throws ReferencedResourceNotFoundException
-     *                                      e
+     *             e
      * @throws RelationPredicateNotFoundException
-     *                                      e
-     * @throws AlreadyExistsException       e
-     * @throws InvalidStatusException       e
-     * @throws MissingElementValueException e
-     * @throws LockingException             e
-     * @throws ReadonlyVersionException     e
-     * @throws InvalidContentException      cf. Interface
+     *             e
+     * @throws AlreadyExistsException
+     *             e
+     * @throws InvalidStatusException
+     *             e
+     * @throws MissingElementValueException
+     *             e
+     * @throws LockingException
+     *             e
+     * @throws ReadonlyVersionException
+     *             e
+     * @throws InvalidContentException
+     *             cf. Interface
      */
     @Override
     public String addContentRelations(final String id, final String taskParam) throws SystemException,
@@ -2469,16 +2752,23 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     *
-     * @param id    id
-     * @param param param
-     * @throws SystemException              e
-     * @throws OptimisticLockingException   e
-     * @throws InvalidStatusException       e
+     * 
+     * @param id
+     *            id
+     * @param param
+     *            param
+     * @throws SystemException
+     *             e
+     * @throws OptimisticLockingException
+     *             e
+     * @throws InvalidStatusException
+     *             e
      * @throws ContentRelationNotFoundException
-     *                                      e
-     * @throws LockingException             e
-     * @throws ContainerNotFoundException   e
+     *             e
+     * @throws LockingException
+     *             e
+     * @throws ContainerNotFoundException
+     *             e
      */
     @Override
     public String removeContentRelations(final String id, final String param) throws SystemException,
@@ -2591,12 +2881,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     }
 
     /**
-     * Retrieve all content relation in which the current resource is subject or object.
-     *
-     * @param id container id
+     * Retrieve all content relation in which the current resource is subject or
+     * object.
+     * 
+     * @param id
+     *            container id
      * @return list of content relations
-     * @throws ContainerNotFoundException Thrown if an item with the specified id could not be found.
-     * @throws SystemException            If an error occurs.
+     * @throws ContainerNotFoundException
+     *             Thrown if an item with the specified id could not be found.
+     * @throws SystemException
+     *             If an error occurs.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -2619,8 +2913,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * Injects the content relation handler.
-     *
-     * @param contentRelationHandler The {@link FedoraContentRelationHandler}.
+     * 
+     * @param contentRelationHandler
+     *            The {@link FedoraContentRelationHandler}.
      */
     public void setContentRelationHandler(final FedoraContentRelationHandler contentRelationHandler) {
         this.contentRelationHandler = contentRelationHandler;
@@ -2628,8 +2923,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * Set the SRURequest object.
-     *
-     * @param sruRequest SRURequest
+     * 
+     * @param sruRequest
+     *            SRURequest
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
