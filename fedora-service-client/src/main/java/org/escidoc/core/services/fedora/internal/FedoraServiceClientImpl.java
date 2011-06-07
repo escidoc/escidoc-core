@@ -3,6 +3,8 @@ package org.escidoc.core.services.fedora.internal;
 import com.googlecode.ehcache.annotations.KeyGenerator;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 import net.sf.oval.guard.Guarded;
+import org.apache.cxf.jaxrs.client.Client;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
@@ -298,7 +300,10 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     public void deleteDatastream(final DeleteDatastreamPathParam path, final DeleteDatastreamQueryParam query) {
-        this.fedoraService.deleteDatastream(path, query);
+        final Client client = WebClient.client(this.fedoraService);
+        final WebClient webClient = WebClient.fromClient(client);
+        webClient.accept(MimeTypes.APPLICATION_JSON).path("/objects/" + path.getPid() +
+                "/datastreams/" + path.getDsID()).delete();
     }
 
     @Override

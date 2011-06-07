@@ -36,6 +36,8 @@ import java.util.List;
 
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
+import org.escidoc.core.services.fedora.DeleteDatastreamPathParam;
+import org.escidoc.core.services.fedora.DeleteDatastreamQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
@@ -695,14 +697,14 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     /**
      * Mark datastream in repository as deleted.
-     * 
-     * @param mdRecord
-     *            Md Record which is to delete
-     * @throws FedoraSystemException
-     *             Thrown if Fedora request failed.
+     *                              A
+     * @param mdRecord Md Record which is to delete
+     * @throws FedoraSystemException Thrown if Fedora request failed.
      */
     private void deleteDatastream(final MdRecordCreate mdRecord) throws FedoraSystemException {
-        this.fedoraUtility.purgeDatastream(getObjid(), mdRecord.getName(), null, null);
+        final DeleteDatastreamPathParam path = new DeleteDatastreamPathParam(getObjid(), mdRecord.getName());
+        final DeleteDatastreamQueryParam query = new DeleteDatastreamQueryParam();
+        this.fedoraServiceClient.deleteDatastream(path, query);
     }
 
     /**

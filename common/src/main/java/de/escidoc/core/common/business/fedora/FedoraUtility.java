@@ -147,123 +147,6 @@ public class FedoraUtility {
     @Qualifier("business.Utility")
     private Utility utility;
 
-    // The methods exposed via jmx
-
-    /**
-     * Gets the FoXML version.
-     * 
-     * @return The version of FOXML
-     */
-    @ManagedAttribute(description = "The FoXML version.")
-    public String getFoxmlVersion() {
-
-        return FOXML_FORMAT;
-    }
-
-    /**
-     * Gets the URL to the Fedora repository.
-     * 
-     * @return Returns the URL to the Fedora repository.
-     */
-    @ManagedAttribute(description = "The URL to the fedora repository.")
-    public String getFedoraUrl() {
-
-        return this.fedoraUrl;
-    }
-
-    /**
-     * Gets the number of active apia connections.
-     * 
-     * @return Returns the number of active apia connections.
-     */
-    @ManagedAttribute(description = "The number of active apia connections.")
-    public int getApiaPoolNumActive() {
-
-        return apiaPool.getNumActive();
-    }
-
-    /**
-     * Gets the number of idle apia connections.
-     * 
-     * @return Returns the number of idle apia connections.
-     */
-    @ManagedAttribute(description = "The number of idle apia connections.")
-    public int getApiaPoolNumIdle() {
-
-        return apiaPool.getNumIdle();
-    }
-
-    /**
-     * Clears the pool of apia connections.
-     */
-    @ManagedOperation(description = "Clear the pool of apia connections.")
-    public void clearApiaPool() {
-
-        apiaPool.clear();
-    }
-
-    /**
-     * Gets the number of active apim connections.
-     * 
-     * @return Returns the number of active apim connections.
-     */
-    @ManagedAttribute(description = "The number of active apim connections.")
-    public int getApimPoolNumActive() {
-
-        return apimPool.getNumActive();
-    }
-
-    /**
-     * Gets the number of idle apim connections.
-     * 
-     * @return Returns the number of idle apim connections.
-     */
-    @ManagedAttribute(description = "The number of idle apim connections.")
-    public int getApimPoolNumIdle() {
-
-        return apimPool.getNumIdle();
-    }
-
-    /**
-     * Clears the pool of apim connections.
-     */
-    @ManagedOperation(description = "Clear the pool of apim connections.")
-    void clearApimPool() {
-
-        apimPool.clear();
-    }
-
-    /**
-     * Gets the number of active fedora clients.
-     * 
-     * @return Returns the number of active fedora clients.
-     */
-    @ManagedAttribute(description = "The number of active fedora clients.")
-    public int getFedoraClientPoolNumActive() {
-
-        return fedoraClientPool.getNumActive();
-    }
-
-    /**
-     * Gets the number of idle fedora clients.
-     * 
-     * @return Returns the number of idle fedora clients.
-     */
-    @ManagedAttribute(description = "The number of idle fedora clients.")
-    public int getFedoraClientPoolNumIdle() {
-
-        return fedoraClientPool.getNumIdle();
-    }
-
-    /**
-     * Clears the pool of fedora clients.
-     */
-    @ManagedOperation(description = "Clear the pool of fedora clients.")
-    public void clearFedoraClientPool() {
-
-        fedoraClientPool.clear();
-    }
-
     /**
      * The method fetches the {@link MIMETypedStream} of the datastream with provided data stream id from Fedora-object
      * with provided pid via Fedora APIA-Webservice getDatastreamDissemination().
@@ -289,7 +172,7 @@ public class FedoraUtility {
             // Workaround
             LOGGER.warn("APIA getDatastreamWithMimeType(..) " + e);
             invalidateApiaObject(apia);
-            clearApimPool();
+            apimPool.clear();
             apia = borrowApia();
             try {
                 return apia.getDatastreamDissemination(pid, dataStreamId, timestamp);
@@ -307,35 +190,6 @@ public class FedoraUtility {
         }
         finally {
             returnApia(apia);
-        }
-    }
-
-    /**
-     * Purge all versions of datastreams between timestamps.
-     * 
-     * @param pid
-     *            Fedora pid
-     * @param datastreamName
-     *            Fedora datastream name
-     * @param startDT
-     *            Start timestamp. Use null for newest.
-     * @param endDT
-     *            End timestamp. Use null for oldest.
-     * @throws FedoraSystemException
-     *             Thrown if purging failed by Fedora
-     */
-    public void purgeDatastream(final String pid, final String datastreamName, final String startDT, final String endDT)
-        throws FedoraSystemException {
-
-        final FedoraAPIM apim = borrowApim();
-        try {
-            apim.purgeDatastream(pid, datastreamName, startDT, endDT, "datastream purged", false);
-        }
-        catch (final Exception e) {
-            throw new FedoraSystemException("Failed to purge Fedora datastream.", e);
-        }
-        finally {
-            returnApim(apim);
         }
     }
 
@@ -464,7 +318,7 @@ public class FedoraUtility {
                 LOGGER.debug("Error on APIM getDatastreams(..)", e);
             }
             invalidateApimObject(apim);
-            clearApimPool();
+            apimPool.clear();
             apim = borrowApim();
             try {
                 datastreams = apim.getDatastreams(pid, timestamp, null);
