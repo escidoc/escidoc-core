@@ -9,9 +9,14 @@
 
     <cxf:bus>
         <cxf:features>
-            <cxf:logging/>
+            <ref bean="compressGZIPFeature"/>
+            <ref bean="loggingFeature"/>
         </cxf:features>
     </cxf:bus>
+
+    <bean id="compressGZIPFeature" class="org.apache.cxf.transport.http.gzip.GZIPFeature"/>
+
+    <bean id="loggingFeature" name="org.apache.cxf.feature.LoggingFeature"/>
 
     <bean name="jaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
         <property name="enableBuffering" value="true"/>
