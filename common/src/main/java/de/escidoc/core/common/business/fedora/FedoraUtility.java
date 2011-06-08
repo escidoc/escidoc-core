@@ -77,8 +77,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.NotWritablePropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jmx.export.annotation.ManagedAttribute;
-import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 import de.escidoc.core.common.business.Constants;
@@ -94,7 +92,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * 
  * @author Rozita Friedman
  */
-@ManagedResource(objectName = "eSciDocCore:name=FedoraUtility", description = "The utility class to access the fedora repository.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
+@ManagedResource(objectName = "eSciDocCore:name=FedoraUtility",
+    description = "The utility class to access the fedora repository.", log = true, logFile = "jmx.log",
+    currencyTimeLimit = 15)
 public class FedoraUtility {
 
     public static final int SYNC_RETRIES = 10;
@@ -148,16 +148,19 @@ public class FedoraUtility {
     private Utility utility;
 
     /**
-     * The method fetches the {@link MIMETypedStream} of the datastream with provided data stream id from Fedora-object
-     * with provided pid via Fedora APIA-Webservice getDatastreamDissemination().
+     * The method fetches the {@link MIMETypedStream} of the datastream with
+     * provided data stream id from Fedora-object with provided pid via Fedora
+     * APIA-Webservice getDatastreamDissemination().
      * 
      * @param dataStreamId
      *            The id of the datastream.
      * @param pid
      *            The Fedora object id.
      * @param timestamp
-     *            Timestamp related to datastream version to retrieve. May be null.
-     * @return Returns the {@link MIMETypedStream} representing the addressed datastream.
+     *            Timestamp related to datastream version to retrieve. May be
+     *            null.
+     * @return Returns the {@link MIMETypedStream} representing the addressed
+     *         datastream.
      * @throws FedoraSystemException
      *             Thrown in case of Fedora exceptions.
      */
@@ -194,7 +197,8 @@ public class FedoraUtility {
     }
 
     /**
-     * Get the names of data streams selected by alternateId. Only the first value of the altIds is compared.
+     * Get the names of data streams selected by alternateId. Only the first
+     * value of the altIds is compared.
      * 
      * @param pid
      *            The id of the Fedora object.
@@ -273,11 +277,13 @@ public class FedoraUtility {
     }
 
     /**
-     * The method retrieves metadata for all datastreams of the fedora object with provided id as Array.
+     * The method retrieves metadata for all datastreams of the fedora object
+     * with provided id as Array.
      * 
      * @param pid
      *            provided id
-     * @return Fedora information set about all datastreams of the requested object.
+     * @return Fedora information set about all datastreams of the requested
+     *         object.
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
@@ -286,12 +292,14 @@ public class FedoraUtility {
     }
 
     /**
-     * The method retrieves metadata for all datastreams of the fedora object with provided id as Array.
+     * The method retrieves metadata for all datastreams of the fedora object
+     * with provided id as Array.
      * 
      * @param pid
      *            provided id
      * @param timestamp
-     *            Timestamp related to datastream version to retrieve. May be null.
+     *            Timestamp related to datastream version to retrieve. May be
+     *            null.
      * @return metadata of datastreams.
      * @throws FedoraSystemException
      *             Thrown if Fedora request failed.
@@ -360,34 +368,8 @@ public class FedoraUtility {
     }
 
     /**
-     * The method retrieves history of a datastream.
-     * 
-     * @param pid
-     *            Fedora object id
-     * @param dsID
-     *            ID of the datastream
-     * @return history of datastream.
-     * @throws FedoraSystemException
-     *             Thrown if Fedora request failed.
-     */
-    public Datastream[] getDatastreamHistory(final String pid, final String dsID) throws FedoraSystemException {
-        Datastream[] datastreams = null;
-        final FedoraAPIM apim = borrowApim();
-        try {
-            datastreams = apim.getDatastreamHistory(pid, dsID);
-        }
-        catch (final RemoteException e) {
-            throw new FedoraSystemException(e.toString(), e);
-        }
-        finally {
-            returnApim(apim);
-        }
-        return datastreams;
-    }
-
-    /**
-     * Send a risearch request to fedora repository with flag flush set to true. Call reinialize() in order to reset a
-     * Table Manager for the Triple Store.
+     * Send a risearch request to fedora repository with flag flush set to true.
+     * Call reinialize() in order to reset a Table Manager for the Triple Store.
      * 
      * @throws FedoraSystemException
      *             Thrown if TripleStore synchronization failed.
@@ -405,10 +387,10 @@ public class FedoraUtility {
             }
             tripleStoreUtility.reinitialize();
         }
-        catch (TripleStoreSystemException tse) {
+        catch (final TripleStoreSystemException tse) {
             throw new WebserverSystemException(tse);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         finally {
@@ -579,15 +561,16 @@ public class FedoraUtility {
     }
 
     /**
-     * Converts an exception thrown during a pool operation to a {@link FedoraSystemException}.
+     * Converts an exception thrown during a pool operation to a
+     * {@link FedoraSystemException}.
      * 
      * @param e
      *            The {@link Exception} to be converted.
      * @return Returns the {@link FedoraSystemException}
      */
     private static FedoraSystemException convertPoolException(final Exception e) {
-        return e instanceof FedoraSystemException ? (FedoraSystemException) e : new FedoraSystemException(e
-            .getMessage(), e);
+        return e instanceof FedoraSystemException ? (FedoraSystemException) e : new FedoraSystemException(
+            e.getMessage(), e);
     }
 
     @PostConstruct
@@ -639,9 +622,11 @@ public class FedoraUtility {
     }
 
     /**
-     * Returns a HttpClient object configured with credentials to access Fedora URLs.
+     * Returns a HttpClient object configured with credentials to access Fedora
+     * URLs.
      * 
-     * @return A HttpClient object configured with credentials to access Fedora URLs.
+     * @return A HttpClient object configured with credentials to access Fedora
+     *         URLs.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     DefaultHttpClient getHttpClient() throws WebserverSystemException {
@@ -711,7 +696,8 @@ public class FedoraUtility {
      * Makes a HTTP GET request to Fedora URL expanded by given local URL.
      * 
      * @param localUrl
-     *            The Fedora local URL. Should start with the '/' after the webcontext path (usually "fedora"). E.g. if
+     *            The Fedora local URL. Should start with the '/' after the
+     *            webcontext path (usually "fedora"). E.g. if
      *            http://localhost:8080/fedora/get/... then localUrl is /get/...
      * @return the content of the URL Request.
      * @throws WebserverSystemException
@@ -802,9 +788,10 @@ public class FedoraUtility {
     /**
      * FIXME (SWA) crud, crud, crud!
      * <p/>
-     * This should only prevent to write the FoXML into log if the resource URL is wrong or resource in in accessible.
-     * If the exception is required as Fedora Exception or not, like in the case of Components, is decided in the upper
-     * methods.
+     * This should only prevent to write the FoXML into log if the resource URL
+     * is wrong or resource in in accessible. If the exception is required as
+     * Fedora Exception or not, like in the case of Components, is decided in
+     * the upper methods.
      * 
      * @param e
      *            Exception
