@@ -146,55 +146,6 @@ public class FedoraUtility {
     private Utility utility;
 
     /**
-     * The method fetches the {@link MIMETypedStream} of the datastream with
-     * provided data stream id from Fedora-object with provided pid via Fedora
-     * APIA-Webservice getDatastreamDissemination().
-     * 
-     * @param dataStreamId
-     *            The id of the datastream.
-     * @param pid
-     *            The Fedora object id.
-     * @param timestamp
-     *            Timestamp related to datastream version to retrieve. May be
-     *            null.
-     * @return Returns the {@link MIMETypedStream} representing the addressed
-     *         datastream.
-     * @throws FedoraSystemException
-     *             Thrown in case of Fedora exceptions.
-     */
-    public MIMETypedStream getDatastreamWithMimeType(final String dataStreamId, final String pid, final String timestamp)
-        throws FedoraSystemException {
-
-        FedoraAPIA apia = borrowApia();
-        try {
-            return apia.getDatastreamDissemination(pid, dataStreamId, timestamp);
-        }
-        catch (final RemoteException e) {
-            // Workaround
-            LOGGER.warn("APIA getDatastreamWithMimeType(..) " + e);
-            invalidateApiaObject(apia);
-            apimPool.clear();
-            apia = borrowApia();
-            try {
-                return apia.getDatastreamDissemination(pid, dataStreamId, timestamp);
-            }
-            catch (final RemoteException e1) {
-                final String message =
-                    "Error on retrieve datastream (pid='" + pid + "', dataStreamId='" + dataStreamId + "', timestamp='"
-                        + timestamp + "') ";
-                LOGGER.warn(message);
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug(message, e1);
-                }
-                throw new FedoraSystemException(message, e);
-            }
-        }
-        finally {
-            returnApia(apia);
-        }
-    }
-
-    /**
      * Get the names of data streams selected by alternateId. Only the first
      * value of the altIds is compared.
      * 
