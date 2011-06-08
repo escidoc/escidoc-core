@@ -9,12 +9,12 @@
 
     <cxf:bus>
         <cxf:features>
-            <ref bean="compressGZIPFeature"/>
+            <!--ref bean="compressGZIPFeature"/-->
             <ref bean="loggingFeature"/>
         </cxf:features>
     </cxf:bus>
 
-    <bean id="compressGZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature"/>
+    <!--bean id="compressGZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature"/-->
 
     <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature"/>
 
