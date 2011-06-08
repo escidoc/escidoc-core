@@ -457,6 +457,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final Stream addStream = new Stream();
         try {
             addStream.write(escidocRelsExtWithWrongLmd.getBytes(XmlUtility.CHARACTER_ENCODING));
+            addStream.lock();
         }
         catch (final IOException e) {
             throw new WebserverSystemException(e);
@@ -492,6 +493,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final Stream addStreamVH = new Stream();
         try {
             addStreamVH.write(wov.getBytes(XmlUtility.CHARACTER_ENCODING));
+            addStreamVH.lock();
         }
         catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
@@ -514,6 +516,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final Stream stream = new Stream();
         try {
             stream.write(relsExtNew.getBytes(XmlUtility.CHARACTER_ENCODING));
+            stream.lock();
         }
         catch (final IOException e) {
             throw new WebserverSystemException(e);

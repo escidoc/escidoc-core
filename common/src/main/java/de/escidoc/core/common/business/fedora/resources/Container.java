@@ -366,6 +366,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
                 final Stream stream = new Stream();
                 try {
                     stream.write(currentMdRecord.getStream());
+                    stream.lock();
                 }
                 catch (final IOException e) {
                     throw new WebserverSystemException(e);

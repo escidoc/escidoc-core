@@ -677,6 +677,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         final Stream stream = new Stream();
         try {
             stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
+            stream.lock();
         }
         catch (final IOException e) {
             throw new WebserverSystemException(e);
@@ -736,6 +737,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         final Stream stream = new Stream();
         try {
             stream.write(content);
+            stream.lock();
         }
         catch (final IOException e) {
             throw new WebserverSystemException(e);
@@ -774,6 +776,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         final Stream stream = new Stream();
         try {
             stream.write(content);
+            stream.lock();
         }
         catch (final IOException e) {
             throw new WebserverSystemException(e);

@@ -868,6 +868,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 final Stream stream = new Stream();
                 try {
                     stream.write(((ByteArrayOutputStream) streams.get(name)).toByteArray());
+                    stream.lock();
                 }
                 catch (IOException e) {
                     throw new WebserverSystemException(e);

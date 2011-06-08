@@ -209,6 +209,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         final Stream addStream = new Stream();
         try {
             addStream.write(getWov().getBytes(XmlUtility.CHARACTER_ENCODING));
+            addStream.lock();
         }
         catch (final IOException e) {
             throw new WebserverSystemException(e);

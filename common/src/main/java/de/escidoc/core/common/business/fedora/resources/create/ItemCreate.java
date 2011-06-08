@@ -284,6 +284,7 @@ public class ItemCreate extends GenericResourceCreate {
             addQueryVH.setVersionable(false);
             final Stream addStreamVH = new Stream();
             addStreamVH.write(getWov().getBytes(XmlUtility.CHARACTER_ENCODING));
+            addStreamVH.lock();
 
             this.fedoraServiceClient.addDatastream(addPathVH, addQueryVH, addStreamVH);
 
@@ -296,6 +297,7 @@ public class ItemCreate extends GenericResourceCreate {
             final Stream stream = new Stream();
             try {
                 stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
+                stream.lock();
             }
             catch (final IOException e) {
                 throw new WebserverSystemException(e);
