@@ -67,15 +67,6 @@
       </includes>
     </fileSet>
 
-    <!-- wsdls -->
-    <fileSet>
-      <directory>${project.basedir}/../integration-tests/target</directory>
-      <outputDirectory>/wsdl</outputDirectory>
-      <includes>
-        <include>*.wsdl</include>
-      </includes>
-    </fileSet>
-
     <!-- DOC -->
     <fileSet>
       <directory>${project.build.directory}/site/technical-documentation/pdf</directory>
