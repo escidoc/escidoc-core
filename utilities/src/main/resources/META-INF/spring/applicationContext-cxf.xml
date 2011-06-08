@@ -16,7 +16,7 @@
 
     <bean id="compressGZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature"/>
 
-    <bean id="loggingFeature" name="org.apache.cxf.feature.LoggingFeature"/>
+    <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature"/>
 
     <bean name="jaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
         <property name="enableBuffering" value="true"/>
