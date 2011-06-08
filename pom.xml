@@ -472,6 +472,7 @@
 						${basedir}/statistic-service-impl/src/main/java${path.separator}
 						${basedir}/statistic-service-spec/src/main/java${path.separator}
 						${basedir}/tme/src/main/java
+						${basedir}/utilities/src/main/java
           </sourcepath>
 
 					<quiet>true</quiet>
@@ -794,6 +795,46 @@
 								<artifactId>java-getopt</artifactId>
 							</exclusion>
 						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>joda-time</groupId>
+						<artifactId>joda-time</artifactId>
+						<version>1.6.2</version>
+					</dependency>
+					<dependency>
+						<groupId>sun-xacml</groupId>
+						<artifactId>sun-xacml</artifactId>
+						<version>1.0</version>
+					</dependency>
+					<dependency>
+						<groupId>com.googlecode.ehcache-spring-annotations</groupId>
+						<artifactId>ehcache-spring-annotations</artifactId>
+						<version>1.1.2</version>
+					</dependency>
+					<dependency>
+						<groupId>commons-pool</groupId>
+						<artifactId>commons-pool</artifactId>
+						<version>1.5.6</version>
+					</dependency>
+					<dependency>
+						<groupId>net.sf.oval</groupId>
+						<artifactId>oval</artifactId>
+						<version>1.70</version>
+					</dependency>
+					<dependency>
+						<groupId>javax.validation</groupId>
+						<artifactId>validation-api</artifactId>
+						<version>1.0.0.GA</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.cxf</groupId>
+						<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+						<version>${cxf.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-core</artifactId>
+						<version>${hibernate.version}</version>
 					</dependency>
 				</dependencies>
 				<executions>
