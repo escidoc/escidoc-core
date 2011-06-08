@@ -14,7 +14,7 @@
         </cxf:features>
     </cxf:bus>
 
-    <bean id="compressGZIPFeature" class="org.apache.cxf.transport.http.gzip.GZIPFeature"/>
+    <bean id="compressGZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature"/>
 
     <bean id="loggingFeature" name="org.apache.cxf.feature.LoggingFeature"/>
 
