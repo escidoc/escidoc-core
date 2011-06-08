@@ -732,7 +732,7 @@
       <param name="element" expression="${element}" />
       <param name="title" expression="${title}" />
       <param name="schemaLocationBase" expression="${escidoc.schemaLocation.base}" />
-      <param name="schemaLocationBaseReplacement" expression="http://${escidoc.server.name}:${escidoc.server.port}${escidoc.xsd.path}" />
+      <param name="schemaLocationBaseReplacement" expression="http://${escidoc.server.name}:${jetty.port}${escidoc.xsd.path}" />
     </xslt>
   </target>
 
@@ -745,7 +745,7 @@
   <target name="xslt-api-transformation">
     <xslt in="${input-filename}" out="${output-filename}" extension="${extension}" style="${xslt.stylesheet}" force="true">
       <param name="schemaLocationBase" expression="${escidoc.schemaLocation.base}" />
-      <param name="schemaLocationBaseReplacement" expression="http://${escidoc.server.name}:${escidoc.server.port}${escidoc.xsd.path}" />
+      <param name="schemaLocationBaseReplacement" expression="http://${escidoc.server.name}:${jetty.port}${escidoc.xsd.path}" />
     </xslt>
   </target>
 

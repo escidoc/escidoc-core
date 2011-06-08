@@ -826,61 +826,61 @@
 				<artifactId>maven-site-plugin</artifactId>
 				<inherited>false</inherited>
 			</plugin>
-<!-- 			<plugin> -->
-<!--         <groupId>org.apache.maven.plugins</groupId> -->
-<!--         <artifactId>maven-resources-plugin</artifactId> -->
-<!-- 				<inherited>false</inherited> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>copy-resources</id> -->
-<!-- 						<phase>validate</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>copy-resources</goal> -->
-<!-- 						</goals> -->
-<!-- 						<configuration> -->
-<!-- 							<outputDirectory>${basedir}/target/site/xsd</outputDirectory> -->
-<!-- 							<resources> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/aa/src/main/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/adm/src/main/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/cmm/src/main/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/common/src/main/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/escidoc-core.war/src/main/webapp/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/oai/src/main/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/om/src/main/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/oum/src/main/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/sb/src/main/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/sm/src/main/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/st/src/main/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 								<resource> -->
-<!-- 									<directory>${basedir}/tme/src/main/xsd</directory> -->
-<!-- 								</resource> -->
-<!-- 							</resources> -->
-<!-- 						</configuration> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
+ 			<plugin> 
+				<groupId>org.apache.maven.plugins</groupId> 
+				<artifactId>maven-resources-plugin</artifactId> 
+ 				<inherited>false</inherited> 
+ 				<executions> 
+ 					<execution> 
+ 						<id>copy-resources</id> 
+ 						<phase>validate</phase> 
+ 						<goals> 
+ 							<goal>copy-resources</goal> 
+ 						</goals> 
+ 						<configuration> 
+ 							<outputDirectory>${basedir}/target/site/xsd</outputDirectory> 
+ 							<resources> 
+ 								<resource> 
+ 									<directory>${basedir}/aa/src/main/xsd</directory> 
+ 								</resource> 
+ 								<resource> 
+ 									<directory>${basedir}/adm/src/main/xsd</directory> 
+ 								</resource> 
+ 								<resource> 
+ 									<directory>${basedir}/cmm/src/main/xsd</directory> 
+ 								</resource> 
+ 								<resource> 
+ 									<directory>${basedir}/common/src/main/xsd</directory> 
+ 								</resource> 
+ 								<resource> 
+ 									<directory>${basedir}/escidoc-core.war/src/main/webapp/xsd</directory> 
+ 								</resource> 
+ 								<resource> 
+ 									<directory>${basedir}/oai/src/main/xsd</directory> 
+ 								</resource> 
+ 								<resource> 
+ 									<directory>${basedir}/om/src/main/xsd</directory> 
+ 								</resource> 
+ 								<resource> 
+ 									<directory>${basedir}/oum/src/main/xsd</directory> 
+ 								</resource> 
+ 								<resource> 
+ 									<directory>${basedir}/sb/src/main/xsd</directory> 
+ 								</resource> 
+ 								<resource> 
+ 									<directory>${basedir}/sm/src/main/xsd</directory> 
+ 								</resource> 
+ 								<resource> 
+ 									<directory>${basedir}/st/src/main/xsd</directory> 
+ 								</resource> 
+ 								<resource> 
+ 									<directory>${basedir}/tme/src/main/xsd</directory> 
+ 								</resource> 
+ 							</resources> 
+ 						</configuration> 
+ 					</execution> 
+ 				</executions> 
+ 			</plugin> 
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
@@ -896,7 +896,7 @@
 							<daemon>true</daemon>
 							<connectors>
 								<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-									<port>9090</port>
+									<port>${jetty.port}</port>
 									<maxIdleTime>60000</maxIdleTime>
 								</connector>
 							</connectors>
@@ -1117,6 +1117,8 @@
 		<fedora.database.default.tablespace>fedora</fedora.database.default.tablespace>
 		<triplestore.oracle.database>oraesci01</triplestore.oracle.database>
 		<triplestore.database.default.tablespace>triples</triplestore.database.default.tablespace>
+
+		<jetty.port>9090</jetty.port>
 		
 		<!-- DATABASE SWITCH SETTINGS -->
     <escidoc.postgres.jdbc.artifactId>postgresql</escidoc.postgres.jdbc.artifactId>
