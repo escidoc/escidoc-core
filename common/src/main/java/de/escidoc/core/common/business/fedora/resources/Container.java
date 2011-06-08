@@ -444,8 +444,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
                                 final Datastream dcNew;
                                 try {
                                     dcNew =
-                                        new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                                        new Datastream("DC", getId(),
+                                            dcNewContent.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
@@ -726,8 +726,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
     public Datastream getDc() throws StreamNotFoundException, FedoraSystemException {
         if (this.dc == null) {
             try {
-                final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
-                final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
+                final DateTime versionDate = new DateTime(getVersionDate()).withZone(DateTimeZone.UTC);
                 this.dc = new Datastream(Datastream.DC_DATASTREAM, getId(), versionDate);
             }
             catch (final WebserverSystemException e) {
