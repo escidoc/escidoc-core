@@ -13,6 +13,3 @@ escidoc-core.ear/escidoc-core.war/WEB-INF/web.xml:
 	in AABeanInitServlet die services eintragen
 
 -Policies updaten: neue Methoden in actions, method-mappings, invocation-mappings + policies eintragen
-	
--Testprojekt:
-antcall wsdl2java in src/bin/build-axis f�r den Handler eintragen
