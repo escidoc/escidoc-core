@@ -44,8 +44,6 @@ import org.esidoc.core.utils.io.Stream;
 import org.esidoc.core.utils.xml.DateTimeJaxbConverter;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -387,8 +385,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
             // retrieve from fedora and add to map
             final Datastream ds;
             try {
-                final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
-                final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
+                final DateTime versionDate = DateTimeJaxbConverter.parseDate(getVersionDate());
                 ds = new Datastream(name, getId(), versionDate);
             }
             catch (final WebserverSystemException e) {
@@ -511,8 +508,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
                     setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), null));
                 }
                 else {
-                    final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(Constants.TIMESTAMP_FORMAT);
-                    final DateTime versionDate = dateTimeFormatter.parseDateTime(getVersionDate());
+                    final DateTime versionDate = DateTimeJaxbConverter.parseDate(getVersionDate());
                     setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), versionDate));
                 }
             }

@@ -23,8 +23,28 @@
  */
 package de.escidoc.core.common.business.fedora.resources.item;
 
+import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.escidoc.core.services.fedora.UpdateObjectPathParam;
+import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.esidoc.core.utils.xml.DateTimeJaxbConverter;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
+
 import de.escidoc.core.common.business.fedora.Constants;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.Triple;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.GenericResourcePid;
@@ -48,34 +68,10 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlItemFoXmlRenderer;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
-import org.escidoc.core.services.fedora.UpdateObjectPathParam;
-import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import javax.annotation.PostConstruct;
-import java.io.ByteArrayInputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * Component resource of eSciDoc.
- *
+ * 
  * @author Frank Schwichtenberg
  */
 @Configurable(preConstruction = true)
@@ -96,13 +92,19 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     private ItemFoXmlRendererInterface foxmlRenderer;
 
     /**
-     * Constructs the Component with the specified id from the Repository. The datastreams are instantiated and
-     * retrieved if the related getter is called.
-     *
-     * @param id        The id of an item managed in Fedora.
-     * @param parentId  The id of the parent object.
-     * @param timestamp The timestamp which specifies the version of the datastreams to retrieve.
-     * @throws ResourceNotFoundException Thrown if the Component resource was not found.
+     * Constructs the Component with the specified id from the Repository. The
+     * datastreams are instantiated and retrieved if the related getter is
+     * called.
+     * 
+     * @param id
+     *            The id of an item managed in Fedora.
+     * @param parentId
+     *            The id of the parent object.
+     * @param timestamp
+     *            The timestamp which specifies the version of the datastreams
+     *            to retrieve.
+     * @throws ResourceNotFoundException
+     *             Thrown if the Component resource was not found.
      */
     public Component(final String id, final String parentId, final String timestamp) throws ResourceNotFoundException,
         ItemNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
@@ -125,8 +127,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     /**
      * Init all Datastreams of the Component.
-     *
-     * @throws FedoraSystemException Thrown if access to Repository or retrieve failed.
+     * 
+     * @throws FedoraSystemException
+     *             Thrown if access to Repository or retrieve failed.
      */
     private void initDatastreams() throws FedoraSystemException {
 
@@ -146,12 +149,13 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             final String location = datastreamInfo.getLocation();
 
             final Datastream ds;
+            DateTime parentVersionDate = null;
+            if(this.parentVersionDate != null) {
+                parentVersionDate = DateTimeJaxbConverter.parseDate(this.parentVersionDate);
+            }
+            
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
-                final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                        DateTimeZone.UTC);
-                final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
                 ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
@@ -160,10 +164,6 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             else {
                 // RELS-EXT
                 if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
-                    final DateTimeFormatter dateTimeFormatter =
-                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                            DateTimeZone.UTC);
-                    final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
                     ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
@@ -171,10 +171,6 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 }
                 // DC
                 else if ("DC".equals(name)) {
-                    final DateTimeFormatter dateTimeFormatter =
-                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                            DateTimeZone.UTC);
-                    final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
                     ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
@@ -182,10 +178,6 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 }
                 // content
                 else if ("content".equals(name)) {
-                    final DateTimeFormatter dateTimeFormatter =
-                        DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                            DateTimeZone.UTC);
-                    final DateTime parentVersionDate = dateTimeFormatter.parseDateTime(this.parentVersionDate);
                     ds =
                         new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue,
                             datastreamInfo.getChecksumType(), datastreamInfo.getChecksum());
@@ -202,11 +194,15 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     }
 
     /**
-     * Retrieving some values from Fedora & TripleStore and keep it in internal HashMap.
-     *
-     * @throws TripleStoreSystemException Thrown if request to TripleStore failed.
-     * @throws XmlParserSystemException   Thrown if parsing of RELS-EXT failed.
-     * @throws WebserverSystemException   Thrown if request to TripleStore failed.
+     * Retrieving some values from Fedora & TripleStore and keep it in internal
+     * HashMap.
+     * 
+     * @throws TripleStoreSystemException
+     *             Thrown if request to TripleStore failed.
+     * @throws XmlParserSystemException
+     *             Thrown if parsing of RELS-EXT failed.
+     * @throws WebserverSystemException
+     *             Thrown if request to TripleStore failed.
      */
     private void getSomeValuesFromFedora() throws TripleStoreSystemException, WebserverSystemException,
         XmlParserSystemException {
@@ -251,7 +247,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     /**
      * Get Content as Stream.
-     *
+     * 
      * @return content
      */
     public Datastream getContent() {
@@ -449,8 +445,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                                 final Datastream dcNew;
                                 try {
                                     dcNew =
-                                        new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                                        new Datastream("DC", getId(),
+                                            dcNewContent.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
@@ -531,8 +527,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     /**
      * @return the href
-     * @deprecated This href does not contain the items version number. Use Item.getHref() + Component.getHrefPart()
-     *             instead.
+     * @deprecated This href does not contain the items version number. Use
+     *             Item.getHref() + Component.getHrefPart() instead.
      */
     @Override
     @Deprecated
@@ -548,13 +544,16 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     }
 
     /**
-     * Set the Component properties. ! Side effect: the RELS-EXT of the Component is updated with the new obtained
-     * values.
+     * Set the Component properties. ! Side effect: the RELS-EXT of the
+     * Component is updated with the new obtained values.
      * <p/>
-     * Once meant as setter-like method. Compare to setMdRecord, setMdRecords, setContent (FRS).
-     *
-     * @param xml    The XML with properties section of Component.
-     * @param itemId The id of the Item.
+     * Once meant as setter-like method. Compare to setMdRecord, setMdRecords,
+     * setContent (FRS).
+     * 
+     * @param xml
+     *            The XML with properties section of Component.
+     * @param itemId
+     *            The id of the Item.
      * @return Map of Component properties.
      */
     public Map<String, String> setProperties(final String xml, final String itemId) throws InvalidContentException,
@@ -594,9 +593,10 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     /**
      * Obtains values from RelsExt.
-     *
+     * 
      * @return map with predictate and objects
-     * @throws XmlParserSystemException Thrown if parse of RELS-EXT failed.
+     * @throws XmlParserSystemException
+     *             Thrown if parse of RELS-EXT failed.
      */
     private Map<String, String> obtainRelsExtValues() throws XmlParserSystemException {
 

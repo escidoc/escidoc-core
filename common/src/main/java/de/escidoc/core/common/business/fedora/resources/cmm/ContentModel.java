@@ -20,10 +20,30 @@
 
 package de.escidoc.core.common.business.fedora.resources.cmm;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.esidoc.core.utils.io.MimeTypes;
+import org.esidoc.core.utils.xml.DateTimeJaxbConverter;
+import org.fcrepo.server.types.gen.DatastreamControlGroup;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.GenericVersionableResourcePid;
 import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitionCreate;
@@ -42,33 +62,11 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.DcReadHandler;
 import de.escidoc.core.common.util.stax.handler.cmm.DsCompositeModelHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.fcrepo.server.types.gen.DatastreamControlGroup;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Configurable;
-
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 /**
- * Implementation of an eSciDoc Content Model Object which consist of datastreams managed in Fedora Digital Repository
- * System.
- *
+ * Implementation of an eSciDoc Content Model Object which consist of
+ * datastreams managed in Fedora Digital Repository System.
+ * 
  * @author Frank Schwichtenberg
  */
 @Configurable(preConstruction = true)
@@ -89,18 +87,26 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentModel.class);
 
     /**
-     * Constructs the Content Model with the specified id. The datastreams are instantiated and retrieved if the related
-     * getter is called.
-     *
-     * @param id The ID of the Content Model.
-     * @throws WebserverSystemException   If an error occurs.
-     * @throws FedoraSystemException      If an error occurs accessing Fedora.
-     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
-     * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
-     * @throws StreamNotFoundException    If a specific datastream can not be found.
-     * @throws ResourceNotFoundException  If an object with the specified ID can not be found. If there is such an
-     *                                    object but this object is no Content Model a ContentModelNotFoundException is
-     *                                    thrown.
+     * Constructs the Content Model with the specified id. The datastreams are
+     * instantiated and retrieved if the related getter is called.
+     * 
+     * @param id
+     *            The ID of the Content Model.
+     * @throws WebserverSystemException
+     *             If an error occurs.
+     * @throws FedoraSystemException
+     *             If an error occurs accessing Fedora.
+     * @throws TripleStoreSystemException
+     *             If an error occurs accessing the triplestore.
+     * @throws IntegritySystemException
+     *             Thrown if there is an integrity error with the addressed
+     *             object.
+     * @throws StreamNotFoundException
+     *             If a specific datastream can not be found.
+     * @throws ResourceNotFoundException
+     *             If an object with the specified ID can not be found. If there
+     *             is such an object but this object is no Content Model a
+     *             ContentModelNotFoundException is thrown.
      * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
      */
     public ContentModel(final String id) throws TripleStoreSystemException, WebserverSystemException,
@@ -125,10 +131,12 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
     /**
      * See Interface for functional description.
-     *
+     * 
      * @return resource properties.
-     * @throws TripleStoreSystemException Thrown if TripleStore request failed.
-     * @throws WebserverSystemException   Thrown in case of internal failure.
+     * @throws TripleStoreSystemException
+     *             Thrown if TripleStore request failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal failure.
      */
     @Override
     public Map<String, String> getResourceProperties() throws TripleStoreSystemException, WebserverSystemException {
@@ -169,10 +177,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         if (this.dc == null) {
             final Datastream ds;
             try {
-                final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                        DateTimeZone.UTC);
-                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
+                final DateTime versionDate = DateTimeJaxbConverter.parseDate(getVersionDate());
                 ds = new Datastream("DC", getId(), versionDate);
             }
             catch (final StreamNotFoundException e) {
@@ -194,9 +199,10 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
     }
 
     /**
-     * Returns a Map containing all content streams of this content model. The names of the content streams are the keys
-     * in the map. The map is initialized creating this object.
-     *
+     * Returns a Map containing all content streams of this content model. The
+     * names of the content streams are the keys in the map. The map is
+     * initialized creating this object.
+     * 
      * @return The content streams of this content model.
      */
     @Deprecated
@@ -206,8 +212,9 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
     /**
      * Returns the specified content stream of this content model.
-     *
-     * @param name The name of the content stream.
+     * 
+     * @param name
+     *            The name of the content stream.
      * @return The specified content stream of this content model.
      */
     @Deprecated
@@ -217,8 +224,9 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
     /**
      * Returns the specified other stream of this content model.
-     *
-     * @param name The name of the content stream.
+     * 
+     * @param name
+     *            The name of the content stream.
      * @return The specified content stream of this content model.
      */
     public Datastream getOtherStream(final String name) {
@@ -226,15 +234,22 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
     }
 
     /**
-     * Init all content model datastreams. Some are initilized by super classes. (This is faster than init of each
-     * single data stream).
-     *
-     * @param datastreamInfos The Fedora datastream information.
-     * @throws WebserverSystemException   If an error occurs.
-     * @throws FedoraSystemException      If an error occurs accessing Fedora.
-     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
-     * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
-     * @throws StreamNotFoundException    If a specific datastream can not be found.
+     * Init all content model datastreams. Some are initilized by super classes.
+     * (This is faster than init of each single data stream).
+     * 
+     * @param datastreamInfos
+     *            The Fedora datastream information.
+     * @throws WebserverSystemException
+     *             If an error occurs.
+     * @throws FedoraSystemException
+     *             If an error occurs accessing Fedora.
+     * @throws TripleStoreSystemException
+     *             If an error occurs accessing the triplestore.
+     * @throws IntegritySystemException
+     *             Thrown if there is an integrity error with the addressed
+     *             object.
+     * @throws StreamNotFoundException
+     *             If a specific datastream can not be found.
      */
     @Override
     protected final void initDatastreams(final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
@@ -253,32 +268,26 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
             final String location = datastreamInfo.getLocation();
 
             final Datastream ds;
+            final String versionDateString = getVersionDate();
+            DateTime versionDate = null;
+            if(versionDateString != null) {
+                versionDate = DateTimeJaxbConverter.parseDate(versionDateString);
+            }
+            
             if (altIDs.contains("content-stream")) {
                 // found content-stream
-                final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                        DateTimeZone.UTC);
-                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.contentStreams.put(name, ds);
             }
             else if (name.equals(DATASTREAM_DS_COMPOSITE_MODEL)) {
-                final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                        DateTimeZone.UTC);
-                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.dsCompositeModel = ds;
             }
             else if (!(name.equals(Datastream.RELS_EXT_DATASTREAM) || "DC".equals(name) || name.equals(DATASTREAM_WOV))) {
-                final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                        DateTimeZone.UTC);
-                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
@@ -293,11 +302,13 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
     }
 
     /**
-     * Expand a list with names of properties values with the propertiesNames for a versionized resource. These list
-     * could be used to request the TripleStore.
-     *
-     * @param propertiesNames Collection of propertiesNames. The collection contains only the version resource specific
-     *                        propertiesNames.
+     * Expand a list with names of properties values with the propertiesNames
+     * for a versionized resource. These list could be used to request the
+     * TripleStore.
+     * 
+     * @param propertiesNames
+     *            Collection of propertiesNames. The collection contains only
+     *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
@@ -313,11 +324,13 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
     /**
      * Expanding the properties naming map.
-     *
-     * @param propertiesMapping The properties name mapping from external as key and the internal name as value. E.g.
-     *                          with the key "version-status" and "LATEST_VERSION_STATUS" as value is the value of
-     *                          "versin-status" after the mapping accessible with the internal key
-     *                          "LATEST_VERSION_STATUS".
+     * 
+     * @param propertiesMapping
+     *            The properties name mapping from external as key and the
+     *            internal name as value. E.g. with the key "version-status" and
+     *            "LATEST_VERSION_STATUS" as value is the value of
+     *            "versin-status" after the mapping accessible with the internal
+     *            key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
@@ -333,10 +346,12 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
     /**
      * Determines if the resource is in Public Status "withdrawn".
-     *
+     * 
      * @return True if the resource is in status withdrawn. False otherwise.
-     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
-     * @throws WebserverSystemException   If an error occurs.
+     * @throws TripleStoreSystemException
+     *             If an error occurs accessing the triplestore.
+     * @throws WebserverSystemException
+     *             If an error occurs.
      */
     public boolean isWithdrawn() throws TripleStoreSystemException, WebserverSystemException {
 
@@ -345,12 +360,14 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
     }
 
     /**
-     * Determines if the resource is in Public Status "released". That means it is once released but not necessarily the
-     * latest version is released.
-     *
+     * Determines if the resource is in Public Status "released". That means it
+     * is once released but not necessarily the latest version is released.
+     * 
      * @return True if the resource is in status released. False otherwise.
-     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
-     * @throws WebserverSystemException   If an error occurs.
+     * @throws TripleStoreSystemException
+     *             If an error occurs accessing the triplestore.
+     * @throws WebserverSystemException
+     *             If an error occurs.
      */
     public boolean isReleased() throws TripleStoreSystemException, WebserverSystemException {
 
@@ -360,10 +377,12 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
     /**
      * Determines if the resource is in Public Status "pending".
-     *
+     * 
      * @return True if the resource is in status pending. False otherwise.
-     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
-     * @throws WebserverSystemException   If an error occurs.
+     * @throws TripleStoreSystemException
+     *             If an error occurs accessing the triplestore.
+     * @throws WebserverSystemException
+     *             If an error occurs.
      */
     public boolean isPending() throws TripleStoreSystemException, WebserverSystemException {
 
@@ -373,10 +392,12 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
     /**
      * Determines if the resource is in Public Status "in-revision".
-     *
+     * 
      * @return True if the resource is in status in-revision. False otherwise.
-     * @throws TripleStoreSystemException If an error occurs accessing the triplestore.
-     * @throws WebserverSystemException   If an error occurs.
+     * @throws TripleStoreSystemException
+     *             If an error occurs accessing the triplestore.
+     * @throws WebserverSystemException
+     *             If an error occurs.
      */
     public boolean isInRevision() throws TripleStoreSystemException, WebserverSystemException {
 
@@ -588,11 +609,14 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
     /**
      * Persists the whole object to Fedora and force the TripleStore sync.
-     *
-     * @return lastModificationDate of the resource (Attention this timestamp differs from the last-modification
-     *         timestamp of the repository. See Versioning Concept.)
-     * @throws FedoraSystemException    Thrown if connection to Fedora failed.
-     * @throws WebserverSystemException Thrown in case of internal error.
+     * 
+     * @return lastModificationDate of the resource (Attention this timestamp
+     *         differs from the last-modification timestamp of the repository.
+     *         See Versioning Concept.)
+     * @throws FedoraSystemException
+     *             Thrown if connection to Fedora failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal error.
      */
     @Override
     public String persist() throws FedoraSystemException, WebserverSystemException {

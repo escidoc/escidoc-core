@@ -23,6 +23,31 @@
  */
 package de.escidoc.core.common.business.fedora.resources;
 
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.xml.stream.XMLStreamException;
+
+import org.escidoc.core.services.fedora.UpdateObjectPathParam;
+import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.esidoc.core.utils.xml.DateTimeJaxbConverter;
+import org.fcrepo.server.types.gen.DatastreamControlGroup;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -53,36 +78,10 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
-import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
-import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
-import org.escidoc.core.services.fedora.UpdateObjectPathParam;
-import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.fcrepo.server.types.gen.DatastreamControlGroup;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Configurable;
-
-import javax.annotation.PostConstruct;
-import javax.xml.stream.XMLStreamException;
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 /**
- * Implementation of a Fedora Item Object which consist of datastreams managed in Fedora Digital Repository System.
+ * Implementation of a Fedora Item Object which consist of datastreams managed
+ * in Fedora Digital Repository System.
  * 
  * @author Frank Schwichtenberg
  */
@@ -107,15 +106,16 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     private boolean resourceInit;
 
     /**
-     * Constructs the Item with the specified id. The datastreams are instantiated and retrieved if the related getter
-     * is called.
+     * Constructs the Item with the specified id. The datastreams are
+     * instantiated and retrieved if the related getter is called.
      * 
      * @param id
      *            The id of an item managed in Fedora.
      * @throws StreamNotFoundException
      *             Thrown if data streams of Item object was not found.
      * @throws IntegritySystemException
-     *             Thrown if there is an integrity error with the addressed object.
+     *             Thrown if there is an integrity error with the addressed
+     *             object.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -153,7 +153,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Add a Component to the Item.
      * 
      * @param c
-     *            The new Component. (The Component has not to be (but could) persist, this is done with with the Item.)
+     *            The new Component. (The Component has not to be (but could)
+     *            persist, this is done with with the Item.)
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -171,7 +172,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Add a Component by id to the Item.
      * 
      * @param componentId
-     *            This has to be a persistent Component. This Component has already to exists within the repository!
+     *            This has to be a persistent Component. This Component has
+     *            already to exists within the repository!
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -272,8 +274,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     }
 
     /**
-     * @return A map which contains unique 'content-category' entries associated with a component object. May be used
-     *         for other identifications which are possibly unique in item scope.
+     * @return A map which contains unique 'content-category' entries associated
+     *         with a component object. May be used for other identifications
+     *         which are possibly unique in item scope.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
@@ -412,17 +415,16 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource #getRelsExt()
+     * @see
+     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
+     * #getRelsExt()
      */
     public Datastream getDc() throws FedoraSystemException, WebserverSystemException {
 
         if (this.dc == null) {
             final Datastream ds;
             try {
-                final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                        DateTimeZone.UTC);
-                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
+                final DateTime versionDate = DateTimeJaxbConverter.parseDate(getVersionDate());
                 ds = new Datastream("DC", getId(), versionDate);
             }
             catch (final StreamNotFoundException e) {
@@ -441,7 +443,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
+     * @see
+     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     public void setDc(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
@@ -463,7 +466,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource #getGenericProperties()
+     * @see
+     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
+     * #getGenericProperties()
      */
     public Datastream getCts() {
         return this.cts;
@@ -510,7 +515,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource #setMdRecords(java.util.HashMap)
+     * @see
+     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
+     * #setMdRecords(java.util.HashMap)
      */
     @Override
     public void setMdRecords(final Map<String, Datastream> mdRecords) throws WebserverSystemException,
@@ -560,7 +567,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource #getMdRecord(java.lang.String)
+     * @see
+     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
+     * #getMdRecord(java.lang.String)
      */
     @Override
     public Datastream getMdRecord(final String name) throws MdRecordNotFoundException {
@@ -583,7 +592,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource #setMdRecord(java.lang.String,
+     * @see
+     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
+     * #setMdRecord(java.lang.String,
      * de.escidoc.core.common.business.fedora.datastream.Stream)
      */
 
@@ -605,7 +616,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             try {
                 curDs = getMdRecord(name);
             }
-            catch (MdRecordNotFoundException e) {
+            catch (final MdRecordNotFoundException e) {
                 throw new IntegritySystemException(e);
             }
             isNew = false;
@@ -645,8 +656,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                                 final Datastream dcNew;
                                 try {
                                     dcNew =
-                                        new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                                        new Datastream("DC", getId(),
+                                            dcNewContent.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
@@ -776,12 +787,13 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     }
 
     /**
-     * Expand a list with names of properties values with the propertiesNames for a versionated resource. These list
-     * could be used to request the TripleStore.
+     * Expand a list with names of properties values with the propertiesNames
+     * for a versionated resource. These list could be used to request the
+     * TripleStore.
      * 
      * @param propertiesNames
-     *            Collection of propertiesNames. The collection contains only the version resource specific
-     *            propertiesNames.
+     *            Collection of propertiesNames. The collection contains only
+     *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
@@ -799,9 +811,11 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Expanding the properties naming map.
      * 
      * @param propertiesMapping
-     *            The properties name mapping from external as key and the internal name as value. E.g. with the key
-     *            "version-status" and "LATEST_VERSION_STATUS" as value is the value of "versin-status" after the
-     *            mapping accessible with the internal key "LATEST_VERSION_STATUS".
+     *            The properties name mapping from external as key and the
+     *            internal name as value. E.g. with the key "version-status" and
+     *            "LATEST_VERSION_STATUS" as value is the value of
+     *            "versin-status" after the mapping accessible with the internal
+     *            key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
@@ -851,7 +865,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     /**
      * Persist all Component of this Item.
      * 
-     * @return true if a Component was updated (and with this persisted), false otherwise.
+     * @return true if a Component was updated (and with this persisted), false
+     *         otherwise.
      * @throws ComponentNotFoundException
      *             Thrown if Component was not found.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
@@ -924,8 +939,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     }
 
     /**
-     * Init all item datastreams. Some are initilized by super classes. (This is faster than init of each single data
-     * stream).
+     * Init all item datastreams. Some are initilized by super classes. (This is
+     * faster than init of each single data stream).
      * 
      * @param datastreamInfos
      *            The Fedora datastream information.
@@ -947,16 +962,14 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             final String location = datastreamInfo.getLocation();
 
             final Datastream ds;
+            DateTime versionDate = null;
+            final String versionDateString = this.getVersionDate();
+            if (versionDateString != null) {
+                versionDate = DateTimeJaxbConverter.parseDate(versionDateString);
+            }
+
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
-                final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                        DateTimeZone.UTC);
-                DateTime versionDate = null;
-                String versionDateString = this.getVersionDate();
-                if (versionDateString != null) {
-                    versionDate = dateTimeFormatter.parseDateTime(versionDateString);
-                }
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
@@ -964,10 +977,6 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             }
             else if (altIDs.contains("content-stream")) {
                 // found content-stream
-                final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                        DateTimeZone.UTC);
-                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
@@ -975,10 +984,6 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             }
             // content-model-specific
             else if ("content-model-specific".equals(name)) {
-                final DateTimeFormatter dateTimeFormatter =
-                    DateTimeFormat.forPattern(de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT).withZone(
-                        DateTimeZone.UTC);
-                final DateTime versionDate = dateTimeFormatter.parseDateTime(this.getVersionDate());
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
@@ -1002,7 +1007,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws WebserverSystemException
      *             In case of an internal error.
      * @throws LockingException
-     *             If the iem is locked and the current user is not the one who locked it.
+     *             If the iem is locked and the current user is not the one who
+     *             locked it.
      * @throws TripleStoreSystemException
      *             If triple store reports an error.
      * @throws InvalidStatusException
