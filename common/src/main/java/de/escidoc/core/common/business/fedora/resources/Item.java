@@ -656,8 +656,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                                 final Datastream dcNew;
                                 try {
                                     dcNew =
-                                        new Datastream("DC", getId(),
-                                            dcNewContent.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                                        new Datastream("DC", getId(), dcNewContent
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);

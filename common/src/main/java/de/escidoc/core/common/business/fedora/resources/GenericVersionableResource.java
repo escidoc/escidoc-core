@@ -1050,8 +1050,8 @@ public class GenericVersionableResource extends GenericResourcePid {
             final byte[] b = getWov().getStream();
             String tmpWov = new String(b, XmlUtility.CHARACTER_ENCODING);
             tmpWov = tmpWov.replaceAll(XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, timestamp);
-            setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(),
-                tmpWov.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
+            setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), tmpWov
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
         }
         catch (final Exception e1) {
             throw new WebserverSystemException(e1);
@@ -1151,8 +1151,8 @@ public class GenericVersionableResource extends GenericResourcePid {
                 newWovStream.toString(XmlUtility.CHARACTER_ENCODING).replaceFirst(
                     "(<" + Constants.WOV_NAMESPACE_PREFIX + ":events[^>]*>)", "$1" + newEventEntry);
 
-            setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(),
-                newWovString.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
+            setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), newWovString
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);
@@ -1265,9 +1265,9 @@ public class GenericVersionableResource extends GenericResourcePid {
                             // current und latest haben
                             // consistente namen
                             final String currentVersionKey =
-                                targetKey.equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS) ? PropertyMapKeys.CURRENT_VERSION_STATUS
-                                    : targetKey.equals(PropertyMapKeys.LATEST_VERSION_DATE) ? PropertyMapKeys.CURRENT_VERSION_VERSION_DATE
-                                        : targetKey.replace("LATEST_", "CURRENT_");
+                                targetKey.equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS) ? PropertyMapKeys.CURRENT_VERSION_STATUS : targetKey
+                                    .equals(PropertyMapKeys.LATEST_VERSION_DATE) ? PropertyMapKeys.CURRENT_VERSION_VERSION_DATE : targetKey
+                                    .replace("LATEST_", "CURRENT_");
                             properties.put(currentVersionKey, value);
                         }
                     }
@@ -1329,8 +1329,8 @@ public class GenericVersionableResource extends GenericResourcePid {
                 // version specified by versionDate. The difference between both
                 // versions are timestamps (version/date, release/date).
                 ds =
-                    isLatestVersion() ? new Datastream(name, getId(), null, mimeType, location, controlGroupValue)
-                        : new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
+                    isLatestVersion() ? new Datastream(name, getId(), null, mimeType, location, controlGroupValue) : new Datastream(
+                        name, getId(), versionDate, mimeType, location, controlGroupValue);
 
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);

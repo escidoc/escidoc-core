@@ -270,10 +270,10 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
             final Datastream ds;
             final String versionDateString = getVersionDate();
             DateTime versionDate = null;
-            if(versionDateString != null) {
+            if (versionDateString != null) {
                 versionDate = DateTimeJaxbConverter.parseDate(versionDateString);
             }
-            
+
             if (altIDs.contains("content-stream")) {
                 // found content-stream
                 ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);

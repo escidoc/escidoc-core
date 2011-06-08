@@ -150,10 +150,10 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
             final Datastream ds;
             DateTime parentVersionDate = null;
-            if(this.parentVersionDate != null) {
+            if (this.parentVersionDate != null) {
                 parentVersionDate = DateTimeJaxbConverter.parseDate(this.parentVersionDate);
             }
-            
+
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
                 ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
@@ -445,8 +445,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                                 final Datastream dcNew;
                                 try {
                                     dcNew =
-                                        new Datastream("DC", getId(),
-                                            dcNewContent.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                                        new Datastream("DC", getId(), dcNewContent
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);

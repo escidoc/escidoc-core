@@ -92,9 +92,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * 
  * @author Rozita Friedman
  */
-@ManagedResource(objectName = "eSciDocCore:name=FedoraUtility",
-    description = "The utility class to access the fedora repository.", log = true, logFile = "jmx.log",
-    currencyTimeLimit = 15)
+@ManagedResource(objectName = "eSciDocCore:name=FedoraUtility", description = "The utility class to access the fedora repository.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class FedoraUtility {
 
     public static final int SYNC_RETRIES = 10;
@@ -569,8 +567,8 @@ public class FedoraUtility {
      * @return Returns the {@link FedoraSystemException}
      */
     private static FedoraSystemException convertPoolException(final Exception e) {
-        return e instanceof FedoraSystemException ? (FedoraSystemException) e : new FedoraSystemException(
-            e.getMessage(), e);
+        return e instanceof FedoraSystemException ? (FedoraSystemException) e : new FedoraSystemException(e
+            .getMessage(), e);
     }
 
     @PostConstruct
