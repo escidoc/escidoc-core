@@ -197,10 +197,15 @@
 			<artifactId>mptstore-oracle</artifactId>
 			<version>0.9.4</version>
 		</dependency>
+    	<dependency>
+        	<groupId>org.springframework.security</groupId>
+        	<artifactId>spring-security-config</artifactId>
+        	<version>${spring.version}</version>
+    	</dependency>
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-openid</artifactId>
-		    <version>2.0.5.RELEASE</version>
+		    <version>${spring.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -588,11 +593,6 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core-tiger</artifactId>
-			<version>2.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.oclc</groupId>

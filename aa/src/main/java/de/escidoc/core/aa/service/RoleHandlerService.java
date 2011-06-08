@@ -1,5 +1,11 @@
 package de.escidoc.core.aa.service;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.Map;
+
+import org.springframework.security.core.context.SecurityContext;
+
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -12,11 +18,6 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.RoleInUseViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.springframework.security.context.SecurityContext;
-
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.util.Map;
 
 /**
  * Service endpoint interface for RoleHandler.

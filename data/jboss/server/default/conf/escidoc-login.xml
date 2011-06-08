@@ -46,7 +46,7 @@ xmlns="http://www.springframework.org/schema/beans"
       xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd"
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
 default-lazy-init="false">
  
     <!--######FORM-BASED-LOGIN#####################################################################################################################-->
@@ -68,13 +68,15 @@ default-lazy-init="false">
       <property name="loginFormUrl" value="/aa/login/login.html"/>
     </bean>
     
-    <security:authentication-provider>
-        <security:jdbc-user-service
-            id="jdbcUserService"
-            data-source-ref="escidoc-core.DataSource"
-            users-by-username-query="select loginname, password, 1 as active from aa.user_account where loginname = ?"
-            authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
-    </security:authentication-provider>
+    <security:authentication-manager>
+	    <security:authentication-provider>
+	        <security:jdbc-user-service
+	            id="jdbcUserService"
+	            data-source-ref="escidoc-core.DataSource"
+	            users-by-username-query="select loginname, password, 1 as active from aa.user_account where loginname = ?"
+	            authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+	    </security:authentication-provider>
+    </security:authentication-manager>
     
     <!--###########################################################################################################################-->
     <!--#######LDAP-LOGIN####################################################################################################################-->
@@ -105,7 +107,7 @@ default-lazy-init="false">
     
     <bean id="contextSource"
         class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
-        <constructor-arg value="ldap://ldap.example.org/ou=example,ou=org"/>
+        <constructor-arg value="ldap://141.66.11.51/dc=fiz-karlsruhe,dc=de"/>
     </bean>
 
     <bean id="userSearch"
@@ -116,15 +118,15 @@ default-lazy-init="false">
     </bean>
 
     <bean id="ldapAuthProvider"
-        class="org.springframework.security.providers.ldap.LdapAuthenticationProvider">
+        class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
         <constructor-arg>
-            <bean class="org.springframework.security.providers.ldap.authenticator.BindAuthenticator">
+            <bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
                 <constructor-arg ref="contextSource"/>
                 <property name="userSearch" ref="userSearch" />
             </bean>
         </constructor-arg>
         <constructor-arg>
-            <bean class="org.springframework.security.ldap.populator.DefaultLdapAuthoritiesPopulator">
+            <bean class="org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopulator">
                 <constructor-arg ref="contextSource"/>
                 <constructor-arg value="ou=group"/>
                 <property name="groupRoleAttribute" value="cn"/>
@@ -136,18 +138,19 @@ default-lazy-init="false">
         <property name="userDetailsContextMapper">
             <bean class="de.escidoc.core.aa.ldap.EscidocLdapContextMapper"/>
         </property>
-        <security:custom-authentication-provider />
     </bean>
 
-    <security:authentication-provider>
-        <security:jdbc-user-service
-            id="jdbcUserService"
-            data-source-ref="escidoc-core.DataSource"
-            users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
-            authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
-    </security:authentication-provider>
-    
-        -->
+	<security:authentication-manager>
+    	<security:authentication-provider ref="ldapAuthProvider" />
+	    <security:authentication-provider>
+	        <security:jdbc-user-service
+	            id="jdbcUserService"
+	            data-source-ref="escidoc-core.DataSource"
+	            users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+	            authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+	    </security:authentication-provider>
+    </security:authentication-manager>
+    -->
 
     <!--###########################################################################################################################-->
     <!--########SHIBBOLETH-LOGIN###################################################################################################################-->
@@ -155,33 +158,39 @@ default-lazy-init="false">
     <!-- Uncomment this to enable login using shibboleth 
         Replace property serviceProviderBaseUrl with the url of your Shibboleth service provider
     -->
-    <!--
+    <!-- 
     <security:http auto-config="false" entry-point-ref="entryPoint"
         path-type="regex">
         <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
         <security:intercept-url pattern="/.*" filters="none" />
         <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
+        <security:custom-filter ref="shibFilter" before="CAS_FILTER"/>
     </security:http>
     
-    <bean id="shibFilter" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationFilter">
-        <security:custom-filter before="AUTHENTICATION_PROCESSING_FILTER"/>
-    </bean>
+	<security:authentication-manager>
+    	<security:authentication-provider ref="shibProvider" />
+	</security:authentication-manager>    
+	
+    <bean id="shibFilter" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationFilter"/>
+
     <bean id="entryPoint" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationEntryPoint">
-        <property name="serviceProviderBaseUrl" value="http://sp.example.org" />
+        <property name="serviceProviderBaseUrl" value="https://kal04756.fiz-karlsruhe.de" />
         <property name="sessionInitiatorPath" value="/Shibboleth.sso/Login" />
     </bean>
-    <bean id="shibProvider" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationProvider">
-        <security:custom-authentication-provider />
-    </bean>
-    <security:authentication-provider>
-        <security:jdbc-user-service
-            id="jdbcUserService"
-            data-source-ref="escidoc-core.DataSource"
-            users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
-            authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
-    </security:authentication-provider>
-    
+
+    <bean id="shibProvider" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationProvider" />
+
+	<security:authentication-manager>
+    	<security:authentication-provider>
+        	<security:jdbc-user-service
+            	id="jdbcUserService"
+            	data-source-ref="escidoc-core.DataSource"
+            	users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+            	authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+    	</security:authentication-provider>
+	</security:authentication-manager>
     -->
+    
     <!--###########################################################################################################################-->
     <!--########OPENID-LOGIN###################################################################################################################-->
     
@@ -198,13 +207,15 @@ default-lazy-init="false">
     <bean id="openidInitializer" class="de.escidoc.core.aa.openid.EscidocOpenidInitializer" />
 	<bean id="openidUserDetailsService" class="de.escidoc.core.aa.openid.EscidocOpenidUserDetailsService" />
  
-    <security:authentication-provider>
-        <security:jdbc-user-service
-            id="jdbcUserService"
-            data-source-ref="escidoc-core.DataSource"
-            users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
-            authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
-    </security:authentication-provider>
+	<security:authentication-manager>
+    	<security:authentication-provider>
+        	<security:jdbc-user-service
+            	id="jdbcUserService"
+            	data-source-ref="escidoc-core.DataSource"
+            	users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+            	authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+    	</security:authentication-provider>
+	</security:authentication-manager>
     -->
     
     <!--###########################################################################################################################-->
@@ -212,7 +223,7 @@ default-lazy-init="false">
 
     <!-- Uncomment this to enable http basic auth. login using the internal 
          UserAccount resource (Deprecated) -->
-    <!-- 
+    <!--
     <security:http auto-config="false" access-denied-page="/aa/login/login-repeated.html"
         path-type="regex">
         <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
@@ -221,15 +232,17 @@ default-lazy-init="false">
         <security:http-basic />
     </security:http>
     
-    <security:authentication-provider>
-        <security:jdbc-user-service
-            id="jdbcUserService"
-            data-source-ref="escidoc-core.DataSource"
-            users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
-            authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
-    </security:authentication-provider>
+	<security:authentication-manager>
+    	<security:authentication-provider>
+        	<security:jdbc-user-service
+            	id="jdbcUserService"
+            	data-source-ref="escidoc-core.DataSource"
+            	users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+            	authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+    	</security:authentication-provider>
+	</security:authentication-manager>
+        -->
     
-    -->
 
     <!--###########################################################################################################################-->
 

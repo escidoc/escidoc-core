@@ -20,8 +20,10 @@
 
 package de.escidoc.core.common.util.service;
 
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.userdetails.UserDetails;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * Class encapsulating the information about the user stored in the user context.<br> This class implements
@@ -100,7 +102,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.springframework.security.userdetails.UserDetails#getAuthorities()
      */
     @Override
-    public GrantedAuthority[] getAuthorities() {
+    public Collection<GrantedAuthority> getAuthorities() {
         // TODO Auto-generated method stub
         return null;
     }

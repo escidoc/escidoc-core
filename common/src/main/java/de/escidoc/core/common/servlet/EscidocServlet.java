@@ -20,6 +20,36 @@
 
 package de.escidoc.core.common.servlet;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.UndeclaredThrowableException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.aopalliance.aop.AspectException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.xml.sax.SAXException;
+
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
@@ -35,34 +65,6 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
-import org.aopalliance.aop.AspectException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.context.SecurityContextHolder;
-import org.xml.sax.SAXException;
-
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.UndeclaredThrowableException;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The eSciDoc servlet. Maps a REST request to the specified resource and invokes the specified (if one is
@@ -319,6 +321,7 @@ public class EscidocServlet extends HttpServlet {
                 doRedirect(httpRequest, httpResponse, (SecurityException) e);
             }
             else {
+                ((SecurityException) e).setRedirectLocation(null);
                 doDeclineHttpRequest(httpResponse, (EscidocException) e);
             }
             ret = true;
@@ -524,7 +527,9 @@ public class EscidocServlet extends HttpServlet {
         httpResponse.setHeader(HEADER_ESCIDOC_EXCEPTION, exception.getClass().getName());
         httpResponse.setStatus(exception.getHttpStatusCode());
         if (exception instanceof SecurityException) {
-            httpResponse.setHeader("Location", ((SecurityException) exception).getRedirectLocation());
+            if (((SecurityException) exception).getRedirectLocation() != null) {
+                httpResponse.setHeader("Location", ((SecurityException) exception).getRedirectLocation());
+            }
         }
         String body;
         try {

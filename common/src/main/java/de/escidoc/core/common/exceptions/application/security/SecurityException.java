@@ -41,7 +41,7 @@ public class SecurityException extends EscidocException {
 
     public static final String HTTP_STATUS_MESSAGE = "Security check failed. Redirect to login";
 
-    private final String redirectLocation;
+    private String redirectLocation;
 
     /**
      * Default constructor.
@@ -160,6 +160,14 @@ public class SecurityException extends EscidocException {
      */
     public String getRedirectLocation() {
         return this.redirectLocation;
+    }
+
+    /**
+     * Sets the redirect location (to the UserManagementWrapper).
+     *
+     */
+    public void setRedirectLocation(final String redirectLocation) {
+        this.redirectLocation = redirectLocation;
     }
 
 }

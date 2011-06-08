@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.springframework.security.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContext;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

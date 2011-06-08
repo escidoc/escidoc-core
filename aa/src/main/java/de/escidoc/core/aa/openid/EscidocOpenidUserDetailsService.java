@@ -30,8 +30,8 @@ package de.escidoc.core.aa.openid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
 import de.escidoc.core.common.util.service.EscidocUserDetails;

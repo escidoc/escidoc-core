@@ -9,7 +9,7 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.springframework.security.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContext;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

@@ -1,5 +1,11 @@
 package de.escidoc.core.sm.service;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.Map;
+
+import org.springframework.security.core.context.SecurityContext;
+
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -9,11 +15,6 @@ import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundExcep
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.springframework.security.context.SecurityContext;
-
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.util.Map;
 
 /**
  * Service endpoint interface for AggregationDefinitionHandler.

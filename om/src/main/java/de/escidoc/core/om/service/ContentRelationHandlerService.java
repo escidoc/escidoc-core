@@ -17,7 +17,7 @@ import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.springframework.security.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContext;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

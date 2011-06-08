@@ -28,18 +28,19 @@
  */
 package de.escidoc.core.aa.business.persistence;
 
-import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.list.ListSorting;
-import org.springframework.security.userdetails.UserDetails;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.springframework.security.core.userdetails.UserDetails;
+
+import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.list.ListSorting;
 
 /**
  * Interface of an data access object to access user account data.

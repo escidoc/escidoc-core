@@ -28,18 +28,18 @@
  */
 package de.escidoc.core.aa.shibboleth;
 
-import de.escidoc.core.common.util.xml.XmlUtility;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.ui.AuthenticationEntryPoint;
-
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
@@ -49,8 +49,8 @@ public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPo
 
     @Override
     public void commence(
-        final ServletRequest request, final ServletResponse response, final AuthenticationException authException)
-        throws IOException, ServletException, UnsupportedEncodingException {
+        final HttpServletRequest request, final HttpServletResponse response,
+        final AuthenticationException authException) throws IOException, ServletException, UnsupportedEncodingException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         // FIXME:URL!!!
         final StringBuilder target = new StringBuilder(this.serviceProviderBaseUrl).append("aa/login");

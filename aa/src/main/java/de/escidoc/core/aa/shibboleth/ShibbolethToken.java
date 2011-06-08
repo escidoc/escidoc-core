@@ -28,8 +28,10 @@
  */
 package de.escidoc.core.aa.shibboleth;
 
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.providers.AbstractAuthenticationToken;
+import java.util.Collection;
+
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 
 public class ShibbolethToken extends AbstractAuthenticationToken {
 
@@ -40,13 +42,13 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
 
     private final ShibbolethUser user;
 
-    public ShibbolethToken(final ShibbolethUser user, final GrantedAuthority[] arg0) {
+    public ShibbolethToken(final ShibbolethUser user, final Collection<GrantedAuthority> arg0) {
         super(arg0);
         this.user = user;
     }
 
     @Override
-    public GrantedAuthority[] getAuthorities() {
+    public Collection<GrantedAuthority> getAuthorities() {
         // TODO Auto-generated method stub
         return null;
     }

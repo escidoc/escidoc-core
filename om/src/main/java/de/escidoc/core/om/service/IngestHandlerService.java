@@ -1,7 +1,7 @@
 package de.escidoc.core.om.service;
 
 import de.escidoc.core.common.exceptions.EscidocException;
-import org.springframework.security.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContext;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

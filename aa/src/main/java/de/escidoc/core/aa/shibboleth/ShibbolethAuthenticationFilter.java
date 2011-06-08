@@ -28,37 +28,40 @@
  */
 package de.escidoc.core.aa.shibboleth;
 
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.ui.SpringSecurityFilter;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 
-public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.GenericFilterBean;
+
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+
+public class ShibbolethAuthenticationFilter extends GenericFilterBean {
 
     /**
      * See Interface for functional description.
      */
     @Override
-    protected void doFilterHttp(
-        final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain filterChain)
         throws IOException, ServletException {
 
-        final String shibSessionId = request.getHeader(ShibbolethDetails.SHIB_SESSION_ID);
+        final String shibSessionId = ((HttpServletRequest) request).getHeader(ShibbolethDetails.SHIB_SESSION_ID);
         if (shibSessionId != null && shibSessionId.length() != 0) {
             final ShibbolethDetails details =
-                new ShibbolethDetails(null, request.getHeader(ShibbolethDetails.SHIB_ASSERTION_COUNT), request
-                    .getHeader(ShibbolethDetails.SHIB_AUTHENTICATION_METHOD), request
-                    .getHeader(ShibbolethDetails.SHIB_AUTHENTICATION_INSTANT), request
-                    .getHeader(ShibbolethDetails.SHIB_AUTHNCONTEXT_CLASS), request
-                    .getHeader(ShibbolethDetails.SHIB_AUTHNCONTEXT_DECL), request
+                new ShibbolethDetails(null, ((HttpServletRequest) request)
+                    .getHeader(ShibbolethDetails.SHIB_ASSERTION_COUNT), ((HttpServletRequest) request)
+                    .getHeader(ShibbolethDetails.SHIB_AUTHENTICATION_METHOD), ((HttpServletRequest) request)
+                    .getHeader(ShibbolethDetails.SHIB_AUTHENTICATION_INSTANT), ((HttpServletRequest) request)
+                    .getHeader(ShibbolethDetails.SHIB_AUTHNCONTEXT_CLASS), ((HttpServletRequest) request)
+                    .getHeader(ShibbolethDetails.SHIB_AUTHNCONTEXT_DECL), ((HttpServletRequest) request)
                     .getHeader(ShibbolethDetails.SHIB_IDENTITY_PROVIDER), shibSessionId);
 
             final ShibbolethUser user = new ShibbolethUser();
@@ -74,24 +77,27 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
 
             // get name
             final String name =
-                StringUtils.isNotEmpty(cnAttribute) && StringUtils.isNotEmpty(request.getHeader(cnAttribute)) ? request
+                StringUtils.isNotEmpty(cnAttribute)
+                    && StringUtils.isNotEmpty(((HttpServletRequest) request).getHeader(cnAttribute)) ? ((HttpServletRequest) request)
                     .getHeader(cnAttribute) : shibSessionId;
 
             // get loginname
             final String loginname =
-                StringUtils.isNotEmpty(uidAttribute) && StringUtils.isNotEmpty(request.getHeader(uidAttribute)) ? request
+                StringUtils.isNotEmpty(uidAttribute)
+                    && StringUtils.isNotEmpty(((HttpServletRequest) request).getHeader(uidAttribute)) ? ((HttpServletRequest) request)
                     .getHeader(uidAttribute).replaceAll("\\s", "") : name.replaceAll("\\s", "_") + '@' + origin;
 
             user.setLoginName(loginname);
             user.setName(name);
 
             final Matcher disposableHeaderMatcher = ShibbolethUser.DISPOSABLE_HEADER_PATTERN.matcher("");
-            final Enumeration<String> enu = request.getHeaderNames();
+            final Enumeration<String> enu = ((HttpServletRequest) request).getHeaderNames();
             while (enu.hasMoreElements()) {
                 final String headerName = enu.nextElement();
                 disposableHeaderMatcher.reset(headerName);
-                if (!disposableHeaderMatcher.matches() && StringUtils.isNotEmpty(request.getHeader(headerName))) {
-                    final Enumeration<String> en = request.getHeaders(headerName);
+                if (!disposableHeaderMatcher.matches()
+                    && StringUtils.isNotEmpty(((HttpServletRequest) request).getHeader(headerName))) {
+                    final Enumeration<String> en = ((HttpServletRequest) request).getHeaders(headerName);
                     while (en.hasMoreElements()) {
                         final String header = en.nextElement();
                         final String[] parts = header.split(";");
@@ -114,17 +120,6 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
         }
 
         filterChain.doFilter(request, response);
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @see SpringSecurityFilter#getOrder()
-     */
-    @Override
-    public int getOrder() {
-
-        return 0;
     }
 
 }

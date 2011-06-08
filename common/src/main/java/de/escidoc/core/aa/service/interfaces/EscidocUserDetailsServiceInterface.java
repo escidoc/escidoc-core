@@ -20,8 +20,8 @@
 
 package de.escidoc.core.aa.service.interfaces;
 
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * Interface to EscidocUserDetailsService.
