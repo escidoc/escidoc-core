@@ -96,7 +96,6 @@
 									<filtering>true</filtering>
 									<includes>
 										<include>escidoc.properties</include>
-										<include>client.wsdd</include>
 									</includes>
 								</resource>
 							</resources>
@@ -116,7 +115,6 @@
 									<filtering>true</filtering>
 									<excludes>
 										<exclude>escidoc.properties</exclude>
-										<exclude>client.wsdd</exclude>
 									</excludes>
 								</resource>
 							</resources>

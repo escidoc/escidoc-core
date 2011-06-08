@@ -45,8 +45,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.TransformerException;
 
 import org.apache.axis.AxisFault;
-import org.apache.axis.EngineConfiguration;
-import org.apache.axis.configuration.FileProvider;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -72,8 +70,6 @@ import org.apache.xpath.XPathAPI;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -891,29 +887,6 @@ public abstract class ClientBase {
         ret.append(parts[0]);
 
         return ret.toString();
-    }
-
-    /**
-     * @return Returns the engineConfig.
-     */
-    public EngineConfiguration getEngineConfig() {
-        FileProvider engineConfig = null;
-        final String filename = "client.wsdd";
-        final PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver =
-            new PathMatchingResourcePatternResolver();
-        try {
-            final Resource[] resource = pathMatchingResourcePatternResolver.getResources("classpath*:**/" + filename);
-            engineConfig = new FileProvider(resource[0].getInputStream());
-        }
-        catch (final IOException e) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on loading configuration.");
-            }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on loading configuration.", e);
-            }
-        }
-        return engineConfig;
     }
 
     public Object create(final Object xml) throws Exception {
