@@ -611,8 +611,13 @@ public class Container extends GenericVersionableResourcePid implements Containe
             setResourceProperties(PropertyMapKeys.LAST_MODIFICATION_DATE, timestamp);
         }
 
-        getFedoraUtility().sync();
-
+        this.getFedoraServiceClient().sync();
+        try {
+            this.getTripleStoreUtility().reinitialize();
+        }
+        catch (TripleStoreSystemException e) {
+            throw new FedoraSystemException("Error on reinitializing triple store.", e);
+        }
         return timestamp;
     }
 

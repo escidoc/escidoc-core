@@ -154,7 +154,13 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
             this.getFedoraServiceClient().deleteObject(componentId);
         }
         this.getFedoraServiceClient().deleteObject(getItem().getId());
-        getFedoraUtility().sync();
+        this.getFedoraServiceClient().sync();
+        try {
+            this.getTripleStoreUtility().reinitialize();
+        }
+        catch (TripleStoreSystemException e) {
+            throw new FedoraSystemException("Error on reinitializing triple store.", e);
+        }
     }
 
 }

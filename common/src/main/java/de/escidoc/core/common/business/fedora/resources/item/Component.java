@@ -273,8 +273,14 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
             final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
             query.setLogMessage("touched");
-            getFedoraServiceClient().updateObject(path, query);
-            getFedoraUtility().sync();
+            this.getFedoraServiceClient().updateObject(path, query);
+            this.getFedoraServiceClient().sync();
+            try {
+                this.getTripleStoreUtility().reinitialize();
+            }
+            catch (TripleStoreSystemException e) {
+                throw new FedoraSystemException("Error on reinitializing triple store.", e);
+            }
         }
     }
 
@@ -286,8 +292,14 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
         final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
         query.setLogMessage("touched");
-        getFedoraServiceClient().updateObject(path, query);
-        getFedoraUtility().sync();
+        this.getFedoraServiceClient().updateObject(path, query);
+        this.getFedoraServiceClient().sync();
+        try {
+            this.getTripleStoreUtility().reinitialize();
+        }
+        catch (TripleStoreSystemException e) {
+            throw new FedoraSystemException("Error on reinitializing triple store.", e);
+        }
         this.content = null;
     }
 
@@ -364,8 +376,14 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
             final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
             query.setLogMessage("touched");
-            getFedoraServiceClient().updateObject(path, query);
-            getFedoraUtility().sync();
+            this.getFedoraServiceClient().updateObject(path, query);
+            this.getFedoraServiceClient().sync();
+            try {
+                this.getTripleStoreUtility().reinitialize();
+            }
+            catch (TripleStoreSystemException e) {
+                throw new FedoraSystemException("Error on reinitializing triple store.", e);
+            }
         }
     }
 
@@ -472,8 +490,14 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
                 final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
                 query.setLogMessage("touched");
-                getFedoraServiceClient().updateObject(path, query);
-                getFedoraUtility().sync();
+                this.getFedoraServiceClient().updateObject(path, query);
+                this.getFedoraServiceClient().sync();
+                try {
+                    this.getTripleStoreUtility().reinitialize();
+                }
+                catch (TripleStoreSystemException e) {
+                    throw new FedoraSystemException("Error on reinitializing triple store.", e);
+                }
             }
         }
         catch (final FedoraSystemException e) {
@@ -485,8 +509,14 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
             final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
             query.setLogMessage("touched");
-            getFedoraServiceClient().updateObject(path, query);
-            getFedoraUtility().sync();
+            this.getFedoraServiceClient().updateObject(path, query);
+            this.getFedoraServiceClient().sync();
+            try {
+                this.getTripleStoreUtility().reinitialize();
+            }
+            catch (TripleStoreSystemException e2) {
+                throw new FedoraSystemException("Error on reinitializing triple store.", e2);
+            }
         }
     }
 
@@ -508,8 +538,14 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
             final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
             query.setLogMessage("touched");
-            getFedoraServiceClient().updateObject(path, query);
-            getFedoraUtility().sync();
+            this.getFedoraServiceClient().updateObject(path, query);
+            this.getFedoraServiceClient().sync();
+            try {
+                this.getTripleStoreUtility().reinitialize();
+            }
+            catch (TripleStoreSystemException e) {
+                throw new FedoraSystemException("Error on reinitializing triple store.", e);
+            }
         }
     }
 

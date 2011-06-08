@@ -522,7 +522,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             throw new WebserverSystemException(e);
         }
         this.fedoraServiceClient.modifyDatastream(path, query, stream);
-        getFedoraUtility().sync();
+        this.fedoraServiceClient.sync();
+        try {
+            this.getTripleStoreUtility().reinitialize();
+        }
+        catch (TripleStoreSystemException e) {
+            throw new FedoraSystemException("Error on reinitializing triple store.", e);
+        }
         String result = null;
 
         try {
@@ -618,7 +624,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         // purge container
         this.fedoraServiceClient.deleteObject(getContainer().getId());
-        getFedoraUtility().sync();
+        this.fedoraServiceClient.sync();
+        try {
+            this.getTripleStoreUtility().reinitialize();
+        }
+        catch (TripleStoreSystemException e) {
+            throw new FedoraSystemException("Error on reinitializing triple store.", e);
+        }
         fireContainerDeleted(getContainer().getId());
     }
 

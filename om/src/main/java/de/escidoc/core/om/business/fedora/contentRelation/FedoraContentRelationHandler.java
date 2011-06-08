@@ -358,7 +358,13 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         final ContentRelationCreate cr = setContentRelation(id);
         checkLocked(cr);
         this.fedoraServiceClient.deleteObject(cr.getObjid());
-        getFedoraUtility().sync();
+        this.fedoraServiceClient.sync();
+        try {
+            this.getTripleStoreUtility().reinitialize();
+        }
+        catch (TripleStoreSystemException e) {
+            throw new FedoraSystemException("Error on reinitializing triple store.", e);
+        }
         fireContentRelationDeleted(cr);
     }
 

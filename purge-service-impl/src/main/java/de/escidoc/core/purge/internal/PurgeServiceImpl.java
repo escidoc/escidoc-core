@@ -3,6 +3,8 @@ package de.escidoc.core.purge.internal;
 import de.escidoc.core.adm.business.admin.PurgeStatus;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.purge.PurgeRequest;
@@ -56,8 +58,13 @@ public class PurgeServiceImpl implements PurgeService {
             }
             this.fedoraServiceClient.deleteObject(purgeRequest.getResourceId());
             // synchronize triple store
-            this.fedoraUtility.sync();
-
+            this.fedoraServiceClient.sync();
+            try {
+                this.tripleStoreUtility.reinitialize();
+            }
+            catch (TripleStoreSystemException e) {
+                throw new FedoraSystemException("Error on reinitializing triple store.", e);
+            }
         }
         catch (final Exception e) {
             LOGGER.error("could not dequeue message", e);

@@ -182,7 +182,13 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                     throw new EncodingSystemException(e.getMessage(), e);
                 }
             }
-            getFedoraUtility().sync();
+            this.getFedoraServiceClient().sync();
+            try {
+                this.getTripleStoreUtility().reinitialize();
+            }
+            catch (TripleStoreSystemException e) {
+                throw new FedoraSystemException("Error on reinitializing triple store.", e);
+            }
         }
 
     }
@@ -457,8 +463,13 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 query.setDsLocation(url);
                 try {
                     final DatastreamProfileTO dsProfile = this.fedoraServiceClient.modifyDatastream(path, query, null);
-                    getFedoraUtility().sync();
-
+                    this.getFedoraServiceClient().sync();
+                    try {
+                        this.getTripleStoreUtility().reinitialize();
+                    }
+                    catch (TripleStoreSystemException e) {
+                        throw new FedoraSystemException("Error on reinitializing triple store.", e);
+                    }
                     if (!contentChecksum.equals(dsProfile.getDsChecksum())) {
                         if (component.hasObjectPid()) {
                             // remove Content PID
@@ -486,7 +497,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             query.setDsLocation(url);
             try {
                 this.fedoraServiceClient.modifyDatastream(path, query, null);
-                getFedoraUtility().sync();
+                this.getFedoraServiceClient().sync();
+                this.getTripleStoreUtility().reinitialize();
             }
             catch (final Exception e) {
                 handleFedoraUploadError(url, e);

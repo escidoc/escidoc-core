@@ -354,7 +354,13 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         checkWithoutChildren("deleted");
 
         this.getFedoraServiceClient().deleteObject(id);
-        getFedoraUtility().sync();
+        this.getFedoraServiceClient().sync();
+        try {
+            this.getTripleStoreUtility().reinitialize();
+        }
+        catch (TripleStoreSystemException e) {
+            throw new FedoraSystemException("Error on reinitializing triple store.", e);
+        }
         fireOuDeleted(id);
 
         // update property hasChildren of all parents in Lucene

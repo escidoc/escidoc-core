@@ -40,6 +40,7 @@ import de.escidoc.core.cmm.business.stax.handler.contentModel.ResourceDefinition
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
@@ -138,6 +139,10 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     @PostConstruct
     private void init() {
@@ -399,7 +404,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
         // delete every behavior (sdef, sdep) even those from old versions
         this.fedoraServiceClient.deleteObject(getContentModel().getId());
-        getFedoraUtility().sync();
+        this.fedoraServiceClient.sync();
+        this.tripleStoreUtility.reinitialize();
         fireContentModelDeleted(getContentModel().getId());
     }
 

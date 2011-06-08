@@ -127,9 +127,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="identifierPrefix">
             <value>${escidoc-core.identifier.prefix}</value>
         </property>
-        <property name="tripleStoreUtility">
-            <ref bean="business.TripleStoreUtility"/>
-        </property>
     </bean>
 
     <bean id="business.TripleStoreUtility"

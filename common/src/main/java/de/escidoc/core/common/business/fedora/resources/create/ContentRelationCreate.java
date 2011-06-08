@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.DeleteDatastreamPathParam;
@@ -212,7 +213,13 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
                 }
             }
             if (forceSync) {
-                this.fedoraUtility.sync();
+                this.fedoraServiceClient.sync();
+                try {
+                    this.getTripleStoreUtility().reinitialize();
+                }
+                catch (TripleStoreSystemException e) {
+                    throw new FedoraSystemException("Error on reinitializing triple store.", e);
+                }
             }
         }
         catch (final Exception e) {
@@ -692,7 +699,13 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         }
         getProperties().setLastModificationDate(lmd);
         if (sync) {
-            this.fedoraUtility.sync();
+            this.fedoraServiceClient.sync();
+            try {
+                this.getTripleStoreUtility().reinitialize();
+            }
+            catch (TripleStoreSystemException e) {
+                throw new FedoraSystemException("Error on reinitializing triple store.", e);
+            }
         }
     }
 

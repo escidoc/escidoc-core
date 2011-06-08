@@ -70,6 +70,12 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
 
         checkStatus(Constants.STATUS_CONTEXT_CREATED);
         this.getFedoraServiceClient().deleteObject(context.getId());
-        getFedoraUtility().sync();
+        this.getFedoraServiceClient().sync();
+        try {
+            this.getTripleStoreUtility().reinitialize();
+        }
+        catch (TripleStoreSystemException e) {
+            throw new FedoraSystemException("Error on reinitializing triple store.", e);
+        }
     }
 }

@@ -38,6 +38,8 @@ import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.NextPIDPathParam;
 import org.escidoc.core.services.fedora.NextPIDQueryParam;
 import org.escidoc.core.services.fedora.PidListTO;
+import org.escidoc.core.services.fedora.SyncPathParam;
+import org.escidoc.core.services.fedora.SyncQueryParam;
 import org.escidoc.core.services.fedora.UpdateObjectPathParam;
 import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
@@ -52,6 +54,8 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
@@ -385,5 +389,12 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     public Future<DatastreamHistoryTO> getDatastreamHistoryAsync(
         final GetDatastreamHistoryPathParam path, final GetDatastreamHistoryQueryParam query) {
         return new AsyncResult<DatastreamHistoryTO>(getDatastreamHistory(path, query));
+    }
+
+    @Override
+    public void sync() {
+        final SyncPathParam path = new SyncPathParam();
+        final SyncQueryParam query = new SyncQueryParam();
+        this.fedoraService.sync(path, query);
     }
 }

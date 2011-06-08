@@ -66,6 +66,7 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.fcrepo.client.FedoraClient;
 import org.fcrepo.client.HttpInputStream;
 import org.fcrepo.server.access.FedoraAPIA;
@@ -118,7 +119,7 @@ public class FedoraUtility {
     /**
      * Query string to trigger a sync via the fedora REST interface.
      */
-    private String syncRestQuery;
+    //private String syncRestQuery;
 
     // TODO
     // in configurationsdatei auslagern--> escidoc config*
@@ -139,7 +140,8 @@ public class FedoraUtility {
 
     private DefaultHttpClient httpClient;
 
-    private TripleStoreUtility tripleStoreUtility;
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     @Autowired
     @Qualifier("business.Utility")
@@ -219,7 +221,7 @@ public class FedoraUtility {
         finally {
             returnApim(apim);
             if (syncTripleStore) {
-                sync();
+                fedoraServiceClient.sync();
             }
         }
         return pid;
@@ -313,37 +315,6 @@ public class FedoraUtility {
         }
         finally {
             returnApia(apia);
-        }
-    }
-
-    /**
-     * Send a risearch request to fedora repository with flag flush set to true.
-     * Call reinialize() in order to reset a Table Manager for the Triple Store.
-     * 
-     * @throws FedoraSystemException
-     *             Thrown if TripleStore synchronization failed.
-     * @throws WebserverSystemException
-     *             Thrown if TripleStore initialization failed.
-     */
-    public void sync() throws FedoraSystemException, WebserverSystemException {
-
-        FedoraClient fc = null;
-        try {
-            fc = borrowFedoraClient();
-            final HttpInputStream httpInStr = fc.get(this.syncRestQuery, true);
-            if (httpInStr.getStatusCode() != HTTP_OK) {
-                throw new FedoraSystemException("Triplestore sync failed.");
-            }
-            tripleStoreUtility.reinitialize();
-        }
-        catch (final TripleStoreSystemException tse) {
-            throw new WebserverSystemException(tse);
-        }
-        catch (final IOException e) {
-            throw new WebserverSystemException(e);
-        }
-        finally {
-            returnFedoraClient(fc);
         }
     }
 
@@ -566,8 +537,6 @@ public class FedoraUtility {
                     FedoraUtility.this.fedoraPassword).getAPIM();
             }
         }, MAX_IDLE, INIT_IDLE_CAPACITY);
-
-        this.syncRestQuery = this.fedoraUrl + "/risearch?flush=true";
     }
 
     /**
@@ -722,16 +691,6 @@ public class FedoraUtility {
     public void setIdentifierPrefix(final String identifierPrefix) {
 
         this.identifierPrefix = identifierPrefix;
-    }
-
-    /**
-     * Injects the TripleStore utility.
-     * 
-     * @param tripleStoreUtility
-     *            TripleStoreUtility from Spring
-     */
-    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
-        this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**

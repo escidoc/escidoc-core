@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -304,7 +305,13 @@ public class ItemCreate extends GenericResourceCreate {
             }
             this.fedoraServiceClient.modifyDatastream(path, query, stream);
             if (forceSync) {
-                getFedoraUtility().sync();
+                this.fedoraServiceClient.sync();
+                try {
+                    this.getTripleStoreUtility().reinitialize();
+                }
+                catch (TripleStoreSystemException e) {
+                    throw new FedoraSystemException("Error on reinitializing triple store.", e);
+                }
             }
         }
         catch (final Exception e) {
@@ -443,7 +450,8 @@ public class ItemCreate extends GenericResourceCreate {
             for (int i = 0; i < comp.size(); i++) {
                 try {
                     this.fedoraServiceClient.deleteObject(getComponents().get(i).getObjid());
-                    getFedoraUtility().sync();
+                    this.fedoraServiceClient.sync();
+                    this.getTripleStoreUtility().reinitialize();
                 }
                 catch (final Exception e2) {
                     if (LOGGER.isWarnEnabled()) {
@@ -458,7 +466,8 @@ public class ItemCreate extends GenericResourceCreate {
         // now the object it self (maybe it doesn't exists)
         try {
             this.fedoraServiceClient.deleteObject(getObjid());
-            getFedoraUtility().sync();
+            this.fedoraServiceClient.sync();
+            this.getTripleStoreUtility().reinitialize();
         }
         catch (final Exception e2) {
             if (LOGGER.isWarnEnabled()) {

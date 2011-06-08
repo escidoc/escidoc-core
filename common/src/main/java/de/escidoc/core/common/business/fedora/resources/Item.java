@@ -891,7 +891,13 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             }
         }
         if (resourceUpdated) {
-            getFedoraUtility().sync();
+            this.getFedoraServiceClient().sync();
+            try {
+                this.getTripleStoreUtility().reinitialize();
+            }
+            catch (TripleStoreSystemException e) {
+                throw new FedoraSystemException("Error on reinitializing triple store.", e);
+            }
         }
 
         if (!this.alteredComponent.isEmpty()) {
@@ -922,7 +928,13 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                 final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
                 query.setLogMessage("touched");
                 getFedoraServiceClient().updateObject(path, query);
-                getFedoraUtility().sync();
+                this.getFedoraServiceClient().sync();
+                try {
+                    this.getTripleStoreUtility().reinitialize();
+                }
+                catch (TripleStoreSystemException e) {
+                    throw new FedoraSystemException("Error on reinitializing triple store.", e);
+                }
                 this.setNeedSync(true);
             }
         }

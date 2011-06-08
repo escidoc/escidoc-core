@@ -410,7 +410,13 @@ public class ItemHandlerCreate extends ItemResourceListener {
         catch (final StreamNotFoundException e1) {
             throw new IntegritySystemException(e1);
         }
-        getFedoraUtility().sync();
+        this.getFedoraServiceClient().sync();
+        try {
+            this.getTripleStoreUtility().reinitialize();
+        }
+        catch (TripleStoreSystemException e) {
+            throw new FedoraSystemException("Error on reinitializing triple store.", e);
+        }
         final String component;
         try {
             final Component c = new Component(componentId, getItem().getId(), null);

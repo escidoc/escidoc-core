@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
@@ -235,7 +236,13 @@ public class ContentModelCreate extends GenericResourceCreate {
         this.fedoraServiceClient.modifyDatastream(path, query, stream);
 
         if (forceSync) {
-            this.fedoraUtility.sync();
+            this.fedoraServiceClient.sync();
+            try {
+                this.getTripleStoreUtility().reinitialize();
+            }
+            catch (TripleStoreSystemException e) {
+                throw new FedoraSystemException("Error on reinitializing triple store.", e);
+            }
         }
     }
 

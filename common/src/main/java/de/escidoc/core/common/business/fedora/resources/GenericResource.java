@@ -885,7 +885,13 @@ public class GenericResource implements FedoraResource {
             setLastModificationDate(lastModificationDate);
         }
         if (sync) {
-            this.fedoraUtility.sync();
+            this.fedoraServiceClient.sync();
+        }
+        try {
+            this.getTripleStoreUtility().reinitialize();
+        }
+        catch (TripleStoreSystemException e) {
+            throw new FedoraSystemException("Error on reinitializing triple store.", e);
         }
         return getLastFedoraModificationDate();
     }

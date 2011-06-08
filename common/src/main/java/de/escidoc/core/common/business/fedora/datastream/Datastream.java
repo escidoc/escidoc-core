@@ -28,6 +28,8 @@ import java.util.Map;
 import javax.validation.constraints.NotNull;
 import javax.xml.parsers.ParserConfigurationException;
 
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import net.sf.oval.guard.Guarded;
 
 import org.apache.cxf.jaxrs.client.ServerWebApplicationException;
@@ -123,6 +125,10 @@ public class Datastream {
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")
@@ -484,7 +490,13 @@ public class Datastream {
             this.updateDatastream(datastreamProfile);
         }
         if (sync) {
-            this.fedoraUtility.sync();
+            this.fedoraServiceClient.sync();
+            try {
+                this.tripleStoreUtility.reinitialize();
+            }
+            catch (TripleStoreSystemException e) {
+                throw new FedoraSystemException("Error on reinitializing triple store.", e);
+            }
         }
         return this.timestamp.withZone(DateTimeZone.UTC).toString(
             de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
