@@ -30,6 +30,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
+import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
+import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.xml.DateTimeJaxbConverter;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
@@ -331,16 +335,14 @@ public class GenericVersionableResource extends GenericResourcePid {
              * The current implementation derives the creation date from the
              * 'created Date' of the RELS-EXT datastream.
              */
+            final GetDatastreamHistoryPathParam path =
+                new GetDatastreamHistoryPathParam(getId(), Datastream.RELS_EXT_DATASTREAM);
+            final GetDatastreamHistoryQueryParam query = new GetDatastreamHistoryQueryParam();
+            final DatastreamHistoryTO history = getFedoraServiceClient().getDatastreamHistory(path, query);
+            final DatastreamProfileTO lastProfile =
+                history.getDatastreamProfile().get(history.getDatastreamProfile().size() - 1);
 
-            try {
-                final org.fcrepo.server.types.gen.Datastream[] datastreams =
-                    getFedoraUtility().getDatastreamHistory(getId(), Datastream.RELS_EXT_DATASTREAM);
-                this.creationDate = datastreams[datastreams.length - 1].getCreateDate();
-            }
-            catch (final FedoraSystemException e) {
-                throw new WebserverSystemException(e);
-            }
-
+            this.creationDate = lastProfile.getDsCreateDate().toString();
         }
         return this.creationDate;
     }
