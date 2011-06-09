@@ -174,8 +174,8 @@ default-lazy-init="false">
     <bean id="shibFilter" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationFilter"/>
 
     <bean id="entryPoint" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationEntryPoint">
-        <property name="serviceProviderBaseUrl" value="https://kal04756.fiz-karlsruhe.de" />
-        <property name="sessionInitiatorPath" value="/Shibboleth.sso/Login" />
+        <property name="serviceProviderBaseUrl" value="https://esfedrep5.fiz-karlsruhe.de:8545" />
+        <property name="sessionInitiatorPath" value="/Shibboleth.sso/DS" />
     </bean>
 
     <bean id="shibProvider" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationProvider" />
