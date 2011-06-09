@@ -19,9 +19,9 @@
 			2008-02-22T09:31:59.625Z
 		</prop:creation-date>
 		<srel:created-by xlink:type="simple" xlink:title="roland"
-			xlink:href="/aa/user-account/escidoc:user42" />
+			xlink:href="/aa/user-account/escidoc:exuser1" />
 		<srel:modified-by xlink:type="simple" xlink:title="roland"
-			xlink:href="/aa/user-account/escidoc:user42" />
+			xlink:href="/aa/user-account/escidoc:exuser1" />
 		<prop:public-status>created</prop:public-status>
 		<prop:name>Context Example 1</prop:name>
 		<prop:description>Context Description</prop:description>

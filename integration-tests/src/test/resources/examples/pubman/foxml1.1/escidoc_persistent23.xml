@@ -34,9 +34,9 @@
           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xlink="http://www.w3.org/1999/xlink/">
           <rdf:Description rdf:about="info:fedora/escidoc:persistent23">
 		    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
-            <srel:created-by rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <prop:created-by-title>roland</prop:created-by-title>
-            <srel:modified-by rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:modified-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <prop:modified-by-title>roland</prop:modified-by-title>
             <prop:type>PubMan</prop:type>
             <srel:organizational-unit rdf:resource="info:fedora/escidoc:persistent25"/>

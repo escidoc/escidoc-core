@@ -101,8 +101,8 @@
             <prop:created-by-title>roland</prop:created-by-title>
             <prop:modified-by-title>roland</prop:modified-by-title>
             <prop:type>TestType</prop:type>
-            <srel:created-by rdf:resource="info:fedora/escidoc:user42"/>
-            <srel:modified-by rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
+            <srel:modified-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <rdf:type rdf:resource="http://escidoc.de/core/01/resources/Context"/>
             <srel:organizational-unit rdf:resource="info:fedora/escidoc:persistent1"/>
             <srel:organizational-unit rdf:resource="info:fedora/escidoc:persistent13"/>

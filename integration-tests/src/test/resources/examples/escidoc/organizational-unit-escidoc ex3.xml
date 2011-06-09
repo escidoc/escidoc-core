@@ -3,8 +3,8 @@
 <organizational-unit:organizational-unit xmlns:organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:base="http://localhost:8080" xlink:type="simple" xlink:title="Department Research and Development" xlink:href="/oum/organizational-unit/escidoc:ex3" last-modification-date="2007-11-20T09:57:44.656Z">
 	<organizational-unit:properties xlink:type="simple" xlink:title="Properties" xlink:href="/oum/organizational-unit/escidoc:ex3/properties">
 		<organizational-unit:creation-date>2007-11-20T09:57:44.656Z</organizational-unit:creation-date>
-		<organizational-unit:created-by xlink:type="simple" xlink:title="roland" xlink:href="/aa/user-account/escidoc:user42" />
-		<organizational-unit:modified-by xlink:type="simple" xlink:title="roland" xlink:href="/aa/user-account/escidoc:user42" />
+		<organizational-unit:created-by xlink:type="simple" xlink:title="roland" xlink:href="/aa/user-account/escidoc:exuser1" />
+		<organizational-unit:modified-by xlink:type="simple" xlink:title="roland" xlink:href="/aa/user-account/escidoc:exuser1" />
 		<organizational-unit:public-status>opened</organizational-unit:public-status>
 		<organizational-unit:has-children>false</organizational-unit:has-children>
 	</organizational-unit:properties>

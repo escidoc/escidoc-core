@@ -19,7 +19,7 @@
           <rdf:Description rdf:about="info:fedora/escidoc:ex6">
             <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
             <prop:content-category>image</prop:content-category>
-            <srel:created-by rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <prop:visibility>public</prop:visibility>
             <prop:created-by-title>roland</prop:created-by-title>
             <prop:valid-status>valid</prop:valid-status>

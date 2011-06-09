@@ -102,7 +102,7 @@
           <rdf:Description rdf:about="info:fedora/escidoc:ex5">
 		    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
             <prop:context-title>A simple Context</prop:context-title>
-            <srel:created-by rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <srel:context rdf:resource="info:fedora/escidoc:ex1"/>
             <prop:public-status>pending</prop:public-status>
             <prop:public-status-comment>Object escidoc:ex5 created.</prop:public-status-comment>
@@ -113,7 +113,7 @@
             <version:number xmlns:version="http://escidoc.de/core/01/properties/version/">1</version:number>
             <version:date xmlns:version="http://escidoc.de/core/01/properties/version/">2007-11-15T08:36:49.625Z</version:date>
             <version:status xmlns:version="http://escidoc.de/core/01/properties/version/">pending</version:status>
-            <srel:modified-by rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:modified-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <prop:modified-by-title>roland</prop:modified-by-title>
             <version:comment xmlns:version="http://escidoc.de/core/01/properties/version/">Object escidoc:ex5 created.</version:comment>
             <srel:component rdf:resource="info:fedora/escidoc:ex6"/>
@@ -129,7 +129,7 @@
           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xlink="http://www.w3.org/1999/xlink/">
           <rdf:Description rdf:about="info:fedora/escidoc:ex5">
             <prop:context-title>A simple Context</prop:context-title>
-            <srel:created-by rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <srel:context rdf:resource="info:fedora/escidoc:ex1"/>
             <prop:public-status>pending</prop:public-status>
             <prop:public-status-comment>Object escidoc:ex5 created.</prop:public-status-comment>
@@ -141,7 +141,7 @@
             <version:date xmlns:version="http://escidoc.de/core/01/properties/version/">2007-11-15T08:36:52.453Z</version:date>
             <version:status xmlns:version="http://escidoc.de/core/01/properties/version/">pending</version:status>
             <version:valid-status xmlns:version="http://escidoc.de/core/01/properties/version/">valid</version:valid-status>
-            <srel:modified-by rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:modified-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <prop:modified-by-title>roland</prop:modified-by-title>
             <version:comment xmlns:version="http://escidoc.de/core/01/properties/version/">Object escidoc:ex5 created.</version:comment>
             <srel:component rdf:resource="info:fedora/escidoc:ex6"/>
@@ -155,7 +155,7 @@
         <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
           <rdf:Description rdf:about="info:fedora/escidoc:ex5">
             <prop:context-title xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/">A simple Context</prop:context-title>
-            <srel:created-by rdf:resource="info:fedora/escidoc:user42" xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"/>
+            <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator" xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"/>
             <srel:context rdf:resource="info:fedora/escidoc:ex1" xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"/>
             <prop:public-status xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/">submitted</prop:public-status>
             <prop:public-status-comment xmlns:prop="http://escidoc.de/core/01/properties/">Status changed to submitted for Item escidoc:ex5.</prop:public-status-comment>
@@ -167,7 +167,7 @@
             <version:date xmlns:version="http://escidoc.de/core/01/properties/version/">2007-11-15T08:36:55.781Z</version:date>
             <version:status xmlns:version="http://escidoc.de/core/01/properties/version/">submitted</version:status>
             <version:valid-status xmlns:version="http://escidoc.de/core/01/properties/version/">valid</version:valid-status>
-            <srel:modified-by xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/" rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:modified-by xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/" rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <prop:modified-by-title xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/">roland</prop:modified-by-title>
             <version:comment xmlns:version="http://escidoc.de/core/01/properties/version/">Status changed to submitted for Item escidoc:ex5.</version:comment>
             <srel:component xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/" rdf:resource="info:fedora/escidoc:ex6" xmlns:escidocRelations="http://www.nsdl.org/ontologies/relationships/"/>
@@ -181,7 +181,7 @@
         <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
           <rdf:Description rdf:about="info:fedora/escidoc:ex5">
             <prop:context-title xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/">A simple Context</prop:context-title>
-            <srel:created-by rdf:resource="info:fedora/escidoc:user42" xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"/>
+            <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator" xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"/>
             <srel:context rdf:resource="info:fedora/escidoc:ex1" xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"/>
             <prop:public-status xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/">released</prop:public-status>
             <prop:public-status-comment xmlns:prop="http://escidoc.de/core/01/properties/">Status changed to released for Item escidoc:ex5.</prop:public-status-comment>
@@ -193,7 +193,7 @@
             <version:date xmlns:version="http://escidoc.de/core/01/properties/version/">2007-11-15T08:36:58.765Z</version:date>
             <version:status xmlns:version="http://escidoc.de/core/01/properties/version/">released</version:status>
             <version:valid-status xmlns:version="http://escidoc.de/core/01/properties/version/">valid</version:valid-status>
-            <srel:modified-by xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/" rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:modified-by xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/" rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <prop:modified-by-title xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/">roland</prop:modified-by-title>
             <version:comment xmlns:version="http://escidoc.de/core/01/properties/version/">Status changed to released for Item escidoc:ex5.</version:comment>
             <srel:component xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/" rdf:resource="info:fedora/escidoc:ex6" xmlns:escidocRelations="http://www.nsdl.org/ontologies/relationships/"/>
@@ -239,9 +239,9 @@
                 <premis:eventType>released</premis:eventType>
                 <premis:eventDateTime>2007-11-15T08:36:59.484Z</premis:eventDateTime>
                 <premis:eventDetail>Status changed to released for Item escidoc:ex5.</premis:eventDetail>
-                <premis:linkingAgentIdentifier xlink:href="/aa/user-account/escidoc:user42" xlink:title="roland" xlink:type="simple">
+                <premis:linkingAgentIdentifier xlink:href="/aa/user-account/escidoc:testsystemadministrator" xlink:title="roland" xlink:type="simple">
                   <premis:linkingAgentIdentifierType>escidoc-internal</premis:linkingAgentIdentifierType>
-                  <premis:linkingAgentIdentifierValue>escidoc:user42</premis:linkingAgentIdentifierValue>
+                  <premis:linkingAgentIdentifierValue>escidoc:testsystemadministrator</premis:linkingAgentIdentifierValue>
                 </premis:linkingAgentIdentifier>
                 <premis:linkingObjectIdentifier>
                   <premis:linkingObjectIdentifierType>escidoc-internal</premis:linkingObjectIdentifierType>
@@ -256,9 +256,9 @@
                 <premis:eventType>submitted</premis:eventType>
                 <premis:eventDateTime>2007-11-15T08:36:56.718Z</premis:eventDateTime>
                 <premis:eventDetail>Status changed to submitted for Item escidoc:ex5.</premis:eventDetail>
-                <premis:linkingAgentIdentifier xlink:href="/aa/user-account/escidoc:user42" xlink:title="roland" xlink:type="simple">
+                <premis:linkingAgentIdentifier xlink:href="/aa/user-account/escidoc:testsystemadministrator" xlink:title="roland" xlink:type="simple">
                   <premis:linkingAgentIdentifierType>escidoc-internal</premis:linkingAgentIdentifierType>
-                  <premis:linkingAgentIdentifierValue>escidoc:user42</premis:linkingAgentIdentifierValue>
+                  <premis:linkingAgentIdentifierValue>escidoc:testsystemadministrator</premis:linkingAgentIdentifierValue>
                 </premis:linkingAgentIdentifier>
                 <premis:linkingObjectIdentifier>
                   <premis:linkingObjectIdentifierType>escidoc-internal</premis:linkingObjectIdentifierType>
@@ -273,9 +273,9 @@
                 <premis:eventType>create</premis:eventType>
                 <premis:eventDateTime>2007-11-15T08:36:52.453Z</premis:eventDateTime>
                 <premis:eventDetail>Object escidoc:ex5 created.</premis:eventDetail>
-                <premis:linkingAgentIdentifier xlink:href="/aa/user-account/escidoc:user42" xlink:title="roland" xlink:type="simple">
+                <premis:linkingAgentIdentifier xlink:href="/aa/user-account/escidoc:testsystemadministrator" xlink:title="roland" xlink:type="simple">
                   <premis:linkingAgentIdentifierType>escidoc-internal</premis:linkingAgentIdentifierType>
-                  <premis:linkingAgentIdentifierValue>escidoc:user42</premis:linkingAgentIdentifierValue>
+                  <premis:linkingAgentIdentifierValue>escidoc:testsystemadministrator</premis:linkingAgentIdentifierValue>
                 </premis:linkingAgentIdentifier>
                 <premis:linkingObjectIdentifier>
                   <premis:linkingObjectIdentifierType>escidoc-internal</premis:linkingObjectIdentifierType>

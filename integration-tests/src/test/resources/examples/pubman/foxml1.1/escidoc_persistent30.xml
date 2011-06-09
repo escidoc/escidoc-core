@@ -19,9 +19,9 @@
           <rdf:Description rdf:about="info:fedora/escidoc:persistent30">
 		    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
             <rdf:type rdf:resource="http://escidoc.de/core/01/resources/OrganizationalUnit"/>
-            <srel:created-by rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <prop:created-by-title>roland</prop:created-by-title>
-            <srel:modified-by rdf:resource="info:fedora/escidoc:user42"/>
+            <srel:modified-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
             <prop:modified-by-title>roland</prop:modified-by-title>
             <prop:public-status>opened</prop:public-status>
             <prop:public-status-comment>Organizational unit escidoc:persistent30 opened.</prop:public-status-comment>
