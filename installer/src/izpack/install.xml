@@ -90,6 +90,8 @@
         <res id="HTMLInfoPanel.installInfo_deu" src="installer/nextstepsAfterInstall.html_deu" parse="yes" type="plain" />
         <res id="HTMLInfoPanel.upgradeInfo_eng" src="installer/nextstepsAfterUpgrade.html_eng" parse="yes" type="plain" />
         <res id="HTMLInfoPanel.upgradeInfo_deu" src="installer/nextstepsAfterUpgrade.html_deu" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.upgradeInfoWithoutMigration_eng" src="installer/nextstepsAfterUpgradeWithoutMigration.html_eng" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.upgradeInfoWithoutMigration_deu" src="installer/nextstepsAfterUpgradeWithoutMigration.html_deu" parse="yes" type="plain" />
 
         <res id="Heading.image" src="installer/escidoc-logo-small.jpg" />
         <res id="Splash.image" src="installer/splash.jpg" />
@@ -113,6 +115,9 @@
 
       <!-- Show dialog that asks for install or update? -->
       <variable name="AskForUpgrade" value="true" />
+
+      <!-- Run migration during upgrade -->
+      <variable name="RunMigration" value="false" />
 
       <!-- Don't show warning in TargetPanel that directory doesn't exist. -->
       <variable name="ShowCreateDirectoryMessage" value="false" />
@@ -297,8 +302,8 @@
         <name>AskForUpgrade</name>
         <value>true</value>
       </condition>
-      <condition type="variable" id="runDatabaseMigration">
-        <name>RunDatabaseMigration</name>
+      <condition type="variable" id="runMigration">
+        <name>RunMigration</name>
         <value>true</value>
       </condition>
       <condition type="variable" id="upgradeEscidoc">
@@ -372,11 +377,12 @@
         <panel classname="UserInputPanel" id="UserInputPanel.16" condition="installEscidoc+authMethodIsFormBased" />
         <!-- panel classname="DataCheckPanel" id="Debug" / -->
         <panel classname="InstallPanel" id="EscidocInstall" />
-        <panel classname="UserInputPanel" id="UserInputPanel.17" condition="upgradeEscidoc" />
-        <panel classname="UserInputPanel" id="UserInputPanel.18" condition="upgradeEscidoc" />
-        <panel classname="ProcessPanel" condition="runDatabaseMigration" />
+        <panel classname="UserInputPanel" id="UserInputPanel.17" condition="upgradeEscidoc+runMigration" />
+        <panel classname="UserInputPanel" id="UserInputPanel.18" condition="upgradeEscidoc+runMigration" />
+        <panel classname="ProcessPanel" condition="upgradeEscidoc+runMigration" />
         <panel classname="HTMLInfoPanel" id="installInfo" condition="installEscidoc" />
-        <panel classname="HTMLInfoPanel" id="upgradeInfo" condition="upgradeEscidoc" />
+        <panel classname="HTMLInfoPanel" id="upgradeInfo" condition="upgradeEscidoc+runMigration" />
+        <panel classname="HTMLInfoPanel" id="upgradeInfoWithoutMigration" condition="upgradeEscidoc+!runMigration" />
         <panel classname="FinishPanel" id="CommonFinish" />
     </panels>
 

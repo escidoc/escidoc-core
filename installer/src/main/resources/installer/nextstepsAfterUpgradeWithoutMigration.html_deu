@@ -1,0 +1,17 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>Gl&uuml;ckwunsch!</title>
+    <style type="text/css">
+      h1 { font-family: 'trebuchet ms', verdana, helvetica, sans-serif; }
+      p, li { font-size: 12pt; font-family: 'trebuchet ms', verdana, helvetica, sans-serif; }
+    </style>
+  </head>
+  
+  <body>
+  	<h1>Gl&uuml;ckwunsch!</h1>
+        <p>Sie haben die eSciDoc-Infrastruktur erfolgreich aktualisiert!
+  	</p>	
+    <p>Wir hoffen, da&szlig; Sie eSciDoc als interessante und n&uuml;tzliche e-Research-Umgebung entdecken werden.</p>
+  </body>
+</html>
