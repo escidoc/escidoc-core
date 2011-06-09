@@ -15,14 +15,14 @@
 						</emphasis>
 					</para>
 					<para>In order to enable a selective harvesting the meta data of
-						Items and Containers of Escidoc repository via OAI-PMH
+						Items and Containers of eSciDoc repository via OAI-PMH
 						[http://www.openarchives.org/OAI/openarchivesprotocol.html],
 						Escidoc repository can be divided into sets composed of released
 						and withdrawn Items and Containers. A set is not static: a set membership is defined by
-						a CQL-query to the Escidoc search service http://host:port/srw/search/escidocoaipmh_all. 
+						a CQL-query to the eSciDoc search service http://host:port/srw/search/escidocoaipmh_all. 
 						Therefore a set composition changes over time according to changes on Items and Containers
 					    and release of new Items and Containers.
-</para>
+					</para>
 					<para>
 						A Set Definition
 						represents a description of a set and
