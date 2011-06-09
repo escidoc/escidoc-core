@@ -32,7 +32,6 @@ import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 import de.escidoc.core.test.security.client.PWCallback;
-import org.apache.axis.utils.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -608,7 +607,7 @@ public final class HttpHelper {
             else {
                 // user account is active, login servlet creates user handle
                 // and redirects to target
-                if (!StringUtils.isEmpty(targetUrl)) {
+                if ((targetUrl != null) && (targetUrl.length() > 0)) {
                     EscidocAbstractTest.assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, httpRes);
                     assertNotNull(httpRes.getFirstHeader("Location"));
                 }

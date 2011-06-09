@@ -1,16 +1,7 @@
 package de.escidoc.core.test.om.item.contentTools;
 
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.resources.BinaryContent;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.om.item.ItemTestBase;
-import org.apache.axis.encoding.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
+import static org.junit.Assert.assertEquals;
 
-import javax.activation.MimetypesFileTypeMap;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,7 +14,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-import static org.junit.Assert.assertEquals;
+import javax.activation.MimetypesFileTypeMap;
+
+import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.resources.BinaryContent;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.om.item.ItemTestBase;
 
 public class ContentTestBase extends ItemTestBase {
 
@@ -141,7 +143,7 @@ public class ContentTestBase extends ItemTestBase {
      */
     protected static String userNamePasswordBase64(final String userInfo) {
 
-        String encs = Base64.encode(userInfo.getBytes());
+        String encs = new String(Base64.encodeBase64(userInfo.getBytes()));
         return "Basic " + encs;
     }
 

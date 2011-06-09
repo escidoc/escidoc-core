@@ -28,20 +28,22 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.common.client.servlet.ClientBase;
-import org.apache.axis.encoding.Base64;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.apache.commons.codec.binary.Base64;
+
+import de.escidoc.core.test.common.client.servlet.ClientBase;
 
 // warning: sun.misc.BASE64Encoder is Sun proprietary API and may be removed in
 // a future release
@@ -183,7 +185,7 @@ public class HttpRequester {
 
         // Set Basic-Authentication Header
         if (securityHandle != null && !securityHandle.equals("")) {
-            String encoding = Base64.encode(securityHandle.getBytes(ClientBase.DEFAULT_CHARSET));
+            String encoding = new String(Base64.encodeBase64(securityHandle.getBytes(ClientBase.DEFAULT_CHARSET)));
             con.setRequestProperty("Authorization", "Basic " + encoding);
         }
 
@@ -233,7 +235,7 @@ public class HttpRequester {
 
         // Set Basic-Authentication Header
         if (securityHandle != null && !securityHandle.equals("")) {
-            String encoding = Base64.encode(securityHandle.getBytes(ClientBase.DEFAULT_CHARSET));
+            String encoding = new String(Base64.encodeBase64(securityHandle.getBytes(ClientBase.DEFAULT_CHARSET)));
             con.setRequestProperty("Authorization", "Basic " + encoding);
         }
 

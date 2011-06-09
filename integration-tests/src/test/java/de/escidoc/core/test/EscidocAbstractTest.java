@@ -28,28 +28,12 @@
  */
 package de.escidoc.core.test;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.aa.UserManagementWrapperClient;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.common.resources.ResourceProvider;
-import org.apache.axis.encoding.Base64;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.xpath.XPathAPI;
-import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.TransformerException;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -70,11 +54,29 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.TransformerException;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.xpath.XPathAPI;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.aa.UserManagementWrapperClient;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.common.resources.ResourceProvider;
 
 /**
  * Base class for tests that are used to test the interfaces of the eSciDoc core services.
@@ -2578,7 +2580,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      * @param exceptionClass
      *            The expected exception type.
      */
-    public static void failMissingException(final Class exceptionClass) {
+    public static void failMissingException(final Class<?> exceptionClass) {
         failMissingException("Missing exception. ", exceptionClass);
     }
 
@@ -2590,7 +2592,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      * @param exceptionClass
      *            The expected exception type.
      */
-    public static void failMissingException(final String message, final Class exceptionClass) {
+    public static void failMissingException(final String message, final Class<?> exceptionClass) {
 
         StringBuffer msg = new StringBuffer(message);
         msg.append(" Missing expected exception: ");
@@ -2609,7 +2611,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      * @param e
      *            The exception to be asserted.
      */
-    public static void assertExceptionType(final String message, final Class expectedClass, final Exception e) {
+    public static void assertExceptionType(final String message, final Class<?> expectedClass, final Exception e) {
 
         if (!e.getClass().equals(expectedClass)) {
             StringBuffer msg = new StringBuffer(message);
@@ -2632,7 +2634,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      * @param e
      *            The exception to be asserted.
      */
-    public static void assertExceptionType(final Class expectedClass, final Exception e) {
+    public static void assertExceptionType(final Class<?> expectedClass, final Exception e) {
 
         assertExceptionType("Unexpected exception, ", expectedClass, e);
     }
@@ -2799,7 +2801,8 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
                 String locationHeaderValue = result.getFirstHeader("Location").getValue();
                 int index = locationHeaderValue.indexOf('=');
                 userHandleFromRedirectUrl =
-                    new String(Base64.decode(locationHeaderValue.substring(index + 1, locationHeaderValue.length())));
+                    new String(Base64.decodeBase64(locationHeaderValue.substring(index + 1, locationHeaderValue
+                        .length())));
             }
             else if ("Set-Cookie".equals(headers[i].getName())) {
                 String setCookieHeaderValue = result.getFirstHeader("Set-Cookie").getValue();
