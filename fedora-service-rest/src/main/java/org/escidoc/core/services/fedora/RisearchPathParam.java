@@ -23,15 +23,6 @@ package org.escidoc.core.services.fedora;
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-public final class SyncQueryParam {
+public final class RisearchPathParam {
 
-    private String flush = Boolean.TRUE.toString();
-
-    public String getFlush() {
-        return flush;
-    }
-
-    public void setFlush(final String flush) {
-        this.flush = flush;
-    }
 }

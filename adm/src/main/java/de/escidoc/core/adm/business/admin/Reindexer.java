@@ -41,6 +41,8 @@ import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexRequestBuilder;
 import de.escidoc.core.index.IndexService;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.esidoc.core.utils.io.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -62,51 +64,8 @@ import java.util.Set;
 @Service("admin.Reindexer")
 public class Reindexer {
 
-    /**
-     * Triple store query to get a list of all containers.
-     */
-    private static final String CONTAINER_LIST_QUERY =
-        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.CONTAINER.getUri() + "%3e";
-
-    /**
-     * Triple store query to get a list of all Content Models.
-     */
-    private static final String CONTENT_MODEL_LIST_QUERY =
-        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.CONTENT_MODEL.getUri() + "%3e";
-
-    /**
-     * Triple store query to get a list of all content relations.
-     */
-    private static final String CONTENT_RELATION_LIST_QUERY =
-        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.CONTENT_RELATION.getUri() + "%3e";
-
-    /**
-     * Triple store query to get a list of all contexts.
-     */
-    private static final String CONTEXT_LIST_QUERY =
-        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.CONTEXT.getUri() + "%3e";
-
-    /**
-     * Triple store query to get a list of all items.
-     */
-    private static final String ITEM_LIST_QUERY =
-        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.ITEM.getUri() + "%3e";
-
-    /**
-     * Triple store query to get a list of all organizational units.
-     */
-    private static final String OU_LIST_QUERY =
-        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
-            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c" + ResourceType.OU.getUri() + "%3e";
-
     @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
+    private FedoraServiceClient fedoraServiceClient;
 
     @Autowired
     @Qualifier("de.escidoc.core.index.IndexService")
@@ -167,35 +126,35 @@ public class Reindexer {
             try {
                 // Get all Containers
                 final Collection<String> containerHrefs =
-                    getIds(indexName, ResourceType.CONTAINER, CONTAINER_LIST_QUERY, clearIndex);
+                    getIds(indexName, ResourceType.CONTAINER, clearIndex);
 
                 idListEmpty &= containerHrefs.isEmpty();
 
                 // Get all Content Models
                 final Collection<String> contentModelHrefs =
-                    getIds(indexName, ResourceType.CONTENT_MODEL, CONTENT_MODEL_LIST_QUERY, clearIndex);
+                    getIds(indexName, ResourceType.CONTENT_MODEL, clearIndex);
 
                 idListEmpty &= contentModelHrefs.isEmpty();
 
                 // Get all Content Relations
                 final Collection<String> contentRelationHrefs =
-                    getIds(indexName, ResourceType.CONTENT_RELATION, CONTENT_RELATION_LIST_QUERY, clearIndex);
+                    getIds(indexName, ResourceType.CONTENT_RELATION, clearIndex);
 
                 idListEmpty &= contentRelationHrefs.isEmpty();
 
                 // Get all Contexts
                 final Collection<String> contextHrefs =
-                    getIds(indexName, ResourceType.CONTEXT, CONTEXT_LIST_QUERY, clearIndex);
+                    getIds(indexName, ResourceType.CONTEXT, clearIndex);
 
                 idListEmpty &= contextHrefs.isEmpty();
 
                 // Get all Items
-                final Collection<String> itemHrefs = getIds(indexName, ResourceType.ITEM, ITEM_LIST_QUERY, clearIndex);
+                final Collection<String> itemHrefs = getIds(indexName, ResourceType.ITEM, clearIndex);
 
                 idListEmpty &= itemHrefs.isEmpty();
 
                 // Get all Organizational Units
-                final Collection<String> orgUnitHrefs = getIds(indexName, ResourceType.OU, OU_LIST_QUERY, clearIndex);
+                final Collection<String> orgUnitHrefs = getIds(indexName, ResourceType.OU, clearIndex);
 
                 idListEmpty &= orgUnitHrefs.isEmpty();
 
@@ -371,7 +330,6 @@ public class Reindexer {
      *
      * @param indexName  name of the index
      * @param type       resource type
-     * @param listQuery  Fedora query to get a list of all resources of the given type
      * @param clearIndex clear the index before adding objects to it
      * @return list of resource ids
      * @throws SystemException Thrown if eSciDoc failed to receive a resource.
@@ -379,13 +337,14 @@ public class Reindexer {
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     private Collection<String> getIds(
-        final String indexName, final ResourceType type, final String listQuery, final boolean clearIndex)
+        final String indexName, final ResourceType type, final boolean clearIndex)
         throws SystemException, FedoraSystemException, WebserverSystemException {
         final Collection<String> result = new LinkedList<String>();
         if (contains(indexName, type)) {
             BufferedReader input = null;
             try {
-                input = new BufferedReader(new InputStreamReader(fedoraUtility.query(listQuery)));
+                Stream stream = this.fedoraServiceClient.query(type.getUri());
+                input = new BufferedReader(new InputStreamReader(stream.getInputStream()));
                 final ReindexStatus reindexStatus = ReindexStatus.getInstance();
                 final String objectType = type.getUri();
                 Set<String> indexedPids = new HashSet<String>();
@@ -443,12 +402,4 @@ public class Reindexer {
         this.indexService = indexService;
     }
 
-    /**
-     * Injects the {@link FedoraUtility}.
-     *
-     * @param fedoraUtility the {@link FedoraUtility} to inject.
-     */
-    public void setFedoraUtility(final FedoraUtility fedoraUtility) {
-        this.fedoraUtility = fedoraUtility;
-    }
 }

@@ -319,34 +319,6 @@ public class FedoraUtility {
     }
 
     /**
-     * Send a GET request to Fedora.
-     * 
-     * @param queryString
-     *            query string
-     * @return response from Fedora as input stream
-     * @throws FedoraSystemException
-     *             Thrown in case of an internal error.
-     * @throws IOException
-     *             Thrown if the GET request to Fedora failed.
-     */
-    public HttpInputStream query(final String queryString) throws FedoraSystemException, IOException {
-        HttpInputStream result = null;
-        FedoraClient fc = null;
-
-        try {
-            fc = borrowFedoraClient();
-            result = fc.get(queryString, true);
-            if (result.getStatusCode() != HTTP_OK) {
-                throw new FedoraSystemException("GET request to Fedora failed with error " + result.getStatusCode());
-            }
-        }
-        finally {
-            returnFedoraClient(fc);
-        }
-        return result;
-    }
-
-    /**
      * Borrows a {@link FedoraClient} from the pool.
      * 
      * @return Returns a {@link FedoraClient}.

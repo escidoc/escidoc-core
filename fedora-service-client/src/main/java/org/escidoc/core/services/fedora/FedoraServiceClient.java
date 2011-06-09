@@ -105,4 +105,8 @@ public interface FedoraServiceClient {
         @NotNull GetDatastreamHistoryPathParam path, @NotNull GetDatastreamHistoryQueryParam query);
 
     void sync();
+
+    Stream query(String resourceType);
+
+    Future<Stream> queryAsync(String resourceType);
 }

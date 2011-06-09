@@ -23,6 +23,55 @@ package org.escidoc.core.services.fedora;
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-public final class SyncPathParam {
+public final class RisearchQueryParam {
 
+    private String type;
+
+    private String lang;
+
+    private String format;
+
+    private String query;
+
+    private String flush;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(final String type) {
+        this.type = type;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(final String lang) {
+        this.lang = lang;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(final String format) {
+        this.format = format;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(final String query) {
+        this.query = query;
+    }
+
+    public String getFlush() {
+        return flush;
+    }
+
+    public void setFlush(final String flush) {
+        this.flush = flush;
+    }
 }

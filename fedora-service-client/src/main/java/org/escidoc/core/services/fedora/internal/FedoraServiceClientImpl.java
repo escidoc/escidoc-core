@@ -4,7 +4,6 @@ import com.googlecode.ehcache.annotations.KeyGenerator;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 import net.sf.oval.guard.Guarded;
 import org.apache.cxf.jaxrs.client.Client;
-import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
@@ -38,8 +37,8 @@ import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.NextPIDPathParam;
 import org.escidoc.core.services.fedora.NextPIDQueryParam;
 import org.escidoc.core.services.fedora.PidListTO;
-import org.escidoc.core.services.fedora.SyncPathParam;
-import org.escidoc.core.services.fedora.SyncQueryParam;
+import org.escidoc.core.services.fedora.RisearchPathParam;
+import org.escidoc.core.services.fedora.RisearchQueryParam;
 import org.escidoc.core.services.fedora.UpdateObjectPathParam;
 import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
@@ -47,22 +46,18 @@ import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
-import org.esidoc.core.utils.io.IOUtils;
 import org.esidoc.core.utils.io.Stream;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.Future;
 
@@ -393,8 +388,26 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     public void sync() {
-        final SyncPathParam path = new SyncPathParam();
-        final SyncQueryParam query = new SyncQueryParam();
-        this.fedoraService.sync(path, query);
+        final RisearchPathParam path = new RisearchPathParam();
+        final RisearchQueryParam query = new RisearchQueryParam();
+        query.setFlush(Boolean.TRUE.toString());
+        this.fedoraService.risearch(path, query);
+    }
+
+    @Override
+    public Stream query(final String resourceType) {
+        final RisearchPathParam path = new RisearchPathParam();
+        final RisearchQueryParam query = new RisearchQueryParam();
+        query.setType("triples");
+        query.setLang("spo");
+        query.setFormat("N-Triples");
+        query.setQuery("* <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <"+ resourceType +">");
+        return this.fedoraService.risearch(path, query);
+    }
+
+    @Override
+    @Async
+    public Future<Stream> queryAsync(final String resourceType) {
+        return new AsyncResult<Stream>(query(resourceType));
     }
 }

@@ -133,7 +133,7 @@ public interface FedoraServiceRESTEndpoint {
     @Path("/risearch")
     @Produces(MimeTypes.ALL)
     @Consumes(MimeTypes.ALL)
-    void sync(@NotNull @PathParam("") SyncPathParam path,
-              @NotNull @QueryParam("") SyncQueryParam query);
+    Stream risearch(@NotNull @PathParam("") RisearchPathParam path,
+                    @NotNull @QueryParam("") RisearchQueryParam query);
 
 }
