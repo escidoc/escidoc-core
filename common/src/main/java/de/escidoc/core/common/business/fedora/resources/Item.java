@@ -26,7 +26,6 @@ package de.escidoc.core.common.business.fedora.resources;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,11 +38,10 @@ import javax.xml.stream.XMLStreamException;
 
 import org.escidoc.core.services.fedora.UpdateObjectPathParam;
 import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.xml.DateTimeJaxbConverter;
-import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -136,7 +134,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
 
     private void init() throws WebserverSystemException, FedoraSystemException, IntegritySystemException,
         StreamNotFoundException, TripleStoreSystemException, ItemNotFoundException, ComponentNotFoundException {
-        initDatastreams(getDatastreamInfos());
+        initDatastreams(getDatastreamProfiles());
         if (!checkResourceType(ResourceType.ITEM)) {
             throw new ItemNotFoundException("Item with the provided objid '" + this.getId() + "' does not exit.");
         }
@@ -957,48 +955,28 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *            The Fedora datastream information.
      */
     @Override
-    protected final void initDatastreams(final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
-        throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
-        StreamNotFoundException {
+    protected final void initDatastream(final DatastreamProfileTO profile) throws WebserverSystemException,
+        FedoraSystemException, TripleStoreSystemException, IntegritySystemException, StreamNotFoundException {
 
-        super.initDatastreams(datastreamInfos);
+        super.initDatastream(profile);
 
-        for (final org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
-            final List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
-            final String name = datastreamInfo.getID();
-            final String label = datastreamInfo.getLabel();
-            final DatastreamControlGroup controlGroup = datastreamInfo.getControlGroup();
-            final String controlGroupValue = controlGroup.getValue();
-            final String mimeType = datastreamInfo.getMIMEType();
-            final String location = datastreamInfo.getLocation();
+        DateTime versionDate = getVersionDate();
 
-            final Datastream ds;
-
-            if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
-                // found md-record
-                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
-                ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                ds.setLabel(label);
-                this.mdRecords.put(name, ds);
-            }
-            else if (altIDs.contains("content-stream")) {
-                // found content-stream
-                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
-                ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                ds.setLabel(label);
-                this.contentStreams.put(name, ds);
-            }
-            // content-model-specific
-            else if ("content-model-specific".equals(name)) {
-                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
-                ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                ds.setLabel(label);
-                this.cts = ds;
-            }
-            else {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Stream " + getId() + '/' + name + " not instanziated in Item.<init>.");
-                }
+        if (profile.getDsAltID().contains(Datastream.METADATA_ALTERNATE_ID)) {
+            // found md-record
+            this.mdRecords.put(profile.getDsID(), new Datastream(profile, getId(), versionDate));
+        }
+        else if (profile.getDsAltID().contains("content-stream")) {
+            // found content-stream
+            this.contentStreams.put(profile.getDsID(), new Datastream(profile, getId(), versionDate));
+        }
+        else if ("content-model-specific".equals(profile.getDsID())) {
+            // found content-model-specific
+            this.cts = new Datastream(profile, getId(), versionDate);
+        }
+        else {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Stream " + getId() + '/' + profile.getDsID() + " not instanziated in Item.<init>.");
             }
         }
     }

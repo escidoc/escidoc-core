@@ -35,99 +35,121 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 
 /**
- * Interface for Fedora Object which consist of datastreams managed in Fedora Digital Repository System.
- *
+ * Interface for Fedora Object which consist of datastreams managed in Fedora
+ * Digital Repository System.
+ * 
  * @author Frank Schwichtenberg
  */
 public interface FedoraResource {
 
     /**
-     * Gets the unique id of the fedora object which is represented by this object. The id contains no version specific
-     * part.
-     *
+     * Gets the unique id of the fedora object which is represented by this
+     * object. The id contains no version specific part.
+     * 
      * @return The unique Fedora id.
      */
     String getId();
 
     /**
      * Get the href of the Feodra object.
-     *
+     * 
      * @return The href.
      */
     String getHref();
 
     /**
      * Get RELS-EXT datastream.
-     *
+     * 
      * @return RELS-EXT
-     * @throws StreamNotFoundException Thrown if datastream with name RELS-EXT doesn't exists within the Fedora object.
-     * @throws FedoraSystemException   Thrown if connection or request to Fedora failed.
+     * @throws StreamNotFoundException
+     *             Thrown if datastream with name RELS-EXT doesn't exists within
+     *             the Fedora object.
+     * @throws FedoraSystemException
+     *             Thrown if connection or request to Fedora failed.
      */
     Datastream getRelsExt() throws StreamNotFoundException, FedoraSystemException;
 
     /**
      * Set RELS-EXT datastream.
-     *
-     * @param ds The new RELS-EXT datastream.
-     * @throws StreamNotFoundException    Thrown if datastream with name RELS-EXT doesn't exists within the Fedora
-     *                                    object.
-     * @throws LockingException           Thrown if Resource is locked.
-     * @throws FedoraSystemException      Thrown if connection or request to Fedora failed.
-     * @throws TripleStoreSystemException Thrown if requesting TripleStore failed.
-     * @throws XmlParserSystemException   Thrown if parsing of RELS-EXT datastream failed.
-     * @throws WebserverSystemException   In case of internal errors.
+     * 
+     * @param ds
+     *            The new RELS-EXT datastream.
+     * @throws StreamNotFoundException
+     *             Thrown if datastream with name RELS-EXT doesn't exists within
+     *             the Fedora object.
+     * @throws LockingException
+     *             Thrown if Resource is locked.
+     * @throws FedoraSystemException
+     *             Thrown if connection or request to Fedora failed.
+     * @throws TripleStoreSystemException
+     *             Thrown if requesting TripleStore failed.
+     * @throws XmlParserSystemException
+     *             Thrown if parsing of RELS-EXT datastream failed.
+     * @throws WebserverSystemException
+     *             In case of internal errors.
      */
     void setRelsExt(Datastream ds) throws StreamNotFoundException, LockingException, FedoraSystemException,
         TripleStoreSystemException, XmlParserSystemException, WebserverSystemException;
 
     /**
      * Set RELS-EXT datastream.
-     *
-     * @param ds The new RELS-EXT datastream.
-     * @throws StreamNotFoundException    Thrown if datastream with name RELS-EXT doesn't exists within the Fedora
-     *                                    object.
-     * @throws LockingException           Thrown if Resource is locked.
-     * @throws FedoraSystemException      Thrown if connection or request to Fedora failed.
-     * @throws TripleStoreSystemException Thrown if requesting TripleStore failed.
-     * @throws XmlParserSystemException   Thrown if parsing of RELS-EXT datastream failed.
-     * @throws WebserverSystemException   In case of internal errors.
+     * 
+     * @param ds
+     *            The new RELS-EXT datastream.
+     * @throws StreamNotFoundException
+     *             Thrown if datastream with name RELS-EXT doesn't exists within
+     *             the Fedora object.
+     * @throws LockingException
+     *             Thrown if Resource is locked.
+     * @throws FedoraSystemException
+     *             Thrown if connection or request to Fedora failed.
+     * @throws TripleStoreSystemException
+     *             Thrown if requesting TripleStore failed.
+     * @throws XmlParserSystemException
+     *             Thrown if parsing of RELS-EXT datastream failed.
+     * @throws WebserverSystemException
+     *             In case of internal errors.
      */
     void setRelsExt(final byte[] ds) throws StreamNotFoundException, LockingException, FedoraSystemException,
         WebserverSystemException, TripleStoreSystemException, XmlParserSystemException;
 
     /**
      * Set RELS-EXT datastream.
-     *
-     * @param ds The new RELS-EXT datastream.
-     * @throws StreamNotFoundException    Thrown if datastream with name RELS-EXT doesn't exists within the Fedora
-     *                                    object.
-     * @throws EncodingSystemException    Thrown if String contains invalid characters for the default character set.
-     * @throws LockingException           Thrown if Resource is locked.
-     * @throws FedoraSystemException      Thrown if connection or request to Fedora failed.
-     * @throws TripleStoreSystemException Thrown if requesting TripleStore failed.
-     * @throws XmlParserSystemException   Thrown if parsing of RELS-EXT datastream failed.
-     * @throws WebserverSystemException   In case of internal errors.
+     * 
+     * @param ds
+     *            The new RELS-EXT datastream.
+     * @throws StreamNotFoundException
+     *             Thrown if datastream with name RELS-EXT doesn't exists within
+     *             the Fedora object.
+     * @throws EncodingSystemException
+     *             Thrown if String contains invalid characters for the default
+     *             character set.
+     * @throws LockingException
+     *             Thrown if Resource is locked.
+     * @throws FedoraSystemException
+     *             Thrown if connection or request to Fedora failed.
+     * @throws TripleStoreSystemException
+     *             Thrown if requesting TripleStore failed.
+     * @throws XmlParserSystemException
+     *             Thrown if parsing of RELS-EXT datastream failed.
+     * @throws WebserverSystemException
+     *             In case of internal errors.
      */
     void setRelsExt(final String ds) throws StreamNotFoundException, LockingException, FedoraSystemException,
         TripleStoreSystemException, XmlParserSystemException, EncodingSystemException, WebserverSystemException;
 
     /**
-     * Get the last modification date of the Fedora object. This value differs from the last modification date of the
-     * resource.
-     *
+     * Get the last modification date of the Fedora object. This value differs
+     * from the last modification date of the resource.
+     * 
      * @return last modification date (Fedora object)
-     * @throws TripleStoreSystemException Thrown in case of TripleStore failures.
-     * @throws FedoraSystemException      Thrown in case of Fedora failures.
-     * @throws WebserverSystemException   Thrown in case of internal errors.
+     * @throws TripleStoreSystemException
+     *             Thrown in case of TripleStore failures.
+     * @throws FedoraSystemException
+     *             Thrown in case of Fedora failures.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal errors.
      */
     DateTime getLastFedoraModificationDate() throws TripleStoreSystemException, FedoraSystemException,
         WebserverSystemException;
-
-    /**
-     * Gets the information about the datastreams of a fedora object.
-     *
-     * @return the {@link org.fcrepo.server.types.gen.Datastream}s of the fedora object.
-     * @throws FedoraSystemException Thrown in case of an error during accessing fedora.
-     */
-    org.fcrepo.server.types.gen.Datastream[] getDatastreamsInformation() throws FedoraSystemException;
 }

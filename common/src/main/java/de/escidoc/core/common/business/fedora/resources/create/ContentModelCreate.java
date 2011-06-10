@@ -27,16 +27,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.IngestPathParam;
+import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.ReadableInstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +48,7 @@ import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.service.UserContext;
@@ -61,8 +62,8 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 /**
  * Content Model for create method.
  * <p/>
- * Attention! This is only a helper class for the transition to integrate this functionality into the ContentModel
- * class.
+ * Attention! This is only a helper class for the transition to integrate this
+ * functionality into the ContentModel class.
  * 
  * @author Frank Schwichtenberg
  */
@@ -192,7 +193,37 @@ public class ContentModelCreate extends GenericResourceCreate {
 
         // serialize object without RELS-EXT and WOV to FOXML
         final String foxml = getMinimalFoXML();
-        this.fedoraUtility.storeObjectInFedora(foxml, false);
+
+        final IngestPathParam ingestPath = new IngestPathParam(getObjid());
+        final IngestQueryParam ingestQuery = new IngestQueryParam();
+        ingestQuery.setEncoding(XmlUtility.CHARACTER_ENCODING);
+        ingestQuery.setFormat(IngestQueryParam.FOXML_FORMAT);
+        ingestQuery.setLogMessage("eSciDoc object created");
+
+        // DigitalObjectTO foxmlObject = null;
+        //
+        // try {
+        // final JAXBContext jc =
+        // JAXBContext.newInstance(DigitalObjectTO.class);
+        // final Unmarshaller unmarshaller = jc.createUnmarshaller();
+        // final EsciDocUnmarshallerListener l =
+        // new EsciDocUnmarshallerListener(new
+        // ByteArrayInputStream(foxml.getBytes(XmlUtility.CHARACTER_ENCODING)));
+        // unmarshaller.setListener(l);
+        // final JAXBElement<DigitalObjectTO> element =
+        // unmarshaller.unmarshal(l.getFilteredXmlStreamReader(),
+        // DigitalObjectTO.class);
+        // foxmlObject = element.getValue();
+        // }
+        // catch (final JAXBException e) {
+        // throw new WebserverSystemException(e);
+        // }
+        // catch (final UnsupportedEncodingException e) {
+        // throw new WebserverSystemException(e);
+        // }
+        //
+        // if (foxmlObject != null) {
+        this.fedoraServiceClient.ingest(ingestPath, ingestQuery, foxml);
 
         // take timestamp and prepare RELS-EXT
         final DateTime lmd = getLastModificationDateByWorkaround(getObjid());
@@ -241,7 +272,7 @@ public class ContentModelCreate extends GenericResourceCreate {
             try {
                 this.getTripleStoreUtility().reinitialize();
             }
-            catch (TripleStoreSystemException e) {
+            catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -278,9 +309,11 @@ public class ContentModelCreate extends GenericResourceCreate {
         templateValues.put(XmlTemplateProvider.HREF, getHrefWithVersionSuffix());
 
         templateValues.put(XmlTemplateProvider.TITLE, this.properties.getObjectProperties().getTitle());
-        //templateValues.put(XmlTemplateProvider.VERSION_DATE, this.properties.getCurrentVersion().getDate().toString());
-        //templateValues.put(XmlTemplateProvider.TIMESTAMP, this.properties.getCurrentVersion().getDate().toString());
-        DateTime date = this.properties.getCurrentVersion().getDate();
+        // templateValues.put(XmlTemplateProvider.VERSION_DATE,
+        // this.properties.getCurrentVersion().getDate().toString());
+        // templateValues.put(XmlTemplateProvider.TIMESTAMP,
+        // this.properties.getCurrentVersion().getDate().toString());
+        final DateTime date = this.properties.getCurrentVersion().getDate();
         if (date == null) {
             templateValues.put(XmlTemplateProvider.VERSION_DATE, null);
             templateValues.put(XmlTemplateProvider.TIMESTAMP, null);
@@ -319,10 +352,11 @@ public class ContentModelCreate extends GenericResourceCreate {
     }
 
     /**
-     * Render Object FoXML with Components, ContentStreams and DC but with incomplete RELS-EXT and wihtout WOV.
+     * Render Object FoXML with Components, ContentStreams and DC but with
+     * incomplete RELS-EXT and wihtout WOV.
      * <p/>
-     * WOV is excluded and RELS-EXT incomplete because of non existing timestamp (which is to add in a later step to the
-     * object).
+     * WOV is excluded and RELS-EXT incomplete because of non existing timestamp
+     * (which is to add in a later step to the object).
      * 
      * @return FoXML representation of ContentModel.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
@@ -458,9 +492,10 @@ public class ContentModelCreate extends GenericResourceCreate {
         // .getCurrentVersion().getPid());
 
         valueMap.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
-        String date = this.properties.getCurrentVersion().getDate().toString();
-        if (date == null) {
-            date = "---";
+
+        String date = "---";
+        if (this.properties.getCurrentVersion().getDate() != null) {
+            date = this.properties.getCurrentVersion().getDate().toString();
         }
         valueMap.put(XmlTemplateProvider.VERSION_DATE, date);
         valueMap.put(XmlTemplateProvider.VERSION_STATUS, this.properties.getCurrentVersion().getStatus().toString());
@@ -470,8 +505,9 @@ public class ContentModelCreate extends GenericResourceCreate {
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_PID, this.properties.getLatestVersion().getPid());
 
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_NUMBER, this.properties.getLatestVersion().getNumber());
-        //        valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, this.properties.getLatestVersion().getDate().toString());
-        DateTime lateVersionDate = this.properties.getLatestVersion().getDate();
+        // valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE,
+        // this.properties.getLatestVersion().getDate().toString());
+        final DateTime lateVersionDate = this.properties.getLatestVersion().getDate();
         if (lateVersionDate == null) {
             valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, null);
         }
@@ -552,38 +588,31 @@ public class ContentModelCreate extends GenericResourceCreate {
     }
 
     /**
-     * TODO remove this method if Fedora has fixed the timestamp bug (Fedora 3.0 and 3.1 do not update the object
-     * timestamp during create. It happens that timestamps of steams are newer than the object timestamp. This failure
+     * TODO remove this method if Fedora has fixed the timestamp bug (Fedora 3.0
+     * and 3.1 do not update the object timestamp during create. It happens that
+     * timestamps of steams are newer than the object timestamp. This failure
      * not occurs during a later update.).
      * 
      * @param objid
      *            The id of the Fedora Object.
-     * @return LastModificationDate of the Object (with workaround for Fedora bug).
+     * @return LastModificationDate of the Object (with workaround for Fedora
+     *         bug).
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
     private DateTime getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
 
-        // Work around for Fedora30 bug APIM.getDatastreams()
-        DateTime lastModificationDate = null;
-        final org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
-            this.fedoraUtility.getDatastreamsInformation(objid, null);
-
-        for (final org.fcrepo.server.types.gen.Datastream aRelsExtInfo : relsExtInfo) {
-            final String createdDate = aRelsExtInfo.getCreateDate();
-
-            if (lastModificationDate == null) {
-                lastModificationDate = new DateTime(createdDate, DateTimeZone.UTC);
+        DateTime lmd = null;
+        final List<DatastreamProfileTO> dsProfiles = this.fedoraServiceClient.getDatastreamProfiles(objid, null);
+        for (final DatastreamProfileTO datastreamProfileTO : dsProfiles) {
+            if (lmd == null) {
+                lmd = datastreamProfileTO.getDsCreateDate();
             }
-            else {
-                final DateTime cDate = new DateTime(createdDate, DateTimeZone.UTC);
-                if (lastModificationDate.isBefore(cDate)) {
-                    lastModificationDate = cDate;
-                }
+            else if (lmd.isBefore(datastreamProfileTO.getDsCreateDate())) {
+                lmd = datastreamProfileTO.getDsCreateDate();
             }
         }
-        // End of the work around
-        return lastModificationDate;
+        return lmd;
     }
 
     /**
@@ -613,12 +642,13 @@ public class ContentModelCreate extends GenericResourceCreate {
     /**
      * Get ContentStreams Vector/HashMap Structure for Velocity.
      * 
-     * @return Vector which contains a HashMap with all values for each ContentStream. HashMap keys are keys for
-     *         Velocity template.
+     * @return Vector which contains a HashMap with all values for each
+     *         ContentStream. HashMap keys are keys for Velocity template.
      */
     private List<HashMap<String, String>> getContentStreamsMap() {
         /*
-         * (has to move in an own renderer class, I know. Please feel free to create class infrastructure.).
+         * (has to move in an own renderer class, I know. Please feel free to
+         * create class infrastructure.).
          */
 
         if (this.contentStreams == null) {

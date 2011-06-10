@@ -24,7 +24,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,11 +38,10 @@ import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
-import org.esidoc.core.utils.xml.DateTimeJaxbConverter;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +81,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     private Datastream dc;
 
-    private Map<String, Datastream> mdRecords;
+    private final Map<String, Datastream> mdRecords = new HashMap<String, Datastream>();
 
     private Datastream cts;
 
@@ -135,7 +133,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
             setDcData();
         }
-        this.mdRecords = new HashMap<String, Datastream>();
+        this.mdRecords.clear();
     }
 
     /**
@@ -278,34 +276,14 @@ public class Container extends GenericVersionableResourcePid implements Containe
     public Map<String, Datastream> getMdRecords() throws IntegritySystemException, FedoraSystemException,
         WebserverSystemException {
 
-        final Map<String, Datastream> result = new HashMap<String, Datastream>();
-        final org.fcrepo.server.types.gen.Datastream[] datastreams = getDatastreamInfos();
+        final List<DatastreamProfileTO> profiles =
+            getFedoraServiceClient().getDatastreamProfilesByAltId(getId(), Datastream.METADATA_ALTERNATE_ID,
+                getVersionDate());
 
-        final Collection<String> names = new ArrayList<String>();
-        for (final org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
-            final List<String> altIDs = Arrays.asList(datastream.getAltIDs());
-            if (altIDs != null && altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
-                names.add(datastream.getID());
-            }
-        }
-        for (final String name : names) {
-            try {
-                final Datastream newDs = new Datastream(name, getId(), getVersionDate());
-                result.put(name, newDs);
-            }
-            catch (final StreamNotFoundException e) {
-                final String message = "Metadata record \"" + name + "\" not found for container " + getId() + '.';
-                LOGGER.error(message, e);
-                throw new IntegritySystemException(message, e);
-            }
-            catch (final WebserverSystemException e) {
-                // FIXME getVersionDate throws an WebserverSystemException in
-                // case of IntegritySystemException
-                throw new FedoraSystemException(e);
-            }
-        }
-        this.mdRecords = result;
-        return result;
+        this.mdRecords.clear();
+        Datastream.convertDatastreamProfileTOs(profiles, getId(), this.mdRecords);
+
+        return this.mdRecords;
     }
 
     /**
@@ -611,7 +589,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
         try {
             this.getTripleStoreUtility().reinitialize();
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
         }
         return timestamp;

@@ -23,7 +23,6 @@ package de.escidoc.core.common.business.fedora.resources.cmm;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,11 +31,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.xml.DateTimeJaxbConverter;
-import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -126,7 +124,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         setHref(Constants.CONTENT_MODEL_URL_BASE + getId());
         setTitle(getProperty(TripleStoreUtility.PROP_DC_TITLE));
         setDescription(getProperty(TripleStoreUtility.PROP_DC_DESCRIPTION));
-        initDatastreams(getDatastreamInfos());
+        initDatastreams(getDatastreamProfiles());
     }
 
     /**
@@ -251,46 +249,28 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
      *             If a specific datastream can not be found.
      */
     @Override
-    protected final void initDatastreams(final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
-        throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
-        StreamNotFoundException {
+    protected final void initDatastream(final DatastreamProfileTO profile) throws WebserverSystemException,
+        FedoraSystemException, TripleStoreSystemException, IntegritySystemException, StreamNotFoundException {
 
-        super.initDatastreams(datastreamInfos);
+        super.initDatastream(profile);
 
-        for (final org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
-            final List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
-            final String name = datastreamInfo.getID();
-            final String label = datastreamInfo.getLabel();
-            final DatastreamControlGroup controlGroup = datastreamInfo.getControlGroup();
-            final String controlGroupValue = controlGroup.getValue();
-            final String mimeType = datastreamInfo.getMIMEType();
-            final String location = datastreamInfo.getLocation();
+        DateTime versionDate = getVersionDate();
 
-            final Datastream ds;
-
-            if (altIDs.contains("content-stream")) {
-                // found content-stream
-                ds = new Datastream(name, getId(), this.getVersionDate(), mimeType, location, controlGroupValue);
-                ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                ds.setLabel(label);
-                this.contentStreams.put(name, ds);
-            }
-            else if (name.equals(DATASTREAM_DS_COMPOSITE_MODEL)) {
-                ds = new Datastream(name, getId(), this.getVersionDate(), mimeType, location, controlGroupValue);
-                ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                ds.setLabel(label);
-                this.dsCompositeModel = ds;
-            }
-            else if (!(name.equals(Datastream.RELS_EXT_DATASTREAM) || "DC".equals(name) || name.equals(DATASTREAM_WOV))) {
-                ds = new Datastream(name, getId(), this.getVersionDate(), mimeType, location, controlGroupValue);
-                ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                ds.setLabel(label);
-                this.otherStreams.put(name, ds);
-            }
-            else {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Stream " + getId() + '/' + name + " not instanziated in ContentModel.<init>.");
-                }
+        if (profile.getDsAltID().contains("content-stream")) {
+            // found content-stream
+            this.contentStreams.put(profile.getDsID(), new Datastream(profile, getId(), versionDate));
+        }
+        else if (DATASTREAM_DS_COMPOSITE_MODEL.equals(profile.getDsID())) {
+            this.dsCompositeModel = new Datastream(profile, getId(), versionDate);
+        }
+        else if (!(Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID()) || "DC".equals(profile.getDsID()) || DATASTREAM_WOV
+            .equals(profile.getDsID()))) {
+            this.otherStreams.put(profile.getDsID(), new Datastream(profile, getId(), versionDate));
+        }
+        else {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Stream " + getId() + '/' + profile.getDsID()
+                    + " not instanziated in ContentModel.<init>.");
             }
         }
     }

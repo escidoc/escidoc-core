@@ -25,8 +25,6 @@ package de.escidoc.core.common.business.fedora.resources.item;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,10 +34,10 @@ import java.util.Set;
 
 import org.escidoc.core.services.fedora.UpdateObjectPathParam;
 import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.xml.DateTimeJaxbConverter;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -54,6 +52,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidContentExcep
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
@@ -81,7 +80,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     private Datastream dc;
 
-    private Map<String, Datastream> mdRecords;
+    private final Map<String, Datastream> mdRecords = new HashMap<String, Datastream>();
 
     private final String parent;
 
@@ -118,74 +117,44 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     protected void init() throws ResourceNotFoundException, ItemNotFoundException, IntegritySystemException,
         FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
-        initDatastreams();
+
+        /*
+         * There was no StreamNotFoundException thrown before from this method
+         * and to avoid such a change, throw a ComponentNotFoundException
+         * instead.
+         */
+        try {
+            initDatastreams(getDatastreamProfiles());
+        }
+        catch (final StreamNotFoundException e) {
+            throw new ComponentNotFoundException(e);
+        }
         getSomeValuesFromFedora();
         if (!checkResourceType(ResourceType.COMPONENT)) {
             throw new ItemNotFoundException("Component with the provided objid '" + this.getId() + "' does not exit.");
         }
     }
 
-    /**
-     * Init all Datastreams of the Component.
-     * 
-     * @throws FedoraSystemException
-     *             Thrown if access to Repository or retrieve failed.
-     */
-    private void initDatastreams() throws FedoraSystemException {
+    @Override
+    protected void initDatastream(final DatastreamProfileTO profile) throws WebserverSystemException,
+        FedoraSystemException, TripleStoreSystemException, IntegritySystemException, StreamNotFoundException {
 
-        // initialize datastreams with Fedora Stream Informations
-        final org.fcrepo.server.types.gen.Datastream[] datastreamInfos =
-            getFedoraUtility().getDatastreamsInformation(getId(), this.parentVersionDate);
+        super.initDatastream(profile);
 
-        this.mdRecords = new HashMap<String, Datastream>();
-
-        for (final org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
-
-            final List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
-            final String name = datastreamInfo.getID();
-            final String label = datastreamInfo.getLabel();
-            final String controlGroupValue = datastreamInfo.getControlGroup().getValue();
-            final String mimeType = datastreamInfo.getMIMEType();
-            final String location = datastreamInfo.getLocation();
-
-            final Datastream ds;
-
-            if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
-                // found md-record
-                ds = new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue);
-                ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                ds.setLabel(label);
-                this.mdRecords.put(name, ds);
-            }
-            else {
-                // RELS-EXT
-                if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
-                    ds = new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue);
-                    ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                    ds.setLabel(label);
-                    this.relsExt = ds;
-                }
-                // DC
-                else if ("DC".equals(name)) {
-                    ds = new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue);
-                    ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                    ds.setLabel(label);
-                    this.dc = ds;
-                }
-                // content
-                else if ("content".equals(name)) {
-                    ds =
-                        new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue,
-                            datastreamInfo.getChecksumType(), datastreamInfo.getChecksum());
-                    ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                    ds.setLabel(label);
-                    this.content = ds;
-                }
-                else {
-                    LOGGER.warn("Stream " + getId() + '/' + name + " not instanziated in Item.<init>.");
-                }
-            }
-
+        if (profile.getDsAltID().contains(Datastream.METADATA_ALTERNATE_ID)) {
+            this.mdRecords.put(profile.getDsID(), new Datastream(profile, getId(), this.parentVersionDate));
+        }
+        else if (Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID())) {
+            this.relsExt = new Datastream(profile, getId(), this.parentVersionDate);
+        }
+        else if ("DC".equals(profile.getDsID())) {
+            this.dc = new Datastream(profile, getId(), this.parentVersionDate);
+        }
+        else if ("content".equals(profile.getDsID())) {
+            this.content = new Datastream(profile, getId(), this.parentVersionDate);
+        }
+        else {
+            LOGGER.warn("Stream " + getId() + '/' + profile.getDsID() + " not instanziated in Component<init>.");
         }
     }
 
@@ -274,7 +243,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             try {
                 this.getTripleStoreUtility().reinitialize();
             }
-            catch (TripleStoreSystemException e) {
+            catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -293,7 +262,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         try {
             this.getTripleStoreUtility().reinitialize();
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
         }
         this.content = null;
@@ -377,7 +346,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             try {
                 this.getTripleStoreUtility().reinitialize();
             }
-            catch (TripleStoreSystemException e) {
+            catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -491,7 +460,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 try {
                     this.getTripleStoreUtility().reinitialize();
                 }
-                catch (TripleStoreSystemException e) {
+                catch (final TripleStoreSystemException e) {
                     throw new FedoraSystemException("Error on reinitializing triple store.", e);
                 }
             }
@@ -510,7 +479,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             try {
                 this.getTripleStoreUtility().reinitialize();
             }
-            catch (TripleStoreSystemException e2) {
+            catch (final TripleStoreSystemException e2) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e2);
             }
         }
@@ -539,7 +508,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             try {
                 this.getTripleStoreUtility().reinitialize();
             }
-            catch (TripleStoreSystemException e) {
+            catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
