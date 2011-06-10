@@ -5,12 +5,20 @@ package org.escidoc.core.services.fedora;
  */
 public final class IngestQueryParam {
 
+    public static final String FOXML_FORMAT = "info:fedora/fedora-system:FOXML-1.1";
+
     private String label;
+
     private String format;
+
     private String encoding;
+
     private String namespace;
+
     private String ownerId;
+
     private String logMessage;
+
     private Boolean ignoreMime;
 
     public String getLabel() {
