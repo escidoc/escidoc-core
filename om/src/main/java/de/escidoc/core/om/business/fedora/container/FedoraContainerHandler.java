@@ -737,7 +737,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         try {
 
-            final String startTimestamp = getContainer().getLastFedoraModificationDate();
+            final DateTime startTimestamp = getContainer().getLastFedoraModificationDate();
 
             final StaxParser sp = new StaxParser();
 
@@ -857,8 +857,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // }
 
             final String updatedXmlData;
-            final String endTimestamp = getContainer().getLastFedoraModificationDate();
-            if (!startTimestamp.equals(endTimestamp) || getContainer().isNewVersion()) {
+            final DateTime endTimestamp = getContainer().getLastFedoraModificationDate();
+            if (!startTimestamp.isEqual(endTimestamp) || getContainer().isNewVersion()) {
                 // object is modified
                 // make new version
                 makeVersion("ContainerHandler.update()");
@@ -1889,7 +1889,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                     // do nothing
                 }
 
-                final String lastModificationDate = getItem().getLastModificationDate();
+                final DateTime lastModificationDate = getItem().getLastModificationDate();
 
                 final String param =
                     "<param last-modification-date=\"" + lastModificationDate + "\"><withdraw-comment>"
@@ -2302,7 +2302,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 throw new InvalidStatusException("Members can not be added, because the "
                     + "container is in an inappropriate state.", e);
             }
-            final String startTimestamp = getContainer().getLastFedoraModificationDate();
+            final DateTime startTimestamp = getContainer().getLastFedoraModificationDate();
 
             final StaxParser sp = new StaxParser();
 
@@ -2349,8 +2349,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                     new Datastream(Datastream.RELS_EXT_DATASTREAM, getContainer().getId(), relsExtNewBytes,
                         MimeTypes.TEXT_XML));
             }
-            final String endTimestamp = getContainer().getLastFedoraModificationDate();
-            if (resourceUpdated || !startTimestamp.equals(endTimestamp)) {
+            final DateTime endTimestamp = getContainer().getLastFedoraModificationDate();
+            if (resourceUpdated || !startTimestamp.isEqual(endTimestamp)) {
                 // updateTimeStamp();
                 makeVersion("Container.addMembers");
                 getContainer().persist();
@@ -2667,7 +2667,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         setContainer(id);
         checkLatestVersion();
-        final String startTimestamp = getContainer().getLastFedoraModificationDate();
+        final DateTime startTimestamp = getContainer().getLastFedoraModificationDate();
 
         checkLocked();
         checkStatusNot(Constants.STATUS_WITHDRAWN);
@@ -2751,8 +2751,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 getContainer().setRelsExt(
                     new Datastream(Datastream.RELS_EXT_DATASTREAM, getContainer().getId(), relsExtNewBytes,
                         MimeTypes.TEXT_XML));
-                final String endTimestamp = getContainer().getLastFedoraModificationDate();
-                if (resourceUpdated || !startTimestamp.equals(endTimestamp)) {
+                final DateTime endTimestamp = getContainer().getLastFedoraModificationDate();
+                if (resourceUpdated || !startTimestamp.isEqual(endTimestamp)) {
                     makeVersion("Container.addContentRelations");
                     getContainer().persist();
                     fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
@@ -2794,7 +2794,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         setContainer(id);
         checkLatestVersion();
-        final String startTimestamp = getContainer().getLastFedoraModificationDate();
+        final DateTime startTimestamp = getContainer().getLastFedoraModificationDate();
 
         checkLocked();
         checkStatusNot(Constants.STATUS_WITHDRAWN);
@@ -2881,8 +2881,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 getContainer().setRelsExt(
                     new Datastream(Datastream.RELS_EXT_DATASTREAM, getContainer().getId(), relsExtNewBytes,
                         MimeTypes.TEXT_XML));
-                final String endTimestamp = getContainer().getLastFedoraModificationDate();
-                if (resourceUpdated || !startTimestamp.equals(endTimestamp)) {
+                final DateTime endTimestamp = getContainer().getLastFedoraModificationDate();
+                if (resourceUpdated || !startTimestamp.isEqual(endTimestamp)) {
                     makeVersion("Container.removeContentRelations");
                     getContainer().persist();
                 }

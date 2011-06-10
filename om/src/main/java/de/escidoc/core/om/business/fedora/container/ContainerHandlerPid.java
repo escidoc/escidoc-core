@@ -318,7 +318,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      */
     private String prepareResponse(final String pid) throws TripleStoreSystemException, WebserverSystemException {
 
-        final String lmd;
+        final DateTime lmd;
         try {
             lmd = getContainer().getLastModificationDate();
         }
@@ -328,8 +328,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
 
         final String result;
         try {
-            final DateTime t = new DateTime(lmd, DateTimeZone.UTC);
-            result = Utility.prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
+            result = Utility.prepareReturnXml(lmd, "<pid>" + pid + "</pid>\n");
         }
         catch (final SystemException e) {
             throw new WebserverSystemException(e);
