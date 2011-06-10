@@ -45,6 +45,7 @@ import java.util.TreeMap;
 
 import javax.xml.stream.XMLStreamException;
 
+import org.joda.time.DateTime;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -216,7 +217,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         XmlSchemaValidationException, XmlCorruptedException {
 
         setItem(id);
-        final String startTimestamp = getItem().getLastFedoraModificationDate();
+        final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
 
         checkLatestVersion();
         checkLocked();
@@ -372,8 +373,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // check if modified
             final String updatedXmlData;
-            final String endTimestamp = getItem().getLastFedoraModificationDate();
-            if (resourceUpdated || !startTimestamp.equals(endTimestamp) || getItem().isNewVersion()) {
+            final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
+            if (resourceUpdated || !startTimestamp.isEqual(endTimestamp) || getItem().isNewVersion()) {
                 // object is modified
                 makeVersion("ItemHandler.update()");
                 getItem().persist();
@@ -631,7 +632,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setItem(id);
-        final String startTimestamp = getItem().getLastFedoraModificationDate();
+        final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
 
         checkLatestVersion();
         checkLocked();
@@ -672,8 +673,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
-        final String endTimestamp = getItem().getLastFedoraModificationDate();
-        if (!startTimestamp.equals(endTimestamp)) {
+        final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
+        if (!startTimestamp.isEqual(endTimestamp)) {
             makeVersion("Item.updateMedataRecord");
             getItem().persist();
             try {
@@ -723,7 +724,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
 
         setItem(id);
-        final String startTimestamp = getItem().getLastFedoraModificationDate();
+        final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
 
         checkLocked();
         checkReleased();
@@ -766,7 +767,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         // FIXME persist DS by set it in the resource object
         newMDS.persist(false);
 
-        final String endTimestamp = getItem().getLastFedoraModificationDate();
+        final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
         if (!startTimestamp.equals(endTimestamp)) {
             makeVersion("Item.createMetadataRecord");
             getItem().persist();
@@ -889,7 +890,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         renderComponents(false);
 
-        final String startTimestamp = getItem().getLastFedoraModificationDate();
+        final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
 
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler olh =
@@ -939,8 +940,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             }
             // can not occur
         }
-        final String endTimestamp = getItem().getLastFedoraModificationDate();
-        if (!startTimestamp.equals(endTimestamp)) {
+        final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
+        if (!startTimestamp.isEqual(endTimestamp)) {
             makeVersion("Item.updateComponents");
             getItem().persist();
             try {
@@ -1175,7 +1176,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 throw new ComponentNotFoundException(e);
             }
         }
-        final String startTimestamp = getItem().getLastFedoraModificationDate();
+        final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
 
         checkLatestVersion();
         checkLocked();
@@ -1216,8 +1217,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         final String updatedXmlData = retrieveComponent(id, componentId);
 
-        final String endTimestamp = getItem().getLastFedoraModificationDate();
-        if (!startTimestamp.equals(endTimestamp)) {
+        final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
+        if (!startTimestamp.isEqual(endTimestamp)) {
             makeVersion("Item.updateComponent");
             getItem().persist();
 
@@ -1516,7 +1517,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         setItem(id);
         checkLatestVersion();
-        final String startTimestamp = getItem().getLastFedoraModificationDate();
+        final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
         checkLocked();
         checkWithdrawn("Removing of content relations is not allowed.");
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -1599,8 +1600,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             getItem().setRelsExt(relsExtNewBytes);
             // getItem().persist();
 
-            final String endTimestamp = getItem().getLastFedoraModificationDate();
-            if (resourceUpdated || !startTimestamp.equals(endTimestamp)) {
+            final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
+            if (resourceUpdated || !startTimestamp.isEqual(endTimestamp)) {
                 makeVersion("Item.removeContentRelations");
                 getItem().persist();
             }

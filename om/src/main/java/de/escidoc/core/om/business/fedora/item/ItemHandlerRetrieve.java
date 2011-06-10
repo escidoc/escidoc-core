@@ -934,7 +934,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_TITLE, "This Version");
         values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_NUMBER, item.getVersionId());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_NUMBER));
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_DATE, item.getVersionDate());
+        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_DATE, item.getVersionDate().toString());
         // properties.get(TripleStoreUtility.PROP_VERSION_DATE));
         values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_STATUS, item.getVersionStatus());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_STATUS));
@@ -1077,8 +1077,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         values.put(XmlTemplateProvider.HREF, getItem().getHref());
 
         try {
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(item
-                .getLastModificationDate()));
+            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, item.getLastModificationDate().toString());
         }
         catch (final FedoraSystemException e) {
             throw new WebserverSystemException(e);

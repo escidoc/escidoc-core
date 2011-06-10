@@ -167,7 +167,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 // but try to stream
                 String fedoraLocalUrl = "/get/" + component.getId() + "/content";
                 if (getItem().getVersionDate() != null) {
-                    fedoraLocalUrl += '/' + getItem().getVersionDate();
+                    fedoraLocalUrl += '/' + getItem().getVersionDate().toString();
                 }
                 bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
             }
@@ -231,7 +231,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
         final URL url;
         try {
-            url = getContentUrl(component.getId(), getItem().getVersionDate(), transformer, param);
+            url = getContentUrl(component.getId(), getItem().getVersionDate().toString(), transformer, param);
         }
         catch (final MalformedURLException e1) {
             throw new WebserverSystemException("Internal content URL corrupt.", e1);
@@ -545,7 +545,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         else {
             String fedoraLocalUrl = "/get/" + getItem().getId() + '/' + name;
             if (getItem().getVersionDate() != null) {
-                fedoraLocalUrl += '/' + getItem().getVersionDate();
+                fedoraLocalUrl += '/' + getItem().getVersionDate().toString();
             }
             bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
         }
