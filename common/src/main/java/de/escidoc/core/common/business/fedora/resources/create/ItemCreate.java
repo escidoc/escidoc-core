@@ -75,6 +75,9 @@ import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 /**
  * Item for create method.
  * <p/>
@@ -270,7 +273,7 @@ public class ItemCreate extends GenericResourceCreate {
             // take timestamp and prepare RELS-EXT
             // String lmd =
             // FedoraUtility.getInstance().getLastModificationDate(getObjid());
-            final String lmd = getLastModificationDateByWorkaround(getObjid());
+            final DateTime lmd = getLastModificationDateByWorkaround(getObjid());
 
             this.properties.getCurrentVersion().setDate(lmd);
             this.properties.getLatestVersion().setDate(lmd);
@@ -495,7 +498,17 @@ public class ItemCreate extends GenericResourceCreate {
         templateValues.put(XmlTemplateProvider.HREF, getHrefWithVersionSuffix());
 
         templateValues.put(XmlTemplateProvider.TITLE, this.properties.getObjectProperties().getTitle());
-        templateValues.put(XmlTemplateProvider.VERSION_DATE, this.properties.getCurrentVersion().getDate());
+        //templateValues.put(XmlTemplateProvider.VERSION_DATE, this.properties.getCurrentVersion().getDate().toString());
+        //templateValues.put(XmlTemplateProvider.TIMESTAMP, this.properties.getCurrentVersion().getDate().toString());
+        DateTime date = this.properties.getCurrentVersion().getDate();
+        if (date == null) {
+            templateValues.put(XmlTemplateProvider.VERSION_DATE, null);
+            templateValues.put(XmlTemplateProvider.TIMESTAMP, null);
+        }
+        else {
+            templateValues.put(XmlTemplateProvider.VERSION_DATE, date.toString());
+            templateValues.put(XmlTemplateProvider.TIMESTAMP, date.toString());
+        }
         templateValues.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
         templateValues.put(XmlTemplateProvider.VERSION_STATUS, this.properties
             .getCurrentVersion().getStatus().toString());
@@ -505,7 +518,6 @@ public class ItemCreate extends GenericResourceCreate {
         templateValues.put(XmlTemplateProvider.VAR_NAMESPACE, Constants.WOV_NAMESPACE_URI);
 
         templateValues.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
-        templateValues.put(XmlTemplateProvider.TIMESTAMP, this.properties.getCurrentVersion().getDate());
 
         // -------------------------------------
 
@@ -709,11 +721,14 @@ public class ItemCreate extends GenericResourceCreate {
         // .getCurrentVersion().getPid());
 
         valueMap.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
-        String date = this.properties.getCurrentVersion().getDate();
-        if (date == null) {
-            date = "---";
+        DateTime currVersionDate = this.properties.getCurrentVersion().getDate();
+        if (currVersionDate == null) {
+            valueMap.put(XmlTemplateProvider.VERSION_DATE, "---");
         }
-        valueMap.put(XmlTemplateProvider.VERSION_DATE, date);
+        else {
+            valueMap.put(XmlTemplateProvider.VERSION_DATE, currVersionDate.toString());
+        }
+
         valueMap.put(XmlTemplateProvider.VERSION_STATUS, this.properties.getCurrentVersion().getStatus().toString());
         valueMap.put(XmlTemplateProvider.VERSION_COMMENT, this.properties.getCurrentVersion().getComment());
 
@@ -721,7 +736,14 @@ public class ItemCreate extends GenericResourceCreate {
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_PID, this.properties.getLatestVersion().getPid());
 
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_NUMBER, this.properties.getLatestVersion().getNumber());
-        valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, this.properties.getLatestVersion().getDate());
+        DateTime lateVersionDate = this.properties.getLatestVersion().getDate();
+        if (lateVersionDate == null) {
+            valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, null);
+        }
+        else {
+            valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, lateVersionDate.toString());
+        }
+
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_STATUS, this.properties
             .getLatestVersion().getStatus().toString());
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_COMMENT, this.properties.getLatestVersion().getComment());
@@ -745,7 +767,7 @@ public class ItemCreate extends GenericResourceCreate {
             // latest release date
             if (this.properties.getLatestReleasedVersion().getDate() != null) {
                 valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE, this.properties
-                    .getLatestReleasedVersion().getDate());
+                    .getLatestReleasedVersion().getDate().toString());
             }
             else {
                 valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE, "---");
@@ -830,14 +852,17 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
-    private String getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
+    private DateTime getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
         // Work around for Fedora30 bug APIM.getDatastreams()
+        //        final org.fcrepo.server.types.gen.Datastream relsExtInfo =
+        //            getFedoraUtility().getDatastreamInformation(objid, Datastream.RELS_EXT_DATASTREAM, null);
+        //        return new DateTime(relsExtInfo.getCreateDate(), DateTimeZone.UTC);
         final GetDatastreamProfilePathParam path =
             new GetDatastreamProfilePathParam(objid, Datastream.RELS_EXT_DATASTREAM);
         final GetDatastreamProfileQueryParam query = new GetDatastreamProfileQueryParam();
         final DatastreamProfileTO dsProfile = this.fedoraServiceClient.getDatastreamProfile(path, query);
 
-        return dsProfile.getDsCreateDate().toString();
+        return new DateTime(dsProfile.getDsCreateDate().toString(), DateTimeZone.UTC);
     }
 
     /**

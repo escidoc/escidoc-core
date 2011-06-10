@@ -35,6 +35,7 @@ import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.ReadableInstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -194,7 +195,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         this.fedoraUtility.storeObjectInFedora(foxml, false);
 
         // take timestamp and prepare RELS-EXT
-        final String lmd = getLastModificationDateByWorkaround(getObjid());
+        final DateTime lmd = getLastModificationDateByWorkaround(getObjid());
 
         this.properties.getCurrentVersion().setDate(lmd);
         this.properties.getLatestVersion().setDate(lmd);
@@ -277,7 +278,18 @@ public class ContentModelCreate extends GenericResourceCreate {
         templateValues.put(XmlTemplateProvider.HREF, getHrefWithVersionSuffix());
 
         templateValues.put(XmlTemplateProvider.TITLE, this.properties.getObjectProperties().getTitle());
-        templateValues.put(XmlTemplateProvider.VERSION_DATE, this.properties.getCurrentVersion().getDate());
+        //templateValues.put(XmlTemplateProvider.VERSION_DATE, this.properties.getCurrentVersion().getDate().toString());
+        //templateValues.put(XmlTemplateProvider.TIMESTAMP, this.properties.getCurrentVersion().getDate().toString());
+        DateTime date = this.properties.getCurrentVersion().getDate();
+        if (date == null) {
+            templateValues.put(XmlTemplateProvider.VERSION_DATE, null);
+            templateValues.put(XmlTemplateProvider.TIMESTAMP, null);
+        }
+        else {
+            templateValues.put(XmlTemplateProvider.VERSION_DATE, date.toString());
+            templateValues.put(XmlTemplateProvider.TIMESTAMP, date.toString());
+        }
+
         templateValues.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
         templateValues.put(XmlTemplateProvider.VERSION_STATUS, this.properties
             .getCurrentVersion().getStatus().toString());
@@ -287,7 +299,6 @@ public class ContentModelCreate extends GenericResourceCreate {
         templateValues.put(XmlTemplateProvider.VAR_NAMESPACE, Constants.WOV_NAMESPACE_URI);
 
         templateValues.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
-        templateValues.put(XmlTemplateProvider.TIMESTAMP, this.properties.getCurrentVersion().getDate());
 
         // -------------------------------------
 
@@ -447,7 +458,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         // .getCurrentVersion().getPid());
 
         valueMap.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
-        String date = this.properties.getCurrentVersion().getDate();
+        String date = this.properties.getCurrentVersion().getDate().toString();
         if (date == null) {
             date = "---";
         }
@@ -459,7 +470,15 @@ public class ContentModelCreate extends GenericResourceCreate {
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_PID, this.properties.getLatestVersion().getPid());
 
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_NUMBER, this.properties.getLatestVersion().getNumber());
-        valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, this.properties.getLatestVersion().getDate());
+        //        valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, this.properties.getLatestVersion().getDate().toString());
+        DateTime lateVersionDate = this.properties.getLatestVersion().getDate();
+        if (lateVersionDate == null) {
+            valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, null);
+        }
+        else {
+            valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, lateVersionDate.toString());
+        }
+
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_STATUS, this.properties
             .getLatestVersion().getStatus().toString());
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_COMMENT, this.properties.getLatestVersion().getComment());
@@ -483,7 +502,7 @@ public class ContentModelCreate extends GenericResourceCreate {
             // latest release date
             if (this.properties.getLatestReleasedVersion().getDate() != null) {
                 valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE, this.properties
-                    .getLatestReleasedVersion().getDate());
+                    .getLatestReleasedVersion().getDate().toString());
             }
             else {
                 valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE, "---");
@@ -543,29 +562,27 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
-    private String getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
+    private DateTime getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
 
         // Work around for Fedora30 bug APIM.getDatastreams()
-        String lastModificationDate = null;
+        DateTime lastModificationDate = null;
         final org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
             this.fedoraUtility.getDatastreamsInformation(objid, null);
+
         for (final org.fcrepo.server.types.gen.Datastream aRelsExtInfo : relsExtInfo) {
             final String createdDate = aRelsExtInfo.getCreateDate();
 
             if (lastModificationDate == null) {
-                lastModificationDate = createdDate;
+                lastModificationDate = new DateTime(createdDate, DateTimeZone.UTC);
             }
             else {
-
-                final ReadableInstant cDate = new DateTime(createdDate);
-                final ReadableInstant lDate = new DateTime(lastModificationDate);
-                if (lDate.isBefore(cDate)) {
-                    lastModificationDate = createdDate;
+                final DateTime cDate = new DateTime(createdDate, DateTimeZone.UTC);
+                if (lastModificationDate.isBefore(cDate)) {
+                    lastModificationDate = cDate;
                 }
             }
         }
         // End of the work around
-
         return lastModificationDate;
     }
 

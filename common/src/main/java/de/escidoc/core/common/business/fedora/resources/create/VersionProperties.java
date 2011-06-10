@@ -20,6 +20,8 @@
 
 package de.escidoc.core.common.business.fedora.resources.create;
 
+import org.joda.time.DateTime;
+
 import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
@@ -47,7 +49,7 @@ public class VersionProperties {
 
     private String pid;
 
-    private String date;
+    private DateTime date;
 
     /**
      * Version properties of Item.
@@ -189,14 +191,14 @@ public class VersionProperties {
     /**
      * @param date the date to set
      */
-    public void setDate(final String date) {
+    public void setDate(final DateTime date) {
         this.date = date;
     }
 
     /**
      * @return the date
      */
-    public String getDate() {
+    public DateTime getDate() {
         return this.date;
     }
 
