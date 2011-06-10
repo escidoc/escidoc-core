@@ -79,15 +79,11 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      */
     private static void addSetDefinitionValues(final SetDefinition setDefinition, final Map<String, Object> values)
         throws SystemException {
-        DateTime lmdDateTime = new DateTime(setDefinition.getLastModificationDate());
-        lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
-        values.put("setDefinitionLastModificationDate", lmd);
+        DateTime lmd = new DateTime(setDefinition.getLastModificationDate(), DateTimeZone.UTC);
+        values.put("setDefinitionLastModificationDate", lmd.toString());
         values.put("setDefinitionHref", setDefinition.getHref());
-        DateTime creationDateTime = new DateTime(setDefinition.getCreationDate());
-        creationDateTime = creationDateTime.withZone(DateTimeZone.UTC);
-        final String creationDate = creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
-        values.put("setDefinitionCreationDate", creationDate);
+        DateTime creationDate = new DateTime(setDefinition.getCreationDate(), DateTimeZone.UTC);
+        values.put("setDefinitionCreationDate", creationDate.toString());
         values.put("setDefinitionName", setDefinition.getName());
         values.put("setDefinitionSpecification", setDefinition.getSpecification());
         values.put("setDefinitionQuery", setDefinition.getQuery());
