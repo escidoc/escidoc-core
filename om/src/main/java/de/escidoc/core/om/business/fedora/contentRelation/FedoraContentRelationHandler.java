@@ -416,8 +416,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         validateToSubmitStatus(cr);
 
         // check optimistic locking criteria
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
-            .getLastModificationDate()), "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Content relation " + id);
 
         cr.getProperties().setStatus(StatusType.SUBMITTED);
         // set status comment
@@ -474,8 +474,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
             throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_SUBMITTED
                 + "' and can not be " + Constants.STATUS_RELEASED + '.');
         }
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
-            .getLastModificationDate()), "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Content relation " + id);
 
         cr.getProperties().setStatus(StatusType.RELEASED);
 
@@ -526,8 +526,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
             throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_SUBMITTED
                 + "' and can not be revised.");
         }
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
-            .getLastModificationDate()), "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Content relation " + id);
 
         cr.getProperties().setStatus(StatusType.INREVISION);
         // set status comment
@@ -574,8 +574,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         checkLocked(cr);
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
-            .getLastModificationDate()), "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Content relation " + id);
         if (!cr.getProperties().isLocked()) {
             lockHandler.lock(cr.getObjid(), Utility.getCurrentUser());
 
@@ -617,8 +617,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         final ContentRelationCreate cr = setContentRelation(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
 
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
-            .getLastModificationDate()), "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Content relation " + id);
         if (cr.getProperties().isLocked()) {
             lockHandler.unlock(cr.getObjid());
 
@@ -660,8 +660,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         }
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
         checkLocked(cr);
-        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), new DateTime(taskParameter
-            .getLastModificationDate()), "Content-relation " + cr.getObjid());
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Content-relation " + cr.getObjid());
 
         String pid = taskParameter.getPid();
         if (pid == null) {
