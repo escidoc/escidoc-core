@@ -63,7 +63,7 @@ public class OaipmhSearchIT extends SearchTestBase {
 
     private static final String INDEX_NAME = "escidocoaipmh_all";
 
-    private static String startTime = "";
+    private static DateTime startTime;
 
     public OaipmhSearchIT() {
         item = new ItemHelper();
@@ -114,7 +114,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
-        startTime = new DateTime(System.currentTimeMillis(), DateTimeZone.UTC).toString();
+        startTime = new DateTime(DateTimeZone.UTC);
         // Create Container/////////////////////////////////////////////////////
         try {
             containerIds = new String[Constants.NUM_OAIPMH_CONTAINERS];
@@ -881,7 +881,7 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR41() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.latest-release.date>\"" + startTime + "\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.latest-release.date>\"" + startTime.toString() + "\"");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("3", getNumberOfHits(response));
