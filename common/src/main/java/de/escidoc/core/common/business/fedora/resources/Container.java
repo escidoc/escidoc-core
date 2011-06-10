@@ -217,8 +217,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
     public Datastream getCts() throws StreamNotFoundException, FedoraSystemException {
         if (this.cts == null) {
             try {
-                final DateTime versionDate = new DateTime(getVersionDate()).withZone(DateTimeZone.UTC);
-                this.cts = new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getId(), versionDate);
+                this.cts = new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getId(), getVersionDate());
             }
             catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
@@ -291,8 +290,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
         }
         for (final String name : names) {
             try {
-                final DateTime versionDate = DateTimeJaxbConverter.parseDate(getVersionDate());
-                final Datastream newDs = new Datastream(name, getId(), versionDate);
+                final Datastream newDs = new Datastream(name, getId(), getVersionDate());
                 result.put(name, newDs);
             }
             catch (final StreamNotFoundException e) {
@@ -386,8 +384,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
             // retrieve from fedora and add to map
             final Datastream ds;
             try {
-                final DateTime versionDate = DateTimeJaxbConverter.parseDate(getVersionDate());
-                ds = new Datastream(name, getId(), versionDate);
+                ds = new Datastream(name, getId(), getVersionDate());
             }
             catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
@@ -509,8 +506,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
                     setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), null));
                 }
                 else {
-                    final DateTime versionDate = DateTimeJaxbConverter.parseDate(getVersionDate());
-                    setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), versionDate));
+                    setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getVersionDate()));
                 }
             }
             catch (final WebserverSystemException e) {
@@ -560,7 +556,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
      *             Thrown in case of internal error.
      */
     @Override
-    public String persist() throws FedoraSystemException, WebserverSystemException {
+    public DateTime persist() throws FedoraSystemException, WebserverSystemException {
         /*
          * Persist persists the data streams of the object and updates all
          * version depending values. These values are RELS-EXT (version/date)
@@ -587,7 +583,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
          * Note: These are to many data stream updates to write one single
          * information (timestamp)
          */
-        String timestamp = null;
+        DateTime timestamp = null;
         if (this.isNeedSync()) {
             // ----------------------------------------------
             // writing RELS-EXT once (problem: /version/date is to old)
@@ -608,7 +604,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
             persistWov();
             updateRelsExtVersionTimestamp(timestamp);
             persistRelsExt();
-            setResourceProperties(PropertyMapKeys.LAST_MODIFICATION_DATE, timestamp);
+            setLastModificationDate(timestamp);
         }
 
         this.getFedoraServiceClient().sync();
@@ -663,7 +659,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    protected String persistEscidocRelsExt() throws FedoraSystemException, WebserverSystemException {
+    protected DateTime persistEscidocRelsExt() throws FedoraSystemException, WebserverSystemException {
 
         // old timestamp instead of null.
         try {
@@ -728,8 +724,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
     public Datastream getDc() throws StreamNotFoundException, FedoraSystemException {
         if (this.dc == null) {
             try {
-                final DateTime versionDate = new DateTime(getVersionDate()).withZone(DateTimeZone.UTC);
-                this.dc = new Datastream(Datastream.DC_DATASTREAM, getId(), versionDate);
+                this.dc = new Datastream(Datastream.DC_DATASTREAM, getId(), getVersionDate());
             }
             catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);

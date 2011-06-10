@@ -48,6 +48,8 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import org.esidoc.core.utils.io.MimeTypes;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import javax.xml.stream.XMLStreamException;
@@ -121,7 +123,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         super.setObjectPid(pid);
 
-        final String timestamp = getLastFedoraModificationDate();
+        final DateTime timestamp = getLastFedoraModificationDate();
         final String newEventEntry = createEventXml(timestamp, "assignObjectPid", "objectPid assigned");
 
         writeEventToWov(null, timestamp, newEventEntry);
@@ -157,7 +159,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             }
             else {
                 // FIXME
-                final String latestReleaseDate = getVersionElementData(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE);
+                final DateTime latestReleaseDate =
+                    new DateTime(getVersionElementData(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE), DateTimeZone.UTC);
                 // get the timestamp of this version
                 // get the RELSE-EXT of the version and parse it for the
                 // versionPid
@@ -210,7 +213,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     public void setVersionPid(final String pid) throws TripleStoreSystemException, IntegritySystemException,
         FedoraSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException {
 
-        final String timestamp = getLastFedoraModificationDate();
+        final DateTime timestamp = getLastFedoraModificationDate();
 
         setLastModificationDate(timestamp);
 
@@ -392,7 +395,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws FedoraSystemException      If Fedora reports an error.
      * @throws TripleStoreSystemException If the triple store request failed.
      */
-    public void updatePidToWov(final String pid, final String timestamp) throws FedoraSystemException,
+    public void updatePidToWov(final String pid, final DateTime timestamp) throws FedoraSystemException,
         WebserverSystemException, TripleStoreSystemException {
 
         // TODO add comment "objectPid added" to the version
@@ -400,7 +403,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             new StartElementWithChildElements(Elements.ELEMENT_PID, Constants.WOV_NAMESPACE_URI,
                 Constants.WOV_NAMESPACE_PREFIX, null, pid, null);
 
-        pidElement.addAttribute(new Attribute("timestamp", null, null, timestamp));
+        pidElement.addAttribute(new Attribute("timestamp", null, null, timestamp.toString()));
         pidElement.addAttribute(new Attribute("user", null, null, UserContext.getId()));
 
         final List<StartElementWithChildElements> elementsToAdd = new ArrayList<StartElementWithChildElements>();

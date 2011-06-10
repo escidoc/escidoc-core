@@ -67,6 +67,26 @@ import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.fcrepo.server.types.gen.DatastreamControlGroup;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
+
+import javax.annotation.PostConstruct;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 /**
  * Generic Versionable Resource.
@@ -354,11 +374,12 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException
      *             Thrown if value reading failed.
      */
-    public String getVersionDate() throws WebserverSystemException {
+    public DateTime getVersionDate() throws WebserverSystemException {
 
-        final String versionDate;
+        final DateTime versionDate;
         try {
-            versionDate = getVersionElementData(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE);
+            versionDate =
+                new DateTime(getVersionElementData(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE), DateTimeZone.UTC);
         }
         catch (final IntegritySystemException e) {
             throw new WebserverSystemException(e);
@@ -519,7 +540,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      *             Thrown in case of internal error.
      */
     @Override
-    public String getLastModificationDate() throws WebserverSystemException, FedoraSystemException {
+    public DateTime getLastModificationDate() throws WebserverSystemException, FedoraSystemException {
 
         if (this.initLastModifiedDate) {
             if (isLatestVersion()) {
@@ -762,7 +783,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    public void updateRelsExtVersionTimestamp(final String newVersionTimestamp) throws WebserverSystemException {
+    public void updateRelsExtVersionTimestamp(final DateTime newVersionTimestamp) throws WebserverSystemException {
 
         // TODO this method should be better called
         // setLastModificationDate(timestamp)
@@ -774,14 +795,15 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         updateElementsRelsExt.put(Constants.VERSION_NS_URI + Elements.ELEMENT_DATE, new StartElementWithChildElements(
             Constants.VERSION_NS_URI + Elements.ELEMENT_DATE, Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX,
-            null, newVersionTimestamp, null));
+            null, newVersionTimestamp.toString(), null));
 
         // if status has changed to release than update latest-release/date
         try {
             if (hasVersionStatusChanged() && getVersionStatus().equals(Constants.STATUS_RELEASED)) {
                 updateElementsRelsExt.put(Constants.RELEASE_NS_URI + Elements.ELEMENT_DATE,
                     new StartElementWithChildElements(Constants.RELEASE_NS_URI + Elements.ELEMENT_DATE,
-                        Constants.RELEASE_NS_URI, Constants.RELEASE_NS_PREFIX, null, newVersionTimestamp, null));
+                        Constants.RELEASE_NS_URI, Constants.RELEASE_NS_PREFIX, null, newVersionTimestamp.toString(),
+                        null));
             }
         }
         catch (final IntegritySystemException e) {
@@ -854,8 +876,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                     setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), null));
                 }
                 else {
-                    final DateTime versionDate = DateTimeJaxbConverter.parseDate(getVersionDate());
-                    setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), versionDate));
+                    setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), getVersionDate()));
                 }
             }
             catch (final WebserverSystemException e) {
@@ -879,12 +900,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws FedoraSystemException
      *             Thrown in case of internal error.
      */
-    public Datastream getRelsExt(final String timestamp) throws StreamNotFoundException, FedoraSystemException {
-        DateTime timestampDateTime = null;
-        if (timestamp != null) {
-            timestampDateTime = new DateTime(timestamp).withZone(DateTimeZone.UTC);
-        }
-        return new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), timestampDateTime);
+    public Datastream getRelsExt(final DateTime timestamp) throws StreamNotFoundException, FedoraSystemException {
+        return new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), timestamp);
     }
 
     // --------------------------------------------------------------------------
@@ -935,7 +952,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      *             Thrown in case of internal error.
      */
     @Override
-    public String persist() throws FedoraSystemException, WebserverSystemException {
+    public DateTime persist() throws FedoraSystemException, WebserverSystemException {
 
         return persist(true);
     }
@@ -954,7 +971,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      *             Thrown in case of internal error.
      */
     @Override
-    public String persist(final boolean sync) throws FedoraSystemException, WebserverSystemException {
+    public DateTime persist(final boolean sync) throws FedoraSystemException, WebserverSystemException {
         /*
          * Persist persists the data streams of the object and updates all
          * version depending values. These values are RELS-EXT (version/date)
@@ -980,7 +997,7 @@ public class GenericVersionableResource extends GenericResourcePid {
          * Note: These are to many data stream updates to write one single
          * information (timestamp)
          */
-        String timestamp = null;
+        DateTime timestamp = null;
         if (this.isNeedSync()) {
             // ----------------------------------------------
             // writing RELS-EXT once (problem: /version/date is to old)
@@ -1001,7 +1018,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             persistWov();
             updateRelsExtVersionTimestamp(timestamp);
             persistRelsExt();
-            setResourceProperties(PropertyMapKeys.LAST_MODIFICATION_DATE, timestamp);
+            setResourceProperties(PropertyMapKeys.LAST_MODIFICATION_DATE, timestamp.toString());
         }
 
         if (sync) {
@@ -1027,9 +1044,9 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    protected String persistWov() throws FedoraSystemException, WebserverSystemException {
+    protected DateTime persistWov() throws FedoraSystemException, WebserverSystemException {
 
-        String timestamp = null;
+        DateTime timestamp = null;
         if (this.wov != null) {
             timestamp = this.wov.merge();
         }
@@ -1049,13 +1066,13 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException
      *             In case of an internal error.
      */
-    protected void updateWovTimestamp(final String versionNo, final String timestamp) throws FedoraSystemException,
+    protected void updateWovTimestamp(final String versionNo, final DateTime timestamp) throws FedoraSystemException,
         WebserverSystemException {
 
         try {
             final byte[] b = getWov().getStream();
             String tmpWov = new String(b, XmlUtility.CHARACTER_ENCODING);
-            tmpWov = tmpWov.replaceAll(XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, timestamp);
+            tmpWov = tmpWov.replaceAll(XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, timestamp.toString());
             setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), tmpWov
                 .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
         }
@@ -1079,7 +1096,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected String createEventXml(
-        final String latestModificationTimestamp, final String newStatus, final String comment)
+        final DateTime latestModificationTimestamp, final String newStatus, final String comment)
         throws WebserverSystemException, IntegritySystemException {
 
         final HashMap<String, String> eventValues = new HashMap<String, String>();
@@ -1090,7 +1107,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
         eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, getHrefWithoutVersionNumber() + "/resources/"
             + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
-        eventValues.put(XmlTemplateProvider.TIMESTAMP, latestModificationTimestamp);
+        eventValues.put(XmlTemplateProvider.TIMESTAMP, latestModificationTimestamp.toString());
         eventValues.put(XmlTemplateProvider.VAR_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(comment));
         eventValues.put(XmlTemplateProvider.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
         eventValues.put(XmlTemplateProvider.VAR_AGENT_TITLE, UserContext.getRealName());
@@ -1117,7 +1134,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException
      *             In case of an internal error.
      */
-    protected void writeEventToWov(final String versionNo, final String timestamp, final String newEventEntry)
+    protected void writeEventToWov(final String versionNo, final DateTime timestamp, final String newEventEntry)
         throws FedoraSystemException, WebserverSystemException {
 
         /*
@@ -1136,7 +1153,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         // FIXME change first occurence of timestamp in version-history
         updateElementsWOV.put(TripleStoreUtility.PROP_VERSION_TIMESTAMP, new StartElementWithChildElements(
             TripleStoreUtility.PROP_VERSION_TIMESTAMP, Constants.WOV_NAMESPACE_URI, Constants.WOV_NAMESPACE_PREFIX,
-            null, timestamp, null));
+            null, timestamp.toString(), null));
 
         final ItemRelsExtUpdateHandler ireuh = new ItemRelsExtUpdateHandler(updateElementsWOV, sp);
         ireuh.setPath("/version-history/version/");
@@ -1301,7 +1318,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     protected org.fcrepo.server.types.gen.Datastream[] getDatastreamInfos() throws WebserverSystemException,
         FedoraSystemException {
 
-        String versionDate = null;
+        DateTime versionDate = null;
         if (!isLatestVersion()) {
             versionDate = getVersionDate();
         }
@@ -1324,11 +1341,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             final String location = datastreamInfo.getLocation();
 
             Datastream ds;
-            DateTime versionDate = null;
-            final String versionDateString = getVersionDate();
-            if (versionDateString != null) {
-                versionDate = DateTimeJaxbConverter.parseDate(versionDateString);
-            }
+            final DateTime versionDate = getVersionDate();
             // RELS-EXT
             if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
                 // The RELS-EXT in the Fedora repository is newer than the

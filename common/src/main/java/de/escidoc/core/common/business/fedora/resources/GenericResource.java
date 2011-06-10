@@ -66,6 +66,32 @@ import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.GetObjectProfilePathParam;
+import org.escidoc.core.services.fedora.GetObjectProfileQueryParam;
+import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
+import org.escidoc.core.services.fedora.access.ObjectProfileTO;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.fcrepo.server.types.gen.DatastreamControlGroup;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import javax.annotation.Resource;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Generic Resource supports object id, title, last modified, datastream, locking and sync mechanisms.
@@ -265,14 +291,21 @@ public class GenericResource implements FedoraResource {
      * @throws WebserverSystemException Thrown in case of internal error.
      * @throws FedoraSystemException    Thrown if access to Fedora fails.
      */
-    public String getLastModificationDate() throws WebserverSystemException, FedoraSystemException {
+    public DateTime getLastModificationDate() throws WebserverSystemException, FedoraSystemException {
 
-        String lastModificationDate;
+        DateTime lastModificationDate = null;
+
         try {
-            lastModificationDate = getResourceProperties().get(PropertyMapKeys.LAST_MODIFICATION_DATE);
+
+            String propLMD = getResourceProperties().get(PropertyMapKeys.LAST_MODIFICATION_DATE);
+
+            if (propLMD != null) {
+                lastModificationDate = new DateTime(propLMD, DateTimeZone.UTC);
+            }
+
             if (lastModificationDate == null) {
                 final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(this.id);
-                lastModificationDate = XmlUtility.normalizeDate(objectProfile.getObjLastModDate().toDate());
+                lastModificationDate = objectProfile.getObjLastModDate();
                 setLastModificationDate(lastModificationDate);
             }
         }
@@ -289,10 +322,27 @@ public class GenericResource implements FedoraResource {
      * @param timestamp The new timestamp for the lastModificationDate.
      * @throws WebserverSystemException Thrown if requesting TripleStore failed.
      */
+    @Deprecated
     public void setLastModificationDate(final String timestamp) throws WebserverSystemException {
         // this.lastModifiedDate = timestamp;
         try {
-            getResourceProperties().put(PropertyMapKeys.LAST_MODIFICATION_DATE, timestamp);
+            setLastModificationDate(new DateTime(timestamp, DateTimeZone.UTC));
+        }
+        catch (final Exception e) {
+            throw new WebserverSystemException(e);
+        }
+    }
+
+    /**
+     * Set the last-modification-date.
+     *
+     * @param timestamp The new timestamp for the lastModificationDate.
+     * @throws WebserverSystemException Thrown if requesting TripleStore failed.
+     */
+    public void setLastModificationDate(final DateTime timestamp) throws WebserverSystemException {
+        // this.lastModifiedDate = timestamp;
+        try {
+            getResourceProperties().put(PropertyMapKeys.LAST_MODIFICATION_DATE, timestamp.toString());
         }
         catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
@@ -307,9 +357,9 @@ public class GenericResource implements FedoraResource {
      * @throws FedoraSystemException Thrown if access to Fedora fails.
      */
     @Override
-    public String getLastFedoraModificationDate() throws FedoraSystemException {
+    public DateTime getLastFedoraModificationDate() throws FedoraSystemException {
         final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(this.id);
-        return XmlUtility.normalizeDate(objectProfile.getObjLastModDate().toDate());
+        return objectProfile.getObjLastModDate();
     }
 
     /**
@@ -824,8 +874,7 @@ public class GenericResource implements FedoraResource {
             if (!ds.equals(curDs)) {
 
                 this.datastream = ds;
-                final String lmd = ds.merge();
-                setLastModificationDate(lmd);
+                setLastModificationDate(ds.merge());
                 this.needSync = true;
             }
         }
@@ -861,7 +910,7 @@ public class GenericResource implements FedoraResource {
      * @throws FedoraSystemException    Thrown if connection to Fedora failed.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    public String persist() throws FedoraSystemException, WebserverSystemException {
+    public DateTime persist() throws FedoraSystemException, WebserverSystemException {
 
         return persist(true);
     }
@@ -874,14 +923,14 @@ public class GenericResource implements FedoraResource {
      * @throws FedoraSystemException    Thrown if connection to Fedora failed.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    public String persist(final boolean sync) throws FedoraSystemException, WebserverSystemException {
+    public DateTime persist(final boolean sync) throws FedoraSystemException, WebserverSystemException {
         /*
          * Well, this is not nice but the used comparing method, to detect
          * changes, is expensive. If RELS-EXT was not updated (through the
          * methods of this class), then should a persist be redundant.
          */
         if (this.needSync) {
-            final String lastModificationDate = persistRelsExt();
+            final DateTime lastModificationDate = persistRelsExt();
             setLastModificationDate(lastModificationDate);
         }
         if (sync) {
@@ -903,12 +952,12 @@ public class GenericResource implements FedoraResource {
      * @throws FedoraSystemException    Thrown if connection to Fedora failed.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    protected String persistRelsExt() throws FedoraSystemException, WebserverSystemException {
+    protected DateTime persistRelsExt() throws FedoraSystemException, WebserverSystemException {
 
-        String timestamp = null; // Maybe would it be better, if we use the
+        DateTime timestamp = null; // Maybe would it be better, if we use the
         // old timestamp instead of null.
         if (this.relsExt != null) {
-            timestamp = this.relsExt.merge();
+            timestamp = new DateTime(this.relsExt.merge(), DateTimeZone.UTC);
         }
 
         return timestamp;

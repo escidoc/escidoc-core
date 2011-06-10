@@ -424,8 +424,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         if (this.dc == null) {
             final Datastream ds;
             try {
-                final DateTime versionDate = DateTimeJaxbConverter.parseDate(getVersionDate());
-                ds = new Datastream("DC", getId(), versionDate);
+                ds = new Datastream("DC", getId(), getVersionDate());
             }
             catch (final StreamNotFoundException e) {
                 throw new WebserverSystemException(e);
@@ -883,9 +882,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         for (final String s : getComponentIds()) {
             final Component component = getComponent(s);
             if (component != null) {
-                final String lmd = component.getLastFedoraModificationDate();
-                final String newLmd = component.persist(false);
-                if (!lmd.equals(newLmd)) {
+                final DateTime lmd = component.getLastFedoraModificationDate();
+                final DateTime newLmd = component.persist(false);
+                if (!lmd.isEqual(newLmd)) {
                     resourceUpdated = true;
                 }
             }
@@ -920,7 +919,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *             Thrown in case of internal failure.
      */
     @Override
-    public String persist() throws FedoraSystemException, WebserverSystemException {
+    public DateTime persist() throws FedoraSystemException, WebserverSystemException {
 
         try {
             if (persistComponents()) {
@@ -974,29 +973,24 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             final String location = datastreamInfo.getLocation();
 
             final Datastream ds;
-            DateTime versionDate = null;
-            final String versionDateString = this.getVersionDate();
-            if (versionDateString != null) {
-                versionDate = DateTimeJaxbConverter.parseDate(versionDateString);
-            }
 
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
-                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
+                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.mdRecords.put(name, ds);
             }
             else if (altIDs.contains("content-stream")) {
                 // found content-stream
-                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
+                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.contentStreams.put(name, ds);
             }
             // content-model-specific
             else if ("content-model-specific".equals(name)) {
-                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
+                ds = new Datastream(name, getId(), getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.cts = ds;
