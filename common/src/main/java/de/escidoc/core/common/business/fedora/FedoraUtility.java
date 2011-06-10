@@ -73,6 +73,8 @@ import org.fcrepo.server.access.FedoraAPIA;
 import org.fcrepo.server.management.FedoraAPIM;
 import org.fcrepo.server.types.gen.Datastream;
 import org.fcrepo.server.types.gen.MIMETypedStream;
+import org.fcrepo.server.types.gen.ObjectProfile;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.NotWritablePropertyException;
@@ -255,18 +257,24 @@ public class FedoraUtility {
      * @throws FedoraSystemException
      *             Thrown if Fedora request failed.
      */
-    public Datastream[] getDatastreamsInformation(final String pid, final String timestamp)
+    public Datastream[] getDatastreamsInformation(final String pid, final DateTime timestamp)
         throws FedoraSystemException {
         Datastream[] datastreams = null;
         FedoraAPIM apim = borrowApim();
+
+        String timeStampString = null;
+        if (timestamp != null) {
+            timeStampString = timestamp.toString();
+        }
+
         try {
             // work around to prevent null returns
-            datastreams = apim.getDatastreams(pid, timestamp, null);
+            datastreams = apim.getDatastreams(pid, timeStampString, null);
             if (datastreams == null) {
                 LOGGER.warn("APIM getDatastreams(" + pid + ", ..) returns null.");
                 returnApim(apim);
                 apim = borrowApim();
-                datastreams = apim.getDatastreams(pid, timestamp, null);
+                datastreams = apim.getDatastreams(pid, timeStampString, null);
             }
         }
         catch (final RemoteException e) {
@@ -280,11 +288,11 @@ public class FedoraUtility {
             apimPool.clear();
             apim = borrowApim();
             try {
-                datastreams = apim.getDatastreams(pid, timestamp, null);
+                datastreams = apim.getDatastreams(pid, timeStampString, null);
             }
             catch (final RemoteException e1) {
                 final String message =
-                    "Error on retrieve datastream (pid='" + pid + "', timestamp='" + timestamp + "') ";
+                    "Error on retrieve datastream (pid='" + pid + "', timestamp='" + timeStampString + "') ";
                 LOGGER.warn(message);
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug(message, e1);
@@ -296,6 +304,40 @@ public class FedoraUtility {
             returnApim(apim);
         }
         return datastreams;
+    }
+
+    /**
+     * The method retrieves metadata for the datastream with a provided name of the fedora object with provided id as
+     * Array.
+     * 
+     * @param pid
+     *            provided object id
+     * @param name
+     *            provided data stream name
+     * @param timestamp
+     *            Timestamp related to datastream version to retrieve. May be null.
+     * @return datastream information
+     * @throws FedoraSystemException
+     *             Thrown if request to Fedora failed.
+     */
+    public Datastream getDatastreamInformation(final String pid, final String name, final DateTime timestamp)
+        throws FedoraSystemException {
+
+        String timeStampString = null;
+        if (timestamp != null) {
+            timeStampString = timestamp.toString();
+        }
+
+        final FedoraAPIM apim = borrowApim();
+        try {
+            return apim.getDatastream(pid, name, timeStampString);
+        }
+        catch (final Exception e) {
+            throw new FedoraSystemException(e.toString(), e);
+        }
+        finally {
+            returnApim(apim);
+        }
     }
 
     public byte[] getDissemination(final String pid, final String contentModelPid, final String name)

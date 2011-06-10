@@ -202,11 +202,11 @@ public class Utility {
      * @throws OptimisticLockingException Thrown if a change of the object is not permitted.
      * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    public static void checkOptimisticLockingCriteria(
+    public static boolean checkOptimisticLockingCriteria(
         final DateTime fedoraLatestVersionDate, final DateTime updateLatestVersionDate, final String label)
         throws OptimisticLockingException, WebserverSystemException {
 
-        if (!fedoraLatestVersionDate.equals(updateLatestVersionDate)) {
+        if (!fedoraLatestVersionDate.isEqual((updateLatestVersionDate))) {
 
             String text = label;
             if (text == null) {
@@ -218,6 +218,7 @@ public class Utility {
                     + updateLatestVersionDate + " saved:" + fedoraLatestVersionDate + ")! Changes are not permitted.";
             throw new OptimisticLockingException(message);
         }
+        return true;
     }
 
     /**
@@ -1308,9 +1309,8 @@ public class Utility {
      * @return The result XML structure.
      * @throws SystemException Thrown if parsing last modification or retrieving xml:base failed.
      */
-    public String prepareReturnXmlFromLastModificationDate(final String lastModificationDate) throws SystemException {
-        final DateTime t = new DateTime(lastModificationDate, DateTimeZone.UTC);
-        return prepareReturnXml(t, null);
+    public String prepareReturnXmlFromLastModificationDate(final DateTime lastModificationDate) throws SystemException {
+        return prepareReturnXml(lastModificationDate, null);
     }
 
     public String prepareReturnXml(final String content) throws SystemException {
@@ -1327,19 +1327,15 @@ public class Utility {
      * @return The result XML structure.
      * @throws SystemException Thrown if parsing last modification or retrieving xml:base failed.
      */
-    public static String prepareReturnXml(final DateTime lastModificationDate, final String content)
-        throws SystemException {
+    public static String prepareReturnXml(DateTime lastModificationDate, final String content) throws SystemException {
 
-        DateTime t = lastModificationDate;
-        if (t == null) {
-            t = new DateTime();
-            t.withZone(DateTimeZone.UTC);
+        if (lastModificationDate == null) {
+            lastModificationDate = new DateTime(DateTimeZone.UTC);
         }
 
         String xml =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<result " + "xmlns=\"" + Constants.RESULT_NAMESPACE_URI
-                + "\" " + "last-modification-date=\""
-                + t.withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT) + '\"';
+                + "\" " + "last-modification-date=\"" + lastModificationDate.toString() + '\"';
 
         xml += content == null ? " />" : ">\n" + content + "</result>\n";
 
