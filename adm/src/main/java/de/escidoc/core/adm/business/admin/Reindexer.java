@@ -125,14 +125,12 @@ public class Reindexer {
 
             try {
                 // Get all Containers
-                final Collection<String> containerHrefs =
-                    getIds(indexName, ResourceType.CONTAINER, clearIndex);
+                final Collection<String> containerHrefs = getIds(indexName, ResourceType.CONTAINER, clearIndex);
 
                 idListEmpty &= containerHrefs.isEmpty();
 
                 // Get all Content Models
-                final Collection<String> contentModelHrefs =
-                    getIds(indexName, ResourceType.CONTENT_MODEL, clearIndex);
+                final Collection<String> contentModelHrefs = getIds(indexName, ResourceType.CONTENT_MODEL, clearIndex);
 
                 idListEmpty &= contentModelHrefs.isEmpty();
 
@@ -143,8 +141,7 @@ public class Reindexer {
                 idListEmpty &= contentRelationHrefs.isEmpty();
 
                 // Get all Contexts
-                final Collection<String> contextHrefs =
-                    getIds(indexName, ResourceType.CONTEXT, clearIndex);
+                final Collection<String> contextHrefs = getIds(indexName, ResourceType.CONTEXT, clearIndex);
 
                 idListEmpty &= contextHrefs.isEmpty();
 
@@ -336,8 +333,7 @@ public class Reindexer {
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
-    private Collection<String> getIds(
-        final String indexName, final ResourceType type, final boolean clearIndex)
+    private Collection<String> getIds(final String indexName, final ResourceType type, final boolean clearIndex)
         throws SystemException, FedoraSystemException, WebserverSystemException {
         final Collection<String> result = new LinkedList<String>();
         if (contains(indexName, type)) {
