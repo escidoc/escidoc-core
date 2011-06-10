@@ -365,7 +365,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             Thrown in case of internal failure (get configuration)
      */
-    public String merge() throws FedoraSystemException, WebserverSystemException {
+    public DateTime merge() throws FedoraSystemException, WebserverSystemException {
 
         if (this.getStream() == null && this.location != null) {
             String loc = this.location;
@@ -440,8 +440,7 @@ public class Datastream {
                 this.updateDatastream(datastreamProfile);
             }
         }
-        return this.timestamp.withZone(DateTimeZone.UTC).toString(
-            de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+        return this.timestamp;
     }
 
     private void addDatastream(final Stream stream) {
