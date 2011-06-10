@@ -1,6 +1,9 @@
 package de.escidoc.core.common.exceptions.remote;
 
-public class EscidocException extends org.apache.axis.AxisFault implements java.io.Serializable {
+public class EscidocException extends Exception {
+
+    private static final long serialVersionUID = 1254972454320093984L;
+
     private int httpStatusCode;
 
     private String httpStatusLine;
@@ -113,63 +116,5 @@ public class EscidocException extends org.apache.axis.AxisFault implements java.
         }
         __hashCodeCalc = false;
         return _hashCode;
-    }
-
-    // Type metadata
-    private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(EscidocException.class, true);
-
-    static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://exceptions.common.core.escidoc.de",
-            "EscidocException"));
-        org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("httpStatusCode");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "httpStatusCode"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
-        elemField.setNillable(false);
-        typeDesc.addFieldDesc(elemField);
-        elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("httpStatusLine");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "httpStatusLine"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
-        elemField.setNillable(true);
-        typeDesc.addFieldDesc(elemField);
-        elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("httpStatusMsg");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "httpStatusMsg"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
-        elemField.setNillable(true);
-        typeDesc.addFieldDesc(elemField);
-    }
-
-    /**
-     * Return type metadata object
-     */
-    public static org.apache.axis.description.TypeDesc getTypeDesc() {
-        return typeDesc;
-    }
-
-    /**
-     * Get Custom Serializer
-     */
-    public static org.apache.axis.encoding.Serializer getSerializer(
-        String mechType, Class _javaType, javax.xml.namespace.QName _xmlType) {
-        return new org.apache.axis.encoding.ser.BeanSerializer(_javaType, _xmlType, typeDesc);
-    }
-
-    /**
-     * Get Custom Deserializer
-     */
-    public static org.apache.axis.encoding.Deserializer getDeserializer(
-        String mechType, Class _javaType, javax.xml.namespace.QName _xmlType) {
-        return new org.apache.axis.encoding.ser.BeanDeserializer(_javaType, _xmlType, typeDesc);
-    }
-
-    /**
-     * Writes the exception data to the faultDetails
-     */
-    public void writeDetails(javax.xml.namespace.QName qname, org.apache.axis.encoding.SerializationContext context)
-        throws java.io.IOException {
-        context.serialize(qname, null, this);
     }
 }

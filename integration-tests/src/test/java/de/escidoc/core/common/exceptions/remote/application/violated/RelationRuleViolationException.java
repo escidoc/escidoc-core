@@ -8,8 +8,10 @@
 package de.escidoc.core.common.exceptions.remote.application.violated;
 
 public class RelationRuleViolationException
-    extends de.escidoc.core.common.exceptions.remote.application.violated.RuleViolationException
-    implements java.io.Serializable {
+    extends de.escidoc.core.common.exceptions.remote.application.violated.RuleViolationException {
+
+    private static final long serialVersionUID = 2596609605825198469L;
+
     public RelationRuleViolationException() {
     }
 
@@ -22,7 +24,6 @@ public class RelationRuleViolationException
     public synchronized boolean equals(Object obj) {
         if (!(obj instanceof RelationRuleViolationException))
             return false;
-        RelationRuleViolationException other = (RelationRuleViolationException) obj;
         if (obj == null)
             return false;
         if (this == obj)
@@ -47,45 +48,5 @@ public class RelationRuleViolationException
         int _hashCode = super.hashCode();
         __hashCodeCalc = false;
         return _hashCode;
-    }
-
-    // Type metadata
-    private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(RelationRuleViolationException.class, true);
-
-    static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName(
-            "http://violated.application.exceptions.common.core.escidoc.de", "RelationRuleViolationException"));
-    }
-
-    /**
-     * Return type metadata object
-     */
-    public static org.apache.axis.description.TypeDesc getTypeDesc() {
-        return typeDesc;
-    }
-
-    /**
-     * Get Custom Serializer
-     */
-    public static org.apache.axis.encoding.Serializer getSerializer(
-        String mechType, Class _javaType, javax.xml.namespace.QName _xmlType) {
-        return new org.apache.axis.encoding.ser.BeanSerializer(_javaType, _xmlType, typeDesc);
-    }
-
-    /**
-     * Get Custom Deserializer
-     */
-    public static org.apache.axis.encoding.Deserializer getDeserializer(
-        String mechType, Class _javaType, javax.xml.namespace.QName _xmlType) {
-        return new org.apache.axis.encoding.ser.BeanDeserializer(_javaType, _xmlType, typeDesc);
-    }
-
-    /**
-     * Writes the exception data to the faultDetails
-     */
-    public void writeDetails(javax.xml.namespace.QName qname, org.apache.axis.encoding.SerializationContext context)
-        throws java.io.IOException {
-        context.serialize(qname, null, this);
     }
 }

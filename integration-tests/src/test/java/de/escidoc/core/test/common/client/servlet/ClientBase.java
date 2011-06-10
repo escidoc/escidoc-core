@@ -44,7 +44,6 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.TransformerException;
 
-import org.apache.axis.AxisFault;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -80,6 +79,7 @@ import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 
+import de.escidoc.core.common.exceptions.remote.EscidocException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
@@ -738,11 +738,10 @@ public abstract class ClientBase {
             exceptionDocument = EscidocAbstractTest.getDocument(exceptionXML, false);
         }
         catch (final Exception e) {
-            // parsing failed, does not seem to be an eScidocException
-            // body is wrapped into a generic Axis-Fault
-            throw new AxisFault("Unknown (unparseable) error response" + "\nStatus code: "
-                + result.getStatusLine().getStatusCode() + "\nStatus text: " + result.getStatusLine().getReasonPhrase()
-                + "\nBody:\n" + exceptionXML);
+            // parsing failed, does not seem to be a known exception
+            throw new EscidocException(result.getStatusLine().getStatusCode(),
+                result.getStatusLine().getReasonPhrase(), "Unknown (unparseable) error response" + "\nBody:\n"
+                    + exceptionXML);
         }
 
         Node exceptionNameNode = EscidocTestBase.selectSingleNode(exceptionDocument, "/exception/class/p");
