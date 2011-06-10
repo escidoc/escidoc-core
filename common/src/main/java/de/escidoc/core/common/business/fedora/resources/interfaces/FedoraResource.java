@@ -23,6 +23,8 @@
  */
 package de.escidoc.core.common.business.fedora.resources.interfaces;
 
+import org.joda.time.DateTime;
+
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
@@ -118,7 +120,7 @@ public interface FedoraResource {
      * @throws FedoraSystemException      Thrown in case of Fedora failures.
      * @throws WebserverSystemException   Thrown in case of internal errors.
      */
-    String getLastFedoraModificationDate() throws TripleStoreSystemException, FedoraSystemException,
+    DateTime getLastFedoraModificationDate() throws TripleStoreSystemException, FedoraSystemException,
         WebserverSystemException;
 
     /**

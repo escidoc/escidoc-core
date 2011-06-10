@@ -20,6 +20,8 @@
 
 package de.escidoc.core.common.business.fedora.resources.interfaces;
 
+import org.joda.time.DateTime;
+
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
@@ -101,7 +103,8 @@ public interface VersionableResource extends Resource {
      * @throws FedoraSystemException      Thrown in case of Fedora failure.
      * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    String getLastModificationDate() throws TripleStoreSystemException, FedoraSystemException, WebserverSystemException;
+    DateTime getLastModificationDate() throws TripleStoreSystemException, FedoraSystemException,
+        WebserverSystemException;
 
     /**
      * Persist the resource.
@@ -109,5 +112,5 @@ public interface VersionableResource extends Resource {
      * @return last-modification-date of the resource
      * @throws SystemException Thrown if persisting fails.
      */
-    String persist() throws SystemException;
+    DateTime persist() throws SystemException;
 }
