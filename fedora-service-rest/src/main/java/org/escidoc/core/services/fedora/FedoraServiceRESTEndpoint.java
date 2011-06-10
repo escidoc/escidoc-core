@@ -31,13 +31,6 @@ public interface FedoraServiceRESTEndpoint {
     @Consumes(MimeTypes.TEXT_XML)
     PidListTO getNextPID(@NotNull @PathParam("") NextPIDPathParam path, @NotNull @QueryParam("") NextPIDQueryParam query);
 
-    @POST
-    @Path("/objects/{pid}")
-    @Produces(MimeTypes.TEXT_XML)
-    @Consumes(MimeTypes.TEXT_XML)
-    void createObject(
-        @NotNull @PathParam("") CreateObjectPathParam path, @NotNull @QueryParam("") CreateObjectQueryParam query);
-
     @GET
     @Path("/objects/{pid}")
     @Produces(MimeTypes.TEXT_XML)
@@ -73,7 +66,15 @@ public interface FedoraServiceRESTEndpoint {
     @Consumes(MimeTypes.TEXT_XML)
     String ingest(
         @NotNull @PathParam("") IngestPathParam path, @NotNull @QueryParam("") IngestQueryParam query,
-        @NotNull DigitalObjectTypeTOExtension digitalObjectTO);
+        @NotNull DigitalObjectTO digitalObjectTO);
+
+    @POST
+    @Path("/objects/{pid}")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.TEXT_XML)
+    Stream ingest(
+        @NotNull @PathParam("") IngestPathParam path, @NotNull @QueryParam("") IngestQueryParam query,
+        @NotNull Stream foxml);
 
     @POST
     @Path("/objects/{pid}/datastreams/{dsID}")
@@ -133,7 +134,6 @@ public interface FedoraServiceRESTEndpoint {
     @Path("/risearch")
     @Produces(MimeTypes.ALL)
     @Consumes(MimeTypes.ALL)
-    Stream risearch(@NotNull @PathParam("") RisearchPathParam path,
-                    @NotNull @QueryParam("") RisearchQueryParam query);
+    Stream risearch(@NotNull @PathParam("") RisearchPathParam path, @NotNull @QueryParam("") RisearchQueryParam query);
 
 }
