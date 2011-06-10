@@ -31,6 +31,7 @@
  */
 package de.escidoc.core.oum.business.fedora.organizationalunit;
 
+import org.joda.time.DateTime;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -414,7 +415,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         final List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
         final List<Predecessor> predecessorsBeforeUpdate = getOrganizationalUnit().getPredecessors();
 
-        final String startTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
+        final DateTime startTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler optimisticLockingHandler =
             new OptimisticLockingHandler(getOrganizationalUnit().getId(), Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,
@@ -476,8 +477,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         catch (final OrganizationalUnitNotFoundException e) {
             throw new IntegritySystemException("Error retrieving updated organizational-unit with id " + id + '!', e);
         }
-        final String endTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
-        if (!startTimeStamp.equals(endTimeStamp)) {
+        final DateTime endTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
+        if (!startTimeStamp.isEqual((endTimeStamp))) {
             fireOuModified(getOrganizationalUnit().getId(), result);
             updateModifiedParents(parentsBeforeUpdate, parents);
             updateModifiedPredecessors(predecessorsBeforeUpdate, predecessorsHandler.getPredecessors());
@@ -559,7 +560,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         WebserverSystemException, XmlParserSystemException, XmlCorruptedException {
 
         setOrganizationalUnit(id);
-        final String startTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
+        final DateTime startTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler optimisticLockingHandler =
             new OptimisticLockingHandler(getOrganizationalUnit().getId(), Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,
@@ -606,8 +607,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         catch (final OrganizationalUnitNotFoundException e) {
             throw new IntegritySystemException("Error retrieving updated organizational-unit with id " + id + '!', e);
         }
-        final String endTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
-        if (!startTimeStamp.equals(endTimeStamp)) {
+        final DateTime endTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
+        if (!startTimeStamp.isEqual(endTimeStamp)) {
             fireOuModified(getOrganizationalUnit().getId(), retrieve(getOrganizationalUnit().getId()));
         }
         return result;
@@ -634,7 +635,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
 
         setOrganizationalUnit(id);
         final List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
-        final String startTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
+        final DateTime startTimeStamp = getOrganizationalUnit().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
         final OptimisticLockingHandler optimisticLockingHandler =
             new OptimisticLockingHandler(getOrganizationalUnit().getId(), Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,

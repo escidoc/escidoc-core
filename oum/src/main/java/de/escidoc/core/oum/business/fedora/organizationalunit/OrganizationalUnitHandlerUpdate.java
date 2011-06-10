@@ -55,6 +55,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.joda.time.DateTime;
+
 /**
  * This class contains common methods for all handler methods.
  *
@@ -158,7 +160,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws FedoraSystemException      Thrown if request to Fedora failed.
      * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
      */
-    protected void checkUpToDate(final String timestamp) throws OptimisticLockingException, WebserverSystemException,
+    protected void checkUpToDate(final DateTime timestamp) throws OptimisticLockingException, WebserverSystemException,
         TripleStoreSystemException, FedoraSystemException {
 
         getUtility().checkOptimisticLockingCriteria(getOrganizationalUnit().getLastModificationDate(), timestamp,
