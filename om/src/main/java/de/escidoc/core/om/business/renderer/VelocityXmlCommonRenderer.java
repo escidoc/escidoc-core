@@ -48,6 +48,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.joda.time.DateTime;
 
 @Service
 public class VelocityXmlCommonRenderer {
@@ -137,7 +138,7 @@ public class VelocityXmlCommonRenderer {
     protected void addCommonValues(final GenericVersionableResourcePid resource, final Map values)
         throws WebserverSystemException {
 
-        final String lmd;
+        final DateTime lmd;
         try {
             lmd = resource.getLastModificationDate();
         }
@@ -145,8 +146,7 @@ public class VelocityXmlCommonRenderer {
             throw new WebserverSystemException(e1);
         }
 
-        final String n = XmlUtility.normalizeDate(lmd);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, n);
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd.toString());
 
         addXlinkValues(values);
     }

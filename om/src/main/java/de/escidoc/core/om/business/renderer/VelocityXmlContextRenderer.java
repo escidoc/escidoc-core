@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -294,15 +295,16 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
     private void addCommonValues(final Context context, final Map<String, Object> values)
         throws WebserverSystemException {
 
-        String lastModDate = null;
+        DateTime lastModDate = null;
+
         try {
             lastModDate = context.getLastModificationDate();
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(lastModDate));
+            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lastModDate.toString());
         }
-        catch (final Exception e) {
-            throw new WebserverSystemException("Unable to parse last-modification-date '" + lastModDate
-                + "' of context '" + context.getId() + "'!", e);
+        catch (FedoraSystemException e) {
+            e.printStackTrace();
         }
+
         values.put("contextId", context.getId());
         values.put("contextTitle", context.getTitle());
         values.put("contextHref", context.getHref());
