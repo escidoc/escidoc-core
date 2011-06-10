@@ -53,13 +53,12 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException, IOException {
+        throws AuthenticationException, IOException {
         OpenIDAuthenticationToken token;
 
         String identity = request.getParameter("openid.identity");
         return super.attemptAuthentication(request, response);
 
     }
-
 
 }
