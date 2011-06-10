@@ -93,6 +93,7 @@ import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.esidoc.core.utils.io.MimeTypes;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -217,7 +218,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         else {
             String fedoraLocalUrl = "/get/" + getContentModel().getId() + '/' + name;
             if (getContentModel().getVersionDate() != null) {
-                fedoraLocalUrl += '/' + getContentModel().getVersionDate();
+                fedoraLocalUrl += '/' + getContentModel().getVersionDate().toString();
             }
             bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
         }
@@ -245,7 +246,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         else {
             String fedoraLocalUrl = "/get/" + ds.getParentId() + '/' + name;
             if (getContentModel().getVersionDate() != null) {
-                fedoraLocalUrl += '/' + getContentModel().getVersionDate();
+                fedoraLocalUrl += '/' + getContentModel().getVersionDate().toString();
             }
             bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
         }
@@ -419,7 +420,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setContentModel(id);
-        final String startTimestamp = getContentModel().getLastFedoraModificationDate();
+        final DateTime startTimestamp = getContentModel().getLastFedoraModificationDate();
         checkLatestVersion();
 
         // parse incomming XML
@@ -630,8 +631,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
         // check if modified
         final String updatedXmlData;
-        final String endTimestamp = getContentModel().getLastFedoraModificationDate();
-        if (!startTimestamp.equals(endTimestamp) || getContentModel().isNewVersion()) {
+        final DateTime endTimestamp = getContentModel().getLastFedoraModificationDate();
+        if (!startTimestamp.isEqual(endTimestamp) || getContentModel().isNewVersion()) {
             // object is modified
             getUtility().makeVersion("ContentModelHandler.update()", null, getContentModel(), getFedoraUtility());
             getContentModel().persist();
