@@ -177,8 +177,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         if (this.dc == null) {
             final Datastream ds;
             try {
-                final DateTime versionDate = DateTimeJaxbConverter.parseDate(getVersionDate());
-                ds = new Datastream("DC", getId(), versionDate);
+                ds = new Datastream("DC", getId(), this.getVersionDate());
             }
             catch (final StreamNotFoundException e) {
                 throw new WebserverSystemException(e);
@@ -268,27 +267,22 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
             final String location = datastreamInfo.getLocation();
 
             final Datastream ds;
-            final String versionDateString = getVersionDate();
-            DateTime versionDate = null;
-            if (versionDateString != null) {
-                versionDate = DateTimeJaxbConverter.parseDate(versionDateString);
-            }
 
             if (altIDs.contains("content-stream")) {
                 // found content-stream
-                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
+                ds = new Datastream(name, getId(), this.getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.contentStreams.put(name, ds);
             }
             else if (name.equals(DATASTREAM_DS_COMPOSITE_MODEL)) {
-                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
+                ds = new Datastream(name, getId(), this.getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.dsCompositeModel = ds;
             }
             else if (!(name.equals(Datastream.RELS_EXT_DATASTREAM) || "DC".equals(name) || name.equals(DATASTREAM_WOV))) {
-                ds = new Datastream(name, getId(), versionDate, mimeType, location, controlGroupValue);
+                ds = new Datastream(name, getId(), this.getVersionDate(), mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.otherStreams.put(name, ds);
@@ -619,7 +613,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
      *             Thrown in case of internal error.
      */
     @Override
-    public String persist() throws FedoraSystemException, WebserverSystemException {
+    public DateTime persist() throws FedoraSystemException, WebserverSystemException {
 
         if (this.isNeedSync()) {
             persistDsCompositeModel();
@@ -628,9 +622,9 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         return persist(true);
     }
 
-    private String persistDsCompositeModel() throws FedoraSystemException, WebserverSystemException {
+    private DateTime persistDsCompositeModel() throws FedoraSystemException, WebserverSystemException {
 
-        String timestamp = null;
+        DateTime timestamp = null;
         if (this.dsCompositeModel != null) {
             timestamp = this.dsCompositeModel.merge();
         }
