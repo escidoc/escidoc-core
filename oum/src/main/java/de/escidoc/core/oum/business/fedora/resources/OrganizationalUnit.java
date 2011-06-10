@@ -31,9 +31,7 @@ package de.escidoc.core.oum.business.fedora.resources;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +41,7 @@ import java.util.Set;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
@@ -104,8 +103,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     private FedoraServiceClient fedoraServiceClient;
 
     /**
-     * Constructs the Context with the specified id. The datastreams are instantiated and retrieved if the related
-     * getter is called.
+     * Constructs the Context with the specified id. The datastreams are
+     * instantiated and retrieved if the related getter is called.
      * 
      * @param id
      *            The id of an organizational unit managed in Fedora.
@@ -146,8 +145,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     }
 
     /**
-     * Get the values of the properties stored in RELS-EXT datastream. If possible retrieve them directly from the
-     * triplestore.
+     * Get the values of the properties stored in RELS-EXT datastream. If
+     * possible retrieve them directly from the triplestore.
      * 
      * @throws TripleStoreSystemException
      *             Thrown if access to TripleStore failed.
@@ -296,7 +295,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     }
 
     /**
-     * Get the list of children ids for this organizational unit from the triplestore.
+     * Get the list of children ids for this organizational unit from the
+     * triplestore.
      * 
      * @return The list of children ids for this organizational unit.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
@@ -390,35 +390,16 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     /*
      * See Interface for functional description.
      * 
-     * @return
-     * 
-     * @throws FedoraSystemException
-     * 
-     * @seede.escidoc.core.oum.business.fedora.resources.interfaces. OrganizationalUnitInterface#getMdRecords()
+     * @see de.escidoc.core.oum.business.fedora.resources.interfaces.
+     * OrganizationalUnitInterface#getMdRecords()
      */
     @Override
     public Map<String, Datastream> getMdRecords() throws FedoraSystemException, IntegritySystemException {
 
-        final Map<String, Datastream> result = new HashMap<String, Datastream>();
-        final org.fcrepo.server.types.gen.Datastream[] datastreams =
-            getFedoraUtility().getDatastreamsInformation(getId(), null);
-        final Collection<String> names = new ArrayList<String>();
-        for (final org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
-            final List<String> altIDs = Arrays.asList(datastream.getAltIDs());
-            if (altIDs != null && altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
-                names.add(datastream.getID());
-            }
-        }
-        for (final String name : names) {
-            try {
-                result.put(name, new Datastream(name, getId(), null));
-            }
-            catch (final StreamNotFoundException e) {
-                throw new IntegritySystemException("Perhaps organizational unit with id '" + getId()
-                    + "' was changed during retrieval of metadata records! ", e);
-            }
-        }
-        return result;
+        final List<DatastreamProfileTO> profiles =
+            getFedoraServiceClient().getDatastreamProfilesByAltId(getId(), Datastream.METADATA_ALTERNATE_ID, null);
+
+        return Datastream.convertDatastreamProfileTOs(profiles, getId());
     }
 
     /**
@@ -499,7 +480,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     @Override
     public void setMdRecords(final Map<String, Datastream> mdRecords) throws IntegritySystemException,
         FedoraSystemException, WebserverSystemException, EncodingSystemException, TripleStoreSystemException {
-        // Container.setMdRecords throws FedoraSystemException, WebserverSystemException,
+        // Container.setMdRecords throws FedoraSystemException,
+        // WebserverSystemException,
         // TripleStoreSystemException, IntegritySystemException,
         // EncodingSystemException
 
@@ -550,7 +532,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
                     throw new WebserverSystemException(e);
                 }
                 this.fedoraServiceClient.addDatastream(path, query, stream);
-                // TODO should new Stream be put in list of md-records of this OU?
+                // TODO should new Stream be put in list of md-records of this
+                // OU?
             }
         }
     }
@@ -562,7 +545,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @throws StreamNotFoundException
      *             If there is no DC datastream and parentId in Fedora.
      * @throws FedoraSystemException
-     *             Thrown in case of an internal system error caused by failed Fedora access.
+     *             Thrown in case of an internal system error caused by failed
+     *             Fedora access.
      */
     public Datastream getDc() throws StreamNotFoundException, FedoraSystemException {
 
@@ -575,7 +559,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @param ds
      *            DC datastream
      * @throws StreamNotFoundException
-     *             If there is no datastream identified by name and parentId in Fedora.
+     *             If there is no datastream identified by name and parentId in
+     *             Fedora.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
