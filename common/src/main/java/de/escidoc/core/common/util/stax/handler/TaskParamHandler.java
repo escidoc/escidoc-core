@@ -26,6 +26,7 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -40,7 +41,7 @@ public class TaskParamHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private String lastModificationDate;
+    private DateTime lastModificationDate;
 
     private String withdrawComment;
 
@@ -104,28 +105,30 @@ public class TaskParamHandler extends DefaultHandler {
         if (PARAM_PATH.equals(currentPath)) {
             final int index = element.indexOfAttribute(null, LAST_MODIFICATION_DATE_ATT);
             if (index != -1) {
+                String lmd_attr = null;
                 try {
-                    this.lastModificationDate = element.getAttribute(index).getValue();
+                    lmd_attr = element.getAttribute(index).getValue();
                 }
                 catch (final IndexOutOfBoundsException e1) {
                     throw new XmlCorruptedException("Error on parsing last modification date attribute", e1);
                 }
-            }
-            // If we would have a schema for taskParam, then is the
-            // last-modifiaction-date timestamp already checked by schema
-            // validation.
-            try {
-                if (this.checkLastModificationDate) {
-                    if (this.lastModificationDate == null) {
-                        throw new XmlCorruptedException("Last modification date is null");
+                // If we would have a schema for taskParam, then is the
+                // last-modifiaction-date timestamp already checked by schema
+                // validation.
+                if (this.checkLastModificationDate && lmd_attr == null) {
+                    throw new XmlCorruptedException("Last modification date is null");
+                }
+                try {
+                    this.lastModificationDate = new DateTime(lmd_attr, DateTimeZone.UTC);
+                }
+                catch (final Exception e) {
+                    if (this.checkLastModificationDate) {
+                        throw new XmlCorruptedException("Task param: last-modification-date '" + lmd_attr
+                            + "' is no valid timestamp!", e);
                     }
-                    new DateTime(this.lastModificationDate);
                 }
             }
-            catch (final Exception e) {
-                throw new XmlCorruptedException("Task param: last-modification-date '" + this.lastModificationDate
-                    + "' is no valid timestamp!", e);
-            }
+
         }
         else if (!currentPath.startsWith(PARAM_PATH)) {
             throw new XmlCorruptedException("Task param has wrong root element '" + currentPath + "'!");
@@ -186,7 +189,7 @@ public class TaskParamHandler extends DefaultHandler {
     /**
      * @return The latest modification date.
      */
-    public String getLastModificationDate() {
+    public DateTime getLastModificationDate() {
         return this.lastModificationDate;
     }
 

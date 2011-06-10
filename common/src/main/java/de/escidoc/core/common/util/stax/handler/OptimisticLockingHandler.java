@@ -20,6 +20,14 @@
 
 package de.escidoc.core.common.util.stax.handler;
 
+import javax.naming.directory.NoSuchAttributeException;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -28,11 +36,6 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import javax.naming.directory.NoSuchAttributeException;
 
 /**
  * Verifies the attribute <code>last-modification-date</code> of a xml request. The specified value have to be the
@@ -55,7 +58,7 @@ public class OptimisticLockingHandler extends DefaultHandler {
 
     private boolean done;
 
-    private final String lastModifiedDate;
+    private final DateTime lastModifiedDate;
 
     private static final String MODIFIED_DATE_ATT_NAME = "last-modification-date";
 
@@ -67,7 +70,7 @@ public class OptimisticLockingHandler extends DefaultHandler {
      * @param lastModificationDate The last modification of the stores object.
      * @param parser               The parser this handler is added.
      */
-    public OptimisticLockingHandler(final String objid, final String objectType, final String lastModificationDate) {
+    public OptimisticLockingHandler(final String objid, final String objectType, final DateTime lastModificationDate) {
         this.objid = objid;
         this.objectType = objectType;
         this.lastModifiedDate = lastModificationDate;
@@ -94,7 +97,7 @@ public class OptimisticLockingHandler extends DefaultHandler {
                     + element.getLocalName() + " is missing.", e);
             }
 
-            final String requestedModificationDate = requestedDate.getValue();
+            final DateTime requestedModificationDate = new DateTime(requestedDate.getValue(), DateTimeZone.UTC);
             if (this.lastModifiedDate != null) {
                 this.utility.checkOptimisticLockingCriteria(this.lastModifiedDate, requestedModificationDate,
                     this.objectType + " with id " + this.objid);
