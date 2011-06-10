@@ -24,9 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,13 +65,8 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.fcrepo.client.FedoraClient;
-import org.fcrepo.client.HttpInputStream;
 import org.fcrepo.server.access.FedoraAPIA;
 import org.fcrepo.server.management.FedoraAPIM;
-import org.fcrepo.server.types.gen.Datastream;
-import org.fcrepo.server.types.gen.MIMETypedStream;
-import org.fcrepo.server.types.gen.ObjectProfile;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.NotWritablePropertyException;
@@ -84,7 +76,6 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -121,7 +112,7 @@ public class FedoraUtility {
     /**
      * Query string to trigger a sync via the fedora REST interface.
      */
-    //private String syncRestQuery;
+    // private String syncRestQuery;
 
     // TODO
     // in configurationsdatei auslagern--> escidoc config*
@@ -148,33 +139,6 @@ public class FedoraUtility {
     @Autowired
     @Qualifier("business.Utility")
     private Utility utility;
-
-    /**
-     * Get the names of data streams selected by alternateId. Only the first
-     * value of the altIds is compared.
-     * 
-     * @param pid
-     *            The id of the Fedora object.
-     * @param altId
-     *            The alternate ID filter.
-     * @return Vector of data stream names where the first altId is equal.
-     * @throws FedoraSystemException
-     *             Thrown if instantiation of Fedora connection fail.
-     */
-    public Collection<String> getDatastreamNamesByAltId(final String pid, final String altId)
-        throws FedoraSystemException {
-        final Collection<String> names = new ArrayList<String>();
-
-        final Datastream[] ds = getDatastreamsInformation(pid);
-
-        for (final Datastream d : ds) {
-            final String[] altIDs = d.getAltIDs();
-            if (altIDs.length > 0 && altIDs[0].equals(altId)) {
-                names.add(d.getID());
-            }
-        }
-        return names;
-    }
 
     /**
      * Store an object.
@@ -227,117 +191,6 @@ public class FedoraUtility {
             }
         }
         return pid;
-    }
-
-    /**
-     * The method retrieves metadata for all datastreams of the fedora object
-     * with provided id as Array.
-     * 
-     * @param pid
-     *            provided id
-     * @return Fedora information set about all datastreams of the requested
-     *         object.
-     * @throws FedoraSystemException
-     *             Thrown if request to Fedora failed.
-     */
-    Datastream[] getDatastreamsInformation(final String pid) throws FedoraSystemException {
-        return getDatastreamsInformation(pid, null);
-    }
-
-    /**
-     * The method retrieves metadata for all datastreams of the fedora object
-     * with provided id as Array.
-     * 
-     * @param pid
-     *            provided id
-     * @param timestamp
-     *            Timestamp related to datastream version to retrieve. May be
-     *            null.
-     * @return metadata of datastreams.
-     * @throws FedoraSystemException
-     *             Thrown if Fedora request failed.
-     */
-    public Datastream[] getDatastreamsInformation(final String pid, final DateTime timestamp)
-        throws FedoraSystemException {
-        Datastream[] datastreams = null;
-        FedoraAPIM apim = borrowApim();
-
-        String timeStampString = null;
-        if (timestamp != null) {
-            timeStampString = timestamp.toString();
-        }
-
-        try {
-            // work around to prevent null returns
-            datastreams = apim.getDatastreams(pid, timeStampString, null);
-            if (datastreams == null) {
-                LOGGER.warn("APIM getDatastreams(" + pid + ", ..) returns null.");
-                returnApim(apim);
-                apim = borrowApim();
-                datastreams = apim.getDatastreams(pid, timeStampString, null);
-            }
-        }
-        catch (final RemoteException e) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on APIM getDatastreams(..)");
-            }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on APIM getDatastreams(..)", e);
-            }
-            invalidateApimObject(apim);
-            apimPool.clear();
-            apim = borrowApim();
-            try {
-                datastreams = apim.getDatastreams(pid, timeStampString, null);
-            }
-            catch (final RemoteException e1) {
-                final String message =
-                    "Error on retrieve datastream (pid='" + pid + "', timestamp='" + timeStampString + "') ";
-                LOGGER.warn(message);
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug(message, e1);
-                }
-                throw new FedoraSystemException(message, e);
-            }
-        }
-        finally {
-            returnApim(apim);
-        }
-        return datastreams;
-    }
-
-    /**
-     * The method retrieves metadata for the datastream with a provided name of the fedora object with provided id as
-     * Array.
-     * 
-     * @param pid
-     *            provided object id
-     * @param name
-     *            provided data stream name
-     * @param timestamp
-     *            Timestamp related to datastream version to retrieve. May be null.
-     * @return datastream information
-     * @throws FedoraSystemException
-     *             Thrown if request to Fedora failed.
-     */
-    public Datastream getDatastreamInformation(final String pid, final String name, final DateTime timestamp)
-        throws FedoraSystemException {
-
-        String timeStampString = null;
-        if (timestamp != null) {
-            timeStampString = timestamp.toString();
-        }
-
-        final FedoraAPIM apim = borrowApim();
-        try {
-            return apim.getDatastream(pid, name, timeStampString);
-        }
-        catch (final Exception e) {
-            throw new FedoraSystemException(e.toString(), e);
-        }
-        finally {
-            returnApim(apim);
-        }
     }
 
     public byte[] getDissemination(final String pid, final String contentModelPid, final String name)
