@@ -52,6 +52,7 @@ import org.escidoc.core.services.fedora.ControlGroup;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
@@ -463,22 +464,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             throw new WebserverSystemException(e);
         }
 
-        getFedoraServiceClient().addDatastream(addPath, addQuery, addStream);
-
-        String lastModifiedDate = null;
-        final org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
-            this.fedoraUtility.getDatastreamsInformation(containerId, null);
-        for (final org.fcrepo.server.types.gen.Datastream aRelsExtInfo : relsExtInfo) {
-            final String createdDate = aRelsExtInfo.getCreateDate();
-            if (lastModifiedDate == null) {
-                lastModifiedDate = createdDate;
-            }
-            else {
-                if (new DateTime(lastModifiedDate).isBefore(new DateTime(createdDate))) {
-                    lastModifiedDate = createdDate;
-                }
-            }
-        }
+        final DatastreamProfileTO profile = getFedoraServiceClient().addDatastream(addPath, addQuery, addStream);
+        final String lastModifiedDate = profile.getDsCreateDate().toString();
 
         // End of the work around
         final String wov =
