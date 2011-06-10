@@ -314,11 +314,10 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
     private static void addCommonValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws WebserverSystemException {
 
-        String lmd = null;
+        DateTime lmd = null;
         try {
             lmd = organizationalUnit.getLastModificationDate();
-            final DateTime t = new DateTime(lmd, DateTimeZone.UTC);
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, t.toString());
+            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd.toString());
         }
         catch (final Exception e) {
             throw new WebserverSystemException("Unable to parse last-modification-date '" + lmd
