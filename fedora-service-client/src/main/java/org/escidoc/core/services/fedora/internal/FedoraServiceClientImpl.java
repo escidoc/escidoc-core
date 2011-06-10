@@ -1,21 +1,28 @@
 package org.escidoc.core.services.fedora.internal;
 
-import com.googlecode.ehcache.annotations.KeyGenerator;
-import com.googlecode.ehcache.annotations.TriggersRemove;
+import static org.esidoc.core.utils.Preconditions.checkState;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Future;
+
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.Response;
+
 import net.sf.oval.guard.Guarded;
+
 import org.apache.cxf.jaxrs.client.Client;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
-import org.escidoc.core.services.fedora.CreateObjectPathParam;
-import org.escidoc.core.services.fedora.CreateObjectQueryParam;
 import org.escidoc.core.services.fedora.DatastreamState;
 import org.escidoc.core.services.fedora.DeleteDatastreamPathParam;
 import org.escidoc.core.services.fedora.DeleteDatastreamQueryParam;
 import org.escidoc.core.services.fedora.DeleteObjectPathParam;
 import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
 import org.escidoc.core.services.fedora.DigitalObjectTO;
-import org.escidoc.core.services.fedora.DigitalObjectTypeTOExtension;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.FedoraServiceRESTEndpoint;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
@@ -41,13 +48,14 @@ import org.escidoc.core.services.fedora.RisearchPathParam;
 import org.escidoc.core.services.fedora.RisearchQueryParam;
 import org.escidoc.core.services.fedora.UpdateObjectPathParam;
 import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
+import org.escidoc.core.services.fedora.access.DatastreamTypeTO;
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
-import org.esidoc.core.utils.io.Stream;
 import org.esidoc.core.utils.io.MimeTypes;
+import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
@@ -56,13 +64,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.Response;
-import java.io.InputStream;
-import java.util.concurrent.Future;
-
-import static org.esidoc.core.utils.Preconditions.checkNotNull;
-import static org.esidoc.core.utils.Preconditions.checkState;
+import com.googlecode.ehcache.annotations.KeyGenerator;
+import com.googlecode.ehcache.annotations.TriggersRemove;
 
 /**
  * Default implementation for
@@ -72,7 +75,7 @@ import static org.esidoc.core.utils.Preconditions.checkState;
  */
 @Service("fedoraServiceClient")
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
+    assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     public static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
@@ -110,18 +113,6 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     @Async
     public Future<PidListTO> getNextPIDAsync(final String namespace, final int numPIDs) {
         return new AsyncResult<PidListTO>(this.getNextPID(namespace, numPIDs));
-    }
-
-    @Override
-    public void createObject(final CreateObjectPathParam path, final CreateObjectQueryParam query) {
-        this.fedoraService.createObject(path, query);
-    }
-
-    @Override
-    @Async
-    public Future<VoidObject> createObjectAsync(final CreateObjectPathParam path, final CreateObjectQueryParam query) {
-        this.createObject(path, query);
-        return new AsyncResult<VoidObject>(VoidObject.getInstance());
     }
 
     @Override
@@ -203,7 +194,9 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     public ObjectDatastreamsTO listDatastreams(final String pid, final DateTime timestamp) {
         final ListDatastreamsPathParam path = new ListDatastreamsPathParam(pid);
         final ListDatastreamsQueryParam query = new ListDatastreamsQueryParam();
-        query.setAsOfDateTime(timestamp.toString(TIMESTAMP_FORMAT));
+        if (timestamp != null) {
+            query.setAsOfDateTime(timestamp.toString(TIMESTAMP_FORMAT));
+        }
         return this.fedoraService.listDatastreams(path, query);
     }
 
@@ -221,22 +214,19 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    public Stream getDatastream(@NotNull final String pid,
-                                               @NotNull final String dsID,
-                                               final DateTime timestamp) {
-       final GetDatastreamPathParam path = new GetDatastreamPathParam(pid, dsID);
-       final GetDatastreamQueryParam query = new GetDatastreamQueryParam();
-       if(timestamp != null) {
+    public Stream getDatastream(@NotNull final String pid, @NotNull final String dsID, final DateTime timestamp) {
+        final GetDatastreamPathParam path = new GetDatastreamPathParam(pid, dsID);
+        final GetDatastreamQueryParam query = new GetDatastreamQueryParam();
+        if (timestamp != null) {
             query.setAsOfDateTime(timestamp.withZone(DateTimeZone.UTC).toString(TIMESTAMP_FORMAT));
-       }
-       return this.fedoraService.getDatastream(path, query);
+        }
+        return this.fedoraService.getDatastream(path, query);
     }
 
     @Override
     @Async
-    public Future<Stream> getDatastreamAsync(@NotNull final String pid,
-                                               @NotNull final String dsID,
-                                               final DateTime timestamp) {
+    public Future<Stream> getDatastreamAsync(
+        @NotNull final String pid, @NotNull final String dsID, final DateTime timestamp) {
         return new AsyncResult<Stream>(getDatastream(pid, dsID, timestamp));
     }
 
@@ -301,8 +291,9 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     public void deleteDatastream(final DeleteDatastreamPathParam path, final DeleteDatastreamQueryParam query) {
         final Client client = WebClient.client(this.fedoraService);
         final WebClient webClient = WebClient.fromClient(client);
-        webClient.accept(MimeTypes.APPLICATION_JSON).path("/objects/" + path.getPid() +
-                "/datastreams/" + path.getDsID()).delete();
+        webClient
+            .accept(MimeTypes.APPLICATION_JSON).path("/objects/" + path.getPid() + "/datastreams/" + path.getDsID())
+            .delete();
     }
 
     @Override
@@ -361,15 +352,32 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    public String ingest(
-        final IngestPathParam path, final IngestQueryParam query, final DigitalObjectTypeTOExtension digitalObjectTO) {
+    public String ingest(final IngestPathParam path, final IngestQueryParam query, final DigitalObjectTO digitalObjectTO) {
         return this.fedoraService.ingest(path, query, digitalObjectTO);
+    }
+
+    /**
+     * FIXME Fix
+     * {@link FedoraServiceClientImpl#ingest(IngestPathParam, IngestQueryParam, DigitalObjectTO)}
+     * and remove this method.
+     */
+    @Override
+    public String ingest(final IngestPathParam path, final IngestQueryParam query, final String foxml) {
+        final Stream stream = new Stream();
+        try {
+            stream.write(foxml.getBytes("UTF-8"));
+            final Stream result = this.fedoraService.ingest(path, query, stream);
+            return new String(result.getBytes(), "UTF-8");
+        }
+        catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     @Async
     public Future<String> ingestAsync(
-        final IngestPathParam path, final IngestQueryParam query, final DigitalObjectTypeTOExtension digitalObjectTO) {
+        final IngestPathParam path, final IngestQueryParam query, final DigitalObjectTO digitalObjectTO) {
         return new AsyncResult<String>(ingest(path, query, digitalObjectTO));
     }
 
@@ -401,7 +409,7 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
         query.setType("triples");
         query.setLang("spo");
         query.setFormat("N-Triples");
-        query.setQuery("* <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <"+ resourceType +">");
+        query.setQuery("* <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <" + resourceType + ">");
         return this.fedoraService.risearch(path, query);
     }
 
@@ -409,5 +417,55 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     @Async
     public Future<Stream> queryAsync(final String resourceType) {
         return new AsyncResult<Stream>(query(resourceType));
+    }
+
+    @Override
+    public List<DatastreamProfileTO> getDatastreamProfiles(final String pid, final DateTime timestamp) {
+
+        final List<DatastreamProfileTO> result = new ArrayList<DatastreamProfileTO>();
+        final ObjectDatastreamsTO datastreams = listDatastreams(pid, timestamp);
+
+        for (final DatastreamTypeTO datastream : datastreams.getDatastream()) {
+            final GetDatastreamProfilePathParam path = new GetDatastreamProfilePathParam(pid, datastream.getDsid());
+            final GetDatastreamProfileQueryParam query = new GetDatastreamProfileQueryParam();
+            final DatastreamProfileTO profile = getDatastreamProfile(path, query);
+
+            result.add(profile);
+        }
+
+        return result;
+    }
+
+    @Override
+    @Async
+    public Future<List<DatastreamProfileTO>> getDatastreamProfilesAsync(final String pid, final DateTime timestamp) {
+        return new AsyncResult<List<DatastreamProfileTO>>(getDatastreamProfiles(pid, timestamp));
+    }
+
+    @Override
+    public List<DatastreamProfileTO> getDatastreamProfilesByAltId(
+        final String pid, final String altId, final DateTime timestamp) {
+        final List<DatastreamProfileTO> result = new ArrayList<DatastreamProfileTO>();
+
+        final ObjectDatastreamsTO datastreams = listDatastreams(pid, timestamp);
+
+        for (final DatastreamTypeTO datastream : datastreams.getDatastream()) {
+            final GetDatastreamProfilePathParam path = new GetDatastreamProfilePathParam(pid, datastream.getDsid());
+            final GetDatastreamProfileQueryParam query = new GetDatastreamProfileQueryParam();
+            final DatastreamProfileTO profile = getDatastreamProfile(path, query);
+
+            if (profile.getDsAltID().size() > 0 && altId.equals(profile.getDsAltID().get(0))) {
+                result.add(profile);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    @Async
+    public Future<List<DatastreamProfileTO>> getDatastreamProfilesByAltIdAsync(
+        final String pid, final String altId, final DateTime timestamp) {
+        return new AsyncResult<List<DatastreamProfileTO>>(getDatastreamProfilesByAltId(pid, altId, timestamp));
     }
 }
