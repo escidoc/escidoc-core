@@ -22,7 +22,6 @@ package de.escidoc.core.common.business.fedora.resources;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -35,8 +34,6 @@ import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.io.MimeTypes;
-import org.esidoc.core.utils.xml.DateTimeJaxbConverter;
-import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
@@ -67,26 +64,6 @@ import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.fcrepo.server.types.gen.DatastreamControlGroup;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Configurable;
-
-import javax.annotation.PostConstruct;
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
 
 /**
  * Generic Versionable Resource.
@@ -1026,7 +1003,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             try {
                 this.getTripleStoreUtility().reinitialize();
             }
-            catch (TripleStoreSystemException e) {
+            catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -1315,66 +1292,39 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     @Override
-    protected org.fcrepo.server.types.gen.Datastream[] getDatastreamInfos() throws WebserverSystemException,
-        FedoraSystemException {
+    protected List<DatastreamProfileTO> getDatastreamProfiles() throws WebserverSystemException, FedoraSystemException {
 
-        DateTime versionDate = null;
-        if (!isLatestVersion()) {
-            versionDate = getVersionDate();
-        }
-        // initialize datastreams with Fedora datastream information
-        return getFedoraUtility().getDatastreamsInformation(getId(), versionDate);
+        return getFedoraServiceClient().getDatastreamProfiles(getId(), getVersionDate());
     }
 
     @Override
-    protected void initDatastreams(final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
-        throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
-        StreamNotFoundException {
+    protected void initDatastream(final DatastreamProfileTO profile) throws WebserverSystemException,
+        FedoraSystemException, TripleStoreSystemException, IntegritySystemException, StreamNotFoundException {
 
-        for (final org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
-            final List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
-            final String name = datastreamInfo.getID();
-            final String label = datastreamInfo.getLabel();
-            final DatastreamControlGroup controlGroup = datastreamInfo.getControlGroup();
-            final String controlGroupValue = controlGroup.getValue();
-            final String mimeType = datastreamInfo.getMIMEType();
-            final String location = datastreamInfo.getLocation();
-
-            Datastream ds;
-            final DateTime versionDate = getVersionDate();
-            // RELS-EXT
-            if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
-                // The RELS-EXT in the Fedora repository is newer than the
-                // version specified by versionDate. The difference between both
-                // versions are timestamps (version/date, release/date).
-                ds =
-                    isLatestVersion() ? new Datastream(name, getId(), null, mimeType, location, controlGroupValue) : new Datastream(
-                        name, getId(), versionDate, mimeType, location, controlGroupValue);
-
-                ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                ds.setLabel(label);
-                this.relsExt = ds;
-            }
-            // DC
-            else if ("DC".equals(name) && this.dc == null) {
-                ds = new Datastream("DC", getId(), versionDate, mimeType, location, controlGroupValue);
-                ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                ds.setLabel(label);
-                this.dc = ds;
-            }
-            // version-history
-            if (name.equals(DATASTREAM_WOV)) {
-                ds = new Datastream(name, getId(), null, mimeType, location, controlGroupValue);
-                ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                ds.setLabel(label);
-                setWov(ds);
-            }
-            else {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Stream " + getId() + '/' + name
-                        + " not instanziated in GenericVersionableResource.<init>.");
-                }
+        final DateTime versionDate = getVersionDate();
+        // RELS-EXT
+        if (Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID())) {
+            // The RELS-EXT in the Fedora repository is newer than the
+            // version specified by versionDate. The difference between both
+            // versions are timestamps (version/date, release/date).
+            this.relsExt =
+                isLatestVersion() ? new Datastream(profile, getId(), null) : new Datastream(profile, getId(),
+                    versionDate);
+        }
+        // DC
+        else if ("DC".equals(profile.getDsID()) && this.dc == null) {
+            this.dc = new Datastream(profile, getId(), versionDate);
+        }
+        // version-history
+        if (DATASTREAM_WOV.equals(profile.getDsID())) {
+            setWov(new Datastream(profile, getId(), null));
+        }
+        else {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Stream " + getId() + '/' + profile.getDsID()
+                    + " not instanziated in GenericVersionableResource.<init>.");
             }
         }
+
     }
 }
