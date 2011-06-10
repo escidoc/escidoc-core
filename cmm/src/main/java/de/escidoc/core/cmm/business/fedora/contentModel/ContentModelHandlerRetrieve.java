@@ -201,8 +201,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.put(XmlTemplateProvider.HREF, getContentModel().getHref());
 
         try {
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(contentModel
-                .getLastModificationDate()));
+            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, contentModel
+                .getLastModificationDate().toString());
         }
         catch (final FedoraSystemException e) {
             throw new WebserverSystemException(e);
@@ -320,7 +320,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_TITLE, "This Version");
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_NUMBER, contentModel.getVersionId());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_NUMBER));
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_DATE, contentModel.getVersionDate());
+        values
+            .put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_DATE, contentModel.getVersionDate().toString());
         // properties.get(TripleStoreUtility.PROP_VERSION_DATE));
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_STATUS, contentModel.getVersionStatus());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_STATUS));
