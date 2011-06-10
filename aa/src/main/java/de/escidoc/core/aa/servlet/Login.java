@@ -62,6 +62,7 @@ import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
 import de.escidoc.core.aa.business.persistence.UserAttribute;
 import de.escidoc.core.aa.business.persistence.UserLoginData;
 import de.escidoc.core.aa.ldap.EscidocLdapUserDetails;
+import de.escidoc.core.aa.openid.EscidocOpenidUserDetails;
 import de.escidoc.core.aa.shibboleth.ShibbolethUser;
 import de.escidoc.core.common.exceptions.application.missing.MissingParameterException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -331,6 +332,11 @@ public class Login extends HttpServlet {
                 loginname = shibUser.getLoginName();
                 username = shibUser.getName();
                 attributes = shibUser.getStringAttributes();
+            }
+            else if (principal instanceof EscidocOpenidUserDetails) {
+                loginname = ((EscidocOpenidUserDetails) principal).getId();
+                username = loginname;
+                attributes = null;
             }
             else {
                 loginname = authentication.getName();

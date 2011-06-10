@@ -21,44 +21,23 @@
  */
 
 /*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft
  * fuer wissenschaftlich-technische Information mbH and Max-Planck-
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
 package de.escidoc.core.aa.openid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
-import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
 import de.escidoc.core.common.util.service.EscidocUserDetails;
 
 /**
- * Implementation of an Acegi UserDetailsService for Openid.
- *
  * @author Michael Hoppe
- * @see UserDetailsService
+ *
  */
-public class EscidocOpenidUserDetailsService implements EscidocUserDetailsServiceInterface {
-
+public class EscidocOpenidUserDetails extends EscidocUserDetails {
     /**
-     * The logger.
+     * The serial version uid.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(EscidocOpenidUserDetailsService.class);
-
-    /**
-     * See Interface for functional description.
-     *
-     * @see org.springframework.security.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
-     */
-    @Override
-    public UserDetails loadUserByUsername(final String identifier) {
-        EscidocOpenidUserDetails userDetails = new EscidocOpenidUserDetails();
-        userDetails.setId(identifier);
-        return userDetails;
-    }
+    private static final long serialVersionUID = 1L;
 
 }
