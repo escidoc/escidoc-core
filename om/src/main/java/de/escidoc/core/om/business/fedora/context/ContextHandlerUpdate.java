@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
+import org.joda.time.DateTime;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -151,7 +152,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
         WebserverSystemException {
 
-        final String startTimeStamp = getContext().getLastFedoraModificationDate();
+        final DateTime startTimeStamp = getContext().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
         sp
             .addHandler(new OptimisticLockingHandler(getContext().getId(), Constants.CONTEXT_OBJECT_TYPE,
