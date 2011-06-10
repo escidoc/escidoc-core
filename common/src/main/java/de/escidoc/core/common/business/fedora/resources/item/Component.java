@@ -87,7 +87,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     private Datastream content;
 
-    private final String parentVersionDate;
+    private final DateTime parentVersionDate;
 
     private ItemFoXmlRendererInterface foxmlRenderer;
 
@@ -106,9 +106,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @throws ResourceNotFoundException
      *             Thrown if the Component resource was not found.
      */
-    public Component(final String id, final String parentId, final String timestamp) throws ResourceNotFoundException,
-        ItemNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+    public Component(final String id, final String parentId, final DateTime timestamp)
+        throws ResourceNotFoundException, ItemNotFoundException, IntegritySystemException, FedoraSystemException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
         super(id);
         this.parent = parentId;
         this.parentVersionDate = timestamp;
@@ -149,14 +149,10 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             final String location = datastreamInfo.getLocation();
 
             final Datastream ds;
-            DateTime parentVersionDate = null;
-            if (this.parentVersionDate != null) {
-                parentVersionDate = DateTimeJaxbConverter.parseDate(this.parentVersionDate);
-            }
 
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
-                ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
+                ds = new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.mdRecords.put(name, ds);
@@ -164,14 +160,14 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             else {
                 // RELS-EXT
                 if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
-                    ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
+                    ds = new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue);
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.relsExt = ds;
                 }
                 // DC
                 else if ("DC".equals(name)) {
-                    ds = new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue);
+                    ds = new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue);
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.dc = ds;
@@ -179,7 +175,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 // content
                 else if ("content".equals(name)) {
                     ds =
-                        new Datastream(name, getId(), parentVersionDate, mimeType, location, controlGroupValue,
+                        new Datastream(name, getId(), this.parentVersionDate, mimeType, location, controlGroupValue,
                             datastreamInfo.getChecksumType(), datastreamInfo.getChecksum());
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
