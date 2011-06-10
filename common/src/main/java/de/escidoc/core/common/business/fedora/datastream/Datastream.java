@@ -22,14 +22,13 @@ package de.escidoc.core.common.business.fedora.datastream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.parsers.ParserConfigurationException;
 
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import net.sf.oval.guard.Guarded;
 
 import org.apache.cxf.jaxrs.client.ServerWebApplicationException;
@@ -56,11 +55,13 @@ import org.xml.sax.SAXException;
 
 import de.escidoc.core.common.business.fedora.Constants;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.FileSystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -169,6 +170,30 @@ public class Datastream {
         this.parentId = parentId;
         this.timestamp = timestamp;
         loadDataFromFedora();
+    }
+
+    /**
+     * @param datastreamProfileTO
+     * @param parentId
+     */
+    public Datastream(@NotNull
+    final DatastreamProfileTO datastreamProfileTO, final String parentId) {
+        this.name = datastreamProfileTO.getDsID();
+        this.parentId = parentId;
+        updateDatastream(datastreamProfileTO);
+    }
+
+    /**
+     * @param datastreamProfileTO
+     * @param parentId
+     * @param overwriteTimestamp
+     */
+    public Datastream(@NotNull
+    final DatastreamProfileTO datastreamProfileTO, final String parentId, final DateTime overwriteTimestamp) {
+        this.name = datastreamProfileTO.getDsID();
+        this.parentId = parentId;
+        updateDatastream(datastreamProfileTO);
+        this.timestamp = overwriteTimestamp;
     }
 
     /**
@@ -327,14 +352,24 @@ public class Datastream {
         this.properties = properties;
     }
 
-    private void loadDataFromFedora() {
+    private void loadDataFromFedora() throws StreamNotFoundException, FedoraSystemException {
         final GetDatastreamProfilePathParam path = new GetDatastreamProfilePathParam(this.parentId, this.name);
         final GetDatastreamProfileQueryParam query = new GetDatastreamProfileQueryParam();
         if (this.timestamp != null) {
             query.setAsOfDateTime(this.timestamp.withZone(DateTimeZone.UTC).toString());
         }
-        final DatastreamProfileTO datastreamProfileTO = this.fedoraServiceClient.getDatastreamProfile(path, query);
-        updateDatastream(datastreamProfileTO);
+        try {
+            final DatastreamProfileTO datastreamProfileTO = this.fedoraServiceClient.getDatastreamProfile(path, query);
+            updateDatastream(datastreamProfileTO);
+        }
+        catch (final ServerWebApplicationException e) {
+            if (e.getStatus() == 404) {
+                throw new StreamNotFoundException(e);
+            }
+            else {
+                throw new FedoraSystemException(e);
+            }
+        }
     }
 
     private void updateDatastream(final DatastreamProfileTO datastreamProfileTO) {
@@ -493,7 +528,7 @@ public class Datastream {
             try {
                 this.tripleStoreUtility.reinitialize();
             }
-            catch (TripleStoreSystemException e) {
+            catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -828,5 +863,55 @@ public class Datastream {
         result = 31 * result + parentId.hashCode();
         result = 31 * result + (getMd5Hash() != null ? getMd5Hash().hashCode() : 0);
         return result;
+    }
+
+    /**
+     * A convenience method to support all old implementations using the
+     * {@link Datastream} object instead of the new {@link DatastreamProfileTO}
+     * object.<br/>
+     * <br/>
+     * If you want to convert an instance of {@link DatastreamProfileTO} to an
+     * instance of {@link Datastream} use the constructor
+     * {@link Datastream#Datastream(DatastreamProfileTO, String)}
+     * 
+     * @param datastreamProfileTOs
+     * @param parentId
+     * @return a map containing {@link Datastream} objects representing the
+     *         {@link DatastreamProfileTO} objects and the datastream ID as the
+     *         keys.
+     */
+    public static final Map<String, Datastream> convertDatastreamProfileTOs(@NotNull
+    final List<DatastreamProfileTO> datastreamProfileTOs, final String parentId) {
+
+        final Map<String, Datastream> result = new HashMap<String, Datastream>(datastreamProfileTOs.size() + 1);
+
+        for (final DatastreamProfileTO datastreamProfileTO : datastreamProfileTOs) {
+            result.put(datastreamProfileTO.getDsID(), new Datastream(datastreamProfileTO, parentId, null));
+        }
+        return result;
+    }
+
+    /**
+     * A convenience method to support all old implementations using the
+     * {@link Datastream} object instead of the new {@link DatastreamProfileTO}
+     * object.<br/>
+     * <br/>
+     * If you want to convert an instance of {@link DatastreamProfileTO} to an
+     * instance of {@link Datastream} use the constructor
+     * {@link Datastream#Datastream(DatastreamProfileTO, String)}
+     * 
+     * @param datastreamProfileTOs
+     * @param parentId
+     * @param intoMap
+     * @return a map containing {@link Datastream} objects representing the
+     *         {@link DatastreamProfileTO} objects and the datastream ID as the
+     *         keys.
+     */
+    public static final void convertDatastreamProfileTOs(@NotNull
+    final List<DatastreamProfileTO> datastreamProfileTOs, final String parentId, final Map<String, Datastream> intoMap) {
+
+        for (final DatastreamProfileTO datastreamProfileTO : datastreamProfileTOs) {
+            intoMap.put(datastreamProfileTO.getDsID(), new Datastream(datastreamProfileTO, parentId, null));
+        }
     }
 }
