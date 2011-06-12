@@ -45,6 +45,7 @@ import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -866,9 +867,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         }
 
         // be aware some of them are triple store requests, which are expensive
-        final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(id);
-        final String lastModificationDate = XmlUtility.normalizeDate(objectProfile.getObjLastModDate().toDate());
-        cr.getProperties().setLastModificationDate(lastModificationDate);
+        cr.getProperties().setLastModificationDate(this.fedoraServiceClient.getObjectProfile(id).getObjLastModDate());
 
         return cr;
     }
@@ -1036,7 +1035,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws TripleStoreSystemException
      *             Thrown if triple store request failed.
      */
-    private String getCreationDate(final String objid) throws ContentRelationNotFoundException,
+    private DateTime getCreationDate(final String objid) throws ContentRelationNotFoundException,
         WebserverSystemException, TripleStoreSystemException {
 
         final String date;
@@ -1053,7 +1052,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
                 throw e;
             }
         }
-        return date;
+        return new DateTime(date, DateTimeZone.UTC);
     }
 
     /**
