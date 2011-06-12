@@ -271,7 +271,7 @@ public class ItemCreate extends GenericResourceCreate {
             getFedoraUtility().storeObjectInFedora(foxml, false);
 
             // take timestamp and prepare RELS-EXT
-            // String lmd =
+            // DateTime lmd =
             // FedoraUtility.getInstance().getLastModificationDate(getObjid());
             final DateTime lmd = getLastModificationDateByWorkaround(getObjid());
 

@@ -621,9 +621,8 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
         // creation /last-modification date
         final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(getObjid());
-        final String lastModificationDate = XmlUtility.normalizeDate(objectProfile.getObjLastModDate().toDate());
-        getProperties().setCreationDate(lastModificationDate);
-        getProperties().setLastModificationDate(lastModificationDate);
+        getProperties().setCreationDate(objectProfile.getObjLastModDate());
+        getProperties().setLastModificationDate(objectProfile.getObjLastModDate());
     }
 
     /**
@@ -690,14 +689,14 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
             throw new WebserverSystemException(e);
         }
         final DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.modifyDatastream(path, query, stream);
-        final String lmd;
+
         if (datastreamProfile.getDateTime() != null) {
-            lmd = XmlUtility.normalizeDate(datastreamProfile.getDateTime().toDate());
+            getProperties().setLastModificationDate(datastreamProfile.getDateTime());
         }
         else {
-            lmd = XmlUtility.normalizeDate(datastreamProfile.getDsCreateDate().toDate());
+            getProperties().setLastModificationDate(datastreamProfile.getDsCreateDate());
         }
-        getProperties().setLastModificationDate(lmd);
+
         if (sync) {
             this.fedoraServiceClient.sync();
             try {

@@ -218,13 +218,6 @@ public class ContentRelationProperties implements Serializable {
     }
 
     /**
-     * @param lastModificationDate Last-modification-date of ContentRelation
-     */
-    public void setLastModificationDate(final String lastModificationDate) {
-        setLastModificationDate(new DateTime(lastModificationDate));
-    }
-
-    /**
      * @return Last-modification-date of ContentRelation
      */
     public DateTime getLastModificationDate() {
@@ -236,13 +229,6 @@ public class ContentRelationProperties implements Serializable {
      */
     public void setCreationDate(final DateTime creationDate) {
         this.creationDate = creationDate;
-    }
-
-    /**
-     * @param creationDate Creation date of ContentRelation
-     */
-    public void setCreationDate(final String creationDate) {
-        setCreationDate(new DateTime(creationDate));
     }
 
     /**
