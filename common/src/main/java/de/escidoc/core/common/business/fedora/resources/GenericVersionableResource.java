@@ -524,8 +524,8 @@ public class GenericVersionableResource extends GenericResourcePid {
                 // we can take this information from TripleStore (should be
                 // faster)
                 try {
-                    setLastModificationDate(getTripleStoreUtility().getPropertiesElements(getId(),
-                        TripleStoreUtility.PROP_LATEST_VERSION_DATE));
+                    setLastModificationDate(new DateTime(getTripleStoreUtility().getPropertiesElements(getId(),
+                        TripleStoreUtility.PROP_LATEST_VERSION_DATE), DateTimeZone.UTC));
                 }
                 catch (final TripleStoreSystemException e) {
                     throw new WebserverSystemException(e);
@@ -534,7 +534,8 @@ public class GenericVersionableResource extends GenericResourcePid {
             else {
                 // use a parser to get the information for older versions
                 try {
-                    setLastModificationDate(getVersionElementData(Elements.ELEMENT_WOV_VERSION_TIMESTAMP));
+                    setLastModificationDate(new DateTime(getVersionElementData(Elements.ELEMENT_WOV_VERSION_TIMESTAMP),
+                        DateTimeZone.UTC));
                 }
                 catch (final IntegritySystemException e) {
                     throw new WebserverSystemException(e);

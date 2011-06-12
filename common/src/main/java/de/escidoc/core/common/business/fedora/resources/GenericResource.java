@@ -313,25 +313,6 @@ public class GenericResource implements FedoraResource {
      * @throws WebserverSystemException
      *             Thrown if requesting TripleStore failed.
      */
-    @Deprecated
-    public void setLastModificationDate(final String timestamp) throws WebserverSystemException {
-        // this.lastModifiedDate = timestamp;
-        try {
-            setLastModificationDate(new DateTime(timestamp, DateTimeZone.UTC));
-        }
-        catch (final Exception e) {
-            throw new WebserverSystemException(e);
-        }
-    }
-
-    /**
-     * Set the last-modification-date.
-     * 
-     * @param timestamp
-     *            The new timestamp for the lastModificationDate.
-     * @throws WebserverSystemException
-     *             Thrown if requesting TripleStore failed.
-     */
     public void setLastModificationDate(final DateTime timestamp) throws WebserverSystemException {
         // this.lastModifiedDate = timestamp;
         try {
