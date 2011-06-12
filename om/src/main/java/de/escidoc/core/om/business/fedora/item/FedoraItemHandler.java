@@ -373,8 +373,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // check if modified
             final String updatedXmlData;
-            final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
-            if (resourceUpdated || !startTimestamp.isEqual(endTimestamp) || getItem().isNewVersion()) {
+            if (resourceUpdated || !startTimestamp.isEqual(getItem().getLastFedoraModificationDate())
+                || getItem().isNewVersion()) {
                 // object is modified
                 makeVersion("ItemHandler.update()");
                 getItem().persist();
@@ -673,8 +673,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
-        final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
-        if (!startTimestamp.isEqual(endTimestamp)) {
+        if (!startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
             makeVersion("Item.updateMedataRecord");
             getItem().persist();
             try {
@@ -940,8 +939,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             }
             // can not occur
         }
-        final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
-        if (!startTimestamp.isEqual(endTimestamp)) {
+
+        if (!startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
             makeVersion("Item.updateComponents");
             getItem().persist();
             try {
@@ -1217,8 +1216,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         final String updatedXmlData = retrieveComponent(id, componentId);
 
-        final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
-        if (!startTimestamp.isEqual(endTimestamp)) {
+        if (!startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
             makeVersion("Item.updateComponent");
             getItem().persist();
 
@@ -1598,10 +1596,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             final byte[] relsExtNewBytes = Utility.updateRelsExt(null, toRemove, null, getItem(), null);
             getItem().setRelsExt(relsExtNewBytes);
-            // getItem().persist();
 
-            final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
-            if (resourceUpdated || !startTimestamp.isEqual(endTimestamp)) {
+            if (resourceUpdated || !startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
                 makeVersion("Item.removeContentRelations");
                 getItem().persist();
             }
