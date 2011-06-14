@@ -302,7 +302,6 @@ public class FedoraUtility {
         }
     }
 
-
     /**
      * Invalidate a {@link FedoraAPIM} to the pool.
      * 

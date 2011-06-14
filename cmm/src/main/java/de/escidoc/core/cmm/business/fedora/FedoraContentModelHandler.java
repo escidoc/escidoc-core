@@ -218,7 +218,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         }
         else {
             final Stream stream =
-                this.fedoraServiceClient.getBinaryContent(getContentModel().getId(), name, getContentModel().getVersionDate());
+                this.fedoraServiceClient.getBinaryContent(getContentModel().getId(), name, getContentModel()
+                    .getVersionDate());
             try {
                 bin.setContent(stream.getInputStream());
             }

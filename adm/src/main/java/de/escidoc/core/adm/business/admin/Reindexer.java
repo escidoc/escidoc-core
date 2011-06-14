@@ -309,18 +309,18 @@ public class Reindexer {
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     private Collection<String> getIds(final String indexName, final ResourceType type, final boolean clearIndex)
-            throws SystemException, FedoraSystemException, WebserverSystemException {
+        throws SystemException, FedoraSystemException, WebserverSystemException {
         final Collection<String> result = new ArrayList<String>();
-        if(contains(indexName, type)) {
+        if (contains(indexName, type)) {
             final Collection<String> queryResult = this.fedoraServiceClient.queryResourceIdsByType(type.getUri());
             final ReindexStatus reindexStatus = ReindexStatus.getInstance();
             final String objectType = type.getUri();
             Set<String> indexedPids = new HashSet<String>();
-            if(!clearIndex) {
+            if (!clearIndex) {
                 indexedPids = indexingHandler.getPids(objectType, indexName);
             }
-            for(String id : queryResult) {
-                if(! indexedPids.contains(id)) {
+            for (String id : queryResult) {
+                if (!indexedPids.contains(id)) {
                     reindexStatus.inc(type);
                     result.add(id);
                 }
