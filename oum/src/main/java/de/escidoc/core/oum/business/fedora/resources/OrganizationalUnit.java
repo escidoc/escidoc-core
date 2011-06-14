@@ -522,7 +522,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
                 final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
                 query.setAltIDs(currentMdRecord.getAlternateIDs());
                 query.setDsLabel(XmlUtility.NAME_MDRECORD);
-                query.setVersionable(false);
+                query.setVersionable(Boolean.FALSE);
                 final Stream stream = new Stream();
                 try {
                     stream.write(currentMdRecord.getStream());

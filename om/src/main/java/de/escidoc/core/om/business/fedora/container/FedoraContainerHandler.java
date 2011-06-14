@@ -453,7 +453,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final AddDatastreamPathParam addPath = new AddDatastreamPathParam(containerId, "ESCIDOC_RELS_EXT");
         final AddDatastreamQueryParam addQuery = new AddDatastreamQueryParam();
         addQuery.setDsLabel("ESCIDOC_RELS_EXT Stream");
-        addQuery.setVersionable(true);
+        addQuery.setVersionable(Boolean.FALSE);
         addQuery.setControlGroup(ControlGroup.M);
         final Stream addStream = new Stream();
         try {
@@ -475,7 +475,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final AddDatastreamPathParam addPathVH = new AddDatastreamPathParam(containerId, "version-history");
         final AddDatastreamQueryParam addQueryVH = new AddDatastreamQueryParam();
         addQueryVH.setDsLabel("whole object versioning datastream");
-        addQueryVH.setVersionable(false);
+        addQueryVH.setVersionable(Boolean.FALSE);
         addQueryVH.setControlGroup(ControlGroup.M);
         final Stream addStreamVH = new Stream();
         try {

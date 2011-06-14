@@ -238,7 +238,7 @@ public class ContentModelCreate extends GenericResourceCreate {
             new AddDatastreamPathParam(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY);
         final AddDatastreamQueryParam addQuery = new AddDatastreamQueryParam();
         addQuery.setDsLabel("whole object versioning datastream");
-        addQuery.setVersionable(false);
+        addQuery.setVersionable(Boolean.FALSE);
         final Stream addStream = new Stream();
         try {
             addStream.write(getWov().getBytes(XmlUtility.CHARACTER_ENCODING));

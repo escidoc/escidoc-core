@@ -511,7 +511,7 @@ public class Datastream {
             this.fedoraServiceClient.addDatastream(path, query, null);
         }
         else if (this.getStream() != null) {
-            query.setVersionable(true);
+            query.setVersionable(Boolean.FALSE);
             final org.esidoc.core.utils.io.Stream stream = new org.esidoc.core.utils.io.Stream();
             try {
                 stream.write(this.getStream());

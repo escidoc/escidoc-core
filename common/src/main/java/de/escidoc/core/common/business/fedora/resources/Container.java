@@ -338,7 +338,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
                 final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
                 query.setAltIDs(currentMdRecord.getAlternateIDs());
                 query.setDsLabel(XmlUtility.NAME_MDRECORD);
-                query.setVersionable(true);
+                query.setVersionable(Boolean.TRUE);
                 final Stream stream = new Stream();
                 try {
                     stream.write(currentMdRecord.getStream());

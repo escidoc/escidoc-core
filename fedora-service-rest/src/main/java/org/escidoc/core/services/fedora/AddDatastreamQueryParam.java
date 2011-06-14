@@ -59,7 +59,7 @@ public final class AddDatastreamQueryParam {
         this.dsLabel = dsLabel;
     }
 
-    public Boolean isVersionable() {
+    public Boolean getVersionable() {
         return versionable;
     }
 

@@ -784,7 +784,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
         query.setAltIDs(Arrays.asList(altIds));
         query.setDsLabel(mdRecord.getLabel());
-        query.setVersionable(false);
+        query.setVersionable(Boolean.FALSE);
         final Stream stream = new Stream();
         try {
             stream.write(content);

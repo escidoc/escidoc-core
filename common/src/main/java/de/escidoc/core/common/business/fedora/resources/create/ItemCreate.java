@@ -284,8 +284,8 @@ public class ItemCreate extends GenericResourceCreate {
             final AddDatastreamPathParam addPathVH =
                 new AddDatastreamPathParam(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY);
             final AddDatastreamQueryParam addQueryVH = new AddDatastreamQueryParam();
-            addQueryVH.setDsLabel("whole object versioning datastream");
-            addQueryVH.setVersionable(false);
+            //addQueryVH.setDsLabel("whole object versioning datastream");
+            addQueryVH.setVersionable(Boolean.FALSE);
             final Stream addStreamVH = new Stream();
             addStreamVH.write(getWov().getBytes(XmlUtility.CHARACTER_ENCODING));
             addStreamVH.lock();

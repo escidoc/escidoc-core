@@ -865,7 +865,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 query.setAltIDs(Arrays
                     .asList(new String[] { de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID }));
                 query.setDsLabel(name);
-                query.setVersionable(true);
+                query.setVersionable(Boolean.TRUE);
                 final Stream stream = new Stream();
                 try {
                     stream.write(((ByteArrayOutputStream) streams.get(name)).toByteArray());
