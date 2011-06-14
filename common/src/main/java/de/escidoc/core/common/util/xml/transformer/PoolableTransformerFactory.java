@@ -27,6 +27,8 @@ import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.esidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +78,9 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")
     private FedoraUtility fedoraUtility;
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     @Autowired
     @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
@@ -163,10 +168,12 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
             if (contentModelId.length() > 0 && !"null".equalsIgnoreCase(contentModelId)) {
                 try {
                     // create link to content of DC-MAPPING in content model object
-                    xsltUrl = "/get/" + contentModelId + '/' + CONTENT_MODEL_XSLT_DC_DATASTREAM;
-                    xslt = this.fedoraUtility.requestFedoraURL(xsltUrl);
+                    final Stream xmltStream =
+                        this.fedoraServiceClient.getBinaryContent(contentModelId, CONTENT_MODEL_XSLT_DC_DATASTREAM,
+                            null);
+                    xslt = xmltStream.getInputStream();
                 }
-                catch (final WebserverSystemException e) {
+                catch (final Throwable e) {
                     // fall back to internal XSLT
                     xsltUrl = internalXsltUrl;
                     xslt = this.connectionUtility.getRequestURL(new URL(xsltUrl)).getEntity().getContent();

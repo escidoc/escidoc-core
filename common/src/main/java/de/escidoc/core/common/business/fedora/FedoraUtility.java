@@ -109,16 +109,6 @@ public class FedoraUtility {
     // Handler für managed REsourcen
     private StackObjectPool apimPool;
 
-    /**
-     * Query string to trigger a sync via the fedora REST interface.
-     */
-    // private String syncRestQuery;
-
-    // TODO
-    // in configurationsdatei auslagern--> escidoc config*
-
-    // escidoc-core.properties // default config
-    // escidoc-core.custom.properties --> f�hrend
     private static final int HTTP_MAX_CONNECTIONS_PER_HOST = 30;
 
     private static final int HTTP_MAX_TOTAL_CONNECTIONS = 90;
@@ -312,23 +302,6 @@ public class FedoraUtility {
         }
     }
 
-    /**
-     * Invalidate a {@link FedoraAPIA} to the pool.
-     * 
-     * @param fedoraApia
-     *            The {@link FedoraAPIA} to be returned to the pool.
-     * @throws FedoraSystemException
-     *             Thrown in case of an internal error.
-     */
-    private void invalidateApiaObject(final FedoraAPIA fedoraApia) throws FedoraSystemException {
-
-        try {
-            apiaPool.invalidateObject(fedoraApia);
-        }
-        catch (final Exception e) {
-            throw convertPoolException(e);
-        }
-    }
 
     /**
      * Invalidate a {@link FedoraAPIM} to the pool.
@@ -475,44 +448,6 @@ public class FedoraUtility {
         catch (final MalformedURLException e) {
             throw new WebserverSystemException("Fedora URL from configuration malformed.", e);
         }
-    }
-
-    /**
-     * Makes a HTTP GET request to Fedora URL expanded by given local URL.
-     * 
-     * @param localUrl
-     *            The Fedora local URL. Should start with the '/' after the
-     *            webcontext path (usually "fedora"). E.g. if
-     *            http://localhost:8080/fedora/get/... then localUrl is /get/...
-     * @return the content of the URL Request.
-     * @throws WebserverSystemException
-     *             If an error occurs.
-     */
-    public InputStream requestFedoraURL(final String localUrl) throws WebserverSystemException {
-        final InputStream fedoraResponseStream;
-        try {
-            final DefaultHttpClient httpClient = getHttpClient();
-            final HttpContext localcontext = new BasicHttpContext();
-            final BasicScheme basicAuth = new BasicScheme();
-            localcontext.setAttribute("preemptive-auth", basicAuth);
-            httpClient.addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
-            final HttpGet httpGet = new HttpGet(this.fedoraUrl + localUrl);
-            final HttpResponse httpResponse = httpClient.execute(httpGet);
-            final int responseCode = httpResponse.getStatusLine().getStatusCode();
-            if (responseCode != HttpServletResponse.SC_OK) {
-                EntityUtils.consume(httpResponse.getEntity());
-                throw new WebserverSystemException("Bad response code '" + responseCode + "' requesting '"
-                    + this.fedoraUrl + localUrl + "'.", new FedoraSystemException(httpResponse
-                    .getStatusLine().getReasonPhrase()));
-            }
-            fedoraResponseStream = httpResponse.getEntity().getContent();
-
-        }
-        catch (final IOException e) {
-            throw new WebserverSystemException(e);
-        }
-
-        return fedoraResponseStream;
     }
 
     /**

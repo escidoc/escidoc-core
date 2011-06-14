@@ -83,21 +83,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
 
-    <bean id="business.TripleStoreConnector" class="de.escidoc.core.common.business.TripleStoreConnector">
-        <property name="connectionUtility">
-            <ref bean="escidoc.core.common.util.service.ConnectionUtility"/>
-        </property>
-        <property name="fedoraUrl">
-            <value>${fedora.url}</value>
-        </property>
-        <property name="fedoraUser">
-            <value>${fedora.user}</value>
-        </property>
-        <property name="fedoraPassword">
-            <value>${fedora.password}</value>
-        </property>
-    </bean>
-
     <bean id="escidoc.core.business.EscidocIdProvider" class="de.escidoc.core.common.persistence.EscidocIdProvider">
         <property name="numberPrefetchedIds">
             <value>${escidoc-core.identifier.numberPrefetched}</value>

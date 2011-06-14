@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.st.business;
 
-import de.escidoc.core.common.util.IOUtils;
+import org.esidoc.core.utils.io.IOUtils;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -29,7 +29,6 @@
 package de.escidoc.core.adm.business.admin;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -37,22 +36,17 @@ import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexRequestBuilder;
 import de.escidoc.core.index.IndexService;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.esidoc.core.utils.io.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
@@ -246,25 +240,6 @@ public class Reindexer {
     }
 
     /**
-     * Extract the subject from the given triple.
-     *
-     * @param triple the triple from which the subject has to be extracted
-     * @return the subject of the given triple
-     */
-    private static String getSubject(final String triple) {
-        String result = null;
-
-        if (triple != null) {
-            final int index = triple.indexOf(' ');
-
-            if (index > 0) {
-                result = triple.substring(triple.indexOf('/') + 1, index - 1);
-            }
-        }
-        return result;
-    }
-
-    /**
      * @param objectType type of the resource.
      * @param indexName  name of the index (may be null for "all indexes")
      * @throws ApplicationServerSystemException
@@ -334,39 +309,21 @@ public class Reindexer {
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     private Collection<String> getIds(final String indexName, final ResourceType type, final boolean clearIndex)
-        throws SystemException, FedoraSystemException, WebserverSystemException {
-        final Collection<String> result = new LinkedList<String>();
-        if (contains(indexName, type)) {
-            BufferedReader input = null;
-            try {
-                Stream stream = this.fedoraServiceClient.query(type.getUri());
-                input = new BufferedReader(new InputStreamReader(stream.getInputStream()));
-                final ReindexStatus reindexStatus = ReindexStatus.getInstance();
-                final String objectType = type.getUri();
-                Set<String> indexedPids = new HashSet<String>();
-                if (!clearIndex) {
-                    indexedPids = indexingHandler.getPids(objectType, indexName);
-                }
-
-                String line;
-                while ((line = input.readLine()) != null) {
-                    final String subject = getSubject(line);
-
-                    if (subject != null) {
-                        final String id = subject.substring(subject.indexOf('/') + 1);
-
-                        if (!indexedPids.contains(id)) {
-                            reindexStatus.inc(type);
-                            result.add(id);
-                        }
-                    }
-                }
+            throws SystemException, FedoraSystemException, WebserverSystemException {
+        final Collection<String> result = new ArrayList<String>();
+        if(contains(indexName, type)) {
+            final Collection<String> queryResult = this.fedoraServiceClient.queryResourceIdsByType(type.getUri());
+            final ReindexStatus reindexStatus = ReindexStatus.getInstance();
+            final String objectType = type.getUri();
+            Set<String> indexedPids = new HashSet<String>();
+            if(!clearIndex) {
+                indexedPids = indexingHandler.getPids(objectType, indexName);
             }
-            catch (final IOException e) {
-                throw new SystemException(e);
-            }
-            finally {
-                IOUtils.closeStream(input);
+            for(String id : queryResult) {
+                if(! indexedPids.contains(id)) {
+                    reindexStatus.inc(type);
+                    result.add(id);
+                }
             }
         }
         return result;

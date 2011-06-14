@@ -45,7 +45,6 @@
     <module>fedora-service-rest</module>
     <module>aspects</module>
     <module>utilities</module>
-    <module>http-client</module>
     <module>index-service-spec</module>
     <module>index-service-impl</module>
     <module>statistic-service-spec</module>
@@ -79,6 +78,18 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>2.3.2</version>
+          <configuration>
+              <source>${java.source.version}</source>
+              <target>${java.target.version}</target>
+              <showDeprecation>true</showDeprecation>
+              <showWarnings>true</showWarnings>
+              <verbose>true</verbose>
+              <fork>false</fork>
+              <meminitial>128m</meminitial>
+              <maxmem>512m</maxmem>
+              <debug>true</debug>
+              <optimize>true</optimize>
+          </configuration>
         </plugin>
 
         <!-- build-helper-maven-plugin [default config] -->
@@ -397,23 +408,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>${java.source.version}</source>
-          <target>${java.target.version}</target>
-          <showDeprecation>true</showDeprecation>
-          <showWarnings>true</showWarnings>
-          <verbose>true</verbose>
-          <fork>true</fork>
-          <meminitial>128m</meminitial>
-          <maxmem>512m</maxmem>
-          <debug>true</debug>
-          <optimize>false</optimize>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -2271,6 +2265,7 @@
         <springDefaultLazyInit>false</springDefaultLazyInit>
       </properties>
       <build>
+        <pluginManagement>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -2288,7 +2283,25 @@
               <optimize>true</optimize>
             </configuration>
           </plugin>
+          <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<configuration>
+                    <excludes>
+                        <exclude>**/TraceInterceptor*</exclude>
+                    </excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
+        </pluginManagement>
       </build>
     </profile>
     <profile>
@@ -2303,6 +2316,7 @@
         <springDefaultLazyInit>false</springDefaultLazyInit>
       </properties>
       <build>
+        <pluginManagement>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -2321,6 +2335,7 @@
             </configuration>
           </plugin>
         </plugins>
+        </pluginManagement>
       </build>
     </profile>
     <profile>
@@ -2335,6 +2350,7 @@
         <springDefaultLazyInit>true</springDefaultLazyInit>
       </properties>
       <build>
+        <pluginManagement>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -2353,6 +2369,7 @@
             </configuration>
           </plugin>
         </plugins>
+        </pluginManagement>
       </build>
     </profile>
   </profiles>

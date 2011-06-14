@@ -46,16 +46,11 @@ import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.foxml.ComponentIdsInItemFoxmlHandler;
-import org.escidoc.core.services.fedora.DigitalObjectTO;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.escidoc.core.services.fedora.GetObjectXMLPathParam;
-import org.escidoc.core.services.fedora.GetObjectXMLQueryParam;
 import org.esidoc.core.utils.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import javax.validation.constraints.NotNull;
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -147,7 +142,7 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
             throw new WebserverSystemException(e);
         }
         finally {
-            IOUtils.closeInputStream(in);
+            IOUtils.closeStream(in);
         }
         final List<String> componentIds = cih.getComponentIds();
         for (final String componentId : componentIds) {

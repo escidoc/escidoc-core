@@ -136,4 +136,11 @@ public interface FedoraServiceRESTEndpoint {
     @Consumes(MimeTypes.ALL)
     Stream risearch(@NotNull @PathParam("") RisearchPathParam path, @NotNull @QueryParam("") RisearchQueryParam query);
 
+    @GET
+    @Path("/get/{pid}/{dsID}/{versionDate}")
+    @Produces(MimeTypes.ALL)
+    @Consumes(MimeTypes.ALL)
+    Stream getBinaryContent(@NotNull @PathParam("") GetBinaryContentPathParam path,
+                            @NotNull @QueryParam("") GetBinaryContentQueryParam query);
+
 }

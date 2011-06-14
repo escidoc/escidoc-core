@@ -27,4 +27,6 @@
 
     <bean id="cachedOutputStreamMessageBodyWriter"
           class="org.escidoc.core.util.xml.internal.DatastreamMessageBodyWriter"/>
+
+
 </beans>

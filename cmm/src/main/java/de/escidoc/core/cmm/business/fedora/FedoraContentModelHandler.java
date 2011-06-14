@@ -93,6 +93,7 @@ import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.esidoc.core.utils.io.MimeTypes;
+import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -216,11 +217,14 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             bin.setRedirectUrl(cs.getLocation());
         }
         else {
-            String fedoraLocalUrl = "/get/" + getContentModel().getId() + '/' + name;
-            if (getContentModel().getVersionDate() != null) {
-                fedoraLocalUrl += '/' + getContentModel().getVersionDate().toString();
+            final Stream stream =
+                this.fedoraServiceClient.getBinaryContent(getContentModel().getId(), name, getContentModel().getVersionDate());
+            try {
+                bin.setContent(stream.getInputStream());
             }
-            bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
+            catch (IOException e) {
+                throw new WebserverSystemException("Error on loading binary content.", e);
+            }
         }
         return bin;
     }
@@ -244,11 +248,14 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             bin.setRedirectUrl(ds.getLocation());
         }
         else {
-            String fedoraLocalUrl = "/get/" + ds.getParentId() + '/' + name;
-            if (getContentModel().getVersionDate() != null) {
-                fedoraLocalUrl += '/' + getContentModel().getVersionDate().toString();
+            Stream stream =
+                this.fedoraServiceClient.getBinaryContent(ds.getParentId(), name, getContentModel().getVersionDate());
+            try {
+                bin.setContent(stream.getInputStream());
             }
-            bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
+            catch (IOException e) {
+                throw new WebserverSystemException("Error on loading binary content.", e);
+            }
         }
 
         return bin;

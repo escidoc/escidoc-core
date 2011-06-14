@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -38,7 +39,7 @@ public final class IOUtils {
         try {
             return copy(input, output, DEFAULT_BUFFER_SIZE);
         } finally {
-            closeInputStream(input);
+            closeStream(input);
         }
     }
 
@@ -48,7 +49,7 @@ public final class IOUtils {
         try {
             return copy(input, output, bufferSize);
         } finally {
-            closeInputStream(input);
+            closeStream(input);
         }
     }
 
@@ -81,7 +82,7 @@ public final class IOUtils {
         }
         ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
         copy(input, bos);
-        closeInputStream(input);
+        closeStream(input);
         return bos.toByteArray();
     }
 
@@ -115,25 +116,31 @@ public final class IOUtils {
         return newStringFromBytes(bytes, UTF8_CHARSET.name(), start, length);
     }
 
-    public static void closeInputStream(InputStream input) {
-        if (input == null) {
-            return;
+    public static String newStringFromStream(final InputStream input, final String charsetName) throws IOException,
+            UnsupportedEncodingException {
+        int i = input.available();
+        if (i < DEFAULT_BUFFER_SIZE) {
+            i = DEFAULT_BUFFER_SIZE;
         }
-        try {
-            input.close();
-        } catch (final IOException e) {
-            LOG.error("Error on closing input stream.", e);
-        }
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
+        copy(input, bos);
+        closeStream(input);
+        return bos.toString(charsetName);
     }
 
-    public static void closeOutputStream(OutputStream output) {
-        if (output == null) {
+    public static String newStringFromStream(final InputStream input) throws IOException,
+            UnsupportedEncodingException {
+        return newStringFromStream(input, UTF8_CHARSET.name());
+    }
+
+    public static void closeStream(Closeable closeable) {
+        if (closeable == null) {
             return;
         }
         try {
-            output.close();
+            closeable.close();
         } catch (final IOException e) {
-            LOG.error("Error on closing output stream.", e);
+            LOG.error("Error on closing stream.", e);
         }
     }
 

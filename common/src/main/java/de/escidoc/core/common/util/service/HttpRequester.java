@@ -23,8 +23,8 @@ package de.escidoc.core.common.util.service;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.esidoc.core.utils.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -271,7 +271,7 @@ public class HttpRequester {
         // Read response
         final String response;
         try {
-            response = IOUtils.readStringFromStream(is);
+            response = IOUtils.newStringFromStream(is);
         }
         finally {
             IOUtils.closeStream(is);
@@ -339,7 +339,7 @@ public class HttpRequester {
 
             // Read response
             try {
-                response = IOUtils.readStringFromStream(is);
+                response = IOUtils.newStringFromStream(is);
             }
             finally {
                 IOUtils.closeStream(is);

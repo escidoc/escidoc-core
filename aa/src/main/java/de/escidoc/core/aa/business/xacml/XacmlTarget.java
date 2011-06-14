@@ -37,7 +37,7 @@ import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionFactory;
 import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
-import de.escidoc.core.common.util.IOUtils;
+import org.esidoc.core.utils.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -160,14 +160,14 @@ public class XacmlTarget extends Target {
      * @see Object#toString()
      */
     public String toString() {
-        final ByteArrayOutputStream writer = new ByteArrayOutputStream();
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
         String returnValue;
         try {
-            encode(writer, new Indenter());
-            returnValue = writer.toString();
+            encode(os, new Indenter());
+            returnValue = os.toString();
         }
         finally {
-            IOUtils.closeStream(writer);
+            IOUtils.closeStream(os);
         }
         return returnValue;
     }

@@ -31,7 +31,7 @@ package de.escidoc.core.aa.business.xacml;
 import com.sun.xacml.Indenter;
 import com.sun.xacml.PolicyReference;
 import com.sun.xacml.finder.PolicyFinder;
-import de.escidoc.core.common.util.IOUtils;
+import org.esidoc.core.utils.io.IOUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
@@ -61,14 +61,14 @@ public class XacmlPolicyReference extends PolicyReference {
      * @see Object#toString()
      */
     public String toString() {
-        final ByteArrayOutputStream writer = new ByteArrayOutputStream();
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
         String returnValue;
         try {
-            encode(writer, new Indenter());
-            returnValue = writer.toString();
+            encode(os, new Indenter());
+            returnValue = os.toString();
         }
         finally {
-            IOUtils.closeStream(writer);
+            IOUtils.closeStream(os);
         }
         return returnValue;
     }

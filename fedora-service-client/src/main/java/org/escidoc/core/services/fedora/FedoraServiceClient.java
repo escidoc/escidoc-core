@@ -1,10 +1,13 @@
 package org.escidoc.core.services.fedora;
 
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Future;
 
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 
 import net.sf.oval.constraint.NotEmpty;
 
@@ -107,13 +110,7 @@ public interface FedoraServiceClient {
     Future<DatastreamHistoryTO> getDatastreamHistoryAsync(
         @NotNull GetDatastreamHistoryPathParam path, @NotNull GetDatastreamHistoryQueryParam query);
 
-    void sync();
-
-    Stream query(String resourceType);
-
-    Future<Stream> queryAsync(String resourceType);
-
-    List<DatastreamProfileTO> getDatastreamProfiles(@NotNull String pid, DateTime timestamp);
+List<DatastreamProfileTO> getDatastreamProfiles(@NotNull String pid, DateTime timestamp);
 
     Future<List<DatastreamProfileTO>> getDatastreamProfilesAsync(@NotNull String pid, DateTime timestamp);
 
@@ -122,4 +119,20 @@ public interface FedoraServiceClient {
 
     Future<List<DatastreamProfileTO>> getDatastreamProfilesByAltIdAsync(
         @NotNull String pid, @NotNull String altId, DateTime timestamp);
+
+    Collection<String> queryResourceIdsByType(@NotNull String resourceType);
+
+    Future<Collection<String>> queryResourceIdsByTypeAsync(@NotNull String resourceType);
+
+    Stream getBinaryContent(@NotNull String pid, @NotNull String dsId, DateTime versionDate);
+
+    Future<Stream> getBinaryContentAsync(@NotNull String pid, @NotNull String dsId, DateTime versionDate);
+
+    Stream risearch(@NotNull @PathParam("") RisearchPathParam path,
+                    @NotNull @QueryParam("") RisearchQueryParam query);
+
+    Future<Stream> risearchAsync(@NotNull @PathParam("") RisearchPathParam path,
+                    @NotNull @QueryParam("") RisearchQueryParam query);
+
+    void sync();
 }

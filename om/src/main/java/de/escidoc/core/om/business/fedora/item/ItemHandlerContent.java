@@ -56,6 +56,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.om.service.result.EscidocServiceRedirect;
+import org.aspectj.runtime.internal.cflowstack.ThreadStackImpl11;
+import org.esidoc.core.utils.io.Stream;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -165,11 +167,15 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             try {
                 // bin content can be got with the Stream (getContent()),
                 // but try to stream
-                String fedoraLocalUrl = "/get/" + component.getId() + "/content";
-                if (getItem().getVersionDate() != null) {
-                    fedoraLocalUrl += '/' + getItem().getVersionDate().toString();
+                final Stream stream =
+                    this.getFedoraServiceClient().getBinaryContent(component.getId(), "content",
+                        getItem().getVersionDate());
+                try {
+                    bin.setContent(stream.getInputStream());
                 }
-                bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
+                catch (IOException e) {
+                    throw new WebserverSystemException("Error on loading binary content.", e);
+                }
             }
             catch (final Exception e) {
                 throw new WebserverSystemException(e);
@@ -228,19 +234,16 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         if ("R".equals(storage)) {
             bin.setRedirectUrl(content.getLocation());
         }
-
-        final URL url;
+        final Stream stream =
+            this.getFedoraServiceClient().getBinaryContent(component.getId(), "content", getItem().getVersionDate());
         try {
-            url = getContentUrl(component.getId(), getItem().getVersionDate().toString(), transformer, param);
+            bin.setContent(stream.getInputStream());
         }
-        catch (final MalformedURLException e1) {
-            throw new WebserverSystemException("Internal content URL corrupt.", e1);
+        catch (IOException e) {
+            throw new WebserverSystemException("Error on loading binary content.", e);
         }
-
-        bin.setContent(getFedoraUtility().requestFedoraURL(url.toString()));
         bin.setFileName(component.getResourceProperties().get(
             de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
-
         return bin;
     }
 
@@ -543,65 +546,17 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             bin.setRedirectUrl(cs.getLocation());
         }
         else {
-            String fedoraLocalUrl = "/get/" + getItem().getId() + '/' + name;
-            if (getItem().getVersionDate() != null) {
-                fedoraLocalUrl += '/' + getItem().getVersionDate().toString();
+            final Stream stream =
+                this.getFedoraServiceClient().getBinaryContent(getItem().getId(), name, getItem().getVersionDate());
+            try {
+                bin.setContent(stream.getInputStream());
             }
-            bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
+            catch (IOException e) {
+                throw new WebserverSystemException("Error on loading binary content.", e);
+            }
         }
 
         return bin;
-    }
-
-    /**
-     * Build the Url for the binary content.
-     *
-     * @param componentId The Id of the component.
-     * @param versionDate The version date.
-     * @param transformer The name of the transformation service.
-     * @param param       The parameter for the transformation service as GET parameter.
-     * @return The Url of the binary content responding to the version.
-     * @throws MalformedURLException Thrown id created Url string is now valid URL.
-     * @throws SystemException       Thrown in case of internal configuration failure.
-     */
-    private URL getContentUrl(
-        final String componentId, final String versionDate, final String transformer, final String param)
-        throws MalformedURLException, SystemException {
-        final String fedoraUser = System.getProperty(EscidocConfiguration.FEDORA_USER);
-        final String fedoraPw = System.getProperty(EscidocConfiguration.FEDORA_PASSWORD);
-        final String auth = fedoraUser + ':' + fedoraPw + '@';
-
-        final String fedoraUrl = System.getProperty(EscidocConfiguration.FEDORA_URL);
-        final int pos = fedoraUrl.indexOf("://");
-        final String protocol = fedoraUrl.substring(0, pos + 3);
-        final String hostPart = fedoraUrl.substring(pos + 3);
-
-        final String contentUrl = protocol + auth + hostPart + "/get/" + componentId + "/content" + '/' + versionDate;
-
-        final URL url;
-        if (transformer.equals(TRANSFORM_SERVICE_DIGILIB)) {
-            url = new URL(getDigilibScalerUrl() + "?fn=" + contentUrl + '&' + param);
-        }
-        else {
-            throw new InvalidParameterException("The content transformation service " + transformer
-                + " is not supported.");
-        }
-
-        return url;
-    }
-
-    /**
-     *
-     * @param bin
-     * @param url
-     * @param fileName
-     * @throws WebserverSystemException
-     */
-    private void getBinaryContent(final EscidocBinaryContent bin, final URL url, final String fileName)
-        throws WebserverSystemException {
-
-        bin.setContent(getFedoraUtility().requestFedoraURL(url.toString()));
-        bin.setFileName(fileName);
     }
 
 }

@@ -11,6 +11,8 @@ import java.util.concurrent.Future;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
 
+import com.googlecode.ehcache.annotations.KeyGenerator;
+import com.googlecode.ehcache.annotations.TriggersRemove;
 import net.sf.oval.guard.Guarded;
 
 import org.apache.cxf.jaxrs.client.Client;
@@ -25,6 +27,8 @@ import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
 import org.escidoc.core.services.fedora.DigitalObjectTO;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.FedoraServiceRESTEndpoint;
+import org.escidoc.core.services.fedora.GetBinaryContentPathParam;
+import org.escidoc.core.services.fedora.GetBinaryContentQueryParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
 import org.escidoc.core.services.fedora.GetDatastreamPathParam;
@@ -54,6 +58,8 @@ import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
+import org.esidoc.core.utils.io.IOUtils;
+import org.esidoc.core.utils.io.Stream;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
@@ -64,8 +70,17 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
-import com.googlecode.ehcache.annotations.KeyGenerator;
-import com.googlecode.ehcache.annotations.TriggersRemove;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.Future;
 
 /**
  * Default implementation for
@@ -403,22 +418,86 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    public Stream query(final String resourceType) {
+    public Collection<String> queryResourceIdsByType(final String resourceType) {
         final RisearchPathParam path = new RisearchPathParam();
         final RisearchQueryParam query = new RisearchQueryParam();
         query.setType("triples");
         query.setLang("spo");
         query.setFormat("N-Triples");
         query.setQuery("* <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <" + resourceType + ">");
-        return this.fedoraService.risearch(path, query);
+        return parseIdsFromStream(this.fedoraService.risearch(path, query));
+    }
+
+    private Collection<String> parseIdsFromStream(final Stream stream) {
+        final Collection<String> result = new ArrayList<String>();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(stream.getInputStream()));
+            String line;
+            while((line = reader.readLine()) != null) {
+                final String subject = extractSubject(line);
+                if(subject != null) {
+                    final String id = subject.substring(subject.indexOf('/') + 1);
+                    result.add(id);
+                }
+            }
+        } catch(IOException e) {
+            throw new RuntimeException("Error on parsing IDs.", e);
+        } finally {
+            IOUtils.closeStream(reader);
+        }
+        return result;
+    }
+
+    /**
+     * Extract the subject from the given triple.
+     *
+     * @param triple the triple from which the subject has to be extracted
+     * @return the subject of the given triple
+     */
+    private static String extractSubject(final String triple) {
+        String result = null;
+        if (triple != null) {
+            final int index = triple.indexOf(' ');
+            if (index > 0) {
+                result = triple.substring(triple.indexOf('/') + 1, index - 1);
+            }
+        }
+        return result;
     }
 
     @Override
     @Async
-    public Future<Stream> queryAsync(final String resourceType) {
-        return new AsyncResult<Stream>(query(resourceType));
+    public Future<Collection<String>> queryResourceIdsByTypeAsync(final String resourceType) {
+        return new AsyncResult<Collection<String>>(queryResourceIdsByType(resourceType));
     }
 
+    @Override
+    public Stream getBinaryContent(@NotNull final String pid, @NotNull final String dsId, final DateTime versionDate) {
+        final GetBinaryContentPathParam path = new GetBinaryContentPathParam(pid, dsId,
+                versionDate.withZone(DateTimeZone.UTC).toString());
+        final GetBinaryContentQueryParam query = new GetBinaryContentQueryParam();
+        return this.fedoraService.getBinaryContent(path, query);
+    }
+
+    @Override
+    @Async
+    public Future<Stream> getBinaryContentAsync(@NotNull final String pid, @NotNull final String dsId,
+                                                final DateTime versionDate) {
+        return new AsyncResult<Stream>(getBinaryContent(pid, dsId, versionDate));
+    }
+
+    @Override
+    public Stream risearch(@NotNull final RisearchPathParam path,
+                           @NotNull final RisearchQueryParam query) {
+        return this.fedoraService.risearch(path, query);
+    }
+
+    @Override
+    public Future<Stream> risearchAsync(@NotNull @PathParam("") final RisearchPathParam path,
+                                        @NotNull @QueryParam("") final RisearchQueryParam query) {
+        return new AsyncResult<Stream>(risearch(path, query));
+    }
     @Override
     public List<DatastreamProfileTO> getDatastreamProfiles(final String pid, final DateTime timestamp) {
 

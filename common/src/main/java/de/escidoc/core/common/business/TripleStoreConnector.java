@@ -26,17 +26,19 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.RisearchPathParam;
+import org.escidoc.core.services.fedora.RisearchQueryParam;
+import org.esidoc.core.utils.io.Encodings;
+import org.esidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -49,6 +51,7 @@ import java.util.regex.Pattern;
  *         <p/>
  *         TODO move to TriplestoreUtility implementation
  */
+@Service("business.TripleStoreConnector")
 public class TripleStoreConnector {
 
     static final String TYPE = "tuples";
@@ -79,13 +82,8 @@ public class TripleStoreConnector {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TripleStoreConnector.class);
 
-    private ConnectionUtility connectionUtility;
-
-    private String fedoraUrl;
-
-    private String fedoraUser;
-
-    private String fedoraPassword;
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     /**
      * @param spoQuery
@@ -97,29 +95,16 @@ public class TripleStoreConnector {
      */
     public String requestMPT(final String spoQuery, final String outputFormat) throws TripleStoreSystemException,
         InvalidTripleStoreOutputFormatException, InvalidTripleStoreQueryException {
+        final RisearchPathParam path = new RisearchPathParam();
+        final RisearchQueryParam query = new RisearchQueryParam();
+        query.setFormat(outputFormat);
+        query.setQuery(spoQuery);
+        query.setType(TYPE_MPT);
+        query.setLang(LANG_MPT);
+        query.setFlush(FLUSH);
+        final Stream stream = this.fedoraServiceClient.risearch(path, query);
         try {
-            final List<NameValuePair> params = new ArrayList<NameValuePair>();
-
-            params.add(new BasicNameValuePair("format", outputFormat));
-            params.add(new BasicNameValuePair("query", spoQuery));
-            params.add(new BasicNameValuePair("type", TYPE_MPT));
-            params.add(new BasicNameValuePair("lang", LANG_MPT));
-
-            // The flush parameter tells the resource index to ensure
-            // that any recently-added/modified/deleted triples are
-            // flushed to the triplestore before executing the query.
-            params.add(new BasicNameValuePair("flush", FLUSH));
-
-            final String url = this.fedoraUrl + "/risearch";
-            final HttpPost httpPost = new HttpPost(url);
-            final HttpEntity entity = new UrlEncodedFormEntity(params, XmlUtility.CHARACTER_ENCODING);
-
-            httpPost.setEntity(entity);
-            connectionUtility.setAuthentication(new URL(url), this.fedoraUser, this.fedoraPassword);
-
-            final HttpResponse httpResponse = connectionUtility.getHttpClient(url).execute(httpPost);
-            String responseContent = connectionUtility.readResponse(httpResponse).trim();
-
+            String responseContent = new String(stream.getBytes(), Encodings.UTF8);
             if (responseContent == null || responseContent.length() == 0) {
                 return null;
             }
@@ -152,38 +137,5 @@ public class TripleStoreConnector {
         catch (final IOException e) {
             throw new TripleStoreSystemException(e.toString(), e);
         }
-        catch (final WebserverSystemException e) {
-            throw new TripleStoreSystemException(e.toString(), e);
-        }
-    }
-
-    /**
-     * Set the connection utility.
-     *
-     * @param connectionUtility ConnectionUtility.
-     */
-    public void setConnectionUtility(final ConnectionUtility connectionUtility) {
-        this.connectionUtility = connectionUtility;
-    }
-
-    /**
-     * @param fedoraUrl the fedoraUrl to inject
-     */
-    public void setFedoraUrl(final String fedoraUrl) {
-        this.fedoraUrl = fedoraUrl;
-    }
-
-    /**
-     * @param fedoraUser the fedoraUser to inject
-     */
-    public void setFedoraUser(final String fedoraUser) {
-        this.fedoraUser = fedoraUser;
-    }
-
-    /**
-     * @param fedoraPassword the fedoraPassword to inject
-     */
-    public void setFedoraPassword(final String fedoraPassword) {
-        this.fedoraPassword = fedoraPassword;
     }
 }

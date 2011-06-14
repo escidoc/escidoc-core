@@ -65,7 +65,6 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.security.helper.InvocationParser;
 import de.escidoc.core.common.util.security.persistence.MethodMapping;
 import de.escidoc.core.common.util.security.persistence.MethodMappingList;
@@ -82,6 +81,7 @@ import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface
 import de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterface;
 import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
+import org.esidoc.core.utils.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -661,13 +661,13 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     private ResponseCtx doEvaluate(final RequestCtx requestCtx) throws WebserverSystemException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Request: ");
-            final ByteArrayOutputStream writer = new ByteArrayOutputStream();
+            final ByteArrayOutputStream os = new ByteArrayOutputStream();
             try {
-                requestCtx.encode(writer, new Indenter());
-                LOGGER.debug(writer.toString());
+                requestCtx.encode(os, new Indenter());
+                LOGGER.debug(os.toString());
             }
             finally {
-                IOUtils.closeStream(writer);
+                IOUtils.closeStream(os);
             }
         }
 
@@ -690,13 +690,13 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Response: ");
-            final ByteArrayOutputStream writer = new ByteArrayOutputStream();
+            final ByteArrayOutputStream os = new ByteArrayOutputStream();
             try {
-                response.encode(writer, new Indenter());
-                LOGGER.debug(writer.toString());
+                response.encode(os, new Indenter());
+                LOGGER.debug(os.toString());
             }
             finally {
-                IOUtils.closeStream(writer);
+                IOUtils.closeStream(os);
             }
         }
         return response;
