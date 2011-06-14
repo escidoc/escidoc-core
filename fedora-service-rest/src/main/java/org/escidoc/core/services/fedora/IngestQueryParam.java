@@ -69,7 +69,7 @@ public final class IngestQueryParam {
         this.logMessage = logMessage;
     }
 
-    public Boolean isIgnoreMime() {
+    public Boolean getIgnoreMime() {
         return ignoreMime;
     }
 
