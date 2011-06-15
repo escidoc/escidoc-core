@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -746,7 +747,7 @@ public abstract class ClientBase {
 
         Node exceptionNameNode = EscidocTestBase.selectSingleNode(exceptionDocument, "/exception/class/p");
         if (exceptionNameNode == null) {
-            throw new Exception("Missing exception node in response body:\n" + exceptionXML);
+            throw new Exception("Missing exception name node in response body:\n" + exceptionXML);
         }
         String exceptionName = exceptionNameNode.getTextContent();
         if (exceptionName == null) {
@@ -774,8 +775,18 @@ public abstract class ClientBase {
                     + exceptionName + ", " + (result).getStatusLine().getReasonPhrase() + "]\n Body:\n" + exceptionXML,
                     e);
             }
-            exceptionObject = exceptionClass.newInstance();
-            if (exceptionObject == null || !(exceptionObject instanceof Exception)) {
+
+            Node exceptionMessageNode = EscidocTestBase.selectSingleNode(exceptionDocument, "/exception/message/p");
+            if (exceptionMessageNode == null) {
+                throw new Exception("Missing exception message node in response body:\n" + exceptionXML);
+            }
+            String exceptionMessage = exceptionMessageNode.getTextContent();
+
+            Constructor<?> constructor = exceptionClass.getConstructor(int.class, String.class, String.class);
+            exceptionObject =
+                constructor.newInstance(result.getStatusLine().getStatusCode(), result
+                    .getStatusLine().getReasonPhrase(), exceptionMessage);
+            if (exceptionObject == null || !(exceptionObject instanceof EscidocException)) {
                 throw new Exception("Exception class could not be instantiated [" + exceptionName + ", "
                     + (result).getStatusLine().getReasonPhrase() + "], instantiated exception object is "
                     + exceptionObject + "\n Body:\n" + exceptionXML);

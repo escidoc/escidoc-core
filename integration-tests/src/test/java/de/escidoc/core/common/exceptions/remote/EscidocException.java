@@ -14,6 +14,7 @@ public class EscidocException extends Exception {
     }
 
     public EscidocException(int httpStatusCode, String httpStatusLine, String httpStatusMsg) {
+        super(httpStatusMsg);
         this.httpStatusCode = httpStatusCode;
         this.httpStatusLine = httpStatusLine;
         this.httpStatusMsg = httpStatusMsg;
