@@ -144,6 +144,8 @@ public class Datastream {
      */
     private boolean contentUnchanged;
 
+    private String string;
+
     /**
      * Constructs the Stream identified by name and parentId. The version of the
      * stream identified by timestamp is retrieved from Fedora. If timestamp is
@@ -401,90 +403,97 @@ public class Datastream {
      *             Thrown in case of internal failure (get configuration)
      */
     public DateTime merge() throws FedoraSystemException, WebserverSystemException {
-
+        final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(this.parentId, this.name);
+        final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
+        query.setDsLabel(this.label);
+        query.setMimeType(this.mimeType);
+        query.setAltIDs(this.alternateIDs);
+        String location = this.location;
         if (this.getStream() == null && this.location != null) {
-            String loc = this.location;
             try {
                 // FIXME this location/href is logic of Item!
                 if (this.contentUnchanged
-                    || loc.startsWith("/ir/item/" + getParentId())
-                    || loc.startsWith(EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL)
+                    || location.startsWith("/ir/item/" + getParentId())
+                    || location.startsWith(EscidocConfiguration.getInstance().get(
+                        EscidocConfiguration.ESCIDOC_CORE_BASEURL)
                         + "/ir/item/" + getParentId())) {
                     // TODO assuming unchanged href
-                    loc = null;
+                    location = null;
                 }
-                else if (loc.startsWith("/")) {
+                else if (location.startsWith("/")) {
                     // assuming relative URL
-                    loc = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) + loc;
+                    string =
+                        EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) + location;
+                    location = string;
                 }
             }
             catch (final IOException e) {
                 throw new WebserverSystemException(e);
             }
-            final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(this.parentId, this.name);
-            final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
-            query.setDsLabel(this.label);
-            query.setMimeType(this.mimeType);
-            query.setAltIDs(this.alternateIDs);
-            query.setDsLocation(loc);
-            final DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.modifyDatastream(path, query, null);
-            this.updateDatastream(datastreamProfile);
         }
         else if (this.getStream() != null) {
-            if (CONTROL_GROUP_INTERNAL_XML.equals(this.getControlGroup())) {
-                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(this.parentId, this.name);
-                final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
-                query.setDsLabel(this.label);
-                query.setMimeType(this.mimeType);
-                query.setAltIDs(this.alternateIDs);
-                final Stream stream = new Stream();
+            if (CONTROL_GROUP_MANAGED.equals(this.getControlGroup())) {
                 try {
-                    stream.write(this.getStream());
-                    stream.lock();
-                }
-                catch (final IOException e) {
-                    throw new WebserverSystemException(e);
-                }
-                try {
-                    final DatastreamProfileTO datastreamProfile =
-                        this.fedoraServiceClient.modifyDatastream(path, query, stream);
-                    updateDatastream(datastreamProfile);
-                }
-                catch (final ServerWebApplicationException e) {
-                    LOGGER.debug("Error on modifing datastream.", e);
-                    addDatastream(stream);
-                }
-            }
-            else if (CONTROL_GROUP_MANAGED.equals(this.getControlGroup())) {
-                String tempURI = null;
-                try {
-                    tempURI = this.utility.upload(this.getStream(), this.parentId + this.name, MimeTypes.TEXT_XML);
+                    location = this.utility.upload(this.getStream(), this.parentId + this.name, MimeTypes.TEXT_XML);
                 }
                 catch (final FileSystemException e) {
                     throw new WebserverSystemException("Error while uploading of content of datastream '" + this.name
                         + "' of the fedora object with id '" + this.parentId + "' to the staging area. ", e);
                 }
-                final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(this.parentId, this.name);
-                final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
-                query.setDsLabel(this.label);
-                query.setMimeType(this.mimeType);
-                query.setAltIDs(this.alternateIDs);
-                query.setDsLocation(tempURI);
-                final DatastreamProfileTO datastreamProfile =
-                    this.fedoraServiceClient.modifyDatastream(path, query, null);
-                this.updateDatastream(datastreamProfile);
+            }
+        }
+        query.setDsLocation(location);
+        try {
+            final DatastreamProfileTO datastreamProfile =
+                this.fedoraServiceClient.modifyDatastream(path, query, convertStream());
+            updateDatastream(datastreamProfile);
+        }
+        catch (final Exception e) {
+            LOGGER.debug("Error on modifing datastream.", e);
+            if (stream != null) {
+                addDatastream();
+            }
+            else {
+                addDatastream(location);
             }
         }
         return this.timestamp;
     }
 
-    private void addDatastream(final Stream stream) {
+    private Stream convertStream() throws WebserverSystemException {
+        if (this.getStream() == null) {
+            return null;
+        }
+        try {
+            final Stream stream = new Stream();
+            stream.write(this.getStream());
+            stream.lock();
+            return stream;
+        }
+        catch (final IOException e) {
+            throw new WebserverSystemException(e);
+        }
+    }
+
+    private void addDatastream(final String location) {
+        final AddDatastreamPathParam addPath = new AddDatastreamPathParam(this.parentId, this.name);
+        final AddDatastreamQueryParam addQuery = new AddDatastreamQueryParam();
+        addQuery.setDsLocation(location);
+        addQuery.setDsLabel(this.label);
+        addQuery.setMimeType(this.mimeType);
+        addQuery.setAltIDs(this.alternateIDs);
+        final DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.addDatastream(addPath, addQuery, null);
+        updateDatastream(datastreamProfile);
+    }
+
+    private void addDatastream() throws WebserverSystemException {
         final AddDatastreamPathParam addPath = new AddDatastreamPathParam(this.parentId, this.name);
         final AddDatastreamQueryParam addQuery = new AddDatastreamQueryParam();
         addQuery.setDsLabel(this.label);
         addQuery.setMimeType(this.mimeType);
         addQuery.setAltIDs(this.alternateIDs);
-        final DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.addDatastream(addPath, addQuery, stream);
+        final DatastreamProfileTO datastreamProfile =
+            this.fedoraServiceClient.addDatastream(addPath, addQuery, convertStream());
         updateDatastream(datastreamProfile);
     }
 

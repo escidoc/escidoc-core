@@ -264,7 +264,12 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
         keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.AddDatastreamKeyGenerator"))
     public DatastreamProfileTO addDatastream(
         final AddDatastreamPathParam path, final AddDatastreamQueryParam query, final Stream stream) {
-        return this.fedoraService.addDatastream(path, query, stream);
+        if (stream != null) {
+            return this.fedoraService.addDatastream(path, query, stream);
+        }
+        else {
+            return this.fedoraService.addDatastream(path, query, new Stream());
+        }
     }
 
     @Override
@@ -274,7 +279,6 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
         keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.AddDatastreamKeyGenerator"))
     public Future<DatastreamProfileTO> addDatastreamAsync(
         final AddDatastreamPathParam path, final AddDatastreamQueryParam query, final Stream stream) {
-        ;
         return new AsyncResult<DatastreamProfileTO>(addDatastream(path, query, stream));
     }
 

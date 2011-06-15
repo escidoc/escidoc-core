@@ -99,8 +99,6 @@ public class FedoraUtility {
 
     private static final String FOXML_FORMAT = "info:fedora/fedora-system:FOXML-1.1";
 
-    private static final int HTTP_OK = 200;
-
     private StackObjectPool fedoraClientPool;
 
     // Nutzerzugriffe
@@ -376,77 +374,6 @@ public class FedoraUtility {
                     FedoraUtility.this.fedoraPassword).getAPIM();
             }
         }, MAX_IDLE, INIT_IDLE_CAPACITY);
-    }
-
-    /**
-     * Returns a HttpClient object configured with credentials to access Fedora
-     * URLs.
-     * 
-     * @return A HttpClient object configured with credentials to access Fedora
-     *         URLs.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    DefaultHttpClient getHttpClient() throws WebserverSystemException {
-        try {
-            if (this.httpClient == null) {
-                final HttpParams params = new BasicHttpParams();
-                ConnManagerParams.setMaxTotalConnections(params, HTTP_MAX_TOTAL_CONNECTIONS);
-
-                final ConnPerRoute connPerRoute = new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
-                ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute);
-
-                final Scheme http = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
-                final SchemeRegistry sr = new SchemeRegistry();
-                sr.register(http);
-                final ClientConnectionManager cm = new ThreadSafeClientConnManager(params, sr);
-
-                this.httpClient = new DefaultHttpClient(cm, params);
-                final URL url = new URL(this.fedoraUrl);
-                final CredentialsProvider credsProvider = new BasicCredentialsProvider();
-
-                final AuthScope authScope = new AuthScope(url.getHost(), AuthScope.ANY_PORT, AuthScope.ANY_REALM);
-                final Credentials creds = new UsernamePasswordCredentials(this.fedoraUser, this.fedoraPassword);
-                credsProvider.setCredentials(authScope, creds);
-
-                httpClient.setCredentialsProvider(credsProvider);
-            }
-
-            // don't wait for auth request
-            final HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
-
-                @Override
-                public void process(final HttpRequest request, final HttpContext context) throws HttpException,
-                    IOException {
-
-                    final AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
-                    final CredentialsProvider credsProvider =
-                        (CredentialsProvider) context.getAttribute(ClientContext.CREDS_PROVIDER);
-                    final HttpHost targetHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
-
-                    // If not auth scheme has been initialized yet
-                    if (authState.getAuthScheme() == null) {
-                        final AuthScope authScope = new AuthScope(targetHost.getHostName(), targetHost.getPort());
-                        // Obtain credentials matching the target host
-                        final Credentials creds = credsProvider.getCredentials(authScope);
-                        // If found, generate BasicScheme preemptively
-                        if (creds != null) {
-                            authState.setAuthScheme(new BasicScheme());
-                            authState.setCredentials(creds);
-                        }
-                    }
-                }
-
-            };
-
-            httpClient.addRequestInterceptor(preemptiveAuth, 0);
-
-            // try only BASIC auth; skip to test NTLM and DIGEST
-
-            return this.httpClient;
-        }
-        catch (final MalformedURLException e) {
-            throw new WebserverSystemException("Fedora URL from configuration malformed.", e);
-        }
     }
 
     /**
