@@ -442,7 +442,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
             throw new InvalidStatusException("Password must not be updated on inactive user-account!");
         }
 
-        final TaskParamHandler handler = XmlUtility.parseTaskParam(taskParam, true);
+        final TaskParamHandler handler = XmlUtility.parseTaskParam(taskParam);
 
         final String password = handler.getPassword();
         if (password == null || "".equals(password)) {
