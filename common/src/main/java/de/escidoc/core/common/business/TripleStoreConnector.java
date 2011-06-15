@@ -143,7 +143,7 @@ public class TripleStoreConnector {
             throw new TripleStoreSystemException("Request to MPT failed." + responseContent);
         }
         catch (final Exception e) {
-            throw new TripleStoreSystemException(e.toString(), e);
+            throw new TripleStoreSystemException("Request to MPT failed.", e);
         }
     }
 }

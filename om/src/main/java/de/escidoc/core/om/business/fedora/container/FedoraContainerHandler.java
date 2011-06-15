@@ -453,7 +453,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final AddDatastreamPathParam addPath = new AddDatastreamPathParam(containerId, "ESCIDOC_RELS_EXT");
         final AddDatastreamQueryParam addQuery = new AddDatastreamQueryParam();
         addQuery.setDsLabel("ESCIDOC_RELS_EXT Stream");
-        addQuery.setVersionable(Boolean.FALSE);
+        addQuery.setVersionable(Boolean.TRUE);
         addQuery.setControlGroup(ControlGroup.M);
         final Stream addStream = new Stream();
         try {
