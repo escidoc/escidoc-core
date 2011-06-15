@@ -101,7 +101,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         try {
             dcXml =
                 XmlUtility.createDC(metadataHandler.getEscidocMdRecordNameSpace(),
-                    ((ByteArrayOutputStream) ((Map) containerDataStreams.get("md-records"))
+                    ((ByteArrayOutputStream) ((Map) containerDataStreams.get(XmlUtility.NAME_MDRECORDS))
                         .get(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING))
                         .toString(XmlUtility.CHARACTER_ENCODING), containerId, contentModel);
         }
@@ -132,7 +132,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                 }
 
             }
-            else if ("md-records".equals(outsideKey)) {
+            else if (XmlUtility.NAME_MDRECORDS.equals(outsideKey)) {
 
                 final Map insideHash = (Map) entry.getValue();
                 if (!insideHash.isEmpty()) {

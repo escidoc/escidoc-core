@@ -31,6 +31,7 @@ package de.escidoc.core.om.business.fedora.item;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -334,7 +335,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 throw new EncodingSystemException(e.getMessage(), e);
             }
             final Map<String, ByteArrayOutputStream> mdRecordsStreams =
-                (Map<String, ByteArrayOutputStream>) streams.get("md-records");
+                (Map<String, ByteArrayOutputStream>) streams.get(XmlUtility.NAME_MDRECORDS);
             if (mdRecordsStreams != null && !mdRecordsStreams.containsKey("escidoc") && !origin) {
                 throw new MissingMdRecordException("No escidoc internal metadata found " + "(md-record/@name='escidoc'");
             }
@@ -661,7 +662,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             XmlUtility.handleUnexpectedStaxParserException(e.getMessage(), e);
         }
 
-        final Map mds = (Map) me.getOutputStreams().get("md-records");
+        final Map mds = (Map) me.getOutputStreams().get(XmlUtility.NAME_MDRECORDS);
         // there is only one md-record (root element is md-record)
         final ByteArrayOutputStream mdXml = (ByteArrayOutputStream) mds.get(mdRecordId);
         final Map<String, Map<String, String>> mdAttributes = mdHandler.getMetadataAttributes();
@@ -744,7 +745,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 + "FedoraItemHandler.createMetadataRecord.", e);
         }
         final Map map = me.getOutputStreams();
-        final Map mdRecords = (Map) map.get("md-records");
+        final Map mdRecords = (Map) map.get(XmlUtility.NAME_MDRECORDS);
         final Set keySet = mdRecords.keySet();
         final Iterator it = keySet.iterator();
         if (!it.hasNext()) {

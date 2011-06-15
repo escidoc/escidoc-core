@@ -250,8 +250,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             throw new EncodingSystemException(e.getMessage(), e);
         }
         final Map<String, ByteArrayOutputStream> mdRecords =
-            streams.get("md-records") == null ? new HashMap<String, ByteArrayOutputStream>() : (Map<String, ByteArrayOutputStream>) streams
-                .get("md-records");
+            streams.get(XmlUtility.NAME_MDRECORDS) == null ? new HashMap<String, ByteArrayOutputStream>() : (Map<String, ByteArrayOutputStream>) streams
+                .get(XmlUtility.NAME_MDRECORDS);
 
         setComponentMetadataRecords(c, mdRecords, mdRecordsMetadataAttribures, nsUri);
 

@@ -807,7 +807,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             }
             // md-records
             final Map<String, Map<String, String>> mdRecordsAttributes = mdHandler.getMetadataAttributes();
-            final Map mdRecordsStreams = (Map) streams.get("md-records");
+            final Map mdRecordsStreams = (Map) streams.get(XmlUtility.NAME_MDRECORDS);
             if (!mdRecordsStreams.containsKey("escidoc")) {
                 throw new XmlCorruptedException("No escidoc internal metadata found " + "(md-record/@name='escidoc'");
             }
@@ -1710,6 +1710,14 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         checkVersionStatus(Constants.STATUS_SUBMITTED);
 
         final String label = "Container " + getContainer().getId();
+
+        // FIXME Item and Container throw different Exceptions if the last-modification-date is not given within the
+        // taskParam XML. It's decided to keep consistency between version 1.3 and 1.4 and therefore not to implement
+        // the same behavior for version 1.4. Consistency could be reached, if taskParam is described as XML schema.
+        if (taskParameter.getLastModificationDate() == null) {
+            throw new XmlCorruptedException("Missing last-modification-date");
+        }
+
         if (Utility.checkUnlocked(getContainer().isLocked(), "Submit", label, getContainer().getLockOwner())
             && getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
                 taskParameter.getLastModificationDate(), label)) {

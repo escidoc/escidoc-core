@@ -387,12 +387,12 @@ public class MultipleExtractor extends WriteHandler {
                                 // subId,
                                 // out);
                                 final HashMap<String, ByteArrayOutputStream> mdRecords;
-                                if (component.containsKey("md-records")) {
-                                    mdRecords = (HashMap<String, ByteArrayOutputStream>) component.get("md-records");
+                                if (component.containsKey(XmlUtility.NAME_MDRECORDS)) {
+                                    mdRecords = (HashMap<String, ByteArrayOutputStream>) component.get(XmlUtility.NAME_MDRECORDS);
                                 }
                                 else {
                                     mdRecords = new HashMap<String, ByteArrayOutputStream>();
-                                    component.put("md-records", mdRecords);
+                                    component.put(XmlUtility.NAME_MDRECORDS, mdRecords);
                                 }
                                 if (mdRecords.containsKey(attributeValue)) {
                                     throw new InvalidContentException("A component md-record with the name '"
@@ -417,7 +417,7 @@ public class MultipleExtractor extends WriteHandler {
                             if ("md-record".equals(theName)) {
                                 if (this.metadata == null) {
                                     this.metadata = new HashMap<String, ByteArrayOutputStream>();
-                                    outputStreams.put("md-records", this.metadata);
+                                    outputStreams.put(XmlUtility.NAME_MDRECORDS, this.metadata);
                                 }
                                 if (metadata.containsKey(attributeValue)) {
                                     throw new InvalidContentException("A md-record with the name '" + attributeValue

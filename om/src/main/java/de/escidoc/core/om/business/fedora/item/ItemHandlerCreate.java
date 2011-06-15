@@ -134,14 +134,14 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         // dc-mapping prototyping
-        if (dataStreams.containsKey("md-records")
-            && ((Map) dataStreams.get("md-records")).containsKey(Elements.MANDATORY_MD_RECORD_NAME)) {
+        if (dataStreams.containsKey(XmlUtility.NAME_MDRECORDS)
+            && ((Map) dataStreams.get(XmlUtility.NAME_MDRECORDS)).containsKey(Elements.MANDATORY_MD_RECORD_NAME)) {
             final String dcXml;
             try {
                 // no content model id for component dc-mapping, default mapping
                 // should be applied
                 dcXml =
-                    XmlUtility.createDC(nsUri, ((ByteArrayOutputStream) ((Map) dataStreams.get("md-records"))
+                    XmlUtility.createDC(nsUri, ((ByteArrayOutputStream) ((Map) dataStreams.get(XmlUtility.NAME_MDRECORDS))
                         .get(Elements.MANDATORY_MD_RECORD_NAME)).toString(XmlUtility.CHARACTER_ENCODING), id, null);
             }
             catch (final UnsupportedEncodingException e) {

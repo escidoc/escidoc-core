@@ -154,10 +154,10 @@ public class MultipleExtractor2 extends DefaultHandler {
                     else {
                         final String attributeValue = getAttributeValue(element, null, attributeName);
                         if ("md-record".equals(elementName)) {
-                            Map<String, OutputStream> mdRecords = components.get("md-records");
+                            Map<String, OutputStream> mdRecords = components.get(XmlUtility.NAME_MDRECORDS);
                             if (mdRecords == null) {
                                 mdRecords = new HashMap<String, OutputStream>();
-                                component.put("md-records", mdRecords);
+                                component.put(XmlUtility.NAME_MDRECORDS, mdRecords);
                             }
                             mdRecords.put(attributeValue, out);
                         }
@@ -175,7 +175,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                         if ("md-record".equals(elementName)) {
                             if (this.metadata == null) {
                                 this.metadata = new HashMap<String, OutputStream>();
-                                outputStreams.put("md-records", this.metadata);
+                                outputStreams.put(XmlUtility.NAME_MDRECORDS, this.metadata);
                             }
                             metadata.put(attributeValue, out);
                         }
