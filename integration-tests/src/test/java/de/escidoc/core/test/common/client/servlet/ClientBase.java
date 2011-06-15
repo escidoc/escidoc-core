@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -782,15 +781,15 @@ public abstract class ClientBase {
             }
             String exceptionMessage = exceptionMessageNode.getTextContent();
 
-            Constructor<?> constructor = exceptionClass.getConstructor(int.class, String.class, String.class);
-            exceptionObject =
-                constructor.newInstance(result.getStatusLine().getStatusCode(), result
-                    .getStatusLine().getReasonPhrase(), exceptionMessage);
+            exceptionObject = exceptionClass.newInstance();
             if (exceptionObject == null || !(exceptionObject instanceof EscidocException)) {
                 throw new Exception("Exception class could not be instantiated [" + exceptionName + ", "
                     + (result).getStatusLine().getReasonPhrase() + "], instantiated exception object is "
                     + exceptionObject + "\n Body:\n" + exceptionXML);
             }
+            ((EscidocException) exceptionObject).setHttpStatusCode(result.getStatusLine().getStatusCode());
+            ((EscidocException) exceptionObject).setHttpStatusLine(result.getStatusLine().getReasonPhrase());
+            ((EscidocException) exceptionObject).setHttpStatusMsg(exceptionMessage);
         }
         throw (Exception) exceptionObject;
     }
