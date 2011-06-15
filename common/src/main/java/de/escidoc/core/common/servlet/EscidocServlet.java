@@ -23,15 +23,18 @@ package de.escidoc.core.common.servlet;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.net.URLEncoder;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -121,6 +124,16 @@ public class EscidocServlet extends HttpServlet {
      * The No-Cache directive for Cache-Control Header and Pragma to prevent caching of the http response.
      */
     private static final String HTTP_HEADER_VALUE_NO_CACHE = "no-cache";
+
+    /**
+     * HTTP header Accept-Encoding.
+     */
+    private static final String HTTP_HEADER_ACCEPT_ENCODING = "Accept-Encoding";
+
+    /**
+     * HTTP header value for Accept-Encoding.
+     */
+    private static final String HTTP_HEADER_VALUE_ACCEPT_ENCODING_GZIP = "gzip";
 
     /**
      * HTTP Pragma.
@@ -236,7 +249,15 @@ public class EscidocServlet extends HttpServlet {
                         doSendBinaryContentResponse(httpResponse, httpMethod, (EscidocBinaryContent) result);
                     }
                     else if (result instanceof String) {
-                        doSendStringResponse(httpResponse, httpMethod, (String) result);
+                        // test whether compressed data is acceptable:
+                        boolean compressionIsAccepted = false;
+                        if (httpRequest.getHeader(HTTP_HEADER_ACCEPT_ENCODING) != null
+                            && httpRequest.getHeader(HTTP_HEADER_ACCEPT_ENCODING).indexOf(
+                                HTTP_HEADER_VALUE_ACCEPT_ENCODING_GZIP) >= 0) {
+                            compressionIsAccepted = true;
+                        }
+
+                        doSendStringResponse(httpResponse, httpMethod, (String) result, compressionIsAccepted);
                     }
                     else if (result instanceof EscidocServiceRedirectInterface) {
                         doRedirectResponse(httpResponse, httpMethod, (EscidocServiceRedirectInterface) result);
@@ -381,17 +402,25 @@ public class EscidocServlet extends HttpServlet {
 
     /**
      * Handles a response for a method that returns a string value.
+     * Returned string might be gzip compressed if param 'compressionIsAccepted' is true.
      *
      * @param httpResponse The {@link HttpServletResponse} object.
      * @param httpMethod   The http method of the request.
      * @param result       The {@link String} object that shall be sent in the response.
+     * @param compressionIsAccepted defines if returned sting object will be gzip compressed
      * @throws IOException If anything fails.
      */
     private static void doSendStringResponse(
-        final HttpServletResponse httpResponse, final String httpMethod, final String result) throws IOException {
+        final HttpServletResponse httpResponse, final String httpMethod, final String result,
+        boolean compressionIsAccepted) throws IOException {
 
         if (HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod) || HTTP_POST.equals(httpMethod)) {
-            doSendStringResponse(httpResponse, result, HttpServletResponse.SC_OK);
+            if (compressionIsAccepted) {
+                doSendCompressedStringResponse(httpResponse, result, HttpServletResponse.SC_OK);
+            }
+            else {
+                doSendStringResponse(httpResponse, result, HttpServletResponse.SC_OK);
+            }
         }
         else {
             doDeclineHttpRequest(httpResponse, new WebserverSystemException(StringUtility.format(
@@ -507,6 +536,32 @@ public class EscidocServlet extends HttpServlet {
         if (text != null) {
             httpResponse.setContentType(XML_RESPONSE_CONTENT_TYPE);
             httpResponse.getWriter().println(text);
+        }
+        httpResponse.setStatus(status);
+    }
+
+    /**
+     * Sends the gzip compressed http response with provided status and the provided text in the response body. <br/> Before sending,
+     * the no-cache headers are added.
+     *
+     * @param httpResponse The {@link HttpServletResponse} object.
+     * @param text         The {@link String} object to be sent in the response body.
+     * @param status       The http response status.
+     * @throws IOException If anything fails.
+     */
+    private static void doSendCompressedStringResponse(
+        final HttpServletResponse httpResponse, final String text, final int status) throws IOException {
+
+        initHttpResponse(httpResponse);
+        if (text != null) {
+            httpResponse.setContentType(XML_RESPONSE_CONTENT_TYPE);
+            httpResponse.setHeader(HTTP_HEADER_ACCEPT_ENCODING, HTTP_HEADER_VALUE_ACCEPT_ENCODING_GZIP);
+            byte txt[] = (text.getBytes());
+            ServletOutputStream servletOut = httpResponse.getOutputStream();
+            OutputStream out = new GZIPOutputStream(servletOut);
+            out.write(txt);
+            out.close();
+            servletOut.close();
         }
         httpResponse.setStatus(status);
     }
