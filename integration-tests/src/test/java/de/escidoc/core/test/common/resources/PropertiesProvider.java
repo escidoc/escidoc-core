@@ -114,7 +114,6 @@ public class PropertiesProvider {
         if (currentUser != null) {
             addFile(currentUser + ".properties");
         }
-        addFile("test.properties");
         addFile("load-test.properties");
         init();
     }
