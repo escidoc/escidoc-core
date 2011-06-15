@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -85,7 +86,7 @@ public class OptimisticLockingHandler extends DefaultHandler {
      */
     @Override
     public StartElement startElement(final StartElement element) throws OptimisticLockingException,
-        MissingAttributeValueException, WebserverSystemException, InvalidContentException {
+        MissingAttributeValueException, WebserverSystemException, InvalidContentException, XmlCorruptedException {
         if (!this.done) {
             final Attribute requestedDate;
             try {

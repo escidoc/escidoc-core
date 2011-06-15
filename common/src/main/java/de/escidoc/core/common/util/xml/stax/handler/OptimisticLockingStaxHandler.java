@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -64,12 +65,13 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
+     * @throws XmlCorruptedException 
      *
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
-        OptimisticLockingException {
+        OptimisticLockingException, XmlCorruptedException {
 
         final boolean notReadyFlag = isNotReady();
 

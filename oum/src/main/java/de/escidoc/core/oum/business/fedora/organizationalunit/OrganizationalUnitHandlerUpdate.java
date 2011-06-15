@@ -33,6 +33,7 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
@@ -159,9 +160,10 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws WebserverSystemException   Thrown in case of an internal error.
      * @throws FedoraSystemException      Thrown if request to Fedora failed.
      * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
+     * @throws XmlCorruptedException      Thrown if the last-modification-date is null
      */
     protected void checkUpToDate(final DateTime timestamp) throws OptimisticLockingException, WebserverSystemException,
-        TripleStoreSystemException, FedoraSystemException {
+        TripleStoreSystemException, FedoraSystemException, XmlCorruptedException {
 
         getUtility().checkOptimisticLockingCriteria(getOrganizationalUnit().getLastModificationDate(), timestamp,
             "Organizational unit " + getOrganizationalUnit().getId());

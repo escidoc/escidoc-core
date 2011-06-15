@@ -20,6 +20,39 @@
 
 package de.escidoc.core.common.business.fedora;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.TransformerException;
+
+import org.apache.xpath.XPathAPI;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -31,6 +64,7 @@ import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResourc
 import de.escidoc.core.common.business.fedora.resources.interfaces.VersionableResource;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
@@ -66,44 +100,10 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
-import org.apache.xpath.XPathAPI;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.access.BeanFactoryLocator;
-import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Some utilities.
- *
+ * 
  * @author Michael Schneider
  */
 @Service("business.Utility")
@@ -126,8 +126,9 @@ public class Utility {
 
     /**
      * Splits a Predicate at the last slash (/).
-     *
-     * @param predicate Predicate.
+     * 
+     * @param predicate
+     *            Predicate.
      * @return split predicate
      */
     public static String[] splitPredicate(final String predicate) {
@@ -143,9 +144,11 @@ public class Utility {
     /**
      * Concatenates the two given path segments and returns a valid path, i.e. the method takes care that there is only
      * one path separator between the path segments.
-     *
-     * @param path     The path.
-     * @param appendix The path to append.
+     * 
+     * @param path
+     *            The path.
+     * @param appendix
+     *            The path to append.
      * @return The concatenated path.
      */
     public static String concatenatePath(final String path, final String appendix) {
@@ -160,8 +163,9 @@ public class Utility {
 
     /**
      * Fetches the id from the link. It is the String after the last '/' in the link.
-     *
-     * @param link The link
+     * 
+     * @param link
+     *            The link
      * @return The extracted id.
      */
     public static String getId(final String link) {
@@ -175,13 +179,18 @@ public class Utility {
 
     /**
      * Check if locked is set to false. If it set to true a LockingException is thrown.
-     *
-     * @param locked    Indicates if the object is locked.
-     * @param method    The method which shall be executed.
-     * @param label     The label identifying the object.
-     * @param lockOwner The lock owner if there was one found.
+     * 
+     * @param locked
+     *            Indicates if the object is locked.
+     * @param method
+     *            The method which shall be executed.
+     * @param label
+     *            The label identifying the object.
+     * @param lockOwner
+     *            The lock owner if there was one found.
      * @return true if the object is not locked.
-     * @throws LockingException Thrown if the object is locked.
+     * @throws LockingException
+     *             Thrown if the object is locked.
      */
     public static boolean checkUnlocked(
         final boolean locked, final String method, final String label, final String lockOwner) throws LockingException {
@@ -195,16 +204,27 @@ public class Utility {
     /**
      * Checks if the given dates are equal. If so the change is permitted and true is returned. Otherwise a
      * LockingException is throws.
-     *
-     * @param fedoraLatestVersionDate The date of the latest version stored in Fedora.
-     * @param updateLatestVersionDate The date of the version the application retrieved and wants to update.
-     * @param label                   A label to identify the object to change.
-     * @throws OptimisticLockingException Thrown if a change of the object is not permitted.
-     * @throws WebserverSystemException   Thrown in case of an internal error.
+     * 
+     * @param fedoraLatestVersionDate
+     *            The date of the latest version stored in Fedora.
+     * @param updateLatestVersionDate
+     *            The date of the version the application retrieved and wants to update.
+     * @param label
+     *            A label to identify the object to change.
+     * @throws OptimisticLockingException
+     *             Thrown if a change of the object is not permitted.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
+     * @throws XmlCorruptedException
+     *             Thrown if one of the the given parameters is null
      */
     public static boolean checkOptimisticLockingCriteria(
         final DateTime fedoraLatestVersionDate, final DateTime updateLatestVersionDate, final String label)
-        throws OptimisticLockingException, WebserverSystemException {
+        throws OptimisticLockingException, WebserverSystemException, XmlCorruptedException {
+
+        if (fedoraLatestVersionDate == null || updateLatestVersionDate == null) {
+            throw new XmlCorruptedException("last-modification-date must not be null");
+        }
 
         if (!fedoraLatestVersionDate.isEqual((updateLatestVersionDate))) {
 
@@ -224,33 +244,41 @@ public class Utility {
     /**
      * Checks if the given dates are equal. If so the change is permitted and true is returned. Otherwise a
      * LockingException is throws.
-     *
-     * @param fedoraLatestVersionDate The date of the latest version stored in Fedora.
-     * @param updateLatestVersionDate The date of the version the application retrieved and wants to update.
-     * @param label                   A label to identify the object to change.
+     * 
+     * @param fedoraLatestVersionDate
+     *            The date of the latest version stored in Fedora.
+     * @param updateLatestVersionDate
+     *            The date of the version the application retrieved and wants to update.
+     * @param label
+     *            A label to identify the object to change.
      * @return true if change is permitted
-     * @throws OptimisticLockingException Thrown if a change of the object is not permitted.
-     * @throws WebserverSystemException   Thrown in case of an internal error.
+     * @throws OptimisticLockingException
+     *             Thrown if a change of the object is not permitted.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
+     * @throws XmlCorruptedException
+     *             Thrown if one of the the given parameters is null
      */
     public static boolean checkOptimisticLockingCriteria(
         final String fedoraLatestVersionDate, final String updateLatestVersionDate, final String label)
-        throws OptimisticLockingException, WebserverSystemException {
+        throws OptimisticLockingException, WebserverSystemException, XmlCorruptedException {
 
-        if (fedoraLatestVersionDate != null && updateLatestVersionDate != null) {
-
-            final DateTime tFedora = new DateTime(fedoraLatestVersionDate);
-            final DateTime tUpdate = new DateTime(updateLatestVersionDate);
-
-            checkOptimisticLockingCriteria(tFedora, tUpdate, label);
+        if (fedoraLatestVersionDate == null || updateLatestVersionDate == null) {
+            throw new XmlCorruptedException("last-modification-date must not be null");
         }
-        return true;
+
+        final DateTime tFedora = new DateTime(fedoraLatestVersionDate);
+        final DateTime tUpdate = new DateTime(updateLatestVersionDate);
+
+        return checkOptimisticLockingCriteria(tFedora, tUpdate, label);
     }
 
     /**
      * Get the id and the name of the current user from the UserContext.
-     *
+     * 
      * @return The the id and the name of the current user. ([0] = id, [1] = name)
-     * @throws WebserverSystemException If the current user could not be retrieved.
+     * @throws WebserverSystemException
+     *             If the current user could not be retrieved.
      */
     public static String[] getCurrentUser() throws WebserverSystemException {
 
@@ -266,9 +294,11 @@ public class Utility {
 
     /**
      * Returns true if both objects specified by id have the same context.
-     *
-     * @param id0 of object
-     * @param id1 of object
+     * 
+     * @param id0
+     *            of object
+     * @param id1
+     *            of object
      * @return true if objects has same context else false.
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
@@ -281,11 +311,13 @@ public class Utility {
 
     /**
      * Checks if the given param is not null.
-     *
-     * @param param The param to check.
-     * @param label The label to add to the exception message.
+     * 
+     * @param param
+     *            The param to check.
+     * @param label
+     *            The label to add to the exception message.
      * @throws MissingMethodParameterException
-     *          If the param is null.
+     *             If the param is null.
      */
     public static void checkNotNull(final Object param, final String label) throws MissingMethodParameterException {
         if (param == null) {
@@ -296,9 +328,11 @@ public class Utility {
 
     /**
      * Checks if a component with id exists.
-     *
-     * @param id The id of the object.
-     * @throws ComponentNotFoundException If the component does not exist or if the object is no component.
+     * 
+     * @param id
+     *            The id of the object.
+     * @throws ComponentNotFoundException
+     *             If the component does not exist or if the object is no component.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -316,9 +350,11 @@ public class Utility {
 
     /**
      * Checks if a container with id exists.
-     *
-     * @param id The id of the object.
-     * @throws ContainerNotFoundException If the container does not exist or if the object is no container.
+     * 
+     * @param id
+     *            The id of the object.
+     * @throws ContainerNotFoundException
+     *             If the container does not exist or if the object is no container.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -336,9 +372,11 @@ public class Utility {
 
     /**
      * Checks if a context with id exists.
-     *
-     * @param id The id of the object.
-     * @throws ContextNotFoundException If the context does not exist or if the object is no context.
+     * 
+     * @param id
+     *            The id of the object.
+     * @throws ContextNotFoundException
+     *             If the context does not exist or if the object is no context.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -356,10 +394,11 @@ public class Utility {
 
     /**
      * Checks if a Content Relation with id exists.
-     *
-     * @param id The id of the object.
+     * 
+     * @param id
+     *            The id of the object.
      * @throws ContentRelationNotFoundException
-     *                         Thrown if Content Relation the does not exist.
+     *             Thrown if Content Relation the does not exist.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -377,9 +416,11 @@ public class Utility {
 
     /**
      * Checks if a content model with id exists.
-     *
-     * @param id The id of the object.
-     * @throws ContentModelNotFoundException If the content model does not exist or if the object is no content model.
+     * 
+     * @param id
+     *            The id of the object.
+     * @throws ContentModelNotFoundException
+     *             If the content model does not exist or if the object is no content model.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -397,12 +438,17 @@ public class Utility {
 
     /**
      * Checks if an item with id exists.
-     *
-     * @param id The id of the object.
-     * @throws ItemNotFoundException      If the item does not exist or if the object is no item.
-     * @throws WebserverSystemException   Thrown if instance of TripleStore failed.
-     * @throws TripleStoreSystemException Thrown in case of Triple Store request or connection failure.
-     * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
+     * 
+     * @param id
+     *            The id of the object.
+     * @throws ItemNotFoundException
+     *             If the item does not exist or if the object is no item.
+     * @throws WebserverSystemException
+     *             Thrown if instance of TripleStore failed.
+     * @throws TripleStoreSystemException
+     *             Thrown in case of Triple Store request or connection failure.
+     * @throws IntegritySystemException
+     *             Thrown if there is an integrity error with the addressed object.
      */
     public void checkIsItem(final String id) throws ItemNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
@@ -417,13 +463,17 @@ public class Utility {
 
     /**
      * Checks if a relation with id exists.
-     *
-     * @param id The id.
+     * 
+     * @param id
+     *            The id.
      * @throws ContentRelationNotFoundException
-     *                                    If the relation does not exist or if the object is no relation.
-     * @throws WebserverSystemException   Thrown if instance of TripleStore failed.
-     * @throws TripleStoreSystemException Thrown in case of Triple Store request or connection failure.
-     * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
+     *             If the relation does not exist or if the object is no relation.
+     * @throws WebserverSystemException
+     *             Thrown if instance of TripleStore failed.
+     * @throws TripleStoreSystemException
+     *             Thrown in case of Triple Store request or connection failure.
+     * @throws IntegritySystemException
+     *             Thrown if there is an integrity error with the addressed object.
      */
     public void checkIsRelation(final String id) throws ContentRelationNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
@@ -438,10 +488,11 @@ public class Utility {
 
     /**
      * Checks if an organizational-unit with id exists.
-     *
-     * @param id The id of the object.
+     * 
+     * @param id
+     *            The id of the object.
      * @throws OrganizationalUnitNotFoundException
-     *                         If the organizational-unit does not exist or if the object is no organizational-unit.
+     *             If the organizational-unit does not exist or if the object is no organizational-unit.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -459,13 +510,19 @@ public class Utility {
 
     /**
      * Check if the object given by id exists and is of the given type.
-     *
-     * @param id   The id.
-     * @param type The expected type.
-     * @throws ResourceNotFoundException  Thrown if resource with provided type does not exist.
-     * @throws WebserverSystemException   Thrown if instance of TripleStore failed.
-     * @throws TripleStoreSystemException Thrown if request or connection to Triple Store failed.
-     * @throws IntegritySystemException   Thrown if no object type is found for an existing object.
+     * 
+     * @param id
+     *            The id.
+     * @param type
+     *            The expected type.
+     * @throws ResourceNotFoundException
+     *             Thrown if resource with provided type does not exist.
+     * @throws WebserverSystemException
+     *             Thrown if instance of TripleStore failed.
+     * @throws TripleStoreSystemException
+     *             Thrown if request or connection to Triple Store failed.
+     * @throws IntegritySystemException
+     *             Thrown if no object type is found for an existing object.
      */
     public void checkIsOfObjectType(final String id, final String type) throws ResourceNotFoundException,
         TripleStoreSystemException, WebserverSystemException, IntegritySystemException {
@@ -490,12 +547,15 @@ public class Utility {
 
     /**
      * Check if the provided object in the xmlData has the same Context id than the object provided by id.
-     *
-     * @param id      It of the reference object.
-     * @param xmlData The XML representation of an object.
-     * @throws InvalidContextException Thrown if the contextId of xmlData differs from the ContextId of the reference
-     *                                 object.
-     * @throws SystemException         Thrown in case of internal failure.
+     * 
+     * @param id
+     *            It of the reference object.
+     * @param xmlData
+     *            The XML representation of an object.
+     * @throws InvalidContextException
+     *             Thrown if the contextId of xmlData differs from the ContextId of the reference object.
+     * @throws SystemException
+     *             Thrown in case of internal failure.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
@@ -564,12 +624,17 @@ public class Utility {
 
     /**
      * Create new object version.
-     *
-     * @param versionComment Comment of event (version or status change)
-     * @param newStatus      New status of object.
-     * @param resource       resource object.
-     * @param fedoraUtility  The {@link FedoraUtility} to use for accessing the data store back end.
-     * @throws SystemException Thrown in case of an internal system error.
+     * 
+     * @param versionComment
+     *            Comment of event (version or status change)
+     * @param newStatus
+     *            New status of object.
+     * @param resource
+     *            resource object.
+     * @param fedoraUtility
+     *            The {@link FedoraUtility} to use for accessing the data store back end.
+     * @throws SystemException
+     *             Thrown in case of an internal system error.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -786,13 +851,19 @@ public class Utility {
 
     /**
      * Update elements in RELS-EXt of versionable resource.
-     *
-     * @param updateElementsRelsExt elements to update
-     * @param removeElementsRelsExt elements to remove from RELS-EXT
-     * @param resource              object resource
-     * @param currentPublicStatus   public-status of current version
-     * @param release               set true if version is release, false otherwise
-     * @throws SystemException Thrown in case of internal failure.
+     * 
+     * @param updateElementsRelsExt
+     *            elements to update
+     * @param removeElementsRelsExt
+     *            elements to remove from RELS-EXT
+     * @param resource
+     *            object resource
+     * @param currentPublicStatus
+     *            public-status of current version
+     * @param release
+     *            set true if version is release, false otherwise
+     * @throws SystemException
+     *             Thrown in case of internal failure.
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
@@ -857,12 +928,14 @@ public class Utility {
 
     /**
      * Create a new entry for the version-history (WOV).
-     *
-     * @param resource The versionable resource.
+     * 
+     * @param resource
+     *            The versionable resource.
      * @param resBaseData
      * @param currentVersionProperties
      * @param newVersionNumberInt
-     * @param comment  The version comment.
+     * @param comment
+     *            The version comment.
      * @return WOV entry for new version
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -913,17 +986,25 @@ public class Utility {
 
     /**
      * Set event values to HashMap and call version-history event entry.
-     *
-     * @param resourceId               The id of the resource.
-     * @param resourceBaseUrl          The resource base URL
-     * @param currentUserName          The name of the current user.
-     * @param currentUserId            The id of the current user.
+     * 
+     * @param resourceId
+     *            The id of the resource.
+     * @param resourceBaseUrl
+     *            The resource base URL
+     * @param currentUserName
+     *            The name of the current user.
+     * @param currentUserId
+     *            The id of the current user.
      * @param latestModificationTimestamp
-     * @param newStatus                New version-status
-     * @param comment                  The version comment.
-     * @param currentVersionProperties map with properties of current version
+     * @param newStatus
+     *            New version-status
+     * @param comment
+     *            The version comment.
+     * @param currentVersionProperties
+     *            map with properties of current version
      * @return XML event entry for version-history
-     * @throws WebserverSystemException Thrown in case of internal error.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal error.
      */
     private static String createEventXml(
         final String resourceId, final String resourceBaseUrl, final String currentUserName,
@@ -951,10 +1032,13 @@ public class Utility {
 
     /**
      * Create comment for version update.
-     *
-     * @param resource       The versionable resource.
-     * @param newStatus      New status of resource.
-     * @param versionComment Comment for version.
+     * 
+     * @param resource
+     *            The versionable resource.
+     * @param newStatus
+     *            New status of resource.
+     * @param versionComment
+     *            Comment for version.
      * @return Comment
      */
     private static String createComment(
@@ -969,7 +1053,8 @@ public class Utility {
 
     /**
      * @return id of current user.
-     * @throws WebserverSystemException Thrown if current user is not set.
+     * @throws WebserverSystemException
+     *             Thrown if current user is not set.
      */
     public String getCurrentUserId() throws WebserverSystemException {
         return getCurrentUser()[0];
@@ -977,7 +1062,8 @@ public class Utility {
 
     /**
      * @return real name of current user.
-     * @throws WebserverSystemException Thrown if current user is not set.
+     * @throws WebserverSystemException
+     *             Thrown if current user is not set.
      */
     public String getCurrentUserRealName() throws WebserverSystemException {
         return getCurrentUser()[1];
@@ -985,10 +1071,12 @@ public class Utility {
 
     /**
      * Get basic XML data from resource.
-     *
-     * @param resource the resource.
+     * 
+     * @param resource
+     *            the resource.
      * @return Map with baseURL, xml namespace and prefix
-     * @throws SystemException Thrown if anything fails.
+     * @throws SystemException
+     *             Thrown if anything fails.
      */
     private static Map<String, String> getResourceBaseData(final VersionableResource resource) throws SystemException {
 
@@ -1086,19 +1174,27 @@ public class Utility {
 
     /**
      * Adds and removes the provided elements to/from RELS-EXT.
-     *
-     * @param addToRelsExt      - Vector with elements, which should be added to RELS-EXT
-     * @param deleteFromRelsExt - Map containing key-value pairs: keys - paths to elements, which should be deleted from
-     *                          RELS-EXT and values - elements thereself.
-     * @param relsExtBytes      - optional parameter: byte [] with content of RELS-EXT datastream. If no relsExtBytes
-     *                          provided (relsExtBytes is set to null), the method retrieves the RELS-EXT from Fedora
-     * @param resource          The resource which RELS-EXT is to alter.
+     * 
+     * @param addToRelsExt
+     *            - Vector with elements, which should be added to RELS-EXT
+     * @param deleteFromRelsExt
+     *            - Map containing key-value pairs: keys - paths to elements, which should be deleted from RELS-EXT and
+     *            values - elements thereself.
+     * @param relsExtBytes
+     *            - optional parameter: byte [] with content of RELS-EXT datastream. If no relsExtBytes provided
+     *            (relsExtBytes is set to null), the method retrieves the RELS-EXT from Fedora
+     * @param resource
+     *            The resource which RELS-EXT is to alter.
      * @param updateProperties
      * @return byte [] RELS-EXT datastream content
-     * @throws IntegritySystemException If the integrity of the repository is violated.
-     * @throws XmlParserSystemException If parsing of xml data fails.
-     * @throws WebserverSystemException In case of an internal error.
-     * @throws FedoraSystemException    If the Fedora reports an error
+     * @throws IntegritySystemException
+     *             If the integrity of the repository is violated.
+     * @throws XmlParserSystemException
+     *             If parsing of xml data fails.
+     * @throws WebserverSystemException
+     *             In case of an internal error.
+     * @throws FedoraSystemException
+     *             If the Fedora reports an error
      */
     public static byte[] updateRelsExt(
         final List<StartElementWithChildElements> addToRelsExt,
@@ -1235,12 +1331,16 @@ public class Utility {
      * The method uses the staging file handler to create a new staging file that stores the provided stream in to
      * staging area. The URL to this staging file is extracted from the XML representation of the staging file and is
      * returned as the redirect URL.
-     *
-     * @param streamContent stream content
-     * @param fileName      file name, which will be included in returned redirect url
-     * @param mimeType      mime type
+     * 
+     * @param streamContent
+     *            stream content
+     * @param fileName
+     *            file name, which will be included in returned redirect url
+     * @param mimeType
+     *            mime type
      * @return redirectUrl url
-     * @throws FileSystemException In case of an internal error during storing the content.
+     * @throws FileSystemException
+     *             In case of an internal error during storing the content.
      */
     public String upload(final byte[] streamContent, final String fileName, final String mimeType)
         throws FileSystemException {
@@ -1273,8 +1373,9 @@ public class Utility {
 
     /**
      * Injects the staging file handler bean.
-     *
-     * @param stagingFileHandler The stanging file handler bean to inject.
+     * 
+     * @param stagingFileHandler
+     *            The stanging file handler bean to inject.
      */
     public void setStagingFileHandler(final StagingFileHandlerInterface stagingFileHandler) {
 
@@ -1283,8 +1384,9 @@ public class Utility {
 
     /**
      * Injects the TripleStore utility.
-     *
-     * @param tripleStoreUtility TripleStoreUtility from Spring
+     * 
+     * @param tripleStoreUtility
+     *            TripleStoreUtility from Spring
      */
     public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
         this.tripleStoreUtility = tripleStoreUtility;
@@ -1292,7 +1394,7 @@ public class Utility {
 
     /**
      * Get StagingFileHandlerBean.
-     *
+     * 
      * @return the stagingFileHandler
      */
     public StagingFileHandlerInterface getStagingFileHandler() {
@@ -1304,10 +1406,12 @@ public class Utility {
      * Prepare the XML for the return of all task oriented methods.
      * <p/>
      * TODO either use velocity template and/or move to an own class (ReturnXY)
-     *
-     * @param lastModificationDate The last-modification-date of the resource.
+     * 
+     * @param lastModificationDate
+     *            The last-modification-date of the resource.
      * @return The result XML structure.
-     * @throws SystemException Thrown if parsing last modification or retrieving xml:base failed.
+     * @throws SystemException
+     *             Thrown if parsing last modification or retrieving xml:base failed.
      */
     public String prepareReturnXmlFromLastModificationDate(final DateTime lastModificationDate) throws SystemException {
         return prepareReturnXml(lastModificationDate, null);
@@ -1321,11 +1425,14 @@ public class Utility {
      * Prepare the XML for the return of all task oriented methods.
      * <p/>
      * TODO either use velocity template and/or move to an own class (ReturnXY)
-     *
-     * @param lastModificationDate The last-modification-date of the resource.
-     * @param content              The XML content elements of the result structure.
+     * 
+     * @param lastModificationDate
+     *            The last-modification-date of the resource.
+     * @param content
+     *            The XML content elements of the result structure.
      * @return The result XML structure.
-     * @throws SystemException Thrown if parsing last modification or retrieving xml:base failed.
+     * @throws SystemException
+     *             Thrown if parsing last modification or retrieving xml:base failed.
      */
     public static String prepareReturnXml(DateTime lastModificationDate, final String content) throws SystemException {
 
@@ -1346,14 +1453,19 @@ public class Utility {
      * Makes a given URL full qualified by prepending eSciDoc base URL if necessary. Returns null, if the IDs of an item
      * and a component are given and the URL refers to the content of that component of that item. Throws an Exception
      * if the URL is invalid in the given context; that means it is of a form that is not allowed.
-     *
-     * @param url         A URL.
-     * @param itemId      The id of an Item or null.
-     * @param componentId The id of a Component or null.
+     * 
+     * @param url
+     *            A URL.
+     * @param itemId
+     *            The id of an Item or null.
+     * @param componentId
+     *            The id of a Component or null.
      * @return The full qualified URL or null if the URL refers to the content of the component, identified by
      *         componentId, of the item, identified by itemId.
-     * @throws InvalidContentException  If the String given as url is not a URI or invalid in the current context.
-     * @throws WebserverSystemException If an error occurs.
+     * @throws InvalidContentException
+     *             If the String given as url is not a URI or invalid in the current context.
+     * @throws WebserverSystemException
+     *             If an error occurs.
      */
     public static String processUrl(final String url, final String itemId, final String componentId)
         throws InvalidContentException, WebserverSystemException {
@@ -1406,9 +1518,10 @@ public class Utility {
 
     /**
      * Get number of build from escidoc.properties.
-     *
+     * 
      * @return build number
-     * @throws WebserverSystemException Thrown if obtaining from properties failed.
+     * @throws WebserverSystemException
+     *             Thrown if obtaining from properties failed.
      */
     public static String getBuildNumber() throws WebserverSystemException {
         final String buildNumber;
@@ -1424,9 +1537,11 @@ public class Utility {
 
     /**
      * Check if an URL is an URL to the framework itself.
-     *
-     * @param url URL as String.
-     * @throws InvalidContentException Thrown if URL points not to the framework itself.
+     * 
+     * @param url
+     *            URL as String.
+     * @throws InvalidContentException
+     *             Thrown if URL points not to the framework itself.
      */
     private static void checkESciDocLocalURL(final String url) throws InvalidContentException {
         if (!(url.startsWith("/ir/") || url.startsWith("/st/"))) {
