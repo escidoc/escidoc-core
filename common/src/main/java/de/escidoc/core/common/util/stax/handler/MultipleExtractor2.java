@@ -154,7 +154,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                     else {
                         final String attributeValue = getAttributeValue(element, null, attributeName);
                         if ("md-record".equals(elementName)) {
-                            Map<String, OutputStream> mdRecords = components.get(this.components);
+                            Map<String, OutputStream> mdRecords = components.get("md-records");
                             if (mdRecords == null) {
                                 mdRecords = new HashMap<String, OutputStream>();
                                 component.put("md-records", mdRecords);
