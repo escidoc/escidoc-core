@@ -388,7 +388,9 @@ public class MultipleExtractor extends WriteHandler {
                                 // out);
                                 final HashMap<String, ByteArrayOutputStream> mdRecords;
                                 if (component.containsKey(XmlUtility.NAME_MDRECORDS)) {
-                                    mdRecords = (HashMap<String, ByteArrayOutputStream>) component.get(XmlUtility.NAME_MDRECORDS);
+                                    mdRecords =
+                                        (HashMap<String, ByteArrayOutputStream>) component
+                                            .get(XmlUtility.NAME_MDRECORDS);
                                 }
                                 else {
                                     mdRecords = new HashMap<String, ByteArrayOutputStream>();
