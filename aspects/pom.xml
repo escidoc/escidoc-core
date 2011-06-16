@@ -45,14 +45,6 @@
 					<outxml>true</outxml>
 					<showWeaveInfo>false</showWeaveInfo>
 				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>test-compile</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

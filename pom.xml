@@ -2274,23 +2274,17 @@
               <fork>false</fork>
               <meminitial>128m</meminitial>
               <maxmem>512m</maxmem>
-              <debug>false</debug>
+              <debug>true</debug>
               <optimize>true</optimize>
             </configuration>
           </plugin>
           <plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>aspectj-maven-plugin</artifactId>
-				<configuration>
-                    <excludes>
-                        <exclude>**/TraceInterceptor*</exclude>
-                    </excludes>
-				</configuration>
 				<executions>
 					<execution>
 						<goals>
 							<goal>compile</goal>
-							<goal>test-compile</goal>
 						</goals>
 					</execution>
 				</executions>

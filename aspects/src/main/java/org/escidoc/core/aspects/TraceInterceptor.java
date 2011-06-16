@@ -39,7 +39,8 @@ public class TraceInterceptor {
 
     @Around("execution(public * de.escidoc.core..*.* (..))"
             + " && !within(org.escidoc.core.aspects..*)"
-            + " && !within(de.escidoc.core.common.util.aop..*)")
+            + " && !within(de.escidoc.core.common.util.aop..*)"
+            + " && if(" + "false" + ")")
     public Object traceMethod(final ProceedingJoinPoint joinPoint) throws Throwable, Exception {
         if (LOGGER.isDebugEnabled()) {
             final StaticPart staticPart = joinPoint.getStaticPart();

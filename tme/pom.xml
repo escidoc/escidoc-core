@@ -57,14 +57,6 @@
 						</aspectLibrary>
 					</aspectLibraries>
 				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>test-compile</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
