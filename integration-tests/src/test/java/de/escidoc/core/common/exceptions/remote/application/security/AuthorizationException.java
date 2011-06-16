@@ -8,6 +8,10 @@ public class AuthorizationException
     public AuthorizationException() {
     }
 
+    public AuthorizationException(int httpStatusCode, String httpStatusLine, String httpStatusMsg) {
+        super(httpStatusCode, httpStatusLine, httpStatusMsg);
+    }
+
     public AuthorizationException(int httpStatusCode, String httpStatusLine, String httpStatusMsg,
         String redirectLocation) {
         super(httpStatusCode, httpStatusLine, httpStatusMsg, redirectLocation);

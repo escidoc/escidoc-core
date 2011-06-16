@@ -9,8 +9,12 @@ public class SecurityException extends de.escidoc.core.common.exceptions.remote.
     public SecurityException() {
     }
 
-    public SecurityException(int httpStatusCode, String httpStatusLine, String httpStatusMsg, String redirectLocation) {
+    public SecurityException(int httpStatusCode, String httpStatusLine, String httpStatusMsg) {
         super(httpStatusCode, httpStatusLine, httpStatusMsg);
+    }
+
+    public SecurityException(int httpStatusCode, String httpStatusLine, String httpStatusMsg, String redirectLocation) {
+        this(httpStatusCode, httpStatusLine, httpStatusMsg);
         this.redirectLocation = redirectLocation;
     }
 

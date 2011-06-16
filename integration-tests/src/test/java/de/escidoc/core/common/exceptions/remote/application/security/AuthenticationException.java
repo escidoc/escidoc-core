@@ -8,12 +8,16 @@ public class AuthenticationException
     public AuthenticationException() {
     }
 
+    public AuthenticationException(int httpStatusCode, String httpStatusLine, String httpStatusMsg) {
+        super(httpStatusCode, httpStatusLine, httpStatusMsg);
+    }
+
     public AuthenticationException(int httpStatusCode, String httpStatusLine, String httpStatusMsg,
         String redirectLocation) {
         super(httpStatusCode, httpStatusLine, httpStatusMsg, redirectLocation);
     }
 
-    private Object __equalsCalc = null;
+   private Object __equalsCalc = null;
 
     public synchronized boolean equals(Object obj) {
         if (!(obj instanceof AuthenticationException))
