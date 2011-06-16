@@ -100,7 +100,7 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
                 }
             }
             catch (final NoSuchAttributeException e) {
-                XmlUtility.throwMissingAttributeValueException(element, XmlUtility.NAME_LAST_MODIFICATION_DATE);
+                throw new XmlCorruptedException("missing " + XmlUtility.NAME_LAST_MODIFICATION_DATE);
             }
         }
 
