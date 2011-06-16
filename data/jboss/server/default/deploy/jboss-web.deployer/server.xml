@@ -39,7 +39,7 @@
          APR (HTTP/AJP) Connector: /docs/apr.html
          Define a non-SSL HTTP/1.1 Connector on port 8080
     -->
-    <Connector port="8080" address="${jboss.bind.address}"    
+    <Connector port="8080" URIEncoding="UTF-8" address="${jboss.bind.address}"
          maxThreads="250" maxHttpHeaderSize="8192"
          emptySessionPath="true" protocol="HTTP/1.1"
          enableLookups="false" redirectPort="9443" acceptCount="100"
