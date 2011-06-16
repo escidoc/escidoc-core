@@ -775,12 +775,6 @@ public abstract class ClientBase {
                     e);
             }
 
-            Node exceptionMessageNode = EscidocTestBase.selectSingleNode(exceptionDocument, "/exception/message/p");
-            if (exceptionMessageNode == null) {
-                throw new Exception("Missing exception message node in response body:\n" + exceptionXML);
-            }
-            String exceptionMessage = exceptionMessageNode.getTextContent();
-
             exceptionObject = exceptionClass.newInstance();
             if (exceptionObject == null || !(exceptionObject instanceof EscidocException)) {
                 throw new Exception("Exception class could not be instantiated [" + exceptionName + ", "
@@ -789,7 +783,13 @@ public abstract class ClientBase {
             }
             ((EscidocException) exceptionObject).setHttpStatusCode(result.getStatusLine().getStatusCode());
             ((EscidocException) exceptionObject).setHttpStatusLine(result.getStatusLine().getReasonPhrase());
-            ((EscidocException) exceptionObject).setHttpStatusMsg(exceptionMessage);
+
+            Node exceptionMessageNode = EscidocTestBase.selectSingleNode(exceptionDocument, "/exception/message/p");
+            if (exceptionMessageNode != null) {
+                String exceptionMessage = exceptionMessageNode.getTextContent();
+
+                ((EscidocException) exceptionObject).setHttpStatusMsg(exceptionMessage);
+            }
         }
         throw (Exception) exceptionObject;
     }
