@@ -1089,10 +1089,10 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
                 mdRecord.getRepositoryIndicator().setResourceIsNew(false);
 
                 if (!ChecksumType.DISABLED.equals(datastreamProfileTO.getDsChecksumType())) {
-                    mdRecord.setChecksumEnabled(true);
+                    mdRecord.setChecksumEnabled(false);
                 }
                 else {
-                    mdRecord.setChecksumEnabled(false);
+                    mdRecord.setChecksumEnabled(true);
                 }
 
                 // alternate ids

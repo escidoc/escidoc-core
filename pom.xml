@@ -1086,8 +1086,6 @@
   </distributionManagement>
 
   <properties>
-    <environment>development</environment>
-    <springDefaultLazyInit>true</springDefaultLazyInit>
     <slf4j.version>1.6.1</slf4j.version>
     <log4j.version>1.2.16</log4j.version>
     <jaxb2-basics.version>0.5.3</jaxb2-basics.version>
@@ -2261,9 +2259,6 @@
           <value>production</value>
         </property>
       </activation>
-      <properties>
-        <springDefaultLazyInit>false</springDefaultLazyInit>
-      </properties>
       <build>
         <pluginManagement>
         <plugins>
@@ -2312,9 +2307,6 @@
           <value>test</value>
         </property>
       </activation>
-      <properties>
-        <springDefaultLazyInit>false</springDefaultLazyInit>
-      </properties>
       <build>
         <pluginManagement>
         <plugins>
@@ -2346,9 +2338,6 @@
           <value>development</value>
         </property>
       </activation>
-      <properties>
-        <springDefaultLazyInit>true</springDefaultLazyInit>
-      </properties>
       <build>
         <pluginManagement>
         <plugins>

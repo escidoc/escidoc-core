@@ -455,7 +455,8 @@ public class MdRecordCreate implements Serializable {
         }
 
         // datastream location
-        if (this.datastreamLocation == null) {
+        // TODO: Discuss this implementation!
+        /*if (this.datastreamLocation == null) {
             if (mdrecord.getDatastreamLocation() != null) {
                 this.datastreamLocation = mdrecord.getDatastreamLocation();
                 changes++;
@@ -464,7 +465,7 @@ public class MdRecordCreate implements Serializable {
         else if (!this.datastreamLocation.equals(mdrecord.getDatastreamLocation())) {
             this.datastreamLocation = mdrecord.getDatastreamLocation();
             changes++;
-        }
+        }*/
 
         if (changes > 0) {
             this.ri.setResourceChanged(true);
