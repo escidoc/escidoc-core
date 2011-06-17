@@ -1375,14 +1375,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         else {
             setContainer(id);
             final String contentModelId = getContainer().getProperty(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID);
-            final byte[] bytes;
+            final Stream stream = this.fedoraServiceClient.getDissemination(id, contentModelId, resourceName);
             try {
-                bytes = this.fedoraUtility.getDissemination(id, contentModelId, resourceName);
+                content.setContent(stream.getInputStream());
+            } catch(IOException e) {
+                throw new FedoraSystemException("Error on reading stream.", e);
             }
-            catch (final FedoraSystemException e) {
-                throw new OperationNotFoundException(e);
-            }
-            content.setContent(new ByteArrayInputStream(bytes));
         }
 
         return content;

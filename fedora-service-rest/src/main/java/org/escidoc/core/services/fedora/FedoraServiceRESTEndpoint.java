@@ -143,4 +143,11 @@ public interface FedoraServiceRESTEndpoint {
     Stream getBinaryContent(@NotNull @PathParam("") GetBinaryContentPathParam path,
                             @NotNull @QueryParam("") GetBinaryContentQueryParam query);
 
+    @GET
+    @Path("/objects/{pid}/methods/{sdefPid}/{method}")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.TEXT_XML)
+    Stream getDissemination(@NotNull @PathParam("") GetDisseminationPathParam path,
+                            @NotNull @QueryParam("") GetDisseminationQueryParam query);
+
 }

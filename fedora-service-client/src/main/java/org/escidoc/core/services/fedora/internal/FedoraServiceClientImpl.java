@@ -35,6 +35,8 @@ import org.escidoc.core.services.fedora.GetDatastreamPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamProfilePathParam;
 import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
 import org.escidoc.core.services.fedora.GetDatastreamQueryParam;
+import org.escidoc.core.services.fedora.GetDisseminationPathParam;
+import org.escidoc.core.services.fedora.GetDisseminationQueryParam;
 import org.escidoc.core.services.fedora.GetObjectProfilePathParam;
 import org.escidoc.core.services.fedora.GetObjectProfileQueryParam;
 import org.escidoc.core.services.fedora.GetObjectXMLPathParam;
@@ -489,6 +491,22 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     public Future<Stream> getBinaryContentAsync(@NotNull final String pid, @NotNull final String dsId,
                                                 final DateTime versionDate) {
         return new AsyncResult<Stream>(getBinaryContent(pid, dsId, versionDate));
+    }
+
+    @Override
+    public Stream getDissemination(@NotNull final String pid, @NotNull final String contentModelPid,
+                                   @NotNull final String methodName) {
+        final String cmp = "sdef:" + contentModelPid.replace(':', '_') + '-' + methodName;
+        final GetDisseminationPathParam path = new GetDisseminationPathParam(pid, cmp, methodName);
+        final GetDisseminationQueryParam query = new GetDisseminationQueryParam();
+        return this.fedoraService.getDissemination(path, query);
+    }
+
+    @Override
+    @Async
+    public Future<Stream> getDisseminationAsync(@NotNull final String pid, @NotNull final String contentModelPid,
+                                                @NotNull final String methodName) {
+        return new AsyncResult<Stream>(getDissemination(pid, contentModelPid, methodName));
     }
 
     @Override

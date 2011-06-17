@@ -46,6 +46,7 @@ import java.util.TreeMap;
 
 import javax.xml.stream.XMLStreamException;
 
+import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
@@ -1003,15 +1004,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         setItem(id);
         final String contentModelId = getItem().getProperty(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID);
-        final byte[] bytes;
+        final Stream stream = this.getFedoraServiceClient().getDissemination(id, contentModelId, resourceName);
         try {
-            bytes = this.fedoraUtility.getDissemination(id, contentModelId, resourceName);
+            content.setContent(stream.getInputStream());
+        } catch(IOException e) {
+            throw new FedoraSystemException("Error on reading stream.", e);
         }
-        catch (final FedoraSystemException e) {
-            throw new OperationNotFoundException(e);
-        }
-        content.setContent(new ByteArrayInputStream(bytes));
-
         return content;
     }
 

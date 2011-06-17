@@ -128,6 +128,12 @@ List<DatastreamProfileTO> getDatastreamProfiles(@NotNull String pid, DateTime ti
 
     Future<Stream> getBinaryContentAsync(@NotNull String pid, @NotNull String dsId, DateTime versionDate);
 
+    Stream getDissemination(@NotNull String pid, @NotNull String contentModelPid, @NotNull String methodName);
+
+    Future<Stream> getDisseminationAsync(@NotNull String pid,
+                                         @NotNull String contentModelPid,
+                                         @NotNull String methodName);
+
     Stream risearch(@NotNull @PathParam("") RisearchPathParam path,
                     @NotNull @QueryParam("") RisearchQueryParam query);
 
