@@ -85,6 +85,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatu
 import de.escidoc.core.common.exceptions.application.invalid.InvalidItemStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -365,6 +366,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         }
         catch (final XMLStreamException e) {
             throw new XmlParserSystemException(e);
+        }
+        catch (LastModificationDateMissingException e) {
+            XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
@@ -2682,6 +2686,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         }
         catch (final XMLStreamException e) {
             throw new XmlParserSystemException(e.getMessage(), e);
+        }
+        catch (LastModificationDateMissingException e) {
+            throw new XmlCorruptedException(e);
         }
         catch (final ContextNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);

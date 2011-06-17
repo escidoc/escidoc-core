@@ -17,7 +17,7 @@ public class AuthenticationException
         super(httpStatusCode, httpStatusLine, httpStatusMsg, redirectLocation);
     }
 
-   private Object __equalsCalc = null;
+    private Object __equalsCalc = null;
 
     public synchronized boolean equals(Object obj) {
         if (!(obj instanceof AuthenticationException))

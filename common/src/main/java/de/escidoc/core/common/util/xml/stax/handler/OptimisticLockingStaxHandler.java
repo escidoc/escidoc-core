@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
@@ -66,12 +67,13 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
     /**
      * See Interface for functional description.
      * @throws XmlCorruptedException 
+     * @throws LastModificationDateMissingException 
      *
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
-        OptimisticLockingException, XmlCorruptedException {
+        OptimisticLockingException, LastModificationDateMissingException {
 
         final boolean notReadyFlag = isNotReady();
 
@@ -100,7 +102,10 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
                 }
             }
             catch (final NoSuchAttributeException e) {
-                throw new XmlCorruptedException("missing " + XmlUtility.NAME_LAST_MODIFICATION_DATE);
+                throw new LastModificationDateMissingException();
+            }
+            catch (final XmlCorruptedException e) {
+                throw new LastModificationDateMissingException();
             }
         }
 

@@ -28,8 +28,21 @@
  */
 package de.escidoc.core.aa.business;
 
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
-import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.aa.business.filter.AccessRights;
 import de.escidoc.core.aa.business.filter.RoleFilter;
 import de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface;
@@ -37,6 +50,7 @@ import de.escidoc.core.aa.business.interfaces.RoleHandlerInterface;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
+import de.escidoc.core.aa.business.persistence.UserAccount;
 import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
 import de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface;
 import de.escidoc.core.aa.business.stax.handler.RolePropertiesStaxHandler;
@@ -48,6 +62,7 @@ import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -65,19 +80,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.common.util.xml.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Business layer implementation of a handler that manages eSciDoc roles.
@@ -301,6 +303,9 @@ public class RoleHandler implements RoleHandlerInterface {
         }
         catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
+        }
+        catch (LastModificationDateMissingException e) {
+            throw new MissingAttributeValueException(e);
         }
         catch (final OptimisticLockingException e) {
             throw e;

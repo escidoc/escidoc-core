@@ -76,6 +76,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidContentExcep
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -1838,6 +1839,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         }
         catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
+        }
+        catch (LastModificationDateMissingException e) {
+            throw new XmlCorruptedException(e);
         }
         catch (final OptimisticLockingException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);

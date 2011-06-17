@@ -28,7 +28,28 @@
  */
 package de.escidoc.core.aa.business;
 
-import de.escidoc.core.aa.business.SecurityHelper;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import de.escidoc.core.aa.business.filter.UserGroupFilter;
 import de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
@@ -56,6 +77,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidContentExcep
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -89,27 +111,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.common.util.xml.stax.handler.LinkStaxHandler;
 import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Implementation for the user group handler.
@@ -263,6 +264,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             sp.parse(in);
             sp.clearHandlerChain();
         }
+        catch (LastModificationDateMissingException e) {
+            throw new XmlCorruptedException(e);
+        }
         catch (final OptimisticLockingException e) {
             throw e;
         }
@@ -303,6 +307,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
         }
         catch (final InvalidXmlException e) {
+            throw new XmlCorruptedException(e);
+        }
+        catch (LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
         }
         catch (final OptimisticLockingException e) {
@@ -367,6 +374,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
         }
         catch (final InvalidXmlException e) {
+            throw new XmlCorruptedException(e);
+        }
+        catch (LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
         }
         catch (final OptimisticLockingException e) {
@@ -580,6 +590,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
+        catch (LastModificationDateMissingException e) {
+            throw new XmlCorruptedException(e);
+        }
         catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
@@ -686,6 +699,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             sp.clearHandlerChain();
         }
         catch (final InvalidXmlException e) {
+            throw new XmlCorruptedException(e);
+        }
+        catch (LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
         }
         catch (final Exception e) {

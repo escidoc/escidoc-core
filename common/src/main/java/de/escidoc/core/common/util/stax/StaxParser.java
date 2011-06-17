@@ -20,8 +20,27 @@
 
 package de.escidoc.core.common.util.stax;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Stack;
+
+import javax.naming.directory.NoSuchAttributeException;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.events.XMLEvent;
+
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -51,23 +70,6 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.common.util.xml.stax.interfaces.DefaultHandlerStackInterface;
-
-import javax.naming.directory.NoSuchAttributeException;
-import javax.xml.namespace.QName;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.events.XMLEvent;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
 
 /**
  * Parser with Handler Chain.
@@ -197,7 +199,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
         ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
         OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
         TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
-        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException {
+        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException,
+        LastModificationDateMissingException {
 
         parseStream(new ByteArrayInputStream(in));
     }
@@ -246,7 +249,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
         ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
         OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
         TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
-        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException {
+        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException,
+        LastModificationDateMissingException {
 
         if (this.handlerChain == null || handlerChain.isEmpty()) {
             throw new XMLStreamException("Parser has no handlers. Try StaxParser sp.addHandler"
@@ -300,7 +304,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
         ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
         OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
         MissingMdRecordException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException,
-        IntegritySystemException, TmeException, XMLStreamException, XmlCorruptedException {
+        IntegritySystemException, TmeException, XMLStreamException, XmlCorruptedException,
+        LastModificationDateMissingException {
 
         final ByteArrayInputStream in;
         try {
@@ -357,7 +362,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, InvalidStatusException,
         OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
         TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
-        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException {
+        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException,
+        LastModificationDateMissingException {
 
         final XMLStreamReader parser = factory.createXMLStreamReader(in, XmlUtility.CHARACTER_ENCODING);
         while (parser.hasNext()) {

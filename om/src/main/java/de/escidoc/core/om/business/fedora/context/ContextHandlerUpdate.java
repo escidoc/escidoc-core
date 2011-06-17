@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
-import org.joda.time.DateTime;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -49,6 +48,7 @@ import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,6 +59,7 @@ import de.escidoc.core.common.business.stax.handler.context.DcUpdateHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -184,6 +185,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         catch (final ContentModelNotFoundException e) {
+            XmlUtility.handleUnexpectedStaxParserException("", e);
+        }
+        catch (LastModificationDateMissingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         catch (final MissingContentException e) {

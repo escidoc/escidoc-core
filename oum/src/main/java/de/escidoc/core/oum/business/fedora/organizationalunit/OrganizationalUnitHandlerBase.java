@@ -34,6 +34,7 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -224,6 +225,9 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
             parser.clearHandlerChain();
         }
+        catch (LastModificationDateMissingException e) {
+            XmlUtility.handleUnexpectedStaxParserException("", e);
+        }
         catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
@@ -297,6 +301,9 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
         try {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
             parser.clearHandlerChain();
+        }
+        catch (LastModificationDateMissingException e) {
+            throw new XmlCorruptedException(e);
         }
         catch (final XMLStreamException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);

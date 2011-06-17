@@ -90,6 +90,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeExcepti
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -388,6 +389,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
+        catch (LastModificationDateMissingException e) {
+            throw new XmlCorruptedException(e);
+        }
         catch (final OptimisticLockingException e) {
             throw e;
         }
@@ -458,6 +462,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
             sp.parse(in);
         }
         catch (final InvalidXmlException e) {
+            throw new XmlCorruptedException(e);
+        }
+        catch (LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
         }
         catch (final OptimisticLockingException e) {
@@ -727,6 +734,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
+        catch (LastModificationDateMissingException e) {
+            throw new XmlCorruptedException(e);
+        }
         catch (final OptimisticLockingException e) {
             throw e;
         }
@@ -787,6 +797,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
         }
         catch (final InvalidXmlException e) {
+            throw new XmlCorruptedException(e);
+        }
+        catch (LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
         }
         catch (final OptimisticLockingException e) {
@@ -1930,6 +1943,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         try {
             sp.parse(in);
         }
+        catch (LastModificationDateMissingException e) {
+            throw new MissingAttributeValueException(e);
+        }
         catch (final MissingAttributeValueException e) {
             throw e;
         }
@@ -2044,6 +2060,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
         try {
             sp.parse(in);
+        }
+        catch (LastModificationDateMissingException e) {
+            throw new MissingAttributeValueException(e);
         }
         catch (final MissingAttributeValueException e) {
             throw e;
@@ -2265,6 +2284,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         sp.addHandler(uarh);
         try {
             sp.parse(in);
+        }
+        catch (LastModificationDateMissingException e) {
+            throw new XmlCorruptedException(e);
         }
         catch (final OptimisticLockingException e) {
             throw e;

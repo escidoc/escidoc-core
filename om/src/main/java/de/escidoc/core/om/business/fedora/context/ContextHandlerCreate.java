@@ -28,11 +28,22 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.xml.stream.XMLStreamException;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
@@ -66,15 +77,6 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.business.renderer.VelocityXmlContextFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContextFoXmlRendererInterface;
 import de.escidoc.core.om.business.stax.handler.context.ContextPropertiesHandler;
-
-import javax.xml.stream.XMLStreamException;
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Handler to create Context objects.
@@ -176,6 +178,9 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         catch (final InvalidXmlException e) {
+            XmlUtility.handleUnexpectedStaxParserException("", e);
+        }
+        catch (final LastModificationDateMissingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         catch (final TmeException e) {

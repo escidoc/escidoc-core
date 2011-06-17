@@ -141,8 +141,9 @@ public class ItemHandlerCreate extends ItemResourceListener {
                 // no content model id for component dc-mapping, default mapping
                 // should be applied
                 dcXml =
-                    XmlUtility.createDC(nsUri, ((ByteArrayOutputStream) ((Map) dataStreams.get(XmlUtility.NAME_MDRECORDS))
-                        .get(Elements.MANDATORY_MD_RECORD_NAME)).toString(XmlUtility.CHARACTER_ENCODING), id, null);
+                    XmlUtility.createDC(nsUri, ((ByteArrayOutputStream) ((Map) dataStreams
+                        .get(XmlUtility.NAME_MDRECORDS)).get(Elements.MANDATORY_MD_RECORD_NAME))
+                        .toString(XmlUtility.CHARACTER_ENCODING), id, null);
             }
             catch (final UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
