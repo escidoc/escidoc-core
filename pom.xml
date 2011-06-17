@@ -1098,7 +1098,7 @@
     <jaxb2-basics.version>0.5.3</jaxb2-basics.version>
     <aspectj.version>1.6.10</aspectj.version>
     <spring.version>3.0.5.RELEASE</spring.version>
-    <cxf.version>2.4.1-SNAPSHOT</cxf.version>
+    <cxf.version>2.5.0-SNAPSHOT</cxf.version>
     <camel.version>2.4.0</camel.version>
     <activemq.version>5.3.2</activemq.version>
     <hibernate.version>3.3.2.GA</hibernate.version>
