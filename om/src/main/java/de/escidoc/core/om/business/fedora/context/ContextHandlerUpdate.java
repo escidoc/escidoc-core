@@ -302,8 +302,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             throw new XmlCorruptedException(e.getMessage(), e);
         }
 
-        getUtility().checkOptimisticLockingCriteria(getContext().getLastModificationDate(),
-            taskParamHandler.getLastModificationDate(), "Context " + getContext().getId());
+        Utility.checkOptimisticLockingCriteria(getContext().getLastModificationDate(), taskParamHandler
+            .getLastModificationDate(), "Context " + getContext().getId());
 
         final Map<String, StartElementWithChildElements> updateElementsRelsExt =
             new TreeMap<String, StartElementWithChildElements>();
@@ -402,8 +402,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             throw new XmlCorruptedException(e.getMessage(), e);
         }
 
-        getUtility().checkOptimisticLockingCriteria(getContext().getLastModificationDate(),
-            taskParamHandler.getLastModificationDate(), "Context " + getContext().getId());
+        Utility.checkOptimisticLockingCriteria(getContext().getLastModificationDate(), taskParamHandler
+            .getLastModificationDate(), "Context " + getContext().getId());
 
         // update RELS-EXT
         final Map<String, StartElementWithChildElements> updateElementsRelsExt =

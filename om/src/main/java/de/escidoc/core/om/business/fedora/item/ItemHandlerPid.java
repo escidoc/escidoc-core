@@ -119,8 +119,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
         checkLocked();
         checkContentPidAssignable(componentId);
 
-        getUtility().checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Item " + getItem().getId());
+        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Item " + getItem().getId());
 
         final Component component = getItem().getComponent(componentId);
 
@@ -174,8 +174,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
         checkLocked();
         checkObjectPidAssignable();
 
-        getUtility().checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Item " + getItem().getId());
+        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Item " + getItem().getId());
 
         String pid = taskParameter.getPid();
         if (pid == null) {
@@ -253,8 +253,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
         checkLocked();
         checkItemVersionPidAssignable();
 
-        getUtility().checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Item " + getItem().getId());
+        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Item " + getItem().getId());
 
         String pid = taskParameter.getPid();
         if (pid == null) {

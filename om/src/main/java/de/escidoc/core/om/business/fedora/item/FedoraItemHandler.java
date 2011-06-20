@@ -1243,8 +1243,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkReleased();
         checkPid();
 
-        if (getUtility().checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
+        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Item " + getItem().getId())) {
 
             // check version status
             final String curStatus = getItem().getProperty(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS);
@@ -1302,8 +1302,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLocked();
         checkReleased();
 
-        if (getUtility().checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
+        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Item " + getItem().getId())) {
 
             // check version status
             final String curStatus = getItem().getVersionStatus();
@@ -1343,8 +1343,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLocked();
         checkVersionStatus(Constants.STATUS_SUBMITTED);
 
-        if (getUtility().checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
+        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Item " + getItem().getId())) {
 
             // set status "in-revision"
             // only renew the timestamp and set status with version entry
@@ -1397,8 +1397,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLatestVersion();
         checkLocked();
 
-        if (getUtility().checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
+        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Item " + getItem().getId())) {
 
             makeVersion(withdrawComment, Constants.STATUS_WITHDRAWN);
             getItem().persist();
@@ -1430,8 +1430,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLocked();
         checkWithdrawn("Adding of content relations is not allowed.");
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
-        getUtility().checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Item " + id);
+        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Item " + id);
 
         final StaxParser sp = new StaxParser();
 
@@ -1520,8 +1520,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLocked();
         checkWithdrawn("Removing of content relations is not allowed.");
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
-        getUtility().checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Item " + id);
+        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Item " + id);
 
         final StaxParser sp = new StaxParser();
 
@@ -1633,8 +1633,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         checkLocked();
 
-        if (getUtility().checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
+        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Item " + getItem().getId())) {
             getItem().setLocked(true, Utility.getCurrentUser());
             // to lock/unlock is no modification of the object, don't update
             // timestamp
@@ -1661,8 +1661,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         // checked by AA
         // checkLocked();
 
-        if (getUtility().checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
+        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Item " + getItem().getId())) {
 
             getItem().setLocked(false, null);
             // to lock/unlock is no modification of the object, don't update
