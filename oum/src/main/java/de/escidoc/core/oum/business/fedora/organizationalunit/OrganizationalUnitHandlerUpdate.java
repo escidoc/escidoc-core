@@ -165,7 +165,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
     protected void checkUpToDate(final DateTime timestamp) throws OptimisticLockingException, WebserverSystemException,
         TripleStoreSystemException, FedoraSystemException, XmlCorruptedException {
 
-        getUtility().checkOptimisticLockingCriteria(getOrganizationalUnit().getLastModificationDate(), timestamp,
+        Utility.checkOptimisticLockingCriteria(getOrganizationalUnit().getLastModificationDate(), timestamp,
             "Organizational unit " + getOrganizationalUnit().getId());
 
     }

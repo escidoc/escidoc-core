@@ -1468,8 +1468,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         final String label = "Container " + getContainer().getId();
         if (Utility.checkUnlocked(getContainer().isLocked(), "Release", label, getContainer().getLockOwner())
-            && getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
-                taskParameter.getLastModificationDate(), label)) {
+            && Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
+                .getLastModificationDate(), label)) {
 
             // check version status
             final String curStatus =
@@ -1652,8 +1652,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         final String label = "Container " + getContainer().getId();
         if (Utility.checkUnlocked(getContainer().isLocked(), "Submit", label, getContainer().getLockOwner())
-            && getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
-                taskParameter.getLastModificationDate(), label)) {
+            && Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
+                .getLastModificationDate(), label)) {
 
             // check version status
             final String curStatus =
@@ -1722,8 +1722,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         }
 
         if (Utility.checkUnlocked(getContainer().isLocked(), "Submit", label, getContainer().getLockOwner())
-            && getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
-                taskParameter.getLastModificationDate(), label)) {
+            && Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
+                .getLastModificationDate(), label)) {
 
             // check version status
             final String curStatus =
@@ -1798,8 +1798,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         final String label = "Container " + getContainer().getId();
         if (Utility.checkUnlocked(getContainer().isLocked(), "Withdraw", label, getContainer().getLockOwner())
-            && getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
-                taskParameter.getLastModificationDate(), label)) {
+            && Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
+                .getLastModificationDate(), label)) {
 
             // FIXME Under which circumstances members should be withdrawn?
             // Look for content-type-type not for name.
@@ -1960,8 +1960,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             throw new LockingException("Container " + getContainer().getId() + " is already locked by "
                 + getContainer().getLockOwner());
         }
-        else if (getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Container " + getContainer().getId())) {
+        else if (Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Container " + getContainer().getId())) {
             getContainer().setLocked(true, Utility.getCurrentUser());
             fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
         }
@@ -2010,8 +2010,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         if (!getContainer().isLocked()) {
             throw new LockingException("Container " + getContainer().getId() + " is not locked.");
         }
-        else if (getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Container " + getContainer().getId())) {
+        else if (Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Container " + getContainer().getId())) {
             getContainer().setLocked(false, Utility.getCurrentUser());
             fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
         }
@@ -2671,8 +2671,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         checkStatusNot(Constants.STATUS_WITHDRAWN);
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
-        getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Container " + id);
+        Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Container " + id);
 
         final StaxParser sp = new StaxParser();
 
@@ -2801,8 +2801,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         checkStatusNot(Constants.STATUS_WITHDRAWN);
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
-        getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Container " + id);
+        Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Container " + id);
 
         final StaxParser sp = new StaxParser();
 

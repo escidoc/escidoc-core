@@ -89,8 +89,8 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         checkStatusNot(Constants.STATUS_WITHDRAWN);
         checkNoObjectPidAssigned();
 
-        getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Container " + id);
+        Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Container " + id);
 
         String pid = taskParameter.getPid();
         if (pid == null) {
@@ -154,8 +154,8 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         checkVersionPidAssignable(id);
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
-        getUtility().checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
-            taskParameter.getLastModificationDate(), "Container " + getContainer().getId());
+        Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
+            .getLastModificationDate(), "Container " + getContainer().getId());
 
         String pid = taskParameter.getPid();
         if (pid == null) {
