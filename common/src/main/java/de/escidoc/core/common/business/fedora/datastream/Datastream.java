@@ -110,7 +110,7 @@ public class Datastream {
 
     private byte[] stream;
 
-    private String md5Hash;
+    private String streamHash;
 
     private String controlGroupValue = CONTROL_GROUP_INTERNAL_XML;
 
@@ -288,8 +288,8 @@ public class Datastream {
     final byte[] stream, final String mimeType) {
         this.name = name;
         this.parentId = parentId;
-        this.setStream(stream);
         this.mimeType = mimeType;
+        this.setStream(stream);
     }
 
     /**
@@ -349,9 +349,9 @@ public class Datastream {
     final byte[] stream, final String mimeType, final Map<String, String> properties) {
         this.name = name;
         this.parentId = parentId;
-        this.setStream(stream);
         this.mimeType = mimeType;
         this.properties = properties;
+        this.setStream(stream);
     }
 
     private void loadDataFromFedora() throws StreamNotFoundException, FedoraSystemException {
@@ -669,7 +669,7 @@ public class Datastream {
 
     private void setStream(final byte[] stream) {
         this.stream = stream;
-        this.updateMd5Hash();
+        this.updateStreamHash();
     }
 
     /**
@@ -680,8 +680,8 @@ public class Datastream {
      *            The string representing the content of this datastream.
      */
     public boolean updateStream(final byte[] stream) {
-        final String newMd5 = calculateMd5Hash(stream);
-        if (!getMd5Hash().equals(newMd5)) {
+        final String newHash = calculateStreamHash(stream);
+        if (!getStreamHash().equals(newHash)) {
             this.setStream(stream);
             return true;
         }
@@ -696,30 +696,34 @@ public class Datastream {
      * 
      * @return The md5 hash of the content of this datastream.
      */
-    private String getMd5Hash() {
-        if (this.md5Hash == null) {
-            updateMd5Hash();
+    private String getStreamHash() {
+        if (this.streamHash == null) {
+            updateStreamHash();
         }
-        return this.md5Hash;
+        return this.streamHash;
     }
 
-    private void updateMd5Hash() {
-        this.md5Hash = calculateMd5Hash(this.getStream());
+    private void updateStreamHash() {
+        this.streamHash = calculateStreamHash(this.getStream());
     }
 
-    private String calculateMd5Hash(final byte[] stream) {
+    private String calculateStreamHash(final byte[] stream) {
+        String hash = null;
         if (stream == null) {
             return null;
         }
-        try {
-            return XmlUtility.getMd5Hash(stream);
+        if (MimeTypes.TEXT_XML.equals(this.mimeType) || MimeTypes.APPLICATION_XML.equals(this.mimeType)) {
+            try {
+                hash = XmlUtility.getMd5Hash(stream);
+            }
+            catch (final ParserConfigurationException e) {
+                throw new RuntimeException("Error on creating checksum of datastream..", e);
+            }
+            catch (final SAXException e) {
+                throw new RuntimeException("Error on creating checksum of datastream.", e);
+            }
         }
-        catch (final ParserConfigurationException e) {
-            throw new RuntimeException("Error on creating checksum of datastream..", e);
-        }
-        catch (final SAXException e) {
-            throw new RuntimeException("Error on creating checksum of datastream.", e);
-        }
+        return hash;
     }
 
     /**
@@ -860,7 +864,10 @@ public class Datastream {
         if (!parentId.equals(that.parentId)) {
             return false;
         }
-        if (getMd5Hash() != null ? !getMd5Hash().equals(that.getMd5Hash()) : that.getMd5Hash() != null) {
+        if (getStreamHash() == null) {
+            return false;
+        }
+        else if (!getStreamHash().equals(that.getStreamHash())) {
             return false;
         }
         return true;
@@ -870,7 +877,7 @@ public class Datastream {
     public int hashCode() {
         int result = name.hashCode();
         result = 31 * result + parentId.hashCode();
-        result = 31 * result + (getMd5Hash() != null ? getMd5Hash().hashCode() : 0);
+        result = 31 * result + (getStreamHash() != null ? getStreamHash().hashCode() : 0);
         return result;
     }
 

@@ -1378,7 +1378,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             final Stream stream = this.fedoraServiceClient.getDissemination(id, contentModelId, resourceName);
             try {
                 content.setContent(stream.getInputStream());
-            } catch(IOException e) {
+            }
+            catch (IOException e) {
                 throw new FedoraSystemException("Error on reading stream.", e);
             }
         }

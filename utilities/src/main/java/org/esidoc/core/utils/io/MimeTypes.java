@@ -9,6 +9,7 @@ public final class MimeTypes {
 
     public final static String ALL = "*/*";
     public final static String TEXT_XML = "text/xml";
+    public final static String APPLICATION_XML = "application/xml";
     public final static String TEXT_PLAIN = "text/plain";
     public final static String APPLICATION_JSON = "application/json";
 

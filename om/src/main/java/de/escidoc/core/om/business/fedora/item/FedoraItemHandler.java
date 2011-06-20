@@ -1007,7 +1007,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final Stream stream = this.getFedoraServiceClient().getDissemination(id, contentModelId, resourceName);
         try {
             content.setContent(stream.getInputStream());
-        } catch(IOException e) {
+        }
+        catch (IOException e) {
             throw new FedoraSystemException("Error on reading stream.", e);
         }
         return content;
