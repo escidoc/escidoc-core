@@ -713,15 +713,7 @@ public class Datastream {
             return null;
         }
         if (MimeTypes.TEXT_XML.equals(this.mimeType) || MimeTypes.APPLICATION_XML.equals(this.mimeType)) {
-            try {
-                hash = XmlUtility.getMd5Hash(stream);
-            }
-            catch (final ParserConfigurationException e) {
-                throw new RuntimeException("Error on creating checksum of datastream..", e);
-            }
-            catch (final SAXException e) {
-                throw new RuntimeException("Error on creating checksum of datastream.", e);
-            }
+            hash = XmlUtility.calculateChecksum(this.stream);
         }
         return hash;
     }

@@ -27,14 +27,19 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.MalformedURLException;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.PostConstruct;
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -51,6 +56,9 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
 
 import org.apache.commons.pool.impl.StackKeyedObjectPool;
+import org.apache.xml.security.c14n.CanonicalizationException;
+import org.apache.xml.security.c14n.Canonicalizer;
+import org.apache.xml.security.c14n.InvalidCanonicalizerException;
 import org.codehaus.stax2.XMLOutputFactory2;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -485,6 +493,11 @@ public final class XmlUtility {
 
     private static final StackKeyedObjectPool TRANSFORMER_POOL =
         new StackKeyedObjectPool(new PoolableTransformerFactory());
+
+    @PostConstruct
+    private void init() {
+        org.apache.xml.security.Init.init();
+    }
 
     /**
      * Simple proxy method that can decide about the resource type and return the matching schema location.
@@ -2167,29 +2180,61 @@ public final class XmlUtility {
     }
 
     /**
-     * Calculate the MD 5 Checksum.
+     * Calculate the checksum.
      *
-     * @param xmlBytes Content over which the checksum is to calculate.
-     * @return MD 5 checksum of xmlBytes.
-     * @throws ParserConfigurationException Thrown if instance new SAXParser failed.
-     * @throws SAXException                 Thrown if pasring failed.
+     * @param xmlBytes Content over which the checksum is to calculate..
      */
-    // TODO create XMLCompareUtility
-    public static String getMd5Hash(final byte[] xmlBytes) throws ParserConfigurationException, SAXException {
-        if (xmlBytes.length == 0) {
-            return "";
-        }
-        final SAXParserFactory spf = SAXParserFactory.newInstance();
-        spf.setNamespaceAware(true);
-        final SAXParser sp = spf.newSAXParser();
-        final XMLHashHandler xhh = new XMLHashHandler();
+    public static String calculateChecksum(final byte[] xmlBytes) {
+        Canonicalizer canonicalizer = null;
+        byte[] canonicalizedXmlBytes = new byte[0];
         try {
-            sp.parse(new ByteArrayInputStream(xmlBytes), xhh);
+            canonicalizer = Canonicalizer.getInstance(Canonicalizer.ALGO_ID_C14N_OMIT_COMMENTS);
+            canonicalizedXmlBytes = canonicalizer.canonicalize(xmlBytes);
         }
-        catch (final IOException e) {
-            throw new SAXException("IO Exception.", e);
+        catch (InvalidCanonicalizerException e) {
+            throw new RuntimeException("Error on canonicalizing XML.", e);
         }
-        return xhh.getHash();
+        catch (IOException e) {
+            throw new RuntimeException("Error on canonicalizing XML.", e);
+        }
+        catch (CanonicalizationException e) {
+            throw new RuntimeException("Error on canonicalizing XML.", e);
+        }
+        catch (ParserConfigurationException e) {
+            throw new RuntimeException("Error on canonicalizing XML.", e);
+        }
+        catch (SAXException e) {
+            throw new RuntimeException("Error on canonicalizing XML.", e);
+        }
+        return calculateSHA1Digest(canonicalizedXmlBytes);
+    }
+
+    private static String calculateSHA1Digest(final byte[] canonicalizedXmlBytes) {
+        try {
+            MessageDigest sha1 = MessageDigest.getInstance("SHA1");
+            DigestInputStream digestInputStream =
+                new DigestInputStream(new ByteArrayInputStream(canonicalizedXmlBytes), sha1);
+            // read the stream and update the hash calculation
+            while (digestInputStream.read() != -1)
+                ;
+            // get the hash value as byte array
+            byte[] hash = sha1.digest();
+            return byteArray2Hex(hash);
+        }
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error on calculating checksum.", e);
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Error on calculating checksum.", e);
+        }
+    }
+
+    private static String byteArray2Hex(byte[] hash) {
+        Formatter formatter = new Formatter();
+        for (byte b : hash) {
+            formatter.format("%02x", b);
+        }
+        return formatter.toString();
     }
 
 }

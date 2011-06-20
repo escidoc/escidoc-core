@@ -501,20 +501,10 @@ public class MdRecordCreate implements Serializable {
         }
         else {
 
-            final String md5HashThis;
-            final String md5HashNew;
-            try {
-                md5HashThis = XmlUtility.getMd5Hash(this.content.getBytes());
-                md5HashNew = XmlUtility.getMd5Hash(mdrecord.getContent().getBytes());
-            }
-            catch (final ParserConfigurationException e) {
-                throw new InvalidContentException(e);
-            }
-            catch (final SAXException e) {
-                throw new InvalidContentException(e);
-            }
+            final String checksumThis = XmlUtility.calculateChecksum(this.content.getBytes());
+            final String checksumNew = XmlUtility.calculateChecksum(mdrecord.getContent().getBytes());
 
-            if (!md5HashThis.equals(md5HashNew)) {
+            if (!checksumThis.equals(checksumNew)) {
 
                 this.content = mdrecord.getContent();
                 changes++;

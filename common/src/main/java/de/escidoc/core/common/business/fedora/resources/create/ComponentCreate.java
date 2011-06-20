@@ -34,6 +34,8 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.apache.commons.codec.binary.Base64;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +78,9 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
     @Autowired
     @Qualifier("escidoc.core.business.FedoraUtility")
     private FedoraUtility fedoraUtility;
+
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
 
     /**
      * Set ItemProperties.
