@@ -42,9 +42,9 @@ public interface FedoraServiceClient {
 
     Future<DigitalObjectTO> getObjectXMLAsync(@NotNull @NotEmpty final String pid);
 
-    InputStream getObjectXMLAsStream(@NotNull @NotEmpty final String pid);
+    Stream getObjectXMLAsStream(@NotNull @NotEmpty final String pid);
 
-    Future<InputStream> getObjectXMLAsStreamAsync(@NotNull @NotEmpty final String pid);
+    Future<Stream> getObjectXMLAsStreamAsync(@NotNull @NotEmpty final String pid);
 
     void updateObject(@NotNull UpdateObjectPathParam path, @NotNull UpdateObjectQueryParam query);
 

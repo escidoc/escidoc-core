@@ -48,6 +48,7 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.foxml.ComponentIdsInItemFoxmlHandler;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.esidoc.core.utils.io.IOUtils;
+import org.esidoc.core.utils.io.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -130,11 +131,13 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                     + ". Container can not be deleted.", e);
             }
         }
-        final InputStream in = this.fedoraServiceClient.getObjectXMLAsStream(getItem().getId());
+        final Stream stream = this.fedoraServiceClient.getObjectXMLAsStream(getItem().getId());
         final StaxParser sp = new StaxParser();
         final ComponentIdsInItemFoxmlHandler cih = new ComponentIdsInItemFoxmlHandler(sp);
         sp.addHandler(cih);
+        InputStream in = null;
         try {
+            in = stream.getInputStream();
             sp.parse(in);
             sp.clearHandlerChain();
         }

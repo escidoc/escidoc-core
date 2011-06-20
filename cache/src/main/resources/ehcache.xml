@@ -3,125 +3,165 @@
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
     <defaultCache eternal="true" maxElementsInMemory="1000" overflowToDisk="false"/>
 
-<!-- caches resources for the indexer. 
-Used by de.escidoc.core.om.business.indexer.IndexerResourceRequester -->
-<cache 
-	name="resourcesCache" 
-	maxElementsInMemory="1000" 
-	eternal="false" 
-	overflowToDisk="false" 
-	timeToIdleSeconds="600"/>
+    <!-- caches resources for the indexer.
+    Used by de.escidoc.core.om.business.indexer.IndexerResourceRequester -->
+    <cache
+            name="resourcesCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            overflowToDisk="false"
+            timeToIdleSeconds="600"/>
 
-<!-- caches roleIsGrantedEvaluationResults. (EvaluationResults for user/group,role,scope)
-Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
-<cache 
-	name="roleIsGrantedCache" 
-	maxElementsInMemory="1000" 
-	eternal="false" 
-	overflowToDisk="false" 
-	timeToIdleSeconds="1200"/>
+    <!-- caches roleIsGrantedEvaluationResults. (EvaluationResults for user/group,role,scope)
+    Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
+    <cache
+            name="roleIsGrantedCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            overflowToDisk="false"
+            timeToIdleSeconds="1200"/>
 
-<!-- caches XACML-Policies for Users
-Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
-<cache 
-	name="userPoliciesCache" 
-	maxElementsInMemory="1000" 
-	eternal="false" 
-	overflowToDisk="false" 
-	timeToIdleSeconds="1200"/>
+    <!-- caches XACML-Policies for Users
+    Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
+    <cache
+            name="userPoliciesCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            overflowToDisk="false"
+            timeToIdleSeconds="1200"/>
 
-<!-- caches Grants of Roles with Scope for Users
-Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
-<cache 
-	name="userGrantsCache" 
-	maxElementsInMemory="1000" 
-	eternal="false" 
-	overflowToDisk="false" 
-	timeToIdleSeconds="1200"/>
+    <!-- caches Grants of Roles with Scope for Users
+    Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
+    <cache
+            name="userGrantsCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            overflowToDisk="false"
+            timeToIdleSeconds="1200"/>
 
-<!-- caches Details for Users
-Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
-<cache 
-	name="userDetailsCache" 
-	maxElementsInMemory="1000" 
-	eternal="false" 
-	overflowToDisk="false" 
-	timeToIdleSeconds="1200"/>
+    <!-- caches Details for Users
+    Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
+    <cache
+            name="userDetailsCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            overflowToDisk="false"
+            timeToIdleSeconds="1200"/>
 
-<!-- caches Group-membership for Users
-Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
-<cache 
-	name="userGroupsCache" 
-	maxElementsInMemory="1000" 
-	eternal="false" 
-	overflowToDisk="false" 
-	timeToIdleSeconds="1200"/>
+    <!-- caches Group-membership for Users
+    Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
+    <cache
+            name="userGroupsCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            overflowToDisk="false"
+            timeToIdleSeconds="1200"/>
 
-<!-- caches XACML-Policies for Roles
-Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
-<cache 
-	name="rolePoliciesCache" 
-	maxElementsInMemory="100" 
-	eternal="true" 
-	overflowToDisk="false"/>
+    <!-- caches XACML-Policies for Roles
+    Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
+    <cache
+            name="rolePoliciesCache"
+            maxElementsInMemory="100"
+            eternal="true"
+            overflowToDisk="false"/>
 
-<!-- caches Roles
-Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
-<cache 
-	name="rolesCache" 
-	maxElementsInMemory="100" 
-	eternal="true" 
-	overflowToDisk="false"/>
+    <!-- caches Roles
+    Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
+    <cache
+            name="rolesCache"
+            maxElementsInMemory="100"
+            eternal="true"
+            overflowToDisk="false"/>
 
-<!-- caches Grants of Roles with Scope for Groups
-Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
-<cache 
-	name="groupGrantsCache" 
-	maxElementsInMemory="1000" 
-	eternal="false" 
-	overflowToDisk="false" 
-	timeToIdleSeconds="1200"/>
+    <!-- caches Grants of Roles with Scope for Groups
+    Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
+    <cache
+            name="groupGrantsCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            overflowToDisk="false"
+            timeToIdleSeconds="1200"/>
 
-<!-- caches XACML-Policies for Groups
-Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
-<cache 
-	name="groupPoliciesCache" 
-	maxElementsInMemory="1000" 
-	eternal="false" 
-	overflowToDisk="false" 
-	timeToIdleSeconds="1200"/>
+    <!-- caches XACML-Policies for Groups
+    Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
+    <cache
+            name="groupPoliciesCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            overflowToDisk="false"
+            timeToIdleSeconds="1200"/>
 
-<!-- caches Attributes for XACML-Evaluation
-Used by de.escidoc.core.aa.business.cache.RequestAttributesCache -->
-<cache 
-	name="attributesCache" 
-	maxElementsInMemory="1000" 
-	eternal="false" 
-	overflowToDisk="false" 
-	timeToIdleSeconds="10"/>
-	
-<!-- caches eSciDoc-XML resources for XACML-Evaluation
-Used by de.escidoc.core.common.util.security.cache.DocumentsCache -->
-<cache 
-	name="documentsCache" 
-	maxElementsInMemory="20" 
-	eternal="true" 
-	overflowToDisk="false"/>
-	
-<!-- caches eSciDoc Method Mappings
-Used by de.escidoc.core.aa.security.cache.SecurityInterceptorCache -->
-<cache 
-	name="mappingsCache" 
-	maxElementsInMemory="500" 
-	eternal="true" 
-	overflowToDisk="false"/>
-	
-<!-- caches eSciDoc Schema-Objects
-Used by de.escidoc.core.common.util.xml.cache.SchemasCache -->
-<cache 
-	name="schemasCache" 
-	maxElementsInMemory="100" 
-	eternal="true" 
-	overflowToDisk="false"/>
-	
+    <!-- caches Attributes for XACML-Evaluation
+    Used by de.escidoc.core.aa.business.cache.RequestAttributesCache -->
+    <cache
+            name="attributesCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            overflowToDisk="false"
+            timeToIdleSeconds="10"/>
+
+    <!-- caches eSciDoc-XML resources for XACML-Evaluation
+    Used by de.escidoc.core.common.util.security.cache.DocumentsCache -->
+    <cache
+            name="documentsCache"
+            maxElementsInMemory="20"
+            eternal="true"
+            overflowToDisk="false"/>
+
+    <!-- caches eSciDoc Method Mappings
+    Used by de.escidoc.core.aa.security.cache.SecurityInterceptorCache -->
+    <cache
+            name="mappingsCache"
+            maxElementsInMemory="500"
+            eternal="true"
+            overflowToDisk="false"/>
+
+    <!-- caches eSciDoc Schema-Objects
+    Used by de.escidoc.core.common.util.xml.cache.SchemasCache -->
+    <cache
+            name="schemasCache"
+            maxElementsInMemory="100"
+            eternal="true"
+            overflowToDisk="false"/>
+
+    <!-- caches Fedora ObjectProfiles
+    Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
+    <cache
+            name="Fedora.ObjectProfiles"
+            maxElementsInMemory="1000"
+            eternal="true"
+            overflowToDisk="true"/>
+
+    <!-- caches Fedora DigitalObjects
+    Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
+    <cache
+            name="Fedora.DigitalObjects"
+            maxElementsInMemory="1000"
+            eternal="true"
+            overflowToDisk="true"/>
+
+    <!-- caches Fedora streams of DigitalObjects
+    Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
+    <cache
+            name="Fedora.DigitalObjectStreams"
+            maxElementsInMemory="1000"
+            eternal="true"
+            overflowToDisk="true"/>
+
+    <!-- caches Fedora DatastreamLists
+    Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
+    <cache
+            name="Fedora.DatastreamLists"
+            maxElementsInMemory="1000"
+            eternal="true"
+            overflowToDisk="true"/>
+
+    <!-- caches Fedora Fedora.DatastreamProfiles
+    Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
+    <cache
+            name="Fedora.DatastreamProfiles"
+            maxElementsInMemory="1000"
+            eternal="true"
+            overflowToDisk="true"/>
+
 </ehcache>

@@ -60,6 +60,13 @@ public interface FedoraServiceRESTEndpoint {
     DigitalObjectTO getObjectXML(
         @NotNull @PathParam("") GetObjectXMLPathParam path, @NotNull @QueryParam("") GetObjectXMLQueryParam query);
 
+    @GET
+    @Path("/objects/{pid}/objectXML")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.TEXT_XML)
+    Stream getObjectXMLAsStream(
+        @NotNull @PathParam("") GetObjectXMLPathParam path, @NotNull @QueryParam("") GetObjectXMLQueryParam query);
+
     @POST
     @Path("/objects/{pid}")
     @Produces(MimeTypes.TEXT_XML)
