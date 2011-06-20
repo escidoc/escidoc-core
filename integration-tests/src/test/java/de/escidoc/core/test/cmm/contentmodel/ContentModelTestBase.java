@@ -51,17 +51,19 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Test the implementation of the Content Model.
- *
+ * 
  * @author Frank Schwichtenberg
  */
 public class ContentModelTestBase extends CmmTestBase {
 
     /**
      * Test retrieving an organizational unit from the framework.
-     *
-     * @param id The id of the organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
      * @return The retrieved organizational unit.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String retrieve(final String id) throws Exception {
         return handleXmlResult(getContentModelClient().retrieve(id));
@@ -141,10 +143,12 @@ public class ContentModelTestBase extends CmmTestBase {
 
     /**
      * Test retrieving resources from the framework.
-     *
-     * @param id The id of the organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
      * @return The retrieved list of resources.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String retrieveResources(final String id) throws Exception {
         return handleXmlResult(getContentModelClient().retrieveResources(id));
@@ -156,10 +160,12 @@ public class ContentModelTestBase extends CmmTestBase {
 
     /**
      * Retrieve the list of content models.
-     *
-     * @param filter CQL filter
+     * 
+     * @param filter
+     *            CQL filter
      * @return The retrieved content models.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String retrieveContentModels(final Map<String, String[]> filter) throws Exception {
 
@@ -176,10 +182,12 @@ public class ContentModelTestBase extends CmmTestBase {
 
     /**
      * Test retrieving the version history of a Content Model.
-     *
-     * @param id The id of the Content Model.
+     * 
+     * @param id
+     *            The id of the Content Model.
      * @return The retrieved version history.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String retrieveVersionHistory(final String id) throws Exception {
 
@@ -188,15 +196,23 @@ public class ContentModelTestBase extends CmmTestBase {
 
     /**
      * Validate Content Model XML.
-     *
-     * @param createdXML               The XML to be validated.
-     * @param title                    Expected titel.
-     * @param description              Expected description.
-     * @param mdRecordDefinitions      Expected Content Stream definitions.
-     * @param resourceDefinitions      Expected Content Stream definitions.
-     * @param contentStreamDefinitions Expected Content Stream definitions.
-     * @param checkBehavior            Wether behavior should be checked or not.
-     * @throws Exception If anything fails.
+     * 
+     * @param createdXML
+     *            The XML to be validated.
+     * @param title
+     *            Expected titel.
+     * @param description
+     *            Expected description.
+     * @param mdRecordDefinitions
+     *            Expected Content Stream definitions.
+     * @param resourceDefinitions
+     *            Expected Content Stream definitions.
+     * @param contentStreamDefinitions
+     *            Expected Content Stream definitions.
+     * @param checkBehavior
+     *            Wether behavior should be checked or not.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void validateContentModel(
         String createdXML, String title, String description, Map<String, String> mdRecordDefinitions,
@@ -277,10 +293,18 @@ public class ContentModelTestBase extends CmmTestBase {
                 }
 
                 // check behavior
+
+                System.out.println(getFrameworkUrl() + "/ir/item/" + getObjidValue(getDocument(itemXml))
+                    + "/resources/trans");
+
                 HttpResponse httpRes =
                     HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getFrameworkUrl() + "/ir/item/"
                         + getObjidValue(getDocument(itemXml)) + "/resources/trans", null, MimeTypes.TEXT_XML, null);
                 String resultCheckString = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+
+                System.out.println(httpRes);
+                System.out.println(resultCheckString);
+
                 Document resultCheckDoc = getDocument(resultCheckString);
                 selectSingleNodeAsserted(resultCheckDoc, "/result[. = 'check']");
 
@@ -325,14 +349,21 @@ public class ContentModelTestBase extends CmmTestBase {
 
     /**
      * Validate Content Model properties XML.
-     *
-     * @param createdXML           The XML to be validated.
-     * @param id                   The objid of the Content Model.
-     * @param propertiesXpath      The path to the properties element.
-     * @param title                Expected title.
-     * @param description          Expected description.
-     * @param lastModificationDate Expected date-time of latest modification.
-     * @throws Exception If anything fails.
+     * 
+     * @param createdXML
+     *            The XML to be validated.
+     * @param id
+     *            The objid of the Content Model.
+     * @param propertiesXpath
+     *            The path to the properties element.
+     * @param title
+     *            Expected title.
+     * @param description
+     *            Expected description.
+     * @param lastModificationDate
+     *            Expected date-time of latest modification.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void validateContentModelProperties(
         String createdXML, String id, String propertiesXpath, String title, String description,
@@ -407,10 +438,13 @@ public class ContentModelTestBase extends CmmTestBase {
 
     /**
      * Validate the form of an objid appearing in an element.
-     *
-     * @param document    The XML document.
-     * @param elementPath The path to the element.
-     * @throws Exception If anything fails.
+     * 
+     * @param document
+     *            The XML document.
+     * @param elementPath
+     *            The path to the element.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void validateObjidForm(Document document, String elementPath) throws Exception {
         String refObjid = null;
