@@ -1,7 +1,6 @@
 package de.escidoc.core.purge.internal;
 
 import de.escidoc.core.adm.business.admin.PurgeStatus;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
@@ -25,9 +24,6 @@ public class PurgeServiceImpl implements PurgeService {
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
-
-    @Autowired
-    private FedoraUtility fedoraUtility;
 
     @Autowired
     private TripleStoreUtility tripleStoreUtility;

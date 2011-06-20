@@ -54,7 +54,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.xml.sax.SAXException;
 
 import de.escidoc.core.common.business.fedora.Constants;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
@@ -130,10 +129,6 @@ public class Datastream {
     @Autowired
     @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
-
-    @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
 
     @Autowired
     @Qualifier("business.Utility")

@@ -44,7 +44,6 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -74,10 +73,6 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
-
-    @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
 
     private ContentModelProperties properties;
 
@@ -185,9 +180,11 @@ public class ContentModelCreate extends GenericResourceCreate {
         if (this.resourceDefinitions != null) {
             for (final ResourceDefinitionCreate resourceDefinitionCreate : this.resourceDefinitions.values()) {
                 final String sdefFoxml = getSDefFoXML(resourceDefinitionCreate);
-                this.fedoraUtility.storeObjectInFedora(sdefFoxml, false);
+                final IngestPathParam path = new IngestPathParam();
+                final IngestQueryParam query = new IngestQueryParam();
+                this.fedoraServiceClient.ingest(path, query, sdefFoxml);
                 final String sdepFoxml = getSDepFoXML(resourceDefinitionCreate);
-                this.fedoraUtility.storeObjectInFedora(sdepFoxml, false);
+                this.fedoraServiceClient.ingest(path, query, sdepFoxml);
             }
         }
 

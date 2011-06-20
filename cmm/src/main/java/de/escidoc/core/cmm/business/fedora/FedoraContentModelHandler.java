@@ -39,7 +39,6 @@ import de.escidoc.core.cmm.business.stax.handler.contentModel.MdRecordDefinition
 import de.escidoc.core.cmm.business.stax.handler.contentModel.ResourceDefinitionHandler;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -90,6 +89,8 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 import org.escidoc.core.services.fedora.DeleteObjectPathParam;
 import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.IngestPathParam;
+import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.esidoc.core.utils.io.MimeTypes;
@@ -134,10 +135,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     @Autowired
     @Qualifier("common.business.indexing.IndexingHandler")
     private ResourceListener indexingHandler;
-
-    @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
@@ -623,9 +620,11 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             else {
                 // create
                 final String sdefFoxml = getSDefFoXML(resourceDefinition);
-                fedoraUtility.storeObjectInFedora(sdefFoxml, false);
+                final IngestPathParam path = new IngestPathParam();
+                final IngestQueryParam query = new IngestQueryParam();
+                this.fedoraServiceClient.ingest(path, query, sdefFoxml);
                 final String sdepFoxml = getSDepFoXML(resourceDefinition);
-                fedoraUtility.storeObjectInFedora(sdepFoxml, false);
+                this.fedoraServiceClient.ingest(path, query, sdepFoxml);
             }
         }
 
@@ -642,7 +641,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         final DateTime endTimestamp = getContentModel().getLastFedoraModificationDate();
         if (!startTimestamp.isEqual(endTimestamp) || getContentModel().isNewVersion()) {
             // object is modified
-            getUtility().makeVersion("ContentModelHandler.update()", null, getContentModel(), getFedoraUtility());
+            getUtility().makeVersion("ContentModelHandler.update()", null, getContentModel());
             getContentModel().persist();
 
             updatedXmlData = retrieve(getContentModel().getId());

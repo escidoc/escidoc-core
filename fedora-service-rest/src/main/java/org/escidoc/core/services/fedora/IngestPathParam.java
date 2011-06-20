@@ -12,13 +12,19 @@ import javax.validation.constraints.NotNull;
         assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
 public final class IngestPathParam {
 
+    public final static String NEW_PID = "new";
+
     @NotNull
     @NotEmpty
     private final String pid;
 
+    public IngestPathParam() {
+        this(NEW_PID);
+    }
+
     public IngestPathParam(final String pid) {
         if(pid == null) {
-            this.pid = "new";
+            this.pid = NEW_PID;
         } else {
             this.pid = pid;
         }

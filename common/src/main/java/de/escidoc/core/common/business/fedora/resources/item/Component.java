@@ -498,7 +498,6 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         if (!ds.equals(curDs)) {
             this.dc = ds;
             ds.merge();
-            // FedoraUtility.getInstance().sync();
             getSomeValuesFromFedora();
             final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
             final UpdateObjectQueryParam query = new UpdateObjectQueryParam();

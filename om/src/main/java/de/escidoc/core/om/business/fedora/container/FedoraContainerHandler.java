@@ -50,6 +50,8 @@ import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.ControlGroup;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.IngestPathParam;
+import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
@@ -68,7 +70,6 @@ import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -212,10 +213,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Autowired
     @Qualifier("business.Utility")
     private Utility utility;
-
-    @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
@@ -447,8 +444,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final String foxml =
             getContainerFoxml(streams, metadataHandler, containerId, contentModel, properties, structMapEntries,
                 XmlTemplateProvider.PLACEHOLDER, relationsData, createComment, propertiesAsReferences);
-
-        getFedoraUtility().storeObjectInFedora(foxml, true);
+        final IngestPathParam path = new IngestPathParam();
+        final IngestQueryParam query = new IngestQueryParam();
+        this.fedoraServiceClient.ingest(path, query, foxml);
+        this.fedoraServiceClient.sync();
 
         final String escidocRelsExtWithWrongLmd =
             getFoxmlContainerRenderer().renderRelsExt(properties, structMapEntries, containerId, "bla", relationsData,
@@ -500,10 +499,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final String relsExtNew =
             getFoxmlContainerRenderer().renderRelsExt(properties, structMapEntries, containerId, lastModifiedDate,
                 relationsData, createComment, propertiesAsReferences);
-        final ModifiyDatastreamPathParam path =
+        final ModifiyDatastreamPathParam modifyPath =
             new ModifiyDatastreamPathParam(containerId, Datastream.RELS_EXT_DATASTREAM);
-        final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
-        query.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
+        final ModifyDatastreamQueryParam modifyQuery = new ModifyDatastreamQueryParam();
+        modifyQuery.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
         final Stream stream = new Stream();
         try {
             stream.write(relsExtNew.getBytes(XmlUtility.CHARACTER_ENCODING));
@@ -512,7 +511,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
-        this.fedoraServiceClient.modifyDatastream(path, query, stream);
+        this.fedoraServiceClient.modifyDatastream(modifyPath, modifyQuery, stream);
         this.fedoraServiceClient.sync();
         try {
             this.getTripleStoreUtility().reinitialize();
@@ -1485,7 +1484,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
             // set status "submited"
             // only renew the timestamp and set status with version entry
-            // getFedoraUtility().touchObject(getContainer().getId(), true);
             makeVersion("ContainerHandler.release()", Constants.STATUS_RELEASED);
             getContainer().setLatestReleasePid();
             getContainer().persist();
@@ -1666,7 +1664,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
             // set status "submited"
             // only renew the timestamp and set status with version entry
-            // getFedoraUtility().touchObject(getContainer().getId(), true);
             makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED);
             getContainer().persist();
             fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
@@ -1736,7 +1733,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
             // set status "in-revision"
             // only renew the timestamp and set status with version entry
-            // getFedoraUtility().touchObject(getContainer().getId(), true);
             makeVersion(taskParameter.getComment(), Constants.STATUS_IN_REVISION);
             getContainer().persist();
 
@@ -1812,7 +1808,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // withdrawing is possible in every version status
 
             // only renew the timestamp and set status with version entry
-            // getFedoraUtility().touchObject(getContainer().getId(), true);
             makeVersion(taskParameter.getComment(), Constants.STATUS_WITHDRAWN);
             getContainer().persist();
 
@@ -2253,8 +2248,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         getContainer().setRelsExt(relsExtNewBytes);
         getContainer().persist();
 
-        // getFedoraUtility().sync();
-
         fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
         fireContainerModified(objid, containerXml);
 
@@ -2622,7 +2615,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     private void makeVersion(final String comment, final String newStatus) throws SystemException,
         TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
         WebserverSystemException, XmlParserSystemException {
-        getUtility().makeVersion(comment, newStatus, getContainer(), getFedoraUtility());
+        getUtility().makeVersion(comment, newStatus, getContainer());
     }
 
     /**

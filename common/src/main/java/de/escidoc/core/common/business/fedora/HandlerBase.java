@@ -50,10 +50,6 @@ public abstract class HandlerBase {
     private FedoraServiceClient fedoraServiceClient;
 
     @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
-
-    @Autowired
     @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
 
@@ -93,15 +89,6 @@ public abstract class HandlerBase {
 
     protected FedoraServiceClient getFedoraServiceClient() {
         return fedoraServiceClient;
-    }
-
-    /**
-     * Gets the {@link FedoraUtility}.
-     *
-     * @return FedoraUtility Returns the {@link FedoraUtility} object.
-     */
-    protected FedoraUtility getFedoraUtility() {
-        return this.fedoraUtility;
     }
 
     /**

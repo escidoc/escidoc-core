@@ -77,6 +77,8 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.business.renderer.VelocityXmlContextFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContextFoXmlRendererInterface;
 import de.escidoc.core.om.business.stax.handler.context.ContextPropertiesHandler;
+import org.escidoc.core.services.fedora.IngestPathParam;
+import org.escidoc.core.services.fedora.IngestQueryParam;
 
 /**
  * Handler to create Context objects.
@@ -233,7 +235,10 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
         final String contextFoxml =
             buildContextFoxml(contextId, properties, dcProperties, propertiesAsReferences, streams);
-        getFedoraUtility().storeObjectInFedora(contextFoxml, true);
+        final IngestPathParam path = new IngestPathParam();
+        final IngestQueryParam query = new IngestQueryParam();
+        this.getFedoraServiceClient().ingest(path, query, contextFoxml);
+        this.getFedoraServiceClient().sync();
 
         return contextId;
     }

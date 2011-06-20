@@ -68,6 +68,8 @@ import de.escidoc.core.om.business.stax.handler.item.ComponentMetadataHandler;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentPropertiesHandler;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentTitleHandler;
+import org.escidoc.core.services.fedora.IngestPathParam;
+import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -599,9 +601,11 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final String componentFoxml =
                 getComponentFoxmlWithVelocity(componentId, mimeType, datastreams, mdRecordAttributes, nsUri,
                     binaryContent.get(FoXmlProvider.DATASTREAM_STORAGE_ATTRIBUTE));
-            getFedoraUtility().storeObjectInFedora(componentFoxml, false);
+            final IngestPathParam path = new IngestPathParam();
+            final IngestQueryParam query = new IngestQueryParam();
+            this.getFedoraServiceClient().ingest(path, query, componentFoxml);
         }
-        catch (final FedoraSystemException e) {
+        catch (final Exception e) {
             final Matcher invalidFoxml = PATTERN_INVALID_FOXML.matcher(e.getCause().getMessage());
             if (invalidFoxml.find()) {
                 throw new IntegritySystemException(e);

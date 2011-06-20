@@ -631,8 +631,6 @@ public class Utility {
      *            New status of object.
      * @param resource
      *            resource object.
-     * @param fedoraUtility
-     *            The {@link FedoraUtility} to use for accessing the data store back end.
      * @throws SystemException
      *             Thrown in case of an internal system error.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
@@ -642,10 +640,9 @@ public class Utility {
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    public void makeVersion(
-        final String versionComment, final String newStatus, final VersionableResource resource,
-        final FedoraUtility fedoraUtility) throws SystemException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+    public void makeVersion(final String versionComment, final String newStatus, final VersionableResource resource)
+        throws SystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+        TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
 
         final String comment = createComment(resource, newStatus, versionComment);
 
@@ -1473,8 +1470,6 @@ public class Utility {
 
         try {
             // // FIXME workaround issue 631
-            // String fedoraBaseUrl =
-            // FedoraUtility.getInstance().getFedoraUrl() + "/get";
             // if (url.startsWith(fedoraBaseUrl)
             // || url.startsWith(fedoraBaseUrl.replaceFirst("localhost",
             // "127.0.0.1"))) {

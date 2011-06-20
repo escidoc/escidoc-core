@@ -40,6 +40,8 @@ import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.DeleteDatastreamPathParam;
 import org.escidoc.core.services.fedora.DeleteDatastreamQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.IngestPathParam;
+import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
@@ -52,7 +54,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.RepositoryIndicator;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -80,10 +81,6 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
-
-    @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
 
     private final RepositoryIndicator ri = new RepositoryIndicator();
 
@@ -617,7 +614,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
         // serialize object without RELS-EXT and WOV to FOXML
         final String foxml = ContentRelationFoXmlProvider.getInstance().getFoXml(this);
-        this.fedoraUtility.storeObjectInFedora(foxml, false);
+        final IngestPathParam path = new IngestPathParam();
+        final IngestQueryParam query = new IngestQueryParam();
+        this.fedoraServiceClient.ingest(path, query, foxml);
 
         // creation /last-modification date
         final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(getObjid());

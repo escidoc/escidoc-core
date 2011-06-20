@@ -60,7 +60,6 @@ import org.springframework.stereotype.Service;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -182,10 +181,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Autowired
     @Qualifier("business.Utility")
     private Utility utility;
-
-    @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
 
     @Override
     public String retrieve(final String id) throws ItemNotFoundException, MissingMethodParameterException,
@@ -1881,7 +1876,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     private void makeVersion(final String comment, final String newStatus) throws SystemException,
         TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
         WebserverSystemException, XmlParserSystemException {
-        getUtility().makeVersion(comment, newStatus, getItem(), getFedoraUtility());
+        getUtility().makeVersion(comment, newStatus, getItem());
     }
 
     /**

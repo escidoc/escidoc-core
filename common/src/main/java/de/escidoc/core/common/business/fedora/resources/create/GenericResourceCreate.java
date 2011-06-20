@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.business.fedora.resources.create;
 
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -49,20 +48,12 @@ public abstract class GenericResourceCreate {
     @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
 
-    @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
-
     private String objid;
 
     private String buildNumber;
 
     protected TripleStoreUtility getTripleStoreUtility() {
         return tripleStoreUtility;
-    }
-
-    protected FedoraUtility getFedoraUtility() {
-        return fedoraUtility;
     }
 
     /**

@@ -99,21 +99,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
 
-    <bean id="escidoc.core.business.FedoraUtility" class="de.escidoc.core.common.business.fedora.FedoraUtility">
-        <property name="fedoraUrl">
-            <value>${fedora.url}</value>
-        </property>
-        <property name="fedoraUser">
-            <value>${fedora.user}</value>
-        </property>
-        <property name="fedoraPassword">
-            <value>${fedora.password}</value>
-        </property>
-        <property name="identifierPrefix">
-            <value>${escidoc-core.identifier.prefix}</value>
-        </property>
-    </bean>
-
     <bean id="business.TripleStoreUtility"
           class="de.escidoc.core.common.business.fedora.mptstore.MPTTripleStoreUtility">
         <property name="myDataSource">

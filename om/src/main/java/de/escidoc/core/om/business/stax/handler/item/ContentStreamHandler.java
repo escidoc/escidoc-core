@@ -164,7 +164,7 @@ public class ContentStreamHandler extends WriteHandler {
      * de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement
      * (de.escidoc.core.common.util.xml.stax.events.StartElement)
      * 
-     * @throws FedoraSystemException If FedoraUtility can not connect to Fedora.
+     * @throws FedoraSystemException if can not connect to Fedora.
      */
     @Override
     public StartElement startElement(final StartElement element) throws InvalidContentException, XMLStreamException,

@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.util.xml.transformer;
 
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
@@ -74,10 +73,6 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
     private static final String CONTENT_MODEL_XSLT_DC_DATASTREAM = "DC-MAPPING";
 
     private String defaultXsltUrl = null;
-
-    @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;

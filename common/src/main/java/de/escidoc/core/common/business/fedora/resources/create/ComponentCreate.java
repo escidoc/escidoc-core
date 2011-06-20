@@ -21,7 +21,6 @@
 package de.escidoc.core.common.business.fedora.resources.create;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -35,6 +34,7 @@ import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.apache.commons.codec.binary.Base64;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,10 +74,6 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
     @Autowired
     @Qualifier("business.Utility")
     private Utility utility;
-
-    @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
@@ -232,7 +228,13 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
 
         validate();
         final String foxml = getFOXML();
-        return this.fedoraUtility.storeObjectInFedora(foxml, forceSync);
+        final IngestPathParam path = new IngestPathParam();
+        final IngestQueryParam query = new IngestQueryParam();
+        final String returnValue = this.fedoraServiceClient.ingest(path, query, foxml);
+        if (forceSync) {
+            this.fedoraServiceClient.sync();
+        }
+        return returnValue;
     }
 
     /**

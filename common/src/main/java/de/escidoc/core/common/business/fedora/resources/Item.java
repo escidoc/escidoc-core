@@ -1019,9 +1019,6 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         // throw new InvalidStatusException("Item " + getItem().getId()
         // + " is in status " + status + ". Can not delete.");
         // }
-        // Don't purge the component object, only delete the entry in item
-        // RELS-EXT
-        // getFedoraUtility().deleteObject(componentId, false);
 
         final StaxParser sp = new StaxParser();
         final RemoveObjectRelationHandlerNew rh = new RemoveObjectRelationHandlerNew(componentId);

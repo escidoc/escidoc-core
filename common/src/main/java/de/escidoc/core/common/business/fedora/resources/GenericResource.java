@@ -45,7 +45,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.LockHandler;
 import de.escidoc.core.common.business.PropertyMapKeys;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.Triple;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
@@ -92,10 +91,6 @@ public class GenericResource implements FedoraResource {
     private FedoraServiceClient fedoraServiceClient;
 
     @Autowired
-    @Qualifier("escidoc.core.business.FedoraUtility")
-    private FedoraUtility fedoraUtility;
-
-    @Autowired
     @Qualifier("business.LockHandler")
     private LockHandler lockHandler;
 
@@ -122,8 +117,6 @@ public class GenericResource implements FedoraResource {
     private String href;
 
     private Datastream datastream;
-
-    private org.fcrepo.server.types.gen.Datastream[] datastreamsInformation;
 
     // for versionated resources (like Item/Container) is the creationDate not
     // the Fedora CreationDate!
@@ -160,10 +153,6 @@ public class GenericResource implements FedoraResource {
 
     protected Utility getUtility() {
         return utility;
-    }
-
-    protected FedoraUtility getFedoraUtility() {
-        return fedoraUtility;
     }
 
     protected FedoraServiceClient getFedoraServiceClient() {

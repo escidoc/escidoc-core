@@ -31,6 +31,8 @@
  */
 package de.escidoc.core.oum.business.fedora.organizationalunit;
 
+import org.escidoc.core.services.fedora.IngestPathParam;
+import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.joda.time.DateTime;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
@@ -304,7 +306,10 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         final String orgUnitFoxml =
             getOrganizationalUnitFoxml(id, relsExtValues, parents, metadataHandler.getMetadataAttributes(),
                 (Map<String, ByteArrayOutputStream>) streams.get(XmlUtility.NAME_MDRECORDS), dcStream);
-        getFedoraUtility().storeObjectInFedora(orgUnitFoxml, true);
+        final IngestPathParam path = new IngestPathParam();
+        final IngestQueryParam query = new IngestQueryParam();
+        this.getFedoraServiceClient().ingest(path, query, orgUnitFoxml);
+        this.getFedoraServiceClient().sync();
 
         String resultOrgUnit;
 

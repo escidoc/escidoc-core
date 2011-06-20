@@ -43,6 +43,8 @@ import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.GetDatastreamProfilePathParam;
 import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
+import org.escidoc.core.services.fedora.IngestPathParam;
+import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
@@ -268,11 +270,11 @@ public class ItemCreate extends GenericResourceCreate {
 
             // serialize object without RELS-EXT and WOV to FOXML
             final String foxml = getMinimalFoXML();
-            getFedoraUtility().storeObjectInFedora(foxml, false);
+            final IngestPathParam path = new IngestPathParam();
+            final IngestQueryParam query = new IngestQueryParam();
+            this.fedoraServiceClient.ingest(path, query, foxml);
 
             // take timestamp and prepare RELS-EXT
-            // DateTime lmd =
-            // FedoraUtility.getInstance().getLastModificationDate(getObjid());
             final DateTime lmd = getLastModificationDateByWorkaround(getObjid());
 
             this.properties.getCurrentVersion().setDate(lmd);
@@ -294,10 +296,10 @@ public class ItemCreate extends GenericResourceCreate {
 
             // update RELS-EXT with timestamp
             final String relsExt = renderRelsExt();
-            final ModifiyDatastreamPathParam path =
+            final ModifiyDatastreamPathParam modifyPath =
                 new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
-            final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
-            query.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
+            final ModifyDatastreamQueryParam modifyQuery = new ModifyDatastreamQueryParam();
+            modifyQuery.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
             final Stream stream = new Stream();
             try {
                 stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
@@ -306,7 +308,7 @@ public class ItemCreate extends GenericResourceCreate {
             catch (final IOException e) {
                 throw new WebserverSystemException(e);
             }
-            this.fedoraServiceClient.modifyDatastream(path, query, stream);
+            this.fedoraServiceClient.modifyDatastream(modifyPath, modifyQuery, stream);
             if (forceSync) {
                 this.fedoraServiceClient.sync();
                 try {
@@ -853,15 +855,10 @@ public class ItemCreate extends GenericResourceCreate {
      *             Thrown if request to Fedora failed.
      */
     private DateTime getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
-        // Work around for Fedora30 bug APIM.getDatastreams()
-        //        final org.fcrepo.server.types.gen.Datastream relsExtInfo =
-        //            getFedoraUtility().getDatastreamInformation(objid, Datastream.RELS_EXT_DATASTREAM, null);
-        //        return new DateTime(relsExtInfo.getCreateDate(), DateTimeZone.UTC);
         final GetDatastreamProfilePathParam path =
             new GetDatastreamProfilePathParam(objid, Datastream.RELS_EXT_DATASTREAM);
         final GetDatastreamProfileQueryParam query = new GetDatastreamProfileQueryParam();
         final DatastreamProfileTO dsProfile = this.fedoraServiceClient.getDatastreamProfile(path, query);
-
         return new DateTime(dsProfile.getDsCreateDate().toString(), DateTimeZone.UTC);
     }
 
