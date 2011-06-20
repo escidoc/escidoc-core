@@ -307,7 +307,7 @@ public interface ItemHandlerInterface {
      * @throws MissingAttributeValueException It a mandatory attribute value is missing.
      * @throws OptimisticLockingException     If the provided latest-modification-date does not match.
      */
-    @Validate(param = 0, resolver = "getItemSchemaLocation")
+    @Validate(param = 1, resolver = "getItemSchemaLocation")
     String createComponent(final String id, final String xmlData) throws MissingContentException,
         ItemNotFoundException, ComponentNotFoundException, LockingException, MissingElementValueException,
         AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
