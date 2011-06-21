@@ -136,12 +136,12 @@ public class EscidocServlet extends HttpServlet {
     private static final String HTTP_HEADER_VALUE_ACCEPT_ENCODING_GZIP = "gzip";
 
     /**
-     * HTTP header Accept-Encoding.
+     * HTTP header Content-Encoding.
      */
     private static final String HTTP_HEADER_CONTENT_ENCODING = "Content-Encoding";
 
     /**
-     * HTTP header value for Accept-Encoding.
+     * HTTP header value for Content-Encoding.
      */
     private static final String HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP = "gzip";
 
