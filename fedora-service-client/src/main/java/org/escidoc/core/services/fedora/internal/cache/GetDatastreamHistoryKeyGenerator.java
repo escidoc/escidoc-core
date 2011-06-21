@@ -22,25 +22,34 @@ package org.escidoc.core.services.fedora.internal.cache;
 
 import com.googlecode.ehcache.annotations.key.CacheKeyGenerator;
 import org.aopalliance.intercept.MethodInvocation;
-import org.escidoc.core.services.fedora.DeleteDatastreamPathParam;
+import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
+import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
+import org.escidoc.core.services.fedora.GetDatastreamProfilePathParam;
+import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 /**
- * {@link CacheKeyGenerator} for setDatastreamState-Operation in {@link org.escidoc.core.services.fedora.FedoraServiceClient}.
+ * {@link CacheKeyGenerator} for getDatastreamHistory-Operation in {@link org.escidoc.core.services.fedora
+ * .FedoraServiceClient}.
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-public final class SetDatastreamStateKeyGenerator implements CacheKeyGenerator<String> {
+public final class GetDatastreamHistoryKeyGenerator implements CacheKeyGenerator<DatastreamCacheKey> {
 
-    public String generateKey(final MethodInvocation methodInvocation) {
+    public DatastreamCacheKey generateKey(final MethodInvocation methodInvocation) {
         return this.generateKey(methodInvocation.getArguments());
     }
 
-    public String generateKey(final Object... objects) {
-        if (objects.length > 0) {
-            if (objects[0] instanceof String) {
-                return (String)objects[0];
+    public DatastreamCacheKey generateKey(final Object... objects) {
+        if(objects.length > 1) {
+            if(objects[0] instanceof GetDatastreamHistoryPathParam &&
+                    objects[1] instanceof GetDatastreamHistoryQueryParam) {
+                final GetDatastreamHistoryPathParam param = (GetDatastreamHistoryPathParam) objects[0];
+                return new DatastreamCacheKey(param.getPid(), param.getDsID(), null);
             }
         }
         return null;
     }
+
 }

@@ -9,6 +9,7 @@
     <ehcache:annotation-driven create-missing-caches="true" cache-manager="ehCacheManager"/>
 
     <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="cacheManagerName" value="defaultCacheManager"/>
         <property name="configLocation" value="classpath:ehcache.xml"/>
     </bean>
 

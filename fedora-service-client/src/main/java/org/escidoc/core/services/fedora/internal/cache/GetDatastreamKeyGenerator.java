@@ -3,6 +3,7 @@ package org.escidoc.core.services.fedora.internal.cache;
 import com.googlecode.ehcache.annotations.key.CacheKeyGenerator;
 import org.aopalliance.intercept.MethodInvocation;
 import org.escidoc.core.services.fedora.GetDatastreamPathParam;
+import org.joda.time.DateTime;
 
 /**
  * {@link CacheKeyGenerator} for getDatastream-Operation in
@@ -17,10 +18,15 @@ public final class GetDatastreamKeyGenerator implements CacheKeyGenerator<Datast
     }
 
     public DatastreamCacheKey generateKey(final Object... objects) {
-        if (objects.length > 0) {
-            if (objects[0] instanceof GetDatastreamPathParam) {
-                final GetDatastreamPathParam getDatastreamPathParam = (GetDatastreamPathParam) objects[0];
-                return new DatastreamCacheKey(getDatastreamPathParam.getPid(), getDatastreamPathParam.getDsID());
+        if (objects.length > 2) {
+            if (objects[0] instanceof String && objects[1] instanceof String) {
+                final String pid = (String) objects[0];
+                final String dsId = (String) objects[1];
+                DateTime timestamp = null;
+                if(objects[2] != null && objects[2] instanceof DateTime) {
+                    timestamp = (DateTime) objects[2];
+                }
+                return new DatastreamCacheKey(pid, dsId, timestamp);
             }
         }
         return null;

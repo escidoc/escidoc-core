@@ -31,7 +31,7 @@ import org.escidoc.core.services.fedora.IngestPathParam;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-public class IngestKeyGenerator implements CacheKeyGenerator<String> {
+public final class IngestKeyGenerator implements CacheKeyGenerator<String> {
 
     public String generateKey(final MethodInvocation methodInvocation) {
         return this.generateKey(methodInvocation.getArguments());

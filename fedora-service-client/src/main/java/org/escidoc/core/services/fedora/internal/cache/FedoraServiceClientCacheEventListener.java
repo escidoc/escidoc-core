@@ -20,54 +20,94 @@
 
 package org.escidoc.core.services.fedora.internal.cache;
 
+import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheException;
+import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.event.CacheEventListener;
 import net.sf.ehcache.event.CacheEventListenerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.cache.ehcache.EhCacheFactoryBean;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+import java.util.List;
 
 /**
- *
+ * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-public class FedoraServiceClientCacheEventListener implements CacheEventListener {
+@Configurable
+public final class FedoraServiceClientCacheEventListener implements CacheEventListener {
+
+    private final static String[] CACHE_NAMES =
+            new String[]{"Fedora.Datastreams", "Fedora.DatastreamLists", "Fedora.DatastreamProfiles",
+                    "Fedora.DatastreamHistories"};
+
+    private CacheManager getCacheManager() {
+        // Return the default cache manager.
+        // It should be the first cache manager in the list.
+        return CacheManager.ALL_CACHE_MANAGERS.get(0);
+    }
 
     @Override
     public void notifyElementRemoved(final Ehcache cache, final Element element) throws CacheException {
-        //To change body of implemented methods use File | Settings | File Templates.
+        final String pid = (String) element.getKey();
+        for(String cacheName : CACHE_NAMES) {
+            final Cache datastreamsCache = getCacheManager().getCache(cacheName);
+            if(datastreamsCache != null) {
+                List datastreamCacheKeys = datastreamsCache.getKeys();
+                for(Object datastreamCacheKeyObject : datastreamCacheKeys) {
+                    final DatastreamCacheKey datastreamCacheKey = (DatastreamCacheKey) datastreamCacheKeyObject;
+                    if(pid.equals(datastreamCacheKey.getPid())) {
+                        datastreamsCache.remove(datastreamCacheKey);
+                    }
+                }
+            }
+        }
     }
 
     @Override
     public void notifyElementPut(final Ehcache cache, final Element element) throws CacheException {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // do nothing
     }
 
     @Override
     public void notifyElementUpdated(final Ehcache cache, final Element element) throws CacheException {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // do nothing
     }
 
     @Override
     public void notifyElementExpired(final Ehcache cache, final Element element) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // do nothing
     }
 
     @Override
     public void notifyElementEvicted(final Ehcache cache, final Element element) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // do nothing
     }
 
     @Override
     public void notifyRemoveAll(final Ehcache cache) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        for(String cacheName : CACHE_NAMES) {
+            final Cache datastreamsCache = getCacheManager().getCache(cacheName);
+            if(datastreamsCache != null) {
+                datastreamsCache.removeAll();
+            }
+        }
     }
 
     @Override
     public void dispose() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // do nothing
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
         return this;
     }
+
 }

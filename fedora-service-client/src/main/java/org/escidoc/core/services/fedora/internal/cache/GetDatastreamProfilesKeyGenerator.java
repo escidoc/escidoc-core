@@ -22,6 +22,7 @@ package org.escidoc.core.services.fedora.internal.cache;
 
 import com.googlecode.ehcache.annotations.key.CacheKeyGenerator;
 import org.aopalliance.intercept.MethodInvocation;
+import org.joda.time.DateTime;
 
 /**
  * {@link CacheKeyGenerator} for getDatastreamProfiles-Operation in {@link org.escidoc.core.services.fedora
@@ -29,16 +30,22 @@ import org.aopalliance.intercept.MethodInvocation;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-public class GetDatastreamProfilesKeyGenerator implements CacheKeyGenerator<String> {
+public final class GetDatastreamProfilesKeyGenerator implements CacheKeyGenerator<DatastreamCacheKey> {
 
-    public String generateKey(final MethodInvocation methodInvocation) {
+    public DatastreamCacheKey generateKey(final MethodInvocation methodInvocation) {
         return this.generateKey(methodInvocation.getArguments());
     }
 
-    public String generateKey(final Object... objects) {
-        if (objects.length > 0) {
-            if (objects[0] instanceof String) {
-                return (String)objects[0];
+    public DatastreamCacheKey generateKey(final Object... objects) {
+        if (objects.length > 2) {
+            if (objects[0] instanceof String && objects[1] instanceof String) {
+                final String pid = (String) objects[0];
+                final String dsId = (String) objects[1];
+                DateTime timestamp = null;
+                if(objects[2] != null && objects[2] instanceof DateTime) {
+                    timestamp = (DateTime) objects[2];
+                }
+                return new DatastreamCacheKey(pid, dsId, timestamp);
             }
         }
         return null;
