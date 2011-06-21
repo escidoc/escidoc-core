@@ -136,6 +136,16 @@ public class EscidocServlet extends HttpServlet {
     private static final String HTTP_HEADER_VALUE_ACCEPT_ENCODING_GZIP = "gzip";
 
     /**
+     * HTTP header Accept-Encoding.
+     */
+    private static final String HTTP_HEADER_CONTENT_ENCODING = "Content-Encoding";
+
+    /**
+     * HTTP header value for Accept-Encoding.
+     */
+    private static final String HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP = "gzip";
+
+    /**
      * HTTP Pragma.
      */
     private static final String HTTP_HEADER_PRAGMA = "Pragma";
@@ -555,7 +565,7 @@ public class EscidocServlet extends HttpServlet {
         initHttpResponse(httpResponse);
         if (text != null) {
             httpResponse.setContentType(XML_RESPONSE_CONTENT_TYPE);
-            httpResponse.setHeader(HTTP_HEADER_ACCEPT_ENCODING, HTTP_HEADER_VALUE_ACCEPT_ENCODING_GZIP);
+            httpResponse.setHeader(HTTP_HEADER_CONTENT_ENCODING, HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP);
             byte txt[] = (text.getBytes());
             ServletOutputStream servletOut = httpResponse.getOutputStream();
             OutputStream out = new GZIPOutputStream(servletOut);
