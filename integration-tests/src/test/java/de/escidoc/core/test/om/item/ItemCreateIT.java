@@ -29,25 +29,27 @@
 package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Test;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-
-import static org.junit.Assert.fail;
 
 /**
  * Test creating Item objects.
- *
+ * 
  * @author Steffen Wagner
  */
 public class ItemCreateIT extends ItemTestBase {
 
     /**
      * Test exception if XML string is empty.
-     *
-     * @throws Exception Thrown if creation of example Item failed.
+     * 
+     * @throws Exception
+     *             Thrown if creation of example Item failed.
      */
     @Test(expected = MissingMethodParameterException.class)
     public void testEmptyCreate01() throws Exception {
@@ -57,8 +59,9 @@ public class ItemCreateIT extends ItemTestBase {
 
     /**
      * Test if version public-status is ignored if an Item is created. (See issue INFR-775)
-     *
-     * @throws Exception Thrown if creation of example Item failed.
+     * 
+     * @throws Exception
+     *             Thrown if creation of example Item failed.
      */
     @Test
     public void testIgnoreStatus01() throws Exception {
@@ -83,8 +86,9 @@ public class ItemCreateIT extends ItemTestBase {
     /**
      * Test if version public-status is ignored if an Item is created. The public-status is set to in-revision (see
      * issue INFR-775, i guess in-rework means in-revision).
-     *
-     * @throws Exception Thrown if creation of example Item failed.
+     * 
+     * @throws Exception
+     *             Thrown if creation of example Item failed.
      */
     @Test
     public void testIgnoreStatus02() throws Exception {
@@ -108,8 +112,9 @@ public class ItemCreateIT extends ItemTestBase {
 
     /**
      * Test if version and public-status is ignored if an Item is created. The public-status is set to withdrawn.
-     *
-     * @throws Exception Thrown if creation of example Item failed.
+     * 
+     * @throws Exception
+     *             Thrown if creation of example Item failed.
      */
     @Test
     public void testIgnoreStatus03() throws Exception {
@@ -133,17 +138,62 @@ public class ItemCreateIT extends ItemTestBase {
 
     /**
      * Test unexpected parser exception instead of InvalidXmlException during create (see issue INFR-911).
-     *
-     * @throws Exception Thrown if behavior is not as expected.
+     * 
+     * @throws Exception
+     *             Thrown if behavior is not as expected.
      */
     @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
 
         /*
-         * The infrastructure has thrown an unexpected parser exception during
-         * creation if a non XML datastructur is send (e.g. String).
+         * The infrastructure has thrown an unexpected parser exception during creation if a non XML data structure is
+         * send (e.g. String).
          */
         create("laber-rababer");
+    }
+
+    /**
+     * Test invalid XML in createComponent.
+     * 
+     * @throws Exception
+     *             Thrown if behavior is not as expected.
+     */
+    @Test(expected = XmlCorruptedException.class)
+    public void invalidXmlOncreateComponent() throws Exception {
+
+        createComponent("escidoc:123", "laber-rababer");
+    }
+
+    /**
+     * Test creation of a component by calling createComponent method.
+     * 
+     * @throws Exception
+     *             Thrown if creation of component fail.
+     */
+    @Test
+    public void createComponent01() throws Exception {
+
+        // create an item an replace the value of the public-status element
+        String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
+        String xml = create(itemXml);
+        Document itemDoc = EscidocAbstractTest.getDocument(xml);
+        String itemId = getObjidValue(itemDoc);
+        String lmd = getLastModificationDateValue(itemDoc);
+
+        // prepare a component
+        Document componentDoc =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "component_for_create.xml");
+
+        // add last-modification-date
+        NamedNodeMap atts = componentDoc.getDocumentElement().getAttributes();
+        Attr newAtt = componentDoc.createAttribute("last-modification-date");
+        newAtt.setNodeValue(lmd);
+        atts.setNamedItem(newAtt);
+
+        String xml2 = createComponent(itemId, toString(componentDoc, false));
+
+        // TODO intensivate checks
+        assertXmlExists("Missing created Component", xml2, "/component/properties/valid-status[text() = 'valid']");
     }
 
 }
