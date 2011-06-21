@@ -29,12 +29,16 @@
 package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import static org.junit.Assert.fail;
@@ -152,20 +156,58 @@ public class ItemCreateTest extends ItemTestBase {
      *
      * @throws Exception Thrown if behavior is not as expected.
      */
-    @Test
+    @Test(expected=InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
 
         /*
          * The infrastructure has thrown an unexpected parser exception during
          * creation if a non XML datastructur is send (e.g. String).
          */
-        try {
-            create("laber-rababer");
-            fail("Missing Invalid XML exception");
-        }
-        catch (final InvalidXmlException e) {
-            // that's ok
-        }
+         create("laber-rababer");
+    }
+
+    /**
+     * Test invalid XML in createComponent.
+     * 
+     * @throws Exception
+     *             Thrown if behavior is not as expected.
+     */
+    @Test(expected = XmlCorruptedException.class)
+    public void invalidXmlOncreateComponent() throws Exception {
+
+        createComponent("escidoc:123", "laber-rababer");
+    }
+
+    /**
+     * Test creation of a component by calling createComponent method.
+     * 
+     * @throws Exception
+     *             Thrown if creation of component fail.
+     */
+    @Test
+    public void createComponent01() throws Exception {
+
+        // create an item an replace the value of the public-status element
+        String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
+        String xml = create(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
+        String itemId = getObjidValue(itemDoc);
+        String lmd = getLastModificationDateValue(itemDoc);
+
+        // prepare a component
+        Document componentDoc =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "component_for_create.xml");
+
+        // add last-modification-date
+        NamedNodeMap atts = componentDoc.getDocumentElement().getAttributes();
+        Attr newAtt = componentDoc.createAttribute("last-modification-date");
+        newAtt.setNodeValue(lmd);
+        atts.setNamedItem(newAtt);
+
+        String xml2 = createComponent(itemId, toString(componentDoc, false));
+
+        // TODO intensivate checks
+        assertXmlExists("Missing created Component", xml2, "/component/properties/valid-status[text() = 'valid']");
     }
 
 }
