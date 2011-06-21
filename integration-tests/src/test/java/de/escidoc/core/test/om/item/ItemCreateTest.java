@@ -31,7 +31,6 @@ package de.escidoc.core.test.om.item;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -156,7 +155,7 @@ public class ItemCreateTest extends ItemTestBase {
      *
      * @throws Exception Thrown if behavior is not as expected.
      */
-    @Test(expected=InvalidXmlException.class)
+    @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
 
         /*
