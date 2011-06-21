@@ -143,8 +143,6 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @Cacheable(cacheName = "Fedora.ObjectProfiles", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectProfileKeyGenerator"))
     public Future<ObjectProfileTO> getObjectProfileAsync(final String pid) {
         return new AsyncResult<ObjectProfileTO>(getObjectProfile(pid));
     }
@@ -160,8 +158,6 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @Cacheable(cacheName = "Fedora.DigitalObjects", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))
     public Future<DigitalObjectTO> getObjectXMLAsync(final String pid) {
         return new AsyncResult<DigitalObjectTO>(getObjectXML(pid));
     }
@@ -177,15 +173,13 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @Cacheable(cacheName = "Fedora.DigitalObjectStreams", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))
     public Future<Stream> getObjectXMLAsStreamAsync(final String pid) {
         return new AsyncResult<Stream>(getObjectXMLAsStream(pid));
     }
 
     @Override
-    @Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))
+    /*@Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))*/
     public ObjectDatastreamsTO listDatastreams(final String pid, final DateTime timestamp) {
         final ListDatastreamsPathParam path = new ListDatastreamsPathParam(pid);
         final ListDatastreamsQueryParam query = new ListDatastreamsQueryParam();
@@ -197,8 +191,6 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))
     public Future<ObjectDatastreamsTO> listDatastreamsAsync(final String pid, final DateTime timestamp) {
         return new AsyncResult<ObjectDatastreamsTO>(listDatastreams(pid, timestamp));
     }
@@ -250,11 +242,6 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @TriggersRemove(
-            cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams",
-                    "Fedora.DatastreamLists", "Fedora.DatastreamProfiles"},
-            keyGenerator = @KeyGenerator(
-                    name = "org.escidoc.core.services.fedora.internal.cache.AddDatastreamKeyGenerator"))
     public Future<DatastreamProfileTO> addDatastreamAsync(final AddDatastreamPathParam path,
                                                           final AddDatastreamQueryParam query, final Stream stream) {
         return new AsyncResult<DatastreamProfileTO>(addDatastream(path, query, stream));
@@ -276,10 +263,6 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams",
-            "Fedora.DatastreamLists", "Fedora.DatastreamProfiles"},
-            keyGenerator = @KeyGenerator(
-                    name = "org.escidoc.core.services.fedora.internal.cache.ModifyDatastreamKeyGenerator"))
     public Future<DatastreamProfileTO> modifyDatastreamAsync(final ModifiyDatastreamPathParam path,
                                                              final ModifyDatastreamQueryParam query,
                                                              final Stream stream) {
@@ -300,10 +283,6 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams",
-            "Fedora.DatastreamLists", "Fedora.DatastreamProfiles"},
-            keyGenerator = @KeyGenerator(
-                    name = "org.escidoc.core.services.fedora.internal.cache.DeleteDatastreamKeyGenerator"))
     public Future<VoidObject> deleteDatastreamAsync(final DeleteDatastreamPathParam path,
                                                     final DeleteDatastreamQueryParam query) {
         deleteDatastream(path, query);
@@ -324,10 +303,6 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams",
-            "Fedora.DatastreamLists", "Fedora.DatastreamProfiles"},
-            keyGenerator = @KeyGenerator(
-                    name = "org.escidoc.core.services.fedora.internal.cache.SetDatastreamStateKeyGenerator"))
     public Future<DatastreamProfileTO> setDatastreamStateAsync(final String pid, final String dsID,
                                                                final DatastreamState state) {
         return new AsyncResult<DatastreamProfileTO>(setDatastreamState(pid, dsID, state));
@@ -343,10 +318,7 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams",
-            "Fedora.DatastreamLists", "Fedora.DatastreamProfiles"},
-            keyGenerator = @KeyGenerator(
-                    name = "org.escidoc.core.services.fedora.internal.cache.UpdateObjectKeyGenerator"))
+    @Async
     public Future<VoidObject> updateObjectAsync(final UpdateObjectPathParam path, final UpdateObjectQueryParam query) {
         updateObject(path, query);
         return new AsyncResult<VoidObject>(VoidObject.getInstance());
@@ -364,26 +336,39 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams",
-            "Fedora.DatastreamLists", "Fedora.DatastreamProfiles"},
-            keyGenerator = @KeyGenerator(
-                    name = "org.escidoc.core.services.fedora.internal.cache.DeleteObjectKeyGenerator"))
+    @Async
     public Future<VoidObject> deleteObjectAsync(final String pid) {
         deleteObject(pid);
         return new AsyncResult<VoidObject>(VoidObject.getInstance());
     }
 
     @Override
+    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams",
+            "Fedora.DatastreamLists", "Fedora.DatastreamProfiles"},
+            keyGenerator = @KeyGenerator(
+                    name = "org.escidoc.core.services.fedora.internal.cache.IngestKeyGenerator"))
     public String ingest(final IngestPathParam path, final IngestQueryParam query,
                          final DigitalObjectTO digitalObjectTO) {
         return this.fedoraService.ingest(path, query, digitalObjectTO);
     }
+
+    @Override
+    @Async
+    public Future<String> ingestAsync(final IngestPathParam path, final IngestQueryParam query,
+                                      final DigitalObjectTO digitalObjectTO) {
+        return new AsyncResult<String>(ingest(path, query, digitalObjectTO));
+    }
+
 
     /**
      * FIXME Fix {@link FedoraServiceClientImpl#ingest(IngestPathParam, IngestQueryParam, DigitalObjectTO)} and remove
      * this method.
      */
     @Override
+    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams",
+            "Fedora.DatastreamLists", "Fedora.DatastreamProfiles"},
+            keyGenerator = @KeyGenerator(
+                    name = "org.escidoc.core.services.fedora.internal.cache.IngestKeyGenerator"))
     public String ingest(final IngestPathParam path, final IngestQueryParam query, final String foxml) {
         final Stream stream = new Stream();
         try {
@@ -393,13 +378,6 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
         } catch(final IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    @Async
-    public Future<String> ingestAsync(final IngestPathParam path, final IngestQueryParam query,
-                                      final DigitalObjectTO digitalObjectTO) {
-        return new AsyncResult<String>(ingest(path, query, digitalObjectTO));
     }
 
     @Override
@@ -521,8 +499,8 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @Cacheable(cacheName = "Fedora.DatastreamProfiles", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamProfilesKeyGenerator"))
+    /*@Cacheable(cacheName = "Fedora.DatastreamProfiles", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamProfilesKeyGenerator"))*/
     public List<DatastreamProfileTO> getDatastreamProfiles(final String pid, final DateTime timestamp) {
         final List<DatastreamProfileTO> result = new ArrayList<DatastreamProfileTO>();
         final ObjectDatastreamsTO datastreams = listDatastreams(pid, timestamp);
@@ -537,15 +515,13 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @Cacheable(cacheName = "Fedora.DatastreamProfiles", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamProfilesKeyGenerator"))
     public Future<List<DatastreamProfileTO>> getDatastreamProfilesAsync(final String pid, final DateTime timestamp) {
         return new AsyncResult<List<DatastreamProfileTO>>(getDatastreamProfiles(pid, timestamp));
     }
 
     @Override
-    @Cacheable(cacheName = "Fedora.DatastreamProfiles", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamProfilesKeyGenerator"))
+    /*@Cacheable(cacheName = "Fedora.DatastreamProfiles", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamProfilesKeyGenerator"))*/
     public List<DatastreamProfileTO> getDatastreamProfilesByAltId(final String pid, final String altId,
                                                                   final DateTime timestamp) {
         final List<DatastreamProfileTO> result = new ArrayList<DatastreamProfileTO>();
@@ -567,8 +543,6 @@ public class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    @Cacheable(cacheName = "Fedora.DatastreamProfiles", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamProfilesKeyGenerator"))
     public Future<List<DatastreamProfileTO>> getDatastreamProfilesByAltIdAsync(final String pid, final String altId,
                                                                                final DateTime timestamp) {
         return new AsyncResult<List<DatastreamProfileTO>>(getDatastreamProfilesByAltId(pid, altId, timestamp));

@@ -50,7 +50,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.jboss.mq.il.uil2.msgs.CreateDestMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -391,8 +390,7 @@ public class Login extends HttpServlet {
 
     /**
      * Login a user for that a user account resource exists.<br> This method creates the new {@link UserLoginData} and
-     * redirects the user to the target. If an exception is thrown during handling this request, the {@link
-     * CreateDestMsg} {@link UserLoginData} is deleted.
+     * redirects the user to the target.
      *
      * @param request     Request.
      * @param response    Response.
