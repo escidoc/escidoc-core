@@ -40,7 +40,6 @@ import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticL
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
-import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -65,7 +64,7 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
- *
+ * 
  * @author Michael Schneider
  */
 public class ItemUpdateIT extends ItemTestBase {
@@ -82,8 +81,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -158,8 +158,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Tests successfully updating an Item adding a component with 'escidoc' metadata record.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddComponentWithEscidocMdRecord() throws Exception {
@@ -207,8 +208,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Test successfully adding an Component with md-record to an Item without Components.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddComponentWithMdRecord02() throws Exception {
@@ -234,8 +236,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Test update Item without id (id= null).
-     *
-     * @throws Exception If framework
+     * 
+     * @throws Exception
+     *             If framework
      */
     @Test
     public void testUpdateWithNullId() throws Exception {
@@ -250,7 +253,7 @@ public class ItemUpdateIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
@@ -291,8 +294,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Tests successfully updating metadata record of an item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_UCI_1() throws Exception {
@@ -335,8 +339,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Tests successfully updating 'escidoc' metadata record of an item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_UCI_1_3() throws Exception {
@@ -390,8 +395,9 @@ public class ItemUpdateIT extends ItemTestBase {
      * Check the DC Mapping. A Metadata Record 'escidoc' is created. The md-record is converted to DC data stream by
      * framework. DC elements are put into TripleStore by Fedora. These test checks the Mapping indirectly by requesting
      * the TripleStore.
-     *
-     * @throws Exception Thrown if DC mapping fails.
+     * 
+     * @throws Exception
+     *             Thrown if DC mapping fails.
      */
     @Test
     public void testDcMapping() throws Exception {
@@ -452,8 +458,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Tests updating item with revision/public-status=withdrawn.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_UCI_3() throws Exception {
@@ -473,8 +480,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Change existing Component with new one.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_UCI_2() throws Exception {
@@ -536,8 +544,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Delete one of two existing Components with update item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_UCI_2_1() throws Exception {
@@ -585,8 +594,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Add two Components with content href.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_UCI_2_2() throws Exception {
@@ -630,8 +640,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Add one Component with content inline and two md-records.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_UCI_2_4() throws Exception {
@@ -639,11 +650,9 @@ public class ItemUpdateIT extends ItemTestBase {
         Document curItem = EscidocAbstractTest.getDocument(theItemXml);
 
         /*
-         * If you test Components, please be aware that the order of Component
-         * is not defined. This means that the latest added Component has not to
-         * be the latest in the representation. The only way to differ
-         * Components are objids (or href). I know this is sometimes
-         * inconvenient, espacially if the objid is added by framework.
+         * If you test Components, please be aware that the order of Component is not defined. This means that the
+         * latest added Component has not to be the latest in the representation. The only way to differ Components are
+         * objids (or href). I know this is sometimes inconvenient, espacially if the objid is added by framework.
          */
 
         // obtain objids of existing Components
@@ -713,8 +722,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Add Component with content inline.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_UCI_2_3() throws Exception {
@@ -754,8 +764,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Item with missing ContextID.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_UCI_4_1() throws Exception {
@@ -780,14 +791,16 @@ public class ItemUpdateIT extends ItemTestBase {
 
         newItemXml = toString(item, false);
         xml = update(theItemId, newItemXml);
+        assertXmlValidItem(xml);
     }
 
     /**
      * Item with missing escidoc internal metadata.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMdRecordException.class)
     public void testOM_UCI_4_2() throws Exception {
         Document item = EscidocAbstractTest.getDocument(theItemXml);
         // Node newItem = deleteElement(item,
@@ -795,19 +808,14 @@ public class ItemUpdateIT extends ItemTestBase {
         Node newItem = substitute(item, "/item/md-records/md-record/@name", "codicse");
 
         String newItemXml = toString(newItem, true);
-        try {
-            update(theItemId, newItemXml);
-        }
-        catch (final Exception e) {
-            Class<?> ec = MissingMdRecordException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
+        update(theItemId, newItemXml);
     }
 
     /**
      * Delete all components by update item without components element.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testItemWithoutComponents() throws Exception {
@@ -832,8 +840,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Delete all components by update item without any component element.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testItemWithoutComponent() throws Exception {
@@ -859,8 +868,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Item does not validate against Schema.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Ignore("Item does not validate against Schema - test not yet implemented")
     @Test
@@ -870,8 +880,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Correct Item with one Component (binary content inline)
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Ignore("Correct Item with one Component (binary content inline) - test not yet implemented")
     @Test
@@ -881,8 +892,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Correct Item with one Component (binary content link)
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Ignore("Correct Item with one Component (binary content link) - test not yet implemented")
     @Test
@@ -893,10 +905,11 @@ public class ItemUpdateIT extends ItemTestBase {
     /**
      * Optimistic locking test: LastModification timestamp of the XML item is older than the LastModification timestamp
      * in the system - update not allowed.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = OptimisticLockingException.class)
     public void testOM_UCI_7_1() throws Exception {
 
         Document item = EscidocAbstractTest.getDocument(theItemXml);
@@ -913,40 +926,29 @@ public class ItemUpdateIT extends ItemTestBase {
         // ""));
         newAtt.setNodeValue("1970-01-01T00:00:00.000Z");
         atts.setNamedItem(newAtt);
-        Class ec = OptimisticLockingException.class;
-        try {
-            update(theItemId, toString(item, false));
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
 
+        update(theItemId, toString(item, false));
     }
 
     /**
      * Nonexisting ID for Item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = ItemNotFoundException.class)
     public void testOM_UCI_8_1() throws Exception {
-        try {
-            update("test", theItemXml);
-        }
-        catch (final ItemNotFoundException e) {
-            return;
-        }
-        fail("Not expected exception");
 
+        update("test", theItemXml);
     }
 
     /**
      * Component with given id does not exist. Item with nonexisting ID for Component [creates a new component]
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = InvalidContentException.class)
     public void testOM_UCI_8_2() throws Exception {
 
         Document curItem = EscidocAbstractTest.getDocument(theItemXml);
@@ -961,19 +963,15 @@ public class ItemUpdateIT extends ItemTestBase {
         hrefNode.setNodeValue(hrefNewVal);
         newItem = substitute(curItem, "/item/components/component[1]/@href", hrefNewVal);
         String newItemXml = toString(newItem, true);
-        try {
-            update(theItemId, newItemXml);
-        }
-        catch (final Exception e) {
-            Class ec = InvalidContentException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
+
+        update(theItemId, newItemXml);
     }
 
     /**
      * Incorrect Component: Inline File(s) too big
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Ignore("Incorrect Component: Inline File(s) too big - test not yet implemented")
     @Test
@@ -983,56 +981,52 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Incorrect Component: binary content link is not valid (HTTP 404).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = FileNotFoundException.class)
     public void testOM_UCI_10_2() throws Exception {
         Document newItem = EscidocAbstractTest.getDocument(theItemXml);
         Node itemWithWrongContentHref =
             substitute(newItem, "/item/components/component/content[1]/@href", "http://localhost/bla");
         String xmlItemWithWrongContentHref = toString(itemWithWrongContentHref, true);
-        try {
-            update(theItemId, xmlItemWithWrongContentHref);
-            fail("No exception on update with wrong content href.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = FileNotFoundException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
+
+        update(theItemId, xmlItemWithWrongContentHref);
     }
 
-    // /**
-    // * Update binary content by link
-    // *
-    // * @test.name Update Component content by href
-    // * @test.id OM_UCI_10-3
-    // * @test.input XML item with Component with new binary content link
-    // * @test.expected Error message
-    // *
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // @Test
-    // public void testOM_UCI_10_3() throws Exception {
-    // Document newItem = getDocument(theItemXml);
-    // Node itemWithNewContentHref = substitute(newItem,
-    // "/item/components/component/content[1]/@href",
-    // "http://"+Constants.HOST_PORT+"/images/escidoc-logo.jpg");
-    // String xmlItemWithNewContentHref = toString(itemWithNewContentHref,
-    // true);
-    //
-    // String xml = update(theItemId, xmlItemWithNewContentHref);
-    //
-    // // TODO check binary content
-    // }
+    /**
+     * Update binary content by link
+     * 
+     * @test.name Update Component content by href
+     * @test.id OM_UCI_10-3
+     * @test.input XML item with Component with new binary content link
+     * @test.expected Error message
+     * 
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    @Ignore
+    public void testOM_UCI_10_3() throws Exception {
+        Document newItem = getDocument(theItemXml);
+        Node itemWithNewContentHref =
+            substitute(newItem, "/item/components/component/content[1]/@href",
+                "http://localhost:8080/images/escidoc-logo.jpg");
+        String xmlItemWithNewContentHref = toString(itemWithNewContentHref, true);
+
+        String xml = update(theItemId, xmlItemWithNewContentHref);
+
+        // TODO check binary content
+    }
 
     /**
      * Item with set readonly element.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_UCI_12() throws Exception {
@@ -1040,6 +1034,7 @@ public class ItemUpdateIT extends ItemTestBase {
         Node itemWithWrongCreationdate =
             substitute(newItem, "/item/properties/creation-date", "1970-01-01T00:00:00.000Z");
         String xmlItemWithWrongCreationdate = toString(itemWithWrongCreationdate, true);
+
         try {
             String xml = update(theItemId, xmlItemWithWrongCreationdate);
         }
@@ -1850,8 +1845,9 @@ public class ItemUpdateIT extends ItemTestBase {
     /**
      * Test successfully updating an item. The first update deletes one optional md-record, the second update add the
      * md-record with the same value of the attribute 'name' again.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddExistingMdrecordWhileUpdate() throws Exception {
@@ -1895,8 +1891,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Test successfully adding of a new optional md-record to an item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddNewMdrecordWhileUpdate() throws Exception {
@@ -1993,8 +1990,9 @@ public class ItemUpdateIT extends ItemTestBase {
     /**
      * Test successfully updating an item. The first update deletes one optional component md-record, the second update
      * add the md-record with the same value of the attribute 'name' to this component again.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddExistingComponentMdrecordWhileUpdate() throws Exception {
@@ -2039,8 +2037,9 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Test successfully adding of a new optional md-record to a component.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddNewMdrecordToComponentWhileUpdate() throws Exception {
@@ -2086,8 +2085,9 @@ public class ItemUpdateIT extends ItemTestBase {
     /**
      * Tests successfully updating 'escidoc' metadata record of an component. Update of escidoc md-record should cause
      * the update of a component property "file-name"
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testUpdateComponentEscidocMdRecord() throws Exception {
@@ -2095,12 +2095,11 @@ public class ItemUpdateIT extends ItemTestBase {
         // changed from retrieve/update metadata to retrieve/update with
         // metadata (2007-01-25, FRS)
         Document item = getDocument(theItemXml, true);
-        String componentId = null;
         String fileNamePath = null;
         String mdXPath = null;
         String mdRecordName = "escidoc";
         String href = selectSingleNode(item, "item/components/component[1]/@href").getNodeValue();
-        componentId = getObjidFromHref(href);
+        String componentId = getObjidFromHref(href);
         mdXPath =
             "/item/components/component[@href='" + href + "']/md-records/md-record[@name='" + mdRecordName
                 + "']/publication/title";
@@ -2129,8 +2128,9 @@ public class ItemUpdateIT extends ItemTestBase {
     /**
      * Tests successfully updating 'escidoc' metadata record of an component. Update of escidoc md-record should cause
      * the update of a component property "file-name"
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testUpdateComponentEscidocMdRecord02() throws Exception {
@@ -2141,17 +2141,14 @@ public class ItemUpdateIT extends ItemTestBase {
 
         Document item = getDocument(itemXml, true);
         String itemId = getObjidValue(itemXml);
-        String componentId = null;
-        String fileNamePath = null;
-        String mdXPath = null;
         String mdRecordName = "escidoc";
 
         String href = selectSingleNode(item, "item/components/component[1]/@href").getNodeValue();
-        componentId = getObjidFromHref(href);
-        mdXPath =
+        String componentId = getObjidFromHref(href);
+        String mdXPath =
             "/item/components/component[@href='" + href + "']/md-records/md-record[@name='" + mdRecordName
                 + "']/publication/title";
-        fileNamePath = "/item/components/component[@href='" + href + "']/properties/file-name";
+        String fileNamePath = "/item/components/component[@href='" + href + "']/properties/file-name";
 
         String oldTitleValue = selectSingleNode(item, mdXPath).getTextContent().trim();
         String oldFileName = selectSingleNode(item, fileNamePath).getTextContent().trim();
@@ -2173,7 +2170,58 @@ public class ItemUpdateIT extends ItemTestBase {
         String newFileName = selectSingleNode(updateDocument, fileNamePath).getTextContent();
 
         assertEquals("file name and md-record.title are not equal", newTitleValue.trim(), newFileName);
+    }
 
+    /**
+     * Tests to add a md-record to a component which had no md-record before.
+     * 
+     * @see INFR-1151
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testUpdateComponentEscidocMdRecord03() throws Exception {
+
+        Document itemDoc =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_1_component.xml");
+
+        // remove md-records from component
+        Node delMdRecord = selectSingleNode(itemDoc, "/item/components/component/md-records");
+        delMdRecord.getParentNode().removeChild(delMdRecord);
+
+        itemDoc.normalize();
+
+        String tmpl = toString(itemDoc, false);
+        String itemXml = create(tmpl);
+
+        // add md-record to the component
+        Document itemDoc2 = EscidocAbstractTest.getDocument(itemXml);
+        String itemId = getObjidValue(itemDoc2);
+
+        Element mdRecord =
+            itemDoc2.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
+                "escidocMetadataRecords:md-record");
+        mdRecord.setAttribute("name", "name1");
+        mdRecord.setAttribute("schema", "bla");
+        Element mdRecordContent = itemDoc2.createElement("bla");
+        mdRecord.appendChild(mdRecordContent);
+
+        Element mdRecords =
+            itemDoc2.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
+                "escidocMetadataRecords:md-records");
+        mdRecords.appendChild(mdRecord);
+        selectSingleNode(itemDoc2, "/item/components/component[1]").appendChild(mdRecords);
+        String newXml = toString(itemDoc2, true);
+
+        String itemXmlV2 = update(itemId, newXml);
+        assertXmlValidItem(itemXmlV2);
+
+        // assert values
+        Document itemDoc3 = getDocument(itemXmlV2, true);
+        String mdXPath = "/item/components/component[1]/md-records/md-record[@name='name1']/bla";
+
+        assertNotNull("missing node", selectSingleNode(itemDoc3, mdXPath));
     }
 
     /**
@@ -2248,7 +2296,7 @@ public class ItemUpdateIT extends ItemTestBase {
         final String item2Xml = update(itemId, addComponent(item1Xml));
         final String item3Xml = update(itemId, addComponent(item2Xml));
 
-        // update 
+        // update
         String lmd = getLastModificationDateValue(getDocument(item3Xml));
         final String restoreItem1Xml =
             update(itemId, toString(substitute(getDocument(item1Xml), "/item/@last-modification-date", lmd), false));
@@ -2266,7 +2314,7 @@ public class ItemUpdateIT extends ItemTestBase {
 
     /**
      * Obatins Component Ids from Item.
-     *
+     * 
      * @return Vector with objids of Component.
      */
     private Vector<String> obtainComponentIds(Document curItem) throws TransformerException {
