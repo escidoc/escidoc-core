@@ -34,10 +34,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.test.EscidocAbstractTest;
 
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -112,7 +109,7 @@ public class IngestIT extends IngestTestBase {
      *             <li>No exception is thrown because object PID is missing</li>
      *             </ul>
      */
-    @Test
+    @Test(expected = InvalidStatusException.class)
     public void testIngestReleasedItem01() throws Exception {
 
         Document toBeCreatedDocument =
@@ -127,14 +124,7 @@ public class IngestIT extends IngestTestBase {
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
-        try {
-            ingest(toBeCreatedXml);
-            fail("Exception for missing object PID wasn't thrown.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = InvalidStatusException.class;
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        ingest(toBeCreatedXml);
     }
 
     /**
@@ -345,7 +335,7 @@ public class IngestIT extends IngestTestBase {
      *             <li>No exception is thrown because object PID is missing</li>
      *             </ul>
      */
-    @Test
+    @Test(expected = InvalidStatusException.class)
     public void testIngestReleasedContainer01() throws Exception {
 
         Document toBeCreatedDocument =
@@ -363,14 +353,7 @@ public class IngestIT extends IngestTestBase {
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
-        try {
-            ingest(toBeCreatedXml);
-            fail("Exception for missing object PID wasn't thrown.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = InvalidStatusException.class;
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        ingest(toBeCreatedXml);
     }
 
     /**
