@@ -64,7 +64,7 @@ import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 
 /**
  * Test the mock implementation of the item resource.
- *
+ * 
  * @author Michael Schneider
  */
 public class ItemIT extends ItemTestBase {
@@ -72,7 +72,7 @@ public class ItemIT extends ItemTestBase {
     private String theItemId = null;
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
@@ -92,7 +92,7 @@ public class ItemIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
@@ -163,7 +163,7 @@ public class ItemIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
@@ -184,7 +184,7 @@ public class ItemIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
@@ -205,7 +205,7 @@ public class ItemIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
@@ -238,7 +238,7 @@ public class ItemIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
@@ -281,8 +281,9 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test successfully creating content item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMCi1a() throws Exception {
@@ -385,8 +386,9 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test successfully creating duplicate content item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMCi1b() throws Exception {
@@ -416,13 +418,12 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test declining creating an item without specifying the content model id, using data provided for issue 365.
-     *
-     * @throws Exception Thrown if anything fails.
+     * 
+     * @throws Exception
+     *             Thrown if anything fails.
      */
-    @Test
+    @Test(expected = XmlCorruptedException.class)
     public void testOMCi_issue365() throws Exception {
-
-        final Class<?> ec = XmlCorruptedException.class;
 
         Document toBeCreatedDocument =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
@@ -432,24 +433,17 @@ public class ItemIT extends ItemTestBase {
 
         String toBeCreatedXml = toString(toBeCreatedDocument, true);
 
-        try {
-            create(toBeCreatedXml);
-            EscidocAbstractTest
-                .failMissingException("Creating item with empty content-model element not declined.", ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Creating item with empty content-model element not declined"
-                + ", properly", ec, e);
-        }
-
+        create(toBeCreatedXml);
+        // if not fail: Creating item with empty content-model element not declined.
     }
 
     /**
      * Test declining creating content item with missing Context ID.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingAttributeValueException.class)
     public void testOMCi2a() throws Exception {
         Document xmlItem =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
@@ -459,21 +453,16 @@ public class ItemIT extends ItemTestBase {
 
         String itemWithoutContextId = toString(xmlItemWithoutContextId, true);
 
-        try {
-            String xml = create(itemWithoutContextId);
-        }
-        catch (final MissingAttributeValueException e) {
-            return;
-        }
-        fail("Not expected exception");
+        create(itemWithoutContextId);
     }
 
     /**
      * Test declining creating content item with missing Content Type.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlCorruptedException.class)
     public void testOMCi2b() throws Exception {
         Document xmlItem =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
@@ -482,22 +471,16 @@ public class ItemIT extends ItemTestBase {
 
         String itemWithoutContentType = toString(xmlItemWithoutContentType, true);
 
-        Class<?> ec = XmlCorruptedException.class;
-        try {
-            String xml = create(itemWithoutContentType);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        create(itemWithoutContentType);
     }
 
     /**
      * Test declining creating content item without any md-record.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOMCi2c() throws Exception {
         Document xmlItem =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
@@ -507,20 +490,14 @@ public class ItemIT extends ItemTestBase {
 
         String itemWithoutEscidocMetadata = toString(xmlItemWithoutEscidocMetadata, true);
 
-        Class<?> ec = XmlSchemaValidationException.class;
-        try {
-            String xml = create(itemWithoutEscidocMetadata);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        create(itemWithoutEscidocMetadata);
     }
 
     /**
      * Test declining creating content item with missing Escidoc Internal Metadata Set.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMCi2e() throws Exception {
@@ -547,10 +524,11 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test declining creating content item with not existing Context.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = ContextNotFoundException.class)
     public void testOMCi3a() throws Exception {
 
         Document xmlItem =
@@ -561,20 +539,14 @@ public class ItemIT extends ItemTestBase {
         xmlItemWithNotExistingContext = substitute(xmlItemWithoutComponents, "/item/properties/context/@href", "bla");
         String itemWithNotExistingContext = toString(xmlItemWithNotExistingContext, true);
 
-        Class<?> ec = ContextNotFoundException.class;
-        try {
-            create(itemWithNotExistingContext);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        create(itemWithNotExistingContext);
     }
 
     /**
      * Test successfully creating content item with one Content Component.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMCi4() throws Exception {
@@ -702,8 +674,9 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test successfully creating content item with two Content Components.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMCi5() throws Exception {
@@ -847,8 +820,9 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test successfully creating content item with one Content Component.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMCi8() throws Exception {
@@ -962,8 +936,9 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test successfully creating content item with two Content Components.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMCi9() throws Exception {
@@ -1102,8 +1077,9 @@ public class ItemIT extends ItemTestBase {
     /**
      * Test successfully creating content item with two Content Components, The first component does not contain
      * md-records.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testCreateItemWithFirstComponendWithoutMdRecords() throws Exception {
@@ -1133,10 +1109,11 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test declining creating content item and Content Component with wrong href.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = FileNotFoundException.class)
     public void testOMCi12a() throws Exception {
         Document xmlItem =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
@@ -1145,21 +1122,14 @@ public class ItemIT extends ItemTestBase {
             substitute(xmlItemWithoutFirstComponent, "/item/components/component/content/@href", "http://localhost/bla");
 
         String itemWithWrongtHrefContent = toString(xmiItemWithWrongtHrefContent, true);
-        try {
-            create(itemWithWrongtHrefContent);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("", FileNotFoundException.class, e);
-
-            return;
-        }
-        fail("Not expected exception");
+        create(itemWithWrongtHrefContent);
     }
 
     /**
      * Test declining creating content item without content components - item xml with set read only element.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMCi12e() throws Exception {
@@ -1299,7 +1269,7 @@ public class ItemIT extends ItemTestBase {
     /**
      * Test declining creating item with relations, whose targets references non existing resources.
      */
-    @Test
+    @Test(expected = ReferencedResourceNotFoundException.class)
     public void testRelationsWithWrongTarget() throws Exception {
 
         String createdItemId1 = "bla1";
@@ -1319,14 +1289,8 @@ public class ItemIT extends ItemTestBase {
         Node xmlItemWithoutComponents = deleteElement(itemForCreateWithRelations, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
 
-        try {
-            create(itemWithoutComponents);
-            fail("No exception occured on item created with relations, which " + " references non existing targets.");
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("ReferencedResourceNotFound expected.",
-                ReferencedResourceNotFoundException.class, e);
-        }
+        create(itemWithoutComponents);
+        // if not fail: No exception occurred on item created with relations, which references non existing targets.
     }
 
     /**
@@ -1466,8 +1430,9 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test successfully creatig of an item with 2 md-records.
-     *
-     * @throws Exception Thrown if anything failed.
+     * 
+     * @throws Exception
+     *             Thrown if anything failed.
      */
     @Test
     public void testCreateItemWith2Mdrecords() throws Exception {
@@ -1489,8 +1454,9 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test decleaning creatig of an item with 2 escidoc md-records.
-     *
-     * @throws Exception Thrown if anything failed.
+     * 
+     * @throws Exception
+     *             Thrown if anything failed.
      */
     @Test
     public void testCreateItemWith2EscidocMdrecords() throws Exception {
@@ -1510,8 +1476,9 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test decleaning create an item without md-records.
-     *
-     * @throws Exception Thrown if anything failed.
+     * 
+     * @throws Exception
+     *             Thrown if anything failed.
      */
     @Test
     public void testCreateItemWithoutMdrecords() throws Exception {
@@ -1536,8 +1503,9 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test deleting component via deleteComponent method.
-     *
-     * @throws Exception Thrown if anything failed.
+     * 
+     * @throws Exception
+     *             Thrown if anything failed.
      */
     @Test
     public void testDeleteComponent01() throws Exception {
@@ -1566,8 +1534,9 @@ public class ItemIT extends ItemTestBase {
 
     /**
      * Test delete of not existing component via deleteComponent method.
-     *
-     * @throws Exception Thrown if anything failed.
+     * 
+     * @throws Exception
+     *             Thrown if anything failed.
      */
     @Test
     public void testDeleteComponent02() throws Exception {
@@ -1653,28 +1622,26 @@ public class ItemIT extends ItemTestBase {
         }
     }
 
-    @Test
+    /**
+     * Test creating Item with null parameter.
+     * 
+     * @throws Exception
+     */
+    @Test(expected = MissingMethodParameterException.class)
     public void testCreateWithNullInput() throws Exception {
-        try {
 
-            create(null);
-        }
-        catch (final MissingMethodParameterException e) {
-            return;
-        }
-        fail("Not expected exception");
+        create(null);
     }
 
     /**
      * Test declining creation of Item with providing reference to context with invalid href (substring context not in
      * href).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = ContextNotFoundException.class)
     public void testOMCi13_1_rest() throws Exception {
-
-        final Class<?> ec = ContextNotFoundException.class;
 
         Document toBeCreatedDocument =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
@@ -1687,26 +1654,19 @@ public class ItemIT extends ItemTestBase {
 
         String toBeCreatedXml = toString(toBeCreatedDocument, true);
 
-        try {
-            create(toBeCreatedXml);
-            EscidocAbstractTest.failMissingException("Creating item with invalid object href not declined. ", ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Creating item with invalid object href not declined,"
-                + " properly. ", ec, e);
-        }
+        create(toBeCreatedXml);
+        // if fail: "Creating item with invalid object href not declined.
     }
 
     /**
      * Test declining creation of Item with providing reference to content-model with invalid href (substring
      * content-model not in href).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = ContentModelNotFoundException.class)
     public void testOMCi13_2_rest() throws Exception {
-
-        final Class ec = ContentModelNotFoundException.class;
 
         Document toBeCreatedDocument =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
@@ -1719,14 +1679,8 @@ public class ItemIT extends ItemTestBase {
 
         String toBeCreatedXml = toString(toBeCreatedDocument, true);
 
-        try {
-            create(toBeCreatedXml);
-            EscidocAbstractTest.failMissingException("Creating item with invalid object href not declined. ", ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Creating item with invalid object href not declined,"
-                + " properly. ", ec, e);
-        }
+        create(toBeCreatedXml);
+        // if fail: Creating item with invalid object href not declined.
     }
 
 }
