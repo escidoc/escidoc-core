@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ CDDL HEADER START
   ~
@@ -20,50 +21,49 @@
 
 <section id="Overview.AaSoap">
 	<title>Authentication and Authorization</title>
+
+  <para>Access to most of the eSciDoc services is protected. User requests
+    have to be authorized before they are granted. Exceptions are the 
+    Search service and the Statistic Data service, which are unprotected.
+  </para>
+     
+	  <para>
+  	After a successful authentication, the Authentication and Authorization 
+  	Manager returns an eSciDoc user handle in the response, 
+    which has to be provided by the application with every subsequent 
+    method invocation throughout the user session. The eSciDoc user handle 
+    expires after a user-definable period of inacitivty. This period may
+    be set in the <literal>escidoc-core.custom.properties</literal> 
+    configuration file.
+  </para>
+
 		<para>
-			The access to most of the eSciDoc base services is proteced.
-			The user performing a request is authenticated and the
-			request is authorized, before it is executed. To
-			authenticate the current user, the eSciDoc user handle
-			identifying the user's account within eSciDoc has to be
-			provided within the request.
-		</para>
-		<para>
-			This is true for all services except the search service that
-			is unprotected. Therefore, everyone is allowed to perform a
-			search request.
-		</para>
-		<para>
-			<emphasis role="bold">Providing the eSciDoc User Handle</emphasis>
-		</para>
-		<para>
-			The SOAP interface uses webservice security (wss4j) to
-			protect the access to the methods of the base services.
-			A technical user name (eSciDocUser) and the eSciDoc user
-			handle that identifies the user's account must be
-			provided using the
-			<emphasis>UsernameToken</emphasis>
-			parameters. The technical user name has to be provided
-			in the user name parameter (
-			<emphasis>user</emphasis>
-			), and the eSciDoc user handle has to be provided in the
-			password parameter.
+			The SOAP interface uses Apache WSS4J<footnote id="wss4j"><para>see 
+			http://ws.apache.org/wss4j/</para></footnote> that implements the 
+			OASIS Web Services Security (WS-Security) standard<footnote 
+		  id="WsSecurity"><para>defined by the OASIS Web Services Security TC, 
+		  see http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=wss</para>
+		  </footnote> to protect the access to the methods of the base services.
+			A technical user name (<code>eSciDocUser</code>) and the eSciDoc user
+			handle that identifies the User Account has to be provided using the
+			<code>UsernameToken</code> parameters. The technical user name has to 
+			be provided in the user name parameter (<code>user</code>), and the 
+			eSciDoc user handle has to be provided in the password parameter.
 		</para>
 		<para>
 			The deployment descriptor of a client should look like
-			shown in the following example:
-			<programlisting>
-				<![CDATA[
+			the following example:
+			<programlisting><![CDATA[
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" 
-  xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
   <transport name="http" 
-             pivot="java:org.apache.axis.transport.http.HTTPSender"/>
+      pivot="java:org.apache.axis.transport.http.HTTPSender"/>
   <globalConfiguration >
     <requestFlow >
-      <handler type="java:org.apache.ws.axis.security.WSDoAllSender" >
+      <handler type="java:org.apache.ws.axis.security.WSDoAllSender">
         <parameter name="action" value="UsernameToken"/>
         <parameter name="passwordCallbackClass" 
-                   value="de.escidoc.core.test.security.client.PWCallback"/>
+            value="de.escidoc.core.test.security.client.PWCallback"/>
         <parameter name="passwordType" value="PasswordText"/>
         <parameter name="user" value="eSciDocUser"/>
         <parameter name="addUTElement" value="Nonce Created" />
@@ -71,37 +71,59 @@
     </requestFlow >
   </globalConfiguration >
 </deployment>
-					]]>
-			</programlisting>
+			]]></programlisting>
 		</para>
 		<para>
-			The
-			<emphasis>passwordCallbackClass</emphasis>
-			should point to the client's implementation of a
-			(password) callback handler. This handler implementation
-			has to determine the eSciDoc user handle and inject it
-			into the request as the password parameter.
+			The <code>passwordCallbackClass</code> should point to the client's 
+			implementation of a (password) callback handler. This handler 
+			implementation has to determine the eSciDoc user handle and inject 
+			it into the request as the password parameter.
 		</para>
 		<para>
-			In case of a failed authentication or authorization, the
-			services throw an
-			<emphasis>
-				de.escidoc.core.common.exceptions.application.security.AuthenticationException
-			</emphasis>
-			or
-			<emphasis>
-				de.escidoc.core.common.exceptions.application.security.AuthorizationException
-			</emphasis>
-			. These exceptions include the location of the eSciDoc
+			In case of a failed authentication or authorization, the services 
+			throw one of the following exceptions:
+			<itemizedlist>
+				<listitem>
+			    <code>de.escidoc.core.common.exceptions.application.security.AuthenticationException</code>
+				</listitem>
+
+				<listitem>
+			    <code>de.escidoc.core.common.exceptions.application.security.AuthorizationException</code>
+				</listitem>
+			</itemizedlist>
+			These exceptions include the location of the eSciDoc
 			user management wrapper that enables the login of the
 			user. This location can be retrieved from the exception
 			by calling the getter method
-			<emphasis>getRedirectLocation</emphasis>
-			.
+			<code>getRedirectLocation()</code>.
 		</para>
-		<para>
-			Note: The eSciDoc user management wrapper provides the
-			login of the user via REST, only (see the concept of
-			user management).
-		</para>
+
+  <para>
+  	<informaltable frame="topbot" colsep="0">
+      <tgroup cols="2">
+      <colspec colwidth="2.5cm"/>
+      <colspec colwidth="12.3cm"/>
+        <tbody>
+          <row rowsep="0">
+            <entry>
+            	<inlinemediaobject>
+                <imageobject>
+                  <imagedata depth="2.0cm" fileref="note.png" />
+                </imageobject>
+              </inlinemediaobject>
+            </entry>
+ 
+            <entry>
+            	<para><emphasis role="bold">Hint</emphasis></para>
+              <para>The eSciDoc user management wrapper provides the
+			          login of the user via REST, only (for futher details,
+			          please refer to the Authentication and Authorization 
+			          Manager API documentation.
+              </para>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+  </para>
 </section>

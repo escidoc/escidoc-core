@@ -31,7 +31,7 @@
 
     <para><emphasis role="bold">Searches</emphasis> are configurable via configuration-files
     and can contain configurable search-fields. 
-    Search can be configured for all resources stored in fedora. 
+    Search can be configured for all resources stored in Fedora. 
     If configured, access policies are evaluated for each resource in the
     answer set. The answer set will only contain those resources the user has
     access to.
@@ -51,14 +51,17 @@
     the APIs of the respective resource services. They always retrieve
     resources of the same type, i.e. the filter method of the Item service
     will always retrieve Item representations exclusively. An exception to
-    this rule are the <literal>retrieveMembers()</literal> methods in the
+    this rule are the <code>retrieveMembers()</code> methods in the
     Context and Container service: the result list may contain both Items and
     Containers.</para>
 
     <para>The following services provide filter methods: <informaltable
         frame="all">
         <tgroup cols="3">
-          <thead>
+         <colspec colwidth="4.1cm" />
+         <colspec colwidth="7.4cm" />
+         <colspec colwidth="3.3cm" />
+         <thead>
             <row>
               <entry>Service</entry>
 
@@ -72,126 +75,149 @@
             <row>
               <entry>Context</entry>
 
-              <entry><simplelist columns="1" type="vert">
-                  <member><literal>retrieveContexts()</literal></member>
+              <entry>
+                <code>
+                  <literallayout>retrieveContexts()
+retrieveMembers()
+retrieveContentRelations()</literallayout>
+                </code>
+              </entry>
 
-                  <member><literal>retrieveMembers()</literal></member>
-                </simplelist></entry>
-
-              <entry><literal>ir</literal></entry>
+              <entry><code>ir</code></entry>
             </row>
 
             <row>
               <entry>Container</entry>
 
-              <entry><simplelist columns="1" type="vert">
-                  <member><literal>retrieveContainers()</literal></member>
+              <entry>
+                <code>
+                  <literallayout>retrieveContainers()
+retrieveMembers()
+retrieveTocs()
+retrieveContentRelations()</literallayout>
+                </code>
+              </entry>
 
-                  <member><literal>retrieveMembers()</literal></member>
-                </simplelist></entry>
-
-              <entry><literal>ir</literal></entry>
+              <entry><code>ir</code></entry>
             </row>
 
             <row>
               <entry>Item</entry>
 
-              <entry><literal>retrieveItems()</literal></entry>
+              <entry>
+                <code>
+            	  <literallayout>retrieveItems()
+retrieveContentRelations()</literallayout>
+                </code>
+              </entry>
 
-              <entry><literal>ir</literal></entry>
+              <entry><code>ir</code></entry>
             </row>
 
             <row>
               <entry>Organizational Unit</entry>
 
-              <entry><literal>retrieveOrganizationalUnits()</literal></entry>
+              <entry>
+                <code>
+                  <literallayout>retrieveOrganizationalUnits()
+retrieveParentObjects()
+retrieveChildObjects()
+retrieveContentRelations()</literallayout>
+                </code>
+              </entry>
 
-              <entry><literal>oum</literal></entry>
+              <entry><code>oum</code></entry>
             </row>
 
             <row>
               <entry>User Account</entry>
 
-              <entry><literal>retrieveUserAccounts()</literal></entry>
+              <entry>
+                <code>
+                  <literallayout>retrieveUserAccounts()
+retrieveGrants()</literallayout>
+                </code>
+              </entry>
 
-              <entry><literal>aa</literal></entry>
+              <entry><code>aa</code></entry>
             </row>
 
             <row>
               <entry>User Group</entry>
 
-              <entry><literal>retrieveUserGroups()</literal></entry>
+              <entry><code>retrieveUserGroups()</code></entry>
 
-              <entry><literal>aa</literal></entry>
+              <entry><code>aa</code></entry>
             </row>
 
             <row>
               <entry>Role</entry>
 
-              <entry><literal>retrieveRoles()</literal></entry>
+              <entry><code>retrieveRoles()</code></entry>
 
-              <entry><literal>aa</literal></entry>
+              <entry><code>aa</code></entry>
             </row>
 
             <row>
               <entry>Content Relation</entry>
 
-              <entry><literal>retrieveContentRelations()</literal></entry>
+              <entry><code>retrieveContentRelations()</code></entry>
 
-              <entry><literal>ir</literal></entry>
+              <entry><code>ir</code></entry>
             </row>
 
             <row>
               <entry>Set Definition</entry>
 
-              <entry><literal>retrieveSetDefinitions()</literal></entry>
+              <entry><code>retrieveSetDefinitions()</code></entry>
 
-              <entry><literal>oai</literal></entry>
+              <entry><code>oai</code></entry>
             </row>
 
             <row>
               <entry>Statistics</entry>
 
-              <entry><simplelist columns="1" type="vert">
-                  <member><literal>retrieveScopes()</literal></member>
+              <entry>
+                <code>
+                  <literallayout>retrieveScopes()
+retrieveReportDefinitions()
+retrieveAggregationDefinitions()</literallayout>
+                </code>
+              </entry>
 
-                  <member><literal>retrieveReportDefinitions()</literal></member>
-
-                  <member><literal>retrieveAggregationDefinitions()</literal></member>
-                </simplelist></entry>
-
-              <entry><literal>sm</literal></entry>
+              <entry><code>sm</code></entry>
             </row>
           </tbody>
         </tgroup>
       </informaltable></para>
 
-    <para><informaltable frame="all">
-        <tgroup cols="1">
+    <para>
+    	<informaltable frame="topbot" colsep="0">
+        <tgroup cols="2">
+        <colspec colwidth="2.5cm"/>
+        <colspec colwidth="12.3cm"/>
           <tbody>
             <row rowsep="0">
-              <entry><emphasis role="bold">Important Note</emphasis></entry>
-            </row>
+              <entry>
+              	<inlinemediaobject>
+                  <imageobject>
+                    <imagedata depth="2.0cm" fileref="note.png" />
+                  </imageobject>
+                </inlinemediaobject>
+              </entry>
 
-            <row rowsep="0">
-              <entry>Previous versions of the eSciDoc Infrastructure (&lt;
+              <entry>
+              	<para><emphasis role="bold">Hint</emphasis></para>
+              	<para>Previous versions of the eSciDoc Infrastructure (&lt;
               1.2) came with an alternative implementation of filter methods,
-              based on XML snippets. These methods do not exist any-more, 
-              so if you use them in your code, you have to refactor it.</entry>
-            </row>
-
-            <row rowsep="0">
-              <entry></entry>
-            </row>
-
-            <row rowsep="0">
-              <entry>Please refer to the eSciDoc Infrastructure 1.1 API
-              documentation for information about the deprecated
-              method.</entry>
+              based on XML snippets. These methods do not exist any-more,
+              so if you use them in your code, you have to refactor it.</para>
+              </entry>
             </row>
           </tbody>
         </tgroup>
-      </informaltable></para>
+      </informaltable>
+    </para>
   </section>
 
   <section>
@@ -200,105 +226,122 @@
     <para>Filter queries consist of the actual CQL query and additional
     metadata, provided as parameters. Queries are executed as SRU Search
     Retrieve Request. The following example shows a query to retrieve an Item
-    with the object identifier <literal>escidoc:5</literal> (using the
+    with the object identifier <code>escidoc:5</code> (using the
     REST-style API):</para>
 
-    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?operation=searchRetrieve&amp;query=&quot;/id&quot;=escidoc:5</programlisting></para>
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?operation=searchRetrieve&amp;query="/id"=escidoc:5</programlisting></para>
 
     <para>This example consists of three parts: <itemizedlist
         mark="opencircle" spacing="compact">
         <listitem>
-           method ( 
-
-          <literal>/ir/items</literal>
-
-           ) 
+           method (<code>/ir/items</code>) 
         </listitem>
 
         <listitem>
-           operation ( 
-
-          <literal>operation=searchRetrieve</literal>
-
-           ) 
+           operation (<code>operation=searchRetrieve</code>) 
         </listitem>
 
         <listitem>
-           parameter ( 
-
-          <literal>query=&quot;/id&quot;=escidoc:5</literal>
-
-           ) 
+           parameter (<code>query="/id"=escidoc:5</code>) 
         </listitem>
       </itemizedlist></para>
 
     <para>In a more formal way, this could be expressed in EBNF as
     follows:</para>
 
-    <para><literal>&lt;filter-query&gt; ::= &lt;method&gt; "?"
-    &lt;operation&gt; [ ( "&amp;" &lt;parameter&gt; )* ]</literal></para>
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+filter-query  = method , "?" , operation , { "&amp;" , parameter } ;
 
-    <para><literal>&lt;method&gt; ::= "/" &lt;service-group&gt; "/"
-    &lt;method-name&gt;</literal></para>
+method        = "/" , service-group , "/" , method-name ;
 
-    <para><literal>&lt;service-group&gt; ::= "aa" | "ir" | "oai" | "oum" |
-    "sm"</literal></para>
+service-group = "aa" | "ir" | "oai" | "oum" | "sm" ;
 
-    <para><literal>&lt;method-name&gt; ::= a-z ( A-Z | a-z )*
-    </literal></para>
+operation     = "operation" , "=" , "searchRetrieve" | "explain" ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+
+    <para>The <code>method-name</code> may be any of the filter 
+      method names (see table in the previous section). Please refer to the API 
+      documentation for the exact spelling of the filter method names, as they
+      differ between REST and SOAP APIs. Also note that SOAP does not have the
+      concept of service groups. Therefore, in SOAP <code>method</code>
+      equals <code>method-name</code>. 
+    </para>
 
     <para>For a list of valid method names and the correct combination with
     service groups, please refer to the table in the previous section.</para>
 
-    <para><literal>&lt;operation&gt; ::= "operation" "=" "searchRetrieve" |
-    "explain"</literal></para>
-
-    <para>The <literal>explain</literal> operation will be described in the
+    <para>The <code>explain</code> operation will be described in the
     following section. For the rest of this section, we will focus on the
-    <literal>searchRetrieve</literal> operation, which is used for expressing
-    filter queries. The <literal>searchRetrieve</literal> operation takes up
+    <code>searchRetrieve</code> operation, which is used for expressing
+    filter queries. The <code>searchRetrieve</code> operation takes up
     to four parameters:</para>
 
-    <para><literal>&lt;parameter&gt; ::= &lt;key&gt; "="
-    &lt;value&gt;</literal></para>
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+operation     = "operation" , "=" , "searchRetrieve" | "explain" ;
 
-    <para><literal>&lt;key&gt; ::= "query" | "version" | "maximumRecords" |
-    "startRecord"</literal></para>
+parameter     = key , "=" , value
 
-    <para>The definition of <literal>&lt;value&gt;</literal> differs for each
-    of the parameters: <itemizedlist mark="opencircle" spacing="compact">
+key           = "query" | "version" | "maximumRecords" |
+                "startRecord" ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+
+    <para>The definition of <code>value</code> differs for each
+    of the parameters: 
+      <itemizedlist mark="opencircle">
         <listitem>
-          <para><literal>query:</literal> the actual query with a filter name
+          <para><code>query:</code> the actual query with a filter name
           and a search term.</para>
 
-          <para>Example:
-          <literal>query=&quot;/id&quot;=escidoc:5</literal></para>
+          <para>
+          	Example: <code>query="/id"=escidoc:5</code>
+          </para>
 
-          <para>EBNF:</para>
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+value           = filter-criteria ;
 
-          <para><literal>&lt;value&gt; ::=
-          &lt;filter-criteria&gt;</literal></para>
+filter-criteria = filter-name , relation , search-term , 
+                  { operator , filter-name , relation , 
+                  search-term } ;
+                  
+filter-name     = ( '"/' , local-name , { "/" , local-name , } , 
+                  '"') | ? special-filter-name ? ;
+                  
+local-name      = LOWERCHAR , { CHAR | DIGIT | ZERO | "-" } ;
 
-          <para><literal>&lt;filter-criteria&gt; ::= &lt;filter-name&gt;
-          &lt;relation&gt; &lt;search-term&gt; (&lt;operator&gt;
-          &lt;filter-name&gt; &lt;relation&gt;
-          &lt;search-term&gt;)*</literal></para>
+relation        = "&lt;" | "&lt;=" | "=" | "&gt;=" | "&gt;" | "&lt;&gt;" ;
 
-          <para><literal>&lt;filter-name&gt; ::= ( ""/" &lt;local-name&gt; (
-          "/" &lt;local-name&gt; )* """) | a-z ( A-Z | a-z )*</literal></para>
+search-term     = { CHAR | DIGIT | ZERO } ;
 
-          <para><literal>&lt;local-name&gt; ::= a-z ( A-Z | a-z | DIGIT | "-"
-          )*</literal></para>
+operator        = "and" | "or" ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
 
           <para>For a more extensive explaination of filter names, please
-          refer to the following section.</para>
+          refer to the following section <xref linkend="Filter.FilterNames" />. 
+          The EBNF extension expression <code>? special-filter-name ?</code> 
+          will be explained in section <xref linkend="Filter.SpecialFilterNames" />.
+          </para>
 
-          <para><literal>&lt;relation&gt; ::= "&lt;" | "&lt;=" | "=" | "&gt;="
-          | "&gt;" | "&lt;&gt;"</literal></para>
-
-          <para><literal>&lt;search-term&gt; ::= CHAR*</literal></para>
-
-          <para><literal>&lt;operator&gt; ::= "and" | "or"</literal></para>
         </listitem>
 
         <listitem>
@@ -307,14 +350,21 @@
 
           <para>Example: <literal>version=1.1</literal></para>
 
-          <para>EBNF:</para>
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+value           = major-version , "." , minor-version ;
 
-          <para><literal>&lt;value&gt; ::= &lt;major-version&gt; "."
-          &lt;minor-version&gt;</literal></para>
+major-version   = DIGIT , { DIGIT | ZERO } ;
 
-          <para><literal>&lt;major-version&gt; ::= DIGIT+</literal></para>
+minor-version   = DIGIT , { DIGIT | ZERO } ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
 
-          <para><literal>&lt;minor-version ::= DIGIT+</literal></para>
         </listitem>
 
         <listitem>
@@ -327,9 +377,16 @@
 
           <para>Example: <literal>maximumRecords=10</literal></para>
 
-          <para>EBNF:</para>
-
-          <para><literal>&lt;value&gt; ::= DIGIT+</literal></para>
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+value           = DIGIT , { DIGIT | ZERO } ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
         </listitem>
 
         <listitem>
@@ -340,9 +397,16 @@
 
           <para>Example: <literal>startRecord=20</literal></para>
 
-          <para>EBNF:</para>
-
-          <para><literal>&lt;value&gt; ::= DIGIT+</literal></para>
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+value           = DIGIT , { DIGIT | ZERO } ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
         </listitem>
       </itemizedlist></para>
 
@@ -358,11 +422,11 @@
     <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items</programlisting></para>
 
     <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?operation=searchRetrieve&amp;version=1.1
-&amp;query=&quot;/id&quot;=escidoc:5&amp;maximumRecords=20&amp;startRecord=100</programlisting></para>
+&amp;query="/id"=escidoc:5&amp;maximumRecords=20&amp;startRecord=100</programlisting></para>
 
   </section>
 
-  <section>
+  <section id="Filter.FilterNames">
     <title>Filter Names</title>
 
     <para>Every literal value inside the XML representation of an object can
@@ -376,7 +440,7 @@
     <literal>&lt;public-status&gt;</literal>. In order to match the value of
     the element <literal>&lt;public-status&gt;</literal>, the filter name
     should be set to
-    <literal>&quot;/properties/public-status&quot;</literal>. Filter names
+    <literal>"/properties/public-status"</literal>. Filter names
     constructed from local names always include at least one slash, which has
     a special meaning in CQL. Therefore, such filter names must be enclosed by
     quotation marks when used in a query.</para>
@@ -399,7 +463,9 @@
 &lt;sru:explainResponse xmlns:sru="http://www.loc.gov/zing/srw/"&gt;
   &lt;sru:version&gt;1.1&lt;/sru:version&gt;
   &lt;sru:record&gt;
-    &lt;sru:recordSchema&gt;http://explain.z3950.org/dtd/2.0/&lt;/sru:recordSchema&gt;
+    &lt;sru:recordSchema&gt;
+      http://explain.z3950.org/dtd/2.0/
+    &lt;/sru:recordSchema&gt;
     &lt;sru:recordPacking&gt;XML&lt;/sru:recordPacking&gt;
     &lt;sru:recordData&gt;
       &lt;zr:explain xmlns:zr="http://explain.z3950.org/dtd/2.0/"&gt;
@@ -409,18 +475,32 @@
           &lt;zr:database&gt;ir/items&lt;/zr:database&gt;
         &lt;/zr:serverInfo&gt;
         &lt;zr:databaseInfo&gt;
-          &lt;title lang="en" primary="true"&gt;eSciDoc database for Items&lt;/title&gt;
+          &lt;title lang="en" primary="true"&gt;
+            eSciDoc database for Items
+          &lt;/title&gt;
         &lt;/zr:databaseInfo&gt;
         &lt;zr:indexInfo&gt;
           &lt;zr:index&gt;
-            &lt;zr:map&gt;&lt;zr:name set=""&gt;<emphasis role="bold">/base</emphasis>&lt;/zr:name&gt;&lt;/zr:map&gt;
+            &lt;zr:map&gt;
+              &lt;zr:name set=""&gt;
+                <emphasis role="bold">/base</emphasis>
+              &lt;/zr:name&gt;
+            &lt;/zr:map&gt;
           &lt;/zr:index&gt;
           &lt;zr:index&gt;
-            &lt;zr:map&gt;&lt;zr:name set=""&gt;<emphasis role="bold">/components/component/content/id</emphasis>&lt;/zr:name&gt;&lt;/zr:map&gt;
+            &lt;zr:map&gt;
+              &lt;zr:name set=""&gt;
+                <emphasis role="bold">/components/component/content/id</emphasis>
+              &lt;/zr:name&gt;
+            &lt;/zr:map&gt;
           &lt;/zr:index&gt;
 [...]
           &lt;zr:index&gt;
-            &lt;zr:map&gt;&lt;zr:name set=""&gt;<emphasis role="bold">/resources/id</emphasis>&lt;/zr:name&gt;&lt;/zr:map&gt;
+            &lt;zr:map&gt;
+              &lt;zr:name set=""&gt;
+                <emphasis role="bold">/resources/id</emphasis>
+              &lt;/zr:name&gt;
+            &lt;/zr:map&gt;
           &lt;/zr:index&gt;
         &lt;/zr:indexInfo&gt;
       &lt;/zr:explain&gt;
@@ -429,46 +509,43 @@
 &lt;/sru:explainResponse&gt;   </programlisting></para>
   </section>
 
-  <section>
+  <section id="Filter.SpecialFilterNames">
     <title>Special Filter Names</title>
 
-    <para>There are a number of filter names are not directly derived from the
-    XML representation of resources: <itemizedlist mark="opencircle"
-        spacing="compact">
+    <para>There are a number of filter names which are not directly derived from the
+      XML representation of resources. Two examples are the user account and 
+      the role of that user. 
+    </para>
+    
+    <para>If you want to search for the resource identifier, you may use the 
+    	following special filter name:
+    	
+      <itemizedlist mark="opencircle" spacing="compact">
         <listitem>
-           
-
-          <literal>
-            &quot;/last-modification-date&quot;
-          </literal>
-
-           : the timestamp of the latest modification of a resource 
+          <code>"/id"</code>: the resource identifier 
+          (e.g., <code>escidoc:4</code>). 
         </listitem>
-      </itemizedlist>Typically, only the access rights of the user invoking
-    the filter method are considered for retrieving the accessible resources.
-    In certain cases (e.g., if the invoking user is an administrator), it
-    might be interesting to retrieve resources based on the access rights of
-    another user: <itemizedlist mark="opencircle" spacing="compact">
+      </itemizedlist>
+    </para>
+    
+    <para>Typically, only the access rights of the user invoking the filter methods 
+      are considered for retrieving the accessible resources. In certain cases 
+      (e.g., if the invoking user is an administrator), it might be interesting 
+      to retrieve resources based on the access rights of another user: 
+    
+      <itemizedlist mark="opencircle" spacing="compact">
         <listitem>
-           
-
-          <literal>user</literal>
-
-           : the user id of the user whose access rights should be considered additionally by the filter method. 
+          <code>user</code>: the user id of the user whose access rights 
+          should be considered additionally by the filter method. 
         </listitem>
-
         <listitem>
-           
-
-          <literal>role</literal>
-
-           : the role id; can only be used in combination with 
-
-          <literal>user</literal>
-
-           . If this filter name is omitted, the user filter will consider all roles granted to the user specified in the user filter. 
+          <code>role</code>: the role id; can only be used in combination
+           with <code>user</code>. If this filter name is omitted, the 
+           user filter will consider all roles granted to the user specified in 
+           the user filter. 
         </listitem>
-      </itemizedlist></para>
+      </itemizedlist>
+    </para>
 
     <para>Supplying a user or role id with the user and role filter names will
     only narrow down the number of retrieved objects. If the provided user id
@@ -478,40 +555,24 @@
     <para>Two filter methods (<literal>retrieveMembers</literal> in Context
     and Container service) may retrieve resources of different types (Items
     and Containers). If you want to limit your filter query to a specific
-    representation type, you can use the type filter name: <itemizedlist
-        mark="opencircle" spacing="compact">
+    resource type, you can use the type filter name: 
+
+      <itemizedlist mark="opencircle" spacing="compact">
         <listitem>
-           
-
-          <literal>
-            &quot;type&quot;
-          </literal>
-
-           : the resource type of the resource the filter query should be limited to. 
-        </listitem>
-      </itemizedlist></para>
-
-    <para><itemizedlist mark="opencircle" spacing="compact">
-        <listitem>
-           
-
-          <literal>
-            &quot;item&quot;
-          </literal>
-
-           : Item 
-        </listitem>
-      </itemizedlist></para>
-
-    <para><itemizedlist mark="opencircle" spacing="compact">
-        <listitem>
-           
-
-          <literal>
-            &quot;organizational-unit&quot;
-          </literal>
-
-           : Organizational Unit 
+          <literal>type</literal> : the resource type of the resource the filter query should be limited to.
+          <para>
+            <itemizedlist mark="bullet" spacing="compact">
+              <listitem>
+                <literal>container</literal> : Container
+              </listitem>
+              <listitem>
+                <literal>item</literal> : Item
+              </listitem>
+              <listitem>
+                <literal>organizational-unit</literal> : Organizational Unit
+              </listitem>
+            </itemizedlist>
+          </para>
         </listitem>
       </itemizedlist></para>
 
@@ -526,18 +587,18 @@
     <title>Filter Criteria</title>
 
     <para>The combination of the filter name, the relation, and the search
-    term is called &quot;filter criteria&quot;. Each filter request may
+    term is called "filter criteria". Each filter request may
     contain several filter criteria, combined by the Boolean operators
-    &quot;and&quot; and &quot;or&quot;. Allowed relations are
-    &quot;&lt;&quot;, &quot;&lt;=&quot;, &quot;=&quot;,
-    &quot;&gt;=&quot;, &quot;&gt;&quot; and &quot;&lt;&gt;&quot;. You
+    "and" and "or". Allowed relations are
+    "&lt;", "&lt;=", "=",
+    "&gt;=", "&gt;" and "&lt;&gt;". You
     may use parentheses to ensure the correct evaluation order of the logical
     expression in your query. The following example searches for Items with
-    either the term ‘cat’ in the title or the term ‘dog’ in the
+    either the term ‘cat’ in the title or the term ‘all my dogs’ in the
     description:</para>
 
-    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query=&quot;/title&quot;=cat or
-    &quot;/description&quot;=dog</programlisting></para>
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query="/md-records/md-record/dc-md/title"=cat or
+    "/properties/description"="all my dogs"</programlisting></para>
 
     <para>Please note that you should URL-encode your query, especially when
     using a web browser as front-end. However, for better readability, we show
@@ -559,8 +620,8 @@
     <para>The following example shows the sort operator in the context of a
     complete filter request:</para>
 
-    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query=&quot;/title&quot;=cat
-    sortby &quot;/id&quot;
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query="/md-records/md-record/dc-md/title"=cat
+    sortby "/id"
     /sort.descending</programlisting></para>
   </section>
 
@@ -588,7 +649,7 @@
     <literal>startRecord</literal> to a multiple of
     <literal>maximumRecords</literal> + 1 and keep the value of
     <literal>maximumRecords</literal> fix. By doing so, you navigate through
-    the complete result list &quot;page by page&quot;.</para>
+    the complete result list "page by page".</para>
 
     <para>All filter methods return an XML document, complying to the SRW/U
     schema. The XML document includes the SRW/U version
@@ -610,7 +671,7 @@
     <para>Generic template for filter requests:</para>
 
     <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/&lt;service-group&gt;/&lt;method&gt;?version=1.1
-    &amp;operation=searchRetrieve&amp;query=&quot;&lt;CQL&gt;&quot;&amp;maximumRecords=20
+    &amp;operation=searchRetrieve&amp;query="&lt;CQL&gt;"&amp;maximumRecords=20
     &amp;startRecord=1</programlisting></para>
 
     <para>In the following, we will just focus on the actual query, which is
@@ -618,16 +679,16 @@
     template for filter requests.</para>
 
     <para>Get a list of all submitted resources with the permissions of user
-    &quot;escidoc:42&quot;:</para>
+    "escidoc:42":</para>
 
-    <para><programlisting>&quot;/properties/public-status&quot;=submitted and user=escidoc:42</programlisting></para>
+    <para><programlisting>"/properties/public-status"=submitted and user=escidoc:42</programlisting></para>
 
     <para>Get a list of all resources in status ‘pending’ or ‘submitted’,
     sorted by their ID:</para>
 
-    <para><programlisting>&quot;/properties/public-status&quot;=pending or
-&quot;/properties/public-status&quot;=submitted
-sortby &quot;/id&quot;/sort.ascending</programlisting></para>
+    <para><programlisting>"/properties/public-status"=pending or
+"/properties/public-status"=submitted
+sortby "/id"/sort.ascending</programlisting></para>
 
     <para>Get the resource with identifier <literal>escidoc:5</literal>, given
     as Java code snippet using the SOAP API:</para>
