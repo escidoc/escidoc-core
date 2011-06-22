@@ -214,14 +214,12 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         }
         final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
-            component = getComponent(id);
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
             values.put("componentHref", de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId()
                 + component.getHrefPart());
             values.putAll(getCommonValues(getOriginItem()));
         }
         else {
-            component = getComponent(id);
             values.put("componentHref", getItem().getHref() + component.getHrefPart());
             values.putAll(getCommonValues(getItem()));
         }
