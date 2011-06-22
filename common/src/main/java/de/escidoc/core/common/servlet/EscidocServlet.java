@@ -262,8 +262,8 @@ public class EscidocServlet extends HttpServlet {
                         // test whether compressed data is acceptable:
                         boolean compressionIsAccepted = false;
                         if (httpRequest.getHeader(HTTP_HEADER_ACCEPT_ENCODING) != null
-                            && httpRequest.getHeader(HTTP_HEADER_ACCEPT_ENCODING).indexOf(
-                                HTTP_HEADER_VALUE_ACCEPT_ENCODING_GZIP) >= 0) {
+                            && httpRequest.getHeader(HTTP_HEADER_ACCEPT_ENCODING).contains(
+                                HTTP_HEADER_VALUE_ACCEPT_ENCODING_GZIP)) {
                             compressionIsAccepted = true;
                         }
 

@@ -60,6 +60,9 @@ import org.apache.xml.security.c14n.CanonicalizationException;
 import org.apache.xml.security.c14n.Canonicalizer;
 import org.apache.xml.security.c14n.InvalidCanonicalizerException;
 import org.codehaus.stax2.XMLOutputFactory2;
+import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.esidoc.core.utils.io.IOUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.ReadableDateTime;
@@ -2179,62 +2182,36 @@ public final class XmlUtility {
         return result;
     }
 
-    /**
-     * Calculate the checksum.
-     *
-     * @param xmlBytes Content over which the checksum is to calculate..
-     */
-    public static String calculateChecksum(final byte[] xmlBytes) {
-        Canonicalizer canonicalizer = null;
-        byte[] canonicalizedXmlBytes = new byte[0];
+    public static final boolean isIdentical(byte[] xml1, byte[] xml2) {
+        if (xml1 == null) {
+            return xml2 == null;
+        }
+        if (xml2 == null) {
+            return xml1 == null;
+        }
+        return isIdentical(IOUtils.newStringFromBytes(xml1), IOUtils.newStringFromBytes(xml2));
+    }
+
+    public static final boolean isIdentical(String xml1, String xml2) {
+        if (xml1 == null) {
+            return xml2 == null;
+        }
+        if (xml2 == null) {
+            return xml1 == null;
+        }
+        XMLUnit.setIgnoreComments(true);
+        XMLUnit.setIgnoreAttributeOrder(true);
+        XMLUnit.setIgnoreWhitespace(true);
         try {
-            canonicalizer = Canonicalizer.getInstance(Canonicalizer.ALGO_ID_C14N_OMIT_COMMENTS);
-            canonicalizedXmlBytes = canonicalizer.canonicalize(xmlBytes);
-        }
-        catch (InvalidCanonicalizerException e) {
-            throw new RuntimeException("Error on canonicalizing XML.", e);
-        }
-        catch (IOException e) {
-            throw new RuntimeException("Error on canonicalizing XML.", e);
-        }
-        catch (CanonicalizationException e) {
-            throw new RuntimeException("Error on canonicalizing XML.", e);
-        }
-        catch (ParserConfigurationException e) {
-            throw new RuntimeException("Error on canonicalizing XML.", e);
+            Diff diff = XMLUnit.compareXML(xml1, xml2);
+            return diff.identical();
         }
         catch (SAXException e) {
-            throw new RuntimeException("Error on canonicalizing XML.", e);
-        }
-        return calculateSHA1Digest(canonicalizedXmlBytes);
-    }
-
-    private static String calculateSHA1Digest(final byte[] canonicalizedXmlBytes) {
-        try {
-            MessageDigest sha1 = MessageDigest.getInstance("SHA1");
-            DigestInputStream digestInputStream =
-                new DigestInputStream(new ByteArrayInputStream(canonicalizedXmlBytes), sha1);
-            // read the stream and update the hash calculation
-            while (digestInputStream.read() != -1)
-                ;
-            // get the hash value as byte array
-            byte[] hash = sha1.digest();
-            return byteArray2Hex(hash);
-        }
-        catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error on calculating checksum.", e);
+            throw new RuntimeException("Error on comparing XML.", e);
         }
         catch (IOException e) {
-            throw new RuntimeException("Error on calculating checksum.", e);
+            throw new RuntimeException("Error on comparing XML.", e);
         }
-    }
-
-    private static String byteArray2Hex(byte[] hash) {
-        Formatter formatter = new Formatter();
-        for (byte b : hash) {
-            formatter.format("%02x", b);
-        }
-        return formatter.toString();
     }
 
 }

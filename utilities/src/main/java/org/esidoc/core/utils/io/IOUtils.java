@@ -22,7 +22,6 @@ public final class IOUtils {
 
     private final static Logger LOG = LoggerFactory.getLogger(IOUtils.class);
 
-    public static final Charset UTF8_CHARSET = Charset.forName("UTF-8");
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
 
     private IOUtils() {
@@ -96,7 +95,7 @@ public final class IOUtils {
     }
 
     public static String newStringFromBytes(byte[] bytes) {
-        return newStringFromBytes(bytes, UTF8_CHARSET.name());
+        return newStringFromBytes(bytes, Encodings.UTF8);
     }
 
     public static String newStringFromBytes(final byte[] bytes,
@@ -113,7 +112,7 @@ public final class IOUtils {
     }
 
     public static String newStringFromBytes(final byte[] bytes, final int start, final int length) {
-        return newStringFromBytes(bytes, UTF8_CHARSET.name(), start, length);
+        return newStringFromBytes(bytes, Encodings.UTF8, start, length);
     }
 
     public static String newStringFromStream(final InputStream input, final String charsetName) throws IOException,
@@ -130,7 +129,7 @@ public final class IOUtils {
 
     public static String newStringFromStream(final InputStream input) throws IOException,
             UnsupportedEncodingException {
-        return newStringFromStream(input, UTF8_CHARSET.name());
+        return newStringFromStream(input, Encodings.UTF8);
     }
 
     public static void closeStream(Closeable closeable) {

@@ -21,7 +21,9 @@ package de.escidoc.core.common.business.fedora.datastream;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,8 @@ import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.esidoc.core.utils.io.Encodings;
+import org.esidoc.core.utils.io.IOUtils;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
@@ -64,6 +68,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import sun.awt.CharsetString;
 
 /**
  * Representation of a datastream managed in Fedora Digital Repository System.
@@ -445,7 +450,7 @@ public class Datastream {
         }
         catch (final Exception e) {
             LOGGER.debug("Error on modifing datastream.", e);
-            if (stream != null) {
+            if (this.getStream() != null) {
                 addDatastream();
             }
             else {
@@ -664,7 +669,6 @@ public class Datastream {
 
     private void setStream(final byte[] stream) {
         this.stream = stream;
-        this.updateStreamHash();
     }
 
     /**
@@ -675,42 +679,11 @@ public class Datastream {
      *            The string representing the content of this datastream.
      */
     public boolean updateStream(final byte[] stream) {
-        final String newHash = calculateStreamHash(stream);
-        if (!getStreamHash().equals(newHash)) {
+        if (!XmlUtility.isIdentical(stream, this.stream)) {
             this.setStream(stream);
             return true;
         }
         return false;
-    }
-
-    /**
-     * Returns the md5 checksum of the content of this datastream. The
-     * {@link de.escidoc.core.common.util.stax.XMLHashHandler XMLHashHandler} is
-     * used to generate a comparable string from the xml data and calculate the
-     * checksum.
-     * 
-     * @return The md5 hash of the content of this datastream.
-     */
-    private String getStreamHash() {
-        if (this.streamHash == null) {
-            updateStreamHash();
-        }
-        return this.streamHash;
-    }
-
-    private void updateStreamHash() {
-        this.streamHash = calculateStreamHash(this.getStream());
-    }
-
-    private String calculateStreamHash(final byte[] stream) {
-        String hash = null;
-        if (stream == null) {
-            return null;
-        }
-        if (MimeTypes.TEXT_XML.equals(this.mimeType) || MimeTypes.APPLICATION_XML.equals(this.mimeType)) {
-            hash = XmlUtility.calculateChecksum(this.stream);
-        }
-        return hash;
     }
 
     /**
@@ -851,10 +824,7 @@ public class Datastream {
         if (!parentId.equals(that.parentId)) {
             return false;
         }
-        if (getStreamHash() == null) {
-            return false;
-        }
-        else if (!getStreamHash().equals(that.getStreamHash())) {
+        if (!XmlUtility.isIdentical(that.getStream(), this.getStream())) {
             return false;
         }
         return true;
@@ -862,9 +832,9 @@ public class Datastream {
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + parentId.hashCode();
-        result = 31 * result + (getStreamHash() != null ? getStreamHash().hashCode() : 0);
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
+        result = 31 * result + (getStream() != null ? Arrays.hashCode(getStream()) : 0);
         return result;
     }
 

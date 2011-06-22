@@ -594,12 +594,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         matcher = PREFIX_PATTERN.matcher(xml);
         xml = matcher.replaceAll("$1");
 
-        final StringBuilder buf = new StringBuilder("<results xmlns=\"");
-        buf.append(Constants.RESULTS_NS_URI);
-        buf.append("\" xmlns:xacml-context=\"");
-        buf.append(Constants.XACML_CONTEXT_NS_URI);
-        buf.append("\">");
-
         matcher = SPLIT_PATTERN.matcher(xml);
         int i = 0;
         final List<RequestCtx> requestCtxs = new ArrayList<RequestCtx>();

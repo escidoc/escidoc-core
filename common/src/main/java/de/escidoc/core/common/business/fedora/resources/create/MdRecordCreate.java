@@ -28,11 +28,14 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -500,12 +503,7 @@ public class MdRecordCreate implements Serializable {
             }
         }
         else {
-
-            final String checksumThis = XmlUtility.calculateChecksum(this.content.getBytes());
-            final String checksumNew = XmlUtility.calculateChecksum(mdrecord.getContent().getBytes());
-
-            if (!checksumThis.equals(checksumNew)) {
-
+            if (!XmlUtility.isIdentical(this.content, mdrecord.getContent())) {
                 this.content = mdrecord.getContent();
                 changes++;
             }

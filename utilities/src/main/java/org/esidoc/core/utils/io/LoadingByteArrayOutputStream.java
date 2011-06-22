@@ -36,7 +36,7 @@ final class LoadingByteArrayOutputStream extends ByteArrayOutputStream {
         };
     }
 
-    public byte[] toByteArray() {
+    public synchronized byte[] toByteArray() {
         if (count != buf.length) {
             buf = super.toByteArray();
         }
