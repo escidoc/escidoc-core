@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ CDDL HEADER START
   ~
@@ -18,272 +19,292 @@
   ~ terms.
   -->
 
-<chapter>
+<chapter id="object-manager">
 	<title>Object Manager (OM)</title>
-	<section>
-		<title>Overview of Object Manager (OM)</title>
+	
+	<section id="om-introduction">
+		<title>Introduction</title>
+
+		<para>The Object Manager is the service group providing all necessary
+			services and methods to store, manage, and retrieve digital objects. 
+			A digital object is 
+			an entity which may contain content objects (e.g., images, videos, 
+			texts, or datasets), metadata and properties describing the content,
+			and behaviors that provide representations of the digital object.
+			The services of the Object Manager allow for aggregating
+			objects, versioning, and managing the basic object lifecycle. The
+			Object
+			Manager is thus the interface to the underlying repository system and one
+			of the central service groups of the eSciDoc Infrastructure.</para>
+
+		<para>The objects are transferred as serializations of the internal 
+			object in the form of XML representations between the services of 
+			the eSciDoc Infrastructure
+			and the invoking application. Therefore, we prefer to name the objects on the
+			API level as resources, which is more compliant with the web
+			architecture.
+			As with the web architecture, you can create, retrieve, update, and
+			delete
+			resources (CRUD operations). When invoking the respective methods, you
+			work with representations of the resource, i.e. XML documents.</para>
+
+		<para>The services of the Object Manager support six basic resource
+			types:
+			Organizational Unit, Item, Container, Context, Content Model, and
+			Content Relation. These six resource types are the basic building blocks
+			for any data model, i.e. every application on top of the eSciDoc
+			Infrastructure has to structure its data in such a way that it can be
+			represented by a combination of these resource types. For each
+			resource
+			type, the Object Manager provides a specific service with its own
+			API.</para>
+	</section>
+
+	<section id="om-services">
+		<title>Services of the Object Manager</title>
+
+		<para>The Object Manager groups a set of services, all of them
+			dedicated
+			to work with specific resource types. All resources maintained by
+			services
+			of the Object Manager are persisted in the underlying repository
+			system.</para>
+
 		<para>
-			In this release the Object Manager (OM) offers services in the following areas:
+			The
+			<emphasis role="bold">Organizational Unit Service</emphasis>
+			(OU) provides methods to work with Organizational Units.
+			Organizational
+			Units which represent the organizational structure of an institution.
+			Each Organizational Unit forms a node in a network with optional
+			references to parent and/or child nodes, i.e. other Organizational
+			Units on a higher or lower hierarchical level.
 		</para>
-		<itemizedlist mark="opencircle">
-			<listitem>
-				<para>
-					<emphasis role="bold">Containers:</emphasis>
-					Containers offer the concept of aggregation, i.e. they can contain other (simple and complex) objects.
-					Each container includes a structural map. A container can be a	collection or a bundle.
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<emphasis role="bold">Items:</emphasis>
-					These are the objects in the eSciDoc system that comprise the institutional repository. An item is a
-					simple or complex object like an article, a report or a translation.
-				</para>
-				<para>
-					Items can have various statuses, which also have an influence on whether actions are applicable to them
-					or not.
-				</para>
-				<para />
-				<para>
-					In this release, the Object Manager supports creation, retrieval, deletion, updates, versioning,
-					submit, release  and withdrawal of Items as	well as various kinds of relations between Items.
-				</para>
+
+		<para>
+			The
+			<emphasis role="bold">Item Service</emphasis>
+			provides methods
+			to work with Items. Items represent the actual content of the
+			repository
+			and its description with metadata. Items may include content 
+			objects or may exist as metadata-only resource.
+		</para>
+
+		<para>
+			The
+			<emphasis role="bold">Container Service</emphasis>
+			provides
+			methods to work with Containers. Containers offer the concept of
+			aggregation, i.e. they can contain other Containers or Items. Each
+			Container includes a structural map, which manages references to all
+			members of the aggregation.
+		</para>
+
+		<para>
+			The
+			<emphasis role="bold">Context Service</emphasis>
+			provides
+			methods to work with Contexts. Contexts represent the legal and
+			administrative entity that takes responsibilty for the resources
+			within their scope. Each instance of the eSciDoc Infrastructure 
+			may contain several Contexts, thus creating separated and 
+			independent compartments for data. Each Container and Item 
+			resource must reference exactly one Context, thus stating the 
+			administrative scope they belong to.
+		</para>
+
+		<para>
+			The
+			<emphasis role="bold">Content Model Service</emphasis>
+			provides
+			methods to work with Content Models. Content Models allow for a more
+			detailed definition of the structure and behavior of an Item or
+			Container,
+			e.g. the number of required metadata records and the metadata profile
+			each
+			of them has to comply with.
+		</para>
+
+		<para>
+			The
+			<emphasis role="bold">Content Relation Service</emphasis>
+			provides methods to work with Content Relations. Content Relations
+			allow
+			to express semantic relations between other resources within the repository.
+			Content Relations are fully-fledged resources, including metadata and
+			provenance information.
+		</para>
+
+		<para>
+			The
+			<emphasis role="bold">Ingest Service</emphasis>
+			provides an
+			efficient method for loading of large quantities of resources. It supports
+			all resource types covered by the Object Manager. The Ingest Service
+			allows to bypass several business rules enforced by the respective
+			resource services in order to speed up the load process.
+		</para>
+	</section>
+
+	<section id="om-fedora">
+		<title>Object Manager and Fedora</title>
+
+		<para>
+			Fedora, the Flexible Extensible Digital Object Repository 
+			Architecture<footnote id="FedoraURL"><para><ulink 
+		  url="http://www.fedora-commons.org/">http://www.fedora-commons.org/</ulink>
+		  </para></footnote>
 				
-			</listitem>
-			<listitem>
-				<para>
-					<emphasis role="bold">Components:</emphasis>
-					Components are used when an Item should not only store metadata about a specific content, but the content itself as
-					digital objects. The Component will be handled as a	separate part of the Item, optionaly enriched with metadata
-					and licenses to facilitate handling and processing.
-				</para>
-				<para>
-					In this release, the Object Manager supports adding, retrieval, update and deletion of Components of Items.
-				</para>
-				<para>A Component can not exist without an Item.</para>
-			</listitem>
-			
-			
-				<listitem>
-					<para>
-						<emphasis role="bold">
-							Organizational Unit
-						</emphasis>
-					</para>
-					<para>
-						Every Organizational Unit will be described in
-						the system with a set of properties.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<emphasis role="bold">
-							Organizational Unit structure
-						</emphasis>
-					</para>
-					<para>
-						Organizational Units are hierarchically
-						organized:
-					</para>
-					<itemizedlist mark="opencircle">
-						<listitem>
-							<para>
-								Each Organizational Unit may have one or
-								more subunits.
-							</para>
-						</listitem>
-						<listitem>
-							<para>
-								An Organizational Unit may be
-								subordinated to one or more
-								Organizational Unit.
-							</para>
-						</listitem>
-					</itemizedlist>
-					<para>
-						There is no limitation in the depth of the
-						organizational Structure.
-					</para>
-					<para>
-						These kind of relation between Organizational
-						Units is handled by the Organizational Unit
-						Manager. Later releases will support the
-						Organizational Unit History, too.
-					</para>
-				</listitem>
-			
-			
-			
-			<listitem>
-				<para>
-					<emphasis role="bold">TOC:</emphasis>
-					TOCs are discrete objects to provide a Table of Content. They may be related to other
-					resources (primarily Containers) in order to describe a view to them. In fact they are 
-					specialised Items and therefore they are versioned and can have various statuses as Items have.
-				</para>
-				<para>
-					In this release, the Object Manager supports creation, retrieval, deletion, updates, versioning,
-					submit, release and withdrawal of TOCs.
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<emphasis role="bold">Context:</emphasis>
-					These are objects that are used to administrate Items and Containers. They will not be versioned but
-					can also have various statuses, which also has an influence on whether actions are applicable to them
-					or not. Each Context can include one or more AdminDescriptors.
-				</para>
-				<para>
-					In this release, the Object Manager supports the retrieval of Contexts as well as creating,	updating and 
-					deleting and furthermore adding, retrieving and moving of Items and Containers to
-					and from Contexts. New Contexts are created with public-status "created".
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<emphasis role="bold">Admin-Descriptor:</emphasis>
-					An AdminDescriptor keeps settings from application. A Context may have multiple Admin-Descriptors as 
-					well as no one. The Admin-Descriptors are stored as data streams with unique names. Specifications for 
-					XML structure of Admin-Descriptors will not be done.
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<emphasis role="bold">Metadata:</emphasis>
-					A Metadata Record describes an Item or a Container in a given Metadata Schema. An Item or a Container 
-					may have one or more Metadata Records. A Metadata Record contains references to Metadata Elements of the respective
-					Metadata Schema and values for these Metadata Elements. Depending on the Metadata Element
-					definition, a Metadata Record may have more values for a single Metadata Element. Contexts do not have
-					their own internal metadata record but one ore more default Metadata records for ingest and other purposes.
-				</para>
-				<para>
-					Note: An Item or a Container has an internal Metadata Record as well as a set of properties. 
-					Items and Containers are versioned. 
-				</para>
-				<para>
-					In this release, the Object Manager allows updating, and retrieving of one Metadata record of Items and Containers.
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<emphasis role="bold">Properties:</emphasis>
-					In all methods except "create" most properties are read-only. In method "create" some properties can 
-					be set (see methods for details). 
-				</para>
-				<para>
-					The application may effect the values of some properties in using specific methods (like changing "public-status"
-					via method "release"), some properties like "name" and "description" of the container are changed via 
-					changes in the corresponding elements of "escidoc" meta data set, some properties are only changed by the 
-					infrastructure (e.x. "last-modification-date", "creation-date") and some are created once by the infrastructure 
-					and never changed (e.x. "created-by")
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<emphasis role="bold">Content Relations:</emphasis>
-					The Items and containers stored in the Object Manager can be related to each other. The relations have
-					names and are directed.  
-					<!-- 
-					Content Relations can have additional metadata and are versioned (e.g. the "is
-					annotated by" between two Items.
-					 -->
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<emphasis role="bold">
-						Structural Relations:
-					</emphasis>
-					Items stored in the Object Manager belong always to a Context and may be part of a Container. The
-					relations have types, names, and are directed. They	have no meta data but are versioned (e.g. the "hasMember"
-					relation between Context and Item).
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<emphasis role="bold">
-						Persistent Identifiers:
-					</emphasis>
-					Container, Item and Component could be assigned with a persistent identifier (PID) which represents the whole object. 
-					These PIDs are called objectPid for Container and Item. Components are no discrete objects, the PIDs are therefore called 
-					componentPid. Each version of Container and Item could be assigned with an own PID, which represents the version.
-					The infrastructure is not limited to a special type of persistent identifier but currently only identifiers from 
-					Handle System are used.  
-				</para>
-				<para>
-					A persistent identifier consists at least of an identifier and a pointer to a location. The infrastructure does not 
-					validate the location pointer. This means that the solution, which assigns a persistent identifier could set any 
-					location. Usually should the persistent identifier point to the object or version at the solution URL or to the 
-					infrastructure URL. The eSciDoc Solution is responsible to set a valid URL during the assignment process. 
-				</para>
-				<para>
-					The Object Manager supports creation and assignment of PIDs via several methods during the publishing process.
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					<emphasis role="bold">Validation:</emphasis>
-					This means checking the validity of objects handled by the Object Manager.
-				</para>
-			</listitem>
-<!-- 
-			<listitem>
-				<para>
-					<emphasis role="bold">Licenses:</emphasis>
-					are referenced from Components. They are stored in the Object Manager, to provide a list of all
-					possible licenses.
-				</para>
-				<para>
-					In this release, Licenses are not supported.
-				</para>
-			</listitem>
- -->
-		</itemizedlist>
-	</section>
-	<section id="SupportedResources">
-		<title>Supported resources</title>
-		<para>
-			For this release the Object Manager (OM) supports the following resources:
+			, is a renowned solution for all kinds of repository-based applications,
+			including e-Research use cases. Fedora is the repository underneath the
+			eSciDoc Infrastructure. However, the eSciDoc Infrastructure
+			completely
+			encapsulates Fedora within the Object Manager. Fedora provides a very
+			generic set of functionalities, addressing the needs of various
+			communities and use cases. On the other hand, this means that Fedora
+			provides rather low-level functionality, often requiring developers to
+			implement higher-level services before they can start building the
+			envisioned applications. eSciDoc tries to fill that gap by adding
+			these
+			high-level services on top of Fedora while hiding some of the more complex
+			aspects of Fedora, thus increasing the productivity of developers.
+			However, this advantage contrasts with a slightly reduced
+			flexibility.
 		</para>
-		<itemizedlist mark="opencircle" spacing="compact">
-			<listitem>
-				<para><emphasis role="bold">Context</emphasis></para>
-			</listitem>
-			<listitem>
-				<para><emphasis role="bold">Container</emphasis></para>
-			</listitem>
-			<listitem>
-				<para><emphasis role="bold">Item</emphasis></para>
-			</listitem>
-			<listitem>
-				<para><emphasis role="bold">OrganizationalUnit</emphasis></para>
-			</listitem>
-		</itemizedlist>
-	</section>
-	<section>
-		<title>Versioning</title>
-		<para>
-			The Object Manager allows versioning of Items and Containers. See cpt_versioning-v0.2.doc for more details.
-		</para>
-		<para>
-			The concepts applied for the versioning of digital objects are explained in
-			<xref linkend="MRFS06" />. Only the latest version of an object can be updated.
+
+		<para>Even though the Object Manager is the persistence layer of the
+			eSciDoc Infrastructure, it is neither a database nor a truly
+			object-oriented system. All resources maintained by the services of 
+			the Object Manager are stored as one or more Fedora objects, which 
+			are XML files stored in the file system. This approach has
+			advantages and disadvantages. It allows for incredible flexibility
+			what can be stored, because the only constraint is the requirement 
+			to be either valid XML (e.g., for metadata), or any binary file format 
+			(for the actual content objects). On the other hand, all operations 
+			working on large sets of objects (filters, batch updates, etc.) are 
+			slow.
 		</para>
 	</section>
-	<section>
-		<title>Content Model</title>
-		<para>
-			With version 1.2 of the eSciDoc Infrastructure the Content Model Object gets structured 
-			and is no longer a dummy object. But
-			Content Models are still in an experimental state. E.g. it is possible to define which 
-			metadata an object must have but this definitions are not ensured and not even checked 
-			by the eScidoc Infrastructure.
+
+	<section id="om-resource-types">
+		<title>Resource Types and Data Model</title>
+
+		<para>All eSciDoc resources maintained by the services of the Object
+			Manager are stored as Fedora objects. A Fedora object consists of
+			several
+			datastreams, which contain either XML or binary content (or, more precise,
+			a reference to a file in the file system representing a version of the
+			content). Specifying the allowed contents and behaviors of
+			datastreams and
+			their composition to a Fedora object defines the ‘content model’, which
+			can be understood as a construction plan for objects. Objects that
+			comply with a certain content model share the same layout and behavior. Fedora
+			imposes very little constraints on content models, resulting in a
+			tremendous flexibility regarding the layout and organization of
+			Fedora
+			objects. This flexibility, on the other side, makes content modeling to
+			one of the challenges to start with Fedora, even for simpler use cases.
 		</para>
+		
+		<para>Therefore, eSciDoc encapsulates the concept of datastreams by
+			introducing 'resources', which represent complete objects. Each service of the Object
+			Manager (and other eSciDoc services as well) work on resources instead of
+			single datastreams. Behind the scenes, each eSciDoc resource type is
+			mapped to a predefined Fedora content model. This is completely opaque
+			to the developer using the services of the eSciDoc Infrastructure to
+			build applications.</para>
+
+		<para>The resource types supported by the Object Manager may be separated
+			in two groups: Contexts, Organizational Units, and Content Relations
+			are relatively fixed in their structure and behavior, whereas Items and
+			Containers are more flexible. Their structure and behaviors may be 
+			controlled by eSciDoc Content Models (which differ from Fedora content
+			models). eSciDoc Content Models enable users to specify more precisely the
+			layout, the allowed contents, and the behavior of Item and Container
+			resources. For the first steps with eSciDoc, you can skip the concept
+			of Content Models and rely on the default Content Models that come with 
+			the eSciDoc standard configuration. The predefined resource
+			types for eSciDoc are less flexible than Fedora objects, but simplify
+			data modeling tremendously. Still, they provide flexibility where needed 
+			(e.g. storing metadata records). Our experience shows that this model
+			accommodates for most use cases.</para>
+
+		<para>Items and Containers are the most important resource types for
+			building your data model. With these two resource types, you can
+			model
+			nearly any data structure for your specific purpose. Items typically
+			represent your content objects. The Item resource type consists of a
+			single entity with zero to many content manifestations (or 
+			representation). Each manifestation is included in the Item as 
+			separate part, the component. A component includes the 
+			manifestation-related metadata, some properties (e.g., mime-type,
+			file
+			name), and the content itself. An example may be an image with three
+			manifestations: a thumbnail as GIF file, a web resolution as JPEG
+			file,
+			and the full-resolution as a TIFF file. However, Items with their 
+			components are not the preferred way to aggregate resources in eSciDoc.
+			Instead, the Containers act as generic aggregation resource type. 
+			Container resources may aggregate both Items 
+			and other Containers as their members. Containers automatically 
+			maintain a list of their members.</para>
+
 		<para>
-			A newly introduced feature of Content Models are the resource definitions. By resource definitions
-			in Content Models so-called resources can be added to objects. These resources are in fact operations
-			which can be called on a specific object by a specific name. The first - and for now the only - possible 
-			resource definition is to define a XSLT which transforms a specified metadata record.
+			Two examples may help to understand the concept. For improved
+			readability, Content Models are omitted. User Account resources are
+			described in the User Account service of the Authentication and 
+			Authorization Manager.</para>
+			
+		<para>The first example is an image collection of fire hydrants. The
+			collection is structured by geographical regions, represented by two
+			Containers, which aggregate the pictures taken in either Europe or
+			North America.
+			Each image of a fire hydrant is stored in two resolutions: thumbnail and
+			web.
+			<xref linkend="om-datamodel-1-example" />
+			depicts a schematic
+			view of such an image collection data model.
 		</para>
+
+		<figure id="om-datamodel-1-example">
+			<title>Data model for an image collection</title>
+
+			<mediaobject>
+				<imageobject>
+					<imagedata depth="9.7cm" fileref="datamodel-image-collection.png" id="datamodel-image-collection"
+						width="14.5cm" />
+				</imageobject>
+				<caption>In this example, the collection is divided into two sub-collections: fire hydrants in the North America and in Europe. Each Item has a single Component with one image.</caption>
+			</mediaobject>
+		</figure>
+
+		<para>
+			The second example depicts a system to store research data acquired
+			from instruments in a laboratory. Each instrument is described with its
+			properties in an instrument description. Instruments may be combined
+			to rigs, which describe an experiment setup.
+			Both instrument and rig descriptions are modeled as Items. The
+			measured data (in this case, spectra, modeled as Items) are stored in 
+			a Container representing an experiment. Experiments are organized in 
+			projects (also modeled as Containers). A configuration describes the 
+			setup or calibration of each instrument. Each captured spectrum is 
+			related to the instrument configuration by a Content Relation.
+			<xref linkend="om-datamodel-2-example" /> depicts a schematic view on 
+			a data model for such a research data management system.
+		</para>
+
+		<figure id="om-datamodel-2-example">
+			<title>Data model for a research data archive</title>
+
+			<mediaobject>
+				<imageobject>
+					<imagedata depth="11.1cm" fileref="datamodel-research-data.png" id="datamodel-research-data"
+						width="14.8cm" />
+				</imageobject>
+				<caption>This data model is based on the Core Scientific Metadata Model (B. Matthews et al.). The dotted blue lines depict Content Relations between resources, providing additional context.</caption>
+			</mediaobject>
+		</figure>
+
 	</section>
 </chapter>
