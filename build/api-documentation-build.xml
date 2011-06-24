@@ -134,7 +134,6 @@
 			<param name="schema.name" value="context.xsd" />
 			<param name="schema.version" value="0.7" />
 			<param name="docbook.name" value="ContextXsd.xml" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
 	<!-- end: build of context documentation -->
@@ -149,7 +148,7 @@
 			<param name="descriptor" value="${interface.descriptor.dir}/content-model.xml" />
 			<param name="schema.name" value="content-model.xsd" />
 			<param name="schema.version" value="0.1" />
-      <param name="draft.mode" value="yes"/>
+                        <param name="draft.mode" value="yes"/>
 		</antcall>
 	</target>
 	<!-- end: build of contentmodel documentation -->
@@ -175,7 +174,6 @@
 			<param name="resource" value="admin" />
 			<param name="document" value="_api_doc_ADM_Admin" />
 			<param name="descriptor" value="${interface.descriptor.dir}/admin.xml" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
 	<!-- end: build of admin documentation -->
@@ -191,7 +189,6 @@
 			<param name="schema.version" value="0.8" />
 			<param name="docbook.name" value="OrganizationalUnitXsd.xml" />
 			<param name="stylesheet.name" value="CreateXsdDocbook.xsl" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 
 	</target>
@@ -208,7 +205,6 @@
 			<param name="schema.version" value="0.1" />
 			<param name="docbook.name" value="SetDefinitionXsd.xml" />
 			<param name="stylesheet.name" value="CreateXsdDocbook.xsl" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 
 	</target>
@@ -222,7 +218,6 @@
 			<param name="component" value="aa" />
 			<param name="document" value="_api_doc_AA_PolicyDecisionPoint" />
 			<param name="descriptor" value="${interface.descriptor.dir}/pdp.xml" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
 	<!-- end: build of policy-decision-point documentation -->
@@ -238,7 +233,6 @@
 			<param name="schema.version" value="0.4" />
 			<param name="docbook.name" value="RoleXsd.xml" />
 			<param name="stylesheet.name" value="createRoleDocbook.xsl" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
 	<!-- end: build of role documentation -->
@@ -250,7 +244,7 @@
 			<param name="component" value="tme" />
 			<param name="document" value="_api_doc_TME_Jhove" />
 			<param name="descriptor" value="${interface.descriptor.dir}/jhove.xml" />
-      <param name="deprecated" value="true"/>
+                        <param name="deprecated" value="true"/>
 		</antcall>
 	</target>
 	<!-- end: build of role documentation -->
@@ -264,7 +258,6 @@
 			<param name="schema.version" value="0.5" />
 			<param name="docbook.name" value="GrantsXsd.xml" />
 			<param name="stylesheet.name" value="createGrantsDocbook.xsl" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 		<antcall target="build-handler-documentation">
 			<param name="resource" value="user-account" />
@@ -287,7 +280,6 @@
 			<param name="schema.version" value="0.6" />
 			<param name="docbook.name" value="UserGroupXsd.xml" />
 			<param name="stylesheet.name" value="createUserGroupDocbook.xsl" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
 
@@ -318,7 +310,6 @@
 			<param name="schema.version" value="0.3" />
 			<param name="docbook.name" value="StatisticDataXsd.xml" />
 			<param name="stylesheet.name" value="createStatisticDataDocbook.xsl" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
 	<!-- end: build of statistic-data documentation -->
@@ -333,7 +324,6 @@
       <param name="schema.version" value="0.3" />
       <param name="docbook.name" value="PreprocessingXsd.xml" />
       <param name="stylesheet.name" value="createPreprocessingDocbook.xsl" />
-      <param name="draft.mode" value="no" />
     </antcall>
   </target>
 
@@ -346,7 +336,6 @@
 			<param name="schema.version" value="0.4" />
 			<param name="docbook.name" value="ScopeListXsd.xml" />
 			<param name="stylesheet.name" value="createScopeListDocbook.xsl" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 		<antcall target="build-handler-documentation">
 			<param name="resource" value="scope" />
@@ -385,7 +374,6 @@
 			<param name="docbook.name" value="AggregationDefinitionListXsd.xml" />
 			<param name="stylesheet.name" value="createAggregationDefinitionListDocbook.xsl" />
 			<param name="schema.version" value="0.4" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 		<antcall target="build-handler-documentation">
 			<param name="resource" value="aggregation-definition" />
@@ -433,7 +421,6 @@
 			<param name="schema.name" value="${report-definition-list.schema.name}" />
 			<param name="stylesheet.name" value="${report-definition-list.stylesheet.name}" />
 			<param name="schema.version" value="0.4" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 		<antcall target="build-handler-documentation">
 			<param name="resource" value="report-definition" />
@@ -472,7 +459,6 @@
 			<param name="docbook.name" value="ReportParametersXsd.xml" />
 			<param name="stylesheet.name" value="createReportParametersDocbook.xsl" />
 			<param name="schema.version" value="0.4" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 		<antcall target="build-handler-documentation">
 			<param name="resource" value="report" />
@@ -527,7 +513,6 @@
 			<param name="stylesheet.name" value="createIngestDocbook.xsl" />
 			<param name="element" value="ingest" />
 			<param name="title" value="Elements and attributes of Ingest interface" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
 	<!-- end: build of ingest documentation -->
@@ -545,7 +530,6 @@
 			<param name="stylesheet.name" value="createItemDocbook.xsl" />
 			<param name="element" value="item" />
 			<param name="title" value="Elements and attributes of Item" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
 	<!-- end: build of Item documentation -->
@@ -561,7 +545,6 @@
 			<param name="schema.version" value="0.9" />
 			<param name="docbook.name" value="ContainerXsd.xml" />
 			<param name="stylesheet.name" value="createContainerDocbook.xsl" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
 	<!-- end: build of container documentation -->
@@ -573,7 +556,6 @@
 			<param name="component" value="om" />
 			<param name="document" value="_api_doc_OM_SemanticStore" />
 			<param name="descriptor" value="${interface.descriptor.dir}/semanticstore.xml" />
-			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
 	<!-- end: build of semanticstore documentation -->
@@ -583,7 +565,7 @@
 	<target name="build-handler-documentation">
 		<antcall target="prepare-component" />
 		<antcall target="${edition}-rest" />
-    <antcall target="${edition}-soap" />
+                <antcall target="${edition}-soap" />
   </target>
 
 	<target name="prepare-component">
@@ -634,6 +616,7 @@
 			<param name="prefix" value="${prefix.filtered}" />
 			<param name="interface" value="${interface.soap}" />
 			<param name="schemas.dir" value="${schemas.soap.src.dir}" />
+                        <param name="deprecated" value="true"/>
 		</antcall>
 	</target>
 
