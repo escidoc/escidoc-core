@@ -177,7 +177,7 @@
 
 			<mediaobject>
 				<imageobject>
-					<imagedata depth="7.55cm" fileref="om/src/docbook/om/lifecycle-context.png"
+					<imagedata depth="7.55cm" fileref="lifecycle-context.png"
 						id="context-lifecycle" width="8.91cm" format="PNG" />
 				</imageobject>
 			</mediaobject>
@@ -244,7 +244,7 @@
 							<entry>
 								<inlinemediaobject>
 									<imageobject>
-										<imagedata depth="2.0cm" fileref="om/src/docbook/om/note.png" format="PNG" />
+										<imagedata depth="2.0cm" fileref="note.png" format="PNG" />
 									</imageobject>
 								</inlinemediaobject>
 							</entry>
