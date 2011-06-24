@@ -168,7 +168,7 @@
       of the metadata records, or a component.
     </para>
 
-    <para>Accessing sub-resources differs between the REST and the SOAP API.
+    <para>
     	The REST API provides an XLink Simple Pointer to each retrievable
       part of a resource. If you look at the representation of a resource, you
       will find several places with resource identifiers (the combination of an
@@ -176,11 +176,7 @@
       <literal>xlink:href</literal> attribute), e.g. for metadata records. If
       you are requesting such a part of a resource via the URI declared in the
       <literal>xlink:href</literal> attribute, the invoked service returns 
-      just this part of the resource. The SOAP API provides the same 
-      functionality with dedicated API methods allowing to work with 
-      sub-resources, e.g. <literal>retrieveMdRecord()</literal>. Consequently, 
-      the XLink attributes are missing in the SOAP representation of the 
-      resource.
+      just this part of the resource.
     </para>
   </section>
 

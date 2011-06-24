@@ -22,30 +22,13 @@
   <section>
     <title>Application Programming Interfaces</title>
 
-      <para>Most services of the eSciDoc Infrastructure offer two application
-      programming interfaces (API): one is based on SOAP (once 'Simple Object
-      Access Protocol'), the other one on the concept of Representational
-      State Transfer (REST). Both are web-service protocols, which allow you
+      <para>The services of the eSciDoc Infrastructure offer an application
+      programming interface (API) which is based on the concept of Representational
+      State Transfer (REST). It is a web-service protocol, which allows you
       invoking methods of services remotely in a language-independent manner.
-      In the case of REST, you work with resources and a restricted set of 
-      verbs (e.g., the verbs defined by HTTP), in SOAP, you have a more
-      elaborate set of methods.</para>
-      <para>
-      Based on the API you select for interacting with the eSciDoc Object
-      Manager, the representation of resources will slightly differ. You may
-      mix method invocations using both APIs in your code, but you should be
-      aware of the subtle differences of the representations (especially
-      regarding the identification of resources). Retrieving a resource via
-      one API and updating it via the other API will usually require
-      reformatting the representation.</para>
+      You work with resources and a restricted set of verbs (e.g., the verbs defined by HTTP).</para>
 
-      <para>Choosing between SOAP and REST API is mainly a matter of taste.
-      Java programmers will often prefer the SOAP interface. Users of
-      scripting languages typically tend to the REST API. Recently, REST-style
-      interfaces gained a lot of interest because of various Web 2.0 services
-      (e.g., Yahoo, Google, Facebook) offering REST APIs.</para>
-
-      <para>A third option is the Java Interface Connector, which is targeted at
+      <para>A second option is the Java Interface Connector, which is targeted at
       Java developers. This connector hides the networking layer between
       eSciDoc Infrastructure and the application completely and provides a
       true object-oriented programming interface. The Java Interface Connector is

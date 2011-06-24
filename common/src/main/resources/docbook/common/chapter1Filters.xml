@@ -268,10 +268,7 @@ operation     = "operation" , "=" , "searchRetrieve" | "explain" ;
 
     <para>The <code>method-name</code> may be any of the filter 
       method names (see table in the previous section). Please refer to the API 
-      documentation for the exact spelling of the filter method names, as they
-      differ between REST and SOAP APIs. Also note that SOAP does not have the
-      concept of service groups. Therefore, in SOAP <code>method</code>
-      equals <code>method-name</code>. 
+      documentation for the exact spelling of the filter method names.
     </para>
 
     <para>For a list of valid method names and the correct combination with
@@ -690,17 +687,5 @@ value           = DIGIT , { DIGIT | ZERO } ;
 "/properties/public-status"=submitted
 sortby "/id"/sort.ascending</programlisting></para>
 
-    <para>Get the resource with identifier <literal>escidoc:5</literal>, given
-    as Java code snippet using the SOAP API:</para>
-
-    <para><programlisting>Map&lt;String, String[]&gt; filterParams = new HashMap&lt;String, String[]&gt;();
-
-filterParams.put("operation",      new String[] {"searchRetrieve"});
-filterParams.put("version",        new String[] {"1.1"});
-filterParams.put("query ",         new String[] {"\"/id\"=escidoc:5"});
-filterParams.put("maximumRecords", new String[] {"10"});
-filterParams.put("startRecord",    new String[] {"100"});
-
-String result = retrieveItems(filterParams);    </programlisting></para>
   </section>
 </section>

@@ -185,10 +185,7 @@ version-id  = DIGIT , { DIGIT | ZERO } ;
 			<para>Nearly all XML documents that are used within the eSciDoc
 				Infrastructure, mostly resource representations, are described by 
 				XML schemas. All schemas are written in
-				W3C’s XML schema language. Because of the already mentioned subtle
-				differences between representations for SOAP and REST interfaces,
-				there
-				are two sets of schemas, one for each API.</para>
+				W3C’s XML schema language.</para>
 
 			<para>Typically, a resource representation is defined by a nested set
 				of
@@ -214,10 +211,6 @@ version-id  = DIGIT , { DIGIT | ZERO } ;
 				</para></footnote>. The URL of an XML schema document can be 
 				deduced from the resource type name and namespace/schema version in 
 				the following form:
-			</para>
-
-			<para>
-				SOAP: https://www.escidoc.org/schemas/soap/<literal>&lt;type-name&gt;</literal>/<literal>&lt;version&gt;</literal>/<literal>&lt;type-name&gt;</literal>.xsd
 			</para>
 
 			<para>
@@ -259,7 +252,6 @@ version-id  = DIGIT , { DIGIT | ZERO } ;
 							<entry>Schema URL:</entry>
 
 							<entry><simplelist columns="1" type="vert">
-                <member>https://www.escidoc.org/schemas/soap/item/0.10/item.xsd</member>
                 <member>https://www.escidoc.org/schemas/rest/item/0.10/item.xsd</member>
               </simplelist></entry>
 						</row>
