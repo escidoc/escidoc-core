@@ -15,11 +15,11 @@ public final class ModifiyDatastreamPathParam {
 
     @NotNull
     @NotEmpty
-    private String pid;
+    private final String pid;
 
     @NotNull
     @NotEmpty
-    private String dsID;
+    private final String dsID;
 
     public ModifiyDatastreamPathParam(@AssertFieldConstraints final String pid,
                                       @AssertFieldConstraints final String dsID) {

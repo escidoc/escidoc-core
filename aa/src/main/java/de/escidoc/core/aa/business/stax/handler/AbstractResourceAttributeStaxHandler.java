@@ -62,7 +62,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     /**
      * contains the by this class extracted Attributes that have value type String
      */
-    private HashMap<String, String> superAttributes = new HashMap<String, String>();
+    private final HashMap<String, String> superAttributes = new HashMap<String, String>();
 
     /**
      * The constructor.
@@ -74,7 +74,8 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      * @param urnVersionStatus The urn of the version-status attribute.
      */
     public AbstractResourceAttributeStaxHandler(final EvaluationCtx ctx, final String resourceId,
-        final String urnModifiedBy, final String urnStatus, final String urnVersionStatus) {
+                                                final String urnModifiedBy, final String urnStatus,
+                                                final String urnVersionStatus) {
 
         this.ctx = ctx;
         this.resourceId = resourceId;
@@ -92,13 +93,13 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
 
         //Only parse elements that are not in metadata-section
-        if (XmlUtility.NAME_MDRECORDS.equals(element.getLocalName())) {
+        if(XmlUtility.NAME_MDRECORDS.equals(element.getLocalName())) {
             setInMetadata(true);
         }
 
-        if (isNotReady() && !isInMetadata()) {
+        if(isNotReady() && ! isInMetadata()) {
             final String localName = element.getLocalName();
-            if (XmlUtility.NAME_MODIFIED_BY.equals(localName)) {
+            if(XmlUtility.NAME_MODIFIED_BY.equals(localName)) {
                 superAttributes.put(this.urnModifiedBy, XmlUtility.getIdFromStartElement(element));
             }
         }
@@ -118,7 +119,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element) throws Exception {
 
         //Only parse elements that are not in metadata-section
-        if (XmlUtility.NAME_MDRECORDS.equals(element.getLocalName())) {
+        if(XmlUtility.NAME_MDRECORDS.equals(element.getLocalName())) {
             setInMetadata(false);
         }
 
@@ -133,17 +134,16 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element) throws Exception {
 
-        if (isNotReady() && !isInMetadata()) {
+        if(isNotReady() && ! isInMetadata()) {
             final String localName = element.getLocalName();
-            if (!this.statusFound && XmlUtility.NAME_PUBLIC_STATUS.equals(localName)) {
+            if(! this.statusFound && XmlUtility.NAME_PUBLIC_STATUS.equals(localName)) {
                 superAttributes.put(this.urnStatus, data);
                 // in an item representation, status is contained in item
                 // properties and in the component properties. We have to mark
                 // the found item status to prevent overriding with component
                 // status.
                 this.statusFound = true;
-            }
-            else if (XmlUtility.NAME_STATUS.equals(localName)) {
+            } else if(XmlUtility.NAME_STATUS.equals(localName)) {
                 superAttributes.put(this.urnVersionStatus, data);
             }
         }

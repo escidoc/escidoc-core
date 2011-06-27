@@ -25,9 +25,9 @@ public class EsciDocMarshallerListener extends Marshaller.Listener {
     public final static Logger LOG = LoggerFactory.getLogger(EsciDocUnmarshallerListener.class);
     private final static String EMPTY_STRING = "";
 
-    private OutputStream outputStream;
-    private FilteringXMLStreamWriter filteringXmlStreamWriter;
-    private List<MarshallerListener> marshallerListeners = new ArrayList<MarshallerListener>();
+    private final OutputStream outputStream;
+    private final FilteringXMLStreamWriter filteringXmlStreamWriter;
+    private final List<MarshallerListener> marshallerListeners = new ArrayList<MarshallerListener>();
 
     public EsciDocMarshallerListener(OutputStream outputStream) {
         this.outputStream = outputStream;

@@ -24,9 +24,9 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
 
     public final static Logger LOG = LoggerFactory.getLogger(EsciDocUnmarshallerListener.class);
 
-    private List<UnmarshallerListener> unmarshallerListeners = new ArrayList<UnmarshallerListener>();
+    private final List<UnmarshallerListener> unmarshallerListeners = new ArrayList<UnmarshallerListener>();
 
-    private ElementStreamFilter elementStreamFilter;
+    private final ElementStreamFilter elementStreamFilter;
 
     public EsciDocUnmarshallerListener(final InputStream inputStream) {
         this.elementStreamFilter = new ElementStreamFilter(inputStream);

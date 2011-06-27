@@ -15,7 +15,7 @@ public final class UpdateObjectPathParam {
 
     @NotNull
     @NotEmpty
-    private String pid;
+    private final String pid;
 
     public UpdateObjectPathParam(@AssertFieldConstraints final String pid) {
         this.pid = pid;

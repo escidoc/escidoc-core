@@ -54,7 +54,7 @@ public class ComponentStaxHandler extends DefaultHandler {
     /**
      * contains the extracted Attributes.
      */
-    private HashMap<String, String> attributes = new HashMap<String, String>();
+    private final HashMap<String, String> attributes = new HashMap<String, String>();
 
     /**
      * The constructor.
@@ -76,11 +76,11 @@ public class ComponentStaxHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
 
-        if (isNotReady()) {
+        if(isNotReady()) {
             final String localName = element.getLocalName();
-            if (XmlUtility.NAME_CREATED_BY.equals(localName)) {
-                attributes.put(AttributeIds.URN_ITEM_COMPONENT_CREATED_BY_ATTR, XmlUtility
-                    .getIdFromStartElement(element));
+            if(XmlUtility.NAME_CREATED_BY.equals(localName)) {
+                attributes.put(AttributeIds.URN_ITEM_COMPONENT_CREATED_BY_ATTR,
+                        XmlUtility.getIdFromStartElement(element));
             }
         }
 
@@ -95,16 +95,14 @@ public class ComponentStaxHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element) throws Exception {
 
-        if (isNotReady()) {
+        if(isNotReady()) {
             super.characters(data, element);
             final String localName = element.getLocalName();
-            if (XmlUtility.NAME_VALID_STATUS.equals(localName)) {
+            if(XmlUtility.NAME_VALID_STATUS.equals(localName)) {
                 attributes.put(AttributeIds.URN_ITEM_COMPONENT_VALID_STATUS_ATTR, data);
-            }
-            else if (XmlUtility.NAME_VISIBILITY.equals(localName)) {
+            } else if(XmlUtility.NAME_VISIBILITY.equals(localName)) {
                 attributes.put(AttributeIds.URN_ITEM_COMPONENT_VISIBILITY_ATTR, data);
-            }
-            else if (XmlUtility.NAME_CONTENT_CATEGORY.equals(localName)) {
+            } else if(XmlUtility.NAME_CONTENT_CATEGORY.equals(localName)) {
                 attributes.put(AttributeIds.URN_ITEM_COMPONENT_CONTENT_CATEGORY_ATTR, data);
             }
         }

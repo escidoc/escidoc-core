@@ -31,20 +31,20 @@ import javax.validation.constraints.NotNull;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class GetDisseminationPathParam {
 
     @NotNull
     @NotEmpty
-    private String pid;
+    private final String pid;
 
     @NotNull
     @NotEmpty
-    private String sdefPid;
+    private final String sdefPid;
 
     @NotNull
     @NotEmpty
-    private String method;
+    private final String method;
 
     public GetDisseminationPathParam(@AssertFieldConstraints final String pid,
                                      @AssertFieldConstraints final String sdefPid,

@@ -14,19 +14,18 @@ import java.io.Serializable;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class DatastreamCacheKey implements Serializable {
 
     @NotNull
     @NotEmpty
-    private String pid;
+    private final String pid;
 
-    private String dsID;
+    private final String dsID;
 
-    private DateTime timestamp;
+    private final DateTime timestamp;
 
-    public DatastreamCacheKey(@AssertFieldConstraints final String pid,
-                              @AssertFieldConstraints final String dsID,
+    public DatastreamCacheKey(@AssertFieldConstraints final String pid, @AssertFieldConstraints final String dsID,
                               @AssertFieldConstraints final DateTime timestamp) {
         this.pid = pid;
         this.dsID = dsID;
