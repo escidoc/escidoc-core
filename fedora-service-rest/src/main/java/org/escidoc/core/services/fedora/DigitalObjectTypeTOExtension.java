@@ -22,8 +22,9 @@ public class DigitalObjectTypeTOExtension extends DigitalObjectTypeTO {
         this.datastream = new DatastreamTypeListTO();
     }
 
+    @Override
     public List<DatastreamTypeTO> getDatastream() {
-        if (this.datastream == null) {
+        if(this.datastream == null) {
             this.datastream = new DatastreamTypeListTO();
         }
         return this.datastream;

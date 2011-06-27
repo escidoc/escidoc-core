@@ -25,21 +25,20 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  */
 @Provider
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public class DatastreamMessageBodyReader implements MessageBodyReader<Stream> {
 
 
-    public boolean isReadable(final Class<?> type, final Type genericType,
-                              final Annotation[] annotations, final MediaType mediaType) {
+    @Override
+    public boolean isReadable(final Class<?> type, final Type genericType, final Annotation[] annotations,
+                              final MediaType mediaType) {
         return Stream.class.isAssignableFrom(type);
     }
 
-    public Stream readFrom(final Class<Stream> type,
-                               final Type genericType,
-                               final Annotation[] annotations,
-                               final MediaType mediaType,
-                               final MultivaluedMap<String, String> httpHeaders,
-                               @NotNull final InputStream entityStream) throws IOException, WebApplicationException {
+    @Override
+    public Stream readFrom(final Class<Stream> type, final Type genericType, final Annotation[] annotations,
+                           final MediaType mediaType, final MultivaluedMap<String, String> httpHeaders,
+                           @NotNull final InputStream entityStream) throws IOException, WebApplicationException {
         final Stream cachedOutputStream = new Stream();
         IOUtils.copyAndCloseInput(entityStream, cachedOutputStream);
         cachedOutputStream.lock();

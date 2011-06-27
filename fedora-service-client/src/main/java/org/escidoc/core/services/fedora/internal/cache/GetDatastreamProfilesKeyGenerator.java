@@ -32,13 +32,15 @@ import org.joda.time.DateTime;
  */
 public final class GetDatastreamProfilesKeyGenerator implements CacheKeyGenerator<DatastreamCacheKey> {
 
+    @Override
     public DatastreamCacheKey generateKey(final MethodInvocation methodInvocation) {
         return this.generateKey(methodInvocation.getArguments());
     }
 
+    @Override
     public DatastreamCacheKey generateKey(final Object... objects) {
-        if (objects.length > 2) {
-            if (objects[0] instanceof String && objects[1] instanceof String) {
+        if(objects.length > 2) {
+            if(objects[0] instanceof String && objects[1] instanceof String) {
                 final String pid = (String) objects[0];
                 final String dsId = (String) objects[1];
                 DateTime timestamp = null;

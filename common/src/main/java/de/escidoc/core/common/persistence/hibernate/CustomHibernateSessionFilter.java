@@ -28,12 +28,14 @@ import org.springframework.orm.hibernate3.support.OpenSessionInViewFilter;
 
 public class CustomHibernateSessionFilter extends OpenSessionInViewFilter {
 
+    @Override
     protected Session getSession(SessionFactory sessionFactory) throws DataAccessResourceFailureException {
         Session session = super.getSession(sessionFactory);
         session.setFlushMode(FlushMode.COMMIT);
         return session;
     }
 
+    @Override
     protected void closeSession(Session session, SessionFactory factory) {
         session.flush();
         super.closeSession(session, factory);

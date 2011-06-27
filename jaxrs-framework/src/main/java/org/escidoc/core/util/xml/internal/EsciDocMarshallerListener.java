@@ -35,7 +35,7 @@ public class EsciDocMarshallerListener extends Marshaller.Listener {
         final XMLStreamWriter xmlStreamWriter;
         try {
             xmlStreamWriter = xmlOutputFactory.createXMLStreamWriter(outputStream);
-        } catch (XMLStreamException e) {
+        } catch(XMLStreamException e) {
             throw new IllegalStateException("Error on creating XML factory.", e);
         }
         filteringXmlStreamWriter = new FilteringXMLStreamWriter(xmlStreamWriter);
@@ -53,28 +53,30 @@ public class EsciDocMarshallerListener extends Marshaller.Listener {
         this.marshallerListeners.remove(marshallerListener);
     }
 
+    @Override
     public void beforeMarshal(final Object source) {
-        if (source instanceof Stream) {
-            final Stream stream  = (Stream) source;
+        if(source instanceof Stream) {
+            final Stream stream = (Stream) source;
             try {
                 filteringXmlStreamWriter.writeCharacters(EMPTY_STRING);
                 filteringXmlStreamWriter.flush();
-            } catch (final XMLStreamException e) {
+            } catch(final XMLStreamException e) {
                 LOG.debug("Error on writing XML stream.", e);
             }
             try {
                 stream.writeCacheTo(outputStream);
-            } catch (IOException e) {
+            } catch(IOException e) {
                 LOG.debug("Error on writing content to stream.", e);
             }
         }
-        for (MarshallerListener marshallerListener : this.marshallerListeners) {
+        for(MarshallerListener marshallerListener : this.marshallerListeners) {
             marshallerListener.beforeMarshal(source);
         }
     }
 
+    @Override
     public void afterMarshal(final Object source) {
-        for (MarshallerListener marshallerListener : this.marshallerListeners) {
+        for(MarshallerListener marshallerListener : this.marshallerListeners) {
             marshallerListener.afterMarshal(source);
         }
     }

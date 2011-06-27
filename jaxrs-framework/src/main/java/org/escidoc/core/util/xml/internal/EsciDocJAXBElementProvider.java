@@ -22,34 +22,31 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public class EsciDocJAXBElementProvider extends JAXBElementProvider {
 
     public final static Logger LOG = LoggerFactory.getLogger(EsciDocJAXBElementProvider.class);
 
-    protected Object unmarshalFromInputStream(@NotNull final Unmarshaller unmarshaller,
-                                              @NotNull final InputStream is,
-                                              final MediaType mt)
-            throws JAXBException {
+    @Override
+    protected Object unmarshalFromInputStream(@NotNull final Unmarshaller unmarshaller, @NotNull final InputStream is,
+                                              final MediaType mt) throws JAXBException {
         final EsciDocUnmarshallerListener unmarshallerListener = new EsciDocUnmarshallerListener(is);
         unmarshaller.setListener(unmarshallerListener);
         return unmarshaller.unmarshal(unmarshallerListener.getFilteredXmlStreamReader());
     }
 
+    @Override
     protected Object unmarshalFromReader(@NotNull final Unmarshaller unmarshaller,
-                                         @NotNull final XMLStreamReader reader,
-                                         final MediaType mt)
+                                         @NotNull final XMLStreamReader reader, final MediaType mt)
             throws JAXBException {
         final EsciDocUnmarshallerListener unmarshallerListener = new EsciDocUnmarshallerListener(reader);
         unmarshaller.setListener(unmarshallerListener);
         return unmarshaller.unmarshal(unmarshallerListener.getFilteredXmlStreamReader());
     }
 
-    protected void marshalToOutputStream(@NotNull final Marshaller marshaller,
-                                         final Object obj,
-                                         @NotNull final OutputStream os,
-                                         final MediaType mt)
-            throws Exception {
+    @Override
+    protected void marshalToOutputStream(@NotNull final Marshaller marshaller, final Object obj,
+                                         @NotNull final OutputStream os, final MediaType mt) throws Exception {
         final EsciDocMarshallerListener marshallerListener = new EsciDocMarshallerListener(os);
         marshaller.setListener(marshallerListener);
         marshaller.marshal(obj, marshallerListener.getXMLStreamWriter());

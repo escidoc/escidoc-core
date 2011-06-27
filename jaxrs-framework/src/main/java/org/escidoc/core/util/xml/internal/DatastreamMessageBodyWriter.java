@@ -23,31 +23,26 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  */
 @Provider
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public class DatastreamMessageBodyWriter implements MessageBodyWriter<Stream> {
 
-    public boolean isWriteable(final Class<?> type,
-                               final Type genericType,
-                               final Annotation[] annotations,
+    @Override
+    public boolean isWriteable(final Class<?> type, final Type genericType, final Annotation[] annotations,
                                final MediaType mediaType) {
         return Stream.class.isAssignableFrom(type);
     }
 
-    public long getSize(final Stream cachedOutputStream,
-                        final Class<?> type,
-                        final Type genericType,
-                        final Annotation[] annotations,
-                        final MediaType mediaType) {
+    @Override
+    public long getSize(final Stream cachedOutputStream, final Class<?> type, final Type genericType,
+                        final Annotation[] annotations, final MediaType mediaType) {
         return cachedOutputStream.size();
     }
 
-    public void writeTo(final Stream cachedOutputStream,
-                        final Class<?> type,
-                        final Type genericType,
-                        final Annotation[] annotations,
-                        final MediaType mediaType,
-                        final MultivaluedMap<String, Object> httpHeaders,
-                        @NotNull final OutputStream entityStream) throws IOException, WebApplicationException {
+    @Override
+    public void writeTo(final Stream cachedOutputStream, final Class<?> type, final Type genericType,
+                        final Annotation[] annotations, final MediaType mediaType,
+                        final MultivaluedMap<String, Object> httpHeaders, @NotNull final OutputStream entityStream)
+            throws IOException, WebApplicationException {
         cachedOutputStream.writeCacheTo(entityStream);
     }
 

@@ -11,16 +11,18 @@ import javax.xml.bind.annotation.XmlElement;
 public final class XmlContentTypeDatastreamHolderTO extends XmlContentTypeTO implements DatastreamHolder {
 
     @XmlElement(namespace = NAMESPACE, name = ELEMENT_NAME)
-    private Stream stream ;
+    private Stream stream;
 
+    @Override
     public Stream getDatastream() {
-        if (this.stream == null) {
+        if(this.stream == null) {
             this.stream = new Stream();
         }
         return this.stream;
     }
 
-    public void setContent(final Stream stream ) {
+    @Override
+    public void setContent(final Stream stream) {
         this.stream = stream;
     }
 

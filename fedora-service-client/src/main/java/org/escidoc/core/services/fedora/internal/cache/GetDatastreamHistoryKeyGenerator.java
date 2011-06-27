@@ -37,10 +37,12 @@ import org.joda.time.DateTimeZone;
  */
 public final class GetDatastreamHistoryKeyGenerator implements CacheKeyGenerator<DatastreamCacheKey> {
 
+    @Override
     public DatastreamCacheKey generateKey(final MethodInvocation methodInvocation) {
         return this.generateKey(methodInvocation.getArguments());
     }
 
+    @Override
     public DatastreamCacheKey generateKey(final Object... objects) {
         if(objects.length > 1) {
             if(objects[0] instanceof GetDatastreamHistoryPathParam &&

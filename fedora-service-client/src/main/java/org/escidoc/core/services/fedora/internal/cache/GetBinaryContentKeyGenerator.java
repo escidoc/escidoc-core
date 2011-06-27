@@ -35,14 +35,15 @@ import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
  */
 public final class GetBinaryContentKeyGenerator implements CacheKeyGenerator<DatastreamCacheKey> {
 
+    @Override
     public DatastreamCacheKey generateKey(final MethodInvocation methodInvocation) {
         return this.generateKey(methodInvocation.getArguments());
     }
 
+    @Override
     public DatastreamCacheKey generateKey(final Object... objects) {
         if(objects.length > 1) {
-            if(objects[0] instanceof GetBinaryContentPathParam &&
-                    objects[1] instanceof GetBinaryContentQueryParam) {
+            if(objects[0] instanceof GetBinaryContentPathParam && objects[1] instanceof GetBinaryContentQueryParam) {
                 final GetBinaryContentPathParam param = (GetBinaryContentPathParam) objects[0];
                 return new DatastreamCacheKey(param.getPid(), param.getDsID(), null);
             }

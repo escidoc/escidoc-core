@@ -36,13 +36,16 @@ import org.joda.time.DateTimeZone;
  */
 public final class GetDatastreamProfileKeyGenerator implements CacheKeyGenerator<DatastreamCacheKey> {
 
+    @Override
     public DatastreamCacheKey generateKey(final MethodInvocation methodInvocation) {
         return this.generateKey(methodInvocation.getArguments());
     }
 
+    @Override
     public DatastreamCacheKey generateKey(final Object... objects) {
-        if (objects.length > 1) {
-            if (objects[0] instanceof GetDatastreamProfilePathParam && objects[1] instanceof GetDatastreamProfileQueryParam) {
+        if(objects.length > 1) {
+            if(objects[0] instanceof GetDatastreamProfilePathParam &&
+                    objects[1] instanceof GetDatastreamProfileQueryParam) {
                 final GetDatastreamProfilePathParam param = (GetDatastreamProfilePathParam) objects[0];
                 final GetDatastreamProfileQueryParam query = (GetDatastreamProfileQueryParam) objects[1];
                 DateTime timestamp = null;

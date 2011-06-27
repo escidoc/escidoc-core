@@ -26,20 +26,21 @@ import org.escidoc.core.services.fedora.DeleteDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 
 /**
- * {@link CacheKeyGenerator} for deleteDatastream-Operation in
- * {@link org.escidoc.core.services.fedora.FedoraServiceClient}.
+ * {@link CacheKeyGenerator} for deleteDatastream-Operation in {@link org.escidoc.core.services.fedora.FedoraServiceClient}.
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public final class DeleteDatastreamKeyGenerator implements CacheKeyGenerator<String> {
 
+    @Override
     public String generateKey(final MethodInvocation methodInvocation) {
         return this.generateKey(methodInvocation.getArguments());
     }
 
+    @Override
     public String generateKey(final Object... objects) {
-        if (objects.length > 0) {
-            if (objects[0] instanceof DeleteDatastreamPathParam) {
+        if(objects.length > 0) {
+            if(objects[0] instanceof DeleteDatastreamPathParam) {
                 final DeleteDatastreamPathParam deleteDatastreamPathParam = (DeleteDatastreamPathParam) objects[0];
                 return deleteDatastreamPathParam.getPid();
             }

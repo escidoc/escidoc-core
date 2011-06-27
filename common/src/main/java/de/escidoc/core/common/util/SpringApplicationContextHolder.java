@@ -26,9 +26,9 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * Wrapper to always return a reference to the Spring Application Context from within non-Spring enabled beans.
- * Unlike Spring MVC's WebApplicationContextUtils we do not need a reference to the Servlet context for this. All we
- * need is for this bean to be initialized during application startup.
+ * Wrapper to always return a reference to the Spring Application Context from within non-Spring enabled beans. Unlike
+ * Spring MVC's WebApplicationContextUtils we do not need a reference to the Servlet context for this. All we need is
+ * for this bean to be initialized during application startup.
  */
 @Component
 public class SpringApplicationContextHolder implements ApplicationContextAware {
@@ -36,10 +36,12 @@ public class SpringApplicationContextHolder implements ApplicationContextAware {
     private static ApplicationContext CONTEXT;
 
     /**
-     * This method is called from within the ApplicationContext once it is
-     * done starting up, it will stick a reference to itself into this bean.
+     * This method is called from within the ApplicationContext once it is done starting up, it will stick a reference
+     * to itself into this bean.
+     *
      * @param context a reference to the ApplicationContext.
      */
+    @Override
     public void setApplicationContext(ApplicationContext context) throws BeansException {
         CONTEXT = context;
     }

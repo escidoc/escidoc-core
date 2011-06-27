@@ -39,10 +39,9 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
     }
 
     private void init() {
-        this.elementStreamFilter.addIgnoredElemenet(
-                QName.valueOf("{http://www.escidoc.de/schemas/metadatarecords/0.5}md-record"));
-        this.elementStreamFilter.addIgnoredElemenet(
-                QName.valueOf("{info:fedora/fedora-system:def/foxml#}xmlContent"));
+        this.elementStreamFilter
+                .addIgnoredElemenet(QName.valueOf("{http://www.escidoc.de/schemas/metadatarecords/0.5}md-record"));
+        this.elementStreamFilter.addIgnoredElemenet(QName.valueOf("{info:fedora/fedora-system:def/foxml#}xmlContent"));
     }
 
 
@@ -58,22 +57,24 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
         this.unmarshallerListeners.remove(unmarshallerListener);
     }
 
+    @Override
     public void beforeUnmarshal(final Object target, final Object parent) {
-        if (target instanceof DatastreamHolder) {
+        if(target instanceof DatastreamHolder) {
             final DatastreamHolder contentTO = (DatastreamHolder) target;
             beforeUnmarshalContentTO(contentTO);
         }
-        for (UnmarshallerListener unmarshallerListener : this.unmarshallerListeners) {
+        for(UnmarshallerListener unmarshallerListener : this.unmarshallerListeners) {
             unmarshallerListener.beforeUnmarshal(target, parent);
         }
     }
 
+    @Override
     public void afterUnmarshal(final Object target, final Object parent) {
-        if (target instanceof DatastreamHolder) {
+        if(target instanceof DatastreamHolder) {
             final DatastreamHolder contentTO = (DatastreamHolder) target;
             afterUnmarshalContentTO(contentTO);
         }
-        for (UnmarshallerListener unmarshallerListener : this.unmarshallerListeners) {
+        for(UnmarshallerListener unmarshallerListener : this.unmarshallerListeners) {
             unmarshallerListener.afterUnmarshal(target, parent);
         }
     }
@@ -91,9 +92,9 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
     private void lockStream(Stream stream) {
         try {
             stream.lock();
-        } catch (final IOException e) {
+        } catch(final IOException e) {
             final String errorMessage = "Error on locking stream.";
-            if (LOG.isWarnEnabled()) {
+            if(LOG.isWarnEnabled()) {
                 LOG.warn(errorMessage, e);
             }
         }

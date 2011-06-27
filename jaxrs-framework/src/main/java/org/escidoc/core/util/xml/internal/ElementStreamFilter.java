@@ -25,7 +25,7 @@ import static org.esidoc.core.utils.Preconditions.checkNotNull;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public class ElementStreamFilter implements StreamFilter {
 
     private final static Logger LOG = LoggerFactory.getLogger(ElementStreamFilter.class);
@@ -40,9 +40,9 @@ public class ElementStreamFilter implements StreamFilter {
         try {
             final XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(inputStream);
             filteredXmlStreamReader = xmlInputFactory.createFilteredReader(xmlStreamReader, this);
-        } catch (XMLStreamException e) {
+        } catch(XMLStreamException e) {
             final String errorMessage = "Error on creating XML reader.";
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessage, e);
             }
             throw new IllegalStateException(errorMessage, e);
@@ -54,9 +54,9 @@ public class ElementStreamFilter implements StreamFilter {
         XMLStreamReader filteredXmlStreamReader;
         try {
             filteredXmlStreamReader = xmlInputFactory.createFilteredReader(reader, this);
-        } catch (XMLStreamException e) {
+        } catch(XMLStreamException e) {
             final String errorMessage = "Error on creating XML reader.";
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessage, e);
             }
             throw new IllegalStateException(errorMessage, e);
@@ -84,9 +84,10 @@ public class ElementStreamFilter implements StreamFilter {
     }
 
 
+    @Override
     public boolean accept(@NotNull final XMLStreamReader reader) {
-        if (this.active) {
-            switch (reader.getEventType()) {
+        if(this.active) {
+            switch(reader.getEventType()) {
                 case XMLStreamConstants.START_ELEMENT:
                     onStartElement(reader);
                     break;
@@ -107,7 +108,7 @@ public class ElementStreamFilter implements StreamFilter {
     private void onStartElement(@NotNull final XMLStreamReader reader) {
         final QName elementName = reader.getName();
         this.output.print("<");
-        if (elementName.getPrefix() != null && elementName.getPrefix().trim().length() > 0) {
+        if(elementName.getPrefix() != null && elementName.getPrefix().trim().length() > 0) {
             this.output.print(elementName.getPrefix());
             this.output.print(":");
         }
@@ -119,17 +120,17 @@ public class ElementStreamFilter implements StreamFilter {
 
     private void onElementText(final XMLStreamReader reader) {
         final String text = reader.getText();
-        if (text != null && text.trim().length() > 0) {
+        if(text != null && text.trim().length() > 0) {
             this.output.print(text);
         }
     }
 
     private void printNamespaces(final XMLStreamReader reader) {
         int count = reader.getNamespaceCount();
-        while (count > 0) {
+        while(count > 0) {
             final String prefix = reader.getNamespacePrefix(count - 1);
             this.output.print(" ");
-            if (prefix != null && prefix.trim().length() > 0) {
+            if(prefix != null && prefix.trim().length() > 0) {
                 this.output.print("xmlns:");
                 this.output.print(prefix);
                 this.output.print("=\"");
@@ -142,10 +143,10 @@ public class ElementStreamFilter implements StreamFilter {
 
     private void printAttributes(final XMLStreamReader reader) {
         int count = reader.getAttributeCount();
-        while (count > 0) {
+        while(count > 0) {
             final String prefix = reader.getAttributePrefix(count - 1);
             this.output.print(" ");
-            if (prefix != null && prefix.trim().length() > 0) {
+            if(prefix != null && prefix.trim().length() > 0) {
                 this.output.print(prefix);
                 this.output.print(":");
             }
@@ -159,8 +160,8 @@ public class ElementStreamFilter implements StreamFilter {
 
     private boolean isIgnoredElement(QName elementName) {
         boolean returnValue = false;
-        for (QName myIgnoredElementName : this.ignoredElements) {
-            if (myIgnoredElementName.equals(elementName)) {
+        for(QName myIgnoredElementName : this.ignoredElements) {
+            if(myIgnoredElementName.equals(elementName)) {
                 returnValue = true;
                 break;
             }
@@ -169,14 +170,14 @@ public class ElementStreamFilter implements StreamFilter {
     }
 
     private void onEndElement(final XMLStreamReader reader) {
-        if (!isIgnoredElement(reader.getName())) {
+        if(! isIgnoredElement(reader.getName())) {
             this.printEndElement(reader.getName());
         }
     }
 
     private void printEndElement(QName elementName) {
         this.output.print("</");
-        if (elementName.getPrefix() != null && elementName.getPrefix().trim().length() > 0) {
+        if(elementName.getPrefix() != null && elementName.getPrefix().trim().length() > 0) {
             this.output.print(elementName.getPrefix());
             this.output.print(":");
         }
