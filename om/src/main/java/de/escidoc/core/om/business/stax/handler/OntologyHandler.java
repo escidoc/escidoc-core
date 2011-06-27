@@ -66,15 +66,15 @@ public class OntologyHandler extends DefaultHandler {
         // TODO: If a predicate contains character #, this character will be
         // thrown away
         final String[] predicateArray = SPLIT_PATTERN.split(p);
-        if(predicateArray.length != 2) {
+        if(predicateArray.length == 2) {
+            this.predicateBase = predicateArray[0];
+            this.predicateWithoutBase = predicateArray[1];
+            this.predicate = p;
+        } else {
             this.exist = false;
             this.predicateBase = null;
             this.predicateWithoutBase = null;
             this.predicate = null;
-        } else {
-            this.predicateBase = predicateArray[0];
-            this.predicateWithoutBase = predicateArray[1];
-            this.predicate = p;
         }
     }
 

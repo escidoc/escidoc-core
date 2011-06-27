@@ -355,13 +355,13 @@ public class ConnectionUtility {
         if(this.httpClient == null) {
 
             final HttpParams params = new BasicHttpParams();
-            if(this.timeout != - 1) {
+            if(this.timeout == - 1) {
+                HttpConnectionParams.setConnectionTimeout(params, DEFAULT_CONNECTION_TIMEOUT);
+                HttpConnectionParams.setSoTimeout(params, DEFAULT_SO_TIMEOUT);
+            } else {
                 // TODO: Maybe separate Connection and SO timeout...
                 HttpConnectionParams.setConnectionTimeout(params, this.timeout);
                 HttpConnectionParams.setSoTimeout(params, this.timeout);
-            } else {
-                HttpConnectionParams.setConnectionTimeout(params, DEFAULT_CONNECTION_TIMEOUT);
-                HttpConnectionParams.setSoTimeout(params, DEFAULT_SO_TIMEOUT);
             }
 
             ConnManagerParams.setMaxTotalConnections(params, HTTP_MAX_TOTAL_CONNECTIONS_FACTOR);
