@@ -68,7 +68,7 @@ import java.util.regex.Pattern;
  * 1. if a provided container element has attributes and/or element text, the business logic checks if a matching
  * subtree element to remove has the same attributes and/oder the same element text 2. if a provided outer subtree
  * element has no attributes/text, the business logic ignores attributes/text in the matching element.
- * 
+ *
  * @author Rozita Friedman, FRA
  */
 public class MultipleExtractor extends WriteHandler {
@@ -111,11 +111,9 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Creates a instance of MultipleExtractor.
-     * 
-     * @param extractPathes
-     *            Paths subtree to extract as key and subtree root element attribute name or null as values
-     * @param parser
-     *            The parser this handler is added to.
+     *
+     * @param extractPathes Paths subtree to extract as key and subtree root element attribute name or null as values
+     * @param parser        The parser this handler is added to.
      */
     public MultipleExtractor(final String extractPathes, final StaxParser parser) {
 
@@ -126,12 +124,10 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Creates a instance of MultipleExtractor.
-     * 
-     * @param extractPathes
-     *            Map with pathes to subtrees to extract as keys and subtrees root elements attribute name or null as
-     *            values
-     * @param parser
-     *            The parser this handler is added to.
+     *
+     * @param extractPathes Map with pathes to subtrees to extract as keys and subtrees root elements attribute name or
+     *                      null as values
+     * @param parser        The parser this handler is added to.
      */
     public MultipleExtractor(final Map<String, String> extractPathes, final StaxParser parser) {
         this.parser = parser;
@@ -140,13 +136,10 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Creates a instance of MultipleExtractor.
-     * 
-     * @param extractPath
-     *            path to subtree to extract
-     * @param extractAtt
-     *            attribute name of the subtrees root element
-     * @param parser
-     *            The parser this handler is added to.
+     *
+     * @param extractPath path to subtree to extract
+     * @param extractAtt  attribute name of the subtrees root element
+     * @param parser      The parser this handler is added to.
      */
     public MultipleExtractor(final String extractPath, final String extractAtt, final StaxParser parser) {
         this.parser = parser;
@@ -156,7 +149,7 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Retrieves a Map with extracted subtrees.
-     * 
+     *
      * @return outputStreams
      */
     public Map<String, Object> getOutputStreams() {
@@ -165,9 +158,8 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Sets component ids.
-     * 
-     * @param pids
-     *            List with ids of components.
+     *
+     * @param pids List with ids of components.
      */
     public void setPids(final List<String> pids) {
         this.pids = pids;
@@ -175,9 +167,8 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * Map of elements which are to remove from XML tree.
-     * 
-     * @param elements
-     *            Elements which are to remove.
+     *
+     * @param elements Elements which are to remove.
      */
     public void removeElements(final Map<String, List<StartElementWithChildElements>> elements) {
         // TODO extend this to List<StartElement>
@@ -186,36 +177,36 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @throws WebserverSystemException
-     *             If an error occured writing XML data.
+     *
+     * @throws WebserverSystemException If an error occured writing XML data.
      */
     @Override
-    public StartElement startElement(final StartElement element) throws InvalidContentException,
-        WebserverSystemException {
+    public StartElement startElement(final StartElement element)
+            throws InvalidContentException, WebserverSystemException {
         final NamespaceContext nscontext = element.getNamespaceContext();
         this.increaseDeepLevel();
         final String currentPath = parser.getCurPath();
         final String theName = element.getLocalName();
-        if (this.insideRemoveElement) {
+        if(this.insideRemoveElement) {
             return element;
         }
-        if (this.removeElements != null && !this.removeElements.isEmpty()
-            && this.removeElements.containsKey(currentPath)) {
+        if(this.removeElements != null && ! this.removeElements.isEmpty() &&
+                this.removeElements.containsKey(currentPath)) {
             final List<StartElementWithChildElements> elementsToDelete = removeElements.get(currentPath);
             final Iterator<StartElementWithChildElements> iterator = elementsToDelete.iterator();
             this.elementToDelete = null;
-            loop1: while (iterator.hasNext()) {
+            loop1:
+            while(iterator.hasNext()) {
                 this.elementToDelete = iterator.next();
                 // September 2009, changed logic: if prefix or namespace
                 // of elementToDelete is null it is not compared with
                 // the current element and handled as match. (FRS)
-                if ((elementToDelete.getPrefix() == null || elementToDelete.getPrefix().equals(element.getPrefix()))
-                    && (elementToDelete.getNamespace() == null || elementToDelete.getNamespace().equals(
-                        element.getNamespace()))) {
+                if((elementToDelete.getPrefix() == null || elementToDelete.getPrefix().equals(element.getPrefix())) &&
+                        (elementToDelete.getNamespace() == null ||
+                                elementToDelete.getNamespace().equals(element.getNamespace()))) {
 
                     final int attCount2 = elementToDelete.getAttributeCount();
-                    if (attCount2 == 0) {
+                    if(attCount2 == 0) {
                         // if a provided element to remove does not
                         // contain
                         // attributes
@@ -228,31 +219,30 @@ public class MultipleExtractor extends WriteHandler {
                         iterator.remove();
                         break loop1;
 
-                    }
-                    else {
+                    } else {
                         final int attCount1 = element.getAttributeCount();
 
-                        if (attCount1 == attCount2) {
+                        if(attCount1 == attCount2) {
                             int matchedAttributesNumber = 0;
-                            for (int i = 0; i < attCount1; i++) {
+                            for(int i = 0; i < attCount1; i++) {
                                 final Attribute curAtt = element.getAttribute(i);
                                 final String curName = curAtt.getLocalName();
                                 final String curNameSpace = curAtt.getNamespace();
                                 final String curValue = curAtt.getValue();
-                                for (int j = 0; j < attCount2; j++) {
+                                for(int j = 0; j < attCount2; j++) {
                                     final Attribute attToDelete = elementToDelete.getAttribute(j);
                                     final String nameToDelete = attToDelete.getLocalName();
                                     final String nameSpaceToDelete = attToDelete.getNamespace();
                                     final String valueToDelete = attToDelete.getValue();
-                                    if (curName.equals(nameToDelete) && curNameSpace.equals(nameSpaceToDelete)
-                                        && curValue.equals(valueToDelete)) {
+                                    if(curName.equals(nameToDelete) && curNameSpace.equals(nameSpaceToDelete) &&
+                                            curValue.equals(valueToDelete)) {
 
                                         // i = attCount1;
                                         // break;
                                         matchedAttributesNumber++;
                                     }
                                 }
-                                if (matchedAttributesNumber == attCount1) {
+                                if(matchedAttributesNumber == attCount1) {
                                     this.isMatchedAttribute = true;
                                     iterator.remove();
                                     break loop1;
@@ -264,7 +254,7 @@ public class MultipleExtractor extends WriteHandler {
                     }
                 }
             }
-            if (this.isMatchedAttribute) {
+            if(this.isMatchedAttribute) {
                 removeElements.put(currentPath, elementsToDelete);
                 this.insideRemoveElement = true;
                 this.isMatchedAttribute = false;
@@ -272,36 +262,35 @@ public class MultipleExtractor extends WriteHandler {
             }
 
         }
-        if ("component".equals(theName) && element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, "resource") < 0
-            && element.indexOfAttribute(null, "inherited") < 0) {
+        if("component".equals(theName) && element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, "resource") < 0 &&
+                element.indexOfAttribute(null, "inherited") < 0) {
             this.inComponent = true;
             // Object id = pids.get(number);
-            if (this.pids != null) {
+            if(this.pids != null) {
                 this.componentId = pids.get(this.number);
                 this.number++;
-            }
-            else {
+            } else {
                 final int indexOfObjid = element.indexOfAttribute(null, "objid");
-                if (indexOfObjid != -1) {
+                if(indexOfObjid != - 1) {
                     final String value = element.getAttribute(indexOfObjid).getValue();
-                    if (value != null && value.length() > 0) {
+                    if(value != null && value.length() > 0) {
                         this.componentId = value;
                     }
                 }
                 final int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI, "href");
-                if (indexOfHref != -1) {
+                if(indexOfHref != - 1) {
                     final String value = element.getAttribute(indexOfHref).getValue();
-                    if (value != null && value.length() > 0) {
+                    if(value != null && value.length() > 0) {
 
                         final Matcher m1 = PATTERN_OBJID_IN_HREF.matcher(value);
-                        if (m1.find()) {
+                        if(m1.find()) {
                             this.componentId = m1.group(1);
                         }
                     }
                 }
 
                 // FIXME workaround issue 630
-                if (this.components != null && components.containsKey(this.componentId)) {
+                if(this.components != null && components.containsKey(this.componentId)) {
                     throw new InvalidContentException("Found component ID twice.");
                 }
 
@@ -309,19 +298,18 @@ public class MultipleExtractor extends WriteHandler {
         }
 
         try {
-            if (this.inside) {
+            if(this.inside) {
 
                 writeElement(element);
 
                 final int attCount = element.getAttributeCount();
-                for (int i = 0; i < attCount; i++) {
+                for(int i = 0; i < attCount; i++) {
                     final Attribute curAtt = element.getAttribute(i);
                     handleAttributeInInsideElement(curAtt, nscontext, theName);
                 }
                 this.insideLevel++;
-            }
-            else {
-                if (pathes.containsKey(currentPath) && element.indexOfAttribute(null, "inherited") < 0) {
+            } else {
+                if(pathes.containsKey(currentPath) && element.indexOfAttribute(null, "inherited") < 0) {
                     final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
                     this.setWriter(XmlUtility.createXmlStreamWriter(out));
@@ -331,41 +319,40 @@ public class MultipleExtractor extends WriteHandler {
                     // create and initialize namespace map
                     this.setNsuris(new HashMap<String, List>());
                     List namespaceTrace = new ArrayList();
-                    namespaceTrace.add(-1);
+                    namespaceTrace.add(- 1);
                     namespaceTrace.add("");
                     namespaceTrace.add("xml");
                     this.getNsuris().put("http://www.w3.org/XML/1998/namespace", namespaceTrace);
                     namespaceTrace = new ArrayList();
-                    namespaceTrace.add(-1);
+                    namespaceTrace.add(- 1);
                     namespaceTrace.add("");
                     namespaceTrace.add("xmlns");
                     this.getNsuris().put("http://www.w3.org/2000/xmlns/", namespaceTrace);
                     // initialized namespace map
 
-                    if (!"md-record".equals(theName) && !"admin-descriptor".equals(theName)) {
+                    if(! "md-record".equals(theName) && ! "admin-descriptor".equals(theName)) {
                         writeElement(element);
                     }
                     String attributeValue = null;
                     final int attCount = element.getAttributeCount();
-                    for (int i = 0; i < attCount; i++) {
+                    for(int i = 0; i < attCount; i++) {
                         final Attribute curAtt = element.getAttribute(i);
                         final String currentAttributeValue =
-                            handleAttributeInOutsideElement(curAtt, nscontext, theName, attributeName);
-                        if (currentAttributeValue != null) {
+                                handleAttributeInOutsideElement(curAtt, nscontext, theName, attributeName);
+                        if(currentAttributeValue != null) {
                             attributeValue = currentAttributeValue;
                         }
                     }
 
-                    if (this.inComponent) {
-                        if (this.components == null) {
+                    if(this.inComponent) {
+                        if(this.components == null) {
                             this.components = new HashMap<String, HashMap<String, Object>>();
                             outputStreams.put("components", this.components);
                         }
                         final HashMap<String, Object> component;
-                        if (components.containsKey(this.componentId)) {
+                        if(components.containsKey(this.componentId)) {
                             component = components.get(this.componentId);
-                        }
-                        else {
+                        } else {
                             component = new HashMap<String, Object>();
 
                             components.put(this.componentId, component);
@@ -373,76 +360,68 @@ public class MultipleExtractor extends WriteHandler {
 
                         // String subId = (String) pids.get(number);
                         // number++;
-                        if (attributeName == null) {
+                        if(attributeName == null) {
                             // outputStreams.put(theName + "*" + subId,
                             // out);
                             component.put(theName, out);
-                        }
-                        else {
-                            if ("md-record".equals(theName)) {
+                        } else {
+                            if("md-record".equals(theName)) {
 
                                 // this.mdNameValue = attributeValue;
                                 // outputStreams.put(attributeValue + "*" +
                                 // subId,
                                 // out);
-                                final HashMap<String, ByteArrayOutputStream> mdRecords;
-                                if (component.containsKey(XmlUtility.NAME_MDRECORDS)) {
-                                    mdRecords =
-                                        (HashMap<String, ByteArrayOutputStream>) component
+                                final Map<String, ByteArrayOutputStream> mdRecords;
+                                if(component.containsKey(XmlUtility.NAME_MDRECORDS)) {
+                                    mdRecords = (HashMap<String, ByteArrayOutputStream>) component
                                             .get(XmlUtility.NAME_MDRECORDS);
-                                }
-                                else {
+                                } else {
                                     mdRecords = new HashMap<String, ByteArrayOutputStream>();
                                     component.put(XmlUtility.NAME_MDRECORDS, mdRecords);
                                 }
-                                if (mdRecords.containsKey(attributeValue)) {
-                                    throw new InvalidContentException("A component md-record with the name '"
-                                        + attributeValue + "' occurs multiple times in the representation"
-                                        + " of a component.");
+                                if(mdRecords.containsKey(attributeValue)) {
+                                    throw new InvalidContentException(
+                                            "A component md-record with the name '" + attributeValue +
+                                                    "' occurs multiple times in the representation" +
+                                                    " of a component.");
 
-                                }
-                                else {
+                                } else {
                                     mdRecords.put(attributeValue, out);
                                 }
-                            }
-                            else {
+                            } else {
                                 component.put(attributeValue, out);
                             }
                         }
-                    }
-                    else {
-                        if (attributeName == null) {
+                    } else {
+                        if(attributeName == null) {
                             outputStreams.put(theName, out);
-                        }
-                        else {
-                            if ("md-record".equals(theName)) {
-                                if (this.metadata == null) {
+                        } else {
+                            if("md-record".equals(theName)) {
+                                if(this.metadata == null) {
                                     this.metadata = new HashMap<String, ByteArrayOutputStream>();
                                     outputStreams.put(XmlUtility.NAME_MDRECORDS, this.metadata);
                                 }
-                                if (metadata.containsKey(attributeValue)) {
-                                    throw new InvalidContentException("A md-record with the name '" + attributeValue
-                                        + "' occurs multiple times in the representation" + " of the resource");
+                                if(metadata.containsKey(attributeValue)) {
+                                    throw new InvalidContentException("A md-record with the name '" + attributeValue +
+                                            "' occurs multiple times in the representation" + " of the resource");
 
-                                }
-                                else {
+                                } else {
                                     metadata.put(attributeValue, out);
                                 }
 
-                            }
-                            else {
-                                if (outputStreams.containsKey(attributeValue)) {
+                            } else {
+                                if(outputStreams.containsKey(attributeValue)) {
                                     final String message =
-                                        "/context/admin-descriptors/admin-descriptor".equals(currentPath) ? "An admin-descriptor with the name '"
-                                            + attributeValue
-                                            + "' occurs multiple times in the "
-                                            + "representation of the context" : "A subresource with the name '"
-                                            + attributeValue + "' occurs multiple times in the"
-                                            + " representation of the resource";
+                                            "/context/admin-descriptors/admin-descriptor".equals(currentPath) ?
+                                                    "An admin-descriptor with the name '" + attributeValue +
+                                                            "' occurs multiple times in the " +
+                                                            "representation of the context" :
+                                                    "A subresource with the name '" + attributeValue +
+                                                            "' occurs multiple times in the" +
+                                                            " representation of the resource";
                                     throw new InvalidContentException(message);
 
-                                }
-                                else {
+                                } else {
                                     outputStreams.put(attributeValue, out);
                                 }
 
@@ -451,13 +430,12 @@ public class MultipleExtractor extends WriteHandler {
                     }
                     // writeElementStart(theName, xmlr);
                     this.insideLevel++;
-                    if (this.insideLevel != 1) {
+                    if(this.insideLevel != 1) {
                         throw new XMLStreamException("insideLevel != 1: " + this.insideLevel);
                     }
                 }
             }
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new WebserverSystemException("Error occured writing XML data.", e);
         }
         // this have to be the last handler
@@ -466,28 +444,26 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @throws WebserverSystemException
-     *             If an error occurred writing XML data.
+     *
+     * @throws WebserverSystemException If an error occurred writing XML data.
      */
     @Override
     public EndElement endElement(final EndElement element) throws WebserverSystemException {
         final String theName = element.getLocalName();
         final String currentPath = parser.getCurPath();
-        if (this.insideRemoveElement && this.isMatchedText) {
-            if (this.removeElements.containsKey(currentPath)) {
+        if(this.insideRemoveElement && this.isMatchedText) {
+            if(this.removeElements.containsKey(currentPath)) {
                 this.insideRemoveElement = false;
                 this.isMatchedText = false;
                 return element;
 
-            }
-            else {
+            } else {
                 return element;
             }
         }
         this.decreaseDeepLevel();
-        if (this.inComponent && "component".equals(theName)) {
-            if (this.componentId == null) {
+        if(this.inComponent && "component".equals(theName)) {
+            if(this.componentId == null) {
                 final Map components = (Map) outputStreams.get("components");
                 components.remove(this.componentId);
             }
@@ -497,10 +473,10 @@ public class MultipleExtractor extends WriteHandler {
         }
 
         try {
-            if (this.inside) {
+            if(this.inside) {
                 this.insideLevel--;
-                if (this.insideLevel > 0 || this.insideLevel == 0 && !"md-record".equals(theName)
-                    && !"admin-descriptor".equals(theName)) {
+                if(this.insideLevel > 0 || this.insideLevel == 0 && ! "md-record".equals(theName) &&
+                        ! "admin-descriptor".equals(theName)) {
                     this.getWriter().writeEndElement();
                 }
 
@@ -508,9 +484,9 @@ public class MultipleExtractor extends WriteHandler {
                 final String ns = element.getNamespace();
                 List nsTrace = this.getNsuris().get(ns);
 
-                if (nsTrace != null && (nsTrace.get(2) == null || nsTrace.get(2).equals(element.getPrefix()))
-                    && nsTrace.get(1).equals(element.getLocalName())
-                    && (Integer) nsTrace.get(0) == this.getDeepLevel() + 1) {
+                if(nsTrace != null && (nsTrace.get(2) == null || nsTrace.get(2).equals(element.getPrefix())) &&
+                        nsTrace.get(1).equals(element.getLocalName()) &&
+                        (Integer) nsTrace.get(0) == this.getDeepLevel() + 1) {
 
                     this.getNsuris().remove(ns);
 
@@ -521,32 +497,30 @@ public class MultipleExtractor extends WriteHandler {
                 // javax.xml.namespace.NamespaceContext
                 Iterator<String> it = this.getNsuris().keySet().iterator();
                 final Collection<String> toRemove = new ArrayList<String>();
-                while (it.hasNext()) {
+                while(it.hasNext()) {
                     try {
                         final String key = it.next();
                         nsTrace = this.getNsuris().get(key);
-                        if ((Integer) nsTrace.get(0) == this.getDeepLevel() + 1) {
+                        if((Integer) nsTrace.get(0) == this.getDeepLevel() + 1) {
                             toRemove.add(key);
                         }
-                    }
-                    catch (final Exception e) {
+                    } catch(final Exception e) {
                         throw new XMLStreamException(e.getMessage(), e);
                     }
                 }
                 it = toRemove.iterator();
-                while (it.hasNext()) {
+                while(it.hasNext()) {
                     final String key = it.next();
                     this.getNsuris().remove(key);
                 }
 
-                if (this.insideLevel == 0) {
+                if(this.insideLevel == 0) {
                     this.inside = false;
                     this.getWriter().flush();
                     this.getWriter().close();
                 }
             }
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new WebserverSystemException("Error occured writing XML data.", e);
         }
         return element;
@@ -554,26 +528,23 @@ public class MultipleExtractor extends WriteHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @throws WebserverSystemException
-     *             If an error occured writing XML data.
+     *
+     * @throws WebserverSystemException If an error occured writing XML data.
      */
     @Override
     public String characters(final String data, final StartElement element) throws WebserverSystemException {
 
         try {
-            if (this.inside) {
-                if (this.insideRemoveElement) {
+            if(this.inside) {
+                if(this.insideRemoveElement) {
                     final String text = this.elementToDelete.getElementText();
-                    if (text != null && text.length() > 0) {
-                        if (data.equals(text)) {
+                    if(text != null && text.length() > 0) {
+                        if(data.equals(text)) {
                             this.isMatchedText = true;
-                        }
-                        else {
+                        } else {
                             this.getWriter().writeCharacters(data);
                         }
-                    }
-                    else {
+                    } else {
                         // if a provided element to remove does not contain a
                         // text
                         // all matched elements will be removed
@@ -581,13 +552,11 @@ public class MultipleExtractor extends WriteHandler {
                         this.isMatchedText = true;
 
                     }
-                }
-                else {
+                } else {
                     this.getWriter().writeCharacters(data);
                 }
             }
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new WebserverSystemException("Error occured writing XML data.", e);
         }
         return data;
