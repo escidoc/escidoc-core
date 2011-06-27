@@ -462,7 +462,7 @@ public class Datastream {
                 stream.write(this.getStream());
                 stream.lock();
             } catch(final IOException e) {
-                e.printStackTrace();
+                throw new FedoraSystemException("Error on persisting datastream.", e);
             }
             final DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.addDatastream(path, query, stream);
             this.updateDatastream(datastreamProfile);
