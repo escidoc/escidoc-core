@@ -58,7 +58,7 @@ public class RequestAttributesCache {
     public void putAttribute(@PartialCacheKey
                              final EvaluationCtx ctx, @PartialCacheKey
     final String cacheKey, final Object result) {
-        return result;
+
     }
 
     /**

@@ -292,23 +292,18 @@ public class ConnectionUtility {
      * @throws WebserverSystemException e
      */
     private HttpHost getProxyHost() throws WebserverSystemException {
-        try {
-            if(! this.proxyConfigured) {
-                final String proxyHostName =
-                        EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
-                final String proxyPort =
-                        EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
-                if(proxyHostName != null && proxyHostName.trim().length() != 0) {
-                    this.proxyHost = proxyPort != null && proxyPort.trim().length() != 0 ?
-                            new HttpHost(proxyHostName, Integer.parseInt(proxyPort)) : new HttpHost(proxyHostName);
-                }
-                this.proxyConfigured = true;
+        if(! this.proxyConfigured) {
+            final String proxyHostName =
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
+            final String proxyPort =
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
+            if(proxyHostName != null && proxyHostName.trim().length() != 0) {
+                this.proxyHost = proxyPort != null && proxyPort.trim().length() != 0 ?
+                        new HttpHost(proxyHostName, Integer.parseInt(proxyPort)) : new HttpHost(proxyHostName);
             }
-            return this.proxyHost;
-
-        } catch(final IOException e) {
-            throw new WebserverSystemException(e);
+            this.proxyConfigured = true;
         }
+        return this.proxyHost;
     }
 
     /**
@@ -318,28 +313,24 @@ public class ConnectionUtility {
      * @throws WebserverSystemException e
      */
     private void setProxy(final CharSequence url) throws WebserverSystemException {
-        try {
-            if(this.proxyHost != null) {
-                String nonProxyHosts =
-                        EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_NON_PROXY_HOSTS);
-                if(nonProxyHosts != null && nonProxyHosts.trim().length() != 0) {
-                    nonProxyHosts = nonProxyHosts.replaceAll("\\.", "\\\\.");
-                    nonProxyHosts = nonProxyHosts.replaceAll("\\*", "");
-                    nonProxyHosts = nonProxyHosts.replaceAll("\\?", "\\\\?");
-                    final Pattern nonProxyPattern = Pattern.compile(nonProxyHosts);
-                    final Matcher nonProxyMatcher = nonProxyPattern.matcher(url);
-                    if(nonProxyMatcher.find()) {
-                        this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, null);
-                    } else {
-                        this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.proxyHost);
-                    }
+        if(this.proxyHost != null) {
+            String nonProxyHosts =
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_NON_PROXY_HOSTS);
+            if(nonProxyHosts != null && nonProxyHosts.trim().length() != 0) {
+                nonProxyHosts = nonProxyHosts.replaceAll("\\.", "\\\\.");
+                nonProxyHosts = nonProxyHosts.replaceAll("\\*", "");
+                nonProxyHosts = nonProxyHosts.replaceAll("\\?", "\\\\?");
+                final Pattern nonProxyPattern = Pattern.compile(nonProxyHosts);
+                final Matcher nonProxyMatcher = nonProxyPattern.matcher(url);
+                if(nonProxyMatcher.find()) {
+                    this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, null);
                 } else {
                     this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.proxyHost);
-
                 }
+            } else {
+                this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.proxyHost);
+
             }
-        } catch(final IOException e) {
-            throw new WebserverSystemException(e);
         }
     }
 

@@ -958,13 +958,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         // Get groups the user is integrated via one of his user attributes
         // check if attribute is ou-attribute. Then resolve path-list
-        final String ouAttributeName;
-        try {
-            ouAttributeName =
-                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
-        } catch(final IOException e) {
-            throw new SystemException(e);
-        }
+        final String ouAttributeName =
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
+
         final Set<UserAttribute> attributes = userAccount.getUserAttributesByUserId();
 
         final Map<String, Set<UserGroupMember>> groupMemberMap = retrieveGroupMembersWithAttributeSelector();

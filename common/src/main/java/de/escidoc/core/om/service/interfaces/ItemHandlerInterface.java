@@ -1233,7 +1233,7 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException   If the Item is not in its latest version specified.
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      */
-    void release(final String id, final String taskParam)
+    String release(final String id, final String taskParam)
             throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidStatusException,
             AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
             OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException;

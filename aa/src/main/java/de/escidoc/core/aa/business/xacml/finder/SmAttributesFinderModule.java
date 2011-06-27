@@ -363,8 +363,6 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                         StringUtility.format("Exception during retrieval of the scope", e.getMessage()), e);
             }
         }
-
-        return scopeXml;
     }
 
     /**

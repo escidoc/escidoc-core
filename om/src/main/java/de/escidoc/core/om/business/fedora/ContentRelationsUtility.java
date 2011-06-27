@@ -63,8 +63,7 @@ public final class ContentRelationsUtility {
     static {
         try {
             loadOntology();
-        }
-        catch (Exception e) {
+        } catch(Exception e) {
             LOGGER.error("Error on loading ontology: " + e.getMessage());
         }
     }
@@ -105,8 +104,8 @@ public final class ContentRelationsUtility {
      * @throws XmlParserSystemException Thrown if an unexpected parser exception occurs
      * @throws WebserverSystemException Thrown if load of list or parsing failed.
      */
-    private static void loadOntology() throws XmlCorruptedException, WebserverSystemException,
-        XmlParserSystemException, InvalidContentException {
+    private static void loadOntology()
+            throws XmlCorruptedException, WebserverSystemException, XmlParserSystemException, InvalidContentException {
 
         final String location = getLocation();
         final InputStream in = getInputStream(location);
@@ -122,17 +121,10 @@ public final class ContentRelationsUtility {
      * @throws WebserverSystemException Thrown if loading escidoc configuration failed.
      */
     private static String getLocation() throws WebserverSystemException {
-        String location;
-        try {
-            location = EscidocConfiguration.getInstance().get(EscidocConfiguration.CONTENT_RELATIONS_URL);
-            if (location == null) {
-                location =
-                    EscidocConfiguration.getInstance().appendToSelfURL(
-                        "/ontologies/mpdl-ontologies/content-relations.xml");
-            }
-        }
-        catch (final IOException ioe) {
-            throw new WebserverSystemException(ioe);
+        String location = EscidocConfiguration.getInstance().get(EscidocConfiguration.CONTENT_RELATIONS_URL);
+        if(location == null) {
+            location = EscidocConfiguration.getInstance()
+                    .appendToSelfURL("/ontologies/mpdl-ontologies/content-relations.xml");
         }
         return location;
     }
@@ -149,18 +141,15 @@ public final class ContentRelationsUtility {
         final URLConnection conn;
         try {
             conn = new URL(location).openConnection();
-        }
-        catch (final MalformedURLException e) {
+        } catch(final MalformedURLException e) {
             throw new WebserverSystemException(e);
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
         final InputStream in;
         try {
             in = conn.getInputStream();
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
         return in;
@@ -175,24 +164,20 @@ public final class ContentRelationsUtility {
      * @throws InvalidContentException  Thrown if content is not as expected
      * @throws XmlParserSystemException Thrown if an unexpected parser exception occurs
      */
-    private static List<String> parseOntology(final InputStream in) throws XmlCorruptedException,
-        InvalidContentException, XmlParserSystemException {
+    private static List<String> parseOntology(final InputStream in)
+            throws XmlCorruptedException, InvalidContentException, XmlParserSystemException {
         final StaxParser sp = new StaxParser();
         final ContentRelationsOntologyHandler handler = new ContentRelationsOntologyHandler(sp);
         sp.addHandler(handler);
         try {
             sp.parse(in);
-        }
-        catch (final XmlCorruptedException e) {
+        } catch(final XmlCorruptedException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (final InvalidContentException e) {
+        } catch(final InvalidContentException e) {
             throw new InvalidContentException(e);
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 

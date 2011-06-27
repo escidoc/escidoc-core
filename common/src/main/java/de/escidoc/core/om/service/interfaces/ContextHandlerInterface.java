@@ -443,7 +443,7 @@ public interface ContextHandlerInterface {
      * @throws StreamNotFoundException    Thrown if required stream could not be found.
      * @throws SystemException            If case of internal error.
      */
-    void open(final String id, final String taskParam)
+    String open(final String id, final String taskParam)
             throws AuthenticationException, AuthorizationException, ContextNotFoundException, InvalidStatusException,
             InvalidXmlException, MissingMethodParameterException, OptimisticLockingException, SystemException,
             LockingException, StreamNotFoundException;

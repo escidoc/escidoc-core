@@ -95,16 +95,8 @@ public class PIDManagerRESTService implements PIDSystem {
         if(param == null) {
             throw new MissingMethodParameterException("Invalid param structure.");
         }
-
-        final String password;
-        final String username;
-        try {
-            username = EscidocConfiguration.getInstance().get("escidoc-core.PidSystemRESTService.user");
-            password = EscidocConfiguration.getInstance().get("escidoc-core.PidSystemRESTService.password");
-        } catch(final IOException e) {
-            throw new WebserverSystemException(e);
-        }
-
+        final String username = EscidocConfiguration.getInstance().get("escidoc-core.PidSystemRESTService.user");
+        final String password = EscidocConfiguration.getInstance().get("escidoc-core.PidSystemRESTService.password");
         final String pidResult;
         try {
             final String xmlParam = preparePidManagerDatastructure(systemID, param);

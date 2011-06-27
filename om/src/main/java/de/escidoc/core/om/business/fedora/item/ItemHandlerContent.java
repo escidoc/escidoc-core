@@ -249,13 +249,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         if("R".equals(storage)) {
             contentUrl = content.getLocation();
         } else {
-            try {
-                contentUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) +
-                        getItem().getHref() + getComponent(componentId).getHrefPart() + "/content";
-                // + "/" + getItem().getVersionDate();
-            } catch(final IOException e) {
-                throw new WebserverSystemException(e);
-            }
+            contentUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) +
+                    getItem().getHref() + getComponent(componentId).getHrefPart() + "/content";
+
         }
 
         final String url;
@@ -280,15 +276,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @throws SystemException Thrown if the URL could not be obtained from configuration.
      */
     private static String getDigilibScalerUrl() throws SystemException {
-
-        final String diglibUrl;
-        try {
-            diglibUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.DIGILIB_SCALER);
-        } catch(final IOException e) {
-            throw new SystemException(e);
-        }
-
-        return diglibUrl;
+        return EscidocConfiguration.getInstance().get(EscidocConfiguration.DIGILIB_SCALER);
     }
 
     /**
@@ -300,13 +288,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     private static String getServiceUrl(final String service) throws SystemException {
 
-        final EscidocConfiguration conf;
-        try {
-            conf = EscidocConfiguration.getInstance();
-        } catch(final IOException e) {
-            throw new SystemException(e);
-        }
-
+        final EscidocConfiguration conf = EscidocConfiguration.getInstance();
         // -----------------------------------
         final String serviceUrl;
         if(service.equals(TRANSFORM_DIGILIB_CLIENT)) {

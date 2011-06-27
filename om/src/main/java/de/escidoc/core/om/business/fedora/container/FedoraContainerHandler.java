@@ -826,19 +826,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         if(parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.ITEM);
         } else {
-            try {
-                String query = "\"/resources/parent\"=" + id + " AND \"/properties/content-model/id\"=" +
-                        EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
+            String query = "\"/resources/parent\"=" + id + " AND \"/properties/content-model/id\"=" +
+                    EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
 
-                if(parameters.getQuery() != null) {
-                    query += " AND " + parameters.getQuery();
-                }
-                sruRequest.searchRetrieve(result, new ResourceType[]{ResourceType.ITEM}, query,
-                        parameters.getMaximumRecords(), parameters.getStartRecord(), parameters.getExtraData(),
-                        parameters.getRecordPacking());
-            } catch(final IOException e) {
-                throw new SystemException(e);
+            if(parameters.getQuery() != null) {
+                query += " AND " + parameters.getQuery();
             }
+            sruRequest.searchRetrieve(result, new ResourceType[]{ResourceType.ITEM}, query,
+                    parameters.getMaximumRecords(), parameters.getStartRecord(), parameters.getExtraData(),
+                    parameters.getRecordPacking());
         }
         return result.toString();
     }
@@ -2096,12 +2092,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         final List<String> memberIds = bremeftph.getMemberIds();
         final Iterator<String> it = memberIds.iterator();
-        final String tocContentModel;
-        try {
-            tocContentModel = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
-        } catch(final IOException e) {
-            throw new WebserverSystemException(e);
-        }
+        final String tocContentModel = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
         while(it.hasNext()) {
             final String memberId = it.next();
             final String memberContentModel =

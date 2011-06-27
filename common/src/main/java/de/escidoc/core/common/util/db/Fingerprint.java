@@ -123,17 +123,13 @@ public class Fingerprint implements Comparable<Object> {
      */
     @Override
     public int compareTo(final Object o) {
-        try {
-            final ByteArrayOutputStream b1 = new ByteArrayOutputStream();
-            final ByteArrayOutputStream b2 = new ByteArrayOutputStream();
+        final ByteArrayOutputStream b1 = new ByteArrayOutputStream();
+        final ByteArrayOutputStream b2 = new ByteArrayOutputStream();
 
-            writeObject(b1);
-            ((Fingerprint) o).writeObject(b2);
-            return b1.toString().replaceAll(JAVA_VERSION_PATTERN, "")
-                    .compareTo(b2.toString().replaceAll(JAVA_VERSION_PATTERN, ""));
-        } catch(final IOException e) {
-            throw new RuntimeException(e);
-        }
+        writeObject(b1);
+        ((Fingerprint) o).writeObject(b2);
+        return b1.toString().replaceAll(JAVA_VERSION_PATTERN, "")
+                .compareTo(b2.toString().replaceAll(JAVA_VERSION_PATTERN, ""));
     }
 
     /**

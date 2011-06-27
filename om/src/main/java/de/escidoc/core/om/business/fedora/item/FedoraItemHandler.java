@@ -435,8 +435,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                     .getAsBoolean(EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
                 fireItemCreated(objid, retrieve(objid));
             }
-        } catch(final IOException e) {
-            throw new SystemException("The eSciDoc configuration could not be read", e);
         } catch(final ResourceNotFoundException e) {
             throw new IntegritySystemException(
                     "The Item with id '" + objid + "', which was just ingested, " + "could not be found for retrieve.",
@@ -1811,7 +1809,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             getItem().setMdRecords(dsMap);
         } else {
             for(final String name : mdMap.keySet()) {
-                final ByteArrayOutputStream stream = mdMap.get(o);
+                final ByteArrayOutputStream stream = mdMap.get(name);
                 final byte[] xmlBytes = stream.toByteArray();
                 HashMap<String, String> mdProperties = null;
                 if("escidoc".equals(name)) {

@@ -342,8 +342,6 @@ public class ItemHandlerPid extends ItemHandlerContent {
                 }
             } catch(final ComponentNotFoundException e) {
                 throw new WebserverSystemException(e);
-            } catch(final IOException e) {
-                throw new WebserverSystemException(e);
             } catch(final SystemException e) {
                 throw new WebserverSystemException(e);
             }
@@ -365,12 +363,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         // FIXME an exception is content model TOC, since we have a real
         // content model object here is a workaround
         final String curCm = getItem().getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
-        final String tocCm;
-        try {
-            tocCm = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
-        } catch(final IOException e) {
-            throw new WebserverSystemException(e);
-        }
+        final String tocCm = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
         if(curCm.endsWith(tocCm)) {
             return true;
         }
@@ -393,12 +386,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         // FIXME an exception is content model TOC, since we have a real
         // content model object here is a workaround
         final String curCm = getItem().getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
-        final String tocCm;
-        try {
-            tocCm = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
-        } catch(final IOException e) {
-            throw new WebserverSystemException(e);
-        }
+        final String tocCm = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
         if(curCm.endsWith(tocCm)) {
             return true;
         }

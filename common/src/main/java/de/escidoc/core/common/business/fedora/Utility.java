@@ -249,8 +249,6 @@ public class Utility {
 
         final DateTime tFedora = new DateTime(fedoraLatestVersionDate);
         final DateTime tUpdate = new DateTime(updateLatestVersionDate);
-
-        return checkOptimisticLockingCriteria(tFedora, tUpdate, label);
     }
 
     /**

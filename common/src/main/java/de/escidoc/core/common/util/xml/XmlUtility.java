@@ -1439,13 +1439,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getSchemaBaseUrl() throws WebserverSystemException {
+        return EscidocConfiguration.getInstance().appendToSelfURL(
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) + '/');
 
-        try {
-            return EscidocConfiguration.getInstance().appendToSelfURL(
-                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) + '/');
-        } catch(final IOException e) {
-            throw new WebserverSystemException("Error accessing Escidoc configuration!", e);
-        }
     }
 
     /**
@@ -1456,15 +1452,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getStylesheetDefinition() throws WebserverSystemException {
-
         if(stylesheetDefinition == null) {
-            try {
-                final String xslt = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSLT_STD);
-                stylesheetDefinition = xslt != null && xslt.length() > 0 ?
-                        "<?xml-stylesheet type=\"text/xsl\" " + "href=\"" + getEscidocBaseUrl() + xslt + "\"?>\n" : "";
-            } catch(final IOException e) {
-                throw new WebserverSystemException(e.getMessage(), e);
-            }
+            final String xslt = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSLT_STD);
+            stylesheetDefinition = xslt != null && xslt.length() > 0 ?
+                    "<?xml-stylesheet type=\"text/xsl\" " + "href=\"" + getEscidocBaseUrl() + xslt + "\"?>\n" : "";
         }
         return stylesheetDefinition;
     }
@@ -1977,11 +1968,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException If an error occurs accessing the escidoc configuration
      */
     public static String getEscidocBaseUrl() throws WebserverSystemException {
-        try {
-            return EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
-        } catch(final IOException e) {
-            throw new WebserverSystemException("Error accessing Escidoc configuration!", e);
-        }
+        return EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
     }
 
     /**

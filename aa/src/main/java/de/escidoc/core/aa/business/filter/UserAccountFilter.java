@@ -58,10 +58,10 @@ public class UserAccountFilter extends CqlFilter {
     private static final String PROP_LOGINNAME = Constants.PROPERTIES_NS_URI + XmlUtility.NAME_LOGIN_NAME;
 
     private static final String PROP_URI_ORGANIZATIONAL_UNIT =
-        Constants.STRUCTURAL_RELATIONS_NS_URI + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
+            Constants.STRUCTURAL_RELATIONS_NS_URI + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
     private static final String PROP_PATH_ORGANIZATIONAL_UNIT =
-        Constants.FILTER_PATH_STRUCTURAL_RELATIONS + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
+            Constants.FILTER_PATH_STRUCTURAL_RELATIONS + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
     /**
      * Parse the given CQL query and create a corresponding Hibernate query to filter for eSciDoc user accounts from
@@ -77,18 +77,16 @@ public class UserAccountFilter extends CqlFilter {
         //And adapt method ExtendedFilterHandler.transformFilterName
         // URI-style filters/////////////////////////////////////////////////////
         //Filter-Names
-        criteriaMap.put(Constants.DC_IDENTIFIER_URI, new Object[] { COMPARE_EQ, "id" });
-        criteriaMap.put(PROP_LOGINNAME, new Object[] { COMPARE_LIKE, "loginname" });
-        criteriaMap.put(TripleStoreUtility.PROP_NAME, new Object[] { COMPARE_LIKE, "name" });
+        criteriaMap.put(Constants.DC_IDENTIFIER_URI, new Object[]{COMPARE_EQ, "id"});
+        criteriaMap.put(PROP_LOGINNAME, new Object[]{COMPARE_LIKE, "loginname"});
+        criteriaMap.put(TripleStoreUtility.PROP_NAME, new Object[]{COMPARE_LIKE, "name"});
+        criteriaMap.put(TripleStoreUtility.PROP_CREATED_BY_ID, new Object[]{COMPARE_EQ, "userAccountByCreatorId.id"});
         criteriaMap
-            .put(TripleStoreUtility.PROP_CREATED_BY_ID, new Object[] { COMPARE_EQ, "userAccountByCreatorId.id" });
-        criteriaMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[] { COMPARE_EQ,
-            "userAccountByModifiedById.id" });
-        criteriaMap.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_CREATION_DATE,
-            new String[] { "r.creationDate = " });
-        criteriaMap.put(Constants.FILTER_ACTIVE, new Object[] {});
-        criteriaMap.put(PROP_URI_ORGANIZATIONAL_UNIT, new Object[] {});
-        criteriaMap.put(Constants.FILTER_GROUP, new Object[] {});
+                .put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[]{COMPARE_EQ, "userAccountByModifiedById.id"});
+        criteriaMap.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_CREATION_DATE, new String[]{"r.creationDate = "});
+        criteriaMap.put(Constants.FILTER_ACTIVE, new Object[]{});
+        criteriaMap.put(PROP_URI_ORGANIZATIONAL_UNIT, new Object[]{});
+        criteriaMap.put(Constants.FILTER_GROUP, new Object[]{});
 
         specialCriteriaNames.add(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_CREATION_DATE);
         specialCriteriaNames.add(Constants.FILTER_ACTIVE);
@@ -106,16 +104,15 @@ public class UserAccountFilter extends CqlFilter {
 
         // Path-style filters////////////////////////////////////////////////////
         //Filter-Names
-        criteriaMap.put(Constants.FILTER_PATH_ID, new Object[] { COMPARE_EQ, "id" });
-        criteriaMap.put(Constants.FILTER_PATH_LOGINNAME, new Object[] { COMPARE_LIKE, "loginname" });
-        criteriaMap.put(Constants.FILTER_PATH_NAME, new Object[] { COMPARE_LIKE, "name" });
-        criteriaMap.put(Constants.FILTER_PATH_CREATED_BY_ID, new Object[] { COMPARE_EQ, "userAccountByCreatorId.id" });
-        criteriaMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID,
-            new Object[] { COMPARE_EQ, "userAccountByModifiedById.id" });
-        criteriaMap.put(Constants.FILTER_PATH_CREATION_DATE, new String[] { "r.creationDate = " });
-        criteriaMap.put(Constants.FILTER_PATH_ACTIVE, new Object[] {});
-        criteriaMap.put(PROP_PATH_ORGANIZATIONAL_UNIT, new Object[] {});
-        criteriaMap.put(Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID, new Object[] {});
+        criteriaMap.put(Constants.FILTER_PATH_ID, new Object[]{COMPARE_EQ, "id"});
+        criteriaMap.put(Constants.FILTER_PATH_LOGINNAME, new Object[]{COMPARE_LIKE, "loginname"});
+        criteriaMap.put(Constants.FILTER_PATH_NAME, new Object[]{COMPARE_LIKE, "name"});
+        criteriaMap.put(Constants.FILTER_PATH_CREATED_BY_ID, new Object[]{COMPARE_EQ, "userAccountByCreatorId.id"});
+        criteriaMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID, new Object[]{COMPARE_EQ, "userAccountByModifiedById.id"});
+        criteriaMap.put(Constants.FILTER_PATH_CREATION_DATE, new String[]{"r.creationDate = "});
+        criteriaMap.put(Constants.FILTER_PATH_ACTIVE, new Object[]{});
+        criteriaMap.put(PROP_PATH_ORGANIZATIONAL_UNIT, new Object[]{});
+        criteriaMap.put(Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID, new Object[]{});
 
         specialCriteriaNames.add(Constants.FILTER_PATH_CREATION_DATE);
         specialCriteriaNames.add(Constants.FILTER_PATH_ACTIVE);
@@ -131,7 +128,7 @@ public class UserAccountFilter extends CqlFilter {
         propertyNamesMap.put(Constants.FILTER_PATH_CREATION_DATE, "creationDate");
         // //////////////////////////////////////////////////////////////////////
 
-        if (query != null) {
+        if(query != null) {
             try {
                 final CQLParser parser = new CQLParser();
 
@@ -139,11 +136,10 @@ public class UserAccountFilter extends CqlFilter {
 
                 final Criterion criterion = evaluate(parser.parse(query));
 
-                if (criterion != null) {
+                if(criterion != null) {
                     detachedCriteria.add(criterion);
                 }
-            }
-            catch (final Exception e) {
+            } catch(final Exception e) {
                 throw new InvalidSearchQueryException(e);
             }
         }
@@ -162,42 +158,32 @@ public class UserAccountFilter extends CqlFilter {
         final Object[] parts = criteriaMap.get(node.getIndex());
         final String value = node.getTerm();
 
-        if (parts != null && !specialCriteriaNames.contains(node.getIndex())) {
+        if(parts != null && ! specialCriteriaNames.contains(node.getIndex())) {
             result = evaluate(node.getRelation(), (String) parts[1], value, (Integer) parts[0] == COMPARE_LIKE);
-        }
-        else {
+        } else {
             final String columnName = node.getIndex();
 
-            if (columnName != null) {
-                if (columnName.equals(Constants.FILTER_ACTIVE) || columnName.equals(Constants.FILTER_PATH_ACTIVE)) {
+            if(columnName != null) {
+                if(columnName.equals(Constants.FILTER_ACTIVE) || columnName.equals(Constants.FILTER_PATH_ACTIVE)) {
                     result = Restrictions.eq("active", Boolean.parseBoolean(value));
-                }
-                else if (columnName.equals(Constants.FILTER_CREATION_DATE)
-                    || columnName.equals(Constants.FILTER_PATH_CREATION_DATE)) {
-                    result =
-                        evaluate(node.getRelation(), "creationDate", value != null && value.length() > 0 ? new Date(
-                            new DateTime(value).getMillis()) : null, false);
-                }
-                else if (columnName.equals(PROP_URI_ORGANIZATIONAL_UNIT)
-                    || columnName.equals(PROP_PATH_ORGANIZATIONAL_UNIT)) {
+                } else if(columnName.equals(Constants.FILTER_CREATION_DATE) ||
+                        columnName.equals(Constants.FILTER_PATH_CREATION_DATE)) {
+                    result = evaluate(node.getRelation(), "creationDate",
+                            value != null && value.length() > 0 ? new Date(new DateTime(value).getMillis()) : null,
+                            false);
+                } else if(columnName.equals(PROP_URI_ORGANIZATIONAL_UNIT) ||
+                        columnName.equals(PROP_PATH_ORGANIZATIONAL_UNIT)) {
                     final String ouAttributeName;
-                    try {
-                        ouAttributeName =
-                            EscidocConfiguration.getInstance().get(
-                                EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
-                    }
-                    catch (final IOException e) {
-                        throw new InvalidSearchQueryException(e);
-                    }
-                    if (ouAttributeName == null || ouAttributeName.length() == 0) {
+                    ouAttributeName = EscidocConfiguration.getInstance()
+                            .get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
+                    if(ouAttributeName == null || ouAttributeName.length() == 0) {
                         throw new InvalidSearchQueryException("ou-attribute-name not found in configuration");
                     }
-                    result =
-                        Restrictions.sqlRestriction("this_.id in (" + "select ua.id from aa.user_account ua, "
-                            + "aa.user_attribute atts " + "where ua.id = atts.user_id " + "and atts.name = '"
-                            + ouAttributeName + "' and atts.value = ?)", value, Hibernate.STRING);
-                }
-                else {
+                    result = Restrictions.sqlRestriction(
+                            "this_.id in (" + "select ua.id from aa.user_account ua, " + "aa.user_attribute atts " +
+                                    "where ua.id = atts.user_id " + "and atts.name = '" + ouAttributeName +
+                                    "' and atts.value = ?)", value, Hibernate.STRING);
+                } else {
                     throw new InvalidSearchQueryException("unknown filter criteria: " + columnName);
                 }
             }

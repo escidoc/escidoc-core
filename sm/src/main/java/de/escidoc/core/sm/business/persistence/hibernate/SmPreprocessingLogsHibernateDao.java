@@ -70,11 +70,10 @@ public class SmPreprocessingLogsHibernateDao extends AbstractHibernateDao implem
      * @see SmPreprocessingLogsDaoInterface #savePreprocessingLog(PreprocessingLog)
      */
     @Override
-    public void savePreprocessingLog(final PreprocessingLog preprocessingLog) throws SqlDatabaseSystemException {
+    public String savePreprocessingLog(final PreprocessingLog preprocessingLog) throws SqlDatabaseSystemException {
         final String savedPreprocessingLog = (String) save(preprocessingLog);
         flush();
         return savedPreprocessingLog;
-
     }
 
     /**

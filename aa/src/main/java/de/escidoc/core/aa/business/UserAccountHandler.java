@@ -1339,13 +1339,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         }
 
         // Get users that are integrated via their user-attributes
-        final String ouAttributeName;
-        try {
-            ouAttributeName =
-                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
-        } catch(final IOException e) {
-            throw new SystemException(e);
-        }
+        final String ouAttributeName =
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
 
         final Set<HashMap<String, String>> attributesSet = new HashSet<HashMap<String, String>>();
         for(final UserGroupMember member : members) {

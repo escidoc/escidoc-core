@@ -106,7 +106,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      * @param object The object to save or update.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    protected void saveOrUpdate(final Object object) throws SqlDatabaseSystemException {
+    protected String saveOrUpdate(final Object object) throws SqlDatabaseSystemException {
 
         if(object != null) {
             try {
@@ -117,6 +117,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
                 throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
             }
         }
+        return null;
     }
 
     /**

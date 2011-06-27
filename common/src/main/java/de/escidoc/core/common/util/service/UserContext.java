@@ -138,14 +138,14 @@ public final class UserContext {
      * @return Returns <code>true</code> if the {@link Authentication} has been changed, <code>false</code> else.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public static void runAsExternalUser() throws WebserverSystemException {
+    public static boolean runAsExternalUser() throws WebserverSystemException {
         final Authentication authentication = getSecurityContext().getAuthentication();
         if(authentication instanceof EscidocRunAsInternalUserToken) {
             getSecurityContext()
                     .setAuthentication(((EscidocRunAsInternalUserToken) authentication).getOrginalAuthentication());
-            return;
+            return true;
         } else {
-            return;
+            return false;
         }
     }
 

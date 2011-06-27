@@ -336,23 +336,11 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @return HashMap of content values
      */
     private Map<String, String> getContentValues() {
-
         final Map<String, String> values = new HashMap<String, String>();
-
-        try {
-            values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance()
-                    .get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
-        } catch(final IOException e) {
-            if(LOGGER.isWarnEnabled()) {
-                LOGGER.warn("No configuration can be found.");
-            }
-            if(LOGGER.isDebugEnabled()) {
-                LOGGER.debug("No configuration can be found.", e);
-            }
-        }
+        values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance()
+                .get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
         values.put(XmlTemplateProvider.REF, this.content.getDataLocation().toString());
         values.put(XmlTemplateProvider.REF_TYPE, "URL");
-
         return values;
     }
 

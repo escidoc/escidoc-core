@@ -85,12 +85,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * <code>XSL_MAPPING_UNKNOWN_TO_DC</code>.
      */
     public PoolableTransformerFactory() {
-
-        try {
-            setDefaultXsltUrl(EscidocConfiguration.getInstance().appendToSelfURL(XSL_MAPPING_UNKNOWN_TO_DC));
-        } catch(final IOException e) {
-            LOGGER.warn("Unable to set URL of DC mapping XSLTs " + "from configuration. " + e);
-        }
+        setDefaultXsltUrl(EscidocConfiguration.getInstance().appendToSelfURL(XSL_MAPPING_UNKNOWN_TO_DC));
     }
 
     /**

@@ -490,25 +490,19 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
                 isNew = true;
             } else {
                 // FIXME change storage and mime-type ? (FRS)
-                try {
-                    if(ds.getLocation() != null && ! ds.getLocation().equals(curDs.getLocation()) &&
-                            ! (ds.getLocation().startsWith("/cmm/content-model/" + getId()) || ds.getLocation()
-                                    .startsWith(EscidocConfiguration.getInstance()
-                                            .get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) + "/cmm/content-model/" +
-                                            getId()))) {
-                        contentChanged = true;
-                    } else {
-                        ds.setContentUnchanged(true);
-                    }
-                    if(! curDs.getControlGroup().equals(ds.getControlGroup()) ||
-                            ! curDs.getMimeType().equals(ds.getMimeType()) ||
-                            ds.getLabel() != null && curDs.getLabel() != null &&
-                                    ! curDs.getLabel().equals(ds.getLabel()) || ! ds.equals(curDs)) {
-                        contentChanged = true;
-                    }
-                } catch(final IOException e) {
-                    // FIXME catch IOE in EscidocConfiguration.getInstance()
-                    throw new WebserverSystemException(e);
+                if(ds.getLocation() != null && ! ds.getLocation().equals(curDs.getLocation()) &&
+                        ! (ds.getLocation().startsWith("/cmm/content-model/" + getId()) || ds.getLocation().startsWith(
+                                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) +
+                                        "/cmm/content-model/" + getId()))) {
+                    contentChanged = true;
+                } else {
+                    ds.setContentUnchanged(true);
+                }
+                if(! curDs.getControlGroup().equals(ds.getControlGroup()) ||
+                        ! curDs.getMimeType().equals(ds.getMimeType()) ||
+                        ds.getLabel() != null && curDs.getLabel() != null && ! curDs.getLabel().equals(ds.getLabel()) ||
+                        ! ds.equals(curDs)) {
+                    contentChanged = true;
                 }
             }
 
@@ -548,13 +542,11 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         return persist(true);
     }
 
-    private void persistDsCompositeModel() throws FedoraSystemException, WebserverSystemException {
-
+    private DateTime persistDsCompositeModel() throws FedoraSystemException, WebserverSystemException {
         DateTime timestamp = null;
         if(this.dsCompositeModel != null) {
             timestamp = this.dsCompositeModel.merge();
         }
         return timestamp;
-
     }
 }

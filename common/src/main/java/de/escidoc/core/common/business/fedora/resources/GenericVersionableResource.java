@@ -536,7 +536,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
      * @throws WebserverSystemException   Thrown in case of internal failure.
      */
-    public final void setLastVersionData() throws TripleStoreSystemException, WebserverSystemException {
+    public final Map<String, String> setLastVersionData() throws TripleStoreSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
 
@@ -920,7 +920,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws FedoraSystemException    Thrown if connection to Fedora failed.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    protected void persistWov() throws FedoraSystemException, WebserverSystemException {
+    protected DateTime persistWov() throws FedoraSystemException, WebserverSystemException {
 
         DateTime timestamp = null;
         if(this.wov != null) {

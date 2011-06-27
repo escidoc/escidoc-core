@@ -352,20 +352,15 @@ public class Datastream {
         query.setAltIDs(this.alternateIDs);
         String location = this.location;
         if(this.getStream() == null && this.location != null) {
-            try {
-                // FIXME this location/href is logic of Item!
-                if(this.contentUnchanged || location.startsWith("/ir/item/" + getParentId()) || location.startsWith(
-                        EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) +
-                                "/ir/item/" + getParentId())) {
-                    // TODO assuming unchanged href
-                    location = null;
-                } else if(location.startsWith("/")) {
-                    // assuming relative URL
-                    location = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) +
-                            location;
-                }
-            } catch(final IOException e) {
-                throw new WebserverSystemException(e);
+            // FIXME this location/href is logic of Item!
+            if(this.contentUnchanged || location.startsWith("/ir/item/" + getParentId()) || location.startsWith(
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) + "/ir/item/" +
+                            getParentId())) {
+                // TODO assuming unchanged href
+                location = null;
+            } else if(location.startsWith("/")) {
+                // assuming relative URL
+                location = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) + location;
             }
         } else if(this.getStream() != null) {
             if(CONTROL_GROUP_MANAGED.equals(this.getControlGroup())) {
@@ -437,7 +432,7 @@ public class Datastream {
      * @throws FedoraSystemException    Thrown if writing of datastream into Fedora fails.
      * @throws WebserverSystemException Thrown if getting Fedora instance fails.
      */
-    public void persist(final boolean sync) throws FedoraSystemException, WebserverSystemException {
+    public String persist(final boolean sync) throws FedoraSystemException, WebserverSystemException {
         final AddDatastreamPathParam path = new AddDatastreamPathParam(this.parentId, this.name);
         final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
         query.setAltIDs(this.alternateIDs);

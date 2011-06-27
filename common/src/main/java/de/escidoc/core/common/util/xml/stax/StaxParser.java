@@ -358,8 +358,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
         //        int chainSize = handlerChain.size();
         for(final DefaultHandler aHandlerChain : this.handlerChain) {
             if(aHandlerChain != null) {
-                final StartElement e = aHandlerChain.peek();
-                chars = handler.characters(chars, e);
+                final StartElement e = startElements.peek();
+                chars = aHandlerChain.characters(chars, e);
             }
         }
     }

@@ -169,17 +169,9 @@ public class ItemHandlerCreate extends ItemResourceListener {
                 values.put(XmlTemplateProvider.CONTROL_GROUP, "M");
             }
             values.put(XmlTemplateProvider.REF_TYPE, "URL");
-            try {
-                values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance()
-                        .get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
-            } catch(final IOException e) {
-                if(LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Error on loading configuration.");
-                }
-                if(LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error on loading configuration.", e);
-                }
-            }
+            values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance()
+                    .get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
+
         }
 
         if(dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS) != null) {

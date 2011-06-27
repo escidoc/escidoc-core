@@ -110,9 +110,9 @@ public class PoliciesCache {
      */
     @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
             properties = {@Property(name = "includeMethod", value = "false")}))
-    public void putRoleIsGrantedEvaluationResult(@PartialCacheKey
-                                                 final String userOrGroupId,
-                                                 final Map<String, Map<String, EvaluationResult>> roleIsGranted) {
+    public Map<String, Map<String, EvaluationResult>> putRoleIsGrantedEvaluationResult(@PartialCacheKey
+                                                                                       final String userOrGroupId,
+                                                                                       final Map<String, Map<String, EvaluationResult>> roleIsGranted) {
         return roleIsGranted;
     }
 

@@ -1526,7 +1526,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      */
     @Override
     public void reinitialize() throws TripleStoreSystemException {
-        return setUpTableManager();
+        setUpTableManager();
     }
 
     /**
@@ -1584,8 +1584,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             final String ddlGenerator =
                     EscidocConfiguration.getInstance().get(EscidocConfiguration.TRIPLESTORE_DDL_GENERATOR);
             return (DDLGenerator) Class.forName(ddlGenerator).newInstance();
-        } catch(IOException e) {
-            throw new TripleStoreSystemException(e.getMessage(), e);
         } catch(InstantiationException e) {
             throw new TripleStoreSystemException(e.getMessage(), e);
         } catch(IllegalAccessException e) {

@@ -837,8 +837,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
                     .getAsBoolean(EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
                 fireContentModelCreated(objid, retrieve(objid));
             }
-        } catch(final IOException e) {
-            throw new SystemException("The eSciDoc configuration could not be read", e);
         } catch(final ResourceNotFoundException e) {
             throw new IntegritySystemException("The Content Model with id '" + objid + "', which was just ingested, " +
                     "could not be found for retrieve.", e);

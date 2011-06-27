@@ -172,7 +172,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * See Interface for functional description.
      */
     @Override
-    public void open(final String id, final String taskParam)
+    public String open(final String id, final String taskParam)
             throws ContextNotFoundException, MissingMethodParameterException, InvalidStatusException,
             AuthenticationException, AuthorizationException, OptimisticLockingException, InvalidXmlException,
             SystemException, LockingException, StreamNotFoundException {

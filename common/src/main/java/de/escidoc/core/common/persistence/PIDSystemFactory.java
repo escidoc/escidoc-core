@@ -79,24 +79,11 @@ public abstract class PIDSystemFactory {
      * @see #getInstance()
      */
     private static void createNewInstanceFromConfig() throws PidSystemException {
-        String factoryClassName;
-
-        try {
-            factoryClassName =
-                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PID_SYSTEM_FACTORY);
-            if(factoryClassName == null) {
-                factoryClassName = DEFAULT_FACTORY;
-            }
-        } catch(final IOException e) {
-            if(LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on instanziating esidoc configuration factory.");
-            }
-            if(LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on instanziating esidoc configuration factory.", e);
-            }
+        String factoryClassName =
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PID_SYSTEM_FACTORY);
+        if(factoryClassName == null) {
             factoryClassName = DEFAULT_FACTORY;
         }
-
         try {
             final Class<?> factoryClass = Class.forName(factoryClassName);
             pidSystemFactory = (PIDSystemFactory) factoryClass.getConstructor().newInstance();

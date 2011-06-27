@@ -546,7 +546,7 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                    handle.
      * @throws AuthorizationException     Thrown if the authorization failed.
      */
-    void open(String id, String taskParam)
+    String open(String id, String taskParam)
             throws AuthenticationException, AuthorizationException, InvalidStatusException, InvalidXmlException,
             MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitNotFoundException,
             SystemException;

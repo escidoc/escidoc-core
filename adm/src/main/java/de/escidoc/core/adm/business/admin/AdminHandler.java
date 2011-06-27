@@ -230,11 +230,7 @@ public class AdminHandler {
 
         final String earliestCreationDate = tripleStoreUtility.getEarliestCreationDate();
         final EscidocConfiguration config;
-        try {
-            config = EscidocConfiguration.getInstance();
-        } catch(final IOException e) {
-            throw new WebserverSystemException(e);
-        }
+        config = EscidocConfiguration.getInstance();
 
         final Properties properties = new Properties();
         final String gsearchUrl = config.get(EscidocConfiguration.GSEARCH_URL);

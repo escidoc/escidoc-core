@@ -122,12 +122,8 @@ public class IndexingHandler implements ResourceListener {
         } catch(final ParserConfigurationException e) {
             throw new SystemException(e.getMessage(), e);
         }
-        try {
-            this.notifyIndexerEnabled = EscidocConfiguration.getInstance()
-                    .getAsBoolean(EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED);
-        } catch(final IOException e) {
-            throw new SystemException(e.getMessage(), e);
-        }
+        this.notifyIndexerEnabled = EscidocConfiguration.getInstance()
+                .getAsBoolean(EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED);
     }
 
     // begin implementation of ResourceListener

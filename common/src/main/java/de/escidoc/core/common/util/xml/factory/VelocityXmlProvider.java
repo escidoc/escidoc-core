@@ -119,6 +119,5 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
     private String getTemplateFilename(final String path, final String resource) throws WebserverSystemException {
         return path.startsWith("/") ? path.substring(1) + '/' + completePath() + '/' + resource + ".vm" :
                 path + '/' + completePath() + '/' + resource + ".vm";
-        ;
     }
 }

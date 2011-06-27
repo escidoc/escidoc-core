@@ -48,7 +48,7 @@ public interface SmPreprocessingLogsDaoInterface {
      * @return Integer primary key of created Object
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    void savePreprocessingLog(final PreprocessingLog preprocessingLog) throws SqlDatabaseSystemException;
+    String savePreprocessingLog(final PreprocessingLog preprocessingLog) throws SqlDatabaseSystemException;
 
     /**
      * retrieves all PreprocessingLogs from the database with given aggregationDefinitionId.

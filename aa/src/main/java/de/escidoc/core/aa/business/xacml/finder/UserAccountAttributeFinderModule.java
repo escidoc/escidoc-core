@@ -374,13 +374,8 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     private EvaluationResult fetchUserAccountOus(final UserAccount userAccount, final boolean getChildren)
             throws SystemException {
 
-        final String ouAttributeName;
-        try {
-            ouAttributeName =
-                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
-        } catch(final IOException e) {
-            throw new SystemException(e);
-        }
+        final String ouAttributeName =
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
         if(ouAttributeName == null || ouAttributeName.length() == 0) {
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
@@ -513,8 +508,6 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
                     assertUserAccount(userAccountId, getUserAccountDao().retrieveUserAccountById(userAccountId));
                 }
             } catch(final UserAccountNotFoundException e) {
-                throw e;
-            } catch(final WebserverSystemException e) {
                 throw e;
             } catch(final Exception e) {
                 final String errorMsg = StringUtility.format("Retrieving of attribute failed", attributeIdValue);

@@ -129,7 +129,6 @@ public class IndexerResourceRequester {
             properties = {@Property(name = "includeMethod", value = "false")}))
     public void setResource(@PartialCacheKey
                             final String identifier, final Object resource) {
-        return resource;
     }
 
     /**
