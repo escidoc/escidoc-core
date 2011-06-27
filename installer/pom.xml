@@ -344,7 +344,7 @@
 										<!-- fedora.fcfg -->
 										<xmltask
 											source="${project.build.directory}/fedora/server/config/fedora.fcfg"
-											dest="${project.build.directory}/fedora/fedora.fcfg"
+											dest="${project.build.directory}/fedora.fcfg"
 											failWithoutMatch="true">
 											<!-- general settings -->
 											<attr path="//*[@name='adminEmailList']" attr="value"
@@ -389,7 +389,7 @@
 										<!-- fedora-users.xml -->
 										<xmltask
 											source="${project.build.directory}/fedora/server/config/fedora-users.xml"
-											dest="${project.build.directory}/fedora/fedora-users.xml"
+											dest="${project.build.directory}/fedora-users.xml"
 											failWithoutMatch="true">
 											<attr path="/users/user[@name='fedoraAdmin']" attr="password"
 												value="${FedoraPassword}" />
@@ -400,7 +400,7 @@
 										<!-- web.xml -->
 										<xmltask
 											source="${project.build.directory}/fedora/install/fedorawar/WEB-INF/web.xml"
-											dest="${project.build.directory}/fedora/web.xml"
+											dest="${project.build.directory}/web.xml"
 											failWithoutMatch="true">
 											<replace
 												path="//*[local-name()='param-name' and text()='fedora.home']/following-sibling::*[1]/text()"
