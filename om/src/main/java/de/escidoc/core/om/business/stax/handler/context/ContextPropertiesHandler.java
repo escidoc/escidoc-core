@@ -78,8 +78,6 @@ public class ContextPropertiesHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private String propertiesPath = "/context/properties";
-
     private final List<String> orgunits = new ArrayList<String>();
 
     /**
@@ -102,72 +100,60 @@ public class ContextPropertiesHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element) throws InvalidStatusException,
-        OrganizationalUnitNotFoundException, ReadonlyAttributeViolationException, MissingElementValueException,
-        IntegritySystemException, TripleStoreSystemException, WebserverSystemException {
+    public String characters(final String data, final StartElement element)
+            throws InvalidStatusException, OrganizationalUnitNotFoundException, ReadonlyAttributeViolationException,
+            MissingElementValueException, IntegritySystemException, TripleStoreSystemException,
+            WebserverSystemException {
         final String curPath = parser.getCurPath();
 
-        if (curPath.startsWith(this.propertiesPath + '/')) {
+        final String propertiesPath = "/context/properties";
+        if(curPath.startsWith(propertiesPath + '/')) {
             final String theName = element.getLocalName();
 
             // organizational-unit
-            if (curPath.equals(this.propertiesPath + "/organizational-units/organizational-unit")) {
+            if(curPath.equals(propertiesPath + "/organizational-units/organizational-unit")) {
 
                 try {
                     final String id;
                     final String xlinkHref = element.getAttribute(Constants.XLINK_URI, "href").getValue();
                     id = XmlUtility.getIdFromURI(xlinkHref);
 
-                    if (!xlinkHref.equals("/oum/organizational-unit/" + id)) {
-                        throw new OrganizationalUnitNotFoundException("The 'organizational-unit' element has a wrong "
-                            + "url. the url have to look like: " + "/oum/organizational-unit/id");
+                    if(! xlinkHref.equals("/oum/organizational-unit/" + id)) {
+                        throw new OrganizationalUnitNotFoundException(
+                                "The 'organizational-unit' element has a wrong " + "url. the url have to look like: " +
+                                        "/oum/organizational-unit/id");
                     }
                     this.utility.checkIsOrganizationalUnit(id);
 
                     final String orgUnitStatus =
-                        this.tripleStoreUtility.getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
+                            this.tripleStoreUtility.getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-                    if (!orgUnitStatus.equals(Constants.STATUS_OU_OPENED)) {
-                        throw new InvalidStatusException("organizational-unit with id " + id + " should be in status "
-                            + Constants.STATUS_OU_OPENED + " but is in status " + orgUnitStatus);
+                    if(! orgUnitStatus.equals(Constants.STATUS_OU_OPENED)) {
+                        throw new InvalidStatusException("organizational-unit with id " + id + " should be in status " +
+                                Constants.STATUS_OU_OPENED + " but is in status " + orgUnitStatus);
                     }
                     this.orgunits.add(id);
                     this.propertiesMap.put(Elements.ELEMENT_ORGANIZATIONAL_UNITS, this.orgunits);
-                }
-                catch (final NoSuchAttributeException e) {
+                } catch(final NoSuchAttributeException e) {
                     throw new ReadonlyAttributeViolationException(e);
                 }
-            }
-            else if (theName.equals(Elements.ELEMENT_NAME)) {
-                if (data.length() == 0) {
+            } else if(theName.equals(Elements.ELEMENT_NAME)) {
+                if(data.length() == 0) {
                     throw new MissingElementValueException("The value of the element " + theName + " is missing");
-                }
-                else {
+                } else {
                     // propertiesMap.put(theName, data);
                     propertiesMap.put(Elements.ELEMENT_NAME, data);
                 }
-            }
-            else if (theName.equals(Elements.ELEMENT_TYPE)) {
-                if (data.length() == 0) {
+            } else if(theName.equals(Elements.ELEMENT_TYPE)) {
+                if(data.length() == 0) {
                     throw new MissingElementValueException("The value of the element " + theName + " is missing");
-                }
-                else {
+                } else {
                     propertiesMap.put(Elements.ELEMENT_TYPE, data);
                 }
-            }
-            else if (theName.equals(Elements.ELEMENT_DESCRIPTION)) {
-                if (data.length() == 0) {
-                    // int index =
-                    // element.indexOfAttribute(
-                    // de.escidoc.core.common.business.Constants.XLINK_URI,
-                    // "href");
-                    // String hrefVal = element.getAttribute(index).getValue();
-                    // propertiesMap.put(element.getLocalName(), hrefVal);
-                    // propertiesMap.put(theName, "");
+            } else if(theName.equals(Elements.ELEMENT_DESCRIPTION)) {
+                if(data.length() == 0) {
                     propertiesMap.put(Elements.ELEMENT_DESCRIPTION, "");
-                }
-                else {
-                    // propertiesMap.put(theName, data);
+                } else {
                     propertiesMap.put(Elements.ELEMENT_DESCRIPTION, data);
                 }
             }

@@ -48,12 +48,4 @@ public class ErrorQueueProcessor {
     public void execute(final String logfile) {
         //read logfile and do something
     }
-
-    /**
-     * @param errorMessageHandler ErrorMessageHandler
-     */
-    public void setErrorMessageHandler(final ErrorMessageHandler errorMessageHandler) {
-        this.errorMessageHandler = errorMessageHandler;
-    }
-
 }

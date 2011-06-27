@@ -23,62 +23,55 @@ public final class FileUtils {
         return createTempFile(prefix, suffix, null, false);
     }
 
-    public static File createTempFile(String prefix,
-                                      String suffix,
-                                      final File parentDir,
-                                      final boolean deleteOnExit) throws IOException {
+    public static File createTempFile(String prefix, String suffix, final File parentDir, final boolean deleteOnExit)
+            throws IOException {
         File result;
-        File parent = (parentDir == null)
-                ? getDefaultTempDirectory()
-                : parentDir;
-        if (suffix == null) {
+        File parent = (parentDir == null) ? getDefaultTempDirectory() : parentDir;
+        if(suffix == null) {
             suffix = ".tmp";
         }
-        if (prefix == null) {
+        if(prefix == null) {
             prefix = "escidoc";
-        } else if (prefix.length() < 3) {
-            prefix = prefix + "escidoc";
+        } else if(prefix.length() < 3) {
+            prefix += "escidoc";
         }
         result = File.createTempFile(prefix, suffix, parent);
         //if parentDir is null, we're in our default dir
         //which will get completely wiped on exit from our exit
         //hook.  No need to set deleteOnExit() which leaks memory.
-        if (deleteOnExit && parentDir != null) {
+        if(deleteOnExit && parentDir != null) {
             result.deleteOnExit();
         }
         return result;
     }
 
     public static synchronized File getDefaultTempDirectory() {
-        if (defaultTempDirectory != null
-                && defaultTempDirectory.exists()) {
+        if(defaultTempDirectory != null && defaultTempDirectory.exists()) {
             return defaultTempDirectory;
         }
         String tempDirectoryProperty = null;
         try {
             tempDirectoryProperty = System.getProperty(FileUtils.class.getName() + ".TempDirectory");
-        } catch (SecurityException e) {
+        } catch(SecurityException e) {
             //Ignorable, we'll use the default
         }
-        if (tempDirectoryProperty != null) {
+        if(tempDirectoryProperty != null) {
             // assume someone outside of us will manage the directory
             File tempDirectory = new File(tempDirectoryProperty);
-            if (tempDirectory.mkdirs()) {
+            if(tempDirectory.mkdirs()) {
                 defaultTempDirectory = tempDirectory;
             }
         }
-        if (defaultTempDirectory == null) {
+        if(defaultTempDirectory == null) {
             int x = RANDOM.nextInt();
             tempDirectoryProperty = System.getProperty("java.io.tmpdir");
             File tmpDirectory = new File(tempDirectoryProperty);
-            if (!tmpDirectory.exists()) {
-                throw new RuntimeException("The directory "
-                        + tmpDirectory.getAbsolutePath()
-                        + " does not exist, please set java.io.tempdir"
-                        + " to an existing directory");
+            if(! tmpDirectory.exists()) {
+                throw new RuntimeException("The directory " + tmpDirectory.getAbsolutePath() +
+                        " does not exist, please set java.io.tempdir" + " to an existing directory");
             }
             File tempFile = new File(tempDirectoryProperty, "escidoc-tmp-" + x);
-            while (!tempFile.mkdir()) {
+            while(! tempFile.mkdir()) {
                 x = RANDOM.nextInt();
                 tempFile = new File(tempDirectoryProperty, "escidoc-tmp-" + x);
             }
@@ -101,12 +94,12 @@ public final class FileUtils {
 
     private static void removeDirectory(@NotNull final File directory, final boolean inShutdown) {
         String[] list = directory.list();
-        if (list == null) {
+        if(list == null) {
             list = new String[0];
         }
-        for (String s : list) {
+        for(String s : list) {
             final File file = new File(directory, s);
-            if (file.isDirectory()) {
+            if(file.isDirectory()) {
                 removeDirectory(file, inShutdown);
             } else {
                 delete(file, inShutdown);
@@ -120,16 +113,16 @@ public final class FileUtils {
     }
 
     public static void delete(@NotNull final File file, final boolean inShutdown) {
-        if (!file.delete()) {
-            if (isWindows()) {
+        if(! file.delete()) {
+            if(isWindows()) {
                 System.gc(); // Ignore FindBugs warning!
             }
             try {
                 Thread.sleep(RETRY_SLEEP_MILLIS);
-            } catch (final InterruptedException e) {
+            } catch(final InterruptedException e) {
                 // ignore exception
             }
-            if (!file.delete() && !inShutdown) {
+            if(! file.delete() && ! inShutdown) {
                 file.deleteOnExit();
             }
         }
