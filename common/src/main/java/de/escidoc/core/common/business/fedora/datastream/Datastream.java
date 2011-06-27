@@ -755,9 +755,9 @@ public class Datastream {
      * @return a map containing {@link Datastream} objects representing the {@link DatastreamProfileTO} objects and the
      *         datastream ID as the keys.
      */
-    public static final Map<String, Datastream> convertDatastreamProfileTOs(@NotNull
-                                                                            final List<DatastreamProfileTO> datastreamProfileTOs,
-                                                                            final String parentId) {
+    public static Map<String, Datastream> convertDatastreamProfileTOs(@NotNull
+                                                                      final List<DatastreamProfileTO> datastreamProfileTOs,
+                                                                      final String parentId) {
 
         final Map<String, Datastream> result = new HashMap<String, Datastream>(datastreamProfileTOs.size() + 1);
 
@@ -776,9 +776,9 @@ public class Datastream {
      * @return a map containing {@link Datastream} objects representing the {@link DatastreamProfileTO} objects and the
      *         datastream ID as the keys.
      */
-    public static final void convertDatastreamProfileTOs(@NotNull
-                                                         final List<DatastreamProfileTO> datastreamProfileTOs,
-                                                         final String parentId, final Map<String, Datastream> intoMap) {
+    public static void convertDatastreamProfileTOs(@NotNull
+                                                   final List<DatastreamProfileTO> datastreamProfileTOs,
+                                                   final String parentId, final Map<String, Datastream> intoMap) {
 
         for(final DatastreamProfileTO datastreamProfileTO : datastreamProfileTOs) {
             intoMap.put(datastreamProfileTO.getDsID(), new Datastream(datastreamProfileTO, parentId, null));

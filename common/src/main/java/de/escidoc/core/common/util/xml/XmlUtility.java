@@ -2143,7 +2143,7 @@ public final class XmlUtility {
         return result;
     }
 
-    public static final boolean isIdentical(byte[] xml1, byte[] xml2) {
+    public static boolean isIdentical(byte[] xml1, byte[] xml2) {
         if(xml1 == null) {
             return xml2 == null;
         }
@@ -2153,7 +2153,7 @@ public final class XmlUtility {
         return isIdentical(IOUtils.newStringFromBytes(xml1), IOUtils.newStringFromBytes(xml2));
     }
 
-    public static final boolean isIdentical(String xml1, String xml2) {
+    public static boolean isIdentical(String xml1, String xml2) {
         if(xml1 == null) {
             return xml2 == null;
         }
