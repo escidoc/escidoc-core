@@ -520,7 +520,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
             if(altId == null) {
                 result.add(profile);
             } else {
-                if(profile.getDsAltID().size() > 0) {
+                if(! profile.getDsAltID().isEmpty()) {
                     for (String dsAltID : profile.getDsAltID()) {
                         if(altId.equals(dsAltID)) {
                             result.add(profile);
