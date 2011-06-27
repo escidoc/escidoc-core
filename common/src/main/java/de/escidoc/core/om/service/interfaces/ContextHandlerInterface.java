@@ -120,12 +120,12 @@ public interface ContextHandlerInterface {
      * @throws XmlSchemaValidationException   Thrown if the schema validation of the provided data failed.
      */
     @Validate(param = 0, resolver = "getContextSchemaLocation")
-    String create(final String xmlData) throws AuthenticationException, AuthorizationException,
-        ContentModelNotFoundException, ContextNameNotUniqueException, InvalidContentException,
-        MissingAttributeValueException, MissingElementValueException, MissingMethodParameterException,
-        ReadonlyAttributeViolationException, ReadonlyElementViolationException, SystemException,
-        OrganizationalUnitNotFoundException, InvalidStatusException, XmlCorruptedException,
-        XmlSchemaValidationException;
+    String create(final String xmlData)
+            throws AuthenticationException, AuthorizationException, ContentModelNotFoundException,
+            ContextNameNotUniqueException, InvalidContentException, MissingAttributeValueException,
+            MissingElementValueException, MissingMethodParameterException, ReadonlyAttributeViolationException,
+            ReadonlyElementViolationException, SystemException, OrganizationalUnitNotFoundException,
+            InvalidStatusException, XmlCorruptedException, XmlSchemaValidationException;
 
     /**
      * Deletes the specified context.<br/>
@@ -151,8 +151,9 @@ public interface ContextHandlerInterface {
      *                                  Thrown if method parameter is missing.
      * @throws SystemException          If case of internal error.
      */
-    void delete(String id) throws AuthenticationException, AuthorizationException, ContextNotEmptyException,
-        ContextNotFoundException, InvalidStatusException, MissingMethodParameterException, SystemException;
+    void delete(String id)
+            throws AuthenticationException, AuthorizationException, ContextNotEmptyException, ContextNotFoundException,
+            InvalidStatusException, MissingMethodParameterException, SystemException;
 
     /**
      * Retrieves the specified context.<br/>
@@ -174,7 +175,7 @@ public interface ContextHandlerInterface {
      * @throws SystemException          If case of internal error.
      */
     String retrieve(String id) throws AuthenticationException, AuthorizationException, ContextNotFoundException,
-        MissingMethodParameterException, SystemException;
+            MissingMethodParameterException, SystemException;
 
     /**
      * Retrieve the properties of a context.<br/>
@@ -234,10 +235,11 @@ public interface ContextHandlerInterface {
      * @throws SystemException               If case of internal error.
      */
     @Validate(param = 1, resolver = "getContextSchemaLocation")
-    String update(String id, String xmlData) throws AuthenticationException, AuthorizationException,
-        ContextNotFoundException, InvalidContentException, InvalidStatusException, InvalidXmlException,
-        MissingMethodParameterException, OptimisticLockingException, ReadonlyAttributeViolationException,
-        ReadonlyElementViolationException, ContextNameNotUniqueException, MissingElementValueException, SystemException;
+    String update(String id, String xmlData)
+            throws AuthenticationException, AuthorizationException, ContextNotFoundException, InvalidContentException,
+            InvalidStatusException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
+            ReadonlyAttributeViolationException, ReadonlyElementViolationException, ContextNameNotUniqueException,
+            MissingElementValueException, SystemException;
 
     /**
      * Retrieves a list of members of a Context applying filters.<br/>
@@ -263,8 +265,8 @@ public interface ContextHandlerInterface {
      *                                  Thrown if method parameter is missing.
      * @throws SystemException          If case of internal error.
      */
-    String retrieveMembers(final String id, final Map<String, String[]> filter) throws ContextNotFoundException,
-        MissingMethodParameterException, SystemException;
+    String retrieveMembers(final String id, final Map<String, String[]> filter)
+            throws ContextNotFoundException, MissingMethodParameterException, SystemException;
 
     //
     // Subresource - admin descriptor
@@ -294,9 +296,9 @@ public interface ContextHandlerInterface {
      *                                  Thrown if admin descriptor could not be found.
      * @throws SystemException          If case of internal error.
      */
-    String retrieveAdminDescriptor(final String id, final String name) throws AdminDescriptorNotFoundException,
-        AuthenticationException, AuthorizationException, ContextNotFoundException, MissingMethodParameterException,
-        SystemException;
+    String retrieveAdminDescriptor(final String id, final String name)
+            throws AdminDescriptorNotFoundException, AuthenticationException, AuthorizationException,
+            ContextNotFoundException, MissingMethodParameterException, SystemException;
 
     /**
      * Retrieve the subresource admin-descriptors of a Context.<br/>
@@ -319,8 +321,9 @@ public interface ContextHandlerInterface {
      *                                  Thrown if method parameter is missing.
      * @throws SystemException          If case of internal error.
      */
-    String retrieveAdminDescriptors(final String id) throws AuthenticationException, AuthorizationException,
-        ContextNotFoundException, MissingMethodParameterException, SystemException;
+    String retrieveAdminDescriptors(final String id)
+            throws AuthenticationException, AuthorizationException, ContextNotFoundException,
+            MissingMethodParameterException, SystemException;
 
     /**
      * Update an admin descriptor of a context.<br/>
@@ -351,9 +354,10 @@ public interface ContextHandlerInterface {
      * @throws SystemException            If case of internal error.
      */
     @Validate(param = 1, resolver = "getContextSchemaLocation")
-    String updateAdminDescriptor(final String id, final String xmlData) throws AdminDescriptorNotFoundException,
-        AuthenticationException, AuthorizationException, ContextNotFoundException, InvalidXmlException,
-        MissingMethodParameterException, OptimisticLockingException, SystemException;
+    String updateAdminDescriptor(final String id, final String xmlData)
+            throws AdminDescriptorNotFoundException, AuthenticationException, AuthorizationException,
+            ContextNotFoundException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
+            SystemException;
 
     //
     // Subresource - resources
@@ -374,10 +378,10 @@ public interface ContextHandlerInterface {
      *                                    Thrown if method parameter is missing.
      * @throws SystemException            If an internal error occurred.
      */
-    EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map<String, String[]> parameters)
-        throws AuthenticationException, AuthorizationException, ContextNotFoundException,
-        MissingMethodParameterException, OperationNotFoundException, SystemException;
+    EscidocBinaryContent retrieveResource(final String id, final String resourceName,
+                                          final Map<String, String[]> parameters)
+            throws AuthenticationException, AuthorizationException, ContextNotFoundException,
+            MissingMethodParameterException, OperationNotFoundException, SystemException;
 
     /**
      * Retrieve the subresource "resources". <br/>
@@ -402,8 +406,9 @@ public interface ContextHandlerInterface {
      *                                  Thrown if method parameter is missing.
      * @throws SystemException          If case of internal error.
      */
-    String retrieveResources(final String id) throws AuthenticationException, AuthorizationException,
-        ContextNotFoundException, MissingMethodParameterException, SystemException;
+    String retrieveResources(final String id)
+            throws AuthenticationException, AuthorizationException, ContextNotFoundException,
+            MissingMethodParameterException, SystemException;
 
     /**
      * Open a context<br/> Set Context status to open.<br/>
@@ -438,9 +443,10 @@ public interface ContextHandlerInterface {
      * @throws StreamNotFoundException    Thrown if required stream could not be found.
      * @throws SystemException            If case of internal error.
      */
-    String open(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
-        ContextNotFoundException, InvalidStatusException, InvalidXmlException, MissingMethodParameterException,
-        OptimisticLockingException, SystemException, LockingException, StreamNotFoundException;
+    void open(final String id, final String taskParam)
+            throws AuthenticationException, AuthorizationException, ContextNotFoundException, InvalidStatusException,
+            InvalidXmlException, MissingMethodParameterException, OptimisticLockingException, SystemException,
+            LockingException, StreamNotFoundException;
 
     /**
      * Close a context<br/> Set Context status to close.<br/>
@@ -475,8 +481,9 @@ public interface ContextHandlerInterface {
      * @throws StreamNotFoundException    Thrown if required stream could not be found.
      * @throws SystemException            If case of internal error.
      */
-    String close(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
-        ContextNotFoundException, InvalidStatusException, InvalidXmlException, MissingMethodParameterException,
-        OptimisticLockingException, SystemException, LockingException, StreamNotFoundException;
+    String close(final String id, final String taskParam)
+            throws AuthenticationException, AuthorizationException, ContextNotFoundException, InvalidStatusException,
+            InvalidXmlException, MissingMethodParameterException, OptimisticLockingException, SystemException,
+            LockingException, StreamNotFoundException;
 
 }

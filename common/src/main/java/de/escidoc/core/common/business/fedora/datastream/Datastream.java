@@ -437,7 +437,7 @@ public class Datastream {
      * @throws FedoraSystemException    Thrown if writing of datastream into Fedora fails.
      * @throws WebserverSystemException Thrown if getting Fedora instance fails.
      */
-    public String persist(final boolean sync) throws FedoraSystemException, WebserverSystemException {
+    public void persist(final boolean sync) throws FedoraSystemException, WebserverSystemException {
         final AddDatastreamPathParam path = new AddDatastreamPathParam(this.parentId, this.name);
         final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
         query.setAltIDs(this.alternateIDs);

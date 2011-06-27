@@ -328,7 +328,7 @@ public class OrganizationalUnitHandler
      * See Interface for functional description.
      */
     @Override
-    public String open(final String id, final String taskParam)
+    public void open(final String id, final String taskParam)
             throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
             OrganizationalUnitNotFoundException, InvalidStatusException, SystemException, OptimisticLockingException,
             InvalidXmlException {

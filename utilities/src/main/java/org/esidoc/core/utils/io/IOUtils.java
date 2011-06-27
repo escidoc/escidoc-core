@@ -26,11 +26,11 @@ public final class IOUtils {
     private IOUtils() {
     }
 
-    public static int copy(@NotNull final InputStream input, @NotNull final OutputStream output) throws IOException {
+    public static void copy(@NotNull final InputStream input, @NotNull final OutputStream output) throws IOException {
         return copy(input, output, DEFAULT_BUFFER_SIZE);
     }
 
-    public static int copyAndCloseInput(@NotNull final InputStream input, @NotNull final OutputStream output)
+    public static void copyAndCloseInput(@NotNull final InputStream input, @NotNull final OutputStream output)
             throws IOException {
         try {
             return copy(input, output, DEFAULT_BUFFER_SIZE);

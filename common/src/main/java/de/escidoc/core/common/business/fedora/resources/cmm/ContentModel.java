@@ -548,7 +548,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         return persist(true);
     }
 
-    private DateTime persistDsCompositeModel() throws FedoraSystemException, WebserverSystemException {
+    private void persistDsCompositeModel() throws FedoraSystemException, WebserverSystemException {
 
         DateTime timestamp = null;
         if(this.dsCompositeModel != null) {

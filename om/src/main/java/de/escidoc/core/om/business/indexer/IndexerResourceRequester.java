@@ -127,8 +127,8 @@ public class IndexerResourceRequester {
      */
     @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
             properties = {@Property(name = "includeMethod", value = "false")}))
-    public Object setResource(@PartialCacheKey
-                              final String identifier, final Object resource) {
+    public void setResource(@PartialCacheKey
+                            final String identifier, final Object resource) {
         return resource;
     }
 

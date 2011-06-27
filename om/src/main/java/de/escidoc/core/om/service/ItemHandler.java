@@ -464,7 +464,7 @@ public class ItemHandler implements ItemHandlerInterface {
     }
 
     @Override
-    public String release(final String id, final String lastModified)
+    public void release(final String id, final String lastModified)
             throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidStatusException,
             AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
             OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException {

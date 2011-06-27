@@ -45,8 +45,8 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     protected static final int COMPARE_EQ = 1;
 
     private static final String FEDORA_EXCEPTION_MESSAGE =
-        new StringBuffer("Fedora might not be running:\n")
-            .append("Problem retrieving Primary Key from Fedora:\n").toString();
+            new StringBuffer("Fedora might not be running:\n").append("Problem retrieving Primary Key from Fedora:\n")
+                    .toString();
 
     /**
      * Deletes the provided persistent object.
@@ -56,11 +56,10 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      */
     public void delete(final Object object) throws SqlDatabaseSystemException {
 
-        if (object != null) {
+        if(object != null) {
             try {
                 getHibernateTemplate().delete(object);
-            }
-            catch (final DataAccessException e) {
+            } catch(final DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
                 throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
             }
@@ -89,11 +88,10 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     protected Object save(final Object object) throws SqlDatabaseSystemException {
 
         Object result = null;
-        if (object != null) {
+        if(object != null) {
             try {
                 result = getHibernateTemplate().save(object);
-            }
-            catch (final DataAccessException e) {
+            } catch(final DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
                 handleFedoraSystemException(e);
                 throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
@@ -107,21 +105,18 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *
      * @param object The object to save or update.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
-     * @return
      */
-    protected String saveOrUpdate(final Object object) throws SqlDatabaseSystemException {
+    protected void saveOrUpdate(final Object object) throws SqlDatabaseSystemException {
 
-        if (object != null) {
+        if(object != null) {
             try {
                 getHibernateTemplate().saveOrUpdate(object);
-            }
-            catch (final DataAccessException e) {
+            } catch(final DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
                 handleFedoraSystemException(e);
                 throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
             }
         }
-        return null;
     }
 
     /**
@@ -132,11 +127,10 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      */
     protected void update(final Object object) throws SqlDatabaseSystemException {
 
-        if (object != null) {
+        if(object != null) {
             try {
                 getHibernateTemplate().update(object);
-            }
-            catch (final DataAccessException e) {
+            } catch(final DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
                 throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
             }
@@ -151,10 +145,10 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      * @throws SqlDatabaseSystemException Thrown if the provided exception contains an <code>BatchUpdateException</code>.
      */
     private static void handleBatchUpdateException(final HibernateException e) throws SqlDatabaseSystemException {
-        if (e.getCause() instanceof BatchUpdateException) {
+        if(e.getCause() instanceof BatchUpdateException) {
             final Exception e1 = ((SQLException) e.getCause()).getNextException();
-            throw new SqlDatabaseSystemException(StringUtility.format(e.getMessage(), e.getCause().getMessage(), e1
-                .getMessage()), e1);
+            throw new SqlDatabaseSystemException(
+                    StringUtility.format(e.getMessage(), e.getCause().getMessage(), e1.getMessage()), e1);
         }
     }
 
@@ -166,12 +160,12 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      * @throws SqlDatabaseSystemException Thrown if the provided exception contains an <code>FedoraSystemException</code>.
      */
     private static void handleFedoraSystemException(final Throwable e) throws SqlDatabaseSystemException {
-        if (e.getCause() != null && e.getCause().getCause() != null) {
+        if(e.getCause() != null && e.getCause().getCause() != null) {
             final Throwable e1 = e.getCause().getCause();
-            if (e1 instanceof FedoraSystemException) {
+            if(e1 instanceof FedoraSystemException) {
                 final StringBuilder message = new StringBuilder(FEDORA_EXCEPTION_MESSAGE);
                 final Throwable e2 = e1.getCause();
-                if (e2 != null) {
+                if(e2 != null) {
                     message.append(e2.getMessage());
                 }
                 throw new SqlDatabaseSystemException(message.toString());
@@ -189,13 +183,11 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     protected Object getUniqueResult(final List<Object> results) {
 
         final int resultSize = results.size();
-        if (resultSize == 1) {
+        if(resultSize == 1) {
             return results.get(0);
-        }
-        else if (resultSize > 1) {
+        } else if(resultSize > 1) {
             throw new NonUniqueResultException(resultSize);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -203,21 +195,16 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     /**
      * merges 2 sets into 1
      *
-     * @param s1
-     * @param s2
      * @return Set merged set
      */
     protected Set<String> mergeSets(final Set<String> s1, final Set<String> s2) {
-        if (s1 == null && s2 == null) {
+        if(s1 == null && s2 == null) {
             return null;
-        }
-        else if (s1 == null) {
+        } else if(s1 == null) {
             return s2;
-        }
-        else if (s2 == null) {
+        } else if(s2 == null) {
             return s1;
-        }
-        else {
+        } else {
             s1.addAll(s2);
             return s1;
         }

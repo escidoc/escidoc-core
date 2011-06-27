@@ -1525,7 +1525,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility# reinitialize()
      */
     @Override
-    public Object reinitialize() throws TripleStoreSystemException {
+    public void reinitialize() throws TripleStoreSystemException {
         return setUpTableManager();
     }
 

@@ -84,8 +84,8 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *          e
      */
-    public String requestIndexing(final String resource, final String index, final String pidSuffix,
-                                  final String indexFulltextVisibilities) throws ApplicationServerSystemException {
+    public void requestIndexing(final String resource, final String index, final String pidSuffix,
+                                final String indexFulltextVisibilities) throws ApplicationServerSystemException {
         final Set<String> indexNames = new HashSet<String>();
         final StringBuilder responses = new StringBuilder();
         final StringBuilder exceptions = new StringBuilder();
@@ -157,7 +157,7 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *          e
      */
-    public String requestDeletion(String resource, final String index, final String pidSuffix)
+    public void requestDeletion(String resource, final String index, final String pidSuffix)
             throws ApplicationServerSystemException {
         final Set<String> indexNames = new HashSet<String>();
         final StringBuilder responses = new StringBuilder();
@@ -215,7 +215,7 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *          e
      */
-    public String requestCreateEmpty(String index) throws ApplicationServerSystemException {
+    public void requestCreateEmpty(String index) throws ApplicationServerSystemException {
         if(index == null) {
             index = "";
         }
@@ -266,7 +266,7 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *          e
      */
-    public String requestOptimize(final String index) throws ApplicationServerSystemException {
+    public void requestOptimize(final String index) throws ApplicationServerSystemException {
         final Set<String> indexNames = new HashSet<String>();
         final StringBuilder responses = new StringBuilder();
         final StringBuilder exceptions = new StringBuilder();
@@ -520,7 +520,7 @@ public class GsearchHandler {
      * @param path path to Directory
      * @return boolean if delete was successful
      */
-    public static boolean deleteDir(final File path) {
+    public static void deleteDir(final File path) {
         if(path.exists()) {
             final File[] files = path.listFiles();
             for(final File file : files) {

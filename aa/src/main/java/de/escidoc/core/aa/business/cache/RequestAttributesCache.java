@@ -48,27 +48,28 @@ public class RequestAttributesCache {
     /**
      * Puts object in cache.
      *
-     * @param ctx the EvaluationContext.
+     * @param ctx      the EvaluationContext.
      * @param cacheKey the cacheKey for this object.
-     * @param result the object to cache.
+     * @param result   the object to cache.
      * @return Object cached Object.
      */
-    @Cacheable(cacheName = "attributesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
-    public Object putAttribute(@PartialCacheKey
-    final EvaluationCtx ctx, @PartialCacheKey
+    @Cacheable(cacheName = "attributesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
+            properties = {@Property(name = "includeMethod", value = "false")}))
+    public void putAttribute(@PartialCacheKey
+                             final EvaluationCtx ctx, @PartialCacheKey
     final String cacheKey, final Object result) {
         return result;
     }
 
     /**
-     * Get object from cache.
-     * If object is not in cache, return null.
+     * Get object from cache. If object is not in cache, return null.
      *
-     * @param ctx the EvaluationContext.
+     * @param ctx      the EvaluationContext.
      * @param cacheKey the cacheKey for this object.
      * @return Object cached Object.
      */
-    @Cacheable(cacheName = "attributesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "attributesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
+            properties = {@Property(name = "includeMethod", value = "false")}))
     public Object getAttribute(final EvaluationCtx ctx, final String cacheKey) {
         return null;
     }
@@ -76,10 +77,11 @@ public class RequestAttributesCache {
     /**
      * Remove object from cache.
      *
-     * @param ctx the EvaluationContext.
+     * @param ctx      the EvaluationContext.
      * @param cacheKey the cacheKey for this object.
      */
-    @TriggersRemove(cacheName = "attributesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "attributesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
+            properties = {@Property(name = "includeMethod", value = "false")}))
     public void clearAttribute(final EvaluationCtx ctx, final String cacheKey) {
     }
 

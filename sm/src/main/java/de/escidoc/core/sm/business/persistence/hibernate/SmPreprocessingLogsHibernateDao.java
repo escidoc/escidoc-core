@@ -44,22 +44,22 @@ import java.util.Date;
 public class SmPreprocessingLogsHibernateDao extends AbstractHibernateDao implements SmPreprocessingLogsDaoInterface {
 
     public static final String QUERY_LOGS_BY_AGG_DEF_ID =
-        "from PreprocessingLog pl where pl.aggregationDefinition.id = ?";
+            "from PreprocessingLog pl where pl.aggregationDefinition.id = ?";
 
     public static final String QUERY_LOGS_BY_DATE = "from PreprocessingLog pl where pl.processingDate = ?";
 
     public static final String QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE =
-        "from PreprocessingLog pl where pl.aggregationDefinition.id = ? " + "and pl.processingDate = ?";
+            "from PreprocessingLog pl where pl.aggregationDefinition.id = ? " + "and pl.processingDate = ?";
 
     public static final String QUERY_LOGS_BY_AGG_DEF_ID_AND_ERROR =
-        "from PreprocessingLog pl where pl.aggregationDefinition.id = ? " + "and pl.hasError = ?";
+            "from PreprocessingLog pl where pl.aggregationDefinition.id = ? " + "and pl.hasError = ?";
 
     public static final String QUERY_LOGS_BY_DATE_AND_ERROR =
-        "from PreprocessingLog pl where pl.processingDate = ? " + "and pl.hasError = ?";
+            "from PreprocessingLog pl where pl.processingDate = ? " + "and pl.hasError = ?";
 
     public static final String QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE_AND_ERROR =
-        "from PreprocessingLog pl where pl.aggregationDefinition.id = ? "
-            + "and pl.processingDate = ? and pl.hasError = ?";
+            "from PreprocessingLog pl where pl.aggregationDefinition.id = ? " +
+                    "and pl.processingDate = ? and pl.hasError = ?";
 
     /**
      * See Interface for functional description.
@@ -70,7 +70,7 @@ public class SmPreprocessingLogsHibernateDao extends AbstractHibernateDao implem
      * @see SmPreprocessingLogsDaoInterface #savePreprocessingLog(PreprocessingLog)
      */
     @Override
-    public String savePreprocessingLog(final PreprocessingLog preprocessingLog) throws SqlDatabaseSystemException {
+    public void savePreprocessingLog(final PreprocessingLog preprocessingLog) throws SqlDatabaseSystemException {
         final String savedPreprocessingLog = (String) save(preprocessingLog);
         flush();
         return savedPreprocessingLog;
@@ -87,8 +87,8 @@ public class SmPreprocessingLogsHibernateDao extends AbstractHibernateDao implem
      */
     @Override
     public Collection<PreprocessingLog> retrievePreprocessingLogs(final String aggregationDefinitionId)
-        throws SqlDatabaseSystemException {
-        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID, new Object[] { aggregationDefinitionId });
+            throws SqlDatabaseSystemException {
+        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID, new Object[]{aggregationDefinitionId});
     }
 
     /**
@@ -101,8 +101,8 @@ public class SmPreprocessingLogsHibernateDao extends AbstractHibernateDao implem
      */
     @Override
     public Collection<PreprocessingLog> retrievePreprocessingLogs(final Date processingDate)
-        throws SqlDatabaseSystemException {
-        return getHibernateTemplate().find(QUERY_LOGS_BY_DATE, new Object[] { processingDate });
+            throws SqlDatabaseSystemException {
+        return getHibernateTemplate().find(QUERY_LOGS_BY_DATE, new Object[]{processingDate});
 
     }
 
@@ -116,8 +116,9 @@ public class SmPreprocessingLogsHibernateDao extends AbstractHibernateDao implem
      * @see SmPreprocessingLogsDaoInterface #retrievePreprocessingLogs(java.lang.String, java.lang.Date)
      */
     @Override
-    public Collection<PreprocessingLog> retrievePreprocessingLogs(
-        final String aggregationDefinitionId, final Date processingDate) throws SqlDatabaseSystemException {
+    public Collection<PreprocessingLog> retrievePreprocessingLogs(final String aggregationDefinitionId,
+                                                                  final Date processingDate)
+            throws SqlDatabaseSystemException {
         return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE, aggregationDefinitionId, processingDate);
     }
 
@@ -131,8 +132,9 @@ public class SmPreprocessingLogsHibernateDao extends AbstractHibernateDao implem
      * @see SmPreprocessingLogsDaoInterface #retrievePreprocessingLogs(java.lang.String, boolean)
      */
     @Override
-    public Collection<PreprocessingLog> retrievePreprocessingLogs(
-        final String aggregationDefinitionId, final boolean hasError) throws SqlDatabaseSystemException {
+    public Collection<PreprocessingLog> retrievePreprocessingLogs(final String aggregationDefinitionId,
+                                                                  final boolean hasError)
+            throws SqlDatabaseSystemException {
         return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_ERROR, aggregationDefinitionId, hasError);
     }
 
@@ -147,7 +149,7 @@ public class SmPreprocessingLogsHibernateDao extends AbstractHibernateDao implem
      */
     @Override
     public Collection<PreprocessingLog> retrievePreprocessingLogs(final Date processingDate, final boolean hasError)
-        throws SqlDatabaseSystemException {
+            throws SqlDatabaseSystemException {
         return getHibernateTemplate().find(QUERY_LOGS_BY_DATE_AND_ERROR, processingDate, hasError);
     }
 
@@ -162,11 +164,11 @@ public class SmPreprocessingLogsHibernateDao extends AbstractHibernateDao implem
      * @see SmPreprocessingLogsDaoInterface #retrievePreprocessingLogs(java.lang.String,java.lang.Date, boolean)
      */
     @Override
-    public Collection<PreprocessingLog> retrievePreprocessingLogs(
-        final String aggregationDefinitionId, final Date processingDate, final boolean hasError)
-        throws SqlDatabaseSystemException {
-        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE_AND_ERROR, aggregationDefinitionId,
-            processingDate, hasError);
+    public Collection<PreprocessingLog> retrievePreprocessingLogs(final String aggregationDefinitionId,
+                                                                  final Date processingDate, final boolean hasError)
+            throws SqlDatabaseSystemException {
+        return getHibernateTemplate()
+                .find(QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE_AND_ERROR, aggregationDefinitionId, processingDate, hasError);
     }
 
     /**

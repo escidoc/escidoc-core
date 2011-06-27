@@ -292,7 +292,7 @@ public class SecurityInterceptor implements Ordered {
      * @see InvocationParser
      * @see MethodMapping
      */
-    private MethodMappingList doAuthorisation(final String className, final String methodName, final Object[] arguments)
+    private void doAuthorisation(final String className, final String methodName, final Object[] arguments)
             throws AuthorizationException, WebserverSystemException, ResourceNotFoundException,
             MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
             InvalidXmlException {

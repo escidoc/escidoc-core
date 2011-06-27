@@ -91,9 +91,9 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      */
     @Validate(param = 0, resolver = "getOrganizationalUnitSchemaLocation", root = "organizational-unit")
     String create(String xml) throws AuthenticationException, AuthorizationException, InvalidStatusException,
-        MissingAttributeValueException, MissingElementValueException, MissingMethodParameterException,
-        MissingMdRecordException, OrganizationalUnitNotFoundException, SystemException, XmlCorruptedException,
-        XmlSchemaValidationException;
+            MissingAttributeValueException, MissingElementValueException, MissingMethodParameterException,
+            MissingMdRecordException, OrganizationalUnitNotFoundException, SystemException, XmlCorruptedException,
+            XmlSchemaValidationException;
 
     /**
      * Delete an Organizational Unit. <br /> <br /> <b>Prerequisites:</b> <br /> <br /> The Organizational Unit must
@@ -114,8 +114,8 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
     void delete(String id) throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        OrganizationalUnitNotFoundException, InvalidStatusException, OrganizationalUnitHasChildrenException,
-        SystemException;
+            OrganizationalUnitNotFoundException, InvalidStatusException, OrganizationalUnitHasChildrenException,
+            SystemException;
 
     /**
      * Retrieve the XML representation of an Organizational Unit.<br /> <br /> <b>Prerequisites:</b><br /> <br /> The
@@ -134,7 +134,7 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
     String retrieve(String id) throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        OrganizationalUnitNotFoundException, SystemException;
+            OrganizationalUnitNotFoundException, SystemException;
 
     /**
      * Update an Organizational Unit.<br /> Every Organizational Unit needs to have at least one (mandatory) metadata
@@ -177,10 +177,10 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws AuthorizationException       Thrown if the authorization failed.
      */
     @Validate(param = 1, resolver = "getOrganizationalUnitSchemaLocation", root = "organizational-unit")
-    String update(String id, String xml) throws AuthenticationException, AuthorizationException,
-        InvalidStatusException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
-        OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
-        MissingElementValueException, SystemException;
+    String update(String id, String xml)
+            throws AuthenticationException, AuthorizationException, InvalidStatusException, InvalidXmlException,
+            MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitHierarchyViolationException,
+            OrganizationalUnitNotFoundException, MissingElementValueException, SystemException;
 
     /**
      * Update the md-records of an Organizational Unit.
@@ -202,9 +202,10 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws AuthorizationException       Thrown if the authorization failed.
      */
     @Validate(param = 1, resolver = "getOrganizationalUnitSchemaLocation", root = "md-records")
-    String updateMdRecords(String id, String xml) throws AuthenticationException, AuthorizationException,
-        InvalidXmlException, InvalidStatusException, MissingMethodParameterException, OptimisticLockingException,
-        OrganizationalUnitNotFoundException, MissingElementValueException, SystemException;
+    String updateMdRecords(String id, String xml)
+            throws AuthenticationException, AuthorizationException, InvalidXmlException, InvalidStatusException,
+            MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitNotFoundException,
+            MissingElementValueException, SystemException;
 
     /**
      * Update the parents of an Organizational Unit.<br />
@@ -237,10 +238,10 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws AuthorizationException       Thrown if the authorization failed.
      */
     @Validate(param = 1, resolver = "getOrganizationalUnitSchemaLocation", root = "parents")
-    String updateParents(String id, String xml) throws AuthenticationException, AuthorizationException,
-        InvalidStatusException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
-        OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
-        MissingElementValueException, SystemException;
+    String updateParents(String id, String xml)
+            throws AuthenticationException, AuthorizationException, InvalidStatusException, InvalidXmlException,
+            MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitHierarchyViolationException,
+            OrganizationalUnitNotFoundException, MissingElementValueException, SystemException;
 
     /**
      * Retrieve the sub resource "properties" of an Organizational Unit.<br />
@@ -263,8 +264,9 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
-    String retrieveProperties(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+    String retrieveProperties(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException;
 
     /**
      * Retrieve the content of the specified virtual resource of an Organizational Unit.
@@ -283,8 +285,8 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws AuthorizationException     Thrown if the authorization failed.
      */
     EscidocBinaryContent retrieveResource(final String id, final String resourceName)
-        throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OperationNotFoundException, SystemException;
+            throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, OperationNotFoundException, SystemException;
 
     /**
      * Retrieve the list of virtual resources of an Organizational Unit.<br /> <br /> This methods returns a list of
@@ -304,8 +306,9 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
-    String retrieveResources(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+    String retrieveResources(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException;
 
     /**
      * <br /> Retrieve the "md-records" sub resource of an Organizational Unit.<br />
@@ -322,8 +325,9 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
-    String retrieveMdRecords(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+    String retrieveMdRecords(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException;
 
     /**
      * Retrieve a single md-record sub resource of an Organizational Unit.<br />
@@ -342,9 +346,9 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                   handle.
      * @throws AuthorizationException    Thrown if the authorization failed.
      */
-    String retrieveMdRecord(final String id, final String name) throws AuthenticationException, AuthorizationException,
-        MdRecordNotFoundException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
-        SystemException;
+    String retrieveMdRecord(final String id, final String name)
+            throws AuthenticationException, AuthorizationException, MdRecordNotFoundException,
+            MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
     /**
      * Retrieve a list with references to all Organizational Units to that this Organizational Unit is subordinated.<br
@@ -364,8 +368,9 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
-    String retrieveParents(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+    String retrieveParents(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException;
 
     /**
      * Retrieve all Organizational Unit objects to that this Organizational Unit is subordinated.<br /> <br />
@@ -386,8 +391,9 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
-    String retrieveParentObjects(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+    String retrieveParentObjects(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException;
 
     /**
      * Retrieve a list with references to all successors of this Organizational Unit (see schema for data structure).
@@ -407,8 +413,9 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
-    String retrieveSuccessors(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+    String retrieveSuccessors(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException;
 
     /**
      * Retrieve the Organizational Units that are subordinated to this Organizational Unit.<br /> <br />
@@ -429,8 +436,9 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
-    String retrieveChildObjects(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+    String retrieveChildObjects(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException;
 
     /**
      * Retrieve the path list of an Organizational Unit. This is a list of all paths from a given Organizational Unit to
@@ -506,8 +514,9 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
-    String retrievePathList(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+    String retrievePathList(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException;
 
     /**
      * Change the state of an Organizational Unit to "opened". <br /> <br /> <b>Prerequisites:</b><br /> <br /> The
@@ -537,9 +546,10 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                    handle.
      * @throws AuthorizationException     Thrown if the authorization failed.
      */
-    String open(String id, String taskParam) throws AuthenticationException, AuthorizationException,
-        InvalidStatusException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
-        OrganizationalUnitNotFoundException, SystemException;
+    void open(String id, String taskParam)
+            throws AuthenticationException, AuthorizationException, InvalidStatusException, InvalidXmlException,
+            MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitNotFoundException,
+            SystemException;
 
     /**
      * Change the state of an Organizational Unit to "closed".<br /> <br /> <b>Prerequisites:</b><br /> <br /> The
@@ -569,9 +579,10 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                    handle.
      * @throws AuthorizationException     Thrown if the authorization failed.
      */
-    String close(String id, String taskParam) throws AuthenticationException, AuthorizationException,
-        InvalidStatusException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
-        OrganizationalUnitNotFoundException, SystemException;
+    String close(String id, String taskParam)
+            throws AuthenticationException, AuthorizationException, InvalidStatusException, InvalidXmlException,
+            MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitNotFoundException,
+            SystemException;
 
     /**
      * Retrieve a list of complete Organizational Units applying filters. <br /> <br /> <b>Tasks:</b> <ul> <li>Check
@@ -592,6 +603,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                     Thrown if the XML data is not provided.
      * @throws SystemException             Thrown in case of an internal error.
      */
-    String retrieveOrganizationalUnits(final Map<String, String[]> filter) throws InvalidSearchQueryException,
-        InvalidXmlException, MissingMethodParameterException, SystemException;
+    String retrieveOrganizationalUnits(final Map<String, String[]> filter)
+            throws InvalidSearchQueryException, InvalidXmlException, MissingMethodParameterException, SystemException;
 }
