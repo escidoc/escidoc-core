@@ -49,11 +49,8 @@ public final class ModifiyDatastreamPathParam {
         if(dsID != null ? ! dsID.equals(that.dsID) : that.dsID != null) {
             return false;
         }
-        if(pid != null ? ! pid.equals(that.pid) : that.pid != null) {
-            return false;
-        }
+        return ! (pid != null ? ! pid.equals(that.pid) : that.pid != null);
 
-        return true;
     }
 
     @Override

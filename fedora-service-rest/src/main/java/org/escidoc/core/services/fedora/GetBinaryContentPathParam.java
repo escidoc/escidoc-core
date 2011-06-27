@@ -30,7 +30,7 @@ import javax.validation.constraints.NotNull;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class GetBinaryContentPathParam {
 
     @NotNull
@@ -44,8 +44,7 @@ public final class GetBinaryContentPathParam {
     private final String versionDate;
 
     public GetBinaryContentPathParam(@AssertFieldConstraints final String pid,
-                                     @AssertFieldConstraints final String dsID,
-                                     final String versionDate) {
+                                     @AssertFieldConstraints final String dsID, final String versionDate) {
         this.pid = pid;
         this.dsID = dsID;
         if(versionDate != null) {
@@ -84,11 +83,8 @@ public final class GetBinaryContentPathParam {
         if(pid != null ? ! pid.equals(that.pid) : that.pid != null) {
             return false;
         }
-        if(versionDate != null ? ! versionDate.equals(that.versionDate) : that.versionDate != null) {
-            return false;
-        }
+        return ! (versionDate != null ? ! versionDate.equals(that.versionDate) : that.versionDate != null);
 
-        return true;
     }
 
     @Override

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class GetObjectProfilePathParam {
 
     @NotNull
@@ -36,11 +36,8 @@ public final class GetObjectProfilePathParam {
 
         final GetObjectProfilePathParam that = (GetObjectProfilePathParam) o;
 
-        if(pid != null ? ! pid.equals(that.pid) : that.pid != null) {
-            return false;
-        }
+        return ! (pid != null ? ! pid.equals(that.pid) : that.pid != null);
 
-        return true;
     }
 
     @Override

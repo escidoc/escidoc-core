@@ -36,11 +36,8 @@ public final class UpdateObjectPathParam {
 
         final UpdateObjectPathParam that = (UpdateObjectPathParam) o;
 
-        if(pid != null ? ! pid.equals(that.pid) : that.pid != null) {
-            return false;
-        }
+        return ! (pid != null ? ! pid.equals(that.pid) : that.pid != null);
 
-        return true;
     }
 
     @Override

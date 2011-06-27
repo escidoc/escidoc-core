@@ -59,10 +59,7 @@ public final class DatastreamCacheKey implements Serializable {
         if(! pid.equals(that.pid)) {
             return false;
         }
-        if(timestamp != null ? ! timestamp.equals(that.timestamp) : that.timestamp != null) {
-            return false;
-        }
-        return true;
+        return ! (timestamp != null ? ! timestamp.equals(that.timestamp) : that.timestamp != null);
     }
 
     @Override

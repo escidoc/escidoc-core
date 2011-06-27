@@ -19,7 +19,7 @@
  */
 
 /**
- * 
+ *
  */
 package org.escidoc.core.services.fedora;
 
@@ -31,10 +31,9 @@ import net.sf.oval.guard.Guarded;
 
 /**
  * @author Marko Voß
- * 
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-    assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class GetDatastreamHistoryPathParam {
 
     @NotNull
@@ -71,23 +70,20 @@ public final class GetDatastreamHistoryPathParam {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) {
+        if(this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if(o == null || getClass() != o.getClass()) {
             return false;
         }
 
         final GetDatastreamHistoryPathParam that = (GetDatastreamHistoryPathParam) o;
 
-        if (dsID != null ? !dsID.equals(that.dsID) : that.dsID != null) {
+        if(dsID != null ? ! dsID.equals(that.dsID) : that.dsID != null) {
             return false;
         }
-        if (pid != null ? !pid.equals(that.pid) : that.pid != null) {
-            return false;
-        }
+        return ! (pid != null ? ! pid.equals(that.pid) : that.pid != null);
 
-        return true;
     }
 
     @Override

@@ -724,10 +724,7 @@ public class Datastream {
         if(! parentId.equals(that.parentId)) {
             return false;
         }
-        if(! XmlUtility.isIdentical(that.getStream(), this.getStream())) {
-            return false;
-        }
-        return true;
+        return XmlUtility.isIdentical(that.getStream(), this.getStream());
     }
 
     @Override

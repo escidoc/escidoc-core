@@ -83,11 +83,8 @@ public final class GetDisseminationPathParam {
         if(pid != null ? ! pid.equals(that.pid) : that.pid != null) {
             return false;
         }
-        if(sdefPid != null ? ! sdefPid.equals(that.sdefPid) : that.sdefPid != null) {
-            return false;
-        }
+        return ! (sdefPid != null ? ! sdefPid.equals(that.sdefPid) : that.sdefPid != null);
 
-        return true;
     }
 
     @Override
