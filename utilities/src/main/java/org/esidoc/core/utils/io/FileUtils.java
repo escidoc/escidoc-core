@@ -25,8 +25,8 @@ public final class FileUtils {
 
     public static File createTempFile(String prefix, String suffix, final File parentDir, final boolean deleteOnExit)
             throws IOException {
-        File result;
-        File parent = (parentDir == null) ? getDefaultTempDirectory() : parentDir;
+        final File result;
+        final File parent = (parentDir == null) ? getDefaultTempDirectory() : parentDir;
         if(suffix == null) {
             suffix = ".tmp";
         }
@@ -57,7 +57,7 @@ public final class FileUtils {
         }
         if(tempDirectoryProperty != null) {
             // assume someone outside of us will manage the directory
-            File tempDirectory = new File(tempDirectoryProperty);
+            final File tempDirectory = new File(tempDirectoryProperty);
             if(tempDirectory.mkdirs()) {
                 defaultTempDirectory = tempDirectory;
             }
@@ -65,7 +65,7 @@ public final class FileUtils {
         if(defaultTempDirectory == null) {
             int x = RANDOM.nextInt();
             tempDirectoryProperty = System.getProperty("java.io.tmpdir");
-            File tmpDirectory = new File(tempDirectoryProperty);
+            final File tmpDirectory = new File(tempDirectoryProperty);
             if(! tmpDirectory.exists()) {
                 throw new RuntimeException("The directory " + tmpDirectory.getAbsolutePath() +
                         " does not exist, please set java.io.tempdir" + " to an existing directory");
@@ -77,7 +77,7 @@ public final class FileUtils {
             }
             defaultTempDirectory = tempFile;
             final File f2 = tempFile;
-            Thread hook = new Thread() {
+            final Thread hook = new Thread() {
                 @Override
                 public void run() {
                     removeDirectory(f2, true);
@@ -97,7 +97,7 @@ public final class FileUtils {
         if(list == null) {
             list = new String[0];
         }
-        for(String s : list) {
+        for(final String s : list) {
             final File file = new File(directory, s);
             if(file.isDirectory()) {
                 removeDirectory(file, inShutdown);
@@ -129,7 +129,7 @@ public final class FileUtils {
     }
 
     private static boolean isWindows() {
-        String osName = System.getProperty("os.name").toLowerCase(Locale.US);
+        final String osName = System.getProperty("os.name").toLowerCase(Locale.US);
         return osName.contains("windows");
     }
 

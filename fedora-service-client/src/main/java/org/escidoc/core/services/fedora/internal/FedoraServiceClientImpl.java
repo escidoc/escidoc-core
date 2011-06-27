@@ -465,8 +465,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    public Future<Stream> getBinaryContentAsync(final String pid, final String dsId,
-                                                final DateTime versionDate) {
+    public Future<Stream> getBinaryContentAsync(final String pid, final String dsId, final DateTime versionDate) {
         return new AsyncResult<Stream>(getBinaryContent(pid, dsId, versionDate));
     }
 
@@ -480,8 +479,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    public Future<Stream> getDisseminationAsync(final String pid,
-                                                final String contentModelPid,
+    public Future<Stream> getDisseminationAsync(final String pid, final String contentModelPid,
                                                 final String methodName) {
         return new AsyncResult<Stream>(getDissemination(pid, contentModelPid, methodName));
     }
@@ -492,8 +490,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    public Future<Stream> risearchAsync(final RisearchPathParam path,
-                                        final RisearchQueryParam query) {
+    public Future<Stream> risearchAsync(final RisearchPathParam path, final RisearchQueryParam query) {
         return new AsyncResult<Stream>(risearch(path, query));
     }
 
@@ -521,7 +518,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
                 result.add(profile);
             } else {
                 if(! profile.getDsAltID().isEmpty()) {
-                    for (String dsAltID : profile.getDsAltID()) {
+                    for(final String dsAltID : profile.getDsAltID()) {
                         if(altId.equals(dsAltID)) {
                             result.add(profile);
                         }

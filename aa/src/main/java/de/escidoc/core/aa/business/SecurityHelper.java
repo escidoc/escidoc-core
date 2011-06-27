@@ -654,7 +654,7 @@ public class SecurityHelper {
         try {
             for(final Object o : roleGrants.keySet()) {
                 final String roleId = (String) o;
-                EscidocRole role = getRole(roleId);
+                final EscidocRole role = getRole(roleId);
                 // The policyId is concatenated String
                 // containing <roleName>/<user or group>/<userOrGroupId>
                 final URI policySetId =

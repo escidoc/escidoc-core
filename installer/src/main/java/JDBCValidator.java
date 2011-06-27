@@ -26,6 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
+
 import com.izforge.izpack.installer.AutomatedInstallData;
 import com.izforge.izpack.installer.DataValidator.Status;
 
@@ -40,50 +41,47 @@ import java.sql.SQLException;
  */
 public class JDBCValidator extends AbstractValidator {
 
-	/*
-	 * Check if the escidoc-core database exists.
-     * Skip the check if it is an upgrade procedure or if the system variable "skip.validation" is set to true.
-     *
-     * @return OK if the database not exists, ERROR otherwise
-	 * @see
-	 * com.izforge.izpack.installer.DataValidator#validateData
-	 * (com.izforge.izpack.installer.AutomatedInstallData)
-	 */
-	@Override
-	public Status validateData(AutomatedInstallData data) {
-		Status status = Status.ERROR;
-		boolean skipValidation = Boolean.valueOf(data
-				.getVariable("SYSTEM_skip_validation"));
-		boolean upgradeEscidoc = Boolean.valueOf(data
-				.getVariable("UpgradeEscidoc"));
+    /*
+      * Check if the escidoc-core database exists.
+      * Skip the check if it is an upgrade procedure or if the system variable "skip.validation" is set to true.
+      *
+      * @return OK if the database not exists, ERROR otherwise
+      * @see
+      * com.izforge.izpack.installer.DataValidator#validateData
+      * (com.izforge.izpack.installer.AutomatedInstallData)
+      */
+    @Override
+    public Status validateData(final AutomatedInstallData data) {
+        Status status = Status.ERROR;
+        final boolean skipValidation = Boolean.valueOf(data.getVariable("SYSTEM_skip_validation"));
+        final boolean upgradeEscidoc = Boolean.valueOf(data.getVariable("UpgradeEscidoc"));
 
-		if (skipValidation || upgradeEscidoc) {
-			status = Status.OK;
-		} else {
-			String userName = data.getVariable("DatabaseUsername");
-			String password = data.getVariable("DatabasePassword");
-			String dbName = data.getVariable("DatasourceEscidoc");
-			String url = data.getVariable("DatabaseURL") + dbName;
+        if(skipValidation || upgradeEscidoc) {
+            status = Status.OK;
+        } else {
+            final String userName = data.getVariable("DatabaseUsername");
+            final String password = data.getVariable("DatabasePassword");
+            final String dbName = data.getVariable("DatasourceEscidoc");
+            final String url = data.getVariable("DatabaseURL") + dbName;
 
-			buildErrorMessage(dbName);
-			try {
-				Connection conn = DriverManager.getConnection(url, userName,
-						password);
+            buildErrorMessage(dbName);
+            try {
+                final Connection conn = DriverManager.getConnection(url, userName, password);
 
-				conn.close();
-			} catch (SQLException e) {
-				// FIXME: Is there a better check for the existance of a database?
-				System.err.println(e.getMessage());
-				status = Status.OK;
-			}
-		}
-		return status;
-	}
+                conn.close();
+            } catch(SQLException e) {
+                // FIXME: Is there a better check for the existance of a database?
+                System.err.println(e.getMessage());
+                status = Status.OK;
+            }
+        }
+        return status;
+    }
 
-	private void buildErrorMessage(String message) {
-		clearErrorMessage();
-		errorMessage.append("The Database \"");
-		errorMessage.append(message);
-		errorMessage.append("\" already exists.");
-	}
+    private void buildErrorMessage(final String message) {
+        clearErrorMessage();
+        errorMessage.append("The Database \"");
+        errorMessage.append(message);
+        errorMessage.append("\" already exists.");
+    }
 }

@@ -18,7 +18,7 @@ public enum ControlGroup {
 
     private final String value;
 
-    ControlGroup(String v) {
+    ControlGroup(final String v) {
         value = v;
     }
 
@@ -26,9 +26,9 @@ public enum ControlGroup {
         return value;
     }
 
-    public static ControlGroup fromValue(String v) {
-        for (ControlGroup c : ControlGroup.values()) {
-            if (c.value.equals(v)) {
+    public static ControlGroup fromValue(final String v) {
+        for(final ControlGroup c : ControlGroup.values()) {
+            if(c.value.equals(v)) {
                 return c;
             }
         }

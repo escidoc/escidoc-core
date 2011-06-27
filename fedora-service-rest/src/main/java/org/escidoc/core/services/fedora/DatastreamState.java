@@ -18,7 +18,7 @@ public enum DatastreamState {
 
     private final String value;
 
-    DatastreamState(String v) {
+    DatastreamState(final String v) {
         value = v;
     }
 
@@ -26,9 +26,9 @@ public enum DatastreamState {
         return value;
     }
 
-    public static DatastreamState fromValue(String v) {
-        for (DatastreamState c : DatastreamState.values()) {
-            if (c.value.equals(v)) {
+    public static DatastreamState fromValue(final String v) {
+        for(final DatastreamState c : DatastreamState.values()) {
+            if(c.value.equals(v)) {
                 return c;
             }
         }

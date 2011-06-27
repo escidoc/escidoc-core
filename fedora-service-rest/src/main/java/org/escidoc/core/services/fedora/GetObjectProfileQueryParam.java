@@ -13,7 +13,7 @@ public final class GetObjectProfileQueryParam {
         return format;
     }
 
-    public void setFormat(String format) {
+    public void setFormat(final String format) {
         this.format = format;
     }
 }

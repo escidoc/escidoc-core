@@ -104,7 +104,7 @@ public class TripleStoreConnector {
         query.setFlush(FLUSH);
         try {
             final Stream stream = this.fedoraServiceClient.risearch(path, query);
-            String responseContent = new String(stream.getBytes(), Encodings.UTF8);
+            final String responseContent = new String(stream.getBytes(), Encodings.UTF8);
             if(responseContent == null || responseContent.length() == 0) {
                 return null;
             }

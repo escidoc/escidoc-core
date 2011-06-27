@@ -251,7 +251,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     public BeanMethod getMethod(final String uri, final String query, final Map<String, String[]> parameters,
                                 final String httpMethod, final Object body)
             throws MethodNotFoundException, EncodingSystemException {
-        String decodedUri;
+        final String decodedUri;
         try {
             decodedUri = URLDecoder.decode(uri, XmlUtility.CHARACTER_ENCODING);
         } catch(final UnsupportedEncodingException e) {

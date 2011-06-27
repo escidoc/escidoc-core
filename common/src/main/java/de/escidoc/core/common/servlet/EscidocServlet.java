@@ -89,7 +89,7 @@ public class EscidocServlet extends HttpServlet {
     private static final String HEADER_ESCIDOC_EXCEPTION = "eSciDocException";
 
     private static final String UNEXPECTED_INTERNAL_RESPONSE =
-        "The request could not be executed " + "due to an unexpected response for the http method.";
+            "The request could not be executed " + "due to an unexpected response for the http method.";
 
     public static final String HTTP_DELETE = "DELETE";
 
@@ -198,17 +198,17 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException      If anything fails.
      */
     @Override
-    public void service(final ServletRequest request, final ServletResponse response) throws ServletException,
-        IOException {
+    public void service(final ServletRequest request, final ServletResponse response)
+            throws ServletException, IOException {
 
         try {
             final String protocol = request.getProtocol();
-            if (protocol.startsWith("HTTP") && request instanceof HttpServletRequest
-                && response instanceof HttpServletResponse) {
+            if(protocol.startsWith("HTTP") && request instanceof HttpServletRequest &&
+                    response instanceof HttpServletResponse) {
                 final HttpServletRequest httpRequest = (HttpServletRequest) request;
                 final HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-                if (getQueryParamValue(httpRequest, HTTP_PARAM_DESCRIPTOR) != null) {
+                if(getQueryParamValue(httpRequest, HTTP_PARAM_DESCRIPTOR) != null) {
                     handleDescriptorRequest(httpResponse);
                     return;
                 }
@@ -216,7 +216,7 @@ public class EscidocServlet extends HttpServlet {
                 final String httpMethod = httpRequest.getMethod();
                 // unsupported request methods,
                 // must be handled before determine bean method
-                if (HTTP_HEAD.equals(httpMethod)) {
+                if(HTTP_HEAD.equals(httpMethod)) {
                     // FIXME check if valid HEAD response can be send
                     doSendStringResponse(httpResponse, null, HttpServletResponse.SC_METHOD_NOT_ALLOWED);
                     return;
@@ -229,16 +229,17 @@ public class EscidocServlet extends HttpServlet {
                 // URL
                 // without the URL parameters is sent.
                 final String queryString = addCookie(httpRequest, httpResponse);
-                if (queryString != null) {
+                if(queryString != null) {
                     final StringBuffer location = httpRequest.getRequestURL();
-                    if (queryString.length() > 0) {
+                    if(queryString.length() > 0) {
                         location.append('?');
                         location.append(queryString);
                     }
                     final String locationString = location.toString();
-                    doRedirect(httpResponse, null, "<html><body><a href=\"" + locationString
-                        + "\">Resource available under this location: " + locationString + "</a></body></html>",
-                        locationString, HttpServletResponse.SC_MOVED_PERMANENTLY);
+                    doRedirect(httpResponse, null,
+                            "<html><body><a href=\"" + locationString + "\">Resource available under this location: " +
+                                    locationString + "</a></body></html>", locationString,
+                            HttpServletResponse.SC_MOVED_PERMANENTLY);
                     return;
                 }
 
@@ -252,44 +253,38 @@ public class EscidocServlet extends HttpServlet {
                     method = methodMapper.getMethod(httpRequest);
 
                     final Object result = method.invoke(authValues[0], authValues[1]);
-                    if (result == null) {
+                    if(result == null) {
                         doSendVoidResponse(httpResponse, httpMethod);
-                    }
-                    else if (result instanceof EscidocBinaryContent) {
+                    } else if(result instanceof EscidocBinaryContent) {
                         doSendBinaryContentResponse(httpResponse, httpMethod, (EscidocBinaryContent) result);
-                    }
-                    else if (result instanceof String) {
+                    } else if(result instanceof String) {
                         // test whether compressed data is acceptable:
                         boolean compressionIsAccepted = false;
-                        if (httpRequest.getHeader(HTTP_HEADER_ACCEPT_ENCODING) != null
-                            && httpRequest.getHeader(HTTP_HEADER_ACCEPT_ENCODING).contains(
-                                HTTP_HEADER_VALUE_ACCEPT_ENCODING_GZIP)) {
+                        if(httpRequest.getHeader(HTTP_HEADER_ACCEPT_ENCODING) != null &&
+                                httpRequest.getHeader(HTTP_HEADER_ACCEPT_ENCODING)
+                                        .contains(HTTP_HEADER_VALUE_ACCEPT_ENCODING_GZIP)) {
                             compressionIsAccepted = true;
                         }
 
                         doSendStringResponse(httpResponse, httpMethod, (String) result, compressionIsAccepted);
-                    }
-                    else if (result instanceof EscidocServiceRedirectInterface) {
+                    } else if(result instanceof EscidocServiceRedirectInterface) {
                         doRedirectResponse(httpResponse, httpMethod, (EscidocServiceRedirectInterface) result);
-                    }
-                    else {
-                        doDeclineHttpRequest(httpResponse, new WebserverSystemException(StringUtility.format(
-                            UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
+                    } else {
+                        doDeclineHttpRequest(httpResponse, new WebserverSystemException(
+                                StringUtility.format(UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
                     }
 
-                    if (!httpResponse.isCommitted()) {
-                        if (LOGGER.isDebugEnabled()) {
+                    if(! httpResponse.isCommitted()) {
+                        if(LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Request not commited.");
                         }
                     }
-                }
-                catch (final Exception e) {
+                } catch(final Exception e) {
                     handleException(httpRequest, httpResponse, method, e);
                 }
 
             }
-        }
-        finally {
+        } finally {
             // clear the user Context as it must not be reused in another
             // request.
             SecurityContextHolder.clearContext();
@@ -308,8 +303,7 @@ public class EscidocServlet extends HttpServlet {
             final XMLBase base = new XMLBase();
             final String descriptor = base.getFileContents(getInitParameter(PARAM_DESCRIPTOR));
             doSendStringResponse(httpResponse, descriptor, HttpServletResponse.SC_OK);
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             doDeclineHttpRequest(httpResponse, new WebserverSystemException("Descriptor not found.", e));
         }
     }
@@ -325,61 +319,53 @@ public class EscidocServlet extends HttpServlet {
      * @return Returns <code>true</code> if the exception has been handled.
      * @throws IOException In case of any failure.
      */
-    private static boolean handleException(
-        final HttpServletRequest httpRequest, final HttpServletResponse httpResponse, final BeanMethod method,
-        final Throwable e) throws IOException, UnsupportedEncodingException {
+    private static boolean handleException(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse,
+                                           final BeanMethod method, final Throwable e)
+            throws IOException, UnsupportedEncodingException {
 
         boolean ret = false;
 
-        if (e == null) {
+        if(e == null) {
             return false;
-        }
-        else if (e instanceof InvocationTargetException) {
-            ret =
-                handleException(httpRequest, httpResponse, method, ((InvocationTargetException) e).getTargetException());
-        }
-        else if (e instanceof AspectException) {
+        } else if(e instanceof InvocationTargetException) {
+            ret = handleException(httpRequest, httpResponse, method,
+                    ((InvocationTargetException) e).getTargetException());
+        } else if(e instanceof AspectException) {
             ret = handleException(httpRequest, httpResponse, method, e.getCause());
-        }
-        else if (e instanceof AuthenticationException) {
+        } else if(e instanceof AuthenticationException) {
             doRedirect(httpRequest, httpResponse, (SecurityException) e);
             ret = true;
-        }
-        else if (e instanceof AuthorizationException) {
+        } else if(e instanceof AuthorizationException) {
             final String[] authValues = getAuthValues(httpRequest, httpResponse);
-            if (authValues == null || authValues[1].length() == 0) {
+            if(authValues == null || authValues[1].length() == 0) {
                 doRedirect(httpRequest, httpResponse, (SecurityException) e);
-            }
-            else {
+            } else {
                 ((SecurityException) e).setRedirectLocation(null);
                 doDeclineHttpRequest(httpResponse, (EscidocException) e);
             }
             ret = true;
-        }
-        else if (e instanceof EscidocException) {
+        } else if(e instanceof EscidocException) {
             doDeclineHttpRequest(httpResponse, (EscidocException) e);
             ret = true;
-        }
-        else if (e instanceof UndeclaredThrowableException) {
+        } else if(e instanceof UndeclaredThrowableException) {
             final Throwable undeclaredThrowable = ((UndeclaredThrowableException) e).getUndeclaredThrowable();
-            if (undeclaredThrowable.getClass().getName().equals(AuthenticationException.class.getName())) {
+            if(undeclaredThrowable.getClass().getName().equals(AuthenticationException.class.getName())) {
                 doRedirect(httpRequest, httpResponse, (SecurityException) undeclaredThrowable);
-            }
-            else {
-                doDeclineHttpRequest(httpResponse, new WebserverSystemException(StringUtility.format(
-                    "Undeclared throwable during method execution", undeclaredThrowable.getClass().getName()),
-                    undeclaredThrowable));
+            } else {
+                doDeclineHttpRequest(httpResponse, new WebserverSystemException(StringUtility
+                        .format("Undeclared throwable during method execution",
+                                undeclaredThrowable.getClass().getName()), undeclaredThrowable));
             }
             ret = true;
         }
 
-        if (!ret) {
-            LOGGER.error(StringUtility.format("Caught exception cannot be handled, returning "
-                + WebserverSystemException.class.getName() + " to client.", e.getClass().getName(), e.getMessage()), e);
-            if (e.getMessage() != null) {
+        if(! ret) {
+            LOGGER.error(StringUtility.format("Caught exception cannot be handled, returning " +
+                    WebserverSystemException.class.getName() + " to client.", e.getClass().getName(), e.getMessage()),
+                    e);
+            if(e.getMessage() != null) {
                 doDeclineHttpRequest(httpResponse, new WebserverSystemException(e.getMessage(), e));
-            }
-            else {
+            } else {
                 doDeclineHttpRequest(httpResponse, new WebserverSystemException(e.getClass().getName(), e));
             }
             ret = true;
@@ -398,10 +384,11 @@ public class EscidocServlet extends HttpServlet {
      * @throws ParserConfigurationException If anything fails.
      * @throws SAXException                 If anything fails.
      */
-    private static MapperInterface getMethodMapper(final String filename) throws IOException, TransformerException,
-        ParserConfigurationException, SAXException, FileNotFoundException {
+    private static MapperInterface getMethodMapper(final String filename)
+            throws IOException, TransformerException, ParserConfigurationException, SAXException,
+            FileNotFoundException {
         MapperInterface result = MAPPINGS.get(filename);
-        if (result == null) {
+        if(result == null) {
             result = new MethodMapper(filename);
             MAPPINGS.put(filename, result);
         }
@@ -418,21 +405,19 @@ public class EscidocServlet extends HttpServlet {
      * @param compressionIsAccepted defines if returned sting object will be gzip compressed
      * @throws IOException If anything fails.
      */
-    private static void doSendStringResponse(
-        final HttpServletResponse httpResponse, final String httpMethod, final String result,
-        boolean compressionIsAccepted) throws IOException {
+    private static void doSendStringResponse(final HttpServletResponse httpResponse, final String httpMethod,
+                                             final String result, final boolean compressionIsAccepted)
+            throws IOException {
 
-        if (HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod) || HTTP_POST.equals(httpMethod)) {
-            if (compressionIsAccepted) {
+        if(HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod) || HTTP_POST.equals(httpMethod)) {
+            if(compressionIsAccepted) {
                 doSendCompressedStringResponse(httpResponse, result, HttpServletResponse.SC_OK);
-            }
-            else {
+            } else {
                 doSendStringResponse(httpResponse, result, HttpServletResponse.SC_OK);
             }
-        }
-        else {
-            doDeclineHttpRequest(httpResponse, new WebserverSystemException(StringUtility.format(
-                UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
+        } else {
+            doDeclineHttpRequest(httpResponse, new WebserverSystemException(
+                    StringUtility.format(UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
         }
     }
 
@@ -444,21 +429,19 @@ public class EscidocServlet extends HttpServlet {
      * @param result       The {@link String} object that shall be sent in the response.
      * @throws IOException If anything fails.
      */
-    private static void doRedirectResponse(
-        final HttpServletResponse httpResponse, final String httpMethod, final EscidocServiceRedirectInterface result)
-        throws IOException {
+    private static void doRedirectResponse(final HttpServletResponse httpResponse, final String httpMethod,
+                                           final EscidocServiceRedirectInterface result) throws IOException {
 
-        if (HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod) || HTTP_POST.equals(httpMethod)) {
+        if(HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod) || HTTP_POST.equals(httpMethod)) {
 
             initHttpResponse(httpResponse);
             httpResponse.setContentType(HTML_RESPONSE_CONTENT_TYPE);
             httpResponse.getWriter().println(result.getContent());
 
             httpResponse.setStatus(HttpServletResponse.SC_FOUND);
-        }
-        else {
-            doDeclineHttpRequest(httpResponse, new WebserverSystemException(StringUtility.format(
-                UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
+        } else {
+            doDeclineHttpRequest(httpResponse, new WebserverSystemException(
+                    StringUtility.format(UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
         }
     }
 
@@ -470,17 +453,15 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException If anything fails.
      */
     private static void doSendVoidResponse(final HttpServletResponse httpResponse, final String httpMethod)
-        throws IOException {
+            throws IOException {
 
-        if (HTTP_DELETE.equals(httpMethod)) {
+        if(HTTP_DELETE.equals(httpMethod)) {
             doSendStringResponse(httpResponse, null, HttpServletResponse.SC_NO_CONTENT);
-        }
-        else if (HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod) || HTTP_POST.equals(httpMethod)) {
+        } else if(HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod) || HTTP_POST.equals(httpMethod)) {
             doSendStringResponse(httpResponse, null, HttpServletResponse.SC_OK);
-        }
-        else {
-            doDeclineHttpRequest(httpResponse, new WebserverSystemException(StringUtility.format(
-                UNEXPECTED_INTERNAL_RESPONSE, httpMethod, "void")));
+        } else {
+            doDeclineHttpRequest(httpResponse, new WebserverSystemException(
+                    StringUtility.format(UNEXPECTED_INTERNAL_RESPONSE, httpMethod, "void")));
         }
     }
 
@@ -494,37 +475,35 @@ public class EscidocServlet extends HttpServlet {
      *                      response.
      * @throws IOException If anything fails.
      */
-    private static void doSendBinaryContentResponse(
-        final HttpServletResponse httpResponse, final String httpMethod, final EscidocBinaryContent binaryContent)
-        throws IOException {
+    private static void doSendBinaryContentResponse(final HttpServletResponse httpResponse, final String httpMethod,
+                                                    final EscidocBinaryContent binaryContent) throws IOException {
 
-        if (HTTP_GET.equals(httpMethod)) {
+        if(HTTP_GET.equals(httpMethod)) {
             final String externalContentRedirectUrl = binaryContent.getRedirectUrl();
-            if (externalContentRedirectUrl != null) {
+            if(externalContentRedirectUrl != null) {
                 // redirect
-                doRedirect(httpResponse, null, "<html><body><a href=\"" + externalContentRedirectUrl
-                    + "\">The requested binary content" + " is externally available under this location: "
-                    + externalContentRedirectUrl + "</a></body></html>", externalContentRedirectUrl,
-                    HttpServletResponse.SC_MOVED_TEMPORARILY);
-            }
-            else {
+                doRedirect(httpResponse, null,
+                        "<html><body><a href=\"" + externalContentRedirectUrl + "\">The requested binary content" +
+                                " is externally available under this location: " + externalContentRedirectUrl +
+                                "</a></body></html>", externalContentRedirectUrl,
+                        HttpServletResponse.SC_MOVED_TEMPORARILY);
+            } else {
                 // response with content
                 httpResponse.setHeader(HTTP_HEADER_CACHE_CONTROL, HTTP_HEADER_VALUE_NO_CACHE);
                 httpResponse.setHeader(HTTP_HEADER_PRAGMA, HTTP_HEADER_VALUE_NO_CACHE);
 
                 httpResponse.setContentType(binaryContent.getMimeType());
-                if (binaryContent.getFileName() != null) {
-                    httpResponse.setHeader("Content-Disposition", "inline;filename=\"" + binaryContent.getFileName()
-                        + '\"');
+                if(binaryContent.getFileName() != null) {
+                    httpResponse.setHeader("Content-Disposition",
+                            "inline;filename=\"" + binaryContent.getFileName() + '\"');
                 }
                 final ServletOutputStream out = httpResponse.getOutputStream();
                 final InputStream content = binaryContent.getContent();
                 IOUtils.copyAndCloseInput(content, out);
             }
-        }
-        else {
-            doDeclineHttpRequest(httpResponse, new WebserverSystemException(StringUtility.format(
-                UNEXPECTED_INTERNAL_RESPONSE, httpMethod, "void")));
+        } else {
+            doDeclineHttpRequest(httpResponse, new WebserverSystemException(
+                    StringUtility.format(UNEXPECTED_INTERNAL_RESPONSE, httpMethod, "void")));
         }
     }
 
@@ -537,11 +516,11 @@ public class EscidocServlet extends HttpServlet {
      * @param status       The http response status.
      * @throws IOException If anything fails.
      */
-    private static void doSendStringResponse(final HttpServletResponse httpResponse, final String text, final int status)
-        throws IOException {
+    private static void doSendStringResponse(final HttpServletResponse httpResponse, final String text,
+                                             final int status) throws IOException {
 
         initHttpResponse(httpResponse);
-        if (text != null) {
+        if(text != null) {
             httpResponse.setContentType(XML_RESPONSE_CONTENT_TYPE);
             httpResponse.getWriter().println(text);
         }
@@ -557,16 +536,16 @@ public class EscidocServlet extends HttpServlet {
      * @param status       The http response status.
      * @throws IOException If anything fails.
      */
-    private static void doSendCompressedStringResponse(
-        final HttpServletResponse httpResponse, final String text, final int status) throws IOException {
+    private static void doSendCompressedStringResponse(final HttpServletResponse httpResponse, final String text,
+                                                       final int status) throws IOException {
 
         initHttpResponse(httpResponse);
-        if (text != null) {
+        if(text != null) {
             httpResponse.setContentType(XML_RESPONSE_CONTENT_TYPE);
             httpResponse.setHeader(HTTP_HEADER_CONTENT_ENCODING, HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP);
-            byte txt[] = (text.getBytes());
-            ServletOutputStream servletOut = httpResponse.getOutputStream();
-            OutputStream out = new GZIPOutputStream(servletOut);
+            final byte[] txt = (text.getBytes());
+            final ServletOutputStream servletOut = httpResponse.getOutputStream();
+            final OutputStream out = new GZIPOutputStream(servletOut);
             out.write(txt);
             out.close();
             servletOut.close();
@@ -583,22 +562,21 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException If anything fails.
      */
     private static void doDeclineHttpRequest(final HttpServletResponse httpResponse, final EscidocException exception)
-        throws IOException {
+            throws IOException {
 
         httpResponse.reset();
         initHttpResponse(httpResponse);
         httpResponse.setHeader(HEADER_ESCIDOC_EXCEPTION, exception.getClass().getName());
         httpResponse.setStatus(exception.getHttpStatusCode());
-        if (exception instanceof SecurityException) {
-            if (((SecurityException) exception).getRedirectLocation() != null) {
+        if(exception instanceof SecurityException) {
+            if(((SecurityException) exception).getRedirectLocation() != null) {
                 httpResponse.setHeader("Location", ((SecurityException) exception).getRedirectLocation());
             }
         }
         String body;
         try {
             body = XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition() + exception.toXmlString();
-        }
-        catch (final WebserverSystemException e) {
+        } catch(final WebserverSystemException e) {
             LOGGER.error("Error on serialising exception to XML string.", e);
             body = XmlUtility.DOCUMENT_START + exception.toXmlString();
         }
@@ -615,23 +593,15 @@ public class EscidocServlet extends HttpServlet {
      * @param exception    The exception that causes the redirect.
      * @throws IOException If anything fails.
      */
-    private static void doRedirect(
-        final HttpServletRequest httpRequest, final HttpServletResponse httpResponse, final SecurityException exception)
-        throws IOException, UnsupportedEncodingException {
+    private static void doRedirect(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse,
+                                   final SecurityException exception) throws IOException, UnsupportedEncodingException {
 
         final String message = exception.toXmlString();
-        final String redirectLocation =
-            exception.getRedirectLocation()
-                + '?'
-                + PARAM_TARGET
-                + '='
-                + URLEncoder.encode(httpRequest.getRequestURL().toString(), ENCODING)
-                + '&'
-                + PARAM_SHIRE
-                + '='
-                + URLEncoder.encode(EscidocConfiguration.getInstance().appendToSelfURL("/shibboleth/acs").replace(
-                    "http://", "https://"), ENCODING) + '&' + PARAM_PROVIDER_ID + '='
-                + URLEncoder.encode("https://www.escidoc.de/shibboleth", ENCODING);
+        final String redirectLocation = exception.getRedirectLocation() + '?' + PARAM_TARGET + '=' +
+                URLEncoder.encode(httpRequest.getRequestURL().toString(), ENCODING) + '&' + PARAM_SHIRE + '=' +
+                URLEncoder.encode(EscidocConfiguration.getInstance().appendToSelfURL("/shibboleth/acs")
+                        .replace("http://", "https://"), ENCODING) + '&' + PARAM_PROVIDER_ID + '=' +
+                URLEncoder.encode("https://www.escidoc.de/shibboleth", ENCODING);
 
         final int httpStatusCode = exception.getHttpStatusCode();
 
@@ -650,20 +620,19 @@ public class EscidocServlet extends HttpServlet {
      * @param httpStatusCode   The http status code.
      * @throws IOException If an errors occurs handling the http response.
      */
-    public static void doRedirect(
-        final HttpServletResponse httpResponse, final String exceptionName, final String message,
-        final String redirectLocation, final int httpStatusCode) throws IOException {
+    public static void doRedirect(final HttpServletResponse httpResponse, final String exceptionName,
+                                  final String message, final String redirectLocation, final int httpStatusCode)
+            throws IOException {
 
         initHttpResponse(httpResponse);
         try {
             httpResponse.setStatus(httpStatusCode);
             httpResponse.setHeader("Location", redirectLocation);
-            if (exceptionName != null) {
+            if(exceptionName != null) {
                 httpResponse.setHeader(HEADER_ESCIDOC_EXCEPTION, exceptionName);
             }
             httpResponse.getWriter().println(message);
-        }
-        catch (final UnsupportedEncodingException e) {
+        } catch(final UnsupportedEncodingException e) {
             doDeclineHttpRequest(httpResponse, new WebserverSystemException(e));
         }
     }
@@ -678,15 +647,14 @@ public class EscidocServlet extends HttpServlet {
      */
     protected static String getQueryParamValue(final HttpServletRequest request, final String param) {
         String result = null;
-        if (request.getQueryString() != null) {
+        if(request.getQueryString() != null) {
             final StringTokenizer queryToken = new StringTokenizer(request.getQueryString(), "&");
-            while (queryToken.hasMoreTokens()) {
+            while(queryToken.hasMoreTokens()) {
                 final String next = queryToken.nextToken();
-                if (next.startsWith(param + '=')) {
+                if(next.startsWith(param + '=')) {
                     result = next.substring(param.length() + 1);
                     break;
-                }
-                else if (next.equals(param)) {
+                } else if(next.equals(param)) {
                     result = "";
                     break;
 
@@ -731,9 +699,9 @@ public class EscidocServlet extends HttpServlet {
     public static Cookie getCookie(final String name, final HttpServletRequest request) {
         Cookie result = null;
         final Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length > 0) {
-            for (final Cookie cooky : cookies) {
-                if (name.equals(cooky.getName())) {
+        if(cookies != null && cookies.length > 0) {
+            for(final Cookie cooky : cookies) {
+                if(name.equals(cooky.getName())) {
                     result = cooky;
                     break;
                 }
@@ -758,33 +726,31 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException In case of an I/O error.
      */
     public static String[] getAuthValues(final HttpServletRequest request, final HttpServletResponse response)
-        throws IOException {
+            throws IOException {
 
         // Authentication via browser cookie
         final Cookie cookie = getCookie(COOKIE_LOGIN, request);
-        if (cookie != null) {
+        if(cookie != null) {
             final String handle = cookie.getValue();
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Received handle in cookie: " + handle);
             }
-            return new String[] { "ShibbolethUser", handle };
+            return new String[]{"ShibbolethUser", handle};
         }
         // Authentication via Auth-Header
-        else if (request.getHeader("Authorization") != null && request.getHeader("Authorization").length() != 0) {
+        else if(request.getHeader("Authorization") != null && request.getHeader("Authorization").length() != 0) {
             String authHeader = request.getHeader("Authorization");
             authHeader = authHeader.substring(authHeader.indexOf(' '));
             try {
                 final String decoded = UserHandleCookieUtil.createDecodedUserHandle(authHeader);
                 final int i = decoded.indexOf(':');
-                return new String[] { "ShibbolethUser", decoded.substring(i + 1) };
-            }
-            catch (final WebserverSystemException e) {
+                return new String[]{"ShibbolethUser", decoded.substring(i + 1)};
+            } catch(final WebserverSystemException e) {
                 throw new IOException("cannot decode user handle", e);
             }
-        }
-        else {
+        } else {
             LOGGER.info("No handle in cookie received, assuming  anonymous access.");
-            return new String[] { "", "" };
+            return new String[]{"", ""};
         }
     }
 
@@ -798,7 +764,7 @@ public class EscidocServlet extends HttpServlet {
      * @throws ServletException thrown in case of an internal error
      */
     public static String addCookie(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse)
-        throws ServletException {
+            throws ServletException {
         // Handle problem with eSciDoc user handle information in
         // Request URL. This could be a request from a browser which
         // displays this complete URL in the URL-line.
@@ -808,27 +774,26 @@ public class EscidocServlet extends HttpServlet {
         String result = null;
         String queryString = httpRequest.getQueryString();
 
-        if (queryString != null) {
+        if(queryString != null) {
             final Matcher m = PATTERN_USER_HANDLE_IN_QUERY.matcher(queryString);
 
-            if (m.find()) {
+            if(m.find()) {
                 final String handle = m.group(1);
 
                 queryString = m.replaceAll("");
                 try {
-                    httpResponse.addCookie(UserHandleCookieUtil.createAuthCookie(UserHandleCookieUtil
-                        .createDecodedUserHandle(handle)));
-                }
-                catch (final WebserverSystemException e) {
+                    httpResponse.addCookie(UserHandleCookieUtil
+                            .createAuthCookie(UserHandleCookieUtil.createDecodedUserHandle(handle)));
+                } catch(final WebserverSystemException e) {
                     throw new ServletException(e);
                 }
-                if (queryString.startsWith("&")) {
+                if(queryString.startsWith("&")) {
                     queryString = queryString.substring(1);
                 }
 
                 final String httpMethod = httpRequest.getMethod();
 
-                if (HTTP_GET.equals(httpMethod) || HTTP_HEAD.equals(httpMethod)) {
+                if(HTTP_GET.equals(httpMethod) || HTTP_HEAD.equals(httpMethod)) {
                     result = queryString;
                 }
             }

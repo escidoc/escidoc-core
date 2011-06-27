@@ -421,7 +421,7 @@ public class ConnectionUtility {
      */
     private HttpResponse get(final String url, final Cookie cookie) throws WebserverSystemException {
 
-        HttpResponse httpResponse;
+        final HttpResponse httpResponse;
         try {
             final HttpGet httpGet = new HttpGet(new URI(url));
             if(cookie != null) {

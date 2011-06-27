@@ -39,7 +39,7 @@ public class IndexerCacheHandler extends DefaultHandler {
 
     private final Set<String> components = new HashSet<String>();
 
-    private int lastVersion = -1;
+    private int lastVersion = - 1;
 
     public static final String XLINK_URI = "http://www.w3.org/1999/xlink";
 
@@ -49,7 +49,6 @@ public class IndexerCacheHandler extends DefaultHandler {
 
     /**
      * Constructor
-     * @param parser
      */
     public IndexerCacheHandler(final StaxParser parser) {
         this.parser = parser;
@@ -57,11 +56,11 @@ public class IndexerCacheHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(StartElement element) {
-        if (CONTENT_PATH.equals(parser.getCurPath())) {
-            int indexOfHref = element.indexOfAttribute(XLINK_URI, "href");
-            if (indexOfHref != (-1)) {
-                Attribute href = element.getAttribute(indexOfHref);
+    public StartElement startElement(final StartElement element) {
+        if(CONTENT_PATH.equals(parser.getCurPath())) {
+            final int indexOfHref = element.indexOfAttribute(XLINK_URI, "href");
+            if(indexOfHref != (- 1)) {
+                final Attribute href = element.getAttribute(indexOfHref);
                 components.add(href.getValue());
             }
         }
@@ -78,7 +77,7 @@ public class IndexerCacheHandler extends DefaultHandler {
      */
     @Override
     public String characters(final String s, final StartElement element) throws Exception {
-        if (parser.getCurPath().endsWith(LATEST_VERSION_PATH)) {
+        if(parser.getCurPath().endsWith(LATEST_VERSION_PATH)) {
             lastVersion = Integer.parseInt(s);
         }
         return s;

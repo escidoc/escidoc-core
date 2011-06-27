@@ -80,7 +80,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
             throws MissingMethodParameterException, AuthenticationException, AuthorizationException,
             SqlDatabaseSystemException, WebserverSystemException {
 
-        StagingFile stagingFile = StagingUtil.generateStagingFile(true, this.dao);
+        final StagingFile stagingFile = StagingUtil.generateStagingFile(true, this.dao);
         if(stagingFile == null) {
             throw new MissingMethodParameterException("Missing staging file.");
         }
@@ -88,7 +88,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         if(binaryContent == null || binaryContent.getContent() == null) {
             throw new MissingMethodParameterException("Binary content must be provided.");
         }
-        String token = stagingFile.getToken();
+        final String token = stagingFile.getToken();
         stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil.getUploadStagingArea(), token));
 
         try {

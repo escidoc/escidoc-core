@@ -47,7 +47,7 @@ public class IndexingCacheHandler {
     /**
      * removes object + subobjects with given id from cache.
      *
-     * @param id resource id
+     * @param id  resource id
      * @param xml xml
      * @throws SystemException The resource could not be removed.
      */
@@ -55,35 +55,34 @@ public class IndexingCacheHandler {
         try {
             String reXml = xml;
             String reId = id;
-            if (reId.matches(".*?:.*?:.*")) {
+            if(reId.matches(".*?:.*?:.*")) {
                 reId = reId.substring(0, reId.lastIndexOf(':'));
             }
-            if (reXml == null || reXml.isEmpty()) {
+            if(reXml == null || reXml.isEmpty()) {
                 reXml = fedoraRestDeviationHandler.retrieveUncached(reId);
             }
             final StaxParser sp = new StaxParser();
             final IndexerCacheHandler handler = new IndexerCacheHandler(sp);
             sp.addHandler(handler);
             sp.parse(reXml);
-            int version = handler.getLastVersion();
-            Set<String> components = handler.getComponents();
+            final int version = handler.getLastVersion();
+            final Set<String> components = handler.getComponents();
             fedoraRestDeviationHandler.removeFromCache(id);
-            for (String componentHref : components) {
+            for(final String componentHref : components) {
                 fedoraRestDeviationHandler.removeFromCache(componentHref);
                 fedoraRestDeviationHandler.removeFromCache(componentHref.replaceFirst("/", ""));
             }
-            if (version > -1) {
-                for (int i = 1; i <= version; i++) {
+            if(version > - 1) {
+                for(int i = 1; i <= version; i++) {
                     fedoraRestDeviationHandler.removeFromCache(reId + ':' + i);
-                    for (String componentHref : components) {
+                    for(String componentHref : components) {
                         componentHref = componentHref.replaceAll(reId, reId + ':' + i);
                         fedoraRestDeviationHandler.removeFromCache(componentHref);
                         fedoraRestDeviationHandler.removeFromCache(componentHref.replaceFirst("/", ""));
                     }
                 }
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new SystemException(e);
         }
     }
@@ -98,8 +97,7 @@ public class IndexingCacheHandler {
     public void writeObjectInCache(final String id, final String xml) throws SystemException {
         try {
             fedoraRestDeviationHandler.cache(id, xml);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new SystemException(e);
         }
     }
@@ -114,14 +112,12 @@ public class IndexingCacheHandler {
     public String retrieveObjectFromCache(final String id) throws SystemException {
         try {
             final String xml = fedoraRestDeviationHandler.export(id, new HashMap(0));
-            if (xml != null) {
+            if(xml != null) {
                 return xml;
-            }
-            else {
+            } else {
                 throw new SystemException("Couldnt retrieve object with id " + id);
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new SystemException(e);
         }
     }
@@ -131,7 +127,8 @@ public class IndexingCacheHandler {
      *
      * @param fedoraRestDeviationHandler The fedorarestDeviationHandler to set.
      */
-    public final void setFedoraRestDeviationHandler(final FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler) {
+    public final void setFedoraRestDeviationHandler(
+            final FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler) {
         this.fedoraRestDeviationHandler = fedoraRestDeviationHandler;
     }
 

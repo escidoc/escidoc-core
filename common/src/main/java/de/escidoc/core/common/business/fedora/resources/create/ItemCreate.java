@@ -113,13 +113,13 @@ public class ItemCreate extends GenericResourceCreate {
     // taken from method handleFedoraUploadError
     // in order to make them static final
     private static final String ERROR_MSG_NO_HTTP_PROTOCOL =
-        "The url has a wrong protocol." + " The protocol must be a http protocol.";
+            "The url has a wrong protocol." + " The protocol must be a http protocol.";
 
     private static final Pattern PATTERN_ERROR_GETTING =
-        Pattern.compile("fedora.server.errors.GeneralException: Error getting", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("fedora.server.errors.GeneralException: Error getting", Pattern.CASE_INSENSITIVE);
 
-    private static final Pattern PATTERN_MALFORMED_URL =
-        Pattern.compile("fedora.server.errors.ObjectIntegrityException: " + "FOXML IO stream was bad : Malformed URL");
+    private static final Pattern PATTERN_MALFORMED_URL = Pattern.compile(
+            "fedora.server.errors.ObjectIntegrityException: " + "FOXML IO stream was bad : Malformed URL");
 
     /**
      * Set ItemProperties.
@@ -138,7 +138,7 @@ public class ItemCreate extends GenericResourceCreate {
      */
     public void addMdRecord(final MdRecordCreate mdRecord) {
 
-        if (this.mdRecords == null) {
+        if(this.mdRecords == null) {
             this.mdRecords = new ArrayList<MdRecordCreate>();
         }
 
@@ -200,9 +200,10 @@ public class ItemCreate extends GenericResourceCreate {
     /**
      * Persist whole Item to Repository and force TripleStore sync.
      */
-    public void persist() throws SystemException, InvalidStatusException, MissingMdRecordException,
-        FileNotFoundException, InvalidContentException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, MissingAttributeValueException, FedoraSystemException {
+    public void persist()
+            throws SystemException, InvalidStatusException, MissingMdRecordException, FileNotFoundException,
+            InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
+            MissingAttributeValueException, FedoraSystemException {
 
         persist(true);
     }
@@ -213,10 +214,10 @@ public class ItemCreate extends GenericResourceCreate {
      * @param forceSync Set true to force synchronous sync of TripleStore.
      * @throws SystemException Thrown if an unexpected error occurs
      */
-    public void persist(final boolean forceSync) throws SystemException, FileNotFoundException,
-        InvalidContentException, FedoraSystemException {
+    public void persist(final boolean forceSync)
+            throws SystemException, FileNotFoundException, InvalidContentException, FedoraSystemException {
 
-        if (getProperties().getObjectProperties().getOrigin() == null) {
+        if(getProperties().getObjectProperties().getOrigin() == null) {
             persistComponents();
         }
 
@@ -225,11 +226,11 @@ public class ItemCreate extends GenericResourceCreate {
             // an unsuccessful requests an objid (and time). This is redundant
             // if rollback is implemented and gives an unused objid back to
             // the objid pool.
-            if (getObjid() == null) {
+            if(getObjid() == null) {
                 setObjid(this.idProvider.getNextPid());
             }
 
-            if (this.properties.getObjectProperties().getTitle() == null) {
+            if(this.properties.getObjectProperties().getTitle() == null) {
                 // if title is no set through DC,
                 // update title (this is required because the title shall
                 // contain the version number
@@ -238,9 +239,9 @@ public class ItemCreate extends GenericResourceCreate {
             }
 
             getProperties().getObjectProperties().setContextTitle(
-                getTripleStoreUtility().getTitle(this.properties.getObjectProperties().getContextId()));
+                    getTripleStoreUtility().getTitle(this.properties.getObjectProperties().getContextId()));
             getProperties().getObjectProperties().setContentModelTitle(
-                getTripleStoreUtility().getTitle(this.properties.getObjectProperties().getContentModelId()));
+                    getTripleStoreUtility().getTitle(this.properties.getObjectProperties().getContentModelId()));
 
             // serialize object without RELS-EXT and WOV to FOXML
             final String foxml = getMinimalFoXML();
@@ -253,12 +254,12 @@ public class ItemCreate extends GenericResourceCreate {
 
             this.properties.getCurrentVersion().setDate(lmd);
             this.properties.getLatestVersion().setDate(lmd);
-            if (this.properties.getLatestReleasedVersion() != null) {
+            if(this.properties.getLatestReleasedVersion() != null) {
                 this.properties.getLatestReleasedVersion().setDate(lmd);
             }
 
             final AddDatastreamPathParam addPathVH =
-                new AddDatastreamPathParam(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY);
+                    new AddDatastreamPathParam(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY);
             final AddDatastreamQueryParam addQueryVH = new AddDatastreamQueryParam();
             addQueryVH.setDsLabel("whole object versioning datastream");
             addQueryVH.setVersionable(Boolean.FALSE);
@@ -271,29 +272,26 @@ public class ItemCreate extends GenericResourceCreate {
             // update RELS-EXT with timestamp
             final String relsExt = renderRelsExt();
             final ModifiyDatastreamPathParam modifyPath =
-                new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
+                    new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
             final ModifyDatastreamQueryParam modifyQuery = new ModifyDatastreamQueryParam();
             modifyQuery.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
             final Stream stream = new Stream();
             try {
                 stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
                 stream.lock();
-            }
-            catch (final IOException e) {
+            } catch(final IOException e) {
                 throw new WebserverSystemException(e);
             }
             this.fedoraServiceClient.modifyDatastream(modifyPath, modifyQuery, stream);
-            if (forceSync) {
+            if(forceSync) {
                 this.fedoraServiceClient.sync();
                 try {
                     this.getTripleStoreUtility().reinitialize();
-                }
-                catch (TripleStoreSystemException e) {
+                } catch(TripleStoreSystemException e) {
                     throw new FedoraSystemException("Error on reinitializing triple store.", e);
                 }
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
 
             rollbackComponents();
             throw new SystemException(e);
@@ -311,14 +309,13 @@ public class ItemCreate extends GenericResourceCreate {
      */
     public String getDC() throws WebserverSystemException, EncodingSystemException {
 
-        if (this.dcXml == null) {
+        if(this.dcXml == null) {
 
             final MdRecordCreate mdRecord = getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
-            if (mdRecord != null) {
+            if(mdRecord != null) {
                 try {
                     this.dcXml = getDC(mdRecord, this.properties.getObjectProperties().getContentModelId());
-                }
-                catch (final Exception e) {
+                } catch(final Exception e) {
                     LOGGER.info("DC mapping of to create resource failed. " + e);
                 }
             }
@@ -342,9 +339,9 @@ public class ItemCreate extends GenericResourceCreate {
      * @return MetadataRecord with required name or null.
      */
     public MdRecordCreate getMetadataRecord(final String name) {
-        if (this.mdRecords != null) {
-            for (final MdRecordCreate mdRecord : this.mdRecords) {
-                if (mdRecord.getName().equals(name)) {
+        if(this.mdRecords != null) {
+            for(final MdRecordCreate mdRecord : this.mdRecords) {
+                if(mdRecord.getName().equals(name)) {
                     return mdRecord;
                 }
             }
@@ -418,18 +415,17 @@ public class ItemCreate extends GenericResourceCreate {
 
         // starting rollback
         final List<ComponentCreate> comp = getComponents();
-        if (comp != null) {
-            for (int i = 0; i < comp.size(); i++) {
+        if(comp != null) {
+            for(int i = 0; i < comp.size(); i++) {
                 try {
                     this.fedoraServiceClient.deleteObject(getComponents().get(i).getObjid());
                     this.fedoraServiceClient.sync();
                     this.getTripleStoreUtility().reinitialize();
-                }
-                catch (final Exception e2) {
-                    if (LOGGER.isWarnEnabled()) {
+                } catch(final Exception e2) {
+                    if(LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on deleting object.");
                     }
-                    if (LOGGER.isDebugEnabled()) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on deleting object.", e2);
                     }
                 }
@@ -440,12 +436,11 @@ public class ItemCreate extends GenericResourceCreate {
             this.fedoraServiceClient.deleteObject(getObjid());
             this.fedoraServiceClient.sync();
             this.getTripleStoreUtility().reinitialize();
-        }
-        catch (final Exception e2) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final Exception e2) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on deleting object.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on deleting object.", e2);
             }
         }
@@ -468,18 +463,17 @@ public class ItemCreate extends GenericResourceCreate {
         templateValues.put(XmlTemplateProvider.TITLE, this.properties.getObjectProperties().getTitle());
         //templateValues.put(XmlTemplateProvider.VERSION_DATE, this.properties.getCurrentVersion().getDate().toString());
         //templateValues.put(XmlTemplateProvider.TIMESTAMP, this.properties.getCurrentVersion().getDate().toString());
-        DateTime date = this.properties.getCurrentVersion().getDate();
-        if (date == null) {
+        final DateTime date = this.properties.getCurrentVersion().getDate();
+        if(date == null) {
             templateValues.put(XmlTemplateProvider.VERSION_DATE, null);
             templateValues.put(XmlTemplateProvider.TIMESTAMP, null);
-        }
-        else {
+        } else {
             templateValues.put(XmlTemplateProvider.VERSION_DATE, date.toString());
             templateValues.put(XmlTemplateProvider.TIMESTAMP, date.toString());
         }
         templateValues.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
-        templateValues.put(XmlTemplateProvider.VERSION_STATUS, this.properties
-            .getCurrentVersion().getStatus().toString());
+        templateValues
+                .put(XmlTemplateProvider.VERSION_STATUS, this.properties.getCurrentVersion().getStatus().toString());
         templateValues.put(XmlTemplateProvider.VERSION_COMMENT, this.properties.getCurrentVersion().getComment());
 
         templateValues.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX, Constants.WOV_NAMESPACE_PREFIX);
@@ -496,8 +490,9 @@ public class ItemCreate extends GenericResourceCreate {
 
         // EVENT_XMLID EVENT_ID_TYPE EVENT_ID_VALUE
         templateValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, "v1e" + System.currentTimeMillis());
-        templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, Constants.ITEM_URL_BASE + getObjid() + "/resources/"
-            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' + templateValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
+        templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE,
+                Constants.ITEM_URL_BASE + getObjid() + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' +
+                        templateValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
         templateValues.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
         templateValues.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, getObjid());
@@ -524,8 +519,8 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws SystemException              Thrown if rendering of Item or sub-elements failed.
      * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      */
-    private String getMinimalFoXML() throws SystemException, UnsupportedEncodingException, EncodingSystemException,
-        WebserverSystemException {
+    private String getMinimalFoXML()
+            throws SystemException, UnsupportedEncodingException, EncodingSystemException, WebserverSystemException {
 
         final Map<String, Object> valueMap = new HashMap<String, Object>();
 
@@ -544,10 +539,10 @@ public class ItemCreate extends GenericResourceCreate {
         // DC (inclusive mapping)----------------------------------------------
         final String dcXml = getDC();
 
-        if (dcXml != null && dcXml.length() > 0) {
+        if(dcXml != null && dcXml.length() > 0) {
             valueMap.put(XmlTemplateProvider.DC, dcXml);
         }
-        if (!valueMap.containsKey(XmlTemplateProvider.VAR_ORIGIN_OBJECT_ID)) {
+        if(! valueMap.containsKey(XmlTemplateProvider.VAR_ORIGIN_OBJECT_ID)) {
             // Content-Streams
             valueMap.put(XmlTemplateProvider.CONTENT_STREAMS, getContentStreamsMap());
             // Components
@@ -579,7 +574,7 @@ public class ItemCreate extends GenericResourceCreate {
 
         valueMap.put(XmlTemplateProvider.CONTENT_RELATIONS, prepareContentRelationsValueMap());
 
-        if (!valueMap.containsKey(XmlTemplateProvider.VAR_ORIGIN_OBJECT_ID)) {
+        if(! valueMap.containsKey(XmlTemplateProvider.VAR_ORIGIN_OBJECT_ID)) {
             valueMap.put(XmlTemplateProvider.COMPONENTS, getComponentIds());
         }
 
@@ -589,19 +584,20 @@ public class ItemCreate extends GenericResourceCreate {
     /**
      * Persist all Components of the Item.
      */
-    private void persistComponents() throws SystemException, FileNotFoundException, InvalidContentException,
-        IntegritySystemException, FedoraSystemException {
+    private void persistComponents()
+            throws SystemException, FileNotFoundException, InvalidContentException, IntegritySystemException,
+            FedoraSystemException {
 
         int i = 0;
         List<String> componentIds = null;
 
         try {
-            if (this.components != null) {
+            if(this.components != null) {
                 /*
                  * FIXME upload method to staging service is not thread safe!
                  */
                 componentIds = new ArrayList<String>();
-                for (i = 0; i < this.components.size(); i++) {
+                for(i = 0; i < this.components.size(); i++) {
                     // old unthreaded - works
                     final ComponentCreate component = this.components.get(i);
                     component.setIdProvider(this.idProvider);
@@ -609,26 +605,23 @@ public class ItemCreate extends GenericResourceCreate {
                     componentIds.add(id);
                 }
             }
-        }
-        catch (final InvalidContentException fne) {
+        } catch(final InvalidContentException fne) {
             rollbackCreate(componentIds);
             throw fne;
-        }
-        catch (final FedoraSystemException e) {
+        } catch(final FedoraSystemException e) {
 
             final Pattern patternInvalidFoXml = Pattern.compile("fedora.server.errors.ObjectValidityException");
 
             final Matcher invalidFoxml = patternInvalidFoXml.matcher(e.getCause().getMessage());
 
-            if (invalidFoxml.find()) {
+            if(invalidFoxml.find()) {
                 throw new IntegritySystemException(e);
             }
 
-            if (this.components.get(i).getContent().getDataLocation() != null) {
+            if(this.components.get(i).getContent().getDataLocation() != null) {
                 handleFedoraUploadError(this.components.get(i).getContent().getDataLocation().toString(), e);
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             rollbackCreate(componentIds);
             throw new SystemException("Failure during create Fedora object.", e);
         }
@@ -654,8 +647,8 @@ public class ItemCreate extends GenericResourceCreate {
         valueMap.put(XmlTemplateProvider.MODIFIED_BY_TITLE, this.properties.getCurrentVersion().getCreatedByName());
 
         valueMap.put(XmlTemplateProvider.PUBLIC_STATUS, this.properties.getObjectProperties().getStatus().toString());
-        valueMap.put(XmlTemplateProvider.PUBLIC_STATUS_COMMENT, this.properties
-            .getObjectProperties().getStatusComment());
+        valueMap.put(XmlTemplateProvider.PUBLIC_STATUS_COMMENT,
+                this.properties.getObjectProperties().getStatusComment());
 
         valueMap.put(XmlTemplateProvider.OBJECT_PID, this.properties.getObjectProperties().getPid());
 
@@ -663,8 +656,8 @@ public class ItemCreate extends GenericResourceCreate {
         valueMap.put(XmlTemplateProvider.CONTEXT_TITLE, this.properties.getObjectProperties().getContextTitle());
 
         valueMap.put(XmlTemplateProvider.CONTENT_MODEL_ID, this.properties.getObjectProperties().getContentModelId());
-        valueMap.put(XmlTemplateProvider.CONTENT_MODEL_TITLE, this.properties
-            .getObjectProperties().getContentModelTitle());
+        valueMap.put(XmlTemplateProvider.CONTENT_MODEL_TITLE,
+                this.properties.getObjectProperties().getContentModelTitle());
 
         // add RELS-EXT current version values
         // version pid currently not supported for create
@@ -672,11 +665,10 @@ public class ItemCreate extends GenericResourceCreate {
         // .getCurrentVersion().getPid());
 
         valueMap.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
-        DateTime currVersionDate = this.properties.getCurrentVersion().getDate();
-        if (currVersionDate == null) {
+        final DateTime currVersionDate = this.properties.getCurrentVersion().getDate();
+        if(currVersionDate == null) {
             valueMap.put(XmlTemplateProvider.VERSION_DATE, "---");
-        }
-        else {
+        } else {
             valueMap.put(XmlTemplateProvider.VERSION_DATE, currVersionDate.toString());
         }
 
@@ -687,47 +679,45 @@ public class ItemCreate extends GenericResourceCreate {
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_PID, this.properties.getLatestVersion().getPid());
 
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_NUMBER, this.properties.getLatestVersion().getNumber());
-        DateTime lateVersionDate = this.properties.getLatestVersion().getDate();
-        if (lateVersionDate == null) {
+        final DateTime lateVersionDate = this.properties.getLatestVersion().getDate();
+        if(lateVersionDate == null) {
             valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, null);
-        }
-        else {
+        } else {
             valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, lateVersionDate.toString());
         }
 
-        valueMap.put(XmlTemplateProvider.LATEST_VERSION_STATUS, this.properties
-            .getLatestVersion().getStatus().toString());
+        valueMap.put(XmlTemplateProvider.LATEST_VERSION_STATUS,
+                this.properties.getLatestVersion().getStatus().toString());
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_COMMENT, this.properties.getLatestVersion().getComment());
 
         // in the case of a surrogate
         final String origin = getProperties().getObjectProperties().getOrigin();
         final String originObjectId = getProperties().getObjectProperties().getOriginObjectId();
         final String originVersionId = getProperties().getObjectProperties().getOriginVersionId();
-        if (origin != null) {
+        if(origin != null) {
             valueMap.put("originObjectId", originObjectId);
-            if (originVersionId != null) {
+            if(originVersionId != null) {
                 valueMap.put(XmlTemplateProvider.VAR_ORIGIN_VERSION_ID, originVersionId);
             }
         }
 
         // add RELS-EXT latest-released-version properties
-        if (this.properties.getLatestReleasedVersion() != null) {
-            valueMap.put(XmlTemplateProvider.LATEST_RELEASE_NUMBER, this.properties
-                .getLatestReleasedVersion().getNumber());
+        if(this.properties.getLatestReleasedVersion() != null) {
+            valueMap.put(XmlTemplateProvider.LATEST_RELEASE_NUMBER,
+                    this.properties.getLatestReleasedVersion().getNumber());
 
             // latest release date
-            if (this.properties.getLatestReleasedVersion().getDate() != null) {
-                valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE, this.properties
-                    .getLatestReleasedVersion().getDate().toString());
-            }
-            else {
+            if(this.properties.getLatestReleasedVersion().getDate() != null) {
+                valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE,
+                        this.properties.getLatestReleasedVersion().getDate().toString());
+            } else {
                 valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE, "---");
             }
 
             // latest release pid
-            if (this.properties.getLatestReleasedVersion().getPid() != null) {
-                valueMap.put(XmlTemplateProvider.LATEST_RELEASE_PID, this.properties
-                    .getLatestReleasedVersion().getPid());
+            if(this.properties.getLatestReleasedVersion().getPid() != null) {
+                valueMap.put(XmlTemplateProvider.LATEST_RELEASE_PID,
+                        this.properties.getLatestReleasedVersion().getPid());
             }
         }
 
@@ -773,16 +763,15 @@ public class ItemCreate extends GenericResourceCreate {
      * @param componentIds Fedora objid of resources which are to purge.
      */
     private void rollbackCreate(final Iterable<String> componentIds) {
-        for (final String componentId : componentIds) {
+        for(final String componentId : componentIds) {
             LOGGER.debug("Rollback Component create (" + componentId + ").");
             try {
                 this.fedoraServiceClient.deleteObject(componentId);
-            }
-            catch (final Exception e2) {
-                if (LOGGER.isWarnEnabled()) {
+            } catch(final Exception e2) {
+                if(LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Purging of Fedora Object (" + componentId + ") failed.");
                 }
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Purging of Fedora Object (" + componentId + ") failed.", e2);
                 }
             }
@@ -800,7 +789,7 @@ public class ItemCreate extends GenericResourceCreate {
      */
     private DateTime getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
         final GetDatastreamProfilePathParam path =
-            new GetDatastreamProfilePathParam(objid, Datastream.RELS_EXT_DATASTREAM);
+                new GetDatastreamProfilePathParam(objid, Datastream.RELS_EXT_DATASTREAM);
         final GetDatastreamProfileQueryParam query = new GetDatastreamProfileQueryParam();
         final DatastreamProfileTO dsProfile = this.fedoraServiceClient.getDatastreamProfile(path, query);
         return new DateTime(dsProfile.getDsCreateDate().toString(), DateTimeZone.UTC);
@@ -837,10 +826,10 @@ public class ItemCreate extends GenericResourceCreate {
      */
     private List<String> getComponentIds() {
 
-        if (this.components != null) {
+        if(this.components != null) {
             final Iterator<ComponentCreate> it = this.components.iterator();
             final List<String> componentIDs = new ArrayList<String>();
-            while (it.hasNext()) {
+            while(it.hasNext()) {
                 componentIDs.add(it.next().getObjid());
             }
             return componentIDs;
@@ -858,15 +847,15 @@ public class ItemCreate extends GenericResourceCreate {
      *                               (file).
      */
     private static void handleFedoraUploadError(final String url, final FedoraSystemException e)
-        throws FileNotFoundException, FedoraSystemException {
+            throws FileNotFoundException, FedoraSystemException {
 
         final Matcher matcherErrorGetting = PATTERN_ERROR_GETTING.matcher(e.getMessage());
         final Matcher matcherMalformedUrl = PATTERN_MALFORMED_URL.matcher(e.getMessage());
 
-        if (matcherErrorGetting.find() || matcherMalformedUrl.find()) {
+        if(matcherErrorGetting.find() || matcherMalformedUrl.find()) {
             throw new FileNotFoundException("Error getting content from " + url, e);
         }
-        if (!(url.startsWith("http://") || url.startsWith("https://"))) {
+        if(! (url.startsWith("http://") || url.startsWith("https://"))) {
             throw new FileNotFoundException(ERROR_MSG_NO_HTTP_PROTOCOL);
         }
         // TODO: Reuse HttpClient
@@ -881,14 +870,12 @@ public class ItemCreate extends GenericResourceCreate {
             final HttpResponse response = client.execute(httpMessage);
             final int resultCode = response.getStatusLine().getStatusCode();
 
-            if (resultCode != HttpServletResponse.SC_OK) {
+            if(resultCode != HttpServletResponse.SC_OK) {
                 throw new FileNotFoundException("Bad request. [" + response.getStatusLine() + ", " + url + ']');
             }
-        }
-        catch (final Exception e1) {
+        } catch(final Exception e1) {
             throw new FileNotFoundException("Error getting content from " + url, e1);
-        }
-        finally {
+        } finally {
             client.getConnectionManager().shutdown();
         }
         throw e;
@@ -904,12 +891,12 @@ public class ItemCreate extends GenericResourceCreate {
         List<HashMap<String, String>> crel = null;
 
         final Iterator<RelationCreate> it = this.relations.iterator();
-        if (it != null) {
-            if (it.hasNext()) {
+        if(it != null) {
+            if(it.hasNext()) {
                 crel = new ArrayList<HashMap<String, String>>();
             }
 
-            while (it.hasNext()) {
+            while(it.hasNext()) {
                 final RelationCreate rel = it.next();
 
                 final HashMap<String, String> relation = new HashMap<String, String>();
@@ -936,16 +923,16 @@ public class ItemCreate extends GenericResourceCreate {
          * create class infrastructure.).
          */
 
-        if (this.contentStreams == null) {
+        if(this.contentStreams == null) {
             return null;
         }
 
         final List<HashMap<String, String>> contStreams = new ArrayList<HashMap<String, String>>();
 
-        for (final ContentStreamCreate contentStream : this.contentStreams) {
+        for(final ContentStreamCreate contentStream : this.contentStreams) {
             final HashMap<String, String> valueMap = new HashMap<String, String>();
-            valueMap.put(XmlTemplateProvider.CONTROL_GROUP, contentStream
-                .getContent().getStorageType().getAbbreviation());
+            valueMap.put(XmlTemplateProvider.CONTROL_GROUP,
+                    contentStream.getContent().getStorageType().getAbbreviation());
             valueMap.put(XmlTemplateProvider.VAR_ID, contentStream.getName());
             valueMap.put(XmlTemplateProvider.VAR_VERSIONABLE, XmlTemplateProvider.TRUE);
             valueMap.put(XmlTemplateProvider.VAR_ALT_IDS, "content-stream");
@@ -954,7 +941,7 @@ public class ItemCreate extends GenericResourceCreate {
             // FIXME using title as label seams inconsistent
             valueMap.put(XmlTemplateProvider.VAR_LABEL, contentStream.getTitle());
 
-            if (contentStream.getContent().getDataLocation() != null) {
+            if(contentStream.getContent().getDataLocation() != null) {
                 valueMap.put(XmlTemplateProvider.VAR_URL, contentStream.getContent().getDataLocation().toString());
             }
             valueMap.put(XmlTemplateProvider.VAR_CONTENT, contentStream.getContent().getContent());

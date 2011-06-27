@@ -168,7 +168,7 @@ public class FilteringXMLStreamWriter implements XMLStreamWriter {
     }
 
     @Override
-    public void writeStartDocument(String s) throws XMLStreamException {
+    public void writeStartDocument(final String s) throws XMLStreamException {
         xmlStreamWriter.writeStartDocument(s);
     }
 

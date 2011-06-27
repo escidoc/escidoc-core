@@ -4,7 +4,7 @@ import java.util.List;
 
 public class DatastreamTypeTOExtension extends DatastreamTypeTO {
 
-    public void addDatastreamVersionTypeTOListener(DatastreamVersionTypeTOListener listener) {
+    public void addDatastreamVersionTypeTOListener(final DatastreamVersionTypeTOListener listener) {
         final DatastreamVersionTypeListTO datastreamVersionTypeListTO =
                 (DatastreamVersionTypeListTO) this.getDatastreamVersion();
         datastreamVersionTypeListTO.addDatastreamVersionTypeTOListener(listener);

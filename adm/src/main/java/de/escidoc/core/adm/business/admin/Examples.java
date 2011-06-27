@@ -302,7 +302,7 @@ public class Examples {
             AuthorizationException, IOException, SAXException, XPathExpressionException, WebserverSystemException,
             ParserConfigurationException, InvalidContentException, XmlCorruptedException, AuthenticationException,
             MissingMethodParameterException, UnsupportedEncodingException {
-        String result = null;
+        final String result = null;
         final String createXml = this.contentModelHandler.create(xml);
         return getObjectId(createXml, ResourceType.CONTENT_MODEL);
     }
@@ -323,7 +323,7 @@ public class Examples {
             ContentModelNotFoundException, OrganizationalUnitNotFoundException, ContextNameNotUniqueException,
             ReadonlyAttributeViolationException, MissingMethodParameterException, UnsupportedEncodingException {
         final String createXml = this.contextHandler.create(MessageFormat.format(xml, new Date().getTime(), ouId));
-        String result = getObjectId(createXml, ResourceType.CONTEXT);
+        final String result = getObjectId(createXml, ResourceType.CONTEXT);
         this.contextHandler.open(result, createTaskParam(getLastModificationDate(createXml, ResourceType.CONTEXT)));
         return result;
     }
@@ -362,7 +362,7 @@ public class Examples {
             ReferencedResourceNotFoundException, MissingMethodParameterException, UnsupportedEncodingException {
         final String createXml =
                 this.containerHandler.createItem(containerId, MessageFormat.format(xml, contextId, contentModelId));
-        String result = getObjectId(createXml, ResourceType.ITEM);
+        final String result = getObjectId(createXml, ResourceType.ITEM);
         final String submitXml =
                 this.itemHandler.submit(result, createTaskParam(getLastModificationDate(createXml, ResourceType.ITEM)));
         final String objectPidXml =
@@ -387,7 +387,7 @@ public class Examples {
             AuthenticationException, MissingMdRecordException, InvalidXmlException, MissingMethodParameterException,
             UnsupportedEncodingException {
         final String createXml = this.organizationalUnitHandler.create(xml);
-        String result = getObjectId(createXml, ResourceType.OU);
+        final String result = getObjectId(createXml, ResourceType.OU);
         this.organizationalUnitHandler
                 .open(result, createTaskParam(getLastModificationDate(createXml, ResourceType.OU)));
         return result;

@@ -26,7 +26,7 @@ public enum ChecksumType {
 
     private final String value;
 
-    ChecksumType(String v) {
+    ChecksumType(final String v) {
         value = v;
     }
 
@@ -34,9 +34,9 @@ public enum ChecksumType {
         return value;
     }
 
-    public static ChecksumType fromValue(String v) {
-        for (ChecksumType c : ChecksumType.values()) {
-            if (c.value.equals(v)) {
+    public static ChecksumType fromValue(final String v) {
+        for(final ChecksumType c : ChecksumType.values()) {
+            if(c.value.equals(v)) {
                 return c;
             }
         }

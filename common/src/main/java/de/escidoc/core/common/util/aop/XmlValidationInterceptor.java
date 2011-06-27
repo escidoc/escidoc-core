@@ -64,32 +64,29 @@ public class XmlValidationInterceptor implements Ordered {
      * Before advice to perform the schema validation of xml data of the current request.
      *
      * @param joinPoint The current {@link JoinPoint}.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      */
     @Before("execution(public * de.escidoc.core.*.service.*.*(..))" + " && !within(de.escidoc.core.common.util.aop..*)")
-    public void validate(final JoinPoint joinPoint) throws XmlParserSystemException, WebserverSystemException,
-        XmlSchemaValidationException, XmlCorruptedException {
+    public void validate(final JoinPoint joinPoint)
+            throws XmlParserSystemException, WebserverSystemException, XmlSchemaValidationException,
+            XmlCorruptedException {
         final Method targetMethod = getTargetInterfaceMethod(joinPoint);
         final Annotation annotation = targetMethod.getAnnotation(Validate.class);
-        if (annotation != null) {
+        if(annotation != null) {
             final Object[] arguments = joinPoint.getArgs();
             validate((String) arguments[((Validate) annotation).param()], ((Validate) annotation).resolver(),
-                ((Validate) annotation).root());
+                    ((Validate) annotation).root());
         }
     }
 
     private static Method getTargetInterfaceMethod(final JoinPoint joinPoint) {
         Method targetMethod = null;
         final Method calledMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
-        Class[] interfaces = joinPoint.getTarget().getClass().getInterfaces();
-        for (Class interfaze : interfaces) {
-            Method[] methods = interfaze.getMethods();
-            for (Method method : methods) {
-                if (method.getName().equals(calledMethod.getName())
-                    && method.getReturnType().equals(calledMethod.getReturnType())) {
+        final Class[] interfaces = joinPoint.getTarget().getClass().getInterfaces();
+        for(final Class interfaze : interfaces) {
+            final Method[] methods = interfaze.getMethods();
+            for(final Method method : methods) {
+                if(method.getName().equals(calledMethod.getName()) &&
+                        method.getReturnType().equals(calledMethod.getReturnType())) {
                     targetMethod = method;
                 }
             }
@@ -102,14 +99,11 @@ public class XmlValidationInterceptor implements Ordered {
      *
      * @param xml             The xml data to validate.
      * @param resolvingMethod The name of the resolving method used to identify the schema location.
-     * @param root
      * @throws WebserverSystemException Thrown in case of an internal error.
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
      */
     private void validate(final String xml, final String resolvingMethod, final String root)
-        throws WebserverSystemException, XmlParserSystemException, XmlSchemaValidationException, XmlCorruptedException {
+            throws WebserverSystemException, XmlParserSystemException, XmlSchemaValidationException,
+            XmlCorruptedException {
 
         xmlUtility.validate(xml, getSchemaLocation(resolvingMethod), root);
     }
@@ -126,8 +120,7 @@ public class XmlValidationInterceptor implements Ordered {
         try {
             final Method getSchemaLocationM = XmlUtility.class.getMethod(resolvingMethod, paramTypes);
             return (String) getSchemaLocationM.invoke(null);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new WebserverSystemException("Could not find schema location for schema " + resolvingMethod + '!', e);
         }
     }

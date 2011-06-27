@@ -76,12 +76,12 @@ import java.util.regex.Pattern;
  * @author Roland Werner (Accenture)
  */
 @Aspect
-@DeclarePrecedence("org.escidoc.core.aspects.TraceInterceptor, "
-    + "de.escidoc.core.aa.security.aop.AuthenticationInterceptor, "
-    + "de.escidoc.core.aa.security.aop.SecurityInterceptor, "
-    + "de.escidoc.core.common.util.aop.ParameterCheckInterceptor, "
-    + "de.escidoc.core.common.util.aop.XmlValidationInterceptor, "
-    + "de.escidoc.core.common.util.aop.StatisticInterceptor, " + '*')
+@DeclarePrecedence(
+        "org.escidoc.core.aspects.TraceInterceptor, " + "de.escidoc.core.aa.security.aop.AuthenticationInterceptor, " +
+                "de.escidoc.core.aa.security.aop.SecurityInterceptor, " +
+                "de.escidoc.core.common.util.aop.ParameterCheckInterceptor, " +
+                "de.escidoc.core.common.util.aop.XmlValidationInterceptor, " +
+                "de.escidoc.core.common.util.aop.StatisticInterceptor, " + '*')
 public class SecurityInterceptor implements Ordered {
 
     /**
@@ -99,7 +99,7 @@ public class SecurityInterceptor implements Ordered {
     private static final String CONTAINER_HANDLER_CLASS_NAME = ContainerHandlerInterface.class.getName();
 
     private static final String INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION =
-        "Internal unexpected error during authorization.";
+            "Internal unexpected error during authorization.";
 
     private InvocationParser invocationParser;
 
@@ -142,12 +142,12 @@ public class SecurityInterceptor implements Ordered {
      * @param joinPoint The current {@link JoinPoint}.
      * @throws Throwable Thrown in case of an error.
      */
-    @Around("execution(public * de.escidoc.core.*.service.*.*(..))"
-        + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
-        + " && !within(de.escidoc.core.common.util.aop..*)")
-    public Object authorize(final ProceedingJoinPoint joinPoint) throws Throwable, AuthorizationException,
-        ResourceNotFoundException, MissingElementValueException, InvalidXmlException, MissingMethodParameterException,
-        WebserverSystemException {
+    @Around("execution(public * de.escidoc.core.*.service.*.*(..))" +
+            " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)" +
+            " && !within(de.escidoc.core.common.util.aop..*)")
+    public Object authorize(final ProceedingJoinPoint joinPoint)
+            throws Throwable, AuthorizationException, ResourceNotFoundException, MissingElementValueException,
+            InvalidXmlException, MissingMethodParameterException, WebserverSystemException {
         final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         final Method calledMethod = methodSignature.getMethod();
         final String target = getTargetInterface(joinPoint);
@@ -158,18 +158,17 @@ public class SecurityInterceptor implements Ordered {
         // --- Preparation ---
         // -------------------
 
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug(StringUtility.concatenateWithColonToString("The callee", target));
             LOGGER.debug(StringUtility.concatenateWithColonToString("Method name", methodName));
             LOGGER.debug(StringUtility.concatenateWithColonToString("The handle/password", handle));
         }
 
         final Object[] arguments = joinPoint.getArgs();
-        if (LOGGER.isDebugEnabled()) {
-            if (arguments.length > 0) {
+        if(LOGGER.isDebugEnabled()) {
+            if(arguments.length > 0) {
                 LOGGER.debug(StringUtility.concatenateWithColon("First Argument", arguments[0]).toString());
-            }
-            else {
+            } else {
                 LOGGER.debug("Method called without arguments.");
             }
         }
@@ -180,7 +179,7 @@ public class SecurityInterceptor implements Ordered {
         // authorization is not performed if the current request is executed as
         // an internal user. Only external users are authorized.
 
-        if (!UserContext.isInternalUser()) {
+        if(! UserContext.isInternalUser()) {
 
             // Calls from the authorization component to other components run
             // with privileges of the internal authorization user (superuser).
@@ -201,8 +200,7 @@ public class SecurityInterceptor implements Ordered {
 
         try {
             return proceed(joinPoint);
-        }
-        catch (final ResourceNotFoundException e) {
+        } catch(final ResourceNotFoundException e) {
             // see issue 475, 500
             // this exception may be thrown if the user tries to access
             // a versionized resource without providing the version number.
@@ -213,10 +211,10 @@ public class SecurityInterceptor implements Ordered {
             // As this is an authorization failure, this kind of
             // ResourceNotFoundException must be caught and a
             // AuthorizationException has to be thrown, instead
-            if (UserContext.isRetrieveRestrictedToReleased() && ERR_MSG_LATEST_RELEASE_NOT_FOUND.equals(e.getMessage())) {
+            if(UserContext.isRetrieveRestrictedToReleased() &&
+                    ERR_MSG_LATEST_RELEASE_NOT_FOUND.equals(e.getMessage())) {
                 throw createAuthorizationException(target, methodName);
-            }
-            else {
+            } else {
                 throw e;
             }
         }
@@ -225,12 +223,12 @@ public class SecurityInterceptor implements Ordered {
     private static String getTargetInterface(final ProceedingJoinPoint joinPoint) {
         String target = null;
         final Method calledMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
-        Class[] interfaces = joinPoint.getTarget().getClass().getInterfaces();
-        for (Class interfaze : interfaces) {
-            Method[] methods = interfaze.getMethods();
-            for (Method method : methods) {
-                if (method.getName().equals(calledMethod.getName())
-                    && method.getReturnType().equals(calledMethod.getReturnType())) {
+        final Class[] interfaces = joinPoint.getTarget().getClass().getInterfaces();
+        for(final Class interfaze : interfaces) {
+            final Method[] methods = interfaze.getMethods();
+            for(final Method method : methods) {
+                if(method.getName().equals(calledMethod.getName()) &&
+                        method.getReturnType().equals(calledMethod.getReturnType())) {
                     target = interfaze.getName();
                 }
             }
@@ -295,9 +293,9 @@ public class SecurityInterceptor implements Ordered {
      * @see MethodMapping
      */
     private MethodMappingList doAuthorisation(final String className, final String methodName, final Object[] arguments)
-        throws AuthorizationException, WebserverSystemException, ResourceNotFoundException,
-        MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
-        InvalidXmlException {
+            throws AuthorizationException, WebserverSystemException, ResourceNotFoundException,
+            MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
+            InvalidXmlException {
 
         MethodMapping methodMapping = null;
         MethodMappingList methodMappings = null;
@@ -310,31 +308,30 @@ public class SecurityInterceptor implements Ordered {
             // this?
             // FIXME: one PDP call for all method mappings
             boolean methodMappingsExist = false;
-            for (int i = 0; i < methodMappings.sizeBefore(); i++) {
+            for(int i = 0; i < methodMappings.sizeBefore(); i++) {
                 methodMappingsExist = true;
                 methodMapping = methodMappings.getBefore(i);
                 final List<Map<String, String>> requests =
-                    getInvocationParser().buildRequestsList(arguments, methodMapping);
+                        getInvocationParser().buildRequestsList(arguments, methodMapping);
 
                 // try to authorize the user
                 // throws an AuthorizationException if not authorized
                 final boolean[] accessAllowedArray = getPdp().evaluateRequestList(requests);
-                if (accessAllowedArray == null || accessAllowedArray.length == 0) {
+                if(accessAllowedArray == null || accessAllowedArray.length == 0) {
                     throw createAuthorizationException(className, methodName);
                 }
-                for (final boolean anAccessAllowedArray : accessAllowedArray) {
-                    if (!anAccessAllowedArray) {
+                for(final boolean anAccessAllowedArray : accessAllowedArray) {
+                    if(! anAccessAllowedArray) {
                         throw createAuthorizationException(className, methodName);
                     }
                 }
             }
-            if (!methodMappingsExist) {
+            if(! methodMappingsExist) {
                 getPdp().touch();
             }
 
             return methodMappings;
-        }
-        catch (final AuthorizationException e) {
+        } catch(final AuthorizationException e) {
             // in case of a retrieve request for a versionized object (currently
             // container and item), the failed check says it is not allowed for
             // the user to retrieve the specified version if it has been
@@ -351,25 +348,23 @@ public class SecurityInterceptor implements Ordered {
             // this is NOT true for retrieve-content! And for retrieve-item it
             // is NOT true if the default-policies have to be changed!!!
 
-            if (methodName.startsWith("retrieve")
-                && PATTERN_CHECK_MISSING_VERSION_NUMBER.matcher((CharSequence) arguments[0]).find()
-                && (className.equals(CONTAINER_HANDLER_CLASS_NAME) || className.equals(ITEM_HANDLER_CLASS_NAME))) {
+            if(methodName.startsWith("retrieve") &&
+                    PATTERN_CHECK_MISSING_VERSION_NUMBER.matcher((CharSequence) arguments[0]).find() &&
+                    (className.equals(CONTAINER_HANDLER_CLASS_NAME) || className.equals(ITEM_HANDLER_CLASS_NAME))) {
 
                 try {
-                    final String latestReleaseVersionNumber =
-                        getTsu().getPropertiesElements((String) arguments[0],
+                    final String latestReleaseVersionNumber = getTsu().getPropertiesElements((String) arguments[0],
                             TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
-                    if (latestReleaseVersionNumber == null) {
+                    if(latestReleaseVersionNumber == null) {
                         throw e;
                     }
                     arguments[0] = arguments[0] + ":" + latestReleaseVersionNumber;
                     doAuthorisation(className, methodName, arguments);
-                }
-                catch (final TripleStoreSystemException ex) {
-                    if (LOGGER.isWarnEnabled()) {
+                } catch(final TripleStoreSystemException ex) {
+                    if(LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on accesing triple store.");
                     }
-                    if (LOGGER.isDebugEnabled()) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on accesing triple store.", e);
                     }
                     throw e;
@@ -377,30 +372,22 @@ public class SecurityInterceptor implements Ordered {
 
                 UserContext.setRestrictedPermissions(UserContext.RESTRICTED_PERMISSION_RELEASES_ONLY);
                 return methodMappings;
-            }
-            else {
+            } else {
                 throw e;
             }
-        }
-        catch (final MissingMethodParameterException e) {
+        } catch(final MissingMethodParameterException e) {
             throw e;
-        }
-        catch (final MissingAttributeValueException e) {
+        } catch(final MissingAttributeValueException e) {
             throw e;
-        }
-        catch (final MissingElementValueException e) {
+        } catch(final MissingElementValueException e) {
             throw e;
-        }
-        catch (final InvalidXmlException e) {
+        } catch(final InvalidXmlException e) {
             throw e;
-        }
-        catch (final ResourceNotFoundException e) {
+        } catch(final ResourceNotFoundException e) {
             throw determineResourceNotFoundException(methodMapping, e);
-        }
-        catch (final WebserverSystemException e) {
+        } catch(final WebserverSystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new WebserverSystemException(INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION, e);
         }
     }
@@ -414,10 +401,10 @@ public class SecurityInterceptor implements Ordered {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static AuthorizationException createAuthorizationException(final String className, final String methodName)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
 
-        return new AuthorizationException(StringUtility.format("Access denied", className, methodName, UserContext
-            .getHandle(), UserContext.getId()));
+        return new AuthorizationException(StringUtility
+                .format("Access denied", className, methodName, UserContext.getHandle(), UserContext.getId()));
     }
 
     /**
@@ -429,32 +416,32 @@ public class SecurityInterceptor implements Ordered {
      * @return Returns the determined sub class instance or the original exception if no sub class could be determined.
      * @throws WebserverSystemException Thrown in case of an identified error with a method mapping.
      */
-    private static ResourceNotFoundException determineResourceNotFoundException(
-        final MethodMapping methodMapping, final ResourceNotFoundException e) throws WebserverSystemException {
+    private static ResourceNotFoundException determineResourceNotFoundException(final MethodMapping methodMapping,
+                                                                                final ResourceNotFoundException e)
+            throws WebserverSystemException {
 
-        if (methodMapping == null) {
+        if(methodMapping == null) {
             throw new WebserverSystemException("No method mapping provided.");
         }
 
-        if (!e.getClass().equals(ResourceNotFoundException.class)) {
+        if(! e.getClass().equals(ResourceNotFoundException.class)) {
             return e;
         }
 
         final String exceptionName = methodMapping.getResourceNotFoundException();
-        if (exceptionName == null) {
-            final String errorMsg =
-                StringUtility.format("Error in method mapping, missing specified" + " ResourceNotFoundException",
-                    methodMapping.getId());
+        if(exceptionName == null) {
+            final String errorMsg = StringUtility
+                    .format("Error in method mapping, missing specified" + " ResourceNotFoundException",
+                            methodMapping.getId());
             throw new WebserverSystemException(errorMsg);
         }
         try {
             final Constructor<ResourceNotFoundException> constructor =
-                (Constructor<ResourceNotFoundException>) Class.forName(exceptionName).getConstructor(
-                    new Class[] { String.class });
+                    (Constructor<ResourceNotFoundException>) Class.forName(exceptionName)
+                            .getConstructor(new Class[]{String.class});
             final String msg = e.getMessage();
             return constructor.newInstance(msg);
-        }
-        catch (final Exception e1) {
+        } catch(final Exception e1) {
             final StringBuilder errorMsg = new StringBuilder("Error in method mapping. Specified");
             errorMsg.append(" ResourceNotFoundException is unknown or cannot ");
             errorMsg.append(" be instantiated using the constructor ");

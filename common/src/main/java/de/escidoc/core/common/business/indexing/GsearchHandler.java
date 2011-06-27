@@ -80,54 +80,49 @@ public class GsearchHandler {
      * @param resource  String resource.
      * @param index     String name of the index.
      * @param pidSuffix PidSuffix for latestVersion, latestRelease if both is in index.
-     * @param indexFulltextVisibilities
      * @return String response
      * @throws ApplicationServerSystemException
      *          e
      */
-    public String requestIndexing(
-        final String resource, String index, final String pidSuffix, final String indexFulltextVisibilities)
-        throws ApplicationServerSystemException {
-        Set<String> indexNames = new HashSet<String>();
-        StringBuilder responses = new StringBuilder();
-        StringBuilder exceptions = new StringBuilder();
-        if (index == null || index.isEmpty()) {
+    public String requestIndexing(final String resource, final String index, final String pidSuffix,
+                                  final String indexFulltextVisibilities) throws ApplicationServerSystemException {
+        final Set<String> indexNames = new HashSet<String>();
+        final StringBuilder responses = new StringBuilder();
+        final StringBuilder exceptions = new StringBuilder();
+        if(index == null || index.isEmpty()) {
             indexNames.addAll(getIndexConfigurations().keySet());
-        }
-        else {
+        } else {
             indexNames.add(index);
         }
-        for (String indexName : indexNames) {
+        for(final String indexName : indexNames) {
             String updateIndexParams =
-                Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_UPDATE_INDEX_PARAMS).replaceFirst(indexName);
+                    Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_UPDATE_INDEX_PARAMS).replaceFirst(indexName);
             updateIndexParams = Constants.VALUE_MATCHER.reset(updateIndexParams).replaceFirst(resource);
             try {
                 final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
 
                 String stylesheetParameters =
-                    Constants.SUPPORTED_MIMETYPES_MATCHER
-                        .reset(Constants.GSEARCH_STYLESHEET_PARAMS).replaceFirst(
-                            URLEncoder.encode(getRepositoryInfo().get("SupportedMimeTypes"),
-                                XmlUtility.CHARACTER_ENCODING));
-                stylesheetParameters =
-                    pidSuffix == null || pidSuffix.length() == 0 ? Constants.PID_VERSION_IDENTIFIER_TOTAL_MATCHER
-                        .reset(stylesheetParameters).replaceFirst("") : Constants.PID_VERSION_IDENTIFIER_MATCHER.reset(
-                        stylesheetParameters).replaceFirst(pidSuffix);
-                stylesheetParameters =
-                    indexFulltextVisibilities == null || indexFulltextVisibilities.length() == 0 ? Constants.INDEX_FULLTEXT_VISIBILITIES_TOTAL_MATCHER
-                        .reset(stylesheetParameters).replaceFirst("") : Constants.INDEX_FULLTEXT_VISIBILITIES_MATCHER
-                        .reset(stylesheetParameters).replaceFirst(
-                            URLEncoder.encode(indexFulltextVisibilities, XmlUtility.CHARACTER_ENCODING));
+                        Constants.SUPPORTED_MIMETYPES_MATCHER.reset(Constants.GSEARCH_STYLESHEET_PARAMS).replaceFirst(
+                                URLEncoder.encode(getRepositoryInfo().get("SupportedMimeTypes"),
+                                        XmlUtility.CHARACTER_ENCODING));
+                stylesheetParameters = pidSuffix == null || pidSuffix.length() == 0 ?
+                        Constants.PID_VERSION_IDENTIFIER_TOTAL_MATCHER.reset(stylesheetParameters).replaceFirst("") :
+                        Constants.PID_VERSION_IDENTIFIER_MATCHER.reset(stylesheetParameters).replaceFirst(pidSuffix);
+                stylesheetParameters = indexFulltextVisibilities == null || indexFulltextVisibilities.length() == 0 ?
+                        Constants.INDEX_FULLTEXT_VISIBILITIES_TOTAL_MATCHER.reset(stylesheetParameters)
+                                .replaceFirst("") :
+                        Constants.INDEX_FULLTEXT_VISIBILITIES_MATCHER.reset(stylesheetParameters).replaceFirst(
+                                URLEncoder.encode(indexFulltextVisibilities, XmlUtility.CHARACTER_ENCODING));
                 updateIndexParams += stylesheetParameters;
 
                 connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("requesting " + updateIndexParams + " from " + gsearchUrl);
                 }
 
                 final String response =
-                    connectionUtility.getRequestURLAsString(new URL(gsearchUrl + updateIndexParams));
-                if (LOGGER.isDebugEnabled()) {
+                        connectionUtility.getRequestURLAsString(new URL(gsearchUrl + updateIndexParams));
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("response: " + response);
                 }
 
@@ -135,15 +130,13 @@ public class GsearchHandler {
                 handleGsearchException(indexName, updateIndexParams, response, 0);
 
                 responses.append(response).append('\n');
-            }
-            catch (final IOException e) {
+            } catch(final IOException e) {
                 exceptions.append(e.getMessage()).append('\n');
-            }
-            catch (final WebserverSystemException e) {
+            } catch(final WebserverSystemException e) {
                 exceptions.append(e.getMessage()).append('\n');
             }
         }
-        if (exceptions.length() > 0) {
+        if(exceptions.length() > 0) {
             throw new ApplicationServerSystemException("Error while indexing resource." + exceptions);
         }
         return responses.toString();
@@ -164,36 +157,34 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *          e
      */
-    public String requestDeletion(String resource, String index, final String pidSuffix)
-        throws ApplicationServerSystemException {
-        Set<String> indexNames = new HashSet<String>();
-        StringBuilder responses = new StringBuilder();
-        StringBuilder exceptions = new StringBuilder();
-        if (pidSuffix != null) {
+    public String requestDeletion(String resource, final String index, final String pidSuffix)
+            throws ApplicationServerSystemException {
+        final Set<String> indexNames = new HashSet<String>();
+        final StringBuilder responses = new StringBuilder();
+        final StringBuilder exceptions = new StringBuilder();
+        if(pidSuffix != null) {
             resource = resource + ':' + pidSuffix;
         }
-        if (index == null || index.isEmpty()) {
+        if(index == null || index.isEmpty()) {
             indexNames.addAll(getIndexConfigurations().keySet());
-        }
-        else {
+        } else {
             indexNames.add(index);
         }
-        for (String indexName : indexNames) {
+        for(final String indexName : indexNames) {
             String deleteIndexParams =
-                Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_DELETE_INDEX_PARAMS).replaceFirst(indexName);
-            deleteIndexParams =
-                Constants.VALUE_MATCHER.reset(deleteIndexParams).replaceFirst(
-                    XmlUtility.getObjidWithoutVersion(XmlUtility.getIdFromURI(resource)));
+                    Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_DELETE_INDEX_PARAMS).replaceFirst(indexName);
+            deleteIndexParams = Constants.VALUE_MATCHER.reset(deleteIndexParams)
+                    .replaceFirst(XmlUtility.getObjidWithoutVersion(XmlUtility.getIdFromURI(resource)));
 
             try {
                 final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
                 connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("requesting " + deleteIndexParams + " from " + gsearchUrl);
                 }
                 final String response =
-                    connectionUtility.getRequestURLAsString(new URL(gsearchUrl + deleteIndexParams));
-                if (LOGGER.isDebugEnabled()) {
+                        connectionUtility.getRequestURLAsString(new URL(gsearchUrl + deleteIndexParams));
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("response: " + response);
                 }
 
@@ -201,12 +192,11 @@ public class GsearchHandler {
                 handleGsearchException(indexName, deleteIndexParams, response, 0);
 
                 responses.append(response).append('\n');
-            }
-            catch (final Exception e) {
+            } catch(final Exception e) {
                 exceptions.append(e.getMessage()).append('\n');
             }
         }
-        if (exceptions.length() > 0) {
+        if(exceptions.length() > 0) {
             throw new ApplicationServerSystemException(exceptions.toString());
         }
         return responses.toString();
@@ -226,41 +216,39 @@ public class GsearchHandler {
      *          e
      */
     public String requestCreateEmpty(String index) throws ApplicationServerSystemException {
-        if (index == null) {
+        if(index == null) {
             index = "";
         }
         final String createEmptyParams =
-            Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS).replaceFirst(index);
+                Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS).replaceFirst(index);
         try {
             final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
             String response = connectionUtility.getRequestURLAsString(new URL(gsearchUrl + createEmptyParams));
             // Catch Exceptions
-            if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
-                if (Constants.LOCK_OBTAIN_TIMEOUT_MATCHER.reset(response).matches()) {
+            if(Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+                if(Constants.LOCK_OBTAIN_TIMEOUT_MATCHER.reset(response).matches()) {
                     deleteLock(response);
                     response = connectionUtility.getRequestURLAsString(new URL(gsearchUrl + createEmptyParams));
-                    if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+                    if(Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                         deleteIndexDirs();
                     }
-                    if (LOGGER.isDebugEnabled()) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("requesting " + createEmptyParams + " from " + gsearchUrl);
                     }
                     response = connectionUtility.getRequestURLAsString(new URL(gsearchUrl + createEmptyParams));
-                    if (LOGGER.isDebugEnabled()) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("response: " + response);
                     }
-                    if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+                    if(Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                         throw new Exception(response);
                     }
-                }
-                else {
+                } else {
                     throw new Exception(response);
                 }
             }
             return response;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -278,40 +266,38 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *          e
      */
-    public String requestOptimize(String index) throws ApplicationServerSystemException {
-        Set<String> indexNames = new HashSet<String>();
-        StringBuilder responses = new StringBuilder();
-        StringBuilder exceptions = new StringBuilder();
-        if (index == null || index.isEmpty()) {
+    public String requestOptimize(final String index) throws ApplicationServerSystemException {
+        final Set<String> indexNames = new HashSet<String>();
+        final StringBuilder responses = new StringBuilder();
+        final StringBuilder exceptions = new StringBuilder();
+        if(index == null || index.isEmpty()) {
             indexNames.addAll(getIndexConfigurations().keySet());
-        }
-        else {
+        } else {
             indexNames.add(index);
         }
-        for (String indexName : indexNames) {
+        for(final String indexName : indexNames) {
             final String optimizeIndexParams =
-                Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_OPTIMIZE_INDEX_PARAMS).replaceFirst(indexName);
+                    Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_OPTIMIZE_INDEX_PARAMS).replaceFirst(indexName);
             try {
                 final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
                 connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("requesting " + optimizeIndexParams + " from " + gsearchUrl);
                 }
                 final String response =
-                    connectionUtility.getRequestURLAsString(new URL(gsearchUrl + optimizeIndexParams));
-                if (LOGGER.isDebugEnabled()) {
+                        connectionUtility.getRequestURLAsString(new URL(gsearchUrl + optimizeIndexParams));
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("response: " + response);
                 }
                 // Catch Exceptions
                 handleGsearchException(indexName, optimizeIndexParams, response, 0);
 
                 responses.append(response).append('\n');
-            }
-            catch (final Exception e) {
+            } catch(final Exception e) {
                 exceptions.append(e.getMessage()).append('\n');
             }
         }
-        if (exceptions.length() > 0) {
+        if(exceptions.length() > 0) {
             throw new ApplicationServerSystemException(exceptions.toString());
         }
         return responses.toString();
@@ -332,11 +318,10 @@ public class GsearchHandler {
         try {
             final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
-            final String response =
-                connectionUtility.getRequestURLAsString(new URL(gsearchUrl
-                    + Constants.GSEARCH_GET_INDEX_CONFIGURATION_PARAMS));
+            final String response = connectionUtility
+                    .getRequestURLAsString(new URL(gsearchUrl + Constants.GSEARCH_GET_INDEX_CONFIGURATION_PARAMS));
             // Catch Exceptions
-            if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+            if(Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                 throw new Exception(response);
             }
             final StaxParser sp = new StaxParser();
@@ -345,8 +330,7 @@ public class GsearchHandler {
 
             sp.parse(new ByteArrayInputStream(response.getBytes(XmlUtility.CHARACTER_ENCODING)));
             return handler.getGsearchIndexConfiguration();
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -366,11 +350,10 @@ public class GsearchHandler {
         try {
             final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
-            final String response =
-                connectionUtility.getRequestURLAsString(new URL(gsearchUrl
-                    + Constants.GSEARCH_GET_REPOSITORY_INFO_PARAMS));
+            final String response = connectionUtility
+                    .getRequestURLAsString(new URL(gsearchUrl + Constants.GSEARCH_GET_REPOSITORY_INFO_PARAMS));
             // Catch Exceptions
-            if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+            if(Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                 throw new Exception(response);
             }
             final StaxParser sp = new StaxParser();
@@ -379,8 +362,7 @@ public class GsearchHandler {
 
             sp.parse(new ByteArrayInputStream(response.getBytes(XmlUtility.CHARACTER_ENCODING)));
             return handler.getGsearchRepositoryInfo();
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -391,7 +373,7 @@ public class GsearchHandler {
      *          e
      */
     public Map<String, Map<String, String>> getIndexConfigurations() throws ApplicationServerSystemException {
-        if (this.indexConfigurations == null) {
+        if(this.indexConfigurations == null) {
             this.indexConfigurations = requestIndexConfiguration();
         }
         return this.indexConfigurations;
@@ -403,7 +385,7 @@ public class GsearchHandler {
      *          e
      */
     public Map<String, String> getRepositoryInfo() throws ApplicationServerSystemException {
-        if (this.repositoryInfo == null) {
+        if(this.repositoryInfo == null) {
             this.repositoryInfo = requestRepositoryInfo();
         }
         return this.repositoryInfo;
@@ -415,10 +397,10 @@ public class GsearchHandler {
      *          e
      */
     public Set<String> getSupportedMimeTypes() throws ApplicationServerSystemException {
-        if (this.supportedMimeTypes == null) {
+        if(this.supportedMimeTypes == null) {
             this.supportedMimeTypes = new HashSet<String>();
             getRepositoryInfo();
-            if (repositoryInfo.get("SupportedMimeTypes") != null) {
+            if(repositoryInfo.get("SupportedMimeTypes") != null) {
                 final String[] supportedMimeTypesArr = SPLIT_PATTERN.split(repositoryInfo.get("SupportedMimeTypes"));
                 supportedMimeTypes.addAll(Arrays.asList(supportedMimeTypesArr));
             }
@@ -434,61 +416,56 @@ public class GsearchHandler {
      * @param request  request that was send to gsearch
      * @param response response thatr was returned by gsearch
      * @param retries  numer of retries already executed
-     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     private void handleGsearchException(final String index, final String request, String response, int retries)
-        throws ApplicationServerSystemException {
+            throws ApplicationServerSystemException {
         try {
-            if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+            if(Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                 String myIndex = index;
                 // If index-directory does not exist yet
                 // (first time indexer runs)
                 // create empty index directory and then recall
                 // gsearch
-                if (Constants.NO_INDEX_DIR_MATCHER.reset(response).matches()) {
+                if(Constants.NO_INDEX_DIR_MATCHER.reset(response).matches()) {
                     final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
-                    if (StringUtils.isEmpty(myIndex)) {
-                        if (!Constants.NO_INDEX_DIR_INDEX_NAME_MATCHER.reset(response).matches()) {
+                    if(StringUtils.isEmpty(myIndex)) {
+                        if(! Constants.NO_INDEX_DIR_INDEX_NAME_MATCHER.reset(response).matches()) {
                             throw new ApplicationServerSystemException(response);
                         }
                         myIndex = Constants.NO_INDEX_DIR_INDEX_NAME_MATCHER.group(1);
-                        if (StringUtils.isEmpty(myIndex)) {
+                        if(StringUtils.isEmpty(myIndex)) {
                             throw new ApplicationServerSystemException(response);
                         }
                     }
                     final String createEmptyParams =
-                        Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS).replaceFirst(
-                            myIndex);
-                    if (LOGGER.isDebugEnabled()) {
+                            Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS)
+                                    .replaceFirst(myIndex);
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("creating empty index");
                     }
                     response = connectionUtility.getRequestURLAsString(new URL(gsearchUrl + createEmptyParams));
-                    if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+                    if(Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                         throw new ApplicationServerSystemException(response);
                     }
-                    if (LOGGER.isDebugEnabled()) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("retrying request " + request);
                     }
                     response = connectionUtility.getRequestURLAsString(new URL(gsearchUrl + request));
-                    if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
-                        if (retries < MAX_ERROR_RETRIES) {
+                    if(Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+                        if(retries < MAX_ERROR_RETRIES) {
                             retries++;
                             handleGsearchException(index, request, response, retries);
-                        }
-                        else {
+                        } else {
                             throw new ApplicationServerSystemException(response);
                         }
                     }
-                }
-                else {
+                } else {
                     throw new ApplicationServerSystemException(response);
                 }
             }
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
-        }
-        catch (final WebserverSystemException e) {
+        } catch(final WebserverSystemException e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -504,12 +481,11 @@ public class GsearchHandler {
             lockfilePath = lockfilePath.replaceFirst("(?s)<.*", "");
             final File file = new File(lockfilePath);
             file.delete();
-        }
-        catch (final Exception e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on deleting lock.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on deleting lock.", e);
             }
         }
@@ -524,16 +500,15 @@ public class GsearchHandler {
             final String indexRootDirPath = jbossDataDirPath + "/index/lucene";
             final File indexRootDir = new File(indexRootDirPath);
             final String[] indexes = indexRootDir.list();
-            for (final String indexe : indexes) {
+            for(final String indexe : indexes) {
                 final File indexDir = new File(indexRootDir, indexe);
                 deleteDir(indexDir);
             }
-        }
-        catch (final Exception e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on deleting index directories.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on deleting index directories.", e);
             }
         }
@@ -546,13 +521,12 @@ public class GsearchHandler {
      * @return boolean if delete was successful
      */
     public static boolean deleteDir(final File path) {
-        if (path.exists()) {
+        if(path.exists()) {
             final File[] files = path.listFiles();
-            for (final File file : files) {
-                if (file.isDirectory()) {
+            for(final File file : files) {
+                if(file.isDirectory()) {
                     deleteDir(file);
-                }
-                else {
+                } else {
                     file.delete();
                 }
             }

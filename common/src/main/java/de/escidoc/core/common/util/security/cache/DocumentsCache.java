@@ -66,12 +66,13 @@ public class DocumentsCache {
      * @throws ParserConfigurationException Thrown in case of an error in parser configuration
      * @throws SAXException                 Thrown in case of a parse error
      */
-    @Cacheable(cacheName = "documentsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
-    public Document retrieveDocument(final Object documentData) throws IOException, ParserConfigurationException,
-        SAXException {
+    @Cacheable(cacheName = "documentsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
+            properties = {@Property(name = "includeMethod", value = "false")}))
+    public Document retrieveDocument(final Object documentData)
+            throws IOException, ParserConfigurationException, SAXException {
         final DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        Document document =
-            builder.parse(new ByteArrayInputStream(((String) documentData).getBytes(XmlUtility.CHARACTER_ENCODING)));
+        final Document document = builder.parse(
+                new ByteArrayInputStream(((String) documentData).getBytes(XmlUtility.CHARACTER_ENCODING)));
         return document;
     }
 }

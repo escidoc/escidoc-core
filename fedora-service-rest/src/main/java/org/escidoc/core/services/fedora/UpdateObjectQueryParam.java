@@ -15,7 +15,7 @@ public final class UpdateObjectQueryParam {
         return label;
     }
 
-    public void setLabel(String label) {
+    public void setLabel(final String label) {
         this.label = label;
     }
 
@@ -23,7 +23,7 @@ public final class UpdateObjectQueryParam {
         return logMessage;
     }
 
-    public void setLogMessage(String logMessage) {
+    public void setLogMessage(final String logMessage) {
         this.logMessage = logMessage;
     }
 
@@ -31,7 +31,7 @@ public final class UpdateObjectQueryParam {
         return ownerId;
     }
 
-    public void setOwnerId(String ownerId) {
+    public void setOwnerId(final String ownerId) {
         this.ownerId = ownerId;
     }
 
@@ -39,7 +39,7 @@ public final class UpdateObjectQueryParam {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(final String state) {
         this.state = state;
     }
 
@@ -47,7 +47,7 @@ public final class UpdateObjectQueryParam {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(String lastModifiedDate) {
+    public void setLastModifiedDate(final String lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 }

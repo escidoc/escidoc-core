@@ -225,7 +225,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
         final String foxml = getFOXML();
         final IngestPathParam path = new IngestPathParam();
         final IngestQueryParam query = new IngestQueryParam();
-        String returnValue;
+        final String returnValue;
         try {
             returnValue = this.fedoraServiceClient.ingest(path, query, foxml);
         } catch(Exception e) {

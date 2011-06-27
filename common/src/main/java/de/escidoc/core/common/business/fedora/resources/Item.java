@@ -111,26 +111,26 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws IntegritySystemException Thrown if there is an integrity error with the addressed object.
      */
     public Item(final String id) throws StreamNotFoundException, TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException, IntegritySystemException, ResourceNotFoundException, FedoraSystemException,
-        ItemNotFoundException {
+            XmlParserSystemException, IntegritySystemException, ResourceNotFoundException, FedoraSystemException,
+            ItemNotFoundException {
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
-            expandPropertiesNamesMapping(getPropertiesNamesMapping()));
+                expandPropertiesNamesMapping(getPropertiesNamesMapping()));
         setHref(Constants.ITEM_URL_BASE + getId());
         init();
     }
 
-    private void init() throws WebserverSystemException, FedoraSystemException, IntegritySystemException,
-        StreamNotFoundException, TripleStoreSystemException, ItemNotFoundException, ComponentNotFoundException {
+    private void init()
+            throws WebserverSystemException, FedoraSystemException, IntegritySystemException, StreamNotFoundException,
+            TripleStoreSystemException, ItemNotFoundException, ComponentNotFoundException {
         initDatastreams(getDatastreamProfiles());
-        if (!checkResourceType(ResourceType.ITEM)) {
+        if(! checkResourceType(ResourceType.ITEM)) {
             throw new ItemNotFoundException("Item with the provided objid '" + this.getId() + "' does not exit.");
         }
         setTitle(getProperty("title"));
         try {
             initComponents();
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -140,8 +140,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @param c The new Component. (The Component has not to be (but could) persist, this is done with with the Item.)
      */
-    public void addComponent(final Component c) throws FedoraSystemException, WebserverSystemException,
-        IntegritySystemException, EncodingSystemException {
+    public void addComponent(final Component c)
+            throws FedoraSystemException, WebserverSystemException, IntegritySystemException, EncodingSystemException {
 
         addComponentToRelsExt(c.getId());
         this.components.put(c.getId(), c);
@@ -154,8 +154,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @param componentId This has to be a persistent Component. This Component has already to exists within the
      *                    repository!
      */
-    public void addComponent(final String componentId) throws FedoraSystemException, WebserverSystemException,
-        IntegritySystemException, EncodingSystemException {
+    public void addComponent(final String componentId)
+            throws FedoraSystemException, WebserverSystemException, IntegritySystemException, EncodingSystemException {
 
         addComponentToRelsExt(componentId);
         this.alteredComponent.add(componentId);
@@ -166,9 +166,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @param componentId The id of the Component which is to delete from the Item.
      */
-    public void deleteComponent(final String componentId) throws LockingException, ComponentNotFoundException,
-        InvalidStatusException, SystemException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    public void deleteComponent(final String componentId)
+            throws LockingException, ComponentNotFoundException, InvalidStatusException, SystemException,
+            IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+            WebserverSystemException {
 
         deleteComponent(getComponent(componentId));
     }
@@ -178,9 +179,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @param c The Component which is to delete from the Item.
      */
-    public void deleteComponent(final FedoraResource c) throws LockingException, ComponentNotFoundException,
-        InvalidStatusException, WebserverSystemException, TripleStoreSystemException, FedoraSystemException,
-        XmlParserSystemException, IntegritySystemException, EncodingSystemException {
+    public void deleteComponent(final FedoraResource c)
+            throws LockingException, ComponentNotFoundException, InvalidStatusException, WebserverSystemException,
+            TripleStoreSystemException, FedoraSystemException, XmlParserSystemException, IntegritySystemException,
+            EncodingSystemException {
 
         final String componentId = c.getId();
         removeComponent(componentId);
@@ -194,24 +196,23 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @param componentId The id of the component.
      * @return Component.
      */
-    public Component getComponent(final String componentId) throws ComponentNotFoundException,
-        WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
-        XmlParserSystemException {
+    public Component getComponent(final String componentId)
+            throws ComponentNotFoundException, WebserverSystemException, FedoraSystemException,
+            TripleStoreSystemException, IntegritySystemException, XmlParserSystemException {
 
         // check if the Component is part of this Item.
-        if (!this.components.containsKey(componentId)) {
-            throw new ComponentNotFoundException("Component with objid='" + componentId
-                + "' is not part of Item with objid='" + getId() + '\'');
+        if(! this.components.containsKey(componentId)) {
+            throw new ComponentNotFoundException(
+                    "Component with objid='" + componentId + "' is not part of Item with objid='" + getId() + '\'');
         }
 
         Component c = this.components.get(componentId);
 
         // load Component
-        if (c == null) {
+        if(c == null) {
             try {
                 c = new Component(componentId, getId(), getVersionDate());
-            }
-            catch (final ResourceNotFoundException e) {
+            } catch(final ResourceNotFoundException e) {
                 throw new ComponentNotFoundException(e);
             }
             this.components.put(componentId, c);
@@ -224,8 +225,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @return A map which contains unique 'content-category' entries associated with a component object. May be used
      *         for other identifications which are possibly unique in item scope.
      */
-    public Map<String, Component> getComponentsByLocalName() throws ComponentNotFoundException,
-        WebserverSystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException {
+    public Map<String, Component> getComponentsByLocalName()
+            throws ComponentNotFoundException, WebserverSystemException, FedoraSystemException,
+            TripleStoreSystemException, XmlParserSystemException {
 
         initComponents();
         return this.componentsByLocalName;
@@ -237,12 +239,13 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @param componentName The name of the Component.
      * @return Component
      */
-    public Component getComponentByLocalName(final String componentName) throws ComponentNotFoundException,
-        WebserverSystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException {
+    public Component getComponentByLocalName(final String componentName)
+            throws ComponentNotFoundException, WebserverSystemException, FedoraSystemException,
+            TripleStoreSystemException, XmlParserSystemException {
 
         initComponents();
         final Component c = this.componentsByLocalName.get(componentName);
-        if (c == null) {
+        if(c == null) {
             throw new ComponentNotFoundException("Component with name '" + componentName + "' could not be found.");
         }
         return c;
@@ -269,16 +272,15 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @return Component IDs
      */
-    public Collection<String> getComponentIds() throws XmlParserSystemException, TripleStoreSystemException,
-        WebserverSystemException {
+    public Collection<String> getComponentIds()
+            throws XmlParserSystemException, TripleStoreSystemException, WebserverSystemException {
 
         final Collection<String> componentIds;
 
-        if (this.components == null) {
-            if (isLatestVersion()) {
+        if(this.components == null) {
+            if(isLatestVersion()) {
                 componentIds = getTripleStoreUtility().getComponents(getId());
-            }
-            else {
+            } else {
                 final List<String> predicates = new ArrayList<String>();
                 predicates.add(Constants.STRUCTURAL_RELATIONS_NS_URI + "component");
                 final StaxParser sp = new StaxParser();
@@ -286,14 +288,12 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                 sp.addHandler(rerle);
                 try {
                     sp.parse(getRelsExt().getStream());
-                }
-                catch (final Exception e) {
+                } catch(final Exception e) {
                     throw new XmlParserSystemException("Unexpected exception.", e);
                 }
                 componentIds = rerle.getEntries().get(Constants.STRUCTURAL_RELATIONS_NS_URI + "component");
             }
-        }
-        else {
+        } else {
             componentIds = this.components.keySet();
         }
 
@@ -305,20 +305,21 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @throws ComponentNotFoundException Thrown if Component of Item could no t be found.
      */
-    private void initComponents() throws ComponentNotFoundException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+    private void initComponents()
+            throws ComponentNotFoundException, TripleStoreSystemException, XmlParserSystemException,
+            WebserverSystemException {
 
-        if (this.components == null) {
+        if(this.components == null) {
             final Iterator<String> idsIter = getComponentIds().iterator();
             this.componentsByLocalName = new HashMap<String, Component>();
             this.components = new HashMap<String, Component>();
 
-            while (idsIter.hasNext()) {
+            while(idsIter.hasNext()) {
                 final String id = idsIter.next();
                 this.components.put(id, null);
                 final String type = this.getProperty(TripleStoreUtility.PROP_CONTENT_CATEGORY);
 
-                if (type != null) {
+                if(type != null) {
                     this.componentsByLocalName.put(type, null);
                 }
             }
@@ -333,8 +334,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         sp.addHandler(dch);
         try {
             sp.parse(getDc().getStream());
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new XmlParserSystemException("Unexpected exception.", e);
         }
         return dch.getPropertiesMap();
@@ -349,12 +349,11 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      */
     public Datastream getDc() throws FedoraSystemException, WebserverSystemException {
 
-        if (this.dc == null) {
+        if(this.dc == null) {
             final Datastream ds;
             try {
                 ds = new Datastream("DC", getId(), getVersionDate());
-            }
-            catch (final StreamNotFoundException e) {
+            } catch(final StreamNotFoundException e) {
                 throw new WebserverSystemException(e);
             }
             // ,
@@ -383,7 +382,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
 
         final Datastream curDs = getDc();
 
-        if (!ds.equals(curDs)) {
+        if(! ds.equals(curDs)) {
 
             this.dc = ds;
             ds.merge();
@@ -411,16 +410,15 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         // fedora
 
         final Datastream curDs = getCts();
-        if (!ds.equals(curDs)) {
+        if(! ds.equals(curDs)) {
             try {
                 ds.merge();
                 this.cts = ds;
-            }
-            catch (final FedoraSystemException e) {
-                if (LOGGER.isWarnEnabled()) {
+            } catch(final FedoraSystemException e) {
+                if(LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on merging datastream.");
                 }
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on merging datastream.", e);
                 }
                 // this is not an update; its a create
@@ -447,8 +445,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * #setMdRecords(java.util.HashMap)
      */
     @Override
-    public void setMdRecords(final Map<String, Datastream> mdRecords) throws WebserverSystemException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException {
+    public void setMdRecords(final Map<String, Datastream> mdRecords)
+            throws WebserverSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+            TripleStoreSystemException {
         // check if mdRecords is set, contains all metadata
         // datastreams, is equal to given mdRecords and save every
         // changed datastream to fedora
@@ -456,15 +455,14 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         // get list of names of data streams with alternateId = "metadata"
         final Set<String> namesInFedora = getMdRecords().keySet();
         // delete data streams which are in fedora but not in mdRecords
-        for (final String nameInFedora : namesInFedora) {
-            if (!mdRecords.containsKey(nameInFedora)) {
+        for(final String nameInFedora : namesInFedora) {
+            if(! mdRecords.containsKey(nameInFedora)) {
                 final Datastream fedoraDs;
                 try {
                     fedoraDs = getMdRecord(nameInFedora);
-                }
-                catch (final MdRecordNotFoundException e) {
-                    throw new IntegritySystemException("Can not find md-record previously found in item " + getId()
-                        + '.', e);
+                } catch(final MdRecordNotFoundException e) {
+                    throw new IntegritySystemException(
+                            "Can not find md-record previously found in item " + getId() + '.', e);
                 }
                 fedoraDs.delete();
                 // TODO ? remove it from this.mdrecords?
@@ -473,15 +471,15 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         }
         Set<Entry<String, Datastream>> mdRecordsEntrySet = mdRecords.entrySet();
         // create/activate data streams which are in mdRecords but not in fedora
-        for (final Entry<String, Datastream> entry : mdRecordsEntrySet) {
+        for(final Entry<String, Datastream> entry : mdRecordsEntrySet) {
             final String name = entry.getKey();
-            if (!namesInFedora.contains(name)) {
+            if(! namesInFedora.contains(name)) {
                 final Datastream currentMdRecord = entry.getValue();
                 setMdRecord(name, currentMdRecord);
             }
         }
         mdRecordsEntrySet = mdRecords.entrySet();
-        for (final Entry<String, Datastream> entry : mdRecordsEntrySet) {
+        for(final Entry<String, Datastream> entry : mdRecordsEntrySet) {
             setMdRecord(entry.getKey(), entry.getValue());
         }
 
@@ -500,9 +498,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      */
     @Override
     public Datastream getMdRecord(final String name) throws MdRecordNotFoundException {
-        if (!this.mdRecords.containsKey(name)) {
-            throw new MdRecordNotFoundException("Metadata record with name " + name + " not found in item " + getId()
-                + '.');
+        if(! this.mdRecords.containsKey(name)) {
+            throw new MdRecordNotFoundException(
+                    "Metadata record with name " + name + " not found in item " + getId() + '.');
         }
         return this.mdRecords.get(name);
     }
@@ -526,8 +524,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      */
 
     @Override
-    public void setMdRecord(final String name, final Datastream ds) throws WebserverSystemException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException {
+    public void setMdRecord(final String name, final Datastream ds)
+            throws WebserverSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+            TripleStoreSystemException {
         // check if the metadata datastream is set, is equal to ds and save to
         // fedora
 
@@ -539,67 +538,61 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         boolean isNew = true;
         Datastream curDs = null;
 
-        if (hasMdRecord(name)) {
+        if(hasMdRecord(name)) {
             try {
                 curDs = getMdRecord(name);
-            }
-            catch (final MdRecordNotFoundException e) {
+            } catch(final MdRecordNotFoundException e) {
                 throw new IntegritySystemException(e);
             }
             isNew = false;
         }
 
         boolean contentChanged = false;
-        if (!isNew) { // curDs is not null
+        if(! isNew) { // curDs is not null
             final String curMimeType = curDs.getMimeType();
             String curType = "";
             String curSchema = "";
             final List<String> altIds = curDs.getAlternateIDs();
-            if (altIds.size() > 1) {
+            if(altIds.size() > 1) {
                 curType = altIds.get(1);
-                if (altIds.size() > 2) {
+                if(altIds.size() > 2) {
                     curSchema = altIds.get(2);
                 }
             }
-            if (!ds.equals(curDs) || !type.equals(curType) || !schema.equals(curSchema)
-                || !mimeType.equals(curMimeType)) {
+            if(! ds.equals(curDs) || ! type.equals(curType) || ! schema.equals(curSchema) ||
+                    ! mimeType.equals(curMimeType)) {
                 contentChanged = true;
             }
         }
 
         try {
-            if (contentChanged || isNew) {
-                if (contentChanged && "escidoc".equals(name)) {
+            if(contentChanged || isNew) {
+                if(contentChanged && "escidoc".equals(name)) {
 
                     final Map<String, String> mdProperties = ds.getProperties();
-                    if (mdProperties != null) {
-                        if (mdProperties.containsKey("nsUri")) {
+                    if(mdProperties != null) {
+                        if(mdProperties.containsKey("nsUri")) {
                             final String nsUri = mdProperties.get("nsUri");
-                            final String dcNewContent =
-                                XmlUtility.createDC(nsUri, ds.toStringUTF8(), getId(),
+                            final String dcNewContent = XmlUtility.createDC(nsUri, ds.toStringUTF8(), getId(),
                                     getResourcePropertiesValue(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
 
-                            if (dcNewContent != null && dcNewContent.trim().length() > 0) {
+                            if(dcNewContent != null && dcNewContent.trim().length() > 0) {
                                 final Datastream dcNew;
                                 try {
-                                    dcNew =
-                                        new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
-                                }
-                                catch (final UnsupportedEncodingException e) {
+                                    dcNew = new Datastream("DC", getId(),
+                                            dcNewContent.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                                } catch(final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
                                 }
                                 setDc(dcNew);
                             }
+                        } else {
+                            throw new IntegritySystemException(
+                                    "namespace uri of 'escidoc' metadata" + " is not set in datastream.");
                         }
-                        else {
-                            throw new IntegritySystemException("namespace uri of 'escidoc' metadata"
-                                + " is not set in datastream.");
-                        }
-                    }
-                    else {
-                        throw new IntegritySystemException("Properties of 'md-record' datastream"
-                            + " with the name 'escidoc' does not exist");
+                    } else {
+                        throw new IntegritySystemException(
+                                "Properties of 'md-record' datastream" + " with the name 'escidoc' does not exist");
                     }
                 }
 
@@ -609,12 +602,11 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                 ds.merge();
 
             }
-        }
-        catch (final FedoraSystemException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final FedoraSystemException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on getting MD-records.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on getting MD-records.", e);
             }
             // this is not an update; its a create
@@ -636,8 +628,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     }
 
     @Deprecated
-    public void setContentStream(final String name, final Datastream ds) throws FedoraSystemException,
-        WebserverSystemException {
+    public void setContentStream(final String name, final Datastream ds)
+            throws FedoraSystemException, WebserverSystemException {
         // don't trust the handler
         final List<String> alternateIDs = new ArrayList<String>();
         alternateIDs.add("content-stream");
@@ -649,33 +641,31 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             boolean contentChanged = false;
             boolean isNew = false;
 
-            if (curDs == null) {
+            if(curDs == null) {
                 isNew = true;
-            }
-            else {
+            } else {
                 // FIXME change storage and mime-type ? (FRS)
                 // TODO ds.getLocation() may be null -> inline content
-                if (ds.getLocation() != null && !ds.getLocation().equals(curDs.getLocation())
-                    && !ds.getLocation().startsWith("/ir/item/" + getId())
-                    || !curDs.getControlGroup().equals(ds.getControlGroup())
-                    || !curDs.getMimeType().equals(ds.getMimeType()) || !curDs.getLabel().equals(ds.getLabel())
-                    || !ds.equals(curDs)) {
+                if(ds.getLocation() != null && ! ds.getLocation().equals(curDs.getLocation()) &&
+                        ! ds.getLocation().startsWith("/ir/item/" + getId()) ||
+                        ! curDs.getControlGroup().equals(ds.getControlGroup()) ||
+                        ! curDs.getMimeType().equals(ds.getMimeType()) || ! curDs.getLabel().equals(ds.getLabel()) ||
+                        ! ds.equals(curDs)) {
                     contentChanged = true;
                 }
             }
 
             // isNew does not indicate that the datastream does not exist
             // in fedora, it may be deleted
-            if (contentChanged || isNew) {
+            if(contentChanged || isNew) {
                 this.contentStreams.put(name, ds);
                 ds.merge();
             }
-        }
-        catch (final FedoraSystemException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final FedoraSystemException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on setting content stream.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on setting content stream.", e);
             }
             // this is not an update; its a create
@@ -685,27 +675,27 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     }
 
     @Deprecated
-    public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams) throws FedoraSystemException,
-        WebserverSystemException, IntegritySystemException {
+    public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams)
+            throws FedoraSystemException, WebserverSystemException, IntegritySystemException {
 
         final Set<String> namesInFedora = getContentStreams().keySet();
 
         Set<Entry<String, Datastream>> contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
-        for (final Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
+        for(final Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
             final String name = entry.getKey();
-            if (!namesInFedora.contains(name)) {
+            if(! namesInFedora.contains(name)) {
                 setContentStream(name, entry.getValue());
             }
         }
         // update DSs which still remain in given list
         contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
-        for (final Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
+        for(final Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
             setContentStream(entry.getKey(), entry.getValue());
         }
 
         // delete data streams which are in fedora but not in given list
-        for (final String nameInFedora : namesInFedora) {
-            if (!contentStreamDatastreams.containsKey(nameInFedora)) {
+        for(final String nameInFedora : namesInFedora) {
+            if(! contentStreamDatastreams.containsKey(nameInFedora)) {
                 final Datastream fedoraDs = getContentStream(nameInFedora);
                 fedoraDs.delete();
                 this.contentStreams.remove(nameInFedora);
@@ -724,7 +714,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames =
-            propertiesNames != null ? propertiesNames : new ArrayList<String>();
+                propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE);
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_CATEGORY);
@@ -744,11 +734,11 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
 
         final Map<String, String> newPropertiesNames =
-            propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
+                propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
 
         newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_VERSION_PID, PropertyMapKeys.LATEST_VERSION_PID);
-        newPropertiesNames.put(TripleStoreUtility.PROP_CONTENT_CATEGORY,
-            PropertyMapKeys.LATEST_VERSION_CONTENT_CATEGORY);
+        newPropertiesNames
+                .put(TripleStoreUtility.PROP_CONTENT_CATEGORY, PropertyMapKeys.LATEST_VERSION_CONTENT_CATEGORY);
         // FIXME release is a methd of Item/Container so this is to move higher
         // within the hirarchie
         newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_RELEASE_PID, PropertyMapKeys.LATEST_RELEASE_PID);
@@ -767,14 +757,13 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     @Override
     public Map<String, String> getResourceProperties() throws TripleStoreSystemException, WebserverSystemException {
 
-        if (!this.resourceInit) {
+        if(! this.resourceInit) {
             super.getResourceProperties();
 
             // override dc properties
             try {
                 addResourceProperties(getDublinCorePropertiesMap());
-            }
-            catch (final XmlParserSystemException e) {
+            } catch(final XmlParserSystemException e) {
                 throw new WebserverSystemException(e);
             }
             this.resourceInit = true;
@@ -789,32 +778,32 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @return true if a Component was updated (and with this persisted), false otherwise.
      * @throws ComponentNotFoundException Thrown if Component was not found.
      */
-    public boolean persistComponents() throws ComponentNotFoundException, TripleStoreSystemException,
-        FedoraSystemException, XmlParserSystemException, WebserverSystemException, IntegritySystemException {
+    public boolean persistComponents()
+            throws ComponentNotFoundException, TripleStoreSystemException, FedoraSystemException,
+            XmlParserSystemException, WebserverSystemException, IntegritySystemException {
 
         boolean resourceUpdated = false;
 
-        for (final String s : getComponentIds()) {
+        for(final String s : getComponentIds()) {
             final Component component = getComponent(s);
-            if (component != null) {
+            if(component != null) {
                 final DateTime lmd = component.getLastFedoraModificationDate();
                 final DateTime newLmd = component.persist(false);
-                if (!lmd.isEqual(newLmd)) {
+                if(! lmd.isEqual(newLmd)) {
                     resourceUpdated = true;
                 }
             }
         }
-        if (resourceUpdated) {
+        if(resourceUpdated) {
             this.getFedoraServiceClient().sync();
             try {
                 this.getTripleStoreUtility().reinitialize();
-            }
-            catch (TripleStoreSystemException e) {
+            } catch(TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
 
-        if (!this.alteredComponent.isEmpty()) {
+        if(! this.alteredComponent.isEmpty()) {
             resourceUpdated = true;
             // persist is called during the alter method
             // should move at this position
@@ -835,7 +824,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     public DateTime persist() throws FedoraSystemException, WebserverSystemException {
 
         try {
-            if (persistComponents()) {
+            if(persistComponents()) {
                 final UpdateObjectPathParam path = new UpdateObjectPathParam(getId());
                 final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
                 query.setLogMessage("touched");
@@ -843,20 +832,17 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                 this.getFedoraServiceClient().sync();
                 try {
                     this.getTripleStoreUtility().reinitialize();
-                }
-                catch (TripleStoreSystemException e) {
+                } catch(TripleStoreSystemException e) {
                     throw new FedoraSystemException("Error on reinitializing triple store.", e);
                 }
                 this.setNeedSync(true);
             }
-        }
-        catch (final ComponentNotFoundException e) {
+        } catch(final ComponentNotFoundException e) {
+            throw new WebserverSystemException(e);
+        } catch(final SystemException e) {
             throw new WebserverSystemException(e);
         }
-        catch (final SystemException e) {
-            throw new WebserverSystemException(e);
-        }
-        if (!this.alteredComponent.isEmpty()) {
+        if(! this.alteredComponent.isEmpty()) {
             this.alteredComponent = new ArrayList<String>();
         }
         return super.persist();
@@ -867,27 +853,25 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * stream).
      */
     @Override
-    protected final void initDatastream(final DatastreamProfileTO profile) throws WebserverSystemException,
-        FedoraSystemException, TripleStoreSystemException, IntegritySystemException, StreamNotFoundException {
+    protected final void initDatastream(final DatastreamProfileTO profile)
+            throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException,
+            IntegritySystemException, StreamNotFoundException {
 
         super.initDatastream(profile);
 
-        DateTime versionDate = getVersionDate();
+        final DateTime versionDate = getVersionDate();
 
-        if (profile.getDsAltID().contains(Datastream.METADATA_ALTERNATE_ID)) {
+        if(profile.getDsAltID().contains(Datastream.METADATA_ALTERNATE_ID)) {
             // found md-record
             this.mdRecords.put(profile.getDsID(), new Datastream(profile, getId(), versionDate));
-        }
-        else if (profile.getDsAltID().contains("content-stream")) {
+        } else if(profile.getDsAltID().contains("content-stream")) {
             // found content-stream
             this.contentStreams.put(profile.getDsID(), new Datastream(profile, getId(), versionDate));
-        }
-        else if ("content-model-specific".equals(profile.getDsID())) {
+        } else if("content-model-specific".equals(profile.getDsID())) {
             // found content-model-specific
             this.cts = new Datastream(profile, getId(), versionDate);
-        }
-        else {
-            if (LOGGER.isDebugEnabled()) {
+        } else {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Stream " + getId() + '/' + profile.getDsID() + " not instanziated in Item.<init>.");
             }
         }
@@ -907,9 +891,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws IntegritySystemException   If the integrity of the repository is violated.
      * @throws EncodingSystemException    If encoding fails.
      */
-    private void removeComponent(final String componentId) throws LockingException, ComponentNotFoundException,
-        WebserverSystemException, InvalidStatusException, TripleStoreSystemException, FedoraSystemException,
-        XmlParserSystemException, IntegritySystemException, EncodingSystemException {
+    private void removeComponent(final String componentId)
+            throws LockingException, ComponentNotFoundException, WebserverSystemException, InvalidStatusException,
+            TripleStoreSystemException, FedoraSystemException, XmlParserSystemException, IntegritySystemException,
+            EncodingSystemException {
 
         // TODO move precondition checks to service method (?FRS)
         // checkLocked();
@@ -935,24 +920,21 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
             // FedoraUtility.getInstance().sync();
             // TODO delete component from components or isn't it necessary
             // because this session is stateless (? FRS)
-        }
-        catch (final StreamNotFoundException e) {
+        } catch(final StreamNotFoundException e) {
             throw new IntegritySystemException(e);
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
-        if (rh.getNoOfRemovedObjects() != 1) {
+        if(rh.getNoOfRemovedObjects() != 1) {
             throw new ComponentNotFoundException("Component with the id '" + componentId + "' not found.");
         }
     }
 
-    private void addComponentToRelsExt(final String componentId) throws FedoraSystemException,
-        WebserverSystemException, IntegritySystemException, EncodingSystemException {
+    private void addComponentToRelsExt(final String componentId)
+            throws FedoraSystemException, WebserverSystemException, IntegritySystemException, EncodingSystemException {
 
         final StaxParser sp = new StaxParser();
 
@@ -969,8 +951,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         newComponentIdElement.setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         newComponentIdElement.setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
         final Attribute resource =
-            new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
-                Constants.IDENTIFIER_PREFIX + componentId);
+                new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
+                        Constants.IDENTIFIER_PREFIX + componentId);
         newComponentIdElement.addAttribute(resource);
         // newComponentIdElement.setElementText(componentId);
         newComponentIdElement.setChildrenElements(null);
@@ -982,8 +964,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
 
         try {
             sp.parse(getRelsExt().getStream());
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new WebserverSystemException(e);
         }
         sp.clearHandlerChain();
@@ -991,8 +972,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
 
         try {
             setRelsExt(relsExtNew);
-        }
-        catch (final StreamNotFoundException e1) {
+        } catch(final StreamNotFoundException e1) {
             throw new IntegritySystemException(e1);
         }
     }

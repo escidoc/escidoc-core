@@ -304,7 +304,7 @@ public class Reindexer {
             if(! clearIndex) {
                 indexedPids = indexingHandler.getPids(objectType, indexName);
             }
-            for(String id : queryResult) {
+            for(final String id : queryResult) {
                 if(! indexedPids.contains(id)) {
                     reindexStatus.inc(type);
                     result.add(id);

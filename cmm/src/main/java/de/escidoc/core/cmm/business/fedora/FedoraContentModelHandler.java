@@ -243,7 +243,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         if("R".equals(ds.getControlGroup())) {
             bin.setRedirectUrl(ds.getLocation());
         } else {
-            Stream stream = this.fedoraServiceClient
+            final Stream stream = this.fedoraServiceClient
                     .getBinaryContent(ds.getParentId(), name, getContentModel().getVersionDate());
             try {
                 bin.setContent(stream.getInputStream());
@@ -455,7 +455,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
-        String description = getContentModel().getDescription() != null ? getContentModel().getDescription() : "";
+        final String description = getContentModel().getDescription() != null ? getContentModel().getDescription() : "";
 
         if(! getContentModel().getTitle().equals(cmph.getProperties().getObjectProperties().getTitle()) ||
                 ! description.equals(cmph.getProperties().getObjectProperties().getDescription())) {

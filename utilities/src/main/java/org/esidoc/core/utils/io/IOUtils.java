@@ -75,7 +75,7 @@ public final class IOUtils {
         if(i < DEFAULT_BUFFER_SIZE) {
             i = DEFAULT_BUFFER_SIZE;
         }
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
         copy(input, bos);
         closeStream(input);
         return bos.toByteArray();
@@ -90,7 +90,7 @@ public final class IOUtils {
         }
     }
 
-    public static String newStringFromBytes(byte[] bytes) {
+    public static String newStringFromBytes(final byte[] bytes) {
         return newStringFromBytes(bytes, Encodings.UTF8);
     }
 
@@ -124,7 +124,7 @@ public final class IOUtils {
         return newStringFromStream(input, Encodings.UTF8);
     }
 
-    public static void closeStream(Closeable closeable) {
+    public static void closeStream(final Closeable closeable) {
         if(closeable == null) {
             return;
         }

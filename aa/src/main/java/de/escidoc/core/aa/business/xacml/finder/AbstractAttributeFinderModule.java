@@ -75,25 +75,25 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
     private RequestAttributesCache requestAttributesCache;
 
     static final String RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX =
-        ResourceNotFoundException.class.getPackage().getName() + '.';
+            ResourceNotFoundException.class.getPackage().getName() + '.';
 
     /**
      * Pattern to check if an object type is an valid eScidoc (virtual) resource and if we can find out the object-type
      * by checking the id (only works for unique fedora-generated ids).
      */
-    public static final Pattern PATTERN_ID_VALIDATABLE_OBJECT_TYPE =
-        Pattern.compile(XmlUtility.NAME_COMPONENT + '|' + XmlUtility.NAME_CONTAINER + '|'
-            + XmlUtility.NAME_CONTENT_MODEL + '|' + XmlUtility.NAME_CONTEXT + '|' + XmlUtility.NAME_ITEM + '|'
-            + XmlUtility.NAME_ORGANIZATIONAL_UNIT + '|' + XmlUtility.NAME_ROLE + '|' + XmlUtility.NAME_USER_ACCOUNT
-            + '|' + XmlUtility.NAME_USER_GROUP + '|' + XmlUtility.NAME_GRANT);
+    public static final Pattern PATTERN_ID_VALIDATABLE_OBJECT_TYPE = Pattern.compile(
+            XmlUtility.NAME_COMPONENT + '|' + XmlUtility.NAME_CONTAINER + '|' + XmlUtility.NAME_CONTENT_MODEL + '|' +
+                    XmlUtility.NAME_CONTEXT + '|' + XmlUtility.NAME_ITEM + '|' + XmlUtility.NAME_ORGANIZATIONAL_UNIT +
+                    '|' + XmlUtility.NAME_ROLE + '|' + XmlUtility.NAME_USER_ACCOUNT + '|' + XmlUtility.NAME_USER_GROUP +
+                    '|' + XmlUtility.NAME_GRANT);
 
     /**
      * Pattern used to parse the attribute id and extract local part (that can be resolved), "current" object-type in
      * the local part, and the tailing part.
      */
-    protected static final Pattern PATTERN_PARSE_ATTRIBUTE_ID =
-        Pattern.compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX + "([^:]+):[^:]+):{0,1}(.*){0,1}" + "|("
-            + AttributeIds.RESOURCE_ATTR_PREFIX + "(object-type|object-type-new|[^:]+?-id))$");
+    protected static final Pattern PATTERN_PARSE_ATTRIBUTE_ID = Pattern.compile(
+            '(' + AttributeIds.RESOURCE_ATTR_PREFIX + "([^:]+):[^:]+):{0,1}(.*){0,1}" + "|(" +
+                    AttributeIds.RESOURCE_ATTR_PREFIX + "(object-type|object-type-new|[^:]+?-id))$");
 
     private static final int GROUP_INDEX_RESOURCE_OBJID = 1;
 
@@ -132,7 +132,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
         convertToObjectType.put(XmlUtility.NAME_SCOPE + "-new", XmlUtility.NAME_SCOPE);
         convertToObjectType.put(XmlUtility.NAME_AGGREGATION_DEFINITION, XmlUtility.NAME_AGGREGATION_DEFINITION);
         convertToObjectType
-            .put(XmlUtility.NAME_AGGREGATION_DEFINITION + "-new", XmlUtility.NAME_AGGREGATION_DEFINITION);
+                .put(XmlUtility.NAME_AGGREGATION_DEFINITION + "-new", XmlUtility.NAME_AGGREGATION_DEFINITION);
         convertToObjectType.put(XmlUtility.NAME_REPORT, XmlUtility.NAME_REPORT);
         convertToObjectType.put(XmlUtility.NAME_REPORT + "-new", XmlUtility.NAME_REPORT);
         convertToObjectType.put(XmlUtility.NAME_REPORT_DEFINITION, XmlUtility.NAME_REPORT_DEFINITION);
@@ -184,12 +184,12 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      *         <code>false</code> else.
      * @throws EscidocException Thrown in case of an error.
      */
-    protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType) throws EscidocException {
+    protected boolean assertAttribute(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
+                                      final String resourceObjid, final String resourceVersionNumber,
+                                      final int designatorType) throws EscidocException {
 
         // make sure this is a resource attribute
-        if (designatorType != AttributeDesignator.RESOURCE_TARGET) {
+        if(designatorType != AttributeDesignator.RESOURCE_TARGET) {
             return false;
         }
 
@@ -208,12 +208,12 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param ctx                   The {@link EvaluationCtx} for that the result has been cached.
      * @return Returns the cached Object or <code>null</code>.
      */
-    protected final Object getFromCache(
-        final String resourceId, final String resourceObjid, final String resourceVersionNumber,
-        final String attributeIdValue, final EvaluationCtx ctx) {
+    protected final Object getFromCache(final String resourceId, final String resourceObjid,
+                                        final String resourceVersionNumber, final String attributeIdValue,
+                                        final EvaluationCtx ctx) {
 
         final String cacheKey = getCacheKey(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue);
-        Object attribute = requestAttributesCache.getAttribute(ctx, cacheKey);
+        final Object attribute = requestAttributesCache.getAttribute(ctx, cacheKey);
         return attribute;
     }
 
@@ -226,11 +226,10 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param resourceVersionNumber The resource version number.
      * @param attributeIdValue      The id of the attribute for that the result shall be cached.
      * @param ctx                   The {@link EvaluationCtx} for that the result shall be cached.
-     * @param cacheObject
      */
-    protected final void putInCache(
-        final String resourceId, final String resourceObjid, final String resourceVersionNumber,
-        final String attributeIdValue, final EvaluationCtx ctx, final Object cacheObject) {
+    protected final void putInCache(final String resourceId, final String resourceObjid,
+                                    final String resourceVersionNumber, final String attributeIdValue,
+                                    final EvaluationCtx ctx, final Object cacheObject) {
 
         final String cacheKey = getCacheKey(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue);
 
@@ -248,9 +247,8 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param attributeIdValue      The attributeId to retrieve the attribute for.
      * @return Returns the cache key for the provided values.
      */
-    protected static String getCacheKey(
-        final String resourceId, final String resourceObjid, final String resourceVersionNumber,
-        final String attributeIdValue) {
+    protected static String getCacheKey(final String resourceId, final String resourceObjid,
+                                        final String resourceVersionNumber, final String attributeIdValue) {
 
         return StringUtility.concatenateWithColonToString(resourceId, attributeIdValue);
     }
@@ -270,9 +268,9 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      *         <code>null</code> is returned.
      * @throws EscidocException Thrown in case of a failure during resolving.
      */
-    protected abstract Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException;
+    protected abstract Object[] resolveLocalPart(final String attributeIdValue, final EvaluationCtx ctx,
+                                                 final String resourceId, final String resourceObjid,
+                                                 final String resourceVersionNumber) throws EscidocException;
 
     /**
      * Finds the resource attribute for the provided input parameters.
@@ -294,12 +292,12 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @return EvaluationResult An EvaluationResult containing the requested attribute.
      */
     @Override
-    public final EvaluationResult findAttribute(
-        final URI attributeType, final URI attributeId, final URI issuer, final URI subjectCategory,
-        final EvaluationCtx ctx, final int designatorType) {
+    public final EvaluationResult findAttribute(final URI attributeType, final URI attributeId, final URI issuer,
+                                                final URI subjectCategory, final EvaluationCtx ctx,
+                                                final int designatorType) {
 
         // make sure they're asking for a string return value
-        if (!attributeType.toString().equals(StringAttribute.identifier)) {
+        if(! attributeType.toString().equals(StringAttribute.identifier)) {
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult(attributeType);
         }
 
@@ -308,9 +306,9 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
         final String resourceId = ((StringAttribute) ctx.getResourceId()).getValue();
         String resourceObjid = resourceId;
         String resourceVersionNumber = null;
-        if (!FinderModuleHelper.isNewResourceId(resourceId)) {
+        if(! FinderModuleHelper.isNewResourceId(resourceId)) {
             final Matcher matcher = Constants.PATTERN_PARSE_RESOURCE_ID.matcher(resourceId);
-            if (matcher.find()) {
+            if(matcher.find()) {
                 // if a match is found, resourceObjid and resourceVersionNumber
                 // are fetched from the matcher
                 resourceObjid = matcher.group(GROUP_INDEX_RESOURCE_OBJID);
@@ -330,51 +328,46 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
             // make sure they're asking for an attribute for that this finder
             // module
             // is responsible for.
-            if (!assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
-                designatorType)) {
+            if(! assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+                    designatorType)) {
                 return CustomEvaluationResultBuilder.createEmptyEvaluationResult(attributeType);
             }
 
             // try to get it from the cache
-            result =
-                (EvaluationResult) getFromCache(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue, ctx);
-            if (result != null) {
+            result = (EvaluationResult) getFromCache(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue,
+                    ctx);
+            if(result != null) {
                 return result;
             }
 
             // perform local resolving
             final Object[] resultArray =
-                resolveLocalPart(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber);
-            if (resultArray != null && resultArray.length == 2) {
+                    resolveLocalPart(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber);
+            if(resultArray != null && resultArray.length == 2) {
                 result = (EvaluationResult) resultArray[0];
                 resolvedAttributeId = (String) resultArray[1];
+            } else if(resultArray != null) {
+                CustomEvaluationResultBuilder.createProcessingErrorResult(new WebserverSystemException(
+                        StringUtility.format("Unexpected result from resolveLocalPart", resultArray)));
             }
-            else if (resultArray != null) {
-                CustomEvaluationResultBuilder.createProcessingErrorResult(new WebserverSystemException(StringUtility
-                    .format("Unexpected result from resolveLocalPart", resultArray)));
-            }
-        }
-        catch (final ResourceNotFoundException e) {
-            if (ResourceNotFoundException.class.equals(e.getClass())) {
+        } catch(final ResourceNotFoundException e) {
+            if(ResourceNotFoundException.class.equals(e.getClass())) {
                 final ResourceNotFoundException e1 =
-                    getResourceNotFoundException(attributeIdValue, resourceId, e.getMessage(), e.getCause());
+                        getResourceNotFoundException(attributeIdValue, resourceId, e.getMessage(), e.getCause());
                 e1.setStackTrace(e.getStackTrace());
                 return CustomEvaluationResultBuilder.createResourceNotFoundResult(e1);
-            }
-            else {
+            } else {
                 return CustomEvaluationResultBuilder.createResourceNotFoundResult(e);
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             return CustomEvaluationResultBuilder.createProcessingErrorResult(e);
         }
 
-        if (result != null) {
+        if(result != null) {
             result = recursivelyCallCtxGetResourceAttribute(attributeIdValue, resolvedAttributeId, ctx, result);
 
             putInCache(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue, ctx, result);
-        }
-        else {
+        } else {
             result = CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
         return result;
@@ -392,22 +385,20 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param newAttributeId The attributeId to retrieve the attribute for.
      * @return Returns the result of <code>ctx.getResourceAttribute</code>.
      */
-    protected static EvaluationResult recursivelyCallCtxGetResourceAttribute(
-        final EvaluationCtx ctx, final String newResourceId, final String newAttributeId) {
+    protected static EvaluationResult recursivelyCallCtxGetResourceAttribute(final EvaluationCtx ctx,
+                                                                             final String newResourceId,
+                                                                             final String newAttributeId) {
 
         final AttributeValue storedResourceId = ctx.getResourceId();
         ctx.setResourceId(new StringAttribute(newResourceId));
         EvaluationResult result = null;
         try {
             result = ctx.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING, new URI(newAttributeId), null);
-        }
-        catch (final URISyntaxException e) {
+        } catch(final URISyntaxException e) {
             return CustomEvaluationResultBuilder.createSyntaxErrorResult(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             return CustomEvaluationResultBuilder.createProcessingErrorResult(e);
-        }
-        finally {
+        } finally {
             ctx.setResourceId(storedResourceId);
         }
         return result;
@@ -444,19 +435,19 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      *                            an empty result is returned.
      * @return Returns the result of <code>ctx.getResourceAttribute</code>.
      */
-    protected EvaluationResult recursivelyCallCtxGetResourceAttribute(
-        final String attributeId, final String resolvedAttributeId, final EvaluationCtx ctx,
-        final EvaluationResult result) {
+    protected EvaluationResult recursivelyCallCtxGetResourceAttribute(final String attributeId,
+                                                                      final String resolvedAttributeId,
+                                                                      final EvaluationCtx ctx,
+                                                                      final EvaluationResult result) {
 
         // check if resolving the attribute id is complete
-        if (result == null) {
+        if(result == null) {
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
-        }
-        else if (isEmptyResult(result)) {
+        } else if(isEmptyResult(result)) {
             return result;
         }
         final int resolvedLength = resolvedAttributeId.length();
-        if (attributeId.length() <= resolvedLength) {
+        if(attributeId.length() <= resolvedLength) {
             return result;
         }
 
@@ -469,12 +460,12 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
         final String newResourceId;
         final boolean attributeValueIsBag = resolvedAttributeValue.isBag();
         String resolvedObjectType;
-        if (!attributeValueIsBag || ((BagAttribute) resolvedAttributeValue).size() == 1) {
+        if(! attributeValueIsBag || ((BagAttribute) resolvedAttributeValue).size() == 1) {
             // as we only support string attributes, the attribute value is a
             // StringAttribute
-            newResourceId =
-                attributeValueIsBag ? ((StringAttribute) ((BagAttribute) resolvedAttributeValue).iterator().next())
-                    .getValue() : ((StringAttribute) resolvedAttributeValue).getValue();
+            newResourceId = attributeValueIsBag ?
+                    ((StringAttribute) ((BagAttribute) resolvedAttributeValue).iterator().next()).getValue() :
+                    ((StringAttribute) resolvedAttributeValue).getValue();
 
             // determine to which object-type the new resource id points
             resolvedObjectType = fixObjectType(resolvedAttributeId.substring(resolvedAttributeId.lastIndexOf(':') + 1));
@@ -483,30 +474,27 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
             // different object types like the object reference of a grant.
             // To get the object type, the object type attribute has to be
             // resolved for the new resource id.
-            if (resolvedObjectType == null) {
+            if(resolvedObjectType == null) {
                 try {
                     resolvedObjectType = fetchObjectType(ctx, newResourceId);
-                }
-                catch (final ResourceNotFoundException e) {
+                } catch(final ResourceNotFoundException e) {
                     return CustomEvaluationResultBuilder.createResourceNotFoundResult(e);
-                }
-                catch (final WebserverSystemException e) {
+                } catch(final WebserverSystemException e) {
                     return CustomEvaluationResultBuilder.createProcessingErrorResult(e);
                 }
             }
 
             // if determining the object type fails, an empty result has to be
             // returned.
-            if (resolvedObjectType == null) {
+            if(resolvedObjectType == null) {
                 return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
             }
-        }
-        else {
+        } else {
             // determine to which object-type the new resource id points
             resolvedObjectType = fixObjectType(resolvedAttributeId.substring(resolvedAttributeId.lastIndexOf(':') + 1));
             // multiple resolved objects of unknown type are not supported,
             // an empty result is returned in this case
-            if (resolvedObjectType == null) {
+            if(resolvedObjectType == null) {
                 return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
             }
 
@@ -515,26 +503,23 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
             // be identified by a provided resource identifier, e.g.
             // component-id
             final String resourceIdentifierAttributeIdValue =
-                AttributeIds.RESOURCE_ATTR_PREFIX + resolvedObjectType + "-id";
+                    AttributeIds.RESOURCE_ATTR_PREFIX + resolvedObjectType + "-id";
             final String providedResourceIdentifier;
             try {
-                providedResourceIdentifier =
-                    FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
-                        new URI(resourceIdentifierAttributeIdValue), true);
-            }
-            catch (final EscidocException e) {
+                providedResourceIdentifier = FinderModuleHelper
+                        .retrieveSingleResourceAttribute(ctx, new URI(resourceIdentifierAttributeIdValue), true);
+            } catch(final EscidocException e) {
                 return CustomEvaluationResultBuilder.createProcessingErrorResult(e);
-            }
-            catch (final URISyntaxException e) {
+            } catch(final URISyntaxException e) {
                 return CustomEvaluationResultBuilder.createProcessingErrorResult(new WebserverSystemException(e));
             }
 
             // check if the provided id is part of the resolved ids.
             // Otherwise, throw a resource not found exception.
-            if (!bagAttribute.contains(new StringAttribute(providedResourceIdentifier))) {
+            if(! bagAttribute.contains(new StringAttribute(providedResourceIdentifier))) {
 
                 final ResourceNotFoundException resourceNotFoundException =
-                    getResourceNotFoundException(resolvedAttributeId, providedResourceIdentifier);
+                        getResourceNotFoundException(resolvedAttributeId, providedResourceIdentifier);
                 return CustomEvaluationResultBuilder.createResourceNotFoundResult(resourceNotFoundException);
             }
 
@@ -546,7 +531,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
         // determine next attribute id to resolve
         final String unresolvedTail = attributeId.substring(resolvedLength + 1);
         final String nextAttributeIdValue =
-            AttributeIds.RESOURCE_ATTR_PREFIX + resolvedObjectType + ':' + unresolvedTail;
+                AttributeIds.RESOURCE_ATTR_PREFIX + resolvedObjectType + ':' + unresolvedTail;
 
         return recursivelyCallCtxGetResourceAttribute(ctx, newResourceId, nextAttributeIdValue);
     }
@@ -563,12 +548,11 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @throws ResourceNotFoundException Thrown if no resource with the provided id exists.
      */
     protected static String fetchSingleResourceAttribute(final EvaluationCtx ctx, final String attributeId)
-        throws WebserverSystemException, ResourceNotFoundException {
+            throws WebserverSystemException, ResourceNotFoundException {
 
         try {
             return FinderModuleHelper.retrieveSingleResourceAttribute(ctx, new URI(attributeId), true);
-        }
-        catch (final URISyntaxException e) {
+        } catch(final URISyntaxException e) {
             throw new WebserverSystemException(e.getMessage(), e);
         }
     }
@@ -587,20 +571,18 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @throws WebserverSystemException  Thrown in case of an internal error.
      * @throws ResourceNotFoundException Thrown if no resource with the provided id exists.
      */
-    protected static String fetchSingleResourceAttribute(
-        final EvaluationCtx ctx, final String newResourceId, final String newAttributeId)
-        throws WebserverSystemException, ResourceNotFoundException {
+    protected static String fetchSingleResourceAttribute(final EvaluationCtx ctx, final String newResourceId,
+                                                         final String newAttributeId)
+            throws WebserverSystemException, ResourceNotFoundException {
 
         final AttributeValue storedResourceId = ctx.getResourceId();
         ctx.setResourceId(new StringAttribute(newResourceId));
         String ret = null;
         try {
             ret = FinderModuleHelper.retrieveSingleResourceAttribute(ctx, new URI(newAttributeId), true);
-        }
-        catch (final URISyntaxException e) {
+        } catch(final URISyntaxException e) {
             throw new WebserverSystemException(e.getMessage(), e);
-        }
-        finally {
+        } finally {
             ctx.setResourceId(storedResourceId);
         }
 
@@ -616,8 +598,8 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @throws WebserverSystemException  Thrown in case of an internal error.
      * @throws ResourceNotFoundException Thrown if no resource with the provided id exists.
      */
-    protected static String fetchObjectType(final EvaluationCtx ctx) throws WebserverSystemException,
-        ResourceNotFoundException {
+    protected static String fetchObjectType(final EvaluationCtx ctx)
+            throws WebserverSystemException, ResourceNotFoundException {
 
         return FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_OBJECT_TYPE, true);
     }
@@ -635,7 +617,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @throws ResourceNotFoundException Thrown if no resource with the provided id exists.
      */
     protected String fetchObjectType(final EvaluationCtx ctx, final String newResourceId)
-        throws WebserverSystemException, ResourceNotFoundException {
+            throws WebserverSystemException, ResourceNotFoundException {
 
         return fetchSingleResourceAttribute(ctx, newResourceId, AttributeIds.URN_OBJECT_TYPE);
     }
@@ -654,16 +636,14 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
         final StringBuilder exceptionName = new StringBuilder(RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX);
 
         final Matcher matcher = PATTERN_PARSE_ATTRIBUTE_ID.matcher(attributeIdValue);
-        if (matcher.find()) {
+        if(matcher.find()) {
             final String objectType = matcher.group(2);
-            if (objectType == null || objectType.length() == 0) {
+            if(objectType == null || objectType.length() == 0) {
                 exceptionName.append("Resource");
-            }
-            else {
+            } else {
                 exceptionName.append(StringUtility.convertToUpperCaseLetterFormat(objectType));
             }
-        }
-        else {
+        } else {
             exceptionName.append("Resource");
         }
         exceptionName.append("NotFoundException");
@@ -681,8 +661,8 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param resourceId       The id of the resource that could not be found.
      * @return Returns the full name of the resource not found exception for the failed attribute fetching.
      */
-    protected ResourceNotFoundException getResourceNotFoundException(
-        final String attributeIdValue, final String resourceId) {
+    protected ResourceNotFoundException getResourceNotFoundException(final String attributeIdValue,
+                                                                     final String resourceId) {
 
         final String errorMsg = StringUtility.format("Resource not found", resourceId);
         return getResourceNotFoundException(attributeIdValue, resourceId, errorMsg, null);
@@ -700,17 +680,17 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param cause            The cause for the resource not found exception.
      * @return Returns the full name of the resource not found exception for the failed attribute fetching.
      */
-    protected ResourceNotFoundException getResourceNotFoundException(
-        final String attributeIdValue, final String resourceId, final String errorMsg, final Throwable cause) {
+    protected ResourceNotFoundException getResourceNotFoundException(final String attributeIdValue,
+                                                                     final String resourceId, final String errorMsg,
+                                                                     final Throwable cause) {
 
         try {
-            final Class<ResourceNotFoundException> exceptionClass =
-                (Class<ResourceNotFoundException>) Class.forName(getResourceNotFoundExceptionName(attributeIdValue));
+            final Class<ResourceNotFoundException> exceptionClass = (Class<ResourceNotFoundException>) Class
+                    .forName(getResourceNotFoundExceptionName(attributeIdValue));
             final Constructor<ResourceNotFoundException> constructor =
-                exceptionClass.getConstructor(new Class[] { String.class, Throwable.class });
+                    exceptionClass.getConstructor(new Class[]{String.class, Throwable.class});
             return constructor.newInstance(errorMsg, cause);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             return new ResourceNotFoundException(errorMsg, e);
         }
     }

@@ -26,6 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
+
 import com.izforge.izpack.installer.AutomatedInstallData;
 import com.izforge.izpack.installer.DataValidator.Status;
 
@@ -36,7 +37,7 @@ import java.net.URLConnection;
 
 /**
  * Check if a HTTP URL is reachable and return an error if it does.
- * 
+ *
  * @author André Schenk
  */
 public class HTTPValidator extends AbstractValidator {
@@ -49,7 +50,7 @@ public class HTTPValidator extends AbstractValidator {
      * @see com.izforge.izpack.installer.DataValidator#validateData (com.izforge.izpack.installer.AutomatedInstallData)
      */
     @Override
-    public Status validateData(AutomatedInstallData data) {
+    public Status validateData(final AutomatedInstallData data) {
         Status status = Status.ERROR;
         final String host = data.getVariable("EscidocHost");
         final String port = data.getVariable("EscidocPort");
@@ -63,18 +64,16 @@ public class HTTPValidator extends AbstractValidator {
 
             conn.setConnectTimeout(5000);
             conn.connect();
-        }
-        catch (MalformedURLException e) {
+        } catch(MalformedURLException e) {
             System.err.println(e.getMessage());
-        }
-        catch (IOException e) {
+        } catch(IOException e) {
             System.err.println(e.getMessage());
             status = Status.OK;
         }
         return status;
     }
 
-    private void buildErrorMessage(String message) {
+    private void buildErrorMessage(final String message) {
         clearErrorMessage();
         errorMessage.append("The URL \"");
         errorMessage.append(message);

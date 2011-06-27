@@ -71,7 +71,7 @@ public class SchemasCache {
     public Schema getSchema(final String schemaUri)
             throws IOException, WebserverSystemException, MalformedURLException {
 
-        Schema schema;
+        final Schema schema;
         final URLConnection conn = new URL(schemaUri).openConnection();
         final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 

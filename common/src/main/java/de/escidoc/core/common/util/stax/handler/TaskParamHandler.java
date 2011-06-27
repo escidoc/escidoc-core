@@ -103,7 +103,7 @@ public class TaskParamHandler extends DefaultHandler {
         if(PARAM_PATH.equals(currentPath)) {
             final int index = element.indexOfAttribute(null, LAST_MODIFICATION_DATE_ATT);
             if(index != - 1) {
-                String lmd_attr;
+                final String lmd_attr;
                 try {
                     lmd_attr = element.getAttribute(index).getValue();
                 } catch(final IndexOutOfBoundsException e1) {

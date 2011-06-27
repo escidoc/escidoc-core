@@ -49,7 +49,7 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
      * server to the return_to URL, once it has authenticated the user</li> </ol>
      */
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+    public Authentication attemptAuthentication(final HttpServletRequest request, final HttpServletResponse response)
             throws AuthenticationException, IOException {
         return super.attemptAuthentication(request, response);
     }

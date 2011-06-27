@@ -539,7 +539,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             if(getLogger().isDebugEnabled()) {
                 getLogger().debug("Executing sql query '" + select + "'.");
             }
-            List<String> results = executeSqlQuery(select);
+            final List<String> results = executeSqlQuery(select);
 
             if(getLogger().isDebugEnabled()) {
                 if(results.isEmpty()) {
@@ -1020,7 +1020,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
             // make URIs from given IDs or HREFs for all structural-relation
             // predicates
-            String object;
+            final String object;
             if(predicate.startsWith(Constants.STRUCTURAL_RELATIONS_NS_URI)) {
                 String id = val;
                 if(val.startsWith("http://") || val.startsWith("/")) {
@@ -1582,7 +1582,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     private DDLGenerator getDdlGenerator() throws TripleStoreSystemException {
 
         try {
-            String ddlGenerator =
+            final String ddlGenerator =
                     EscidocConfiguration.getInstance().get(EscidocConfiguration.TRIPLESTORE_DDL_GENERATOR);
             return (DDLGenerator) Class.forName(ddlGenerator).newInstance();
         } catch(IOException e) {
@@ -2013,7 +2013,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final String typeTableName = getTableName(PROP_OBJECT_TYPE);
 
         if(memberTableName != null && typeTableName != null) {
-            String select;
+            final String select;
             final DatabaseType databaseType = getDatabaseType();
             if(databaseType == DatabaseType.POSTGRES) {
                 select = MessageFormat.format("WITH RECURSIVE getChildContainers AS (SELECT {1}.s, {1}.o" +
@@ -2061,7 +2061,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final String parentTableName = getTableName(PROP_PARENT);
 
         if(parentTableName != null) {
-            String select;
+            final String select;
             final DatabaseType databaseType = getDatabaseType();
             if(databaseType == DatabaseType.POSTGRES) {
                 select = MessageFormat.format("WITH RECURSIVE getChildOUs AS (SELECT {0}.s, {0}.o" +

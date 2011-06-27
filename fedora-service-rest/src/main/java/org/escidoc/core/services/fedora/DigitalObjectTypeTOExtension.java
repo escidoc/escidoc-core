@@ -8,12 +8,12 @@ import java.util.List;
  */
 public class DigitalObjectTypeTOExtension extends DigitalObjectTypeTO {
 
-    public void addDatastreamTypeTOListener(DatastreamTypeTOListener listener) {
+    public void addDatastreamTypeTOListener(final DatastreamTypeTOListener listener) {
         final DatastreamTypeListTO datastreamTypeListTO = (DatastreamTypeListTO) this.getDatastream();
         datastreamTypeListTO.addDatastreamTypeTOListener(listener);
     }
 
-    public void removeDatastreamTypeTOListener(DatastreamTypeTOListener listener) {
+    public void removeDatastreamTypeTOListener(final DatastreamTypeTOListener listener) {
         final DatastreamTypeListTO datastreamTypeListTO = (DatastreamTypeListTO) this.getDatastream();
         datastreamTypeListTO.removeDatastreamTypeTOListener(listener);
     }

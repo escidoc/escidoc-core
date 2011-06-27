@@ -293,7 +293,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
     private void addCommonValues(final Context context, final Map<String, Object> values)
             throws WebserverSystemException {
 
-        DateTime lastModDate;
+        final DateTime lastModDate;
 
         try {
             lastModDate = context.getLastModificationDate();

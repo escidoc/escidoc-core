@@ -56,11 +56,11 @@ public final class FedoraServiceClientCacheEventListener implements CacheEventLi
     @Override
     public void notifyElementRemoved(final Ehcache cache, final Element element) throws CacheException {
         final String pid = (String) element.getKey();
-        for(String cacheName : CACHE_NAMES) {
+        for(final String cacheName : CACHE_NAMES) {
             final Cache datastreamsCache = getCacheManager().getCache(cacheName);
             if(datastreamsCache != null) {
-                List datastreamCacheKeys = datastreamsCache.getKeys();
-                for(Object datastreamCacheKeyObject : datastreamCacheKeys) {
+                final List datastreamCacheKeys = datastreamsCache.getKeys();
+                for(final Object datastreamCacheKeyObject : datastreamCacheKeys) {
                     final DatastreamCacheKey datastreamCacheKey = (DatastreamCacheKey) datastreamCacheKeyObject;
                     if(pid.equals(datastreamCacheKey.getPid())) {
                         datastreamsCache.remove(datastreamCacheKey);
@@ -92,7 +92,7 @@ public final class FedoraServiceClientCacheEventListener implements CacheEventLi
 
     @Override
     public void notifyRemoveAll(final Ehcache cache) {
-        for(String cacheName : CACHE_NAMES) {
+        for(final String cacheName : CACHE_NAMES) {
             final Cache datastreamsCache = getCacheManager().getCache(cacheName);
             if(datastreamsCache != null) {
                 datastreamsCache.removeAll();

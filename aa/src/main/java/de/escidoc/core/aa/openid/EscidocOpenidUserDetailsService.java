@@ -51,11 +51,10 @@ public class EscidocOpenidUserDetailsService implements EscidocUserDetailsServic
 
     /**
      * See Interface for functional description.
-     *
      */
     @Override
     public UserDetails loadUserByUsername(final String identifier) {
-        EscidocOpenidUserDetails userDetails = new EscidocOpenidUserDetails();
+        final EscidocOpenidUserDetails userDetails = new EscidocOpenidUserDetails();
         userDetails.setId(identifier);
         return userDetails;
     }

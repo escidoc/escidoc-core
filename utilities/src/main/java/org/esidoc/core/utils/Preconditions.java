@@ -13,15 +13,15 @@ import java.util.NoSuchElementException;
  *     if (count <= 0) {
  *       throw new IllegalArgumentException("must be positive: " + count);
  *     }</pre>
- * <p/>
+ *
  * to be replaced with the more compact
  * <pre>
  *     checkArgument(count > 0, "must be positive: %s", count);</pre>
- * <p/>
+ *
  * Note that the sense of the expression is inverted; with {@code Preconditions} you declare what you expect to be
  * <i>true</i>, just as you do with an <a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/assert.html"> {@code
  * assert}</a> or a JUnit {@code assertTrue()} call.
- * <p/>
+ *
  * <p>Take care not to confuse precondition checking with other similar types of checks! Precondition exceptions --
  * including those provided here, but also {@link IndexOutOfBoundsException}, {@link NoSuchElementException}, {@link
  * UnsupportedOperationException} and others -- are used to signal that the <i>calling method</i> has made an error.
@@ -47,11 +47,10 @@ public final class Preconditions {
      *                     String#valueOf(Object)}
      * @throws IllegalArgumentException if {@code expression} is false
      */
-    public static void checkArgument(final boolean expression,
-                                     final Object errorMessage) {
-        if (!expression) {
+    public static void checkArgument(final boolean expression, final Object errorMessage) {
+        if(! expression) {
             final String errorMessageString = String.valueOf(errorMessage);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new IllegalArgumentException(errorMessageString);
@@ -73,12 +72,11 @@ public final class Preconditions {
      * @throws NullPointerException     if the check fails and either {@code errorMessageTemplate} or {@code
      *                                  errorMessageArgs} is null (don't let this happen)
      */
-    public static void checkArgument(final boolean expression,
-                                     final String errorMessageTemplate,
+    public static void checkArgument(final boolean expression, final String errorMessageTemplate,
                                      final Object... errorMessageArgs) {
-        if (!expression) {
+        if(! expression) {
             final String errorMessageString = format(errorMessageTemplate, errorMessageArgs);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new IllegalArgumentException(errorMessageString);
@@ -95,9 +93,9 @@ public final class Preconditions {
      * @throws IllegalStateException if {@code expression} is false
      */
     public static void checkState(final boolean expression, final Object errorMessage) {
-        if (!expression) {
+        if(! expression) {
             final String errorMessageString = String.valueOf(errorMessage);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new IllegalStateException(errorMessageString);
@@ -120,12 +118,11 @@ public final class Preconditions {
      * @throws NullPointerException  if the check fails and either {@code errorMessageTemplate} or {@code
      *                               errorMessageArgs} is null (don't let this happen)
      */
-    public static void checkState(final boolean expression,
-                                  final String errorMessageTemplate,
+    public static void checkState(final boolean expression, final String errorMessageTemplate,
                                   final Object... errorMessageArgs) {
-        if (!expression) {
+        if(! expression) {
             final String errorMessageString = format(errorMessageTemplate, errorMessageArgs);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new IllegalStateException(errorMessageString);
@@ -141,11 +138,10 @@ public final class Preconditions {
      * @return the non-null reference that was validated
      * @throws NullPointerException if {@code reference} is null
      */
-    public static <T> T checkNotNull(final T reference,
-                                     final Object errorMessage) {
-        if (reference == null) {
+    public static <T> T checkNotNull(final T reference, final Object errorMessage) {
+        if(reference == null) {
             final String errorMessageString = String.valueOf(errorMessage);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new NullPointerException(errorMessageString);
@@ -167,12 +163,11 @@ public final class Preconditions {
      * @return the non-null reference that was validated
      * @throws NullPointerException if {@code reference} is null
      */
-    public static <T> T checkNotNull(final T reference,
-                                     final String errorMessageTemplate,
+    public static <T> T checkNotNull(final T reference, final String errorMessageTemplate,
                                      final Object... errorMessageArgs) {
-        if (reference == null) {
+        if(reference == null) {
             final String errorMessageString = format(errorMessageTemplate, errorMessageArgs);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new NullPointerException(errorMessageString);
@@ -190,11 +185,10 @@ public final class Preconditions {
      * @return the non-null {@code iterable} reference just validated
      * @throws NullPointerException if {@code iterable} is null or contains at least one null element
      */
-    public static <T extends Iterable<?>> T checkContentsNotNull(final T iterable,
-                                                                 final Object errorMessage) {
-        if (containsOrIsNull(iterable)) {
+    public static <T extends Iterable<?>> T checkContentsNotNull(final T iterable, final Object errorMessage) {
+        if(containsOrIsNull(iterable)) {
             final String errorMessageString = String.valueOf(errorMessage);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new NullPointerException(errorMessageString);
@@ -217,12 +211,11 @@ public final class Preconditions {
      * @return the non-null {@code iterable} reference just validated
      * @throws NullPointerException if {@code iterable} is null or contains at least one null element
      */
-    public static <T extends Iterable<?>> T checkContentsNotNull(final T iterable,
-                                                                 final String errorMessageTemplate,
+    public static <T extends Iterable<?>> T checkContentsNotNull(final T iterable, final String errorMessageTemplate,
                                                                  final Object... errorMessageArgs) {
-        if (containsOrIsNull(iterable)) {
+        if(containsOrIsNull(iterable)) {
             final String errorMessageString = format(errorMessageTemplate, errorMessageArgs);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new NullPointerException(errorMessageString);
@@ -231,20 +224,20 @@ public final class Preconditions {
     }
 
     private static boolean containsOrIsNull(final Iterable<?> iterable) {
-        if (iterable == null) {
+        if(iterable == null) {
             return true;
         }
-        if (iterable instanceof Collection) {
-            Collection<?> collection = (Collection<?>) iterable;
+        if(iterable instanceof Collection) {
+            final Collection<?> collection = (Collection<?>) iterable;
             try {
                 return collection.contains(null);
-            } catch (NullPointerException e) {
+            } catch(NullPointerException e) {
                 // A NPE implies that the collection doesn't contain null.
                 return false;
             }
         } else {
-            for (Object element : iterable) {
-                if (element == null) {
+            for(final Object element : iterable) {
+                if(element == null) {
                     return true;
                 }
             }
@@ -261,7 +254,7 @@ public final class Preconditions {
      * @throws IndexOutOfBoundsException if {@code index} is negative or is not less than {@code size}
      * @throws IllegalArgumentException  if {@code size} is negative
      */
-    public static void checkElementIndex(int index, int size) {
+    public static void checkElementIndex(final int index, final int size) {
         checkElementIndex(index, size, "index");
     }
 
@@ -277,16 +270,16 @@ public final class Preconditions {
      */
     public static void checkElementIndex(final int index, final int size, final String desc) {
         checkArgument(size >= 0, "negative size: %s", size);
-        if (index < 0) {
+        if(index < 0) {
             final String errorMessageString = format("%s (%s) must not be negative", desc, index);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new IndexOutOfBoundsException(errorMessageString);
         }
-        if (index >= size) {
+        if(index >= size) {
             final String errorMessageString = format("%s (%s) must be less than size (%s)", desc, index, size);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new IndexOutOfBoundsException(errorMessageString);
@@ -318,16 +311,16 @@ public final class Preconditions {
      */
     public static void checkPositionIndex(final int index, final int size, final String desc) {
         checkArgument(size >= 0, "negative size: %s", size);
-        if (index < 0) {
+        if(index < 0) {
             final String errorMessageString = format("%s (%s) must not be negative", desc, index);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new IndexOutOfBoundsException(errorMessageString);
         }
-        if (index > size) {
+        if(index > size) {
             final String errorMessageString = format("%s (%s) must not be greater than size (%s)", desc, index, size);
-            if (LOG.isDebugEnabled()) {
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new IndexOutOfBoundsException(errorMessageString);
@@ -348,9 +341,10 @@ public final class Preconditions {
     public static void checkPositionIndexes(final int start, final int end, final int size) {
         checkPositionIndex(start, size, "start index");
         checkPositionIndex(end, size, "end index");
-        if (end < start) {
-            final String errorMessageString = format("end index (%s) must not be less than start index (%s)", end, start);
-            if (LOG.isDebugEnabled()) {
+        if(end < start) {
+            final String errorMessageString =
+                    format("end index (%s) must not be less than start index (%s)", end, start);
+            if(LOG.isDebugEnabled()) {
                 LOG.debug(errorMessageString);
             }
             throw new IndexOutOfBoundsException(errorMessageString);
@@ -368,13 +362,12 @@ public final class Preconditions {
      */
     static String format(final String template, final Object... args) { // visible for testing
         // start substituting the arguments into the '%s' placeholders
-        StringBuilder builder = new StringBuilder(
-                template.length() + 16 * args.length);
+        final StringBuilder builder = new StringBuilder(template.length() + 16 * args.length);
         int templateStart = 0;
         int i = 0;
-        while (i < args.length) {
-            int placeholderStart = template.indexOf("%s", templateStart);
-            if (placeholderStart == -1) {
+        while(i < args.length) {
+            final int placeholderStart = template.indexOf("%s", templateStart);
+            if(placeholderStart == - 1) {
                 break;
             }
             builder.append(template.substring(templateStart, placeholderStart));
@@ -383,10 +376,10 @@ public final class Preconditions {
         }
         builder.append(template.substring(templateStart));
         // if we run out of placeholders, append the extra args in square braces
-        if (i < args.length) {
+        if(i < args.length) {
             builder.append(" [");
             builder.append(args[i++]);
-            while (i < args.length) {
+            while(i < args.length) {
                 builder.append(", ");
                 builder.append(args[i++]);
             }

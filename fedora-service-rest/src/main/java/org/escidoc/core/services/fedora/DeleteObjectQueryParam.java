@@ -11,7 +11,7 @@ public final class DeleteObjectQueryParam {
         return logMessage;
     }
 
-    public void setLogMessage(String logMessage) {
+    public void setLogMessage(final String logMessage) {
         this.logMessage = logMessage;
     }
 }

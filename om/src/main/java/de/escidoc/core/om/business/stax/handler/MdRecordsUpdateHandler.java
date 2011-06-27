@@ -84,57 +84,54 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
         final String curPath = parser.getCurPath();
         final String theName = element.getLocalName();
         final int indexInherited = element.indexOfAttribute(null, "inherited");
-        if (curPath.startsWith(this.mdRecordsPath) || mdRecordsPath.length() == 0) {
+        if(curPath.startsWith(this.mdRecordsPath) || mdRecordsPath.length() == 0) {
 
-            if (curPath.equals(this.mdRecordsPath + "/md-record") && indexInherited < 0) {
+            if(curPath.equals(this.mdRecordsPath + "/md-record") && indexInherited < 0) {
                 // the entire md-record element is stored in fedora, so adjust
                 // all values
                 this.isInside = true;
                 // get name of md-record
 
-                int index = element.indexOfAttribute(null, "name");
-                if (index > -1) {
+                final int index = element.indexOfAttribute(null, "name");
+                if(index > - 1) {
                     this.name = element.getAttribute(index).getValue();
-                    if (name.length() == 0) {
-                        throw new MissingAttributeValueException("the value of the"
-                            + " \"name\" atribute of the element " + theName + " is empty.");
+                    if(name.length() == 0) {
+                        throw new MissingAttributeValueException(
+                                "the value of the" + " \"name\" atribute of the element " + theName + " is empty.");
                     }
-                    if (Elements.MANDATORY_MD_RECORD_NAME.equals(name)) {
+                    if(Elements.MANDATORY_MD_RECORD_NAME.equals(name)) {
                         this.isMandatoryName = true;
                     }
                 }
 
                 String typeValue = null;
                 final int indexOfType = element.indexOfAttribute(null, "md-type");
-                if (indexOfType != -1) {
+                if(indexOfType != - 1) {
                     final Attribute type = element.getAttribute(indexOfType);
                     typeValue = type.getValue();
                 }
                 String schemaValue = null;
                 final int indexOfSchema = element.indexOfAttribute(null, "schema");
-                if (indexOfSchema != -1) {
+                if(indexOfSchema != - 1) {
                     final Attribute schema = element.getAttribute(indexOfSchema);
                     schemaValue = schema.getValue();
                 }
                 final Map<String, String> md = new HashMap<String, String>();
-                if (typeValue != null) {
+                if(typeValue != null) {
                     md.put("type", typeValue);
-                }
-                else {
+                } else {
                     md.put("type", Constants.UNKNOWN);
                 }
 
-                if (schemaValue != null) {
+                if(schemaValue != null) {
                     md.put("schema", schemaValue);
-                }
-                else {
+                } else {
                     md.put("schema", Constants.UNKNOWN);
                 }
                 metadataAttributes.put(this.name, md);
-            }
-            else if (this.isInside && !this.isRootMetadataElement) {
+            } else if(this.isInside && ! this.isRootMetadataElement) {
                 this.isRootMetadataElement = true;
-                if ("escidoc".equals(this.name)) {
+                if("escidoc".equals(this.name)) {
                     this.escidocMdRecordNameSpace = element.getNamespace();
                 }
 
@@ -151,14 +148,13 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
      */
     @Override
     public EndElement endElement(final EndElement element) throws MissingMdRecordException {
-        if (parser.getCurPath().equals(this.mdRecordsPath + "/md-record")) {
+        if(parser.getCurPath().equals(this.mdRecordsPath + "/md-record")) {
             this.isInside = false;
             this.isRootMetadataElement = false;
             this.name = null;
-        }
-        else if (mdRecordsPath.equals(parser.getCurPath()) && !this.isMandatoryName && !this.origin) {
-            throw new MissingMdRecordException("Mandatory md-record with a name " + Elements.MANDATORY_MD_RECORD_NAME
-                + " is missing.");
+        } else if(mdRecordsPath.equals(parser.getCurPath()) && ! this.isMandatoryName && ! this.origin) {
+            throw new MissingMdRecordException(
+                    "Mandatory md-record with a name " + Elements.MANDATORY_MD_RECORD_NAME + " is missing.");
         }
         return element;
     }
