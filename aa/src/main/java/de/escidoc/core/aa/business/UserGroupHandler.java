@@ -632,18 +632,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                     throw new XmlCorruptedException(message);
                 }
             }
-            else if ("user-attribute".equals(type)) {
-                try {
-                    //If ou-user-attribute is set as selector, check if ou is != created
-                    if (EscidocConfiguration
-                        .getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME).equals(name)) {
-                        //this.tripleStoreUtility.
-                    }
-                }
-                catch (IOException e) {
-                    throw new SystemException(e);
-                }
-            }
             boolean alreadyExist = false;
             for (final UserGroupMember existingMember : existingMembers) {
                 if (name.equals(existingMember.getName()) && type.equals(existingMember.getType())
