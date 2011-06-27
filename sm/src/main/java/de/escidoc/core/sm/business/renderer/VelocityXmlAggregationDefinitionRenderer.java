@@ -93,16 +93,16 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * @param values                The {@link Map} to add the values to.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private static void addAggregationDefinitionValues(
-        final AggregationDefinition aggregationDefinition, final Map<String, Object> values) throws SystemException {
+    private static void addAggregationDefinitionValues(final AggregationDefinition aggregationDefinition,
+                                                       final Map<String, Object> values) {
         DateTime createDateTime = new DateTime(aggregationDefinition.getCreationDate());
         createDateTime = createDateTime.withZone(DateTimeZone.UTC);
         final String create = createDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("aggregationDefinitionCreationDate", create);
         values.put("aggregationDefinitionCreatedById", aggregationDefinition.getCreatorId());
         values.put("aggregationDefinitionCreatedByTitle", "user " + aggregationDefinition.getCreatorId());
-        values.put("aggregationDefinitionCreatedByHref", XmlUtility.getUserAccountHref(aggregationDefinition
-            .getCreatorId()));
+        values.put("aggregationDefinitionCreatedByHref",
+                XmlUtility.getUserAccountHref(aggregationDefinition.getCreatorId()));
         values.put("aggregationDefinitionId", aggregationDefinition.getId());
         values.put("aggregationDefinitionName", aggregationDefinition.getName());
         values.put("aggregationDefinitionHref", XmlUtility.getAggregationDefinitionHref(aggregationDefinition.getId()));
@@ -119,29 +119,29 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * @param aggregationTables set of aggregationTables.
      * @param values            The {@link Map} to add the values to.
      */
-    private static void addAggregationTableValues(
-        final Collection<AggregationTable> aggregationTables, final Map<String, Object> values) {
+    private static void addAggregationTableValues(final Collection<AggregationTable> aggregationTables,
+                                                  final Map<String, Object> values) {
         final Collection<HashMap<String, Object>> aggregationTablesVm = new ArrayList<HashMap<String, Object>>();
-        if (aggregationTables != null) {
+        if(aggregationTables != null) {
             final Collection<AggregationTable> sortedAggregationTables =
-                new TreeSet<AggregationTable>(new AggregationTableComparator());
+                    new TreeSet<AggregationTable>(new AggregationTableComparator());
             sortedAggregationTables.addAll(aggregationTables);
-            for (final AggregationTable aggregationTable : sortedAggregationTables) {
+            for(final AggregationTable aggregationTable : sortedAggregationTables) {
                 final HashMap<String, Object> tableMap = new HashMap<String, Object>();
                 tableMap.put("name", aggregationTable.getName());
 
                 // fields
                 final Collection<HashMap<String, String>> aggregationTableFieldsVm =
-                    new ArrayList<HashMap<String, String>>();
-                if (aggregationTable.getAggregationTableFields() != null) {
+                        new ArrayList<HashMap<String, String>>();
+                if(aggregationTable.getAggregationTableFields() != null) {
                     final Collection<AggregationTableField> sortedAggregationTableFields =
-                        new TreeSet<AggregationTableField>(new AggregationTableFieldComparator());
+                            new TreeSet<AggregationTableField>(new AggregationTableFieldComparator());
                     sortedAggregationTableFields.addAll(aggregationTable.getAggregationTableFields());
-                    for (final AggregationTableField aggregationTableField : sortedAggregationTableFields) {
+                    for(final AggregationTableField aggregationTableField : sortedAggregationTableFields) {
                         final HashMap<String, String> aggregationTableFieldVm = new HashMap<String, String>();
                         aggregationTableFieldVm.put("name", aggregationTableField.getName());
-                        aggregationTableFieldVm.put("fieldTypeId", Integer.toString(aggregationTableField
-                            .getFieldTypeId()));
+                        aggregationTableFieldVm
+                                .put("fieldTypeId", Integer.toString(aggregationTableField.getFieldTypeId()));
                         aggregationTableFieldVm.put("feed", aggregationTableField.getFeed());
                         aggregationTableFieldVm.put("xpath", aggregationTableField.getXpath());
                         aggregationTableFieldVm.put("dataType", aggregationTableField.getDataType());
@@ -153,22 +153,22 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
 
                 // indexes
                 final Collection<HashMap<String, Object>> aggregationTableIndexesVm =
-                    new ArrayList<HashMap<String, Object>>();
-                if (aggregationTable.getAggregationTableIndexes() != null) {
+                        new ArrayList<HashMap<String, Object>>();
+                if(aggregationTable.getAggregationTableIndexes() != null) {
                     final Collection<AggregationTableIndexe> sortedAggregationTableIndexes =
-                        new TreeSet<AggregationTableIndexe>(new AggregationTableIndexComparator());
+                            new TreeSet<AggregationTableIndexe>(new AggregationTableIndexComparator());
                     sortedAggregationTableIndexes.addAll(aggregationTable.getAggregationTableIndexes());
-                    for (final AggregationTableIndexe aggregationTableIndex : sortedAggregationTableIndexes) {
+                    for(final AggregationTableIndexe aggregationTableIndex : sortedAggregationTableIndexes) {
                         final HashMap<String, Object> aggregationTableIndexVm = new HashMap<String, Object>();
                         aggregationTableIndexVm.put("name", aggregationTableIndex.getName());
                         final Collection<HashMap<String, String>> indexFields =
-                            new ArrayList<HashMap<String, String>>();
-                        if (aggregationTableIndex.getAggregationTableIndexFields() != null) {
+                                new ArrayList<HashMap<String, String>>();
+                        if(aggregationTableIndex.getAggregationTableIndexFields() != null) {
                             final Collection<AggregationTableIndexField> sortedAggregationTableIndexFields =
-                                new TreeSet<AggregationTableIndexField>(new AggregationTableIndexFieldComparator());
-                            sortedAggregationTableIndexFields.addAll(aggregationTableIndex
-                                .getAggregationTableIndexFields());
-                            for (final AggregationTableIndexField aggregationTableIndexField : sortedAggregationTableIndexFields) {
+                                    new TreeSet<AggregationTableIndexField>(new AggregationTableIndexFieldComparator());
+                            sortedAggregationTableIndexFields
+                                    .addAll(aggregationTableIndex.getAggregationTableIndexFields());
+                            for(final AggregationTableIndexField aggregationTableIndexField : sortedAggregationTableIndexFields) {
                                 final HashMap<String, String> field = new HashMap<String, String>();
                                 field.put("field", aggregationTableIndexField.getField());
                                 indexFields.add(field);
@@ -193,14 +193,14 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * @param values The {@link Map} to add the values to.
      */
     private static void addStatisticDataSelectorValues(
-        final Collection<AggregationStatisticDataSelector> aggregationStatisticDataSelectors,
-        final Map<String, Object> values) {
+            final Collection<AggregationStatisticDataSelector> aggregationStatisticDataSelectors,
+            final Map<String, Object> values) {
         final Collection<HashMap<String, String>> aggregationDataSelectorsVm = new ArrayList<HashMap<String, String>>();
-        if (aggregationStatisticDataSelectors != null) {
+        if(aggregationStatisticDataSelectors != null) {
             final Collection<AggregationStatisticDataSelector> sortedAggregationStatisticDataSelectors =
-                new TreeSet<AggregationStatisticDataSelector>(new AggregationStatisticDataSelectorComparator());
+                    new TreeSet<AggregationStatisticDataSelector>(new AggregationStatisticDataSelectorComparator());
             sortedAggregationStatisticDataSelectors.addAll(aggregationStatisticDataSelectors);
-            for (final AggregationStatisticDataSelector aggregationStatisticDataSelector : sortedAggregationStatisticDataSelectors) {
+            for(final AggregationStatisticDataSelector aggregationStatisticDataSelector : sortedAggregationStatisticDataSelectors) {
                 final HashMap<String, String> selectorMap = new HashMap<String, String>();
                 selectorMap.put("selectorType", aggregationStatisticDataSelector.getSelectorType());
                 selectorMap.put("xpath", aggregationStatisticDataSelector.getXpath());
@@ -219,9 +219,8 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      *      #renderAggregationDefinitions(de.escidoc.core.sm.business.aggregationDefinition)
      */
     @Override
-    public String renderAggregationDefinitions(
-        final Collection<AggregationDefinition> aggregationDefinitions, final RecordPacking recordPacking)
-        throws SystemException {
+    public String renderAggregationDefinitions(final Collection<AggregationDefinition> aggregationDefinitions,
+                                               final RecordPacking recordPacking) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -232,9 +231,10 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
         addAggregationDefinitionListNamespaceValues(values);
 
         final List<Map<String, Object>> aggregationDefinitionsValues =
-            aggregationDefinitions != null ? new ArrayList<Map<String, Object>>(aggregationDefinitions.size()) : new ArrayList();
-        if (aggregationDefinitions != null) {
-            for (final AggregationDefinition aggregationDefinition : aggregationDefinitions) {
+                aggregationDefinitions != null ? new ArrayList<Map<String, Object>>(aggregationDefinitions.size()) :
+                        new ArrayList();
+        if(aggregationDefinitions != null) {
+            for(final AggregationDefinition aggregationDefinition : aggregationDefinitions) {
                 final Map<String, Object> aggregationDefinitionValues = new HashMap<String, Object>();
                 addAggregationDefinitionNamespaceValues(aggregationDefinitionValues);
                 addAggregationDefinitionValues(aggregationDefinition, aggregationDefinitionValues);
@@ -251,7 +251,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * @param values The {@link Map} to that the values shall be added.
      */
     private static void addAggregationDefinitionNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("aggregationDefinitionNamespacePrefix", Constants.AGGREGATION_DEFINITION_NS_PREFIX);
         values.put("aggregationDefinitionNamespace", Constants.AGGREGATION_DEFINITION_NS_URI);
@@ -267,7 +267,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * @param values The {@link Map} to that the values shall be added.
      */
     private static void addAggregationDefinitionListNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("aggregationDefinitionListNamespacePrefix", Constants.AGGREGATION_DEFINITION_LIST_NS_PREFIX);
@@ -291,8 +291,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * @return Returns the <code>AggregationDefinitionXmlProvider</code> object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static AggregationDefinitionXmlProvider getAggregationDefinitionXmlProvider()
-        throws WebserverSystemException {
+    private static AggregationDefinitionXmlProvider getAggregationDefinitionXmlProvider() {
 
         return AggregationDefinitionXmlProvider.getInstance();
     }

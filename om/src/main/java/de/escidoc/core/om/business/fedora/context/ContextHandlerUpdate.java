@@ -430,9 +430,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws WebserverSystemException      In case of an internal error in the webserver.
      * @throws TripleStoreSystemException    In case of an internal error in the triple store.
      */
-    private void updateRelsExt(final Map<String, String> changedValues)
-            throws XmlParserSystemException, ContextNameNotUniqueException, TripleStoreSystemException,
-            WebserverSystemException {
+    private void updateRelsExt(final Map<String, String> changedValues) throws XmlParserSystemException {
 
         if(changedValues.size() < 1) {
             return;

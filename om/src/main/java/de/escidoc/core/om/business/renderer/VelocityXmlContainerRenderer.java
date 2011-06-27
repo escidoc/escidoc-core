@@ -251,7 +251,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @param values Already added values.
      * @throws WebserverSystemException If an error occurs.
      */
-    private static void addNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addNamespaceValues(final Map<String, Object> values) {
 
         values.put("containerNamespacePrefix", Constants.CONTAINER_NAMESPACE_PREFIX);
         values.put("containerNamespace", Constants.CONTAINER_NAMESPACE_URI);

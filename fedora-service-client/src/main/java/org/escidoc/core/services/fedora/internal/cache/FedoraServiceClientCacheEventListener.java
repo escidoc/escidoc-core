@@ -99,7 +99,7 @@ public final class FedoraServiceClientCacheEventListener implements CacheEventLi
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
+    public Object clone() {
         return this;
     }
 

@@ -195,8 +195,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         return getContentStream(name);
     }
 
-    private EscidocBinaryContent getContentStream(final String name)
-            throws ContentStreamNotFoundException, FedoraSystemException, WebserverSystemException {
+    private EscidocBinaryContent getContentStream(final String name) throws WebserverSystemException {
 
         final Datastream cs = getContentModel().getContentStream(name);
 

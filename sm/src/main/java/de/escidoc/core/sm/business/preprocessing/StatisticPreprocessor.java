@@ -115,35 +115,33 @@ public class StatisticPreprocessor {
      *          e
      */
     public void execute(final Date inputDate) throws StatisticPreprocessingSystemException {
-        if (LOGGER.isInfoEnabled()) {
+        if(LOGGER.isInfoEnabled()) {
             LOGGER.info("Preprocessing Statistics for Date " + inputDate);
         }
         final Date date = inputDate != null ? inputDate : new Date();
-        if (LOGGER.isInfoEnabled()) {
+        if(LOGGER.isInfoEnabled()) {
             LOGGER.info("ComputedDate: " + date);
         }
         try {
             // Get all Aggregation Definitions from Database
             final Collection<AggregationDefinition> aggregationDefinitions = dao.retrieveAggregationDefinitions();
-            if (aggregationDefinitions != null) {
-                for (final AggregationDefinition aggregationDefinition : aggregationDefinitions) {
+            if(aggregationDefinitions != null) {
+                for(final AggregationDefinition aggregationDefinition : aggregationDefinitions) {
                     try {
                         execute(date, aggregationDefinition);
-                    }
-                    catch (final Exception e) {
+                    } catch(final Exception e) {
                         errorMessageHandler.putErrorMessage(new HashMap<String, String>(), e,
-                            de.escidoc.core.common.business.Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
-                        if (LOGGER.isWarnEnabled()) {
+                                de.escidoc.core.common.business.Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
+                        if(LOGGER.isWarnEnabled()) {
                             LOGGER.warn("Error on retrieving aggregation definitions.");
                         }
-                        if (LOGGER.isDebugEnabled()) {
+                        if(LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Error on retrieving aggregation definitions.", e);
                         }
                     }
                 }
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new StatisticPreprocessingSystemException(e);
         }
     }
@@ -158,36 +156,36 @@ public class StatisticPreprocessor {
      *          e
      */
     public void execute(final Date startDate, final Date endDate, final String aggregationDefinitionId)
-        throws StatisticPreprocessingSystemException {
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("Preprocessing Statistics for AggregationDefinition " + aggregationDefinitionId
-                + ", StartDate:" + startDate + ", EndDate:" + endDate);
+            throws StatisticPreprocessingSystemException {
+        if(LOGGER.isInfoEnabled()) {
+            LOGGER.info(
+                    "Preprocessing Statistics for AggregationDefinition " + aggregationDefinitionId + ", StartDate:" +
+                            startDate + ", EndDate:" + endDate);
         }
-        if (aggregationDefinitionId == null) {
+        if(aggregationDefinitionId == null) {
             throw new StatisticPreprocessingSystemException("aggregationDefinitionId may not be null");
         }
         try {
             final AggregationDefinition aggregationDefinition = dao.retrieve(aggregationDefinitionId);
             final Date executionDate = determineStartDate(startDate, aggregationDefinition.getScope().getId());
             final Date internalEndDate = determineEndDate(endDate);
-            if (LOGGER.isInfoEnabled()) {
+            if(LOGGER.isInfoEnabled()) {
                 LOGGER.info("ComputedStartDate: " + executionDate);
                 LOGGER.info("ComputedEndDate: " + internalEndDate);
             }
-            if (internalEndDate.before(executionDate)) {
+            if(internalEndDate.before(executionDate)) {
                 return;
             }
             final Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(executionDate.getTime());
-            while (internalEndDate.after(executionDate)) {
+            while(internalEndDate.after(executionDate)) {
                 execute(executionDate, aggregationDefinition);
                 cal.add(Calendar.DATE, 1);
                 executionDate.setTime(cal.getTimeInMillis());
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             errorMessageHandler.putErrorMessage(new HashMap<String, String>(), e,
-                de.escidoc.core.common.business.Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
+                    de.escidoc.core.common.business.Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
             throw new StatisticPreprocessingSystemException(e);
         }
     }
@@ -202,8 +200,8 @@ public class StatisticPreprocessor {
      *          e
      */
     private void execute(final Date inputDate, final AggregationDefinition aggregationDefinition)
-        throws StatisticPreprocessingSystemException {
-        if (aggregationDefinition == null) {
+            throws StatisticPreprocessingSystemException {
+        if(aggregationDefinition == null) {
             throw new StatisticPreprocessingSystemException("aggregationDefinition may not be null");
         }
         final Date date = inputDate != null ? inputDate : new Date();
@@ -212,56 +210,54 @@ public class StatisticPreprocessor {
             // aggregation-definition
             // if statistic-data was processed successfully before.
             final Collection<PreprocessingLog> preprocessingLogs =
-                preprocessingLogsDao.retrievePreprocessingLogs(aggregationDefinition.getId(), date, false);
-            if (preprocessingLogs != null && !preprocessingLogs.isEmpty()) {
+                    preprocessingLogsDao.retrievePreprocessingLogs(aggregationDefinition.getId(), date, false);
+            if(preprocessingLogs != null && ! preprocessingLogs.isEmpty()) {
                 final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                LOGGER.error("aggregation-definition " + aggregationDefinition.getId()
-                    + " already preprocessed successfully for date " + dateFormat.format(date));
+                LOGGER.error("aggregation-definition " + aggregationDefinition.getId() +
+                        " already preprocessed successfully for date " + dateFormat.format(date));
                 return;
             }
 
-            if (LOGGER.isInfoEnabled()) {
-                LOGGER.info("preprocessing aggregation-definition " + aggregationDefinition.getName() + " for Date "
-                    + date);
+            if(LOGGER.isInfoEnabled()) {
+                LOGGER.info("preprocessing aggregation-definition " + aggregationDefinition.getName() + " for Date " +
+                        date);
             }
 
             // Do we have to access the statistic-data-table?
-            if (aggregationDefinition.getAggregationStatisticDataSelectors() != null) {
-                for (final AggregationStatisticDataSelector aggregationStatisticDataSelector : aggregationDefinition
-                    .getAggregationStatisticDataSelectors()) {
-                    if ("statistic-table".equals(aggregationStatisticDataSelector.getSelectorType())) {
+            if(aggregationDefinition.getAggregationStatisticDataSelectors() != null) {
+                for(final AggregationStatisticDataSelector aggregationStatisticDataSelector : aggregationDefinition
+                        .getAggregationStatisticDataSelectors()) {
+                    if("statistic-table".equals(aggregationStatisticDataSelector.getSelectorType())) {
                         // Extract Data from raw-statistics-table
-                        final List resultList =
-                            dbAccessor.executeSql(generateStatisticTableSelectVo(aggregationStatisticDataSelector,
-                                aggregationDefinition.getScope().getId(), date));
-                        if (LOGGER.isInfoEnabled() && resultList != null) {
+                        final List resultList = dbAccessor.executeSql(
+                                generateStatisticTableSelectVo(aggregationStatisticDataSelector,
+                                        aggregationDefinition.getScope().getId(), date));
+                        if(LOGGER.isInfoEnabled() && resultList != null) {
                             LOGGER.info("found " + resultList.size() + " records");
                         }
                         // preprocess Data
                         final AggregationPreprocessorVo aggregationPreprocessorVo =
-                            aggregationPreprocessor.processAggregation(aggregationDefinition, resultList);
+                                aggregationPreprocessor.processAggregation(aggregationDefinition, resultList);
                         // write dataHash into Database 
                         //(either insert or update)
-                        synchronized (AggregationIdMapper.getInstance().getAggregationIdEntry(
-                            aggregationDefinition.getId())) {
-                            aggregationPreprocessor.persistAggregation(aggregationPreprocessorVo, aggregationDefinition
-                                .getId(), date);
+                        synchronized(AggregationIdMapper.getInstance()
+                                .getAggregationIdEntry(aggregationDefinition.getId())) {
+                            aggregationPreprocessor
+                                    .persistAggregation(aggregationPreprocessorVo, aggregationDefinition.getId(), date);
                         }
 
                     }
                 }
             }
-        }
-        catch (final RuntimeException e) {
+        } catch(final RuntimeException e) {
             handleException(date, aggregationDefinition, e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             handleException(date, aggregationDefinition, e);
         }
     }
 
     private void handleException(final Date date, final AggregationDefinition aggregationDefinition, final Throwable e)
-        throws StatisticPreprocessingSystemException {
+            throws StatisticPreprocessingSystemException {
         final PreprocessingLog preprocessingLog = new PreprocessingLog();
         preprocessingLog.setAggregationDefinition(aggregationDefinition);
         preprocessingLog.setHasError(true);
@@ -269,18 +265,18 @@ public class StatisticPreprocessor {
         preprocessingLog.setProcessingDate(new java.sql.Date(date.getTime()));
         try {
             preprocessingLogsDao.savePreprocessingLog(preprocessingLog);
-        }
-        catch (final SqlDatabaseSystemException e1) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final SqlDatabaseSystemException e1) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on saving preprocessing log.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on saving preprocessing log.", e1);
             }
         }
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        throw new StatisticPreprocessingSystemException("error while preprocessing aggregationDefinition "
-            + aggregationDefinition.getId() + " for date " + dateFormat.format(date) + ": " + e);
+        throw new StatisticPreprocessingSystemException(
+                "error while preprocessing aggregationDefinition " + aggregationDefinition.getId() + " for date " +
+                        dateFormat.format(date) + ": " + e);
     }
 
     /**
@@ -299,13 +295,13 @@ public class StatisticPreprocessor {
      * @throws ScopeNotFoundException     e
      */
     private DatabaseSelectVo generateStatisticTableSelectVo(
-        final AggregationStatisticDataSelector aggregationStatisticDataSelector, final String scopeId, final Date date)
-        throws StatisticPreprocessingSystemException, XmlParserSystemException, ScopeNotFoundException,
-        SqlDatabaseSystemException {
+            final AggregationStatisticDataSelector aggregationStatisticDataSelector, final String scopeId,
+            final Date date)
+            throws StatisticPreprocessingSystemException, ScopeNotFoundException, SqlDatabaseSystemException {
         String xpath = null;
-        if (aggregationStatisticDataSelector.getSelectorType() != null
-            && "statistic-table".equals(aggregationStatisticDataSelector.getSelectorType())
-            && aggregationStatisticDataSelector.getXpath() != null) {
+        if(aggregationStatisticDataSelector.getSelectorType() != null &&
+                "statistic-table".equals(aggregationStatisticDataSelector.getSelectorType()) &&
+                aggregationStatisticDataSelector.getXpath() != null) {
             xpath = aggregationStatisticDataSelector.getXpath();
         }
         final DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
@@ -338,7 +334,7 @@ public class StatisticPreprocessor {
         final Scope scope = scopesDao.retrieve(scopeId);
 
         //only restrict to scope_id if Scope is no admin-scope
-        if (!scope.getScopeType().equals(ScopeTypes.ADMIN.name())) {
+        if(! scope.getScopeType().equals(ScopeTypes.ADMIN.name())) {
             final AdditionalWhereFieldVo additionalWhereFieldVo = new AdditionalWhereFieldVo();
             additionalWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
             additionalWhereFieldVo.setFieldName("scope_id");
@@ -348,12 +344,12 @@ public class StatisticPreprocessor {
             additionalWhereFieldVos.add(additionalWhereFieldVo);
         }
 
-        if (xpath != null && xpath.length() != 0) {
+        if(xpath != null && xpath.length() != 0) {
             final AdditionalWhereFieldVo xpathWhereFieldVo = new AdditionalWhereFieldVo();
             xpathWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
             xpathWhereFieldVo.setFieldType(Constants.DATABASE_FIELD_TYPE_FREE_SQL);
-            xpathWhereFieldVo.setFieldValue(handleXpathQuery(xpath.replaceAll("\\s+", " "),
-                Constants.STATISTIC_DATA_XML_FIELD_NAME));
+            xpathWhereFieldVo.setFieldValue(
+                    handleXpathQuery(xpath.replaceAll("\\s+", " "), Constants.STATISTIC_DATA_XML_FIELD_NAME));
             additionalWhereFieldVos.add(xpathWhereFieldVo);
         }
 
@@ -373,20 +369,20 @@ public class StatisticPreprocessor {
      *          e
      */
     private String handleXpathQuery(final String inputXpathQuery, final String field)
-        throws StatisticPreprocessingSystemException {
+            throws StatisticPreprocessingSystemException {
         try {
             final StringBuilder dbXpathQuery = new StringBuilder(" (");
             final String xpathQuery = inputXpathQuery.replaceAll("\\s+", " ");
             // Split at and/ors and save and/ors in array
             final String operatorHelper =
-                xpathQuery.replaceAll(".*?(( and )|( AND )|( And )|( or )|( OR )|( Or )).*?", "$1\\|");
+                    xpathQuery.replaceAll(".*?(( and )|( AND )|( And )|( or )|( OR )|( Or )).*?", "$1\\|");
             final String[] operators = operatorHelper.split("\\|");
             final String[] xpathQueryParts = xpathQuery.split("( and )|( AND )|( And )|( or )|( OR )|( Or )");
 
             // iterate over xpath-query-parts
             // (eg //parameter[@name>\"type\"]/* > \u2018page-request\u2019)
-            for (int i = 0; i < xpathQueryParts.length; i++) {
-                if (i > 0) {
+            for(int i = 0; i < xpathQueryParts.length; i++) {
+                if(i > 0) {
                     dbXpathQuery.append(' ').append(operators[i - 1]).append(' ');
                 }
 
@@ -394,11 +390,11 @@ public class StatisticPreprocessor {
                 String xpathQueryPart = xpathQueryParts[i].trim();
                 final StringBuilder openingBracketSaver = new StringBuilder("");
                 final StringBuilder closingBracketSaver = new StringBuilder("");
-                while (xpathQueryPart.indexOf('(') == 0) {
+                while(xpathQueryPart.indexOf('(') == 0) {
                     xpathQueryPart = xpathQueryPart.substring(1);
                     openingBracketSaver.append('(');
                 }
-                while (xpathQueryPart.lastIndexOf(')') == xpathQueryPart.length() - 1) {
+                while(xpathQueryPart.lastIndexOf(')') == xpathQueryPart.length() - 1) {
                     xpathQueryPart = xpathQueryPart.substring(0, xpathQueryPart.length() - 2);
                     closingBracketSaver.append(')');
                 }
@@ -407,13 +403,12 @@ public class StatisticPreprocessor {
                 final String xpathExpression = xpathQueryPart.replaceAll("(\\[.*?\\].*?)(=|>|<)", "$1\\|$2\\|");
                 final String[] xpathExpressionParts = xpathExpression.split("\\|.*?\\|");
                 dbXpathQuery.append(openingBracketSaver);
-                if (xpathExpressionParts.length > 1) {
+                if(xpathExpressionParts.length > 1) {
                     final String operator = xpathExpression.replaceAll(".*?\\|(.*?)\\|.*", "$1");
                     final String left = dbAccessor.getXpathString(xpathExpressionParts[0], field);
                     final String right = xpathExpressionParts[1].replaceAll("['\"]", "").trim();
                     dbXpathQuery.append(left).append(' ').append(operator).append(" '").append(right).append('\'');
-                }
-                else {
+                } else {
                     final String left = dbAccessor.getXpathBoolean(xpathExpressionParts[0], field);
                     dbXpathQuery.append(left);
                 }
@@ -421,8 +416,7 @@ public class StatisticPreprocessor {
             }
             dbXpathQuery.append(") ");
             return dbXpathQuery.toString();
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new StatisticPreprocessingSystemException("Cannot handle xpath-query for statistic-table", e);
         }
     }
@@ -437,7 +431,7 @@ public class StatisticPreprocessor {
      */
     private Date determineStartDate(final Date startDate, final String scopeId) throws SqlDatabaseSystemException {
         Date internalStartDate = statisticDataDao.retrieveMinTimestamp(scopeId);
-        if (internalStartDate == null) {
+        if(internalStartDate == null) {
             internalStartDate = new Date();
         }
         final Calendar cal = Calendar.getInstance();
@@ -446,7 +440,7 @@ public class StatisticPreprocessor {
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 1);
         internalStartDate.setTime(cal.getTimeInMillis());
-        if (startDate != null && startDate.after(internalStartDate)) {
+        if(startDate != null && startDate.after(internalStartDate)) {
             internalStartDate.setTime(startDate.getTime());
         }
         return internalStartDate;
@@ -460,12 +454,12 @@ public class StatisticPreprocessor {
      */
     private static Date determineEndDate(final Date endDate) {
         final Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
+        cal.add(Calendar.DATE, - 1);
         cal.set(Calendar.HOUR_OF_DAY, 23);
         cal.set(Calendar.MINUTE, 59);
         cal.set(Calendar.SECOND, 59);
         final Date internalEndDate = new Date(cal.getTimeInMillis());
-        if (endDate != null && endDate.before(internalEndDate)) {
+        if(endDate != null && endDate.before(internalEndDate)) {
             cal.setTimeInMillis(endDate.getTime());
             cal.set(Calendar.HOUR_OF_DAY, 23);
             cal.set(Calendar.MINUTE, 59);

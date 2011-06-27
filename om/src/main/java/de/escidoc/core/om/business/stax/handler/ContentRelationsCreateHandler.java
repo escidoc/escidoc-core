@@ -282,7 +282,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void targetExist(final String targetObjectType)
-            throws ReferencedResourceNotFoundException, TripleStoreSystemException, WebserverSystemException {
+            throws ReferencedResourceNotFoundException, TripleStoreSystemException {
         if(! this.tripleStoreUtility.exists(this.targetIdWithoutVersion)) {
             throw new ReferencedResourceNotFoundException(
                     "Referenced target resource with id " + this.targetIdWithoutVersion + " does not exist.");

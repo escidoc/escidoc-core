@@ -289,7 +289,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @return The expected <code>List</code> of <code>Maps</code>.
      */
     private List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
-            throws TripleStoreSystemException, WebserverSystemException {
+            throws TripleStoreSystemException {
         final List<Map<String, String>> entries = new ArrayList<Map<String, String>>(ids.size());
         for(final String id : ids) {
             final Map<String, String> entry = new HashMap<String, String>(THREE);
@@ -343,7 +343,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @param values The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addNamespaceValues(final Map<String, Object> values) {
 
         values.put("organizationalUnitNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_PREFIX);
         values.put("organizationalUnitNamespace", Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI);
@@ -387,7 +387,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @param values The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addSuccessorsNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addSuccessorsNamespaceValues(final Map<String, Object> values) {
 
         values.put("organizationalUnitNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_PREFIX);
         values.put("organizationalUnitNamespace", Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_LIST_NAMESPACE_URI);

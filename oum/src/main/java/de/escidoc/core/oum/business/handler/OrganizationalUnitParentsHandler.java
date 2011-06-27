@@ -60,7 +60,7 @@ public class OrganizationalUnitParentsHandler extends OrganizationalUnitHandlerB
      * @param parser The stax parser.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public OrganizationalUnitParentsHandler(final StaxParser parser) throws WebserverSystemException {
+    public OrganizationalUnitParentsHandler(final StaxParser parser) {
 
         super(parser);
     }
@@ -71,20 +71,20 @@ public class OrganizationalUnitParentsHandler extends OrganizationalUnitHandlerB
      * @see DefaultHandler# startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element) throws OrganizationalUnitNotFoundException,
-        MissingAttributeValueException, XmlCorruptedException, TripleStoreSystemException, IntegritySystemException,
-        WebserverSystemException {
+    public StartElement startElement(final StartElement element)
+            throws OrganizationalUnitNotFoundException, MissingAttributeValueException, XmlCorruptedException,
+            TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
         final String curPath = getParser().getCurPath();
-        if (!this.rootElementPathChecked) {
-            if (!getParser().getCurPath().startsWith('/' + this.rootElement)) {
-                throw new XmlCorruptedException("Root element is " + element.getLocalName() + " not as expected"
-                    + this.rootElement + "! ");
+        if(! this.rootElementPathChecked) {
+            if(! getParser().getCurPath().startsWith('/' + this.rootElement)) {
+                throw new XmlCorruptedException(
+                        "Root element is " + element.getLocalName() + " not as expected" + this.rootElement + "! ");
             }
             this.rootElementPathChecked = true;
         }
 
-        if (curPath.endsWith(XmlUtility.NAME_PARENT)) {
+        if(curPath.endsWith(XmlUtility.NAME_PARENT)) {
             parents.add(checkParentRef(element));
         }
         return element;

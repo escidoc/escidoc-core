@@ -86,8 +86,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
      * @param values    The {@link Map} to add the values to.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private static void addUserGroupValues(final UserGroup userGroup, final Map<String, Object> values)
-        throws SystemException {
+    private static void addUserGroupValues(final UserGroup userGroup, final Map<String, Object> values) {
         DateTime lmdDateTime = new DateTime(userGroup.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
@@ -129,7 +128,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
      */
     @Override
     public String renderCurrentGrants(final UserGroup userGroup, final List<RoleGrant> currentGrants)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootCurrentGrants", XmlTemplateProvider.TRUE);
@@ -141,7 +140,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("currentGrantsTitle", "Grants of " + userGroup.getLabel());
         values.put("currentGrantsHref", XmlUtility.getUserGroupCurrentGrantsHref(userGroup.getId()));
-        if (currentGrants != null && !currentGrants.isEmpty()) {
+        if(currentGrants != null && ! currentGrants.isEmpty()) {
             values.put("currentGrants", currentGrants);
         }
         DateTime lmdDateTime = new DateTime(userGroup.getLastModificationDate());
@@ -174,12 +173,12 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
         values.put("grantTitle", grant.getTitle());
         values.put("grantHref", grant.getHref());
         values.put("grantId", grant.getId());
-        if (grant.getUserAccountByUserId() != null) {
+        if(grant.getUserAccountByUserId() != null) {
             values.put("grantUserTitle", grant.getUserAccountByUserId().getName());
             values.put("grantUserHref", grant.getUserAccountByUserId().getHref());
             values.put("grantUserId", grant.getUserAccountByUserId().getId());
         }
-        if (grant.getUserGroupByGroupId() != null) {
+        if(grant.getUserGroupByGroupId() != null) {
             values.put("grantGroupTitle", grant.getUserGroupByGroupId().getName());
             values.put("grantGroupHref", grant.getUserGroupByGroupId().getHref());
             values.put("grantGroupId", grant.getUserGroupByGroupId().getId());
@@ -202,7 +201,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
         values.put("grantRemark", grant.getGrantRemark());
 
         final Date revocationDate = grant.getRevocationDate();
-        if (revocationDate != null) {
+        if(revocationDate != null) {
             DateTime revokationDateTime = new DateTime(grant.getRevocationDate());
             revokationDateTime = revokationDateTime.withZone(DateTimeZone.UTC);
             final String revokationDate = revokationDateTime.toString(Constants.TIMESTAMP_FORMAT);
@@ -254,7 +253,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
      */
     @Override
     public String renderUserGroups(final List<UserGroup> userGroups, final RecordPacking recordPacking)
-        throws SystemException {
+            throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootUserGroup", XmlTemplateProvider.TRUE);
@@ -262,7 +261,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
         addCommonValues(values);
         addUserGroupListValues(values);
         final Collection<Map<String, Object>> userGroupsValues = new ArrayList<Map<String, Object>>(userGroups.size());
-        for (final UserGroup userGroup : userGroups) {
+        for(final UserGroup userGroup : userGroups) {
             final Map<String, Object> userGroupValues = new HashMap<String, Object>();
             addUserGroupValues(userGroup, userGroupValues);
             userGroupsValues.add(userGroupValues);

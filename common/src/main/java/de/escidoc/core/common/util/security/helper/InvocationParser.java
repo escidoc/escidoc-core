@@ -198,8 +198,7 @@ public class InvocationParser {
     private Map<String, String> setupResourceAttributes(final Object arguments,
                                                         final Iterable<InvocationMapping> invocationMappings,
                                                         final boolean isArray, final int index)
-            throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
-            WebserverSystemException, XmlCorruptedException {
+            throws MissingMethodParameterException, WebserverSystemException, XmlCorruptedException {
 
         if(arguments == null || invocationMappings == null) {
             return new HashMap<String, String>();

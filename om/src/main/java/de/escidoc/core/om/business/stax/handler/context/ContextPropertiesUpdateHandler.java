@@ -222,8 +222,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @return true If value does not compares to the reopsitory value. false If value compares to the respository
      *         value.
      */
-    private boolean checkValueChanged(final String key, final String value)
-            throws TripleStoreSystemException, WebserverSystemException {
+    private boolean checkValueChanged(final String key, final String value) throws TripleStoreSystemException {
 
         final String repositoryValue = key.equals(Elements.ELEMENT_DESCRIPTION) ?
                 this.tripleStoreUtility.getPropertiesElements(this.contextId, Constants.DC_NS_URI + key) :

@@ -473,8 +473,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     }
 
     @Deprecated
-    private EscidocBinaryContent getContentStream(final String name)
-            throws ContentStreamNotFoundException, FedoraSystemException, WebserverSystemException {
+    private EscidocBinaryContent getContentStream(final String name) throws WebserverSystemException {
 
         final Datastream cs = getItem().getContentStream(name);
 

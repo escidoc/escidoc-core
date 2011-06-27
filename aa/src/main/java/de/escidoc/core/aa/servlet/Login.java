@@ -724,8 +724,7 @@ public class Login extends HttpServlet {
      * @throws SqlDatabaseSystemException Thrown in case of a database error.
      * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    private void deleteExternalAttributes(final UserAccount userAccount)
-            throws SqlDatabaseSystemException, WebserverSystemException {
+    private void deleteExternalAttributes(final UserAccount userAccount) throws SqlDatabaseSystemException {
         final List<UserAttribute> attributes = dao.retrieveAttributes(userAccount);
 
         for(final UserAttribute attribute : attributes) {
@@ -775,7 +774,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException   Thrown in case of an internal error.
      */
     private void createExternalAttributes(final UserAccount userAccount, final Map<String, List<String>> attributes)
-            throws SqlDatabaseSystemException, WebserverSystemException {
+            throws SqlDatabaseSystemException {
         for(final Entry<String, List<String>> entry : attributes.entrySet()) {
             final List<String> attributeValues = entry.getValue();
             if(attributeValues != null) {

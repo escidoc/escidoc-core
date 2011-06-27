@@ -154,8 +154,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @throws XmlParserSystemException   Thrown if parsing of RELS-EXT failed.
      * @throws WebserverSystemException   Thrown if request to TripleStore failed.
      */
-    private void getSomeValuesFromFedora()
-            throws TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+    private void getSomeValuesFromFedora() throws XmlParserSystemException {
 
         final Map<String, String> properties = new HashMap<String, String>();
         properties.putAll(obtainRelsExtValues());

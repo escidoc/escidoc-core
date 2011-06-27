@@ -394,7 +394,7 @@ public class Fingerprint implements Comparable<Object> {
      * @param o The object to be written to the stream.
      * @throws IOException Thrown if the object could not be written.
      */
-    public final void writeObject(final OutputStream o) throws IOException {
+    public final void writeObject(final OutputStream o) {
         final XMLEncoder e = new XMLEncoder(new BufferedOutputStream(o));
 
         e.writeObject(this);

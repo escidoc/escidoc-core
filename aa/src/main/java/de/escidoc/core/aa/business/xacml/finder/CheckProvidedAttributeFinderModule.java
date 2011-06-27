@@ -69,25 +69,24 @@ public class CheckProvidedAttributeFinderModule extends AbstractAttributeFinderM
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckProvidedAttributeFinderModule.class);
 
     private static final String PROVIDED_ATTRIBUTES_ID =
-        AttributeIds.INTERNAL_ENVIRONMENT_PREFIX + "provided-attributes";
+            AttributeIds.INTERNAL_ENVIRONMENT_PREFIX + "provided-attributes";
 
     /**
      * Pattern used to check if an attribute id is a id of a new resource attribute or an identifier attribute.
      */
     private static final Pattern PATTERN_ID_ATTRIBUTE_OR_NEW_ATTRIBUTE = Pattern.compile(".*:([^-]*)(-id|-new){0,1}");
 
-    @SuppressWarnings( { "CanBeFinal" })
+    @SuppressWarnings({"CanBeFinal"})
     private static URI PROVIDED_ATTRIBUTES_ID_URI; // Ignore FindBugs
 
     static {
         try {
             PROVIDED_ATTRIBUTES_ID_URI = new URI(PROVIDED_ATTRIBUTES_ID);
-        }
-        catch (final URISyntaxException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final URISyntaxException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on initialising provided attributes ID.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on initialising provided attributes ID.", e);
             }
         }
@@ -97,9 +96,9 @@ public class CheckProvidedAttributeFinderModule extends AbstractAttributeFinderM
      * See Interface for functional description.
      */
     @Override
-    protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType) throws EscidocException {
+    protected boolean assertAttribute(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
+                                      final String resourceObjid, final String resourceVersionNumber,
+                                      final int designatorType) throws EscidocException {
 
         // The check should be performed one time per evaluation, only.
         // Additionally, it has to be assured, that the check is not again
@@ -117,47 +116,44 @@ public class CheckProvidedAttributeFinderModule extends AbstractAttributeFinderM
      * success or throws an exception.
      */
     @Override
-    protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws SystemException, ResourceNotFoundException {
+    protected Object[] resolveLocalPart(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
+                                        final String resourceObjid, final String resourceVersionNumber)
+            throws SystemException, ResourceNotFoundException {
 
         final AttributeValue providedAttributesIds =
-            ctx.getEnvironmentAttribute(Constants.URI_XMLSCHEMA_STRING, getAttributeId(), null).getAttributeValue();
+                ctx.getEnvironmentAttribute(Constants.URI_XMLSCHEMA_STRING, getAttributeId(), null).getAttributeValue();
         putInCache("", "", "", PROVIDED_ATTRIBUTES_ID, ctx, new EvaluationResult(providedAttributesIds));
         final Iterator<StringAttribute> iter = ((BagAttribute) providedAttributesIds).iterator();
-        while (iter.hasNext()) {
+        while(iter.hasNext()) {
             final String attributeId = iter.next().getValue();
             final Matcher m = PATTERN_ID_ATTRIBUTE_OR_NEW_ATTRIBUTE.matcher(attributeId);
-            if (m.find()) {
+            if(m.find()) {
                 final String expectedObjectType = m.group(1);
-                if (PATTERN_ID_VALIDATABLE_OBJECT_TYPE.matcher(expectedObjectType).find()) {
+                if(PATTERN_ID_VALIDATABLE_OBJECT_TYPE.matcher(expectedObjectType).find()) {
                     final String id = fetchSingleResourceAttribute(ctx, attributeId);
                     String objectType;
                     try {
                         objectType = fetchObjectType(ctx, id);
-                    }
-                    catch (final ResourceNotFoundException e) {
+                    } catch(final ResourceNotFoundException e) {
                         objectType = "";
                     }
-                    if (!expectedObjectType.equals(objectType)) {
+                    if(! expectedObjectType.equals(objectType)) {
 
                         final String resourceName =
-                            StringUtility.convertToUpperCaseLetterFormat(expectedObjectType).toString();
+                                StringUtility.convertToUpperCaseLetterFormat(expectedObjectType).toString();
                         final String exceptionName =
-                            RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX + resourceName + "NotFoundException";
+                                RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX + resourceName + "NotFoundException";
                         final String errorMsg = StringUtility.format(resourceName + " not found", id);
 
                         try {
                             final Class<ResourceNotFoundException> exceptionClass =
-                                (Class<ResourceNotFoundException>) Class.forName(exceptionName);
+                                    (Class<ResourceNotFoundException>) Class.forName(exceptionName);
                             final Constructor<ResourceNotFoundException> constructor =
-                                exceptionClass.getConstructor(new Class[] { String.class, Throwable.class });
+                                    exceptionClass.getConstructor(new Class[]{String.class, Throwable.class});
                             throw constructor.newInstance(errorMsg, null);
-                        }
-                        catch (final ResourceNotFoundException e) {
+                        } catch(final ResourceNotFoundException e) {
                             throw e;
-                        }
-                        catch (final Exception e) {
+                        } catch(final Exception e) {
                             throw new ResourceNotFoundException(errorMsg, e);
                         }
                     }
@@ -176,7 +172,7 @@ public class CheckProvidedAttributeFinderModule extends AbstractAttributeFinderM
      * @return Returns an {@link URI} representing the attribute id.
      * @throws SystemException Thrown in case of an internal system error.
      */
-    public static URI getAttributeId() throws SystemException {
+    public static URI getAttributeId() {
         return PROVIDED_ATTRIBUTES_ID_URI;
     }
 

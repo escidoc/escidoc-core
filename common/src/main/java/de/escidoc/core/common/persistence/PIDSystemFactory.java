@@ -45,12 +45,11 @@ public abstract class PIDSystemFactory {
     static {
         try {
             createNewInstanceFromConfig();
-        }
-        catch (final PidSystemException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final PidSystemException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on creating new instance of PIDSystemFactory.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on creating new instance of PIDSystemFactory.", e);
             }
         }
@@ -71,7 +70,7 @@ public abstract class PIDSystemFactory {
      * @throws PidSystemException If no instance could be returned
      * @see EscidocConfiguration
      */
-    public static PIDSystemFactory getInstance() throws PidSystemException {
+    public static PIDSystemFactory getInstance() {
         return pidSystemFactory;
     }
 
@@ -84,16 +83,15 @@ public abstract class PIDSystemFactory {
 
         try {
             factoryClassName =
-                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PID_SYSTEM_FACTORY);
-            if (factoryClassName == null) {
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PID_SYSTEM_FACTORY);
+            if(factoryClassName == null) {
                 factoryClassName = DEFAULT_FACTORY;
             }
-        }
-        catch (final IOException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final IOException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on instanziating esidoc configuration factory.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on instanziating esidoc configuration factory.", e);
             }
             factoryClassName = DEFAULT_FACTORY;
@@ -102,20 +100,15 @@ public abstract class PIDSystemFactory {
         try {
             final Class<?> factoryClass = Class.forName(factoryClassName);
             pidSystemFactory = (PIDSystemFactory) factoryClass.getConstructor().newInstance();
-        }
-        catch (final ClassNotFoundException e) {
+        } catch(final ClassNotFoundException e) {
             throw new PidSystemException(e);
-        }
-        catch (final InstantiationException e) {
+        } catch(final InstantiationException e) {
             throw new PidSystemException(e);
-        }
-        catch (final IllegalAccessException e) {
+        } catch(final IllegalAccessException e) {
             throw new PidSystemException(e);
-        }
-        catch (NoSuchMethodException e) {
+        } catch(NoSuchMethodException e) {
             throw new PidSystemException(e);
-        }
-        catch (InvocationTargetException e) {
+        } catch(InvocationTargetException e) {
             throw new PidSystemException(e);
         }
     }

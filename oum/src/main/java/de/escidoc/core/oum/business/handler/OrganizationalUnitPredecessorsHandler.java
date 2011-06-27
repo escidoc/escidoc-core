@@ -63,7 +63,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
      * @param parser The StAX parser.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public OrganizationalUnitPredecessorsHandler(final StaxParser parser) throws WebserverSystemException {
+    public OrganizationalUnitPredecessorsHandler(final StaxParser parser) {
 
         super(parser);
     }

@@ -85,8 +85,8 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * @param values           The {@link Map} to add the values to.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private static void addReportDefinitionValues(
-        final ReportDefinition reportDefinition, final Map<String, Object> values) throws SystemException {
+    private static void addReportDefinitionValues(final ReportDefinition reportDefinition,
+                                                  final Map<String, Object> values) {
         DateTime createDateTime = new DateTime(reportDefinition.getCreationDate());
         createDateTime = createDateTime.withZone(DateTimeZone.UTC);
         final String create = createDateTime.toString(Constants.TIMESTAMP_FORMAT);
@@ -118,15 +118,15 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * @param reportDefinitionRoles set of reportDefinitionRoles.
      * @param values                The {@link Map} to add the values to.
      */
-    private static void addReportDefinitionRoleValues(
-        final Collection<ReportDefinitionRole> reportDefinitionRoles, final Map<String, Object> values) {
-        if (reportDefinitionRoles != null && !reportDefinitionRoles.isEmpty()) {
+    private static void addReportDefinitionRoleValues(final Collection<ReportDefinitionRole> reportDefinitionRoles,
+                                                      final Map<String, Object> values) {
+        if(reportDefinitionRoles != null && ! reportDefinitionRoles.isEmpty()) {
             final Collection<HashMap<String, String>> reportDefinitionRolesVm =
-                new ArrayList<HashMap<String, String>>();
+                    new ArrayList<HashMap<String, String>>();
             final Collection<ReportDefinitionRole> sortedReportDefinitionRoles =
-                new TreeSet<ReportDefinitionRole>(new ReportDefinitionRoleComparator());
+                    new TreeSet<ReportDefinitionRole>(new ReportDefinitionRoleComparator());
             sortedReportDefinitionRoles.addAll(reportDefinitionRoles);
-            for (final ReportDefinitionRole reportDefinitionRole : sortedReportDefinitionRoles) {
+            for(final ReportDefinitionRole reportDefinitionRole : sortedReportDefinitionRoles) {
                 final HashMap<String, String> roleMap = new HashMap<String, String>();
                 roleMap.put("id", reportDefinitionRole.getRoleId());
                 roleMap.put("title", "role " + reportDefinitionRole.getRoleId());
@@ -147,8 +147,8 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      *      #renderReportDefinitions(de.escidoc.core.sm.business.ReportDefinition)
      */
     @Override
-    public String renderReportDefinitions(
-        final Collection<ReportDefinition> reportDefinitions, final RecordPacking recordPacking) throws SystemException {
+    public String renderReportDefinitions(final Collection<ReportDefinition> reportDefinitions,
+                                          final RecordPacking recordPacking) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -159,16 +159,15 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
         addReportDefinitionListNamespaceValues(values);
 
         final List<Map<String, Object>> reportDefinitionsValues;
-        if (reportDefinitions != null) {
+        if(reportDefinitions != null) {
             reportDefinitionsValues = new ArrayList<Map<String, Object>>(reportDefinitions.size());
-            for (final ReportDefinition reportDefinition : reportDefinitions) {
+            for(final ReportDefinition reportDefinition : reportDefinitions) {
                 final Map<String, Object> reportDefinitionValues = new HashMap<String, Object>();
                 addReportDefinitionNamespaceValues(reportDefinitionValues);
                 addReportDefinitionValues(reportDefinition, reportDefinitionValues);
                 reportDefinitionsValues.add(reportDefinitionValues);
             }
-        }
-        else {
+        } else {
             reportDefinitionsValues = new ArrayList<Map<String, Object>>();
         }
         values.put("reportDefinitions", reportDefinitionsValues);
@@ -181,7 +180,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * @param values The {@link Map} to that the values shall be added.
      */
     private static void addReportDefinitionNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("reportDefinitionNamespacePrefix", Constants.REPORT_DEFINITION_NS_PREFIX);
         values.put("reportDefinitionNamespace", Constants.REPORT_DEFINITION_NS_URI);
@@ -197,7 +196,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * @param values The {@link Map} to that the values shall be added.
      */
     private static void addReportDefinitionListNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("reportDefinitionListNamespacePrefix", Constants.REPORT_DEFINITION_LIST_NS_PREFIX);

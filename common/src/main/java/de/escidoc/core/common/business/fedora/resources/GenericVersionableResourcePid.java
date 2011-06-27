@@ -79,9 +79,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     private static final Pattern SPLIT_PATTERN_PREDICATE_AND_TARGET = Pattern.compile("###");
 
-    private static final Pattern LATEST_RELEASE_PID_ENTRY =
-        Pattern.compile("<[^:]+:" + TripleStoreUtility.PROP_LATEST_RELEASE_PID + "[^>]>[^<]</[^:]+:"
-            + TripleStoreUtility.PROP_LATEST_RELEASE_PID + "\\s*>\\s*", Pattern.MULTILINE);
+    private static final Pattern LATEST_RELEASE_PID_ENTRY = Pattern.compile(
+            "<[^:]+:" + TripleStoreUtility.PROP_LATEST_RELEASE_PID + "[^>]>[^<]</[^:]+:" +
+                    TripleStoreUtility.PROP_LATEST_RELEASE_PID + "\\s*>\\s*", Pattern.MULTILINE);
 
     /**
      * VersionPid HashMap (version no., versionPid).
@@ -96,11 +96,11 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws TripleStoreSystemException Thrown in case of TripleStore error.
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    public GenericVersionableResourcePid(final String id) throws TripleStoreSystemException, WebserverSystemException,
-        ResourceNotFoundException {
+    public GenericVersionableResourcePid(final String id)
+            throws TripleStoreSystemException, WebserverSystemException, ResourceNotFoundException {
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
-            expandPropertiesNamesMapping(getPropertiesNamesMapping()));
+                expandPropertiesNamesMapping(getPropertiesNamesMapping()));
     }
 
     /**
@@ -118,8 +118,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws SystemException Thrown in case of internal error.
      */
     @Override
-    public void setObjectPid(final String pid) throws SystemException, FedoraSystemException, WebserverSystemException,
-        EncodingSystemException, TripleStoreSystemException, XmlParserSystemException {
+    public void setObjectPid(final String pid)
+            throws SystemException, FedoraSystemException, WebserverSystemException, EncodingSystemException,
+            TripleStoreSystemException, XmlParserSystemException {
 
         super.setObjectPid(pid);
 
@@ -153,25 +154,23 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         String pid = this.versionPids.get(fullId);
 
-        if (pid == null) {
-            if (fullId.equals(getFullId())) {
+        if(pid == null) {
+            if(fullId.equals(getFullId())) {
                 pid = getVersionData().get(PropertyMapKeys.CURRENT_VERSION_PID);
-            }
-            else {
+            } else {
                 // FIXME
                 final DateTime latestReleaseDate =
-                    new DateTime(getVersionElementData(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE), DateTimeZone.UTC);
+                        new DateTime(getVersionElementData(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE),
+                                DateTimeZone.UTC);
                 // get the timestamp of this version
                 // get the RELSE-EXT of the version and parse it for the
                 // versionPid
                 final Datastream relsExt;
                 try {
                     relsExt = getRelsExt(latestReleaseDate);
-                }
-                catch (final FedoraSystemException e) {
+                } catch(final FedoraSystemException e) {
                     throw new IntegritySystemException(e);
-                }
-                catch (final StreamNotFoundException e) {
+                } catch(final StreamNotFoundException e) {
                     throw new IntegritySystemException(e);
                 }
 
@@ -181,17 +180,16 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 sp.addHandler(cih);
                 try {
                     sp.parse(relsExt.getStream());
-                }
-                catch (final Exception e) {
+                } catch(final Exception e) {
                     throw new IntegritySystemException(e);
                 }
                 pid = cih.getVersionPid();
-                if (!validPidStructure(pid)) {
+                if(! validPidStructure(pid)) {
                     pid = null;
                 }
             }
 
-            if (validPidStructure(pid)) {
+            if(validPidStructure(pid)) {
                 this.versionPids.put(fullId, pid);
             }
         }
@@ -204,8 +202,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *
      * @param pid The to assign PID.
      */
-    public void setVersionPid(final String pid) throws TripleStoreSystemException, IntegritySystemException,
-        FedoraSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException {
+    public void setVersionPid(final String pid)
+            throws TripleStoreSystemException, IntegritySystemException, FedoraSystemException,
+            WebserverSystemException, EncodingSystemException, XmlParserSystemException {
 
         final DateTime timestamp = getLastFedoraModificationDate();
 
@@ -226,13 +225,14 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * <p/>
      * Precondition: The method checks not if the version is released! This check is part of the method caller.
      */
-    public void setLatestReleasePid() throws TripleStoreSystemException, IntegritySystemException,
-        WebserverSystemException, FedoraSystemException, XmlParserSystemException {
+    public void setLatestReleasePid()
+            throws TripleStoreSystemException, IntegritySystemException, WebserverSystemException,
+            FedoraSystemException, XmlParserSystemException {
 
         // Currently we can not trust the internal map because the status is
         // changes out side of the resource.
         String latestReleasedVersion = getResourcePropertiesValue(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER);
-        if (latestReleasedVersion == null) {
+        if(latestReleasedVersion == null) {
             // FIXME emergency solution because the version status is not known
             // resource internal
             latestReleasedVersion = getVersionId();
@@ -246,10 +246,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         final int cvn = Integer.valueOf(getVersionId());
         String pid = null;
 
-        if (lrvn == cvn) {
+        if(lrvn == cvn) {
             pid = getVersionPid();
-        }
-        else if (lrvn <= cvn) {
+        } else if(lrvn <= cvn) {
             pid = getVersionPid(getId() + VERSION_NUMBER_SEPARATOR + lrvn);
         }
         setResourceProperties(PropertyMapKeys.LATEST_RELEASE_PID, pid);
@@ -262,22 +261,22 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *
      * @param pid The to PID of the latest released version.
      */
-    public void setLatestReleasePid(final String pid) throws TripleStoreSystemException, FedoraSystemException,
-        XmlParserSystemException, WebserverSystemException {
+    public void setLatestReleasePid(final String pid)
+            throws TripleStoreSystemException, FedoraSystemException, XmlParserSystemException,
+            WebserverSystemException {
 
         byte[] relsExtS = null;
 
-        if (getLatestReleaseVersionNumber() == null) {
+        if(getLatestReleaseVersionNumber() == null) {
             relsExtS = createLatestReleasePid(pid);
-        }
-        else if (getLatestReleasePid() != null && pid.length() != 0) {
+        } else if(getLatestReleasePid() != null && pid.length() != 0) {
             // relsExtS = updateVersionPid(pid);
             relsExtS = updateLatestReleasePid(pid);
         }
 
         // we could store the new collected pid
         // versionPids.put(getFullId(), pid);
-        if (relsExtS != null) {
+        if(relsExtS != null) {
             setRelsExt(relsExtS);
         }
         // }
@@ -300,8 +299,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         final String pid;
         try {
             pid = getVersionPid();
-        }
-        catch (final IntegritySystemException e) {
+        } catch(final IntegritySystemException e) {
             throw new WebserverSystemException(e);
         }
         return validPidStructure(pid);
@@ -321,7 +319,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     public String getLatestReleasePid() throws TripleStoreSystemException, WebserverSystemException {
 
         final String pid = getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_PID);
-        if (validPidStructure(pid)) {
+        if(validPidStructure(pid)) {
             return pid;
         }
         return null;
@@ -332,8 +330,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *
      * @param pid Persistent Identifier
      */
-    private void setPidToRelsExt(final String pid) throws TripleStoreSystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
+    private void setPidToRelsExt(final String pid)
+            throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+            XmlParserSystemException, WebserverSystemException {
 
         /*
          * if (version == latest release) if (latest-release.pid == null) create
@@ -347,19 +346,17 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         // if ((ltstRlsNo != null) && (getVersionId().equals(ltstRlsNo))) {
         byte[] relsExtS = null;
 
-        if (getVersionPid() == null) {
+        if(getVersionPid() == null) {
             relsExtS = createVersionPid(pid);
-        }
-        else if (getVersionPid() != null && pid.length() != 0) {
+        } else if(getVersionPid() != null && pid.length() != 0) {
             relsExtS = updateVersionPid(pid);
-        }
-        else if (pid == null || pid.length() == 0) {
+        } else if(pid == null || pid.length() == 0) {
             relsExtS = deleteLatestReleasePid();
         }
 
         // now parse RELS-EXT
 
-        if (relsExtS != null) {
+        if(relsExtS != null) {
             setRelsExt(relsExtS);
         }
     }
@@ -373,13 +370,13 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws FedoraSystemException      If Fedora reports an error.
      * @throws TripleStoreSystemException If the triple store request failed.
      */
-    public void updatePidToWov(final String pid, final DateTime timestamp) throws FedoraSystemException,
-        WebserverSystemException, TripleStoreSystemException {
+    public void updatePidToWov(final String pid, final DateTime timestamp)
+            throws FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
 
         // TODO add comment "objectPid added" to the version
         final StartElementWithChildElements pidElement =
-            new StartElementWithChildElements(Elements.ELEMENT_PID, Constants.WOV_NAMESPACE_URI,
-                Constants.WOV_NAMESPACE_PREFIX, null, pid, null);
+                new StartElementWithChildElements(Elements.ELEMENT_PID, Constants.WOV_NAMESPACE_URI,
+                        Constants.WOV_NAMESPACE_PREFIX, null, pid, null);
 
         pidElement.addAttribute(new Attribute("timestamp", null, null, timestamp.toString()));
         pidElement.addAttribute(new Attribute("user", null, null, UserContext.getId()));
@@ -389,10 +386,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         final StaxParser sp = new StaxParser();
         final AddNewSubTreesToDatastream addNewSubtreesHandler =
-            new AddNewSubTreesToDatastream('/' + Elements.ELEMENT_WOV_VERSION_HISTORY, sp);
+                new AddNewSubTreesToDatastream('/' + Elements.ELEMENT_WOV_VERSION_HISTORY, sp);
 
         final StartElement pointer =
-            new StartElement("version", Constants.WOV_NAMESPACE_URI, Constants.WOV_NAMESPACE_PREFIX, null);
+                new StartElement("version", Constants.WOV_NAMESPACE_URI, Constants.WOV_NAMESPACE_PREFIX, null);
 
         pointer.addAttribute(new Attribute("objid", null, null, getFullId()));
 
@@ -405,8 +402,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             final ByteArrayOutputStream wovExtNew = addNewSubtreesHandler.getOutputStreams();
             final byte[] wovNewBytes = wovExtNew.toByteArray();
             setWov(new Datastream(DATASTREAM_WOV, getId(), wovNewBytes, MimeTypes.TEXT_XML));
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -420,15 +416,15 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws WebserverSystemException   In case of an internal error.
      * @throws TripleStoreSystemException If the triple store request failed.
      */
-    private byte[] createVersionPid(final String pid) throws XmlParserSystemException, TripleStoreSystemException,
-        WebserverSystemException {
+    private byte[] createVersionPid(final String pid)
+            throws XmlParserSystemException, TripleStoreSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
 
         // create new RELS-EXT element
         final AddNewSubTreesToDatastream addNewSubtreesHandler = new AddNewSubTreesToDatastream("/RDF", sp);
         final StartElement pointer =
-            new StartElement("Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf", null);
+                new StartElement("Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf", null);
         addNewSubtreesHandler.setPointerElement(pointer);
 
         final List<StartElementWithChildElements> elements = new ArrayList<StartElementWithChildElements>();
@@ -446,21 +442,20 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         final String latestReleasedVersion = getResourcePropertiesValue(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER);
 
         byte[] relsExt = null;
-        if (latestReleasedVersion != null) {
+        if(latestReleasedVersion != null) {
 
             // compare the versions (only set latest-release pid if the
             // latest-released version is older thean the current.
             final int lrvn = Integer.valueOf(latestReleasedVersion);
             final int cvn = Integer.valueOf(getVersionId());
 
-            if (lrvn <= cvn) {
+            if(lrvn <= cvn) {
                 // get the pid of the latest-release
                 final String latestReleasePid = getLatestReleasePid();
-                if (latestReleasePid != null) {
+                if(latestReleasePid != null) {
                     // update release pid
                     relsExt = updateLatestReleasePid(latestReleasePid);
-                }
-                else {
+                } else {
                     // add release pid
                     final StartElementWithChildElements latestReleasePidElement = new StartElementWithChildElements();
                     latestReleasePidElement.setLocalName(Elements.ELEMENT_PID);
@@ -475,17 +470,14 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         sp.addHandler(addNewSubtreesHandler);
 
         try {
-            if (relsExt != null) {
+            if(relsExt != null) {
                 sp.parse(new ByteArrayInputStream(relsExt));
-            }
-            else {
+            } else {
                 sp.parse(new ByteArrayInputStream(getRelsExt().getStream()));
             }
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new XmlParserSystemException("Unexpected Exception " + e);
         }
 
@@ -501,15 +493,14 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws WebserverSystemException   In case of an internal error.
      * @throws TripleStoreSystemException If the triple store request failed.
      */
-    private byte[] createLatestReleasePid(final String pid) throws XmlParserSystemException,
-        TripleStoreSystemException, WebserverSystemException {
+    private byte[] createLatestReleasePid(final String pid) throws XmlParserSystemException {
 
         final StaxParser sp = new StaxParser();
 
         // create new RELS-EXT element
         final AddNewSubTreesToDatastream addNewSubtreesHandler = new AddNewSubTreesToDatastream("/RDF", sp);
         final StartElement pointer =
-            new StartElement("Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf", null);
+                new StartElement("Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf", null);
         addNewSubtreesHandler.setPointerElement(pointer);
 
         final List<StartElementWithChildElements> elements = new ArrayList<StartElementWithChildElements>();
@@ -526,11 +517,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         try {
             sp.parse(getRelsExt().getStream());
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new XmlParserSystemException("Unexpected Exception " + e);
         }
 
@@ -549,11 +538,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         final StaxParser sp = new StaxParser();
 
         final Map<String, StartElementWithChildElements> elementsToUpdate =
-            new HashMap<String, StartElementWithChildElements>();
+                new HashMap<String, StartElementWithChildElements>();
 
         // update //properties/version/pid
-        elementsToUpdate.put(Elements.ELEMENT_PID, new StartElementWithChildElements(Elements.ELEMENT_PID,
-            Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX, null, pid, null));
+        elementsToUpdate.put(Elements.ELEMENT_PID,
+                new StartElementWithChildElements(Elements.ELEMENT_PID, Constants.VERSION_NS_URI,
+                        Constants.VERSION_NS_PREFIX, null, pid, null));
         final ItemRelsExtUpdateHandler ireuh = new ItemRelsExtUpdateHandler(elementsToUpdate, sp);
 
         final HashMap<String, String> extractPathes = new HashMap<String, String>();
@@ -564,11 +554,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         try {
             sp.parse(getRelsExt().getStream());
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new XmlParserSystemException("Unexpected Exception " + e);
         }
 
@@ -589,11 +577,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         final StaxParser sp = new StaxParser();
 
         final Map<String, StartElementWithChildElements> elementsToUpdate =
-            new HashMap<String, StartElementWithChildElements>();
+                new HashMap<String, StartElementWithChildElements>();
 
         // update //properties/version/pid
-        elementsToUpdate.put(Elements.ELEMENT_PID, new StartElementWithChildElements(Elements.ELEMENT_PID,
-            Constants.RELEASE_NS_URI, Constants.RELEASE_NS_PREFIX, null, pid, null));
+        elementsToUpdate.put(Elements.ELEMENT_PID,
+                new StartElementWithChildElements(Elements.ELEMENT_PID, Constants.RELEASE_NS_URI,
+                        Constants.RELEASE_NS_PREFIX, null, pid, null));
         final ItemRelsExtUpdateHandler ireuh = new ItemRelsExtUpdateHandler(elementsToUpdate, sp);
 
         final HashMap<String, String> extractPathes = new HashMap<String, String>();
@@ -604,11 +593,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         try {
             sp.parse(new ByteArrayInputStream(getRelsExt().getStream()));
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new XmlParserSystemException("Unexpected Exception " + e);
         }
 
@@ -629,26 +616,24 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws WebserverSystemException Thrown in case of internal failure.
      */
     @Deprecated
-    private byte[] deleteLatestReleasePid() throws IntegritySystemException, EncodingSystemException,
-        FedoraSystemException, WebserverSystemException {
+    private byte[] deleteLatestReleasePid()
+            throws IntegritySystemException, EncodingSystemException, FedoraSystemException, WebserverSystemException {
 
         // FIXME use a real XML parser to delete entries !
         String relsExt;
         try {
             relsExt = getRelsExt().toString(XmlUtility.CHARACTER_ENCODING);
-        }
-        catch (final StreamNotFoundException e) {
+        } catch(final StreamNotFoundException e) {
             throw new IntegritySystemException(e);
         }
 
         final Matcher m = LATEST_RELEASE_PID_ENTRY.matcher(relsExt);
         byte[] relsExtS = null;
-        if (m.find()) {
+        if(m.find()) {
             relsExt = relsExt.replaceAll(m.group(), "");
             try {
                 relsExtS = relsExt.getBytes(XmlUtility.CHARACTER_ENCODING);
-            }
-            catch (final UnsupportedEncodingException e) {
+            } catch(final UnsupportedEncodingException e) {
                 throw new IntegritySystemException(e);
             }
         }
@@ -667,7 +652,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames =
-            propertiesNames != null ? propertiesNames : new ArrayList<String>();
+                propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_LATEST_VERSION_PID);
         newPropertiesNames.add(TripleStoreUtility.PROP_LATEST_RELEASE_PID);
@@ -685,7 +670,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
 
         final Map<String, String> newPropertiesNamesMap =
-            propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
+                propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_PID, PropertyMapKeys.LATEST_VERSION_PID);
         // FIXME release is a methd of Item/Container so this is to move higher
@@ -698,14 +683,13 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     /**
      * @return Vector with HashMaps of relations.
      */
-    public List<Map<String, String>> getRelations() throws FedoraSystemException, IntegritySystemException,
-        XmlParserSystemException, WebserverSystemException {
+    public List<Map<String, String>> getRelations()
+            throws FedoraSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException {
 
         final Datastream relsExt;
         try {
             relsExt = getRelsExt();
-        }
-        catch (final StreamNotFoundException e1) {
+        } catch(final StreamNotFoundException e1) {
             throw new IntegritySystemException("Stream not found.", e1);
         }
         final byte[] relsExtContent = relsExt.getStream();
@@ -717,11 +701,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         sp.addHandler(reHandler);
         try {
             sp.parse(relsExtInputStream);
-        }
-        catch (final WebserverSystemException e) {
+        } catch(final WebserverSystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         return reHandler.getRelations();
@@ -738,29 +720,26 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws FedoraSystemException    If the Fedora reports an error
      */
     public void setContentRelations(final StaxParser sp, final Collection<String> relationsToUpdate)
-        throws XmlParserSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException {
+            throws XmlParserSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException {
 
         final Datastream relsExt;
         try {
             relsExt = getRelsExt();
-        }
-        catch (final StreamNotFoundException e1) {
+        } catch(final StreamNotFoundException e1) {
             throw new IntegritySystemException("Stream not found.", e1);
         }
         final ByteArrayInputStream relsExtInputStream = new ByteArrayInputStream(relsExt.getStream());
 
         final RelsExtContentRelationsReadHandlerForUpdate relsExtHandler =
-            new RelsExtContentRelationsReadHandlerForUpdate(sp);
+                new RelsExtContentRelationsReadHandlerForUpdate(sp);
 
         sp.addHandler(relsExtHandler);
 
         try {
             sp.parse(relsExtInputStream);
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new XmlParserSystemException(e.getMessage(), e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new WebserverSystemException(e);
         }
         sp.clearHandlerChain();
@@ -773,9 +752,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         List<StartElementWithChildElements> elementsToAdd = null;
 
         // prepare update relations
-        if (!relationsToUpdate.isEmpty()) {
+        if(! relationsToUpdate.isEmpty()) {
             elementsToAdd = new ArrayList<StartElementWithChildElements>();
-            for (final String relation : relationsToUpdate) {
+            for(final String relation : relationsToUpdate) {
                 final String[] predicateAndTarget = SPLIT_PATTERN_PREDICATE_AND_TARGET.split(relation);
                 final String[] predicate = SPLIT_PATTERN_PREDICATE.split(predicateAndTarget[0]);
                 final StartElementWithChildElements newContentRelationElement = new StartElementWithChildElements();
@@ -783,8 +762,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 newContentRelationElement.setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
                 newContentRelationElement.setNamespace(predicate[0]);
                 final Attribute resource =
-                    new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
-                        Constants.IDENTIFIER_PREFIX + predicateAndTarget[1]);
+                        new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
+                                Constants.IDENTIFIER_PREFIX + predicateAndTarget[1]);
                 newContentRelationElement.addAttribute(resource);
                 // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
@@ -793,12 +772,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         }
         // prepare add/remove
         Map<String, List<StartElementWithChildElements>> toRemove = null;
-        if (!existRelations.isEmpty()) {
+        if(! existRelations.isEmpty()) {
             final Iterator<String> iterator = existRelations.iterator();
             final HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
-                new HashMap<String, List<StartElementWithChildElements>>();
+                    new HashMap<String, List<StartElementWithChildElements>>();
 
-            while (iterator.hasNext()) {
+            while(iterator.hasNext()) {
                 final String relation = iterator.next();
                 final String[] predicateAndTarget = SPLIT_PATTERN_PREDICATE_AND_TARGET.split(relation);
                 final String[] predicate = SPLIT_PATTERN_PREDICATE.split(predicateAndTarget[0]);
@@ -808,16 +787,15 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 newContentRelationElement.setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
                 newContentRelationElement.setNamespace(predicate[0] + '/');
                 final Attribute resource =
-                    new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
-                        Constants.IDENTIFIER_PREFIX + predicateAndTarget[1]);
+                        new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
+                                Constants.IDENTIFIER_PREFIX + predicateAndTarget[1]);
                 newContentRelationElement.addAttribute(resource);
                 newContentRelationElement.setChildrenElements(null);
-                if (predicateValuesVectorAssignment.containsKey(predicate[1])) {
+                if(predicateValuesVectorAssignment.containsKey(predicate[1])) {
                     final List<StartElementWithChildElements> vector =
-                        predicateValuesVectorAssignment.get(predicate[1]);
+                            predicateValuesVectorAssignment.get(predicate[1]);
                     vector.add(newContentRelationElement);
-                }
-                else {
+                } else {
                     final List<StartElementWithChildElements> vector = new ArrayList<StartElementWithChildElements>();
                     vector.add(newContentRelationElement);
                     predicateValuesVectorAssignment.put(predicate[1], vector);
@@ -827,23 +805,21 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             // remove
             toRemove = new TreeMap<String, List<StartElementWithChildElements>>();
 
-            for (final Entry<String, List<StartElementWithChildElements>> e : predicateValuesVectorAssignment
-                .entrySet()) {
+            for(final Entry<String, List<StartElementWithChildElements>> e : predicateValuesVectorAssignment
+                    .entrySet()) {
                 toRemove.put("/RDF/Description/" + e.getKey(), e.getValue());
             }
         }
 
         // Update RELS-EXT
-        if (toRemove != null || elementsToAdd != null) {
+        if(toRemove != null || elementsToAdd != null) {
             final byte[] newRelsExtBytes =
-                Utility.updateRelsExt(elementsToAdd, toRemove, relsExt.getStream(), this, null);
+                    Utility.updateRelsExt(elementsToAdd, toRemove, relsExt.getStream(), this, null);
             try {
                 setRelsExt(new String(newRelsExtBytes, XmlUtility.CHARACTER_ENCODING));
-            }
-            catch (final EncodingSystemException e) {
+            } catch(final EncodingSystemException e) {
                 throw new IntegritySystemException(e);
-            }
-            catch (final UnsupportedEncodingException e) {
+            } catch(final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
         }

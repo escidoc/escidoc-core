@@ -83,8 +83,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
         values.put("isRootResources", XmlTemplateProvider.TRUE);
 
         addCommonValues(values);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(role
-            .getLastModificationDate()));
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
+                XmlUtility.normalizeDate(role.getLastModificationDate()));
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
         addResourcesValues(role, values);
 
@@ -99,7 +99,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
      */
     @Override
     public String renderRoles(final List<EscidocRole> roles, final RecordPacking recordPacking)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(values);
@@ -107,7 +107,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
         values.put("recordPacking", recordPacking);
 
         final Collection<Map<String, Object>> rolesValues = new ArrayList<Map<String, Object>>(roles.size());
-        for (final EscidocRole escidocRole : roles) {
+        for(final EscidocRole escidocRole : roles) {
             final Map<String, Object> roleValues = new HashMap<String, Object>();
             addRoleValues(escidocRole, roleValues);
             rolesValues.add(roleValues);
@@ -134,15 +134,12 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
 
     /**
      * Adds the values of the role that shall be rendered to the provided {@link Map}.
-     * @param role
-     * @param values
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addRoleValues(final EscidocRole role, final Map<String, Object> values)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(role
-            .getLastModificationDate()));
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
+                XmlUtility.normalizeDate(role.getLastModificationDate()));
         values.put(XmlTemplateProvider.VAR_CREATION_DATE, XmlUtility.normalizeDate(role.getCreationDate()));
         values.put(XmlTemplateProvider.VAR_DESCRIPTION, role.getDescription());
 
@@ -161,17 +158,16 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
         values.put("roleIsLimited", role.isLimited());
         values.put("roleName", role.getRoleName());
 
-        if (role.isLimited()) {
+        if(role.isLimited()) {
             // sort output
             Collection<ScopeDef> collection = role.getScopeDefs();
-            if (collection != null && !collection.isEmpty()) {
+            if(collection != null && ! collection.isEmpty()) {
                 final List<ScopeDef> list = new ArrayList<ScopeDef>(collection);
                 Collections.sort(list);
                 collection = list;
             }
             values.put("roleScopeDefs", collection);
-        }
-        else {
+        } else {
             values.put("roleScopeDefs", null);
         }
 
@@ -186,8 +182,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
      * @param values The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addPolicyValues(final EscidocRole role, final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addPolicyValues(final EscidocRole role, final Map<String, Object> values) {
 
         // There seems to be a problem in XacmlPolicy.encode that does not
         // escape special characters. Therefore, we should try to directly get
@@ -196,7 +191,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
         // build and encode it.
         final Collection<EscidocPolicy> policies = role.getEscidocPolicies();
         final Iterator<EscidocPolicy> iter = policies.iterator();
-        if (iter.hasNext()) {
+        if(iter.hasNext()) {
             final EscidocPolicy policy = iter.next();
             values.put("policy", CustomPolicyBuilder.insertXacmlPrefix(policy.getXml()));
         }
@@ -252,7 +247,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
      * @return Returns the {@link RoleXmlProvider} object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static RoleXmlProvider getRoleXmlProvider() throws WebserverSystemException {
+    private static RoleXmlProvider getRoleXmlProvider() {
 
         return RoleXmlProvider.getInstance();
     }

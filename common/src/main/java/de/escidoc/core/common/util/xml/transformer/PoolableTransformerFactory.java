@@ -139,8 +139,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      *         provided key, the default one identified by constant <code>XSL_MAPPING_UNKNOWN_TO_DC</code> is returned.
      * @throws IOException Thrown if retrieving values from eSciDoc properties (configuration) failed.
      */
-    private InputStream mapKeyToXslt(final String key)
-            throws WebserverSystemException, FedoraSystemException, IOException {
+    private InputStream mapKeyToXslt(final String key) throws IOException {
         final String[] keyParts = SPLIT_PATTERN.split(key);
         final String nsUri = keyParts[0];
         final String contentModelId = keyParts[1];

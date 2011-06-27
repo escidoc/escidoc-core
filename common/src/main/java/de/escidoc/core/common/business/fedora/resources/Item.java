@@ -110,8 +110,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws IntegritySystemException Thrown if there is an integrity error with the addressed object.
      */
     public Item(final String id) throws StreamNotFoundException, TripleStoreSystemException, WebserverSystemException,
-            XmlParserSystemException, IntegritySystemException, ResourceNotFoundException, FedoraSystemException,
-            ItemNotFoundException {
+            IntegritySystemException, ResourceNotFoundException, FedoraSystemException, ItemNotFoundException {
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
                 expandPropertiesNamesMapping(getPropertiesNamesMapping()));
@@ -305,8 +304,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws ComponentNotFoundException Thrown if Component of Item could no t be found.
      */
     private void initComponents()
-            throws ComponentNotFoundException, TripleStoreSystemException, XmlParserSystemException,
-            WebserverSystemException {
+            throws TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         if(this.components == null) {
             final Iterator<String> idsIter = getComponentIds().iterator();

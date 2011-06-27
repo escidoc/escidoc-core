@@ -68,12 +68,11 @@ public class VelocityXmlActionRenderer extends AbstractRenderer implements Actio
         values.put("contextId", actions.getContextId());
 
         final List<String> actionIdList;
-        if (actions.getActionIds() != null) {
+        if(actions.getActionIds() != null) {
             final String[] actionIds = PATTERN_WHITESPACE.split(actions.getActionIds());
             actionIdList = new ArrayList<String>(actionIds.length);
             actionIdList.addAll(Arrays.asList(actionIds));
-        }
-        else {
+        } else {
             actionIdList = new ArrayList<String>(0);
         }
         values.put("actionIds", actionIdList);
@@ -87,7 +86,7 @@ public class VelocityXmlActionRenderer extends AbstractRenderer implements Actio
      * @return Returns the {@link ActionXmlProvider} object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static ActionXmlProvider getActionXmlProvider() throws WebserverSystemException {
+    private static ActionXmlProvider getActionXmlProvider() {
 
         return ActionXmlProvider.getInstance();
     }

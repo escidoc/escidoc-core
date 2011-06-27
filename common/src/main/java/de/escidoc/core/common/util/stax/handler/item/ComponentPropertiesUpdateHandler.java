@@ -56,10 +56,11 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
 
     // names of elements that must be deleted if they do not occur
     private static final String[] EXPECTED_ELEMENTS =
-        { TripleStoreUtility.PROP_MIME_TYPE, TripleStoreUtility.PROP_VALID_STATUS };
+            {TripleStoreUtility.PROP_MIME_TYPE, TripleStoreUtility.PROP_VALID_STATUS};
 
     public ComponentPropertiesUpdateHandler(final Component component, final String propertiesPath,
-        final StaxParser parser) throws TripleStoreSystemException, WebserverSystemException {
+                                            final StaxParser parser)
+            throws TripleStoreSystemException, WebserverSystemException {
 
         this.parser = parser;
         this.propertiesPath = propertiesPath;
@@ -71,7 +72,7 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
     }
 
     public ComponentPropertiesUpdateHandler(final Map<String, String> properties, final String propertiesPath,
-        final StaxParser parser) throws TripleStoreSystemException, WebserverSystemException {
+                                            final StaxParser parser) {
 
         this.parser = parser;
         this.propertiesPath = propertiesPath;
@@ -83,11 +84,11 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element) throws InvalidContentException,
-        WebserverSystemException {
+    public String characters(final String data, final StartElement element)
+            throws InvalidContentException, WebserverSystemException {
         final String curPath = parser.getCurPath();
 
-        if (curPath.startsWith(this.propertiesPath)) {
+        if(curPath.startsWith(this.propertiesPath)) {
             // do my job
             // if (curPath.equals(propertiesPath + "/description")) {
             // // should be saved/deleted
@@ -95,33 +96,30 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
             // properties.put(TripleStoreUtility.PROP_DESCRIPTION, data);
             // }
             // visibility
-            if (curPath.equals(this.propertiesPath + "/visibility")) {
+            if(curPath.equals(this.propertiesPath + "/visibility")) {
                 // just save, xml-schema ensures correct values
-                if (data.length() > 0) {
+                if(data.length() > 0) {
                     properties.put(TripleStoreUtility.PROP_VISIBILITY, data);
-                }
-                else {
-                    throw new InvalidContentException("Components.properties." + Elements.ELEMENT_VISIBILITY
-                        + " has invalid value.");
+                } else {
+                    throw new InvalidContentException(
+                            "Components.properties." + Elements.ELEMENT_VISIBILITY + " has invalid value.");
                 }
             }
             // content-category
-            else if (curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY)) {
+            else if(curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY)) {
                 // ensure there is a value and save
-                if (data.length() > 0) {
+                if(data.length() > 0) {
                     properties.put(TripleStoreUtility.PROP_CONTENT_CATEGORY, data);
+                } else {
+                    throw new InvalidContentException(
+                            "Components.properties." + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY +
+                                    " has invalid value.");
                 }
-                else {
-                    throw new InvalidContentException("Components.properties."
-                        + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY + " has invalid value.");
-                }
-            }
-            else if (curPath.equals(this.propertiesPath + "/mime-type")) {
+            } else if(curPath.equals(this.propertiesPath + "/mime-type")) {
                 // should be saved/deleted
                 expected.remove(TripleStoreUtility.PROP_MIME_TYPE);
                 properties.put(TripleStoreUtility.PROP_MIME_TYPE, data);
-            }
-            else if (curPath.equals(this.propertiesPath + "/valid-status")) {
+            } else if(curPath.equals(this.propertiesPath + "/valid-status")) {
                 // should be saved/deleted
                 expected.remove(TripleStoreUtility.PROP_VALID_STATUS);
                 properties.put(TripleStoreUtility.PROP_VALID_STATUS, data);
@@ -133,9 +131,9 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) {
         final String curPath = parser.getCurPath();
-        if (curPath.equals(this.propertiesPath)) {
+        if(curPath.equals(this.propertiesPath)) {
             // delete properties not send
-            for (final String anExpected : this.expected) {
+            for(final String anExpected : this.expected) {
                 properties.remove(anExpected);
             }
         }

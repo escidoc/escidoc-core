@@ -82,7 +82,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * @param values The {@link Map} to add the values to.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private static void addScopeValues(final Scope scope, final Map<String, Object> values) throws SystemException {
+    private static void addScopeValues(final Scope scope, final Map<String, Object> values) {
         DateTime createDateTime = new DateTime(scope.getCreationDate());
         createDateTime = createDateTime.withZone(DateTimeZone.UTC);
         final String create = createDateTime.toString(Constants.TIMESTAMP_FORMAT);
@@ -114,7 +114,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      */
     @Override
     public String renderScopes(final Collection<Scope> scopes, final RecordPacking recordPacking)
-        throws SystemException, WebserverSystemException {
+            throws SystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -125,16 +125,15 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
         addScopeListNamespaceValues(values);
 
         final List<Map<String, Object>> scopesValues;
-        if (scopes != null) {
+        if(scopes != null) {
             scopesValues = new ArrayList<Map<String, Object>>(scopes.size());
-            for (final Scope scope : scopes) {
+            for(final Scope scope : scopes) {
                 final Map<String, Object> scopeValues = new HashMap<String, Object>();
                 addScopeNamespaceValues(scopeValues);
                 addScopeValues(scope, scopeValues);
                 scopesValues.add(scopeValues);
             }
-        }
-        else {
+        } else {
             scopesValues = new ArrayList<Map<String, Object>>();
         }
         values.put("scopes", scopesValues);

@@ -221,7 +221,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * @param element StAX StartElement
      */
     private void handleContextElement(final StartElement element)
-            throws MissingAttributeValueException, WebserverSystemException, ContextNotFoundException {
+            throws MissingAttributeValueException, ContextNotFoundException {
 
         this.expectedElements.remove(Elements.ELEMENT_CONTEXT);
         String contextId;
@@ -296,7 +296,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * @param element StAX StartElement
      */
     private void handleOrigin(final StartElement element)
-            throws MissingAttributeValueException, WebserverSystemException, InvalidContentException {
+            throws MissingAttributeValueException, InvalidContentException {
 
         String originId;
         try {

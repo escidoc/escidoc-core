@@ -919,7 +919,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws TripleStoreSystemException Thrown if triple store request failed.
      */
     private DateTime getCreationDate(final String objid)
-            throws ContentRelationNotFoundException, WebserverSystemException, TripleStoreSystemException {
+            throws ContentRelationNotFoundException, TripleStoreSystemException {
 
         final String date;
         try {
@@ -941,7 +941,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws FedoraSystemException    Thrown if access to Fedora failed.
      * @throws IntegritySystemException Thrown if data integrity is violated.
      */
-    private void setMetadata(final ContentRelationCreate cr) throws FedoraSystemException, IntegritySystemException {
+    private void setMetadata(final ContentRelationCreate cr) throws IntegritySystemException {
 
         final List<DatastreamProfileTO> dsProfiles =
                 getFedoraServiceClient().getDatastreamProfiles(cr.getObjid(), null);

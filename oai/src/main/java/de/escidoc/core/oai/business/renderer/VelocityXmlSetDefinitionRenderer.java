@@ -77,8 +77,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      * @param values        The {@link Map} to add the values to.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private static void addSetDefinitionValues(final SetDefinition setDefinition, final Map<String, Object> values)
-            throws SystemException {
+    private static void addSetDefinitionValues(final SetDefinition setDefinition, final Map<String, Object> values) {
         final DateTime lmd = new DateTime(setDefinition.getLastModificationDate(), DateTimeZone.UTC);
         values.put("setDefinitionLastModificationDate", lmd.toString());
         values.put("setDefinitionHref", setDefinition.getHref());

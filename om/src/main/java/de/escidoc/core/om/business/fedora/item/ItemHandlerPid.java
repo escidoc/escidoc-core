@@ -312,7 +312,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      *
      * @return true if all pre-conditions are fulfilled otherwise false.
      */
-    private boolean releasableContentPid() throws WebserverSystemException, TripleStoreSystemException {
+    private boolean releasableContentPid() throws WebserverSystemException {
         boolean result;
 
         if(Boolean.valueOf(System.getProperty("cmm.Item.contentPid.releaseWithoutPid"))) {

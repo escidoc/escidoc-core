@@ -64,23 +64,19 @@ public class VelocityXmlCommonRenderer {
      * @param href      href of resource
      * @param values    The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    public void addRelationsValues(
-        final List<Map<String, String>> relations, final String href, final Map<String, Object> values)
-        throws FedoraSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException,
-        TripleStoreSystemException {
+    public void addRelationsValues(final List<Map<String, String>> relations, final String href,
+                                   final Map<String, Object> values)
+            throws FedoraSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException,
+            TripleStoreSystemException {
 
         values.put("contentRelationsHref", href + de.escidoc.core.common.business.fedora.Constants.RELATIONS_URL_PART);
 
         List<Map<String, String>> entries = null;
-        if (relations != null && !relations.isEmpty()) {
+        if(relations != null && ! relations.isEmpty()) {
             final Iterator<Map<String, String>> relIter = relations.iterator();
             entries = new ArrayList<Map<String, String>>(relations.size());
-            while (relIter.hasNext()) {
+            while(relIter.hasNext()) {
                 final Map<String, String> entry = new HashMap<String, String>(3);
                 final Map<String, String> relation = relIter.next();
                 final String targetId = relation.get("target");
@@ -88,10 +84,9 @@ public class VelocityXmlCommonRenderer {
                 entry.put("targetId", targetId);
                 entry.put("predicate", predicate);
                 final String objectType = this.tripleStoreUtility.getObjectType(targetId);
-                if (objectType.endsWith("Item")) {
+                if(objectType.endsWith("Item")) {
                     entry.put("targetHref", XmlUtility.BASE_OM + "item/" + targetId);
-                }
-                else {
+                } else {
                     entry.put("targetHref", XmlUtility.BASE_OM + "container/" + targetId);
                 }
                 final String targetTitle = this.tripleStoreUtility.getTitle(targetId);
@@ -99,7 +94,7 @@ public class VelocityXmlCommonRenderer {
                 entries.add(entry);
             }
         }
-        if (entries != null && !entries.isEmpty()) {
+        if(entries != null && ! entries.isEmpty()) {
             values.put("contentRelations", entries);
         }
     }
@@ -111,7 +106,7 @@ public class VelocityXmlCommonRenderer {
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
     }
 
-    protected static void addRelationsNamespaceValues(final Map values) throws WebserverSystemException {
+    protected static void addRelationsNamespaceValues(final Map values) {
         values.put("contentRelationsNamespacePrefix", Constants.CONTENT_RELATIONS_NAMESPACE_PREFIX);
         values.put("contentRelationsNamespace", Constants.CONTENT_RELATIONS_NAMESPACE_URI);
 
@@ -122,7 +117,7 @@ public class VelocityXmlCommonRenderer {
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
-    protected static void addParentsNamespaceValues(final Map values) throws WebserverSystemException {
+    protected static void addParentsNamespaceValues(final Map values) {
         values.put("parentsNamespacePrefix", Constants.PARENTS_NAMESPACE_PREFIX);
         values.put("parentsNamespace", Constants.PARENTS_NAMESPACE_URI);
 
@@ -136,13 +131,12 @@ public class VelocityXmlCommonRenderer {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     protected void addCommonValues(final GenericVersionableResourcePid resource, final Map values)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
 
         final DateTime lmd;
         try {
             lmd = resource.getLastModificationDate();
-        }
-        catch (final FedoraSystemException e1) {
+        } catch(final FedoraSystemException e1) {
             throw new WebserverSystemException(e1);
         }
 

@@ -566,7 +566,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @return LastModificationDate of the Object (with workaround for Fedora bug).
      * @throws FedoraSystemException Thrown if request to Fedora failed.
      */
-    private DateTime getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
+    private DateTime getLastModificationDateByWorkaround(final String objid) {
 
         DateTime lmd = null;
         final List<DatastreamProfileTO> dsProfiles = this.fedoraServiceClient.getDatastreamProfiles(objid, null);

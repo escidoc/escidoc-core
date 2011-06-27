@@ -111,27 +111,26 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * Pattern used to parse the attribute id and fetch the resolvable part, the last part of the resolvable part and
      * the tail.
      */
-    private static final String USER_ACCOUNT_ATTRS =
-        "(handle|login-name|name|" + "created-by|modified-by|"
-            + "organizational-unit|organizational-unit-with-children|" + "group-membership|role-grant)";
+    private static final String USER_ACCOUNT_ATTRS = "(handle|login-name|name|" + "created-by|modified-by|" +
+            "organizational-unit|organizational-unit-with-children|" + "group-membership|role-grant)";
 
     private static final String ROLE_GRANT_ATTRS = "(assigned-on)";
 
-    private static final Pattern PATTERN_PARSE_ROLE_GRANT_ROLE =
-        Pattern.compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|' + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')'
-            + USER_ACCOUNT_ATTRS + "):(.*?):" + ROLE_GRANT_ATTRS);
+    private static final Pattern PATTERN_PARSE_ROLE_GRANT_ROLE = Pattern.compile(
+            "((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|' + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')' +
+                    USER_ACCOUNT_ATTRS + "):(.*?):" + ROLE_GRANT_ATTRS);
 
-    private static final Pattern PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID =
-        Pattern.compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|' + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')'
-            + USER_ACCOUNT_ATTRS + ")(:.*){0,1}");
+    private static final Pattern PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID = Pattern.compile(
+            "((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|' + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')' +
+                    USER_ACCOUNT_ATTRS + ")(:.*){0,1}");
 
     private static final Pattern PATTERN_SUBJECT_ATTRIBUTE_PREFIX = Pattern.compile(AttributeIds.SUBJECT_ATTR_PREFIX);
 
     private static final Pattern PATTERN_USER_ACCOUNT_ATTRIBUTE_PREFIX =
-        Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX);
+            Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX);
 
     private static final Pattern PATTERN_IS_SUBJECT_ATTRIBUTE_ID =
-        Pattern.compile(AttributeIds.SUBJECT_ATTR_PREFIX + ".*");
+            Pattern.compile(AttributeIds.SUBJECT_ATTR_PREFIX + ".*");
 
     /**
      * Attributes can have USER_ACCOUNT_ATTR_PREFIX
@@ -185,20 +184,20 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * This attribute matches the organizational unit of the user (identified by the resource-id).
      */
     public static final String ATTR_USER_ORGANIZATIONAL_UNIT =
-        AttributeIds.USER_ACCOUNT_ATTR_PREFIX + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
+            AttributeIds.USER_ACCOUNT_ATTR_PREFIX + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
     /**
      * This attribute matches the organizational unit of the user (identified by the resource-id) (also children are
      * resolved).
      */
     public static final String ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN =
-        AttributeIds.USER_ACCOUNT_ATTR_PREFIX + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "-with-children";
+            AttributeIds.USER_ACCOUNT_ATTR_PREFIX + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "-with-children";
 
     /**
      * This attribute matches the scope of a role of the user.
      */
     public static final Pattern ATTR_USER_ROLE_SCOPE =
-        Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "role-grant:(.*?):assigned-on");
+            Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "role-grant:(.*?):assigned-on");
 
     @Autowired
     @Qualifier("security.SecurityHelper")
@@ -231,16 +230,16 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * See Interface for functional description.
      */
     @Override
-    protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType) throws EscidocException {
+    protected boolean assertAttribute(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
+                                      final String resourceObjid, final String resourceVersionNumber,
+                                      final int designatorType) throws EscidocException {
 
         // the super class method only supports RESOURCE attributes. We have to
         // override it, to support SUBJECT Attributes, too.
 
         // make sure this is an Subject or Resource attribute
-        if (designatorType != AttributeDesignator.SUBJECT_TARGET
-            && designatorType != AttributeDesignator.RESOURCE_TARGET) {
+        if(designatorType != AttributeDesignator.SUBJECT_TARGET &&
+                designatorType != AttributeDesignator.RESOURCE_TARGET) {
 
             return false;
         }
@@ -255,10 +254,9 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * See Interface for functional description.
      */
     @Override
-    protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException, ResourceNotFoundException, SystemException,
-        SqlDatabaseSystemException {
+    protected Object[] resolveLocalPart(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
+                                        final String resourceObjid, final String resourceVersionNumber)
+            throws EscidocException, ResourceNotFoundException, SystemException, SqlDatabaseSystemException {
 
         // determine the id of the user account and to simplify the further
         // work, replace INTERNAL_SUBJECT_ATTRIBUTE_PREFIX by
@@ -267,10 +265,10 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
         final String internalAttributeIdValue;
         final String userAccountId;
         boolean isSubjectAttribute = false;
-        if (PATTERN_IS_SUBJECT_ATTRIBUTE_ID.matcher(attributeIdValue).find()) {
+        if(PATTERN_IS_SUBJECT_ATTRIBUTE_ID.matcher(attributeIdValue).find()) {
             isSubjectAttribute = true;
             userAccountId = FinderModuleHelper.retrieveSingleSubjectAttribute(ctx, Constants.URI_SUBJECT_ID, true);
-            if (userAccountId == null) {
+            if(userAccountId == null) {
                 final StringBuilder errorMsg = new StringBuilder("The subject (user) of the request cannot be ");
                 errorMsg.append("identified, the ");
                 errorMsg.append(Constants.URI_SUBJECT_ID);
@@ -279,91 +277,74 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
             }
             final Matcher matcher = PATTERN_SUBJECT_ATTRIBUTE_PREFIX.matcher(attributeIdValue);
             internalAttributeIdValue = matcher.replaceFirst(AttributeIds.USER_ACCOUNT_ATTR_PREFIX);
-        }
-        else {
+        } else {
             userAccountId = FinderModuleHelper.getResourceId(ctx);
-            if (FinderModuleHelper.isNewResourceId(userAccountId)) {
+            if(FinderModuleHelper.isNewResourceId(userAccountId)) {
                 return null;
             }
             internalAttributeIdValue = attributeIdValue;
         }
         // ask cache for previously cached results
-        EvaluationResult result =
-            (EvaluationResult) getFromCache(resourceId, resourceObjid, resourceVersionNumber, internalAttributeIdValue,
-                ctx);
+        EvaluationResult result = (EvaluationResult) getFromCache(resourceId, resourceObjid, resourceVersionNumber,
+                internalAttributeIdValue, ctx);
 
         String resolvedAttributeIdValue = null;
-        if (result == null) {
+        if(result == null) {
             // check if attributes of an anonymous user shall be retrieved
-            if (UserContext.isIdOfAnonymousUser(userAccountId)) {
+            if(UserContext.isIdOfAnonymousUser(userAccountId)) {
                 // The anonymous user does not have an account, for each
                 // attribute the value of the anonymous identifier is returned.
                 result = CustomEvaluationResultBuilder.createSingleStringValueResult(UserContext.ANONYMOUS_IDENTIFIER);
                 // the resolved id is set to the complete id, as no further
                 // resolving is possible.
                 resolvedAttributeIdValue = internalAttributeIdValue;
-            }
-            else {
-                if (ATTR_USER_HANDLE.equals(internalAttributeIdValue)) {
+            } else {
+                if(ATTR_USER_HANDLE.equals(internalAttributeIdValue)) {
                     final Set userHandles = retrieveUserHandle(ctx, userAccountId, internalAttributeIdValue);
                     result = new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, userHandles));
                     resolvedAttributeIdValue = ATTR_USER_HANDLE;
-                }
-                else if (ATTR_USER_ROLE_SCOPE.matcher(internalAttributeIdValue).matches()) {
+                } else if(ATTR_USER_ROLE_SCOPE.matcher(internalAttributeIdValue).matches()) {
                     result = fetchRoleScopes(userAccountId, internalAttributeIdValue);
                     resolvedAttributeIdValue = internalAttributeIdValue;
-                }
-                else if (ATTR_USER_GROUP_MEMBERSHIP.equals(internalAttributeIdValue)) {
+                } else if(ATTR_USER_GROUP_MEMBERSHIP.equals(internalAttributeIdValue)) {
                     result = fetchUserGroups(userAccountId);
                     resolvedAttributeIdValue = internalAttributeIdValue;
-                }
-                else {
+                } else {
                     // Fetch the user account and return the appropriate value
                     final UserAccount userAccount;
                     try {
                         userAccount = retrieveUserAccount(ctx, userAccountId);
-                    }
-                    catch (final UserAccountNotFoundException e) {
-                        if (isSubjectAttribute) {
-                            throw new UserAccountNotFoundException(StringUtility.format(
-                                "Account of subject not found.", userAccountId, e.getMessage()), e);
-                        }
-                        else {
+                    } catch(final UserAccountNotFoundException e) {
+                        if(isSubjectAttribute) {
+                            throw new UserAccountNotFoundException(StringUtility
+                                    .format("Account of subject not found.", userAccountId, e.getMessage()), e);
+                        } else {
                             throw e;
                         }
                     }
                     final Pattern p = PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID;
                     final Matcher idMatcher = p.matcher(internalAttributeIdValue);
-                    if (idMatcher.find()) {
+                    if(idMatcher.find()) {
                         resolvedAttributeIdValue = idMatcher.group(1);
-                        if (userAccount != null) {
-                            if (ATTR_USER_ID.equals(resolvedAttributeIdValue)) {
+                        if(userAccount != null) {
+                            if(ATTR_USER_ID.equals(resolvedAttributeIdValue)) {
                                 final String nextResourceId = userAccount.getId();
                                 result = CustomEvaluationResultBuilder.createSingleStringValueResult(nextResourceId);
-                            }
-                            else if (ATTR_USER_LOGIN_NAME.equals(resolvedAttributeIdValue)) {
-                                result =
-                                    CustomEvaluationResultBuilder.createSingleStringValueResult(userAccount
-                                        .getLoginname());
-                            }
-                            else if (ATTR_USER_NAME.equals(resolvedAttributeIdValue)) {
-                                result =
-                                    CustomEvaluationResultBuilder.createSingleStringValueResult(userAccount.getName());
-                            }
-                            else if (ATTR_CREATED_BY.equals(resolvedAttributeIdValue)) {
-                                result =
-                                    CustomEvaluationResultBuilder.createSingleStringValueResult(userAccount
-                                        .getUserAccountByCreatorId().getId());
-                            }
-                            else if (ATTR_MODIFIED_BY.equals(resolvedAttributeIdValue)) {
-                                result =
-                                    CustomEvaluationResultBuilder.createSingleStringValueResult(userAccount
-                                        .getUserAccountByModifiedById().getId());
-                            }
-                            else if (ATTR_USER_ORGANIZATIONAL_UNIT.equals(resolvedAttributeIdValue)) {
+                            } else if(ATTR_USER_LOGIN_NAME.equals(resolvedAttributeIdValue)) {
+                                result = CustomEvaluationResultBuilder
+                                        .createSingleStringValueResult(userAccount.getLoginname());
+                            } else if(ATTR_USER_NAME.equals(resolvedAttributeIdValue)) {
+                                result = CustomEvaluationResultBuilder
+                                        .createSingleStringValueResult(userAccount.getName());
+                            } else if(ATTR_CREATED_BY.equals(resolvedAttributeIdValue)) {
+                                result = CustomEvaluationResultBuilder
+                                        .createSingleStringValueResult(userAccount.getUserAccountByCreatorId().getId());
+                            } else if(ATTR_MODIFIED_BY.equals(resolvedAttributeIdValue)) {
+                                result = CustomEvaluationResultBuilder.createSingleStringValueResult(
+                                        userAccount.getUserAccountByModifiedById().getId());
+                            } else if(ATTR_USER_ORGANIZATIONAL_UNIT.equals(resolvedAttributeIdValue)) {
                                 result = fetchUserAccountOus(userAccount, false);
-                            }
-                            else if (ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN.equals(resolvedAttributeIdValue)) {
+                            } else if(ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN.equals(resolvedAttributeIdValue)) {
                                 result = fetchUserAccountOus(userAccount, true);
                             }
                         }
@@ -371,16 +352,16 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
                 }
             }
         }
-        if (result == null) {
+        if(result == null) {
             return null;
         }
-        if (isSubjectAttribute) {
+        if(isSubjectAttribute) {
             // revert previously Subject -> Resource change
             final Matcher matcher = PATTERN_USER_ACCOUNT_ATTRIBUTE_PREFIX.matcher(resolvedAttributeIdValue);
             resolvedAttributeIdValue = matcher.replaceFirst(AttributeIds.SUBJECT_ATTR_PREFIX);
         }
         putInCache(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue, ctx, result);
-        return new Object[] { result, resolvedAttributeIdValue };
+        return new Object[]{result, resolvedAttributeIdValue};
     }
 
     /**
@@ -391,37 +372,35 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
      */
     private EvaluationResult fetchUserAccountOus(final UserAccount userAccount, final boolean getChildren)
-        throws SystemException {
+            throws SystemException {
 
         final String ouAttributeName;
         try {
             ouAttributeName =
-                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
-        }
-        catch (final IOException e) {
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
+        } catch(final IOException e) {
             throw new SystemException(e);
         }
-        if (ouAttributeName == null || ouAttributeName.length() == 0) {
+        if(ouAttributeName == null || ouAttributeName.length() == 0) {
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
         final List<UserAttribute> attributes = userAccountDao.retrieveAttributes(userAccount, ouAttributeName);
         final EvaluationResult result;
-        if (attributes == null || attributes.isEmpty()) {
+        if(attributes == null || attributes.isEmpty()) {
             result = CustomEvaluationResultBuilder.createEmptyEvaluationResult();
-        }
-        else {
+        } else {
             final List<StringAttribute> results = new ArrayList<StringAttribute>(attributes.size());
             final Collection<String> ouIds = new ArrayList<String>();
-            for (final UserAttribute attribute : attributes) {
+            for(final UserAttribute attribute : attributes) {
                 results.add(new StringAttribute(attribute.getValue()));
-                if (getChildren) {
+                if(getChildren) {
                     ouIds.add(attribute.getValue());
                 }
             }
-            if (getChildren) {
+            if(getChildren) {
                 final List<String> childOus = tripleStoreUtility.getChildrenPath(ouIds, new ArrayList<String>());
-                if (childOus != null) {
-                    for (final String childOu : childOus) {
+                if(childOus != null) {
+                    for(final String childOu : childOus) {
                         results.add(new StringAttribute(childOu));
                     }
                 }
@@ -445,13 +424,12 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
 
         final Set<String> userGroups = securityHelper.getUserGroups(userAccountId);
 
-        if (userGroups == null || userGroups.isEmpty()) {
+        if(userGroups == null || userGroups.isEmpty()) {
             result = CustomEvaluationResultBuilder.createEmptyEvaluationResult();
-        }
-        else {
+        } else {
             final Iterator<String> groupIdsIter = userGroups.iterator();
             final List<StringAttribute> results = new ArrayList<StringAttribute>(userGroups.size());
-            while (groupIdsIter.hasNext()) {
+            while(groupIdsIter.hasNext()) {
                 results.add(new StringAttribute(groupIdsIter.next()));
             }
             result = new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, results));
@@ -467,23 +445,22 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
      */
     private EvaluationResult fetchRoleScopes(final String userAccountId, final CharSequence attributeId)
-        throws SqlDatabaseSystemException, SystemException {
+            throws SqlDatabaseSystemException, SystemException {
 
         // get role to fetch
         final Matcher roleMatcher = PATTERN_PARSE_ROLE_GRANT_ROLE.matcher(attributeId);
         String roleName = null;
-        if (roleMatcher.find()) {
+        if(roleMatcher.find()) {
             roleName = roleMatcher.group(4);
         }
-        if (roleName == null || roleName.length() == 0) {
+        if(roleName == null || roleName.length() == 0) {
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
 
         Set<String> userGroups = null;
         try {
             userGroups = securityHelper.getUserGroups(userAccountId);
-        }
-        catch (UserAccountNotFoundException e) {
+        } catch(UserAccountNotFoundException e) {
             // The caller doesn't expect to get an exception from here if
             // the user doesn't exist.
         }
@@ -494,21 +471,20 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
         users.add(userAccountId);
         criterias.put(de.escidoc.core.common.business.Constants.FILTER_PATH_USER_ID, users);
         criterias.put(de.escidoc.core.common.business.Constants.FILTER_PATH_ROLE_ID, roles);
-        if (userGroups != null && !userGroups.isEmpty()) {
+        if(userGroups != null && ! userGroups.isEmpty()) {
             criterias.put(de.escidoc.core.common.business.Constants.FILTER_PATH_GROUP_ID, (HashSet<String>) userGroups);
         }
         final List<RoleGrant> roleGrants = userAccountDao.retrieveGrants(criterias, null, ListSorting.ASCENDING);
         final EvaluationResult result;
-        if (roleGrants != null) {
+        if(roleGrants != null) {
             final List<StringAttribute> results = new ArrayList<StringAttribute>();
-            for (final RoleGrant roleGrant : roleGrants) {
-                if (roleGrant.getRevocationDate() == null) {
+            for(final RoleGrant roleGrant : roleGrants) {
+                if(roleGrant.getRevocationDate() == null) {
                     results.add(new StringAttribute(roleGrant.getObjectId()));
                 }
             }
             result = new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, results));
-        }
-        else {
+        } else {
             result = CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
         return result;
@@ -525,31 +501,28 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @throws UserAccountNotFoundException Thrown if no user account with provided id is found.
      */
     private Set retrieveUserHandle(final EvaluationCtx ctx, final String userAccountId, final String attributeIdValue)
-        throws WebserverSystemException, UserAccountNotFoundException {
+            throws WebserverSystemException, UserAccountNotFoundException {
 
         Set<AttributeValue> result =
-            (Set<AttributeValue>) getFromCache(XmlUtility.NAME_HANDLE, null, null, userAccountId, ctx);
-        if (result == null) {
+                (Set<AttributeValue>) getFromCache(XmlUtility.NAME_HANDLE, null, null, userAccountId, ctx);
+        if(result == null) {
             final List userHandles;
             try {
                 userHandles = getUserAccountDao().retrieveUserLoginDataByUserId(userAccountId);
-                if (userHandles == null || userHandles.isEmpty()) {
+                if(userHandles == null || userHandles.isEmpty()) {
                     assertUserAccount(userAccountId, getUserAccountDao().retrieveUserAccountById(userAccountId));
                 }
-            }
-            catch (final UserAccountNotFoundException e) {
+            } catch(final UserAccountNotFoundException e) {
                 throw e;
-            }
-            catch (final WebserverSystemException e) {
+            } catch(final WebserverSystemException e) {
                 throw e;
-            }
-            catch (final Exception e) {
+            } catch(final Exception e) {
                 final String errorMsg = StringUtility.format("Retrieving of attribute failed", attributeIdValue);
                 throw new WebserverSystemException(errorMsg, e);
             }
             result = new HashSet<AttributeValue>();
-            if (userHandles != null && !userHandles.isEmpty()) {
-                for (final Object userHandle : userHandles) {
+            if(userHandles != null && ! userHandles.isEmpty()) {
+                for(final Object userHandle : userHandles) {
                     final UserLoginData userLoginData = (UserLoginData) userHandle;
                     result.add(new StringAttribute(userLoginData.getHandle()));
                 }
@@ -569,16 +542,15 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @throws UserAccountNotFoundException Thrown if no user account with provided id exists.
      */
     private UserAccount retrieveUserAccount(final EvaluationCtx ctx, final String userAccountId)
-        throws WebserverSystemException, UserAccountNotFoundException {
+            throws WebserverSystemException, UserAccountNotFoundException {
 
         UserAccount userAccount = (UserAccount) getFromCache(XmlUtility.NAME_ID, null, null, userAccountId, ctx);
-        if (userAccount == null) {
+        if(userAccount == null) {
             try {
                 userAccount = getUserAccountDao().retrieveUserAccount(userAccountId);
-            }
-            catch (final Exception e) {
-                throw new WebserverSystemException(StringUtility.format(
-                    "Exception during retrieval of the user account", e.getMessage()), e);
+            } catch(final Exception e) {
+                throw new WebserverSystemException(
+                        StringUtility.format("Exception during retrieval of the user account", e.getMessage()), e);
             }
         }
 
@@ -596,10 +568,11 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @throws UserAccountNotFoundException Thrown if assertion fails.
      */
     private static void assertUserAccount(final String userId, final UserAccount userAccount)
-        throws UserAccountNotFoundException {
+            throws UserAccountNotFoundException {
 
-        if (userAccount == null) {
-            throw new UserAccountNotFoundException(StringUtility.format("User with provided id does not exist", userId));
+        if(userAccount == null) {
+            throw new UserAccountNotFoundException(
+                    StringUtility.format("User with provided id does not exist", userId));
         }
     }
 
@@ -609,7 +582,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @return Returns the user account dao bean.
      * @throws WebserverSystemException Thrown in case of an internal system error during bean initialization.
      */
-    private UserAccountDaoInterface getUserAccountDao() throws WebserverSystemException {
+    private UserAccountDaoInterface getUserAccountDao() {
 
         return this.userAccountDao;
     }

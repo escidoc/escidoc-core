@@ -444,8 +444,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException If the triple store reports an error.
      * @throws WebserverSystemException   In case of an internal error.
      */
-    final void checkNotStatus(final String status)
-            throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
+    final void checkNotStatus(final String status) throws InvalidStatusException, WebserverSystemException {
 
         // In first release, if object is once released no changes are allowed
         if(! status.equals(getItem().getStatus())) {

@@ -240,7 +240,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
      */
     private static Map<String, String> getPropertiesValues(final ContentModel contentModel)
             throws TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
-            XmlParserSystemException, EncodingSystemException, FedoraSystemException, ContentModelNotFoundException {
+            ContentModelNotFoundException {
 
         // retrieve properties from resource (the resource decided where are the
         // data to load, TripleStore or Wov)
@@ -395,7 +395,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
     // TODO ContentModelHandlerRetrieve ?
     private Map<String, Object> getResourceDefinitionsValues(final ContentModel contentModel)
-            throws TripleStoreSystemException, WebserverSystemException {
+            throws TripleStoreSystemException {
 
         // for every xslt service definition bound to this content model
         // get the operation name and create a URL for the datastream "xslt"
@@ -453,8 +453,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    private static Map<String, String> getResourcesValues(final FedoraResource contentModel)
-            throws WebserverSystemException {
+    private static Map<String, String> getResourcesValues(final FedoraResource contentModel) {
         final Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", contentModel.getHref() + "/resources");

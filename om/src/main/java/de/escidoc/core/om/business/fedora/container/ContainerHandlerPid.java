@@ -304,7 +304,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @throws WebserverSystemException   Thrown in case of internal error.
      * @throws TripleStoreSystemException Thrown in case of TripleStore error.
      */
-    private String prepareResponse(final String pid) throws TripleStoreSystemException, WebserverSystemException {
+    private String prepareResponse(final String pid) throws WebserverSystemException {
 
         final DateTime lmd;
         try {

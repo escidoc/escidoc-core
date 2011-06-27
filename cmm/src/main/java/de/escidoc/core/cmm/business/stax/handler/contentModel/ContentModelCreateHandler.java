@@ -66,7 +66,7 @@ public class ContentModelCreateHandler extends DefaultHandler {
     private static final String XPATH_CONTENT_MODEL_METADATA = XPATH_CONTENT_MODEL + "/md-record-definitions";
 
     private static final String XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS =
-        XPATH_CONTENT_MODEL + "/resource-definitions";
+            XPATH_CONTENT_MODEL + "/resource-definitions";
 
     private static final String XPATH_CONTENT_MODEL_CONTENT_STREAMS = XPATH_CONTENT_MODEL + "/content-streams";
 
@@ -96,7 +96,7 @@ public class ContentModelCreateHandler extends DefaultHandler {
      * @param parser StAX Parser.
      * @throws WebserverSystemException If internal error occurs.
      */
-    public ContentModelCreateHandler(final StaxParser parser) throws WebserverSystemException {
+    public ContentModelCreateHandler(final StaxParser parser) {
 
         this.parser = parser;
         this.contentModel = new ContentModelCreate();
@@ -109,48 +109,42 @@ public class ContentModelCreateHandler extends DefaultHandler {
      * @return StartElement The StartElement.
      */
     @Override
-    public StartElement startElement(final StartElement element) throws InvalidContentException,
-        MissingAttributeValueException, ReadonlyAttributeViolationException, ReadonlyElementViolationException,
-        ContentModelNotFoundException, ContextNotFoundException, WebserverSystemException {
+    public StartElement startElement(final StartElement element)
+            throws InvalidContentException, MissingAttributeValueException, ReadonlyAttributeViolationException,
+            ReadonlyElementViolationException, ContentModelNotFoundException, ContextNotFoundException,
+            WebserverSystemException {
 
-        if (this.parsingProperties) {
+        if(this.parsingProperties) {
             this.propertiesHandler.startElement(element);
-        }
-        else if (this.parsingMetaData) {
+        } else if(this.parsingMetaData) {
             this.metadataHandler.startElement(element);
-        }
-        else if (this.parsingResourceDefinitions) {
+        } else if(this.parsingResourceDefinitions) {
             this.resourceDefinitionHandler.startElement(element);
-        }
-        else if (this.parsingContentStreams) {
+        } else if(this.parsingContentStreams) {
             this.contentStreamsHandler.startElement(element);
-        }
-        else {
+        } else {
             final String currentPath = parser.getCurPath();
 
-            if (XPATH_CONTENT_MODEL_PROPERTIES.equals(currentPath)) {
-                if (LOGGER.isDebugEnabled()) {
+            if(XPATH_CONTENT_MODEL_PROPERTIES.equals(currentPath)) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parser reached " + XPATH_CONTENT_MODEL_PROPERTIES);
                 }
                 this.parsingProperties = true;
                 this.propertiesHandler = new ContentModelPropertiesHandler(this.parser);
                 this.propertiesHandler.startElement(element);
-            }
-            else if (XPATH_CONTENT_MODEL_METADATA.equals(currentPath)) {
+            } else if(XPATH_CONTENT_MODEL_METADATA.equals(currentPath)) {
                 this.parsingMetaData = true;
                 this.metadataHandler = new MdRecordDefinitionHandler(this.parser, XPATH_CONTENT_MODEL_METADATA);
                 this.metadataHandler.startElement(element);
-            }
-            else if (XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS.equals(currentPath)) {
+            } else if(XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS.equals(currentPath)) {
                 this.parsingResourceDefinitions = true;
                 this.resourceDefinitionHandler =
-                    new ResourceDefinitionHandler(this.parser, XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS);
+                        new ResourceDefinitionHandler(this.parser, XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS);
                 this.resourceDefinitionHandler.startElement(element);
-            }
-            else if (XPATH_CONTENT_MODEL_CONTENT_STREAMS.equals(currentPath)) {
+            } else if(XPATH_CONTENT_MODEL_CONTENT_STREAMS.equals(currentPath)) {
                 this.parsingContentStreams = true;
                 this.contentStreamsHandler =
-                    new ContentStreamsHandler(this.parser, XPATH_CONTENT_MODEL_CONTENT_STREAMS);
+                        new ContentStreamsHandler(this.parser, XPATH_CONTENT_MODEL_CONTENT_STREAMS);
                 this.contentStreamsHandler.startElement(element);
             }
         }
@@ -165,14 +159,15 @@ public class ContentModelCreateHandler extends DefaultHandler {
      * @return StAX EndElement
      */
     @Override
-    public EndElement endElement(final EndElement element) throws MissingContentException, InvalidXmlException,
-        MissingAttributeValueException, ContextNotFoundException, ContentModelNotFoundException,
-        UnsupportedEncodingException, InvalidContentException, WebserverSystemException {
+    public EndElement endElement(final EndElement element)
+            throws MissingContentException, InvalidXmlException, MissingAttributeValueException,
+            ContextNotFoundException, ContentModelNotFoundException, UnsupportedEncodingException,
+            InvalidContentException, WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
 
-        if (XPATH_CONTENT_MODEL_PROPERTIES.equals(currentPath)) {
-            if (LOGGER.isDebugEnabled()) {
+        if(XPATH_CONTENT_MODEL_PROPERTIES.equals(currentPath)) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_PROPERTIES);
             }
             // parser leaves the XML component element
@@ -180,43 +175,36 @@ public class ContentModelCreateHandler extends DefaultHandler {
             this.propertiesHandler.endElement(element);
             this.contentModel.setProperties(this.propertiesHandler.getProperties());
             this.propertiesHandler = null;
-        }
-        else if (XPATH_CONTENT_MODEL_METADATA.equals(currentPath)) {
-            if (LOGGER.isDebugEnabled()) {
+        } else if(XPATH_CONTENT_MODEL_METADATA.equals(currentPath)) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_METADATA);
             }
             // parser leaves the XML md-records element
             this.parsingMetaData = false;
             this.contentModel.setMdRecordDefinitions(this.metadataHandler.getMdRecordDefinitions());
             this.metadataHandler = null;
-        }
-        else if (XPATH_CONTENT_MODEL_CONTENT_STREAMS.equals(currentPath)) {
-            if (LOGGER.isDebugEnabled()) {
+        } else if(XPATH_CONTENT_MODEL_CONTENT_STREAMS.equals(currentPath)) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_CONTENT_STREAMS);
             }
             this.parsingContentStreams = false;
             this.contentModel.setContentStreams(this.contentStreamsHandler.getContentStreams());
             this.contentStreamsHandler = null;
-        }
-        else if (XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS.equals(currentPath)) {
-            if (LOGGER.isDebugEnabled()) {
+        } else if(XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS.equals(currentPath)) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS);
             }
             this.parsingResourceDefinitions = false;
             this.contentModel.setResourceDefinitions(this.resourceDefinitionHandler.getResourceDefinitions());
             this.resourceDefinitionHandler = null;
-        }
-        else {
-            if (this.parsingProperties) {
+        } else {
+            if(this.parsingProperties) {
                 this.propertiesHandler.endElement(element);
-            }
-            else if (this.parsingMetaData) {
+            } else if(this.parsingMetaData) {
                 this.metadataHandler.endElement(element);
-            }
-            else if (this.parsingResourceDefinitions) {
+            } else if(this.parsingResourceDefinitions) {
                 this.resourceDefinitionHandler.endElement(element);
-            }
-            else if (this.parsingContentStreams) {
+            } else if(this.parsingContentStreams) {
                 this.contentStreamsHandler.endElement(element);
             }
         }
@@ -232,16 +220,15 @@ public class ContentModelCreateHandler extends DefaultHandler {
      * @return XML character element.
      */
     @Override
-    public String characters(final String s, final StartElement element) throws InvalidContentException,
-        MissingElementValueException, WebserverSystemException, InvalidStatusException {
+    public String characters(final String s, final StartElement element)
+            throws InvalidContentException, MissingElementValueException, WebserverSystemException,
+            InvalidStatusException {
 
-        if (this.parsingProperties) {
+        if(this.parsingProperties) {
             this.propertiesHandler.characters(s, element);
-        }
-        else if (this.parsingResourceDefinitions) {
+        } else if(this.parsingResourceDefinitions) {
             this.resourceDefinitionHandler.characters(s, element);
-        }
-        else if (this.parsingContentStreams) {
+        } else if(this.parsingContentStreams) {
             this.contentStreamsHandler.characters(s, element);
         }
 

@@ -164,8 +164,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
     }
 
     private void checkRefElement(final String objectId, final String href)
-            throws InvalidContentException, TripleStoreSystemException, WebserverSystemException,
-            ReferencedResourceNotFoundException {
+            throws InvalidContentException, TripleStoreSystemException, ReferencedResourceNotFoundException {
         this.targetId = null;
         this.targetId = href != null ? Utility.getId(href) : objectId;
         final String targetIdWithoutVersion = XmlUtility.getObjidWithoutVersion(this.targetId);

@@ -115,7 +115,7 @@ public final class Stream extends OutputStream {
         this.inMemory = inMemory;
     }
 
-    public void setOutputDirectory(final File outputDirectory) throws IOException {
+    public void setOutputDirectory(final File outputDirectory) {
         this.outputDirectory = outputDirectory;
     }
 
@@ -351,7 +351,7 @@ public final class Stream extends OutputStream {
         }
     }
 
-    private void createFileOutputStream() throws IOException {
+    private void createFileOutputStream() {
         if(tempFileFailed) {
             return;
         }

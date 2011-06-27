@@ -62,7 +62,7 @@ public class GenericResourcePid extends GenericResource {
      */
     public GenericResourcePid() {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
-            expandPropertiesNamesMapping(getPropertiesNamesMapping()));
+                expandPropertiesNamesMapping(getPropertiesNamesMapping()));
     }
 
     /**
@@ -73,11 +73,11 @@ public class GenericResourcePid extends GenericResource {
      * @throws TripleStoreSystemException Thrown in case of TripleStore error.
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    public GenericResourcePid(final String objid) throws TripleStoreSystemException, WebserverSystemException,
-        ResourceNotFoundException {
+    public GenericResourcePid(final String objid)
+            throws TripleStoreSystemException, WebserverSystemException, ResourceNotFoundException {
 
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
-            expandPropertiesNamesMapping(getPropertiesNamesMapping()));
+                expandPropertiesNamesMapping(getPropertiesNamesMapping()));
         setId(objid);
     }
 
@@ -90,11 +90,12 @@ public class GenericResourcePid extends GenericResource {
      */
     public void removeObjectPid() throws WebserverSystemException {
         final Map<String, List<StartElementWithChildElements>> deleteFromRelsExt =
-            new TreeMap<String, List<StartElementWithChildElements>>();
+                new TreeMap<String, List<StartElementWithChildElements>>();
         final List<StartElementWithChildElements> elementsToRemove = new ArrayList<StartElementWithChildElements>();
 
-        elementsToRemove.add(new StartElementWithChildElements(Elements.ELEMENT_PID, Constants.PROPERTIES_NS_URI, null,
-            null, null, null));
+        elementsToRemove
+                .add(new StartElementWithChildElements(Elements.ELEMENT_PID, Constants.PROPERTIES_NS_URI, null, null,
+                        null, null));
         deleteFromRelsExt.put("/RDF/Description/pid", elementsToRemove);
         updateRelsExt(null, deleteFromRelsExt);
         this.objectPid = null;
@@ -110,10 +111,11 @@ public class GenericResourcePid extends GenericResource {
      * @param pid The PID which is to assign as object PID.
      * @throws SystemException Thrown in case of internal error.
      */
-    public void setObjectPid(final String pid) throws SystemException, EncodingSystemException, FedoraSystemException,
-        XmlParserSystemException, WebserverSystemException {
+    public void setObjectPid(final String pid)
+            throws SystemException, EncodingSystemException, FedoraSystemException, XmlParserSystemException,
+            WebserverSystemException {
 
-        if (!validPidStructure(pid)) {
+        if(! validPidStructure(pid)) {
             throw new SystemException("Invalid structure for Persistent Identifier");
         }
         updateRelsExtWithObjectPid(pid);
@@ -131,17 +133,17 @@ public class GenericResourcePid extends GenericResource {
 
         // TODO use objectPid from the propertiesMap and avoid a second
         // parameter
-        if (this.objectPid == null) {
+        if(this.objectPid == null) {
             this.objectPid = getResourceProperties().get(PropertyMapKeys.OBJECT_PID);
             // FIXME
             // sche: It seems that the key used for object PID differs between
             // Item and Component.
-            if (this.objectPid == null) {
+            if(this.objectPid == null) {
                 this.objectPid = getResourceProperties().get(TripleStoreUtility.PROP_OBJECT_PID);
             }
             // getTripleStoreUtility().getPropertiesElements(getId(),
             // TripleStoreUtility.PROP_OBJECT_PID);
-            if (!validPidStructure(this.objectPid)) {
+            if(! validPidStructure(this.objectPid)) {
                 this.objectPid = null;
             }
         }
@@ -186,7 +188,7 @@ public class GenericResourcePid extends GenericResource {
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames =
-            propertiesNames != null ? propertiesNames : new ArrayList<String>();
+                propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_OBJECT_PID);
 
@@ -203,8 +205,8 @@ public class GenericResourcePid extends GenericResource {
      * @throws WebserverSystemException   In case of an internal error.
      * @throws TripleStoreSystemException Thrown if TripleStore requests fail.
      */
-    private void updateRelsExtWithObjectPid(final String pid) throws XmlParserSystemException, EncodingSystemException,
-        FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
+    private void updateRelsExtWithObjectPid(final String pid)
+            throws XmlParserSystemException, EncodingSystemException, FedoraSystemException, WebserverSystemException {
 
         // TODO we haven't defined a non-versioned resource where we use
         // objectPid. So this method is more or less untested.
@@ -218,7 +220,7 @@ public class GenericResourcePid extends GenericResource {
 
         final AddNewSubTreesToDatastream addNewSubtreesHandler = new AddNewSubTreesToDatastream("/RDF", sp);
         final StartElement pointer =
-            new StartElement("Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf", null);
+                new StartElement("Description", "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf", null);
         addNewSubtreesHandler.setPointerElement(pointer);
         final List<StartElementWithChildElements> elements = new ArrayList<StartElementWithChildElements>();
         elements.add(pidElement);
@@ -227,18 +229,15 @@ public class GenericResourcePid extends GenericResource {
 
         try {
             sp.parse(getRelsExt().toStringUTF8());
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new XmlParserSystemException("Unexpected Exception " + e);
         }
 
         try {
             setRelsExt(addNewSubtreesHandler.getOutputStreams());
-        }
-        catch (final StreamNotFoundException e) {
+        } catch(final StreamNotFoundException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -253,7 +252,7 @@ public class GenericResourcePid extends GenericResource {
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
 
         final Map<String, String> newPropertiesNamesMap =
-            propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
+                propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_OBJECT_PID, PropertyMapKeys.OBJECT_PID);
 

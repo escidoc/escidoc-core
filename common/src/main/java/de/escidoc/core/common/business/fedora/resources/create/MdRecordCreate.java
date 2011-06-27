@@ -477,7 +477,7 @@ public class MdRecordCreate implements Serializable {
      * @return number of changes.
      * @throws InvalidContentException Thrown if content is invalid.
      */
-    private int mergeContent(final MdRecordCreate mdrecord) throws InvalidContentException {
+    private int mergeContent(final MdRecordCreate mdrecord) {
 
         int changes = 0;
         if(this.content == null) {

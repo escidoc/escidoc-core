@@ -67,7 +67,7 @@ import de.escidoc.core.oum.business.fedora.resources.interfaces.OrganizationalUn
 
 /**
  * Resource implementation of an organizational unit resource.
- * 
+ *
  * @author Michael Schneider
  */
 @Configurable(preConstruction = true)
@@ -103,25 +103,22 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     private FedoraServiceClient fedoraServiceClient;
 
     /**
-     * Constructs the Context with the specified id. The datastreams are
-     * instantiated and retrieved if the related getter is called.
-     * 
-     * @param id
-     *            The id of an organizational unit managed in Fedora.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * Constructs the Context with the specified id. The datastreams are instantiated and retrieved if the related
+     * getter is called.
+     *
+     * @param id The id of an organizational unit managed in Fedora.
      */
-    public OrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+    public OrganizationalUnit(final String id)
+            throws OrganizationalUnitNotFoundException, TripleStoreSystemException, IntegritySystemException,
+            WebserverSystemException {
         super(id);
         init();
     }
 
-    private void init() throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
-        if (this.getId() != null) {
+    private void init()
+            throws OrganizationalUnitNotFoundException, TripleStoreSystemException, IntegritySystemException,
+            WebserverSystemException {
+        if(this.getId() != null) {
             this.getUtility().checkIsOrganizationalUnit(this.getId());
         }
         setHref(Constants.ORGANIZATIONAL_UNIT_URL_BASE + this.getId());
@@ -130,28 +127,22 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
 
     /**
      * Retrieve a property value from the triplestore.
-     * 
-     * @param property
-     *            The name of the expected property.
+     *
+     * @param property The name of the expected property.
      * @return The retrieved value of the property.
-     * @throws TripleStoreSystemException
-     *             If access to the triplestore fails.
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
+     * @throws TripleStoreSystemException If access to the triplestore fails.
+     * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    private String getPropertyFromTriplestore(final String property) throws TripleStoreSystemException,
-        WebserverSystemException {
+    private String getPropertyFromTriplestore(final String property) throws TripleStoreSystemException {
         return getTripleStoreUtility().getPropertiesElements(getId(), property);
     }
 
     /**
-     * Get the values of the properties stored in RELS-EXT datastream. If
-     * possible retrieve them directly from the triplestore.
-     * 
-     * @throws TripleStoreSystemException
-     *             Thrown if access to TripleStore failed.
-     * @throws WebserverSystemException
-     *             If access to the backend (fedora or triplestore) fails.
+     * Get the values of the properties stored in RELS-EXT datastream. If possible retrieve them directly from the
+     * triplestore.
+     *
+     * @throws TripleStoreSystemException Thrown if access to TripleStore failed.
+     * @throws WebserverSystemException   If access to the backend (fedora or triplestore) fails.
      */
     protected final void getSomeValuesFromFedora() throws TripleStoreSystemException, WebserverSystemException {
 
@@ -166,7 +157,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
         this.modifiedByTitle = getPropertyFromTriplestore(TripleStoreUtility.PROP_MODIFIED_BY_TITLE);
         this.publicStatus = getPropertyFromTriplestore(TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-        this.hasChildren = !getTripleStoreUtility().getChildren(getId()).isEmpty();
+        this.hasChildren = ! getTripleStoreUtility().getChildren(getId()).isEmpty();
         this.name = getTripleStoreUtility().getTitle(getId());
         this.description = getTripleStoreUtility().getDescription(getId());
         this.parents = getTripleStoreUtility().getParents(getId());
@@ -176,47 +167,45 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
 
     /**
      * Get list of predecessors of OU.
-     * 
-     * @param ouId
-     *            Id of Organizational Unit.
+     *
+     * @param ouId Id of Organizational Unit.
      * @return List of predecessors for the selected OU.
-     * @throws TripleStoreSystemException
-     *             Thrown if request TripleStore failed.
+     * @throws TripleStoreSystemException Thrown if request TripleStore failed.
      */
     public List<Predecessor> getPredecessors(final String ouId) throws TripleStoreSystemException {
         final List<Predecessor> predecessors = new ArrayList<Predecessor>();
         // collect affiliations
         List<String> pred = getTripleStoreUtility().executeQueryId(ouId, false, Constants.PREDECESSOR_AFFILIATION);
         Iterator<String> it = pred.iterator();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             predecessors.add(new Predecessor(it.next(), PredecessorForm.AFFILIATION));
         }
 
         // collect fusion
         pred = getTripleStoreUtility().executeQueryId(ouId, false, Constants.PREDECESSOR_FUSION);
         it = pred.iterator();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             predecessors.add(new Predecessor(it.next(), PredecessorForm.FUSION));
         }
 
         // collect replacement
         pred = getTripleStoreUtility().executeQueryId(ouId, false, Constants.PREDECESSOR_REPLACEMENT);
         it = pred.iterator();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             predecessors.add(new Predecessor(it.next(), PredecessorForm.REPLACEMENT));
         }
 
         // collect spin-off
         pred = getTripleStoreUtility().executeQueryId(ouId, false, Constants.PREDECESSOR_SPIN_OFF);
         it = pred.iterator();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             predecessors.add(new Predecessor(it.next(), PredecessorForm.SPIN_OFF));
         }
 
         // collect splitting
         pred = getTripleStoreUtility().executeQueryId(ouId, false, Constants.PREDECESSOR_SPLITTING);
         it = pred.iterator();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             predecessors.add(new Predecessor(it.next(), PredecessorForm.SPLITTING));
         }
         return predecessors;
@@ -224,12 +213,10 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
 
     /**
      * Get list of successors of OU.
-     * 
-     * @param ouId
-     *            Id of Organizational Unit.
+     *
+     * @param ouId Id of Organizational Unit.
      * @return List of successors for the selected OU.
-     * @throws TripleStoreSystemException
-     *             Thrown if request TripleStore failed.
+     * @throws TripleStoreSystemException Thrown if request TripleStore failed.
      */
     public List<Predecessor> getSuccessors(final String ouId) throws TripleStoreSystemException {
         final List<Predecessor> successors = new ArrayList<Predecessor>();
@@ -238,35 +225,35 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
         // collect affiliations
         List<String> pred = getTripleStoreUtility().executeQueryForList(ids, true, Constants.PREDECESSOR_AFFILIATION);
         Iterator<String> it = pred.iterator();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.AFFILIATION));
         }
 
         // collect fusion
         pred = getTripleStoreUtility().executeQueryForList(ids, true, Constants.PREDECESSOR_FUSION);
         it = pred.iterator();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.FUSION));
         }
 
         // collect replacement
         pred = getTripleStoreUtility().executeQueryForList(ids, true, Constants.PREDECESSOR_REPLACEMENT);
         it = pred.iterator();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.REPLACEMENT));
         }
 
         // collect spin-off
         pred = getTripleStoreUtility().executeQueryForList(ids, true, Constants.PREDECESSOR_SPIN_OFF);
         it = pred.iterator();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.SPIN_OFF));
         }
 
         // collect splitting
         pred = getTripleStoreUtility().executeQueryForList(ids, true, Constants.PREDECESSOR_SPLITTING);
         it = pred.iterator();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             successors.add(new Predecessor(XmlUtility.getIdFromURI(it.next()), PredecessorForm.SPLITTING));
         }
         return successors;
@@ -280,8 +267,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     }
 
     /**
-     * @param createdByTitle
-     *            the createdByTitle to set
+     * @param createdByTitle the createdByTitle to set
      */
     public void setCreatedByTitle(final String createdByTitle) {
         this.createdByTitle = createdByTitle;
@@ -295,20 +281,16 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     }
 
     /**
-     * Get the list of children ids for this organizational unit from the
-     * triplestore.
-     * 
+     * Get the list of children ids for this organizational unit from the triplestore.
+     *
      * @return The list of children ids for this organizational unit.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public List<String> getChildrenIds() throws TripleStoreSystemException, WebserverSystemException {
         return getTripleStoreUtility().getChildren(getId());
     }
 
     /**
-     * @param hasChildren
-     *            the hasChildren to set
+     * @param hasChildren the hasChildren to set
      */
     public void setHasChildren(final boolean hasChildren) {
         this.hasChildren = hasChildren;
@@ -322,8 +304,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     }
 
     /**
-     * @param modifiedBy
-     *            the modifiedBy to set
+     * @param modifiedBy the modifiedBy to set
      */
     public void setModifiedBy(final String modifiedBy) {
         this.modifiedBy = modifiedBy;
@@ -337,8 +318,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     }
 
     /**
-     * @param modifiedByTitle
-     *            the modifiedByTitle to set
+     * @param modifiedByTitle the modifiedByTitle to set
      */
     public void setModifiedByTitle(final String modifiedByTitle) {
         this.modifiedByTitle = modifiedByTitle;
@@ -352,8 +332,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     }
 
     /**
-     * @param name
-     *            the name to set
+     * @param name the name to set
      */
     public void setName(final String name) {
         this.name = name;
@@ -361,7 +340,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
 
     /**
      * OU title equals OU name.
-     * 
+     *
      * @return the title
      */
     @Override
@@ -397,7 +376,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     public Map<String, Datastream> getMdRecords() throws FedoraSystemException, IntegritySystemException {
 
         final List<DatastreamProfileTO> profiles =
-            getFedoraServiceClient().getDatastreamProfilesByAltId(getId(), Datastream.METADATA_ALTERNATE_ID, null);
+                getFedoraServiceClient().getDatastreamProfilesByAltId(getId(), Datastream.METADATA_ALTERNATE_ID, null);
 
         return Datastream.convertDatastreamProfileTOs(profiles, getId());
     }
@@ -406,12 +385,13 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * See Interface for functional description.
      */
     @Override
-    public void setMdRecord(final String name, final Datastream ds) throws EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
+    public void setMdRecord(final String name, final Datastream ds)
+            throws EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
+            TripleStoreSystemException {
         final String mimeType = ds.getMimeType();
         String type = Constants.DEFAULT_ALTID_TYPE;
         String schema = Constants.DEFAULT_ALTID_SCHEMA;
-        if (ds.getAlternateIDs().size() >= 3) {
+        if(ds.getAlternateIDs().size() >= 3) {
             type = ds.getAlternateIDs().get(1);
             schema = ds.getAlternateIDs().get(2);
         }
@@ -422,49 +402,46 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
             String curType = "";
             String curSchema = "";
             final List<String> altIds = curDs.getAlternateIDs();
-            if (altIds.size() > 1) {
+            if(altIds.size() > 1) {
                 curType = altIds.get(1);
-                if (altIds.size() > 2) {
+                if(altIds.size() > 2) {
                     curSchema = altIds.get(2);
                 }
             }
-            final boolean contentChanged = !ds.equals(curDs);
-            if (contentChanged || !type.equals(curType) || !schema.equals(curSchema) || !mimeType.equals(curMimeType)) {
-                if (contentChanged && name.equals(ESCIDOC)) {
+            final boolean contentChanged = ! ds.equals(curDs);
+            if(contentChanged || ! type.equals(curType) || ! schema.equals(curSchema) ||
+                    ! mimeType.equals(curMimeType)) {
+                if(contentChanged && name.equals(ESCIDOC)) {
 
                     final Map<String, String> mdProperties = ds.getProperties();
-                    if (mdProperties != null) {
-                        if (mdProperties.containsKey(NS_URI)) {
+                    if(mdProperties != null) {
+                        if(mdProperties.containsKey(NS_URI)) {
                             final String dcNewContent =
-                                XmlUtility.createDC(mdProperties.get(NS_URI), ds.toStringUTF8(), getId());
-                            if (dcNewContent != null && dcNewContent.trim().length() > 0) {
+                                    XmlUtility.createDC(mdProperties.get(NS_URI), ds.toStringUTF8(), getId());
+                            if(dcNewContent != null && dcNewContent.trim().length() > 0) {
                                 try {
-                                    setDc(new Datastream(Datastream.DC_DATASTREAM, getId(), dcNewContent
-                                        .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
-                                }
-                                catch (final UnsupportedEncodingException e) {
+                                    setDc(new Datastream(Datastream.DC_DATASTREAM, getId(),
+                                            dcNewContent.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
+                                } catch(final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e.getMessage(), e);
                                 }
                             }
+                        } else {
+                            throw new IntegritySystemException(
+                                    "Namespace URI of 'escidoc' metadata" + " is not set in datastream.");
                         }
-                        else {
-                            throw new IntegritySystemException("Namespace URI of 'escidoc' metadata"
-                                + " is not set in datastream.");
-                        }
-                    }
-                    else {
-                        throw new IntegritySystemException("Properties of 'md-record' datastream"
-                            + " with then name 'escidoc' do not exist");
+                    } else {
+                        throw new IntegritySystemException(
+                                "Properties of 'md-record' datastream" + " with then name 'escidoc' do not exist");
                     }
                 }
                 ds.merge();
             }
-        }
-        catch (final StreamNotFoundException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final StreamNotFoundException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on setting MD-records.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on setting MD-records.", e);
             }
             // this is not an update; its a create
@@ -478,8 +455,9 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * See Interface for functional description.
      */
     @Override
-    public void setMdRecords(final Map<String, Datastream> mdRecords) throws IntegritySystemException,
-        FedoraSystemException, WebserverSystemException, EncodingSystemException, TripleStoreSystemException {
+    public void setMdRecords(final Map<String, Datastream> mdRecords)
+            throws IntegritySystemException, FedoraSystemException, WebserverSystemException, EncodingSystemException,
+            TripleStoreSystemException {
         // Container.setMdRecords throws FedoraSystemException,
         // WebserverSystemException,
         // TripleStoreSystemException, IntegritySystemException,
@@ -489,20 +467,19 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
         final Set<String> namesInFedora = getMdRecords().keySet();
 
         // delete Datastreams which are in Fedora but not in mdRecords
-        for (final String nameInFedora : namesInFedora) {
-            if (!mdRecords.containsKey(nameInFedora)) {
+        for(final String nameInFedora : namesInFedora) {
+            if(! mdRecords.containsKey(nameInFedora)) {
                 try {
                     final Datastream fedoraDs = getMdRecord(nameInFedora);
-                    if (fedoraDs != null) {
+                    if(fedoraDs != null) {
                         fedoraDs.delete();
                     }
-                }
-                catch (final StreamNotFoundException e) {
+                } catch(final StreamNotFoundException e) {
                     // Do nothing, datastream is already deleted.
-                    if (LOGGER.isWarnEnabled()) {
+                    if(LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Unable to find datastream '" + nameInFedora + "'.");
                     }
-                    if (LOGGER.isDebugEnabled()) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Unable to find datastream '" + nameInFedora + "'.", e);
                     }
                 }
@@ -510,12 +487,11 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
         }
 
         // create or update Datastreams which are send
-        for (final Entry<String, Datastream> stringDatastreamEntry : mdRecords.entrySet()) {
-            if (namesInFedora.contains(stringDatastreamEntry.getKey())) {
+        for(final Entry<String, Datastream> stringDatastreamEntry : mdRecords.entrySet()) {
+            if(namesInFedora.contains(stringDatastreamEntry.getKey())) {
                 setMdRecord(stringDatastreamEntry.getKey(), stringDatastreamEntry.getValue());
                 namesInFedora.remove(stringDatastreamEntry.getKey());
-            }
-            else {
+            } else {
                 final Datastream currentMdRecord = stringDatastreamEntry.getValue();
 
                 final AddDatastreamPathParam path = new AddDatastreamPathParam(getId(), stringDatastreamEntry.getKey());
@@ -527,8 +503,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
                 try {
                     stream.write(currentMdRecord.getStream());
                     stream.lock();
-                }
-                catch (final IOException e) {
+                } catch(final IOException e) {
                     throw new WebserverSystemException(e);
                 }
                 this.fedoraServiceClient.addDatastream(path, query, stream);
@@ -540,13 +515,10 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
 
     /**
      * Get DC datastream.
-     * 
+     *
      * @return The DC datastream.
-     * @throws StreamNotFoundException
-     *             If there is no DC datastream and parentId in Fedora.
-     * @throws FedoraSystemException
-     *             Thrown in case of an internal system error caused by failed
-     *             Fedora access.
+     * @throws StreamNotFoundException If there is no DC datastream and parentId in Fedora.
+     * @throws FedoraSystemException   Thrown in case of an internal system error caused by failed Fedora access.
      */
     public Datastream getDc() throws StreamNotFoundException, FedoraSystemException {
 
@@ -555,25 +527,19 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
 
     /**
      * Set DC datastream.
-     * 
-     * @param ds
-     *            DC datastream
-     * @throws StreamNotFoundException
-     *             If there is no datastream identified by name and parentId in
-     *             Fedora.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     *
+     * @param ds DC datastream
+     * @throws StreamNotFoundException If there is no datastream identified by name and parentId in Fedora.
      */
-    public void setDc(final Datastream ds) throws StreamNotFoundException, TripleStoreSystemException,
-        FedoraSystemException, WebserverSystemException {
+    public void setDc(final Datastream ds)
+            throws StreamNotFoundException, TripleStoreSystemException, FedoraSystemException,
+            WebserverSystemException {
 
         try {
-            if (!ds.equals(getDc())) {
+            if(! ds.equals(getDc())) {
                 ds.merge();
             }
-        }
-        catch (final StreamNotFoundException e) {
+        } catch(final StreamNotFoundException e) {
             throw new StreamNotFoundException("No DC for organizational-unit " + getId() + '.', e);
         }
         getSomeValuesFromFedora();
@@ -587,8 +553,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     }
 
     /**
-     * @param publicStatus
-     *            the publicStatus to set
+     * @param publicStatus the publicStatus to set
      */
     public void setPublicStatus(final String publicStatus) {
         this.publicStatus = publicStatus;
@@ -603,7 +568,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
 
     /**
      * Get predecessors of OU.
-     * 
+     *
      * @return the predecessors of the OU
      */
     public List<Predecessor> getPredecessors() {
@@ -612,15 +577,13 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
 
     /**
      * Get successors of OU.
-     * 
+     *
      * @return the successors of the OU
-     * @throws WebserverSystemException
-     *             Thrown if creating instance of TripleStoreUtility failed.
-     * @throws TripleStoreSystemException
-     *             Thrown if TripleStore request failed.
+     * @throws WebserverSystemException   Thrown if creating instance of TripleStoreUtility failed.
+     * @throws TripleStoreSystemException Thrown if TripleStore request failed.
      */
     public List<Predecessor> getSuccessors() throws TripleStoreSystemException, WebserverSystemException {
-        if (this.successors == null) {
+        if(this.successors == null) {
             this.successors = getSuccessors(getId());
         }
         return this.successors;

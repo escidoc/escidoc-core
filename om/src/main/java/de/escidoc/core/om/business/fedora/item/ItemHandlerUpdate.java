@@ -233,8 +233,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
     private static void setComponentMetadataRecords(final Component c, final Map<String, ByteArrayOutputStream> mdMap,
                                                     final Map<String, Map<String, String>> mdAttributesMap,
                                                     final String escidocMdRecordnsUri)
-            throws ComponentNotFoundException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
-            WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
+            throws EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
+            TripleStoreSystemException, XmlParserSystemException {
 
         final Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
         for(final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : mdMap.entrySet()) {

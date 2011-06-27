@@ -519,8 +519,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws SystemException              Thrown if rendering of Item or sub-elements failed.
      * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      */
-    private String getMinimalFoXML()
-            throws SystemException, UnsupportedEncodingException, EncodingSystemException, WebserverSystemException {
+    private String getMinimalFoXML() throws SystemException, EncodingSystemException, WebserverSystemException {
 
         final Map<String, Object> valueMap = new HashMap<String, Object>();
 
@@ -787,7 +786,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @return LastModificationDate of the Object (with workaround for Fedora bug).
      * @throws FedoraSystemException Thrown if request to Fedora failed.
      */
-    private DateTime getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
+    private DateTime getLastModificationDateByWorkaround(final String objid) {
         final GetDatastreamProfilePathParam path =
                 new GetDatastreamProfilePathParam(objid, Datastream.RELS_EXT_DATASTREAM);
         final GetDatastreamProfileQueryParam query = new GetDatastreamProfileQueryParam();

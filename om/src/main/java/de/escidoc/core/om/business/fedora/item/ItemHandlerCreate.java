@@ -128,8 +128,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
     private String getComponentFoxmlWithVelocity(final String id, final String contentMimeType, final Map dataStreams,
                                                  final Map<String, Map<String, String>> metadataAttributes,
                                                  final String nsUri, final String storage)
-            throws WebserverSystemException, EncodingSystemException, InvalidContentException,
-            TripleStoreSystemException {
+            throws WebserverSystemException, EncodingSystemException, InvalidContentException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         // dc-mapping prototyping

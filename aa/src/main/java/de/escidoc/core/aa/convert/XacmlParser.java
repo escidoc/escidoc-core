@@ -100,16 +100,16 @@ public class XacmlParser {
 
     private final EscidocRoleDaoInterface roleDao = new EscidocRoleDaoInterface() {
         @Override
-        public boolean roleExists(final String identifier) throws SqlDatabaseSystemException {
+        public boolean roleExists(final String identifier) {
             return false;
         }
 
         @Override
-        public void deleteRole(final EscidocRole r) throws SqlDatabaseSystemException {
+        public void deleteRole(final EscidocRole r) {
         }
 
         @Override
-        public void flush() throws SqlDatabaseSystemException {
+        public void flush() {
         }
 
         @Override
@@ -118,15 +118,15 @@ public class XacmlParser {
         }
 
         @Override
-        public List<EscidocRole> retrieveRoles(
-            final Map<String, Object> criteria, final int offset, final int maxResults, final String orderBy,
-            final ListSorting sorting) throws SqlDatabaseSystemException {
+        public List<EscidocRole> retrieveRoles(final Map<String, Object> criteria, final int offset,
+                                               final int maxResults, final String orderBy, final ListSorting sorting)
+                throws SqlDatabaseSystemException {
             return null;
         }
 
         @Override
         public List<EscidocRole> retrieveRoles(final String criteria, final int offset, final int maxResults)
-            throws InvalidSearchQueryException, SqlDatabaseSystemException {
+                throws InvalidSearchQueryException, SqlDatabaseSystemException {
             return null;
         }
 
@@ -149,12 +149,12 @@ public class XacmlParser {
         String result = "";
         final List<String> ruleList = pol.getMatchingRules(resourceType);
 
-        for (final String rule : ruleList) {
-            if (rule != null && rule.length() > 0) {
+        for(final String rule : ruleList) {
+            if(rule != null && rule.length() > 0) {
                 result = result.length() > 0 ? values.getAndCondition(result, rule) : rule;
             }
         }
-        if (result.length() == 0) {
+        if(result.length() == 0) {
             result = values.getNeutralOrElement(resourceType);
         }
         return result;
@@ -170,20 +170,18 @@ public class XacmlParser {
         String result = "";
         final String label = resourceType.getLabel();
 
-        for (final Object scope : role.getScopeDefs()) {
-            if (label.equals(((ScopeDefBase) scope).getObjectType())) {
+        for(final Object scope : role.getScopeDefs()) {
+            if(label.equals(((ScopeDefBase) scope).getObjectType())) {
                 final String rule = values.getScope(((ScopeDefBase) scope).getAttributeId());
 
-                if (rule == null) {
-                    if (values.ignoreScope(((ScopeDefBase) scope).getAttributeId())) {
+                if(rule == null) {
+                    if(values.ignoreScope(((ScopeDefBase) scope).getAttributeId())) {
                         LOGGER.info("ignore scope definition " + ((ScopeDefBase) scope).getAttributeId());
+                    } else {
+                        throw new IllegalArgumentException(
+                                "no translation found for " + ((ScopeDefBase) scope).getAttributeId());
                     }
-                    else {
-                        throw new IllegalArgumentException("no translation found for "
-                            + ((ScopeDefBase) scope).getAttributeId());
-                    }
-                }
-                else {
+                } else {
                     result = result.length() > 0 ? values.getOrCondition(result, rule) : rule;
                 }
             }
@@ -226,8 +224,9 @@ public class XacmlParser {
      * @param file file to be parsed
      * @throws Exception Thrown in case of an internal error.
      */
-    public void parse(final File file) throws Exception, XMLStreamException, WebserverSystemException,
-        XmlParserSystemException, XmlCorruptedException {
+    public void parse(final File file)
+            throws Exception, XMLStreamException, WebserverSystemException, XmlParserSystemException,
+            XmlCorruptedException {
         this.role = new EscidocRole();
         initFactory();
 
@@ -250,8 +249,7 @@ public class XacmlParser {
             sp.addHandler(xacmlHandler);
             sp.parse(in);
             pol.parse(role.getXacmlPolicySet());
-        }
-        finally {
+        } finally {
             IOUtils.closeStream(in);
         }
     }

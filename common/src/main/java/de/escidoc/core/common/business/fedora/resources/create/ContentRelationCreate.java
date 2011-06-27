@@ -655,7 +655,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @param mdRecord Md Record which is to delete
      * @throws FedoraSystemException Thrown if Fedora request failed.
      */
-    private void deleteDatastream(final MdRecordCreate mdRecord) throws FedoraSystemException {
+    private void deleteDatastream(final MdRecordCreate mdRecord) {
         final DeleteDatastreamPathParam path = new DeleteDatastreamPathParam(getObjid(), mdRecord.getName());
         final DeleteDatastreamQueryParam query = new DeleteDatastreamQueryParam();
         this.fedoraServiceClient.deleteDatastream(path, query);
@@ -668,8 +668,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown if internal error occurs.
      */
-    private void updateDataStream(final MdRecordCreate mdRecord)
-            throws FedoraSystemException, WebserverSystemException {
+    private void updateDataStream(final MdRecordCreate mdRecord) throws WebserverSystemException {
 
         final String[] altIds = {Datastream.METADATA_ALTERNATE_ID, mdRecord.getType(), mdRecord.getSchema()};
 
@@ -702,8 +701,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown if internal error occurs.
      */
-    private void createDatastream(final MdRecordCreate mdRecord)
-            throws FedoraSystemException, WebserverSystemException {
+    private void createDatastream(final MdRecordCreate mdRecord) throws WebserverSystemException {
 
         final String[] altIds = {Datastream.METADATA_ALTERNATE_ID, mdRecord.getType(), mdRecord.getSchema()};
 

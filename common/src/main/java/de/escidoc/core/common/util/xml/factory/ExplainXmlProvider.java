@@ -280,8 +280,7 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
             values.put("HOST", baseUrl.getHost());
             values.put("PORT", baseUrl.getPort());
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new WebserverSystemException(e);
         }
         return getXml(RESOURCE_NAME, RESOURCES_PATH, values);
@@ -293,7 +292,7 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
      * @return Returns the <code>ExplainXmlProvider</code> object.
      * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
-    public static ExplainXmlProvider getInstance() throws WebserverSystemException {
+    public static ExplainXmlProvider getInstance() {
         return provider;
     }
 }

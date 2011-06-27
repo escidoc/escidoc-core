@@ -245,8 +245,7 @@ public class ConnectionUtility {
         final HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
 
             @Override
-            public void process(final HttpRequest request, final HttpContext context)
-                    throws HttpException, IOException {
+            public void process(final HttpRequest request, final HttpContext context) {
 
                 final AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
                 final CredentialsProvider credsProvider =

@@ -70,7 +70,7 @@ public class Attribute {
      * @param index  The index.
      * @throws XmlParserSystemException Thrown if parsing failed.
      */
-    public Attribute(final XMLStreamReader parser, final int index) throws XmlParserSystemException {
+    public Attribute(final XMLStreamReader parser, final int index) {
 
         this.localName = parser.getAttributeLocalName(index);
         this.namespace = parser.getAttributeNamespace(index);

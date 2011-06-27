@@ -110,8 +110,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
     }
 
     private void init()
-            throws StreamNotFoundException, SystemException, ResourceNotFoundException, TripleStoreSystemException,
-            XmlParserSystemException, WebserverSystemException {
+            throws SystemException, ResourceNotFoundException, TripleStoreSystemException, XmlParserSystemException,
+            WebserverSystemException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
                 expandPropertiesNamesMapping(getPropertiesNamesMapping()));
 
