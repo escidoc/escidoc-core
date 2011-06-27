@@ -950,9 +950,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     /**
      * Init all item datastreams. Some are initilized by super classes. (This is
      * faster than init of each single data stream).
-     * 
-     * @param datastreamInfos
-     *            The Fedora datastream information.
+     *
      */
     @Override
     protected final void initDatastream(final DatastreamProfileTO profile) throws WebserverSystemException,

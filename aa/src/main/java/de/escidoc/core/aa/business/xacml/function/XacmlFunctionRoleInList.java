@@ -84,7 +84,6 @@ public class XacmlFunctionRoleInList extends FunctionBase {
     /**
      * See Interface for functional description.
      *
-     * @see Function#evaluate(List, EvaluationCtx)
      */
     @Override
     public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {

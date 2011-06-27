@@ -76,7 +76,6 @@ public class XacmlFunctionContains extends FunctionBase {
     /**
      * See Interface for functional description.
      *
-     * @see Function#evaluate(List, EvaluationCtx)
      */
     @Override
     public EvaluationResult evaluate(final List inputs, final EvaluationCtx context) {

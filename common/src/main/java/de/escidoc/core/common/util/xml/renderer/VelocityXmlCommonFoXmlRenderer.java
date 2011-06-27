@@ -43,8 +43,6 @@ public class VelocityXmlCommonFoXmlRenderer {
      * @param comment
      * @param baseUrl
      * @throws WebserverSystemException cf. Interface
-     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderWov(String, String,
-     *      String, String, String, String, String)
      * @return
      */
     public String renderWov(

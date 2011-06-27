@@ -83,7 +83,7 @@ public class NewComponentExtractor extends DefaultHandler {
             this.deepLevel--;
 
             final String ns = element.getNamespace();
-            List nsTrace = (List) nsuris.get(ns);
+            List nsTrace = nsuris.get(ns);
 
             if (nsTrace != null && (nsTrace.get(2) == null || nsTrace.get(2).equals(element.getPrefix()))
                 && nsTrace.get(1).equals(element.getLocalName()) && (Integer) nsTrace.get(0) == this.deepLevel + 1) {
@@ -167,7 +167,7 @@ public class NewComponentExtractor extends DefaultHandler {
         String prefix = element.getPrefix();
         if (uri != null) {
             if (nsuris.containsKey(uri)) {
-                final List namespaceTrace = (List) nsuris.get(uri);
+                final List namespaceTrace = nsuris.get(uri);
                 final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 final String prefixTrace = (String) namespaceTrace.get(2);
                 if (prefixTrace == null || !prefixTrace.equals(prefix)) {

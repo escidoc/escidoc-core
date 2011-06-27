@@ -52,7 +52,6 @@ public class EscidocOpenidUserDetailsService implements EscidocUserDetailsServic
     /**
      * See Interface for functional description.
      *
-     * @see org.springframework.security.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
      */
     @Override
     public UserDetails loadUserByUsername(final String identifier) {

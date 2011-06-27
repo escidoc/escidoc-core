@@ -189,7 +189,6 @@ public class MultipleExtractor extends WriteHandler {
      * 
      * @throws WebserverSystemException
      *             If an error occured writing XML data.
-     * @see DefaultHandler#startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element) throws InvalidContentException,
@@ -470,7 +469,6 @@ public class MultipleExtractor extends WriteHandler {
      * 
      * @throws WebserverSystemException
      *             If an error occurred writing XML data.
-     * @see DefaultHandler#endElement(EndElement)
      */
     @Override
     public EndElement endElement(final EndElement element) throws WebserverSystemException {
@@ -559,7 +557,6 @@ public class MultipleExtractor extends WriteHandler {
      * 
      * @throws WebserverSystemException
      *             If an error occured writing XML data.
-     * @see DefaultHandler#characters(String, StartElement)
      */
     @Override
     public String characters(final String data, final StartElement element) throws WebserverSystemException {

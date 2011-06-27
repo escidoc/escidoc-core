@@ -73,8 +73,6 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
      * 
      * @throws WebserverSystemException
      *             cf. Interface
-     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderRelsExt(HashMap,
-     *      String, ArrayList, String, String, String, Vector, String)
      */
     @Override
     public String renderDefaultDc(final String componentId) throws WebserverSystemException {
@@ -171,8 +169,6 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
      * 
      * @throws WebserverSystemException
      *             cf. Interface
-     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderWov(String, String,
-     *      String, String, String, String, String)
      */
     @Override
     public String renderWov(

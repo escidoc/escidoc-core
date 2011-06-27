@@ -113,8 +113,6 @@ public class VelocityXmlContainerFoXmlRenderer implements ContainerFoXmlRenderer
      * See Interface for functional description.
      *
      * @throws WebserverSystemException cf. Interface
-     * @see ContainerFoXmlRendererInterface#renderRelsExt(HashMap, String, ArrayList, String, String, String, Vector,
-     *      String)
      */
     @Override
     public String renderRelsExt(
@@ -133,7 +131,6 @@ public class VelocityXmlContainerFoXmlRenderer implements ContainerFoXmlRenderer
      * See Interface for functional description.
      *
      * @throws WebserverSystemException cf. Interface
-     * @see ContainerFoXmlRendererInterface#renderWov(String, String, String, String, String, String, String)
      */
     @Override
     public String renderWov(

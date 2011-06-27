@@ -212,7 +212,6 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see ContextHandlerInterface#retrieveAdminDescriptor(String)
      */
     @Override
     public String retrieveAdminDescriptor(final String id, final String name) throws ContextNotFoundException,
@@ -225,7 +224,6 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see ContextHandlerInterface#retrieveAdminDescriptor(String)
      */
     @Override
     public String retrieveAdminDescriptors(final String id) throws ContextNotFoundException,

@@ -51,7 +51,7 @@ public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPo
     public void commence(
         final HttpServletRequest request, final HttpServletResponse response,
         final AuthenticationException authException) throws IOException, ServletException, UnsupportedEncodingException {
-        final HttpServletRequest httpRequest = (HttpServletRequest) request;
+        final HttpServletRequest httpRequest = request;
         // FIXME:URL!!!
         final StringBuilder target = new StringBuilder(this.serviceProviderBaseUrl).append("aa/login");
 

@@ -99,7 +99,6 @@ public class EscidocUserDetails implements UserDetails {
     /**
      * See Interface for functional description.<br> This implementation returns <code>null</code>!
      *
-     * @see org.springframework.security.userdetails.UserDetails#getAuthorities()
      */
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
@@ -110,7 +109,6 @@ public class EscidocUserDetails implements UserDetails {
     /**
      * See Interface for functional description.<br> This implementation returns <code>null</code>!
      *
-     * @see org.springframework.security.userdetails.UserDetails#getPassword()
      */
     @Override
     public String getPassword() {
@@ -122,7 +120,6 @@ public class EscidocUserDetails implements UserDetails {
      * See Interface for functional description.<br/> This delegates to <code>getRealName()</code>
      *
      * @return Returns the realName of the user account.
-     * @see org.springframework.security.userdetails.UserDetails#getUsername()
      */
     @Override
     public String getUsername() {
@@ -133,7 +130,6 @@ public class EscidocUserDetails implements UserDetails {
     /**
      * See Interface for functional description.<br> This implementation returns <code>false</code>!
      *
-     * @see org.springframework.security.userdetails.UserDetails#isAccountNonExpired()
      */
     @Override
     public boolean isAccountNonExpired() {
@@ -144,7 +140,6 @@ public class EscidocUserDetails implements UserDetails {
     /**
      * See Interface for functional description.<br> This implementation returns <code>false</code>!
      *
-     * @see org.springframework.security.userdetails.UserDetails#isAccountNonLocked()
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -155,7 +150,6 @@ public class EscidocUserDetails implements UserDetails {
     /**
      * See Interface for functional description.<br> This implementation returns <code>false</code>!
      *
-     * @see org.springframework.security.userdetails.UserDetails#isCredentialsNonExpired()
      */
     @Override
     public boolean isCredentialsNonExpired() {
@@ -166,7 +160,6 @@ public class EscidocUserDetails implements UserDetails {
     /**
      * See Interface for functional description.<br> This implementation returns <code>false</code>!
      *
-     * @see org.springframework.security.userdetails.UserDetails#isEnabled()
      */
     @Override
     public boolean isEnabled() {

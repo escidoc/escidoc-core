@@ -234,8 +234,7 @@ public class SecurityHelper {
                             // for the addressed object.
                             if (resolvedAttributeValues != null && !resolvedAttributeValues.isEmpty()) {
                                 for (final String resolvedAttributeValue : resolvedAttributeValues) {
-                                    final Collection grantsOfRoleAndObject =
-                                        (Collection) grantsOfRole.get(resolvedAttributeValue);
+                                    final Collection grantsOfRoleAndObject = grantsOfRole.get(resolvedAttributeValue);
                                     if (grantsOfRoleAndObject != null && !grantsOfRoleAndObject.isEmpty()) {
                                         if (FinderModuleHelper.isNewResourceId(resourceId)) {
                                             return EvaluationResult.getInstance(true);

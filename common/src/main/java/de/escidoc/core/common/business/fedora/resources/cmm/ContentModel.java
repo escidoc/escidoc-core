@@ -234,8 +234,6 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
      * Init all content model datastreams. Some are initilized by super classes.
      * (This is faster than init of each single data stream).
      * 
-     * @param datastreamInfos
-     *            The Fedora datastream information.
      * @throws WebserverSystemException
      *             If an error occurs.
      * @throws FedoraSystemException

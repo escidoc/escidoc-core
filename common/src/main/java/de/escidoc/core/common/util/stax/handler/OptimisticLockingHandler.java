@@ -69,7 +69,6 @@ public class OptimisticLockingHandler extends DefaultHandler {
      * @param objid                The unique identifier of the handled object.
      * @param objectType           Type of Resource (required to set name of resource in case of Exception).
      * @param lastModificationDate The last modification of the stores object.
-     * @param parser               The parser this handler is added.
      */
     public OptimisticLockingHandler(final String objid, final String objectType, final DateTime lastModificationDate) {
         this.objid = objid;
