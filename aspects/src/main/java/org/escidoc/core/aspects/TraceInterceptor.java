@@ -84,7 +84,7 @@ public class TraceInterceptor {
         return message.toString();
     }
 
-    private String getDepthString() {
+    private static String getDepthString() {
         final StringWriter depthStringWriter = new StringWriter(TraceDepthThreadLocal.getDepth() * DEPTH_SPACES);
         for (int i = 0; i < TraceDepthThreadLocal.getDepth(); i++) {
             for (int j = 0; j < DEPTH_SPACES; j++) {
