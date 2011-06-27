@@ -28,6 +28,34 @@
  */
 package de.escidoc.core.aa.business;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.annotation.PostConstruct;
+
+import org.esidoc.core.utils.io.IOUtils;
+import org.openid4java.util.HttpClientFactory;
+import org.openid4java.util.ProxyProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import com.sun.xacml.Indenter;
 import com.sun.xacml.ParsingException;
 import com.sun.xacml.attr.StringAttribute;
@@ -37,6 +65,7 @@ import com.sun.xacml.ctx.ResponseCtx;
 import com.sun.xacml.ctx.Result;
 import com.sun.xacml.ctx.Status;
 import com.sun.xacml.ctx.Subject;
+
 import de.escidoc.core.aa.business.authorisation.CustomPdp;
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
@@ -65,6 +94,7 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.security.helper.InvocationParser;
 import de.escidoc.core.common.util.security.persistence.MethodMapping;
 import de.escidoc.core.common.util.security.persistence.MethodMappingList;
@@ -81,29 +111,6 @@ import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface
 import de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterface;
 import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
-import org.esidoc.core.utils.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Implementation for the AA Component.
@@ -209,6 +216,22 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      */
     @PostConstruct
     public void init() throws SqlDatabaseSystemException, WebserverSystemException {
+        try {
+            final String proxyHostName =
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
+            final String proxyPort =
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
+            if (proxyHostName != null && proxyHostName.trim().length() != 0) {
+                ProxyProperties proxyProps = new ProxyProperties();
+                proxyProps.setProxyHostName(proxyHostName);
+                if (proxyPort != null && proxyPort.trim().length() != 0) {
+                    proxyProps.setProxyPort(Integer.parseInt(proxyPort));
+                }
+                HttpClientFactory.setProxyProperties(proxyProps);
+            }
+        }
+        catch (IOException e) {
+        }
         accessRights.deleteAccessRights();
 
         final Map<String, Object> filter = new HashMap<String, Object>();
