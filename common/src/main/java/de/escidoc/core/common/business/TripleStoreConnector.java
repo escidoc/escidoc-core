@@ -22,10 +22,10 @@ package de.escidoc.core.common.business;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.cxf.jaxrs.client.ServerWebApplicationException;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.RisearchPathParam;
@@ -44,7 +44,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
- * An utility class for Kowary request.
+ * An utility class for MPT request.
  *
  * @author Rozita Friedman
  *         <p/>
@@ -101,7 +101,7 @@ public class TripleStoreConnector {
         query.setLang(LANG_MPT);
         query.setFlush(FLUSH);
         try {
-            query.setQuery(URIUtil.encodeQuery(spoQuery, Encodings.ISO_8859_1));
+            query.setQuery(URLEncoder.encode(spoQuery, Encodings.ISO_8859_1));
             final Stream stream = this.fedoraServiceClient.risearch(path, query);
             final String responseContent = new String(stream.getBytes(), Encodings.UTF8);
             if (responseContent == null || responseContent.length() == 0) {
