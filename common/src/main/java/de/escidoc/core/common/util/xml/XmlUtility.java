@@ -497,11 +497,6 @@ public final class XmlUtility {
     private static final StackKeyedObjectPool TRANSFORMER_POOL =
         new StackKeyedObjectPool(new PoolableTransformerFactory());
 
-    @PostConstruct
-    private void init() {
-        org.apache.xml.security.Init.init();
-    }
-
     /**
      * Simple proxy method that can decide about the resource type and return the matching schema location.
      *
