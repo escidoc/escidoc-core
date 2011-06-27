@@ -39,7 +39,6 @@ import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundE
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
@@ -52,7 +51,6 @@ import de.escidoc.core.common.persistence.PIDSystemFactory;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;

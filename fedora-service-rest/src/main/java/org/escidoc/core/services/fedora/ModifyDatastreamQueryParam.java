@@ -1,9 +1,7 @@
 package org.escidoc.core.services.fedora;
 
-import net.sf.oval.guard.Guarded;
 import org.esidoc.core.utils.io.MimeTypes;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,7 @@ public final class ModifyDatastreamQueryParam {
         if(altIDs == null) {
             this.altIDs = new ArrayList<String>();
         } else {
-           this.altIDs = new ArrayList<String>(altIDs);
+            this.altIDs = new ArrayList<String>(altIDs);
         }
     }
 

@@ -14,8 +14,6 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import static org.esidoc.core.utils.Preconditions.checkNotNull;
-
 /**
  * eSciDoc specific implementation of {@link JAXBElementProvider}.
  *

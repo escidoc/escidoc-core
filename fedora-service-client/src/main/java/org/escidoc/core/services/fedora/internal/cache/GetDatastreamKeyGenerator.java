@@ -2,7 +2,6 @@ package org.escidoc.core.services.fedora.internal.cache;
 
 import com.googlecode.ehcache.annotations.key.CacheKeyGenerator;
 import org.aopalliance.intercept.MethodInvocation;
-import org.escidoc.core.services.fedora.GetDatastreamPathParam;
 import org.joda.time.DateTime;
 
 /**

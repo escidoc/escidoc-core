@@ -24,7 +24,6 @@ import com.googlecode.ehcache.annotations.key.CacheKeyGenerator;
 import org.aopalliance.intercept.MethodInvocation;
 import org.escidoc.core.services.fedora.GetDatastreamProfilePathParam;
 import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
-import org.escidoc.core.services.fedora.ListDatastreamsPathParam;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 

@@ -70,7 +70,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -241,10 +240,9 @@ public class CustomPdp {
      * @return the result of the evaluation
      * @throws ParsingException         if the Request is invalid
      * @throws WebserverSystemException Thrown in case of an internal error.
-     * @throws java.io.FileNotFoundException
      */
-    public ResponseCtx evaluate(final String requestFile) throws ParsingException, WebserverSystemException,
-        FileNotFoundException {
+    public ResponseCtx evaluate(final String requestFile)
+            throws ParsingException, WebserverSystemException, FileNotFoundException {
         // setup the request based on the file
         final RequestCtx request = RequestCtx.getInstance(new FileInputStream(requestFile));
 
@@ -298,7 +296,8 @@ public class CustomPdp {
      *
      * @param partlyResolveableAttrFinder <code>PartlyResolveableAttributeFinderModule</code> object to inject.
      */
-    public void setPartlyResolveableAttrFinder(final PartlyResolveableAttributeFinderModule partlyResolveableAttrFinder) {
+    public void setPartlyResolveableAttrFinder(
+            final PartlyResolveableAttributeFinderModule partlyResolveableAttrFinder) {
         this.partlyResolveableAttrFinder = partlyResolveableAttrFinder;
     }
 
@@ -418,7 +417,7 @@ public class CustomPdp {
      *         the {@link NewOuParentsAttributeFinderModule} to inject.
      */
     public void setNewOuParentsAttributeFinderModule(
-        final NewOuParentsAttributeFinderModule newOuParentsAttributeFinderModule) {
+            final NewOuParentsAttributeFinderModule newOuParentsAttributeFinderModule) {
         this.newOuParentsAttributeFinderModule = newOuParentsAttributeFinderModule;
     }
 

@@ -33,7 +33,6 @@ import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
 import de.escidoc.core.aa.business.persistence.UserLoginData;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.UserContext;
@@ -51,7 +50,7 @@ import org.springframework.stereotype.Service;
 public class UserManagementWrapper implements UserManagementWrapperInterface {
 
     private static final String ERROR_MSG_LOGOUT_HANDLE_NULL =
-        "Handle of current user not initialized, logout cannot be performed.";
+            "Handle of current user not initialized, logout cannot be performed.";
 
     @Autowired
     @Qualifier("persistence.UserAccountDao")
@@ -80,12 +79,12 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
     @Override
     public void logout() throws AuthenticationException, SqlDatabaseSystemException, WebserverSystemException {
 
-        if (UserContext.isAnonymousUser()) {
+        if(UserContext.isAnonymousUser()) {
             return;
         }
 
         final String handle = UserContext.getHandle();
-        if (handle == null) {
+        if(handle == null) {
             throw new WebserverSystemException(ERROR_MSG_LOGOUT_HANDLE_NULL);
         }
         dao.deleteUserLoginData(handle);
@@ -97,14 +96,14 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      * @param handle the handle
      */
     @Override
-    public void initHandleExpiryTimestamp(final String handle) throws SqlDatabaseSystemException,
-        WebserverSystemException {
+    public void initHandleExpiryTimestamp(final String handle)
+            throws SqlDatabaseSystemException, WebserverSystemException {
         final UserLoginData userLoginData = dao.retrieveUserLoginDataByHandle(handle);
         final long expiryts = System.currentTimeMillis() + getESciDocUserHandleLifetime();
-        if (userLoginData.getExpiryts() < expiryts) {
-            if (userLoginData.getExpiryts() < System.currentTimeMillis()) {
-                throw new WebserverSystemException("Handle-expiry-timestamp cannot get "
-                    + "reinitialized on expired handles");
+        if(userLoginData.getExpiryts() < expiryts) {
+            if(userLoginData.getExpiryts() < System.currentTimeMillis()) {
+                throw new WebserverSystemException(
+                        "Handle-expiry-timestamp cannot get " + "reinitialized on expired handles");
             }
             userLoginData.setExpiryts(expiryts);
             dao.saveOrUpdate(userLoginData);
@@ -117,15 +116,13 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      */
     private long getESciDocUserHandleLifetime() throws WebserverSystemException {
 
-        if (this.eSciDocUserHandleLifetime == Long.MIN_VALUE) {
+        if(this.eSciDocUserHandleLifetime == Long.MIN_VALUE) {
             try {
-                this.eSciDocUserHandleLifetime =
-                    Long.parseLong(EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME));
-            }
-            catch (final Exception e) {
+                this.eSciDocUserHandleLifetime = Long.parseLong(
+                        EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME));
+            } catch(final Exception e) {
                 throw new WebserverSystemException(StringUtility.format("Can't get configuration parameter",
-                    EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME, e.getMessage()), e);
+                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME, e.getMessage()), e);
             }
         }
         return this.eSciDocUserHandleLifetime;

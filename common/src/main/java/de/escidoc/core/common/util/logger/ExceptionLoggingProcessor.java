@@ -24,7 +24,6 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 public class ExceptionLoggingProcessor implements Processor {
 
@@ -36,9 +35,9 @@ public class ExceptionLoggingProcessor implements Processor {
 
     @Override
     public void process(final Exchange exchange) throws Exception {
-        @SuppressWarnings( { "ThrowableResultOfMethodCallIgnored" })
+        @SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
         final Throwable caused = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Throwable.class);
-        if (caused != null) {
+        if(caused != null) {
             final Logger logger = LoggerFactory.getLogger(this.logCategory);
             logger.error(caused.getMessage());
         }

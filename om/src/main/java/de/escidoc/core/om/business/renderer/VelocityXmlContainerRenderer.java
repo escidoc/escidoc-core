@@ -49,7 +49,6 @@ import de.escidoc.core.common.util.xml.factory.ContainerXmlProvider;
 import de.escidoc.core.common.util.xml.factory.MetadataRecordsXmlProvider;
 import de.escidoc.core.common.util.xml.factory.RelationsXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-import de.escidoc.core.om.business.fedora.container.FedoraContainerHandler;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterface;
 import de.escidoc.core.om.business.security.UserFilter;
 import org.joda.time.DateTimeZone;
@@ -58,8 +57,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

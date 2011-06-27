@@ -8,8 +8,6 @@ import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import static org.esidoc.core.utils.Preconditions.checkNotNull;
-
 /**
  * {@link XMLStreamWriter} that filters content elements in {@link org.esidoc.core.utils.xml.DatastreamHolder} objects.
  *

@@ -38,7 +38,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.IOUtils;
@@ -48,7 +47,7 @@ import de.escidoc.core.common.util.db.Fingerprint;
 
 /**
  * Get some interesting information about the eSciDoc framework.
- * 
+ *
  * @author André Schenk
  */
 public class FrameworkInfo extends JdbcDaoSupport {
@@ -89,8 +88,8 @@ public class FrameworkInfo extends JdbcDaoSupport {
      * Database query to get the latest version.
      */
     private static final String QUERY_LATEST_VERSION =
-        "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + "=(SELECT MAX(" + COLUMN_DATE + ") FROM "
-            + TABLE_NAME + ')';
+            "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + "=(SELECT MAX(" + COLUMN_DATE + ") FROM " +
+                    TABLE_NAME + ')';
 
     /**
      * path to XML file with the finger print of the "escidoc-core" database.
@@ -99,22 +98,21 @@ public class FrameworkInfo extends JdbcDaoSupport {
 
     /**
      * Check if the currently installed eSciDocCore database matches the needed database version.
-     * 
-     * @throws SystemException
-     *             Thrown if the eSciDocCore database has the wrong version
+     *
+     * @throws SystemException Thrown if the eSciDocCore database has the wrong version
      */
     public void checkDbVersion() throws SystemException {
         final Version currentDbVersion = getVersion();
 
-        if (!DB_VERSION.equals(currentDbVersion)) {
-            throw new SystemException("database version differs (needed: " + DB_VERSION + ", installed: "
-                + currentDbVersion + ')');
+        if(! DB_VERSION.equals(currentDbVersion)) {
+            throw new SystemException(
+                    "database version differs (needed: " + DB_VERSION + ", installed: " + currentDbVersion + ')');
         }
     }
 
     /**
      * Get the current database version from the database.
-     * 
+     *
      * @return current database version
      */
     public Version getVersion() {
@@ -126,24 +124,22 @@ public class FrameworkInfo extends JdbcDaoSupport {
                 public Object extractData(final ResultSet rs) throws SQLException {
                     Version result = null;
 
-                    if (rs.next()) {
-                        result =
-                            new Version(rs.getInt(COLUMN_MAJOR_NUMBER), rs.getInt(COLUMN_MINOR_NUMBER), rs
-                                .getInt(COLUMN_REVISION_NUMBER));
+                    if(rs.next()) {
+                        result = new Version(rs.getInt(COLUMN_MAJOR_NUMBER), rs.getInt(COLUMN_MINOR_NUMBER),
+                                rs.getInt(COLUMN_REVISION_NUMBER));
                     }
                     return result;
                 }
             });
-            if (result == null) {
+            if(result == null) {
                 // version table is empty
                 result = new Version(1, 0, 0);
             }
-        }
-        catch (final DataAccessException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final DataAccessException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.debug("Error on getting database version.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on getting database version.", e);
             }
             // version table doesn't exist
@@ -154,13 +150,10 @@ public class FrameworkInfo extends JdbcDaoSupport {
 
     /**
      * Compare the current database structure with the structure stored in an XML file.
-     * 
+     *
      * @return true if both structures are equal
-     * @throws IOException
-     *             Thrown if the XML file could not be read
-     * @throws SQLException
-     *             Thrown if the structure of the database could not be determined
-     * @throws java.io.FileNotFoundException
+     * @throws IOException  Thrown if the XML file could not be read
+     * @throws SQLException Thrown if the structure of the database could not be determined
      */
     public boolean isConsistent() throws IOException, SQLException {
         boolean result = false;
@@ -168,13 +161,11 @@ public class FrameworkInfo extends JdbcDaoSupport {
         try {
             connection = getConnection();
             final Fingerprint currentFingerprint = new Fingerprint(connection);
-            final Fingerprint storedFingerprint =
-                Fingerprint.readObject(getClass().getResourceAsStream(
-                    FINGERPRINT_PATH + DatabaseType.valueOf(connection).getProductName() + '/' + DB_VERSION.toString()
-                        + ".xml"));
+            final Fingerprint storedFingerprint = Fingerprint.readObject(getClass().getResourceAsStream(
+                    FINGERPRINT_PATH + DatabaseType.valueOf(connection).getProductName() + '/' + DB_VERSION.toString() +
+                            ".xml"));
             result = storedFingerprint.equals(currentFingerprint);
-        }
-        finally {
+        } finally {
             IOUtils.closeConnection(connection);
         }
         return result;

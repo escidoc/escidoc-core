@@ -20,16 +20,11 @@
 
 package de.escidoc.core.common.util;
 
-import de.escidoc.core.common.util.xml.XmlUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.sql.Connection;
@@ -48,68 +43,64 @@ public final class IOUtils {
     }
 
     public static void closeStream(final Closeable stream) {
-        if (stream == null) {
+        if(stream == null) {
             return;
         }
         try {
             stream.close();
-        }
-        catch (final IOException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final IOException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on closing stream.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on closing stream.", e);
             }
         }
     }
 
     public static void closeWriter(final Writer writer) {
-        if (writer == null) {
+        if(writer == null) {
             return;
         }
         try {
             writer.close();
-        }
-        catch (final IOException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final IOException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on closing writer.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on closing writer.", e);
             }
         }
     }
 
     public static void closeConnection(final Connection connection) {
-        if (connection == null) {
+        if(connection == null) {
             return;
         }
         try {
             connection.close();
-        }
-        catch (final SQLException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final SQLException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on closing connection.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on closing connection.", e);
             }
         }
     }
 
     public static void closeResultSet(final ResultSet resultSet) {
-        if (resultSet == null) {
+        if(resultSet == null) {
             return;
         }
         try {
             resultSet.close();
-        }
-        catch (final SQLException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final SQLException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on closing result set.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on closing result set.", e);
             }
         }

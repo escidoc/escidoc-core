@@ -23,7 +23,6 @@ package de.escidoc.core.common.business.indexing;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.IndexerCacheHandler;
-import de.escidoc.core.common.util.stax.handler.SrwScanResponseHandler;
 import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

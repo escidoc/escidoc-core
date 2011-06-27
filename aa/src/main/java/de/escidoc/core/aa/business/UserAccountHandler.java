@@ -111,7 +111,6 @@ import de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedExce
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
@@ -143,35 +142,34 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountHandler.class);
 
     private static final String XPATH_GRANT_ASSIGNED_ON =
-        '/' + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/' + XmlUtility.NAME_ASSIGNED_ON;
+            '/' + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/' + XmlUtility.NAME_ASSIGNED_ON;
 
     private static final String XPATH_GRANT_ROLE =
-        '/' + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/' + XmlUtility.NAME_ROLE;
+            '/' + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/' + XmlUtility.NAME_ROLE;
 
-    private static final Pattern GROUP_FILTER_PATTERN =
-        Pattern
-            .compile("(?s)\"{0,1}(" + Constants.FILTER_GROUP + '|' + Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID
-                + ")(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*" + "|\"*\\s*(cql.any)\\s*\"*)"
-                + "([^\\s\"\\(\\)]*)\"{0,1}");
+    private static final Pattern GROUP_FILTER_PATTERN = Pattern.compile(
+            "(?s)\"{0,1}(" + Constants.FILTER_GROUP + '|' + Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID +
+                    ")(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*" + "|\"*\\s*(cql.any)\\s*\"*)" +
+                    "([^\\s\"\\(\\)]*)\"{0,1}");
 
     private static final String MSG_WRONG_HREF = "Referenced object href is wrong, object has another type.";
 
     private static final String MSG_GRANT_RESTRICTION_VIOLATED =
-        "Grants can be created on containers, content models, contexts"
-            + ", items, components, organizational units, user-accounts, "
-            + "user-groups and scopes, only. No resource of one " + "of these types with the provided id exists.";
+            "Grants can be created on containers, content models, contexts" +
+                    ", items, components, organizational units, user-accounts, " +
+                    "user-groups and scopes, only. No resource of one " + "of these types with the provided id exists.";
 
     private static final String MSG_USER_NOT_FOUND_BY_ID = "User with provided id does not exist.";
 
     private static final String MSG_USER_NOT_FOUND_BY_IDENTITY_INFO =
-        "User with provided user identity does not exist.";
+            "User with provided user identity does not exist.";
 
     private static final String MSG_GROUP_NOT_FOUND_BY_ID = "User-Group with provided id does not exist.";
 
     private static final String MSG_UNEXPECTED_EXCEPTION = "Unexpected exception in ";
 
     private static final String MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS =
-        "Unexpected exception during evaluating access rights.";
+            "Unexpected exception during evaluating access rights.";
 
     private static final String MSG_XML_SCHEMA_ENSURE = "Should be ensured by XML Schema.";
 
@@ -253,7 +251,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String retrieveCurrentUser() throws UserAccountNotFoundException, SystemException, WebserverSystemException {
-        if (StringUtils.isEmpty(UserContext.getId())) {
+        if(StringUtils.isEmpty(UserContext.getId())) {
             throw new UserAccountNotFoundException("No user logged in");
         }
         final UserAccount userAccount = dao.retrieveUserAccount(UserContext.getId());
@@ -277,8 +275,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData) throws UniqueConstraintViolationException, XmlCorruptedException,
-        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException, WebserverSystemException {
+    public String create(final String xmlData)
+            throws UniqueConstraintViolationException, XmlCorruptedException, OrganizationalUnitNotFoundException,
+            SystemException, InvalidStatusException, WebserverSystemException {
 
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
 
@@ -287,22 +286,18 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final StaxParser sp = new StaxParser(XmlUtility.NAME_USER_ACCOUNT);
 
         final UserAccountPropertiesStaxHandler propertiesHandler =
-            new UserAccountPropertiesStaxHandler(userAccount, this.dao, true);
+                new UserAccountPropertiesStaxHandler(userAccount, this.dao, true);
         sp.addHandler(propertiesHandler);
 
         try {
             sp.parse(in);
-        }
-        catch (final UniqueConstraintViolationException e) {
+        } catch(final UniqueConstraintViolationException e) {
             throw e;
-        }
-        catch (final InvalidStatusException e) {
+        } catch(final InvalidStatusException e) {
             throw e;
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final String msg = MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".create: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
@@ -333,8 +328,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String userId) throws UserAccountNotFoundException, SqlDatabaseSystemException,
-        WebserverSystemException {
+    public void delete(final String userId)
+            throws UserAccountNotFoundException, SqlDatabaseSystemException, WebserverSystemException {
 
         dao.delete(retrieveUserAccountById(userId));
 
@@ -361,10 +356,10 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public String update(final String userId, final String xmlData) throws UserAccountNotFoundException,
-        UniqueConstraintViolationException, XmlCorruptedException, MissingAttributeValueException,
-        OptimisticLockingException, OrganizationalUnitNotFoundException, SystemException, InvalidStatusException,
-        WebserverSystemException {
+    public String update(final String userId, final String xmlData)
+            throws UserAccountNotFoundException, UniqueConstraintViolationException, XmlCorruptedException,
+            MissingAttributeValueException, OptimisticLockingException, OrganizationalUnitNotFoundException,
+            SystemException, InvalidStatusException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -373,38 +368,30 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final StaxParser sp = new StaxParser(XmlUtility.NAME_USER_ACCOUNT);
 
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
+                new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         final UserAccountPropertiesStaxHandler propertiesHandler =
-            new UserAccountPropertiesStaxHandler(userAccount, this.dao, false);
+                new UserAccountPropertiesStaxHandler(userAccount, this.dao, false);
         sp.addHandler(propertiesHandler);
 
         try {
             sp.parse(in);
-        }
-        catch (final InvalidXmlException e) {
+        } catch(final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (LastModificationDateMissingException e) {
+        } catch(LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (final OptimisticLockingException e) {
+        } catch(final OptimisticLockingException e) {
             throw e;
-        }
-        catch (final MissingAttributeValueException e) {
+        } catch(final MissingAttributeValueException e) {
             throw e;
-        }
-        catch (final UniqueConstraintViolationException e) {
+        } catch(final UniqueConstraintViolationException e) {
             throw e;
-        }
-        catch (final InvalidStatusException e) {
+        } catch(final InvalidStatusException e) {
             throw e;
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final String msg = MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
@@ -433,44 +420,40 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface#updatePassword(String, String)
      */
     @Override
-    public void updatePassword(final String userId, final String taskParam) throws UserAccountNotFoundException,
-        InvalidStatusException, XmlCorruptedException, MissingMethodParameterException, OptimisticLockingException,
-        AuthenticationException, AuthorizationException, SystemException, XmlParserSystemException,
-        SqlDatabaseSystemException, WebserverSystemException {
+    public void updatePassword(final String userId, final String taskParam)
+            throws UserAccountNotFoundException, InvalidStatusException, XmlCorruptedException,
+            MissingMethodParameterException, OptimisticLockingException, AuthenticationException,
+            AuthorizationException, SystemException, XmlParserSystemException, SqlDatabaseSystemException,
+            WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
-        if (!userAccount.getActive()) {
+        if(! userAccount.getActive()) {
             throw new InvalidStatusException("Password must not be updated on inactive user-account!");
         }
 
         final TaskParamHandler handler = XmlUtility.parseTaskParam(taskParam);
 
         final String password = handler.getPassword();
-        if (password == null || "".equals(password)) {
+        if(password == null || "".equals(password)) {
             throw new MissingMethodParameterException("Password must not be null or empty!");
         }
         userAccount.setPassword(password);
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(taskParam);
         final StaxParser sp = new StaxParser("param");
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
+                new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
         try {
             sp.parse(in);
-        }
-        catch (final InvalidXmlException e) {
+        } catch(final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (LastModificationDateMissingException e) {
+        } catch(LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (final OptimisticLockingException e) {
+        } catch(final OptimisticLockingException e) {
             throw e;
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         setModificationValues(userAccount);
@@ -503,32 +486,32 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public Map<String, Map<String, List<RoleGrant>>> retrieveCurrentGrantsAsMap(final String userId)
-        throws UserAccountNotFoundException, SqlDatabaseSystemException {
+            throws UserAccountNotFoundException, SqlDatabaseSystemException {
 
         retrieveUserAccountById(userId);
         final List<RoleGrant> currentGrants = fetchCurrentGrants(userId);
-        if (currentGrants == null || currentGrants.isEmpty()) {
+        if(currentGrants == null || currentGrants.isEmpty()) {
             return null;
         }
 
         final Iterator<RoleGrant> iter = currentGrants.iterator();
         final Map<String, Map<String, List<RoleGrant>>> ret = new HashMap<String, Map<String, List<RoleGrant>>>();
-        while (iter.hasNext()) {
+        while(iter.hasNext()) {
             final RoleGrant grant = iter.next();
             final String roleId = grant.getEscidocRole().getId();
             Map<String, List<RoleGrant>> grantsOfRole = ret.get(roleId);
-            if (grantsOfRole == null) {
+            if(grantsOfRole == null) {
                 grantsOfRole = new HashMap<String, List<RoleGrant>>();
                 ret.put(roleId, grantsOfRole);
             }
             String key = grant.getObjectId();
-            if (key == null) {
+            if(key == null) {
                 // For grants of unlimited roles an empty string is used
                 // as the key.
                 key = "";
             }
             List<RoleGrant> grantsOfObject = grantsOfRole.get(key);
-            if (grantsOfObject == null) {
+            if(grantsOfObject == null) {
                 grantsOfObject = new ArrayList<RoleGrant>();
                 grantsOfRole.put(key, grantsOfObject);
             }
@@ -556,21 +539,19 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final List<RoleGrant> filteredCurrentGrants = new ArrayList<RoleGrant>();
 
         // AA-filter
-        for (final RoleGrant roleGrant : currentGrants) {
+        for(final RoleGrant roleGrant : currentGrants) {
             grantsMap.put(roleGrant.getId(), roleGrant);
-            final Object[] args = { userId, roleGrant.getId() };
+            final Object[] args = {userId, roleGrant.getId()};
             argumentList.add(args);
         }
         try {
             final List<Object[]> returnList = pdp.evaluateMethodForList("user-account", "retrieveGrant", argumentList);
-            for (final Object[] obj : returnList) {
+            for(final Object[] obj : returnList) {
                 filteredCurrentGrants.add(grantsMap.get(obj[1]));
             }
-        }
-        catch (final MissingMethodParameterException e) {
+        } catch(final MissingMethodParameterException e) {
             throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
-        }
-        catch (final ResourceNotFoundException e) {
+        } catch(final ResourceNotFoundException e) {
             throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
 
@@ -587,8 +568,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveGrants(java.util.Map)
      */
     @Override
-    public String retrieveGrants(final Map<String, String[]> filter) throws InvalidSearchQueryException,
-        SystemException {
+    public String retrieveGrants(final Map<String, String[]> filter)
+            throws InvalidSearchQueryException, SystemException {
 
         final SRURequestParameters parameters = new DbRequestParameters(filter);
 
@@ -598,30 +579,26 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final boolean explain = parameters.isExplain();
 
         final String result;
-        if (explain) {
+        if(explain) {
             final Map<String, Object> values = new HashMap<String, Object>();
 
             values.put("PROPERTY_NAMES", new RoleGrantFilter(null).getPropertyNames());
             result = ExplainXmlProvider.getInstance().getExplainRoleGrantXml(values);
-        }
-        else if (limit == 0) {
-            result =
-                renderer.renderGrants(new ArrayList<RoleGrant>(0), Integer.toString(0), Integer.toString(offset),
+        } else if(limit == 0) {
+            result = renderer.renderGrants(new ArrayList<RoleGrant>(0), Integer.toString(0), Integer.toString(offset),
                     Integer.toString(limit), parameters.getRecordPacking());
-        }
-        else {
+        } else {
             final int needed = offset + limit;
             final List<RoleGrant> permittedRoleGrants = new ArrayList<RoleGrant>();
 
             final List<RoleGrant> tmpRoleGrants = dao.retrieveGrants(query, 0, 0, this.userGroupHandler);
-            if (tmpRoleGrants != null && !tmpRoleGrants.isEmpty()) {
+            if(tmpRoleGrants != null && ! tmpRoleGrants.isEmpty()) {
                 final List<String> userIds = new ArrayList<String>();
                 final List<String> groupIds = new ArrayList<String>();
-                for (final RoleGrant roleGrant : tmpRoleGrants) {
-                    if (roleGrant.getUserId() != null && !userIds.contains(roleGrant.getUserId())) {
+                for(final RoleGrant roleGrant : tmpRoleGrants) {
+                    if(roleGrant.getUserId() != null && ! userIds.contains(roleGrant.getUserId())) {
                         userIds.add(roleGrant.getUserId());
-                    }
-                    else if (roleGrant.getGroupId() != null && !groupIds.contains(roleGrant.getGroupId())) {
+                    } else if(roleGrant.getGroupId() != null && ! groupIds.contains(roleGrant.getGroupId())) {
                         groupIds.add(roleGrant.getGroupId());
                     }
                 }
@@ -629,48 +606,44 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
                 try {
                     List<String> tmpUsersPermitted = new ArrayList<String>();
                     List<String> tmpGroupsPermitted = new ArrayList<String>();
-                    if (!userIds.isEmpty()) {
+                    if(! userIds.isEmpty()) {
                         tmpUsersPermitted = pdp.evaluateRetrieve("user-account", userIds);
                     }
-                    if (!groupIds.isEmpty()) {
+                    if(! groupIds.isEmpty()) {
                         tmpGroupsPermitted = pdp.evaluateRetrieve("user-group", groupIds);
                     }
-                    if (!tmpUsersPermitted.isEmpty() || !tmpGroupsPermitted.isEmpty()) {
-                        for (final RoleGrant roleGrant : tmpRoleGrants) {
-                            if (roleGrant.getUserId() != null) {
-                                if (tmpUsersPermitted.contains(roleGrant.getUserId())) {
+                    if(! tmpUsersPermitted.isEmpty() || ! tmpGroupsPermitted.isEmpty()) {
+                        for(final RoleGrant roleGrant : tmpRoleGrants) {
+                            if(roleGrant.getUserId() != null) {
+                                if(tmpUsersPermitted.contains(roleGrant.getUserId())) {
                                     permittedRoleGrants.add(roleGrant);
                                 }
-                            }
-                            else if (roleGrant.getGroupId() != null
-                                && tmpGroupsPermitted.contains(roleGrant.getGroupId())) {
+                            } else if(roleGrant.getGroupId() != null &&
+                                    tmpGroupsPermitted.contains(roleGrant.getGroupId())) {
                                 permittedRoleGrants.add(roleGrant);
                             }
                         }
                     }
-                }
-                catch (final MissingMethodParameterException e) {
+                } catch(final MissingMethodParameterException e) {
                     throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
-                }
-                catch (final ResourceNotFoundException e) {
+                } catch(final ResourceNotFoundException e) {
                     throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                 }
             }
 
             final List<RoleGrant> offsetRoleGrants;
             final int numberPermitted = permittedRoleGrants.size();
-            if (offset >= 0 && offset < numberPermitted) {
+            if(offset >= 0 && offset < numberPermitted) {
                 offsetRoleGrants = new ArrayList<RoleGrant>(limit);
-                for (int i = offset; i < numberPermitted && i < needed; i++) {
+                for(int i = offset; i < numberPermitted && i < needed; i++) {
                     offsetRoleGrants.add(permittedRoleGrants.get(i));
                 }
-            }
-            else {
+            } else {
                 offsetRoleGrants = new ArrayList<RoleGrant>(0);
             }
             result =
-                renderer.renderGrants(offsetRoleGrants, Integer.toString(numberPermitted), Integer.toString(offset),
-                    Integer.toString(limit), parameters.getRecordPacking());
+                    renderer.renderGrants(offsetRoleGrants, Integer.toString(numberPermitted), Integer.toString(offset),
+                            Integer.toString(limit), parameters.getRecordPacking());
         }
         return result;
     }
@@ -688,8 +661,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public String retrieveGrant(final String userId, final String grantId) throws GrantNotFoundException,
-        UserAccountNotFoundException, SystemException {
+    public String retrieveGrant(final String userId, final String grantId)
+            throws GrantNotFoundException, UserAccountNotFoundException, SystemException {
 
         return renderer.renderGrant(retrieveGrantByIds(userId, grantId));
     }
@@ -709,9 +682,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public void activate(final String userId, final String taskParam) throws AlreadyActiveException,
-        UserAccountNotFoundException, XmlCorruptedException, MissingAttributeValueException,
-        OptimisticLockingException, SystemException, WebserverSystemException {
+    public void activate(final String userId, final String taskParam)
+            throws AlreadyActiveException, UserAccountNotFoundException, XmlCorruptedException,
+            MissingAttributeValueException, OptimisticLockingException, SystemException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -720,34 +693,28 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final StaxParser sp = new StaxParser(XmlUtility.NAME_PARAM);
 
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
+                new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         try {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
-        }
-        catch (final InvalidXmlException e) {
+        } catch(final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (LastModificationDateMissingException e) {
+        } catch(LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (final OptimisticLockingException e) {
+        } catch(final OptimisticLockingException e) {
             throw e;
-        }
-        catch (final MissingAttributeValueException e) {
+        } catch(final MissingAttributeValueException e) {
             throw e;
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final String msg = MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".activate: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
         // check active flag and change value
-        if (userAccount.getActive()) {
+        if(userAccount.getActive()) {
             throw new AlreadyActiveException();
         }
         userAccount.setActive(Boolean.TRUE);
@@ -774,9 +741,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public void deactivate(final String userId, final String taskParam) throws AlreadyDeactiveException,
-        UserAccountNotFoundException, XmlCorruptedException, MissingAttributeValueException,
-        OptimisticLockingException, SystemException, WebserverSystemException {
+    public void deactivate(final String userId, final String taskParam)
+            throws AlreadyDeactiveException, UserAccountNotFoundException, XmlCorruptedException,
+            MissingAttributeValueException, OptimisticLockingException, SystemException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -785,35 +752,29 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final StaxParser sp = new StaxParser(XmlUtility.NAME_PARAM);
 
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
+                new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         try {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
-        }
-        catch (final InvalidXmlException e) {
+        } catch(final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (LastModificationDateMissingException e) {
+        } catch(LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (final OptimisticLockingException e) {
+        } catch(final OptimisticLockingException e) {
             throw e;
-        }
-        catch (final MissingAttributeValueException e) {
+        } catch(final MissingAttributeValueException e) {
             throw e;
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".deactivate: " + e.getClass().getName();
+                    MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".deactivate: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
         // check ative flag and change value
-        if (!userAccount.getActive()) {
+        if(! userAccount.getActive()) {
             throw new AlreadyDeactiveException();
         }
         userAccount.setActive(Boolean.FALSE);
@@ -841,9 +802,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public String createGrant(final String userId, final String grantXML) throws AlreadyExistsException,
-        UserAccountNotFoundException, InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
-        SystemException, WebserverSystemException {
+    public String createGrant(final String userId, final String grantXML)
+            throws AlreadyExistsException, UserAccountNotFoundException, InvalidScopeException, RoleNotFoundException,
+            XmlCorruptedException, SystemException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final RoleGrant grant = new RoleGrant();
@@ -852,7 +813,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final StaxParser sp = new StaxParser(XmlUtility.NAME_GRANT);
 
         final LinkStaxHandler roleLinkHandler =
-            new LinkStaxHandler(XPATH_GRANT_ROLE, XmlUtility.BASE_ROLE, RoleNotFoundException.class);
+                new LinkStaxHandler(XPATH_GRANT_ROLE, XmlUtility.BASE_ROLE, RoleNotFoundException.class);
         sp.addHandler(roleLinkHandler);
         final LinkStaxHandler objectLinkHandler = new LinkStaxHandler(XPATH_GRANT_ASSIGNED_ON);
         sp.addHandler(objectLinkHandler);
@@ -862,19 +823,15 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
         try {
             sp.parse(in);
-        }
-        catch (final InvalidXmlException e) {
+        } catch(final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (final RoleNotFoundException e) {
+        } catch(final RoleNotFoundException e) {
             throw e;
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createGrant: " + e.getClass().getName();
+                    MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createGrant: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -884,7 +841,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
         final String roleId = roleLinkHandler.getObjid();
         final EscidocRole role = roleDao.retrieveRole(roleId);
-        if (role == null) {
+        if(role == null) {
             throw new RoleNotFoundException(StringUtility.format("Role with provided id not found", roleId));
         }
         grant.setEscidocRole(role);
@@ -897,16 +854,15 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
         // FIXME: inject Triplestoreutility
 
-        if (objectId != null) {
+        if(objectId != null) {
             final Map<String, String> objectAttributes;
             try {
                 objectAttributes = objectAttributeResolver.resolveObjectAttributes(objectId);
-            }
-            catch (final Exception e) {
+            } catch(final Exception e) {
                 throw new SystemException(e);
             }
 
-            if (objectAttributes == null) {
+            if(objectAttributes == null) {
                 throw new XmlCorruptedException(StringUtility.format(MSG_GRANT_RESTRICTION_VIOLATED, objectId));
             }
             final String objectType = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
@@ -914,27 +870,27 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
             // check if objectType may be scope
             boolean checkOk = false;
-            if (role.getScopeDefs() != null && objectType != null) {
-                for (final ScopeDef scopeDef : role.getScopeDefs()) {
-                    if (scopeDef.getAttributeObjectType() != null
-                        && scopeDef.getAttributeObjectType().equals(objectType)) {
+            if(role.getScopeDefs() != null && objectType != null) {
+                for(final ScopeDef scopeDef : role.getScopeDefs()) {
+                    if(scopeDef.getAttributeObjectType() != null &&
+                            scopeDef.getAttributeObjectType().equals(objectType)) {
                         checkOk = true;
                         break;
                     }
                 }
             }
-            if (!checkOk) {
-                throw new InvalidScopeException("objectId " + objectId + " has objectType " + objectType
-                    + " and may not be scope for role " + role.getRoleName());
+            if(! checkOk) {
+                throw new InvalidScopeException(
+                        "objectId " + objectId + " has objectType " + objectType + " and may not be scope for role " +
+                                role.getRoleName());
             }
 
             // see issue 358. The title of an object stored in fedora may
             // not be explicitly stored in the triple store.
             // Therefore, a default title will be set, if it is null, here.
-            if (objectTitle == null) {
+            if(objectTitle == null) {
                 objectTitle = StringUtility.convertToUpperCaseLetterFormat(objectType) + " " + objectId;
-            }
-            else if (objectTitle.length() > MAX_FIELD_LENGTH) {
+            } else if(objectTitle.length() > MAX_FIELD_LENGTH) {
                 objectTitle = objectTitle.substring(0, MAX_FIELD_LENGTH);
             }
 
@@ -943,19 +899,19 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
             // In case of REST it has to be checked if the provided href points
             // to the correct href.
-            if (objectLinkHandler.getHref() != null && !objectLinkHandler.getHref().equals(objectHref)) {
+            if(objectLinkHandler.getHref() != null && ! objectLinkHandler.getHref().equals(objectHref)) {
                 // FIXME: exception should be a resource not found exception
                 // but this changes the interface. To prevent problems on
                 // application side, currently an XmlCorruptedException is
                 // thrown.
-                throw new XmlCorruptedException(StringUtility.format(MSG_WRONG_HREF, objectLinkHandler.getHref(),
-                    objectType));
+                throw new XmlCorruptedException(
+                        StringUtility.format(MSG_WRONG_HREF, objectLinkHandler.getHref(), objectType));
             }
 
             // check if grant already exists
-            if (dao.retrieveCurrentGrant(userAccount, role, objectId) != null) {
-                throw new AlreadyExistsException(StringUtility.format("Grant already exists", userId, role.getId(),
-                    objectId));
+            if(dao.retrieveCurrentGrant(userAccount, role, objectId) != null) {
+                throw new AlreadyExistsException(
+                        StringUtility.format("Grant already exists", userId, role.getId(), objectId));
             }
 
             // set object values in grant
@@ -990,8 +946,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public void revokeGrant(final String userId, final String grantId, final String taskParam)
-        throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
-        MissingAttributeValueException, SystemException, WebserverSystemException {
+            throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
+            MissingAttributeValueException, SystemException, WebserverSystemException {
 
         final RoleGrant grant = retrieveGrantByIds(userId, grantId);
 
@@ -1007,20 +963,15 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
         try {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
-        }
-        catch (final AlreadyRevokedException e) {
+        } catch(final AlreadyRevokedException e) {
             throw e;
-        }
-        catch (final InvalidXmlException e) {
+        } catch(final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (final MissingAttributeValueException e) {
+        } catch(final MissingAttributeValueException e) {
             throw e;
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final String msg = MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
@@ -1048,9 +999,10 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR")
-    public void revokeGrants(final String userId, final String taskParam) throws UserAccountNotFoundException,
-        GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
-        SystemException, AuthorizationException, SqlDatabaseSystemException, WebserverSystemException {
+    public void revokeGrants(final String userId, final String taskParam)
+            throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
+            MissingAttributeValueException, SystemException, AuthorizationException, SqlDatabaseSystemException,
+            WebserverSystemException {
 
         // check if user exists
         retrieveUserAccountById(userId);
@@ -1059,7 +1011,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final List<RoleGrant> grants = fetchCurrentGrants(userId);
         // build HashMap with grantId
         final HashMap<String, RoleGrant> grantsHash = new HashMap<String, RoleGrant>();
-        for (final RoleGrant grant : grants) {
+        for(final RoleGrant grant : grants) {
             grantsHash.put(grant.getId(), grant);
         }
 
@@ -1073,65 +1025,60 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         fp.addHandler(fh);
         try {
             fp.parse(new ByteArrayInputStream(taskParam.getBytes(XmlUtility.CHARACTER_ENCODING)));
-        }
-        catch (final InvalidContentException e) {
+        } catch(final InvalidContentException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
         final Map<String, Object> filters = fh.getRules();
 
         final Collection<String> grantIds;
-        if (filters.isEmpty()) {
+        if(filters.isEmpty()) {
             // if no filters are provided, remove all current grants
             grantIds = new HashSet<String>();
-            for (final String grantId : grantsHash.keySet()) {
+            for(final String grantId : grantsHash.keySet()) {
                 grantIds.add(grantId);
             }
-        }
-        else {
+        } else {
             // get ids of grants to revoke
             grantIds = (Collection<String>) filters.get(Constants.DC_IDENTIFIER_URI);
         }
 
-        if (grantIds == null || grantIds.isEmpty()) {
+        if(grantIds == null || grantIds.isEmpty()) {
             return;
         }
 
         // check if all grants that shall get revoked are currentGrants
-        for (final String grantId : grantIds) {
-            if (!grantsHash.containsKey(grantId)) {
+        for(final String grantId : grantIds) {
+            if(! grantsHash.containsKey(grantId)) {
                 throw new GrantNotFoundException("Grant with id " + grantId + " is no current grant of user " + userId);
             }
         }
 
         // AA-filter grants to revoke
         final List<Object[]> argumentList = new ArrayList<Object[]>();
-        for (final String grantId : grantIds) {
-            final Object[] args = { userId, grantId };
+        for(final String grantId : grantIds) {
+            final Object[] args = {userId, grantId};
             argumentList.add(args);
         }
         try {
             final List<Object[]> returnList = pdp.evaluateMethodForList("user-account", "revokeGrant", argumentList);
-            if (returnList.size() < grantIds.size()) {
+            if(returnList.size() < grantIds.size()) {
                 // user is not allowed to revoke at least one of the grants
                 // so throw AuthorizationException
-                throw new AuthorizationException("You are not allowed to revoke at least "
-                    + "one of the specified grants");
+                throw new AuthorizationException(
+                        "You are not allowed to revoke at least " + "one of the specified grants");
             }
-        }
-        catch (final MissingMethodParameterException e) {
+        } catch(final MissingMethodParameterException e) {
             throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
-        }
-        catch (final ResourceNotFoundException e) {
+        } catch(final ResourceNotFoundException e) {
             throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
 
         final UserAccount authenticateUser = getAuthenticatedUser(this.dao);
         try {
-            for (final String grantId : grantIds) {
+            for(final String grantId : grantIds) {
                 final RoleGrant roleGrant = grantsHash.get(grantId);
                 // set revoke-date, -user and -remark
                 roleGrant.setUserAccountByRevokerId(authenticateUser);
@@ -1141,8 +1088,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
                 dao.update(roleGrant);
             }
 
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
 
@@ -1159,11 +1105,11 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see UserAccountHandlerInterface #retrieveUserHandles(java.lang.String)
      */
     @Override
-    public List<UserLoginData> retrieveUserHandles(final String userId) throws UserAccountNotFoundException,
-        SqlDatabaseSystemException {
+    public List<UserLoginData> retrieveUserHandles(final String userId)
+            throws UserAccountNotFoundException, SqlDatabaseSystemException {
 
         final List<UserLoginData> ret = dao.retrieveUserLoginDataByUserId(userId);
-        if (ret == null || ret.isEmpty()) {
+        if(ret == null || ret.isEmpty()) {
             assertUserAccount(userId, dao.retrieveUserAccountById(userId));
         }
         return ret;
@@ -1179,8 +1125,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveUserAccounts(java.util.Map)
      */
     @Override
-    public String retrieveUserAccounts(final Map<String, String[]> filter) throws InvalidSearchQueryException,
-        SystemException, WebserverSystemException, TripleStoreSystemException {
+    public String retrieveUserAccounts(final Map<String, String[]> filter)
+            throws InvalidSearchQueryException, SystemException, WebserverSystemException, TripleStoreSystemException {
 
         Map<String, String[]> castedFilter = filter;
 
@@ -1197,29 +1143,27 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final boolean explain = parameters.isExplain();
 
         final String result;
-        if (explain) {
+        if(explain) {
             final Map<String, Object> values = new HashMap<String, Object>();
 
             values.put("PROPERTY_NAMES", new UserAccountFilter(null).getPropertyNames());
             result = ExplainXmlProvider.getInstance().getExplainUserAccountXml(values);
-        }
-        else if (limit == 0) {
+        } else if(limit == 0) {
             result = renderer.renderUserAccounts(new ArrayList<UserAccount>(0), parameters.getRecordPacking());
-        }
-        else {
+        } else {
             final int currentLimit = offset + limit;
             int currentOffset = 0;
             final List<UserAccount> permittedUserAccounts = new ArrayList<UserAccount>();
             final int size = permittedUserAccounts.size();
-            while (size <= currentLimit) {
+            while(size <= currentLimit) {
 
                 final List<UserAccount> tmpUserAccounts = dao.retrieveUserAccounts(query, currentOffset, currentLimit);
-                if (tmpUserAccounts == null || tmpUserAccounts.isEmpty()) {
+                if(tmpUserAccounts == null || tmpUserAccounts.isEmpty()) {
                     break;
                 }
                 Iterator<UserAccount> userAccountIter = tmpUserAccounts.iterator();
                 final List<String> ids = new ArrayList<String>(tmpUserAccounts.size());
-                while (userAccountIter.hasNext()) {
+                while(userAccountIter.hasNext()) {
                     final UserAccount userAccount = userAccountIter.next();
                     ids.add(userAccount.getId());
                 }
@@ -1227,32 +1171,28 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
                 try {
                     final List<String> tmpPermitted = pdp.evaluateRetrieve("user-account", ids);
                     final int numberPermitted = tmpPermitted.size();
-                    if (numberPermitted == 0) {
+                    if(numberPermitted == 0) {
                         break;
-                    }
-                    else {
+                    } else {
                         int permittedIndex = 0;
                         String currentPermittedId = tmpPermitted.get(permittedIndex);
                         userAccountIter = tmpUserAccounts.iterator();
-                        while (userAccountIter.hasNext()) {
+                        while(userAccountIter.hasNext()) {
                             final UserAccount userAccount = userAccountIter.next();
-                            if (currentPermittedId.equals(userAccount.getId())) {
+                            if(currentPermittedId.equals(userAccount.getId())) {
                                 permittedUserAccounts.add(userAccount);
-                                ++permittedIndex;
-                                if (permittedIndex < numberPermitted) {
+                                ++ permittedIndex;
+                                if(permittedIndex < numberPermitted) {
                                     currentPermittedId = tmpPermitted.get(permittedIndex);
-                                }
-                                else {
+                                } else {
                                     break;
                                 }
                             }
                         }
                     }
-                }
-                catch (final MissingMethodParameterException e) {
+                } catch(final MissingMethodParameterException e) {
                     throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
-                }
-                catch (final ResourceNotFoundException e) {
+                } catch(final ResourceNotFoundException e) {
                     throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                 }
                 currentOffset += currentLimit;
@@ -1260,13 +1200,12 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
             final List<UserAccount> offsetUserAccounts;
             final int numberPermitted = permittedUserAccounts.size();
-            if (offset < numberPermitted) {
+            if(offset < numberPermitted) {
                 offsetUserAccounts = new ArrayList<UserAccount>(limit);
-                for (int i = offset; i < numberPermitted && i < currentLimit; i++) {
+                for(int i = offset; i < numberPermitted && i < currentLimit; i++) {
                     offsetUserAccounts.add(permittedUserAccounts.get(i));
                 }
-            }
-            else {
+            } else {
                 offsetUserAccounts = new ArrayList<UserAccount>(0);
             }
             result = renderer.renderUserAccounts(offsetUserAccounts, parameters.getRecordPacking());
@@ -1283,30 +1222,30 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws SystemException             e
      */
     private Map<String, String[]> fixCqlGroupFilter(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, SystemException, TripleStoreSystemException {
+            throws InvalidSearchQueryException, SystemException, TripleStoreSystemException {
 
         Map<String, String[]> returnFilter = filter;
         final Object[] queryPartsObject = filter.get(Constants.SRU_PARAMETER_QUERY);
-        if (queryPartsObject != null) {
+        if(queryPartsObject != null) {
             final String[] queryParts = new String[queryPartsObject.length];
-            for (int i = 0; i < queryPartsObject.length; i++) {
-                if (queryPartsObject[i] != null) {
+            for(int i = 0; i < queryPartsObject.length; i++) {
+                if(queryPartsObject[i] != null) {
                     queryParts[i] = queryPartsObject[i].toString();
                 }
             }
             boolean groupFilterFound = false;
-            for (int i = 0; i < queryParts.length; i++) {
+            for(int i = 0; i < queryParts.length; i++) {
                 final Matcher matcher = GROUP_FILTER_PATTERN.matcher(queryParts[i]);
-                if (matcher.find()) {
+                if(matcher.find()) {
                     groupFilterFound = true;
                     final Matcher groupFilterMatcher = GROUP_FILTER_PATTERN.matcher(queryParts[i]);
                     final StringBuffer result = new StringBuffer("");
-                    while (groupFilterMatcher.find()) {
-                        if (groupFilterMatcher.group(6).matches(".*?%.*")) {
+                    while(groupFilterMatcher.find()) {
+                        if(groupFilterMatcher.group(6).matches(".*?%.*")) {
                             throw new InvalidSearchQueryException("Wildcards not allowed in group-filter");
                         }
-                        if (groupFilterMatcher.group(3) != null && groupFilterMatcher.group(3).matches(">|<|<=|>=|<>")
-                            || groupFilterMatcher.group(4) != null || groupFilterMatcher.group(5) != null) {
+                        if(groupFilterMatcher.group(3) != null && groupFilterMatcher.group(3).matches(">|<|<=|>=|<>") ||
+                                groupFilterMatcher.group(4) != null || groupFilterMatcher.group(5) != null) {
                             throw new InvalidSearchQueryException("non-supported relation in group-filter");
                         }
                         // get users for group
@@ -1315,25 +1254,23 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
                             final Set<String> userIds = retrieveUsersForGroup(groupFilterMatcher.group(6));
                             // write user-cql-query
                             // and replace group-expression with it.
-                            if (userIds != null && !userIds.isEmpty()) {
-                                for (final String userId : userIds) {
-                                    if (replacement.length() > 2) {
+                            if(userIds != null && ! userIds.isEmpty()) {
+                                for(final String userId : userIds) {
+                                    if(replacement.length() > 2) {
                                         replacement.append(" or ");
                                     }
                                     replacement.append('\"');
                                     replacement.append(Constants.FILTER_PATH_ID);
                                     replacement.append("\"=").append(userId).append(' ');
                                 }
-                            }
-                            else {
+                            } else {
                                 throw new UserGroupNotFoundException("");
                             }
-                        }
-                        catch (final UserGroupNotFoundException e) {
-                            if (LOGGER.isWarnEnabled()) {
+                        } catch(final UserGroupNotFoundException e) {
+                            if(LOGGER.isWarnEnabled()) {
                                 LOGGER.warn("Error on getting users for group.");
                             }
-                            if (LOGGER.isDebugEnabled()) {
+                            if(LOGGER.isDebugEnabled()) {
                                 LOGGER.debug("Error on getting users for group.", e);
                             }
                             // if group has no users or group not found,
@@ -1350,18 +1287,17 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
                     queryParts[i] = result.toString();
                 }
             }
-            if (groupFilterFound) {
+            if(groupFilterFound) {
                 final Map<String, String[]> filter1 = new HashMap<String, String[]>();
-                for (final Entry<String, String[]> entry : filter.entrySet()) {
-                    if (entry.getValue() != null) {
+                for(final Entry<String, String[]> entry : filter.entrySet()) {
+                    if(entry.getValue() != null) {
                         // noinspection RedundantCast
                         filter1.put(entry.getKey(), new String[((Object[]) entry.getValue()).length]);
                         // noinspection RedundantCast
-                        for (int j = 0; j < ((Object[]) entry.getValue()).length; j++) {
+                        for(int j = 0; j < ((Object[]) entry.getValue()).length; j++) {
                             filter1.get(entry.getKey())[j] = entry.getValue()[j];
                         }
-                    }
-                    else {
+                    } else {
                         filter1.put(entry.getKey(), null);
                     }
                 }
@@ -1381,23 +1317,23 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws SystemException            e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveUsersForGroup(java.lang.String)
      */
-    private Set<String> retrieveUsersForGroup(final String groupId) throws UserGroupNotFoundException, SystemException,
-        TripleStoreSystemException {
+    private Set<String> retrieveUsersForGroup(final String groupId)
+            throws UserGroupNotFoundException, SystemException, TripleStoreSystemException {
         // may not return null but empty list!!
         final Set<String> userIds = new HashSet<String>();
 
         // Try getting the userGroup
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
-        if (userGroup == null) {
+        if(userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility.format(MSG_GROUP_NOT_FOUND_BY_ID, groupId));
         }
 
         final Set<UserGroupMember> members = userGroup.getMembers();
 
         // Get users that are integrated via their userId
-        for (final UserGroupMember member : members) {
-            if (member.getType().equals(Constants.TYPE_USER_GROUP_MEMBER_INTERNAL)
-                && member.getName().equals(Constants.NAME_USER_GROUP_MEMBER_USER_ACCOUNT)) {
+        for(final UserGroupMember member : members) {
+            if(member.getType().equals(Constants.TYPE_USER_GROUP_MEMBER_INTERNAL) &&
+                    member.getName().equals(Constants.NAME_USER_GROUP_MEMBER_USER_ACCOUNT)) {
                 userIds.add(member.getValue());
             }
         }
@@ -1406,26 +1342,25 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final String ouAttributeName;
         try {
             ouAttributeName =
-                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
-        }
-        catch (final IOException e) {
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
+        } catch(final IOException e) {
             throw new SystemException(e);
         }
 
         final Set<HashMap<String, String>> attributesSet = new HashSet<HashMap<String, String>>();
-        for (final UserGroupMember member : members) {
-            if (member.getType().equals(Constants.TYPE_USER_GROUP_MEMBER_USER_ATTRIBUTE)) {
+        for(final UserGroupMember member : members) {
+            if(member.getType().equals(Constants.TYPE_USER_GROUP_MEMBER_USER_ATTRIBUTE)) {
                 final HashMap<String, String> attributeHash = new HashMap<String, String>();
                 attributeHash.put(member.getName(), member.getValue());
                 attributesSet.add(attributeHash);
                 // check if attribute-name is ou-attribute
                 // if yes, resolve children-path-list
-                if (ouAttributeName != null && ouAttributeName.length() != 0
-                    && member.getName().equals(ouAttributeName)) {
+                if(ouAttributeName != null && ouAttributeName.length() != 0 &&
+                        member.getName().equals(ouAttributeName)) {
                     final List<String> initialList = new ArrayList<String>();
                     initialList.add(member.getValue());
                     final List<String> pathList = getOrgUnitChildrenPathList(member.getValue(), initialList);
-                    for (final String ouId : pathList) {
+                    for(final String ouId : pathList) {
                         final HashMap<String, String> ouAttributeHash = new HashMap<String, String>();
                         ouAttributeHash.put(ouAttributeName, ouId);
                         attributesSet.add(ouAttributeHash);
@@ -1433,17 +1368,17 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
                 }
             }
         }
-        if (!attributesSet.isEmpty()) {
+        if(! attributesSet.isEmpty()) {
             final List<UserAttribute> userAttributes = dao.retrieveAttributes(attributesSet);
-            for (final UserAttribute userAttribute : userAttributes) {
+            for(final UserAttribute userAttribute : userAttributes) {
                 userIds.add(userAttribute.getUserAccountByUserId().getId());
             }
         }
 
         // Get users that are integrated via other groups
-        for (final UserGroupMember member : members) {
-            if (member.getType().equals(Constants.TYPE_USER_GROUP_MEMBER_INTERNAL)
-                && member.getName().equals(Constants.NAME_USER_GROUP_MEMBER_USER_GROUP)) {
+        for(final UserGroupMember member : members) {
+            if(member.getType().equals(Constants.TYPE_USER_GROUP_MEMBER_INTERNAL) &&
+                    member.getName().equals(Constants.NAME_USER_GROUP_MEMBER_USER_GROUP)) {
                 userIds.addAll(retrieveUsersForGroup(member.getValue()));
             }
         }
@@ -1460,13 +1395,13 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws SystemException If anything fails while computing the paths.
      */
     private List<String> getOrgUnitChildrenPathList(final String orgUnitId, final List<String> totalList)
-        throws SystemException {
+            throws SystemException {
 
         List<String> addableList = totalList;
         final List<String> orgUnitIds = tripleStoreUtility.getChildren(orgUnitId);
-        if (orgUnitIds != null && !orgUnitIds.isEmpty()) {
+        if(orgUnitIds != null && ! orgUnitIds.isEmpty()) {
             addableList.addAll(orgUnitIds);
-            for (final String childOrgUnitId : orgUnitIds) {
+            for(final String childOrgUnitId : orgUnitIds) {
                 addableList = getOrgUnitChildrenPathList(childOrgUnitId, addableList);
             }
         }
@@ -1486,17 +1421,18 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveUserDetails(java.lang.String)
      */
     @Override
-    public UserDetails retrieveUserDetails(final String handle) throws MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, UserAccountNotFoundException, SqlDatabaseSystemException {
+    public UserDetails retrieveUserDetails(final String handle)
+            throws MissingMethodParameterException, AuthenticationException, AuthorizationException,
+            UserAccountNotFoundException, SqlDatabaseSystemException {
         final UserDetails ret = dao.retrieveUserDetails(handle);
         // FIXME: use this as the authentication service?
         // In this case, additional values have to be set in the user details
         // and in case of user not found an authentication exception has to be
         // thrown.?
 
-        if (ret == null) {
-            throw new UserAccountNotFoundException(StringUtility.format("User not authenticated by provided handle",
-                handle));
+        if(ret == null) {
+            throw new UserAccountNotFoundException(
+                    StringUtility.format("User not authenticated by provided handle", handle));
         }
         return ret;
     }
@@ -1511,12 +1447,12 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws UserAccountNotFoundException Thrown if the user account does not exists.
      * @throws GrantNotFoundException       Thrown if the grant does not exists for the user.
      */
-    private RoleGrant retrieveGrantByIds(final String userId, final String grantId) throws SqlDatabaseSystemException,
-        UserAccountNotFoundException, GrantNotFoundException {
+    private RoleGrant retrieveGrantByIds(final String userId, final String grantId)
+            throws SqlDatabaseSystemException, UserAccountNotFoundException, GrantNotFoundException {
 
         final RoleGrant grant = dao.retrieveGrant(userId, grantId);
-        if (grant == null) {
-            if (dao.retrieveUserAccountById(userId) == null) {
+        if(grant == null) {
+            if(dao.retrieveUserAccountById(userId) == null) {
                 throw new UserAccountNotFoundException();
             }
             throw new GrantNotFoundException(StringUtility.format("Grant not found", userId, grantId));
@@ -1537,18 +1473,19 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws ReadonlyElementViolationException
      *                                        Thrown if the attribute is external and may not get changed.
      */
-    private UserAttribute retrieveAttributeById(final String userId, final String attributeId, final boolean forReadOnly)
-        throws SqlDatabaseSystemException, UserAccountNotFoundException, UserAttributeNotFoundException,
-        ReadonlyElementViolationException {
+    private UserAttribute retrieveAttributeById(final String userId, final String attributeId,
+                                                final boolean forReadOnly)
+            throws SqlDatabaseSystemException, UserAccountNotFoundException, UserAttributeNotFoundException,
+            ReadonlyElementViolationException {
 
         final UserAttribute attribute = dao.retrieveAttribute(userId, attributeId);
-        if (attribute == null) {
-            if (dao.retrieveUserAccountById(userId) == null) {
+        if(attribute == null) {
+            if(dao.retrieveUserAccountById(userId) == null) {
                 throw new UserAccountNotFoundException();
             }
             throw new UserAttributeNotFoundException(StringUtility.format("Attribute not found", userId, attributeId));
         }
-        if (!(forReadOnly || attribute.getInternal())) {
+        if(! (forReadOnly || attribute.getInternal())) {
             throw new ReadonlyElementViolationException("Attribute is external and may not get changed");
 
         }
@@ -1563,8 +1500,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws SqlDatabaseSystemException   In case of a database error.
      * @throws WebserverSystemException     Thrown in case of an internal error.
      */
-    private void sendUserAccountUpdateEvent(final String userId) throws SqlDatabaseSystemException,
-        UserAccountNotFoundException, WebserverSystemException {
+    private void sendUserAccountUpdateEvent(final String userId)
+            throws SqlDatabaseSystemException, UserAccountNotFoundException, WebserverSystemException {
 
         securityHelper.clearUserPoliciesCaches(userId);
         securityHelper.clearUserGroups(userId);
@@ -1578,8 +1515,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws SqlDatabaseSystemException   In case of a database error.
      * @throws WebserverSystemException     Thrown in case of an internal error.
      */
-    private void sendUserAttributeUpdateEvent(final String userId) throws SqlDatabaseSystemException,
-        UserAccountNotFoundException, WebserverSystemException {
+    private void sendUserAttributeUpdateEvent(final String userId)
+            throws SqlDatabaseSystemException, UserAccountNotFoundException, WebserverSystemException {
 
         securityHelper.clearUserGroups(userId);
         retrieveUserAccountById(userId).touch();
@@ -1594,11 +1531,11 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws UserAccountNotFoundException Thrown if an user account with the provided id cannot be found.
      * @throws SqlDatabaseSystemException   In case of a database error.
      */
-    private UserAccount retrieveUserAccountById(final String userId) throws UserAccountNotFoundException,
-        SqlDatabaseSystemException {
+    private UserAccount retrieveUserAccountById(final String userId)
+            throws UserAccountNotFoundException, SqlDatabaseSystemException {
 
         final UserAccount user = dao.retrieveUserAccountById(userId);
-        if (user == null) {
+        if(user == null) {
             throw new UserAccountNotFoundException(StringUtility.format(MSG_USER_NOT_FOUND_BY_ID, userId));
         }
         return user;
@@ -1612,9 +1549,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws UserAccountNotFoundException Thrown if assertion fails.
      */
     private static void assertUserAccount(final String userId, final UserAccount user)
-        throws UserAccountNotFoundException {
+            throws UserAccountNotFoundException {
 
-        if (user == null) {
+        if(user == null) {
             throw new UserAccountNotFoundException(StringUtility.format(MSG_USER_NOT_FOUND_BY_IDENTITY_INFO, userId));
         }
     }
@@ -1631,9 +1568,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
         final List<RoleGrant> grants = dao.retrieveGrantsByUserId(userId);
         final List<RoleGrant> currentGrants = new ArrayList<RoleGrant>(grants.size());
-        if (!grants.isEmpty()) {
-            for (final RoleGrant grant : grants) {
-                if (grant.getRevocationDate() == null) {
+        if(! grants.isEmpty()) {
+            for(final RoleGrant grant : grants) {
+                if(grant.getRevocationDate() == null) {
                     currentGrants.add(grant);
                 }
             }
@@ -1728,8 +1665,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *
      * @param userAccount The <code>UserAccount</code> object to modify.
      */
-    private void setModificationValues(final UserAccount userAccount) throws SqlDatabaseSystemException,
-        WebserverSystemException {
+    private void setModificationValues(final UserAccount userAccount)
+            throws SqlDatabaseSystemException, WebserverSystemException {
 
         userAccount.setLastModificationDate(new Date());
         userAccount.setUserAccountByModifiedById(getAuthenticatedUser(this.dao));
@@ -1745,12 +1682,12 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws WebserverSystemException   Thrown if the account of the authenticated user cannot be found.
      */
     public static UserAccount getAuthenticatedUser(final UserAccountDaoInterface dao)
-        throws SqlDatabaseSystemException, WebserverSystemException {
+            throws SqlDatabaseSystemException, WebserverSystemException {
 
         final UserAccount userAccount = dao.retrieveUserAccountById(UserContext.getId());
-        if (userAccount == null) {
-            throw new WebserverSystemException(StringUtility.format("Account of authenticated user not found",
-                UserContext.getId()));
+        if(userAccount == null) {
+            throw new WebserverSystemException(
+                    StringUtility.format("Account of authenticated user not found", UserContext.getId()));
         }
         return userAccount;
     }
@@ -1801,20 +1738,20 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrievePreference(java.lang.String)
      */
     @Override
-    public String retrievePreference(final String userId, final String name) throws UserAccountNotFoundException,
-        PreferenceNotFoundException, SystemException {
+    public String retrievePreference(final String userId, final String name)
+            throws UserAccountNotFoundException, PreferenceNotFoundException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final Set<UserPreference> currentPreferences = userAccount.getUserPreferencesByUserId();
 
         String result = null;
-        for (final UserPreference preference : currentPreferences) {
+        for(final UserPreference preference : currentPreferences) {
             final String preferenceName = preference.getName();
-            if (preferenceName.equals(name)) {
+            if(preferenceName.equals(name)) {
                 result = renderer.renderPreference(userAccount, preference);
             }
         }
-        if (result == null) {
+        if(result == null) {
             throw new PreferenceNotFoundException("Preference with name " + name + " not found");
         }
 
@@ -1836,9 +1773,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public String createPreference(final String userId, final String preferenceXML) throws AlreadyExistsException,
-        UserAccountNotFoundException, PreferenceNotFoundException, XmlCorruptedException, SystemException,
-        WebserverSystemException {
+    public String createPreference(final String userId, final String preferenceXML)
+            throws AlreadyExistsException, UserAccountNotFoundException, PreferenceNotFoundException,
+            XmlCorruptedException, SystemException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -1850,10 +1787,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
         try {
             sp.parse(in);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createPreference: " + e.getClass().getName();
+                    MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createPreference: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -1862,7 +1798,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final Set<String> preferenceNames = preferences.keySet();
         // there is only one entry
         // TODO ensure by xml schema that is true
-        if (preferenceNames.size() > 1) {
+        if(preferenceNames.size() > 1) {
             throw new XmlCorruptedException("Only one preference allowed. " + MSG_XML_SCHEMA_ENSURE);
         }
         final Iterator<String> it = preferenceNames.iterator();
@@ -1875,8 +1811,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final Set<UserPreference> userPreferences = userAccount.getUserPreferencesByUserId();
         // TODO check for same preference already set by getting preference by
         // PrimKey(userId,name)
-        for (final UserPreference userPreference : userPreferences) {
-            if (preferenceName.equals(userPreference.getName())) {
+        for(final UserPreference userPreference : userPreferences) {
+            if(preferenceName.equals(userPreference.getName())) {
                 throw new AlreadyExistsException("Preference " + preferenceName + " already exists for user " + userId);
             }
         }
@@ -1909,9 +1845,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String updatePreference(final String userId, final String preferenceName, final String preferenceXML)
-        throws AlreadyExistsException, UserAccountNotFoundException, PreferenceNotFoundException,
-        XmlCorruptedException, SystemException, OptimisticLockingException, MissingAttributeValueException,
-        WebserverSystemException {
+            throws AlreadyExistsException, UserAccountNotFoundException, PreferenceNotFoundException,
+            XmlCorruptedException, SystemException, OptimisticLockingException, MissingAttributeValueException,
+            WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final Set<UserPreference> userPreferences = userAccount.getUserPreferencesByUserId();
@@ -1920,7 +1856,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_PREFERENCE);
 
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
+                new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         final UserPreferenceReadHandler uprh = new UserPreferenceReadHandler();
@@ -1928,19 +1864,15 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
         try {
             sp.parse(in);
-        }
-        catch (LastModificationDateMissingException e) {
+        } catch(LastModificationDateMissingException e) {
             throw new MissingAttributeValueException(e);
-        }
-        catch (final MissingAttributeValueException e) {
+        } catch(final MissingAttributeValueException e) {
             throw e;
-        }
-        catch (final OptimisticLockingException e) {
+        } catch(final OptimisticLockingException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createPreference: " + e.getClass().getName();
+                    MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createPreference: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -1948,27 +1880,27 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final Set<String> preferenceNames = preferences.keySet();
         // there is only one entry
         // TODO ensure by xml schema that is true
-        if (preferenceNames.size() > 1) {
+        if(preferenceNames.size() > 1) {
             throw new XmlCorruptedException("Only one preference allowed. " + MSG_XML_SCHEMA_ENSURE);
         }
         final Iterator<String> it = preferenceNames.iterator();
         final String xmlPreferenceName = it.next();
-        if (!xmlPreferenceName.equals(preferenceName)) {
-            throw new XmlCorruptedException("Given preference name does not match "
-                + "preference name inside the xml representation.");
+        if(! xmlPreferenceName.equals(preferenceName)) {
+            throw new XmlCorruptedException(
+                    "Given preference name does not match " + "preference name inside the xml representation.");
         }
 
         // TODO check for existence of preference by getting preference by
         // PrimKey(userId,name)
         final Iterator<UserPreference> prefIt = userPreferences.iterator();
         UserPreference preference = null;
-        while (prefIt.hasNext()) {
+        while(prefIt.hasNext()) {
             final UserPreference curPref = prefIt.next();
-            if (preferenceName.equals(curPref.getName())) {
+            if(preferenceName.equals(curPref.getName())) {
                 preference = curPref;
             }
         }
-        if (preference == null) {
+        if(preference == null) {
             // FIXME NotFoundException ?(FRS)
             throw new AlreadyExistsException("Preference " + preferenceName + " does not exist for user " + userId);
         }
@@ -1994,14 +1926,15 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public void deletePreference(final String userId, final String preferenceName) throws UserAccountNotFoundException,
-        PreferenceNotFoundException, SqlDatabaseSystemException, WebserverSystemException {
+    public void deletePreference(final String userId, final String preferenceName)
+            throws UserAccountNotFoundException, PreferenceNotFoundException, SqlDatabaseSystemException,
+            WebserverSystemException {
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final Set<UserPreference> userPreferences = userAccount.getUserPreferencesByUserId();
 
         // PrimKey(userId,name)
-        for (final UserPreference userPreference : userPreferences) {
-            if (userPreference.getName().equals(preferenceName)) {
+        for(final UserPreference userPreference : userPreferences) {
+            if(userPreference.getName().equals(preferenceName)) {
                 userPreferences.remove(userPreference);
                 // update user in policy cache; rights may depend on preferences
                 sendUserAccountUpdateEvent(userId);
@@ -2009,8 +1942,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
                 return;
             }
         }
-        throw new PreferenceNotFoundException("The preference '" + preferenceName + "' does not exist for user '"
-            + userId + "'.");
+        throw new PreferenceNotFoundException(
+                "The preference '" + preferenceName + "' does not exist for user '" + userId + "'.");
     }
 
     /**
@@ -2029,8 +1962,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String updatePreferences(final String userId, final String preferencesXML)
-        throws UserAccountNotFoundException, XmlCorruptedException, SystemException, OptimisticLockingException,
-        MissingAttributeValueException, WebserverSystemException {
+            throws UserAccountNotFoundException, XmlCorruptedException, SystemException, OptimisticLockingException,
+            MissingAttributeValueException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -2041,24 +1974,20 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         sp.addHandler(uprh);
 
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
+                new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         try {
             sp.parse(in);
-        }
-        catch (LastModificationDateMissingException e) {
+        } catch(LastModificationDateMissingException e) {
             throw new MissingAttributeValueException(e);
-        }
-        catch (final MissingAttributeValueException e) {
+        } catch(final MissingAttributeValueException e) {
             throw e;
-        }
-        catch (final OptimisticLockingException e) {
+        } catch(final OptimisticLockingException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".updatePreference: " + e.getClass().getName();
+                    MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".updatePreference: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -2075,7 +2004,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
         // add all given preferences
         final Map<String, String> preferences = uprh.getPreferences();
-        for (final Entry<String, String> e : preferences.entrySet()) {
+        for(final Entry<String, String> e : preferences.entrySet()) {
             final UserPreference preference = new UserPreference();
             final String preferenceName = e.getKey();
             final String preferenceValue = e.getValue();
@@ -2112,8 +2041,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public String createAttribute(final String userId, final String attributeXML) throws AlreadyExistsException,
-        UserAccountNotFoundException, XmlCorruptedException, SystemException, WebserverSystemException {
+    public String createAttribute(final String userId, final String attributeXML)
+            throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException, SystemException,
+            WebserverSystemException {
 
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(attributeXML);
         final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_ATTRIBUTE);
@@ -2123,10 +2053,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
         try {
             sp.parse(in);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createAttribute: " + e.getClass().getName();
+                    MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".createAttribute: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -2135,7 +2064,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final Set<String> attributeNames = attributes.keySet();
         // there is only one entry
         // TODO ensure by xml schema that is true
-        if (attributeNames.size() > 1) {
+        if(attributeNames.size() > 1) {
             throw new XmlCorruptedException("Only one attribute allowed. " + MSG_XML_SCHEMA_ENSURE);
         }
 
@@ -2151,10 +2080,11 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
         final Set<UserAttribute> userAttributes = userAccount.getUserAttributesByUserId();
 
-        for (final UserAttribute userAttribute : userAttributes) {
-            if (attributeName.equals(userAttribute.getName()) && attributeValue.equals(userAttribute.getValue())) {
-                throw new AlreadyExistsException("Attribute " + attributeName + " with value " + attributeValue
-                    + " already exists for user " + userId);
+        for(final UserAttribute userAttribute : userAttributes) {
+            if(attributeName.equals(userAttribute.getName()) && attributeValue.equals(userAttribute.getValue())) {
+                throw new AlreadyExistsException(
+                        "Attribute " + attributeName + " with value " + attributeValue + " already exists for user " +
+                                userId);
             }
         }
         dao.save(attribute);
@@ -2191,17 +2121,17 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public String retrieveNamedAttributes(final String userId, final String name) throws UserAccountNotFoundException,
-        UserAttributeNotFoundException, SystemException {
+    public String retrieveNamedAttributes(final String userId, final String name)
+            throws UserAccountNotFoundException, UserAttributeNotFoundException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final Set<UserAttribute> currentAttributes = userAccount.getUserAttributesByUserId();
 
         final Set<UserAttribute> selectedAttributes = new HashSet<UserAttribute>();
-        if (currentAttributes != null) {
-            for (final UserAttribute attribute : currentAttributes) {
+        if(currentAttributes != null) {
+            for(final UserAttribute attribute : currentAttributes) {
                 final String attributeName = attribute.getName();
-                if (attributeName.equals(name)) {
+                if(attributeName.equals(name)) {
                     selectedAttributes.add(attribute);
                 }
             }
@@ -2222,13 +2152,12 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public String retrieveAttribute(final String userId, final String attributeId) throws UserAccountNotFoundException,
-        UserAttributeNotFoundException, SystemException {
+    public String retrieveAttribute(final String userId, final String attributeId)
+            throws UserAccountNotFoundException, UserAttributeNotFoundException, SystemException {
         final UserAttribute attribute;
         try {
             attribute = retrieveAttributeById(userId, attributeId, true);
-        }
-        catch (final ReadonlyElementViolationException e) {
+        } catch(final ReadonlyElementViolationException e) {
             throw new SystemException(e);
         }
         return renderer.renderAttribute(attribute);
@@ -2253,8 +2182,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String updateAttribute(final String userId, final String attributeId, final String attributeXML)
-        throws UserAccountNotFoundException, OptimisticLockingException, ReadonlyElementViolationException,
-        UserAttributeNotFoundException, XmlCorruptedException, SystemException, WebserverSystemException {
+            throws UserAccountNotFoundException, OptimisticLockingException, ReadonlyElementViolationException,
+            UserAttributeNotFoundException, XmlCorruptedException, SystemException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final UserAttribute userAttribute = retrieveAttributeById(userId, attributeId, false);
@@ -2262,21 +2191,18 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_ATTRIBUTE);
         final UserAttributeReadHandler uarh = new UserAttributeReadHandler();
         final OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
+                new OptimisticLockingStaxHandler(userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
         sp.addHandler(uarh);
         try {
             sp.parse(in);
-        }
-        catch (LastModificationDateMissingException e) {
+        } catch(LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (final OptimisticLockingException e) {
+        } catch(final OptimisticLockingException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final String msg =
-                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".updateAttribute: " + e.getClass().getName();
+                    MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".updateAttribute: " + e.getClass().getName();
             throw new SystemException(msg, e);
         }
 
@@ -2284,14 +2210,14 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final Set<String> attributeNames = attributes.keySet();
         // there is only one entry
         // TODO ensure by xml schema that is true
-        if (attributeNames.size() > 1) {
+        if(attributeNames.size() > 1) {
             throw new XmlCorruptedException("Only one attribute allowed. " + MSG_XML_SCHEMA_ENSURE);
         }
         final Iterator<String> it = attributeNames.iterator();
         final String xmlAttributeName = it.next();
-        if (!xmlAttributeName.equals(userAttribute.getName())) {
-            throw new XmlCorruptedException("Given attribute name does not match "
-                + "attribute name inside the xml representation.");
+        if(! xmlAttributeName.equals(userAttribute.getName())) {
+            throw new XmlCorruptedException(
+                    "Given attribute name does not match " + "attribute name inside the xml representation.");
         }
         userAttribute.setValue(attributes.get(xmlAttributeName));
         sendUserAttributeUpdateEvent(userId);
@@ -2311,9 +2237,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public void deleteAttribute(final String userId, final String attributeId) throws UserAccountNotFoundException,
-        UserAttributeNotFoundException, ReadonlyElementViolationException, SqlDatabaseSystemException,
-        WebserverSystemException {
+    public void deleteAttribute(final String userId, final String attributeId)
+            throws UserAccountNotFoundException, UserAttributeNotFoundException, ReadonlyElementViolationException,
+            SqlDatabaseSystemException, WebserverSystemException {
 
         final UserAttribute userAttribute = retrieveAttributeById(userId, attributeId, false);
 
@@ -2331,43 +2257,43 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String retrievePermissionFilterQuery(final Map<String, String[]> parameters)
-        throws InvalidSearchQueryException, SystemException {
+            throws InvalidSearchQueryException, SystemException {
         final Set<ResourceType> resourceTypes = EnumSet.noneOf(ResourceType.class);
         final String[] types = parameters.get("index");
-        if (types != null) {
+        if(types != null) {
             final Collection<String> hashedTypes = new HashSet<String>();
             hashedTypes.addAll(Arrays.asList(types));
             final Map<String, Map<String, Map<String, Object>>> objectTypeParameters =
-                this.indexingHandler.getObjectTypeParameters();
-            for (final Entry<String, Map<String, Map<String, Object>>> entry : objectTypeParameters.entrySet()) {
+                    this.indexingHandler.getObjectTypeParameters();
+            for(final Entry<String, Map<String, Map<String, Object>>> entry : objectTypeParameters.entrySet()) {
                 final Map<String, Map<String, Object>> index = entry.getValue();
-                for (final String indexName : index.keySet()) {
-                    if (hashedTypes.contains(indexName)) {
+                for(final String indexName : index.keySet()) {
+                    if(hashedTypes.contains(indexName)) {
                         resourceTypes.add(ResourceType.getResourceTypeFromUri(entry.getKey()));
                     }
                 }
             }
         }
-        return Utility.prepareReturnXml(null, "<filter>"
-            + permissionsQuery.getFilterQuery(resourceTypes, this.utility.getCurrentUserId(), new FilterInterface() {
-                @Override
-                public String getRoleId() {
-                    final String[] parameter = parameters.get("role");
+        return Utility.prepareReturnXml(null, "<filter>" +
+                permissionsQuery.getFilterQuery(resourceTypes, this.utility.getCurrentUserId(), new FilterInterface() {
+                    @Override
+                    public String getRoleId() {
+                        final String[] parameter = parameters.get("role");
 
-                    return parameter != null && parameter.length > 0 ? parameter[0] : null;
-                }
+                        return parameter != null && parameter.length > 0 ? parameter[0] : null;
+                    }
 
-                @Override
-                public String getUserId() {
-                    final String[] parameter = parameters.get("user");
+                    @Override
+                    public String getUserId() {
+                        final String[] parameter = parameters.get("user");
 
-                    return parameter != null && parameter.length > 0 ? parameter[0] : null;
-                }
+                        return parameter != null && parameter.length > 0 ? parameter[0] : null;
+                    }
 
-                @Override
-                public String toString() {
-                    return "[userId=" + getUserId() + ",roleId=" + getRoleId() + ']';
-                }
-            }) + "</filter>");
+                    @Override
+                    public String toString() {
+                        return "[userId=" + getUserId() + ",roleId=" + getRoleId() + ']';
+                    }
+                }) + "</filter>");
     }
 }

@@ -14,8 +14,6 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import static org.esidoc.core.utils.Preconditions.checkNotNull;
-
 /**
  * {@link MessageBodyWriter} for {@link org.esidoc.core.utils.io.Stream}.
  *

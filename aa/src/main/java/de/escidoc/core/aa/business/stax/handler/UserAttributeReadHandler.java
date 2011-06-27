@@ -32,7 +32,6 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
-import javax.naming.directory.NoSuchAttributeException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +42,7 @@ public class UserAttributeReadHandler extends DefaultHandler {
 
     @Override
     public String characters(final String data, final StartElement element) throws Exception {
-        if (element.getLocalName().equals(Elements.ELEMENT_USER_ATTRIBUTE)) {
+        if(element.getLocalName().equals(Elements.ELEMENT_USER_ATTRIBUTE)) {
             final String name = element.getAttributeValue(null, "name");
             this.attributes.put(name, data);
         }

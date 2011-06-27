@@ -31,7 +31,6 @@ package de.escidoc.core.om.business.fedora.ingest;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidResourceException;
 import de.escidoc.core.om.business.interfaces.IngestFacade;
 import de.escidoc.core.om.business.interfaces.ValueFormatter;
 import org.springframework.beans.factory.annotation.Autowired;

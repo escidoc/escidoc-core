@@ -17,8 +17,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.esidoc.core.utils.Preconditions.checkNotNull;
-
 /**
  * {@link StreamFilter} that filters specific elements in a XML file.
  *

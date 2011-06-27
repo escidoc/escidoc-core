@@ -29,7 +29,6 @@
 package de.escidoc.core.sm.business;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.system.StatisticPreprocessingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface;
@@ -66,7 +65,7 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
      */
     @Override
     public void preprocess(final String aggregationDefinitionId, final String xmlData)
-        throws MissingMethodParameterException, SystemException {
+            throws MissingMethodParameterException, SystemException {
 
         //parse
         final StaxParser sp = new StaxParser();
@@ -74,8 +73,7 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new SystemException(e);
         }
 

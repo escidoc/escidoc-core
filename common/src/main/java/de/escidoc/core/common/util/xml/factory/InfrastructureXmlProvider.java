@@ -21,7 +21,6 @@
 package de.escidoc.core.common.util.xml.factory;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.service.UserContext;
 
 /**
  * XmlTemplateProvider implementation using the velocity template engine.<br> This implementation uses the velocity

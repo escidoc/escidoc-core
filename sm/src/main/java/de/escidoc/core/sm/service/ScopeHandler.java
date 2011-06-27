@@ -39,8 +39,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -82,8 +80,9 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData) throws AuthenticationException, AuthorizationException,
-        XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException, SystemException {
+    public String create(final String xmlData)
+            throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+            MissingMethodParameterException, SystemException {
         return handler.create(xmlData);
     }
 
@@ -101,7 +100,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     @Override
     public void delete(final String id) throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
-        MissingMethodParameterException, SystemException {
+            MissingMethodParameterException, SystemException {
         handler.delete(id);
     }
 
@@ -119,8 +118,9 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws AuthenticationException, AuthorizationException,
-        ScopeNotFoundException, MissingMethodParameterException, SystemException {
+    public String retrieve(final String id)
+            throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
+            MissingMethodParameterException, SystemException {
         return handler.retrieve(id);
     }
 
@@ -138,8 +138,9 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface #retrieveScopes(java.util.Map)
      */
     @Override
-    public String retrieveScopes(final Map<String, String[]> parameters) throws InvalidSearchQueryException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveScopes(final Map<String, String[]> parameters)
+            throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
         return handler.retrieveScopes(parameters);
     }
 
@@ -160,9 +161,9 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface #update(java.lang.String,java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData) throws AuthenticationException, AuthorizationException,
-        ScopeNotFoundException, MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException,
-        SystemException {
+    public String update(final String id, final String xmlData)
+            throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
+            MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException, SystemException {
         return handler.update(id, xmlData);
     }
 

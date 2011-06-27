@@ -2,7 +2,6 @@ package org.escidoc.core.services.fedora;
 
 import org.esidoc.core.utils.io.MimeTypes;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +46,7 @@ public final class AddDatastreamQueryParam {
         if(altIDs == null) {
             this.altIDs = new ArrayList<String>();
         } else {
-           this.altIDs = new ArrayList<String>(altIDs);
+            this.altIDs = new ArrayList<String>(altIDs);
         }
     }
 

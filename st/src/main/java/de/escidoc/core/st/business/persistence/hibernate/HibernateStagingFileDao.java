@@ -40,7 +40,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -72,15 +71,12 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
             final Criteria criteria = session.createCriteria(StagingFile.class);
             criteria.add(Restrictions.eq("token", token));
             return (StagingFile) criteria.uniqueResult();
-        }
-        catch (final DataAccessResourceFailureException e) {
+        } catch(final DataAccessResourceFailureException e) {
             throw new SqlDatabaseSystemException(e);
-        }
-        catch (final HibernateException e) {
+        } catch(final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
-        }
-        catch (final IllegalStateException e) {
+        } catch(final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);
         }
 
@@ -96,8 +92,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
             final DetachedCriteria criteria = DetachedCriteria.forClass(StagingFile.class);
             criteria.add(Restrictions.lt("expiryTs", System.currentTimeMillis()));
             return getHibernateTemplate().findByCriteria(criteria);
-        }
-        catch (final DataAccessException e) {
+        } catch(final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -108,11 +103,10 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
     @Override
     public void save(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
-        if (stagingFile != null) {
+        if(stagingFile != null) {
             try {
                 getHibernateTemplate().save(stagingFile);
-            }
-            catch (final DataAccessException e) {
+            } catch(final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -124,11 +118,10 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
     @Override
     public void update(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
-        if (stagingFile != null) {
+        if(stagingFile != null) {
             try {
                 getHibernateTemplate().update(stagingFile);
-            }
-            catch (final DataAccessException e) {
+            } catch(final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -141,11 +134,10 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
     @Override
     public void saveOrUpdate(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
-        if (stagingFile != null) {
+        if(stagingFile != null) {
             try {
                 getHibernateTemplate().saveOrUpdate(stagingFile);
-            }
-            catch (final DataAccessException e) {
+            } catch(final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -157,11 +149,10 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
     @Override
     public void delete(final StagingFile stagingFile) throws SqlDatabaseSystemException {
 
-        if (stagingFile != null) {
+        if(stagingFile != null) {
             try {
                 getHibernateTemplate().delete(stagingFile);
-            }
-            catch (final DataAccessException e) {
+            } catch(final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -173,13 +164,12 @@ public class HibernateStagingFileDao extends HibernateDaoSupport implements Stag
     @Override
     public void delete(final StagingFile[] stagingFiles) throws SqlDatabaseSystemException {
 
-        if (stagingFiles != null) {
+        if(stagingFiles != null) {
             try {
-                for (final StagingFile stagingFile : stagingFiles) {
+                for(final StagingFile stagingFile : stagingFiles) {
                     getHibernateTemplate().delete(stagingFile);
                 }
-            }
-            catch (final DataAccessException e) {
+            } catch(final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }

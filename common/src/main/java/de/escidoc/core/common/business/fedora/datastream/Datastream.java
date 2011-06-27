@@ -21,7 +21,6 @@ package de.escidoc.core.common.business.fedora.datastream;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.NotNull;
-import javax.xml.parsers.ParserConfigurationException;
 
 import net.sf.oval.guard.Guarded;
 
@@ -44,8 +42,6 @@ import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
-import org.esidoc.core.utils.io.Encodings;
-import org.esidoc.core.utils.io.IOUtils;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
@@ -55,7 +51,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.xml.sax.SAXException;
 
 import de.escidoc.core.common.business.fedora.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -68,7 +63,6 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import sun.awt.CharsetString;
 
 /**
  * Representation of a datastream managed in Fedora Digital Repository System.

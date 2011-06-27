@@ -30,7 +30,6 @@ package de.escidoc.core.aa.business.stax.handler;
 
 import de.escidoc.core.aa.business.persistence.EscidocPolicy;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
-import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -84,34 +83,32 @@ public class XacmlStaxHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws SystemException {
 
-        if (isNotReady()) {
+        if(isNotReady()) {
             final String elementName = element.getLocalName();
-            if (!this.insidePolicy && elementName.startsWith("Policy")) {
+            if(! this.insidePolicy && elementName.startsWith("Policy")) {
 
                 this.insidePolicy = true;
                 this.writer = new StringWriter();
                 try {
                     this.policyWriter = XmlUtility.createXmlStreamWriter(this.writer);
-                }
-                catch (final XMLStreamException e) {
+                } catch(final XMLStreamException e) {
                     throw new SystemException("Writer creation failed.", e);
                 }
             }
 
-            if (this.insidePolicy) {
+            if(this.insidePolicy) {
 
-                if (elementName.startsWith("Policy")) {
+                if(elementName.startsWith("Policy")) {
                     this.policyLevel++;
                 }
 
                 try {
                     policyWriter.writeStartElement(elementName);
-                    for (int i = 0; i < element.getAttributeCount(); i++) {
+                    for(int i = 0; i < element.getAttributeCount(); i++) {
                         final Attribute attribute = element.getAttribute(i);
                         policyWriter.writeAttribute(attribute.getLocalName(), attribute.getValue());
                     }
-                }
-                catch (final Exception e) {
+                } catch(final Exception e) {
                     throw new SystemException("Extracting policy failed.", e);
                 }
             }
@@ -126,7 +123,7 @@ public class XacmlStaxHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element) throws XMLStreamException {
 
-        if (isNotReady() && this.insidePolicy) {
+        if(isNotReady() && this.insidePolicy) {
             policyWriter.writeCharacters(data);
         }
         return data;
@@ -140,30 +137,29 @@ public class XacmlStaxHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) throws XMLStreamException {
 
-        if (isNotReady() && this.insidePolicy) {
+        if(isNotReady() && this.insidePolicy) {
 
             policyWriter.writeEndElement();
 
             final String elementName = element.getLocalName();
-            if (elementName.startsWith("Policy")) {
+            if(elementName.startsWith("Policy")) {
                 this.policyLevel--;
-                if (this.policyLevel == 0) {
+                if(this.policyLevel == 0) {
                     this.insidePolicy = false;
                     policyWriter.close();
                     IOUtils.closeWriter(this.writer);
                     this.policyXml = writer.toString();
 
                     Collection<EscidocPolicy> escidocPolicies = role.getEscidocPolicies();
-                    if (escidocPolicies == null) {
+                    if(escidocPolicies == null) {
                         escidocPolicies = new ArrayList<EscidocPolicy>(1);
                         role.setEscidocPolicies(escidocPolicies);
                     }
 
-                    if (escidocPolicies.isEmpty()) {
+                    if(escidocPolicies.isEmpty()) {
                         final EscidocPolicy policy = new EscidocPolicy(this.policyXml, this.role);
                         escidocPolicies.add(policy);
-                    }
-                    else {
+                    } else {
                         final EscidocPolicy policy = escidocPolicies.iterator().next();
                         policy.setXml(this.policyXml);
                     }

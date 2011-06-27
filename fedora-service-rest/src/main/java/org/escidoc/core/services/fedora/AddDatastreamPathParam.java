@@ -4,14 +4,13 @@ import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.guard.Guarded;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class AddDatastreamPathParam {
 
     @NotNull

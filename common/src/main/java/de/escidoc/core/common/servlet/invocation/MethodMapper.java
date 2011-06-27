@@ -25,7 +25,6 @@ import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundExcept
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

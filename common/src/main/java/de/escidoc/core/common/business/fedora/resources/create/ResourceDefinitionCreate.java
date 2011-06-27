@@ -22,12 +22,10 @@ package de.escidoc.core.common.business.fedora.resources.create;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,9 +54,9 @@ public class ResourceDefinitionCreate {
      */
     public void setName(final String name) throws MissingAttributeValueException {
 
-        if (name == null || name.length() == 0) {
-            throw new MissingAttributeValueException("the value of the"
-                + " \"name\" atribute of the element 'resource-definition' is missing");
+        if(name == null || name.length() == 0) {
+            throw new MissingAttributeValueException(
+                    "the value of the" + " \"name\" atribute of the element 'resource-definition' is missing");
         }
 
         this.name = name;
@@ -101,10 +99,9 @@ public class ResourceDefinitionCreate {
     }
 
     public void setXsltHref(final String xsltHref) throws IOException {
-        final URL url =
-            xsltHref.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
-                EscidocConfiguration.ESCIDOC_CORE_BASEURL)
-                + xsltHref) : new URL(xsltHref);
+        final URL url = xsltHref.startsWith("/") ?
+                new URL(EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) + xsltHref) :
+                new URL(xsltHref);
         this.xsltHref = url.toString();
     }
 
@@ -117,7 +114,7 @@ public class ResourceDefinitionCreate {
     }
 
     public String getFedoraId(final String parentId) {
-        if (this.name == null) {
+        if(this.name == null) {
             throw new NullPointerException("Name must not be null to provide FedoraId.");
         }
         return "info:fedora/sdef:" + parentId.replaceAll(":", "_") + '-' + this.name;

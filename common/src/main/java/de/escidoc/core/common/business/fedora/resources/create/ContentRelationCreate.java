@@ -52,7 +52,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.RepositoryIndicator;
@@ -74,7 +73,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 @Configurable
 public class ContentRelationCreate extends GenericResourceCreate implements Cloneable, Serializable {
 
-    private static final long serialVersionUID = -2959419814324564197L;
+    private static final long serialVersionUID = - 2959419814324564197L;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationCreate.class);
 
@@ -127,10 +126,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      */
     public void addMdRecord(final MdRecordCreate mdRecord) throws InvalidContentException {
 
-        if (this.mdRecords == null) {
+        if(this.mdRecords == null) {
             this.mdRecords = new ArrayList<MdRecordCreate>();
-        }
-        else {
+        } else {
             checkUniqueName(this.mdRecords, mdRecord.getName());
         }
         mdRecord.getRepositoryIndicator().setResourceIsNew(true);
@@ -145,9 +143,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
     public void deleteMdRecord(final String name) {
 
         final Iterator<MdRecordCreate> it = this.mdRecords.iterator();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             final String recordName = it.next().getName();
-            if (recordName.equals(name)) {
+            if(recordName.equals(name)) {
                 it.remove();
                 break;
             }
@@ -185,30 +183,27 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
     public void persist(final boolean forceSync) throws SystemException {
 
         try {
-            if (getObjid() == null) {
+            if(getObjid() == null) {
                 // Do not set fedora object id earlier. Otherwise consumes
                 // an unsuccessful requests an objid (and time). This is
                 // redundant
                 // if rollback is implemented and gives an unused objid back to
                 // the objid pool.
                 createFedoraResource();
-            }
-            else {
-                if (this.ri.isResourceChanged()) {
+            } else {
+                if(this.ri.isResourceChanged()) {
                     updateFedoraResource();
                 }
             }
-            if (forceSync) {
+            if(forceSync) {
                 this.fedoraServiceClient.sync();
                 try {
                     this.getTripleStoreUtility().reinitialize();
-                }
-                catch (TripleStoreSystemException e) {
+                } catch(TripleStoreSystemException e) {
                     throw new FedoraSystemException("Error on reinitializing triple store.", e);
                 }
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new SystemException(e);
         }
     }
@@ -224,14 +219,13 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      */
     public String getDC() throws WebserverSystemException, EncodingSystemException {
 
-        if (this.dcXml == null) {
+        if(this.dcXml == null) {
 
             final MdRecordCreate mdRecord = getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
-            if (mdRecord != null) {
+            if(mdRecord != null) {
                 try {
                     this.dcXml = getDC(mdRecord, "");
-                }
-                catch (final Exception e) {
+                } catch(final Exception e) {
                     LOGGER.info("DC mapping of to create resource failed. " + e);
                 }
             }
@@ -264,9 +258,9 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @return MetadataRecord with required name or null.
      */
     public MdRecordCreate getMetadataRecord(final String name) {
-        if (this.mdRecords != null) {
-            for (final MdRecordCreate mdRecord : this.mdRecords) {
-                if (mdRecord.getName().equals(name)) {
+        if(this.mdRecords != null) {
+            for(final MdRecordCreate mdRecord : this.mdRecords) {
+                if(mdRecord.getName().equals(name)) {
                     return mdRecord;
                 }
             }
@@ -390,7 +384,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         // merge md-records
         changes += mergeMdRecords(nCr);
 
-        if (changes > 0) {
+        if(changes > 0) {
             this.ri.setResourceChanged(true);
         }
         return changes;
@@ -416,33 +410,31 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
         int changes = 0;
 
-        if (getMetadataRecords() == null && nCr.getMetadataRecords() != null) {
+        if(getMetadataRecords() == null && nCr.getMetadataRecords() != null) {
 
             // add all md-records
-            for (final MdRecordCreate mdRecord : nCr.getMetadataRecords()) {
+            for(final MdRecordCreate mdRecord : nCr.getMetadataRecords()) {
                 mdRecord.getRepositoryIndicator().setResourceIsNew(true);
                 addMdRecord(mdRecord);
                 changes++;
             }
-        }
-        else if (getMetadataRecords() != null && nCr.getMetadataRecords() == null) {
+        } else if(getMetadataRecords() != null && nCr.getMetadataRecords() == null) {
 
             // mark all md-records as deleted
-            for (final MdRecordCreate mdRecord : getMetadataRecords()) {
+            for(final MdRecordCreate mdRecord : getMetadataRecords()) {
                 mdRecord.getRepositoryIndicator().setResourceToDelete(true);
                 changes++;
             }
-        }
-        else if (getMetadataRecords() != null && nCr.getMetadataRecords() != null) {
+        } else if(getMetadataRecords() != null && nCr.getMetadataRecords() != null) {
 
             // drop removed MdRecords
             Iterator<MdRecordCreate> it = getMetadataRecords().iterator();
-            while (it.hasNext()) {
+            while(it.hasNext()) {
                 final MdRecordCreate mdRecord = it.next();
                 final String name = mdRecord.getName();
 
                 final MdRecordCreate newMdRecord = nCr.getMetadataRecord(name);
-                if (newMdRecord == null) {
+                if(newMdRecord == null) {
                     mdRecord.getRepositoryIndicator().setResourceToDelete(true);
                 }
 
@@ -450,17 +442,16 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
             // compare existing, add new
             it = nCr.getMetadataRecords().iterator();
-            while (it.hasNext()) {
+            while(it.hasNext()) {
                 final MdRecordCreate mdRecord = it.next();
                 final String name = mdRecord.getName();
 
                 final MdRecordCreate oldMdRecord = getMetadataRecord(name);
-                if (oldMdRecord == null) {
+                if(oldMdRecord == null) {
                     mdRecord.getRepositoryIndicator().setResourceIsNew(true);
                     addMdRecord(mdRecord);
                     changes++;
-                }
-                else if (oldMdRecord.merge(mdRecord) > 0) {
+                } else if(oldMdRecord.merge(mdRecord) > 0) {
                     mdRecord.getRepositoryIndicator().setResourceChanged(true);
                     changes++;
                 }
@@ -529,13 +520,12 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         // changes++;
         // }
         // ContentRelation description changed
-        if (getProperties().getDescription() == null) {
-            if (nCr.getProperties().getDescription() != null) {
+        if(getProperties().getDescription() == null) {
+            if(nCr.getProperties().getDescription() != null) {
                 getProperties().setDescription(nCr.getProperties().getDescription());
                 changes++;
             }
-        }
-        else if (!getProperties().getDescription().equals(nCr.getProperties().getDescription())) {
+        } else if(! getProperties().getDescription().equals(nCr.getProperties().getDescription())) {
             getProperties().setDescription(nCr.getProperties().getDescription());
             changes++;
         }
@@ -550,13 +540,13 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @throws InvalidContentException Thrown if the md-record name is not unique.
      */
     private static void checkUniqueName(final Iterable<MdRecordCreate> records, final String name)
-        throws InvalidContentException {
+            throws InvalidContentException {
 
-        for (final MdRecordCreate record : records) {
+        for(final MdRecordCreate record : records) {
             final String recordName = record.getName();
-            if (recordName.equals(name)) {
-                throw new InvalidContentException("A md-record with the name '" + name + "' occurs multiple times "
-                    + "in the representation of a content relation.");
+            if(recordName.equals(name)) {
+                throw new InvalidContentException("A md-record with the name '" + name + "' occurs multiple times " +
+                        "in the representation of a content relation.");
             }
         }
 
@@ -570,7 +560,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
     private void createFedoraResource() throws SystemException, WebserverSystemException, EncodingSystemException {
         setObjid(this.idProvider.getNextPid());
 
-        if (this.properties.getTitle() == null) {
+        if(this.properties.getTitle() == null) {
             // if title is no set through DC,
             // update title (this is required because the title shall
             // contain the version number)
@@ -598,22 +588,20 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
     private void updateFedoraResource() throws SystemException, WebserverSystemException {
 
         // update md-records
-        if (getMetadataRecords() != null) {
+        if(getMetadataRecords() != null) {
 
             // drop removed MdRecords
             final Iterator<MdRecordCreate> it = getMetadataRecords().iterator();
-            while (it.hasNext()) {
+            while(it.hasNext()) {
                 final MdRecordCreate mdRecord = it.next();
 
-                if (mdRecord.getRepositoryIndicator().isResourceToDelete()) {
+                if(mdRecord.getRepositoryIndicator().isResourceToDelete()) {
                     // if MdRecord is marked as deleted
                     deleteDatastream(mdRecord);
                     it.remove();
-                }
-                else if (mdRecord.getRepositoryIndicator().isResourceChanged()) {
+                } else if(mdRecord.getRepositoryIndicator().isResourceChanged()) {
                     updateDataStream(mdRecord);
-                }
-                else if (mdRecord.getRepositoryIndicator().isResourceIsNew()) {
+                } else if(mdRecord.getRepositoryIndicator().isResourceIsNew()) {
                     createDatastream(mdRecord);
                 }
 
@@ -633,32 +621,29 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
     public void persistProperties(final boolean sync) throws SystemException, WebserverSystemException {
         final String relsExt = ContentRelationFoXmlProvider.getInstance().getRelsExt(this);
         final ModifiyDatastreamPathParam path =
-            new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
+                new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
         final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
         query.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
         final Stream stream = new Stream();
         try {
             stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
             stream.lock();
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
         final DatastreamProfileTO datastreamProfile = this.fedoraServiceClient.modifyDatastream(path, query, stream);
 
-        if (datastreamProfile.getDateTime() != null) {
+        if(datastreamProfile.getDateTime() != null) {
             getProperties().setLastModificationDate(datastreamProfile.getDateTime());
-        }
-        else {
+        } else {
             getProperties().setLastModificationDate(datastreamProfile.getDsCreateDate());
         }
 
-        if (sync) {
+        if(sync) {
             this.fedoraServiceClient.sync();
             try {
                 this.getTripleStoreUtility().reinitialize();
-            }
-            catch (TripleStoreSystemException e) {
+            } catch(TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -683,15 +668,15 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown if internal error occurs.
      */
-    private void updateDataStream(final MdRecordCreate mdRecord) throws FedoraSystemException, WebserverSystemException {
+    private void updateDataStream(final MdRecordCreate mdRecord)
+            throws FedoraSystemException, WebserverSystemException {
 
-        final String[] altIds = { Datastream.METADATA_ALTERNATE_ID, mdRecord.getType(), mdRecord.getSchema() };
+        final String[] altIds = {Datastream.METADATA_ALTERNATE_ID, mdRecord.getType(), mdRecord.getSchema()};
 
         final byte[] content;
         try {
             content = mdRecord.getContent().getBytes(XmlUtility.CHARACTER_ENCODING);
-        }
-        catch (final UnsupportedEncodingException e) {
+        } catch(final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
         }
         final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(getObjid(), mdRecord.getName());
@@ -703,8 +688,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         try {
             stream.write(content);
             stream.lock();
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
         this.fedoraServiceClient.modifyDatastream(path, query, stream);
@@ -718,15 +702,15 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown if internal error occurs.
      */
-    private void createDatastream(final MdRecordCreate mdRecord) throws FedoraSystemException, WebserverSystemException {
+    private void createDatastream(final MdRecordCreate mdRecord)
+            throws FedoraSystemException, WebserverSystemException {
 
-        final String[] altIds = { Datastream.METADATA_ALTERNATE_ID, mdRecord.getType(), mdRecord.getSchema() };
+        final String[] altIds = {Datastream.METADATA_ALTERNATE_ID, mdRecord.getType(), mdRecord.getSchema()};
 
         final byte[] content;
         try {
             content = mdRecord.getContent().getBytes(XmlUtility.CHARACTER_ENCODING);
-        }
-        catch (final UnsupportedEncodingException e) {
+        } catch(final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -739,8 +723,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
         try {
             stream.write(content);
             stream.lock();
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
         this.fedoraServiceClient.addDatastream(path, query, stream);
@@ -765,20 +748,17 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
             final ObjectOutputStream oos = new ObjectOutputStream(os);
             try {
                 oos.writeObject(this);
-            }
-            finally {
+            } finally {
                 IOUtils.closeStream(oos);
             }
             final InputStream fis = new ByteArrayInputStream(os.toByteArray());
             final ObjectInputStream ois = new ObjectInputStream(fis);
             try {
                 result = ois.readObject();
-            }
-            finally {
+            } finally {
                 IOUtils.closeStream(ois);
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final CloneNotSupportedException cnse = new CloneNotSupportedException(e.toString()); // Ignore
             // FindBugs
             cnse.initCause(e);

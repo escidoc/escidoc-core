@@ -34,7 +34,6 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
@@ -73,12 +72,10 @@ public class ContextHandlerBase extends HandlerBase {
      *
      * @param id The ID of the context which should be bound to this Handler.
      * @throws ContextNotFoundException If there is no context with <code>id</code> in the repository.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    public void setContext(final String id) throws ContextNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+    public void setContext(final String id)
+            throws ContextNotFoundException, TripleStoreSystemException, IntegritySystemException,
+            WebserverSystemException {
 
         this.context = new Context(id);
     }
@@ -96,15 +93,15 @@ public class ContextHandlerBase extends HandlerBase {
      *
      * @param status Value of Context status which is to check.
      * @throws InvalidStatusException Thrown if status compares of Context not to the status parameter.
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkStatus(final String status) throws InvalidStatusException, TripleStoreSystemException {
-        final String objectStatus =
-            getTripleStoreUtility().getPropertiesElements(this.context.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
+        final String objectStatus = getTripleStoreUtility()
+                .getPropertiesElements(this.context.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-        if (!objectStatus.equals(status)) {
-            throw new InvalidStatusException("Context " + context.getId() + " is in "
-                + TripleStoreUtility.PROP_PUBLIC_STATUS + " '" + objectStatus + "'.");
+        if(! objectStatus.equals(status)) {
+            throw new InvalidStatusException(
+                    "Context " + context.getId() + " is in " + TripleStoreUtility.PROP_PUBLIC_STATUS + " '" +
+                            objectStatus + "'.");
         }
     }
 

@@ -21,14 +21,10 @@
 package de.escidoc.core.common.persistence;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.SpringApplicationContextHolder;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.id.IdentifierGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.Serializable;
 
@@ -48,12 +44,10 @@ public class EscidocIdGenerator implements IdentifierGenerator {
     @Override
     public Serializable generate(final SessionImplementor sessionImplementor, final Object arg1) {
         try {
-            final EscidocIdProvider idProvider =
-                (EscidocIdProvider) SpringApplicationContextHolder.getContext().getBean(
-                    "escidoc.core.business.EscidocIdProvider");
+            final EscidocIdProvider idProvider = (EscidocIdProvider) SpringApplicationContextHolder.getContext()
+                    .getBean("escidoc.core.business.EscidocIdProvider");
             return idProvider.getNextPid();
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw new HibernateException("Failed to generate an id. ", e);
         }
     }

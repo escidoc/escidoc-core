@@ -23,9 +23,7 @@
  */
 package de.escidoc.core.common.business.fedora.resources;
 
-import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.interfaces.VersionableResource;
-import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
@@ -49,8 +47,9 @@ public class Relation extends GenericVersionableResource implements VersionableR
      * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
      * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    public Relation(final String id) throws TripleStoreSystemException, WebserverSystemException,
-        IntegritySystemException, ResourceNotFoundException {
+    public Relation(final String id)
+            throws TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
+            ResourceNotFoundException {
         super(id);
         this.getUtility().checkIsRelation(id);
     }

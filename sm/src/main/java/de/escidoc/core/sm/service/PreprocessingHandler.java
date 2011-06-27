@@ -37,8 +37,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.PreprocessingHandlerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 /**
@@ -59,7 +57,7 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
      * @param preprocessingHandler The Preprocessing handler bean to inject.
      */
     public void setPreprocessingHandler(
-        final de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface preprocessingHandler) {
+            final de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface preprocessingHandler) {
 
         this.handler = preprocessingHandler;
     }
@@ -79,9 +77,9 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
      * @see de.escidoc.core.sm.service.interfaces.PreprocessingHandlerInterface #create(java.lang.String)
      */
     @Override
-    public void preprocess(final String aggregationDefinitionId, final String xmlData) throws AuthenticationException,
-        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException,
-        SystemException {
+    public void preprocess(final String aggregationDefinitionId, final String xmlData)
+            throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+            MissingMethodParameterException, SystemException {
         handler.preprocess(aggregationDefinitionId, xmlData);
     }
 

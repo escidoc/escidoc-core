@@ -29,11 +29,9 @@
 package de.escidoc.core.oum.business.handler;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -64,32 +62,26 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws MissingAttributeValueException If the href is not found.
      * @throws OrganizationalUnitNotFoundException
      *                                        If the id does not point to an organizational unit.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    protected String checkParentRef(final StartElement element) throws MissingAttributeValueException,
-        OrganizationalUnitNotFoundException, TripleStoreSystemException, IntegritySystemException,
-        WebserverSystemException {
+    protected String checkParentRef(final StartElement element)
+            throws MissingAttributeValueException, OrganizationalUnitNotFoundException, TripleStoreSystemException,
+            IntegritySystemException, WebserverSystemException {
 
         String result;
         try {
             result = XmlUtility.getIdFromURI(element.getAttribute(Constants.XLINK_URI, "href").getValue());
-        }
-        catch (final NoSuchAttributeException e) {
+        } catch(final NoSuchAttributeException e) {
             try {
                 result = element.getAttribute(null, "objid").getValue();
-            }
-            catch (final NoSuchAttributeException e1) {
+            } catch(final NoSuchAttributeException e1) {
                 throw new MissingAttributeValueException("Parent attribute 'href' or 'objid' has to be set! ", e1);
             }
         }
         try {
             this.getUtility().checkIsOrganizationalUnit(result);
-        }
-        catch (final OrganizationalUnitNotFoundException e) {
-            throw new OrganizationalUnitNotFoundException("Reference to parent organizational-unit is not valid! "
-                + e.getMessage(), e);
+        } catch(final OrganizationalUnitNotFoundException e) {
+            throw new OrganizationalUnitNotFoundException(
+                    "Reference to parent organizational-unit is not valid! " + e.getMessage(), e);
         }
         return result;
     }
@@ -106,7 +98,6 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *
      * @param property The property.
      * @return The value of the property.
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getProperty(final String property) throws TripleStoreSystemException {
 

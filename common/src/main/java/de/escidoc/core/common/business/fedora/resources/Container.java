@@ -52,7 +52,6 @@ import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ContainerInterface;
-import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -103,22 +102,24 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws SystemException           Thrown in case of an internal error.
      * @throws ResourceNotFoundException Thrown if no container could be found under the provided id.
      */
-    public Container(final String id) throws StreamNotFoundException, SystemException, ResourceNotFoundException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    public Container(final String id)
+            throws StreamNotFoundException, SystemException, ResourceNotFoundException, TripleStoreSystemException,
+            XmlParserSystemException, WebserverSystemException {
         super(id);
         init();
     }
 
-    private void init() throws StreamNotFoundException, SystemException, ResourceNotFoundException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    private void init()
+            throws StreamNotFoundException, SystemException, ResourceNotFoundException, TripleStoreSystemException,
+            XmlParserSystemException, WebserverSystemException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
-            expandPropertiesNamesMapping(getPropertiesNamesMapping()));
+                expandPropertiesNamesMapping(getPropertiesNamesMapping()));
 
         this.getUtility().checkIsContainer(getId());
 
         setHref(Constants.CONTAINER_URL_BASE + getId());
         getVersionData();
-        if (getVersionNumber() != null) {
+        if(getVersionNumber() != null) {
 
             setDcData();
         }
@@ -137,7 +138,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
     @Override
     public String getCreationDate() throws TripleStoreSystemException, WebserverSystemException {
 
-        if (this.creationDate == null) {
+        if(this.creationDate == null) {
             /*
              * The creation version date is the date of the first version. This
              * is not the creation date of the Fedora object! With Fedora
@@ -153,12 +154,12 @@ public class Container extends GenericVersionableResourcePid implements Containe
              */
 
             final GetDatastreamHistoryPathParam path =
-                new GetDatastreamHistoryPathParam(getId(), DATASTREAM_ESCIDOC_RELS_EXT);
+                    new GetDatastreamHistoryPathParam(getId(), DATASTREAM_ESCIDOC_RELS_EXT);
             final GetDatastreamHistoryQueryParam query = new GetDatastreamHistoryQueryParam();
             final DatastreamHistoryTO history = this.fedoraServiceClient.getDatastreamHistory(path, query);
             this.creationDate =
-                history
-                    .getDatastreamProfile().get(history.getDatastreamProfile().size() - 1).getDsCreateDate().toString();
+                    history.getDatastreamProfile().get(history.getDatastreamProfile().size() - 1).getDsCreateDate()
+                            .toString();
         }
         return this.creationDate;
     }
@@ -179,8 +180,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
         sp.addHandler(dch);
         try {
             sp.parse(this.getDc().getStream());
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new XmlParserSystemException("Unexpected exception.", e);
         }
         setTitle(dch.getPropertiesMap().get(Elements.ELEMENT_DC_TITLE));
@@ -196,11 +196,10 @@ public class Container extends GenericVersionableResourcePid implements Containe
      */
     @Deprecated
     public Datastream getCts() throws StreamNotFoundException, FedoraSystemException {
-        if (this.cts == null) {
+        if(this.cts == null) {
             try {
                 this.cts = new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getId(), getVersionDate());
-            }
-            catch (final WebserverSystemException e) {
+            } catch(final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
             }
         }
@@ -215,20 +214,20 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws TripleStoreSystemException
      * @throws WebserverSystemException
      */
-    public void setCts(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException {
+    public void setCts(final Datastream ds)
+            throws StreamNotFoundException, FedoraSystemException, TripleStoreSystemException,
+            WebserverSystemException {
         try {
             final Datastream curDs = getCts();
-            if (!ds.equals(curDs)) {
+            if(! ds.equals(curDs)) {
                 ds.merge();
                 this.cts = ds;
             }
-        }
-        catch (final StreamNotFoundException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final StreamNotFoundException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on setting datastream.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on setting datastream.", e);
             }
             // this is not an update; its a create
@@ -237,11 +236,11 @@ public class Container extends GenericVersionableResourcePid implements Containe
         }
         // FedoraException when datastreams are preinitialized (see Item) and
         // getCts does not throw an exception on non-existing datastream.
-        catch (final FedoraSystemException e) {
-            if (LOGGER.isWarnEnabled()) {
+        catch(final FedoraSystemException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on setting datastream.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on setting datastream.", e);
             }
             // this is not an update; its a create
@@ -256,12 +255,11 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @return MdRecords HashMap
      */
     @Override
-    public Map<String, Datastream> getMdRecords() throws IntegritySystemException, FedoraSystemException,
-        WebserverSystemException {
+    public Map<String, Datastream> getMdRecords()
+            throws IntegritySystemException, FedoraSystemException, WebserverSystemException {
 
-        final List<DatastreamProfileTO> profiles =
-            getFedoraServiceClient().getDatastreamProfilesByAltId(getId(), Datastream.METADATA_ALTERNATE_ID,
-                getVersionDate());
+        final List<DatastreamProfileTO> profiles = getFedoraServiceClient()
+                .getDatastreamProfilesByAltId(getId(), Datastream.METADATA_ALTERNATE_ID, getVersionDate());
 
         this.mdRecords.clear();
         Datastream.convertDatastreamProfileTOs(profiles, getId(), this.mdRecords);
@@ -273,8 +271,9 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     @Override
-    public void setMdRecords(final Map<String, Datastream> mdRecords) throws FedoraSystemException,
-        WebserverSystemException, TripleStoreSystemException, IntegritySystemException, EncodingSystemException {
+    public void setMdRecords(final Map<String, Datastream> mdRecords)
+            throws FedoraSystemException, WebserverSystemException, TripleStoreSystemException,
+            IntegritySystemException, EncodingSystemException {
         // check if mdRecords is set, contains all metadata
         // Datastreams, is equal to given mdRecords and save every
         // changed data stream to fedora
@@ -283,20 +282,19 @@ public class Container extends GenericVersionableResourcePid implements Containe
         final Set<String> namesInFedora = getMdRecords().keySet();
 
         // delete data streams which are in fedora but not in mdRecords
-        for (final String nameInFedora : namesInFedora) {
-            if (!mdRecords.containsKey(nameInFedora)) {
+        for(final String nameInFedora : namesInFedora) {
+            if(! mdRecords.containsKey(nameInFedora)) {
                 try {
                     final Datastream fedoraDs = getMdRecord(nameInFedora);
-                    if (fedoraDs != null) {
+                    if(fedoraDs != null) {
                         // FIXME remove the entire datastream
                         fedoraDs.delete();
                     }
-                }
-                catch (final StreamNotFoundException e) {
-                    if (LOGGER.isWarnEnabled()) {
+                } catch(final StreamNotFoundException e) {
+                    if(LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Failed to set MdRecords.");
                     }
-                    if (LOGGER.isDebugEnabled()) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Failed to set MdRecords.", e);
                     }
                 }
@@ -306,14 +304,13 @@ public class Container extends GenericVersionableResourcePid implements Containe
         // create or activate data streams which are in mdRecords but not in
         // fedora
         final Iterator<Entry<String, Datastream>> nameIt = mdRecords.entrySet().iterator();
-        while (nameIt.hasNext()) {
+        while(nameIt.hasNext()) {
             final Entry<String, Datastream> mapEntry = nameIt.next();
             final String name = mapEntry.getKey();
-            if (namesInFedora.contains(name)) {
+            if(namesInFedora.contains(name)) {
                 // update Datastreams which already exist
                 setMdRecord(name, mdRecords.get(name));
-            }
-            else {
+            } else {
 
                 final Datastream currentMdRecord = mapEntry.getValue();
                 final AddDatastreamPathParam path = new AddDatastreamPathParam(getId(), name);
@@ -325,8 +322,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
                 try {
                     stream.write(currentMdRecord.getStream());
                     stream.lock();
-                }
-                catch (final IOException e) {
+                } catch(final IOException e) {
                     throw new WebserverSystemException(e);
                 }
                 this.fedoraServiceClient.addDatastream(path, query, stream);
@@ -340,13 +336,12 @@ public class Container extends GenericVersionableResourcePid implements Containe
     @Override
     public Datastream getMdRecord(final String name) throws StreamNotFoundException, FedoraSystemException {
         // check if the ds is set
-        if (!this.mdRecords.containsKey(name)) {
+        if(! this.mdRecords.containsKey(name)) {
             // retrieve from fedora and add to map
             final Datastream ds;
             try {
                 ds = new Datastream(name, getId(), getVersionDate());
-            }
-            catch (final WebserverSystemException e) {
+            } catch(final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
             }
             this.mdRecords.put(name, ds);
@@ -358,8 +353,9 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     @Override
-    public void setMdRecord(final String name, final Datastream ds) throws WebserverSystemException,
-        FedoraSystemException, TripleStoreSystemException, EncodingSystemException, IntegritySystemException {
+    public void setMdRecord(final String name, final Datastream ds)
+            throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException, EncodingSystemException,
+            IntegritySystemException {
         // check if the metadata datastream is set, is equal to ds and save to
         // fedora
 
@@ -374,47 +370,43 @@ public class Container extends GenericVersionableResourcePid implements Containe
             String curType = "";
             String curSchema = "";
             final List<String> altIds = curDs.getAlternateIDs();
-            if (altIds.size() > 1) {
+            if(altIds.size() > 1) {
                 curType = altIds.get(1);
-                if (altIds.size() > 2) {
+                if(altIds.size() > 2) {
                     curSchema = altIds.get(2);
                 }
             }
             boolean contentChanged = false;
-            if (!ds.equals(curDs)) {
+            if(! ds.equals(curDs)) {
                 contentChanged = true;
             }
-            if (contentChanged || !type.equals(curType) || !schema.equals(curSchema) || !mimeType.equals(curMimeType)) {
-                if (contentChanged && "escidoc".equals(name)) {
+            if(contentChanged || ! type.equals(curType) || ! schema.equals(curSchema) ||
+                    ! mimeType.equals(curMimeType)) {
+                if(contentChanged && "escidoc".equals(name)) {
 
                     final Map<String, String> mdProperties = ds.getProperties();
-                    if (mdProperties != null) {
-                        if (mdProperties.containsKey("nsUri")) {
+                    if(mdProperties != null) {
+                        if(mdProperties.containsKey("nsUri")) {
                             final String nsUri = mdProperties.get("nsUri");
-                            final String dcNewContent =
-                                XmlUtility.createDC(nsUri, ds.toStringUTF8(), getId(),
+                            final String dcNewContent = XmlUtility.createDC(nsUri, ds.toStringUTF8(), getId(),
                                     getResourcePropertiesValue(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
-                            if (dcNewContent != null && dcNewContent.trim().length() > 0) {
+                            if(dcNewContent != null && dcNewContent.trim().length() > 0) {
                                 final Datastream dcNew;
                                 try {
-                                    dcNew =
-                                        new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
-                                }
-                                catch (final UnsupportedEncodingException e) {
+                                    dcNew = new Datastream("DC", getId(),
+                                            dcNewContent.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                                } catch(final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
                                 }
                                 setDc(dcNew);
                             }
+                        } else {
+                            throw new IntegritySystemException(
+                                    "namespace uri of 'escidoc' metadata" + " does not set in datastream.");
                         }
-                        else {
-                            throw new IntegritySystemException("namespace uri of 'escidoc' metadata"
-                                + " does not set in datastream.");
-                        }
-                    }
-                    else {
-                        throw new IntegritySystemException("Properties of 'md-record' datastream"
-                            + " with then name 'escidoc' does not exist");
+                    } else {
+                        throw new IntegritySystemException(
+                                "Properties of 'md-record' datastream" + " with then name 'escidoc' does not exist");
                     }
                 }
 
@@ -422,12 +414,11 @@ public class Container extends GenericVersionableResourcePid implements Containe
                 ds.merge();
 
             }
-        }
-        catch (final StreamNotFoundException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final StreamNotFoundException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Failed to set MdRecords.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Failed to set MdRecords.", e);
             }
             // this is not an update; its a create
@@ -455,18 +446,16 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     public Datastream getEscidocRelsExt() throws StreamNotFoundException, FedoraSystemException {
 
-        if (this.escidocRelsExt == null) {
+        if(this.escidocRelsExt == null) {
             try {
                 // TODO: USe a different constructor to set a correct control
                 // group
-                if (isLatestVersion()) {
+                if(isLatestVersion()) {
                     setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), null));
-                }
-                else {
+                } else {
                     setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getVersionDate()));
                 }
-            }
-            catch (final WebserverSystemException e) {
+            } catch(final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
             }
         }
@@ -482,10 +471,10 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown in case of internal failure.
      */
-    public void setEscidocRelsExt(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
-        WebserverSystemException {
+    public void setEscidocRelsExt(final Datastream ds)
+            throws StreamNotFoundException, FedoraSystemException, WebserverSystemException {
 
-        if (this.escidocRelsExt == null || !this.escidocRelsExt.equals(ds)) {
+        if(this.escidocRelsExt == null || ! this.escidocRelsExt.equals(ds)) {
             this.escidocRelsExt = ds;
 
         }
@@ -534,7 +523,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
          * information (timestamp)
          */
         DateTime timestamp = null;
-        if (this.isNeedSync()) {
+        if(this.isNeedSync()) {
             // ----------------------------------------------
             // writing RELS-EXT once (problem: /version/date is to old)
             // timestamp = getLastFedoraModificationDate();
@@ -547,7 +536,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
             // ----------------------------------------------
             // writing RELS-EXT twice.
             timestamp = persistEscidocRelsExt();
-            if (timestamp == null) {
+            if(timestamp == null) {
                 timestamp = getLastFedoraModificationDate();
             }
             updateWovTimestamp(getVersionNumber(), timestamp);
@@ -560,8 +549,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
         this.getFedoraServiceClient().sync();
         try {
             this.getTripleStoreUtility().reinitialize();
-        }
-        catch (final TripleStoreSystemException e) {
+        } catch(final TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
         }
         return timestamp;
@@ -571,14 +559,13 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @return Vector with HashMaps of relations.
      */
     @Override
-    public List<Map<String, String>> getRelations() throws FedoraSystemException, IntegritySystemException,
-        XmlParserSystemException, WebserverSystemException {
+    public List<Map<String, String>> getRelations()
+            throws FedoraSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException {
 
         final Datastream datastreamWithRelations;
         try {
             datastreamWithRelations = getVersionNumber() == null ? getRelsExt() : getEscidocRelsExt();
-        }
-        catch (final StreamNotFoundException e1) {
+        } catch(final StreamNotFoundException e1) {
             throw new IntegritySystemException("Stream not found.", e1);
         }
         final byte[] datastreamWithRelationsContent = datastreamWithRelations.getStream();
@@ -590,11 +577,9 @@ public class Container extends GenericVersionableResourcePid implements Containe
         sp.addHandler(reHandler);
         try {
             sp.parse(relsExtInputStream);
-        }
-        catch (final WebserverSystemException e) {
+        } catch(final WebserverSystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         return reHandler.getRelations();
@@ -611,21 +596,19 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
         // old timestamp instead of null.
         try {
-            if (this.escidocRelsExt != null) {
+            if(this.escidocRelsExt != null) {
                 final boolean updated = this.escidocRelsExt.updateStream(getRelsExt().getStream());
-                if (updated) {
+                if(updated) {
                     this.escidocRelsExt.merge();
                 }
-            }
-            else {
-                this.escidocRelsExt =
-                    new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getRelsExt().getStream(), MimeTypes.TEXT_XML);
+            } else {
+                this.escidocRelsExt = new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getRelsExt().getStream(),
+                        MimeTypes.TEXT_XML);
                 escidocRelsExt.setControlGroup("M");
                 setEscidocRelsExt(this.escidocRelsExt);
 
             }
-        }
-        catch (final StreamNotFoundException e) {
+        } catch(final StreamNotFoundException e) {
             throw new WebserverSystemException("RELS-EXT datastream not found in" + " container with id " + getId(), e);
         }
         return this.escidocRelsExt.merge();
@@ -638,8 +621,9 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setDc(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
-    public void setDc(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
-        WebserverSystemException, TripleStoreSystemException {
+    public void setDc(final Datastream ds)
+            throws StreamNotFoundException, FedoraSystemException, WebserverSystemException,
+            TripleStoreSystemException {
         // TODO should lock only be checked in handler?
         // if (this.isLocked) {
         // throw new LockingException("Item " + getId() + " is locked.");
@@ -649,13 +633,12 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
             final Datastream curDs = getDc();
 
-            if (!ds.equals(curDs)) {
+            if(! ds.equals(curDs)) {
 
                 this.dc = ds;
                 ds.merge();
             }
-        }
-        catch (final StreamNotFoundException e) {
+        } catch(final StreamNotFoundException e) {
             // An item have to have a RELS-EXT datastream
             throw new StreamNotFoundException("No DC for item " + getId() + '.', e);
         }
@@ -670,11 +653,10 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * #getDc()
      */
     public Datastream getDc() throws StreamNotFoundException, FedoraSystemException {
-        if (this.dc == null) {
+        if(this.dc == null) {
             try {
                 this.dc = new Datastream(Datastream.DC_DATASTREAM, getId(), getVersionDate());
-            }
-            catch (final WebserverSystemException e) {
+            } catch(final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
             }
         }
@@ -689,12 +671,11 @@ public class Container extends GenericVersionableResourcePid implements Containe
      */
     public String getContextId() throws WebserverSystemException {
 
-        if (this.contextId == null) {
+        if(this.contextId == null) {
             try {
                 this.contextId =
-                    getTripleStoreUtility().getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_ID);
-            }
-            catch (final TripleStoreSystemException e) {
+                        getTripleStoreUtility().getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_ID);
+            } catch(final TripleStoreSystemException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -725,9 +706,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
         try {
             contextTitle =
-                getTripleStoreUtility().getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_TITLE);
-        }
-        catch (final TripleStoreSystemException e) {
+                    getTripleStoreUtility().getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_TITLE);
+        } catch(final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -745,7 +725,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames =
-            propertiesNames != null ? propertiesNames : new ArrayList<String>();
+                propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE);
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_CATEGORY);
@@ -765,11 +745,11 @@ public class Container extends GenericVersionableResourcePid implements Containe
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
 
         final Map<String, String> newPropertiesNames =
-            propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
+                propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
 
         newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_VERSION_PID, PropertyMapKeys.LATEST_VERSION_PID);
-        newPropertiesNames.put(TripleStoreUtility.PROP_CONTENT_CATEGORY,
-            PropertyMapKeys.LATEST_VERSION_CONTENT_CATEGORY);
+        newPropertiesNames
+                .put(TripleStoreUtility.PROP_CONTENT_CATEGORY, PropertyMapKeys.LATEST_VERSION_CONTENT_CATEGORY);
         // FIXME release is a method of Item/Container so this is to move higher
         // within the hirarchie
         newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_RELEASE_PID, PropertyMapKeys.LATEST_RELEASE_PID);
@@ -787,7 +767,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
     @Override
     public Datastream getWov() throws StreamNotFoundException, FedoraSystemException {
 
-        if (this.wov == null) {
+        if(this.wov == null) {
             this.wov = new Datastream(DATASTREAM_WOV, getId(), null);
             this.wov.setControlGroup("M");
         }
@@ -803,7 +783,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
      */
     @Override
     public void setWov(final Datastream ds) throws FedoraSystemException, StreamNotFoundException {
-        if (!getWov().equals(ds)) {
+        if(! getWov().equals(ds)) {
             ds.setControlGroup("M");
             this.wov = ds;
             this.setNeedSync(true);

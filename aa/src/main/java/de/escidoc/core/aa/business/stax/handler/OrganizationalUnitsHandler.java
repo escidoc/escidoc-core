@@ -35,7 +35,6 @@ import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -56,9 +55,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
 
     private static final String ERR_MSG_OU_NOT_OPENED =
-        "Referenced organizational unit is not in public status opened.";
+            "Referenced organizational unit is not in public status opened.";
 
-    public static final int UNINITIALIZED = -1;
+    public static final int UNINITIALIZED = - 1;
 
     @Autowired
     @Qualifier("business.Utility")
@@ -70,7 +69,7 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
 
     public OrganizationalUnitsHandler() {
         super(XmlUtility.XPATH_USER_ACCOUNT_ORGANIZATIONAL_UNIT, XmlUtility.BASE_ORGANIZATIONAL_UNIT,
-            OrganizationalUnitNotFoundException.class);
+                OrganizationalUnitNotFoundException.class);
     }
 
     /**
@@ -79,10 +78,11 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
      * @see LinkCollectionStaxHandler #endLinkElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endLinkElement(final EndElement element) throws EscidocException, IntegritySystemException,
-        InvalidStatusException, OrganizationalUnitNotFoundException, WebserverSystemException {
+    public EndElement endLinkElement(final EndElement element)
+            throws EscidocException, IntegritySystemException, InvalidStatusException,
+            OrganizationalUnitNotFoundException, WebserverSystemException {
         this.utility.checkIsOrganizationalUnit(getObjid());
-        if (!Constants.STATUS_OU_OPENED.equals(tripleStoreUtility.getPublicStatus(getObjid()))) {
+        if(! Constants.STATUS_OU_OPENED.equals(tripleStoreUtility.getPublicStatus(getObjid()))) {
             throw new InvalidStatusException(StringUtility.format(ERR_MSG_OU_NOT_OPENED, getObjid()));
         }
         return super.endLinkElement(element);

@@ -33,8 +33,6 @@ import com.sun.xacml.attr.AttributeDesignator;
 import com.sun.xacml.cond.EvaluationResult;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
-import de.escidoc.core.aa.business.cache.RequestAttributesCache;
-import de.escidoc.core.aa.business.persistence.UserAccount;
 import de.escidoc.core.aa.business.persistence.UserGroup;
 import de.escidoc.core.aa.business.persistence.UserGroupDaoInterface;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
@@ -75,14 +73,14 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
     private static final String ATTR_NAME = "name";
 
     private static final String RESOLVABLE_USER_GROUP_ATTRS =
-        ATTR_CREATED_BY + '|' + ATTR_MODIFIED_BY + '|' + ATTR_ID + '|' + ATTR_NAME;
+            ATTR_CREATED_BY + '|' + ATTR_MODIFIED_BY + '|' + ATTR_ID + '|' + ATTR_NAME;
 
     private static final Pattern PATTERN_USER_GROUP_ATTRIBUTE_PREFIX =
-        Pattern.compile(AttributeIds.USER_GROUP_ATTR_PREFIX);
+            Pattern.compile(AttributeIds.USER_GROUP_ATTR_PREFIX);
 
-    private static final Pattern PATTERN_PARSE_USER_GROUP_ATTRIBUTE_ID =
-        Pattern.compile("((" + AttributeIds.USER_GROUP_ATTR_PREFIX + ")(" + RESOLVABLE_USER_GROUP_ATTRS
-            + "))(-new){0,1}(:(.*)){0,1}");
+    private static final Pattern PATTERN_PARSE_USER_GROUP_ATTRIBUTE_ID = Pattern.compile(
+            "((" + AttributeIds.USER_GROUP_ATTR_PREFIX + ")(" + RESOLVABLE_USER_GROUP_ATTRS +
+                    "))(-new){0,1}(:(.*)){0,1}");
 
     @Autowired
     @Qualifier("persistence.UserGroupDao")
@@ -92,12 +90,12 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
      * See Interface for functional description.
      */
     @Override
-    protected boolean assertAttribute(
-        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType) throws EscidocException {
+    protected boolean assertAttribute(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
+                                      final String resourceObjid, final String resourceVersionNumber,
+                                      final int designatorType) throws EscidocException {
 
         // make sure this is an Resource attribute
-        if (designatorType != AttributeDesignator.RESOURCE_TARGET) {
+        if(designatorType != AttributeDesignator.RESOURCE_TARGET) {
             return false;
         }
         // make sure attribute is in escidoc-internal format for
@@ -110,60 +108,54 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
      * See Interface for functional description.
      */
     @Override
-    protected Object[] resolveLocalPart(
-        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws UserGroupNotFoundException, WebserverSystemException {
+    protected Object[] resolveLocalPart(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
+                                        final String resourceObjid, final String resourceVersionNumber)
+            throws UserGroupNotFoundException, WebserverSystemException {
 
         EvaluationResult result;
         final String resolvedAttributeIdValue;
 
         final Matcher userGroupAttributeMatcher = PATTERN_PARSE_USER_GROUP_ATTRIBUTE_ID.matcher(attributeIdValue);
-        if (userGroupAttributeMatcher.find()) {
+        if(userGroupAttributeMatcher.find()) {
             // -new attribute is not resolvable
-            if (userGroupAttributeMatcher.group(4) != null) {
+            if(userGroupAttributeMatcher.group(4) != null) {
                 return null;
             }
             resolvedAttributeIdValue = userGroupAttributeMatcher.group(1);
             final String attributeId = userGroupAttributeMatcher.group(3);
 
             final String userGroupId = FinderModuleHelper.getResourceId(ctx);
-            if (FinderModuleHelper.isNewResourceId(userGroupId)) {
+            if(FinderModuleHelper.isNewResourceId(userGroupId)) {
                 return null;
             }
 
             // ask cache for previously cached results
-            result =
-                (EvaluationResult) getFromCache(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue, ctx);
+            result = (EvaluationResult) getFromCache(resourceId, resourceObjid, resourceVersionNumber, attributeIdValue,
+                    ctx);
 
-            if (result == null) {
+            if(result == null) {
                 final UserGroup userGroup = retrieveUserGroup(ctx, userGroupId);
-                if (ATTR_CREATED_BY.equals(attributeId)) {
-                    result =
-                        CustomEvaluationResultBuilder.createSingleStringValueResult(userGroup.getCreatorId().getId());
-                }
-                else if (ATTR_MODIFIED_BY.equals(attributeId)) {
-                    result =
-                        CustomEvaluationResultBuilder
+                if(ATTR_CREATED_BY.equals(attributeId)) {
+                    result = CustomEvaluationResultBuilder
+                            .createSingleStringValueResult(userGroup.getCreatorId().getId());
+                } else if(ATTR_MODIFIED_BY.equals(attributeId)) {
+                    result = CustomEvaluationResultBuilder
                             .createSingleStringValueResult(userGroup.getModifiedById().getId());
-                }
-                else if (ATTR_ID.equals(attributeId)) {
+                } else if(ATTR_ID.equals(attributeId)) {
                     result = CustomEvaluationResultBuilder.createSingleStringValueResult(userGroup.getId());
-                }
-                else if (ATTR_NAME.equals(attributeId)) {
+                } else if(ATTR_NAME.equals(attributeId)) {
                     result = CustomEvaluationResultBuilder.createSingleStringValueResult(userGroup.getName());
-                }
-                else {
+                } else {
                     return null;
                 }
             }
 
-        }
-        else {
+        } else {
             return null;
         }
 
         putInCache(resourceId, resourceObjid, resourceVersionNumber, resolvedAttributeIdValue, ctx, result);
-        return new Object[] { result, resolvedAttributeIdValue };
+        return new Object[]{result, resolvedAttributeIdValue};
     }
 
     /**
@@ -174,11 +166,11 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
      * @throws UserGroupNotFoundException Thrown if assertion fails.
      */
     private static void assertUserGroup(final String userGroupId, final UserGroup userGroup)
-        throws UserGroupNotFoundException {
+            throws UserGroupNotFoundException {
 
-        if (userGroup == null) {
-            throw new UserGroupNotFoundException(StringUtility.format("Group with provided id does not exist",
-                userGroupId));
+        if(userGroup == null) {
+            throw new UserGroupNotFoundException(
+                    StringUtility.format("Group with provided id does not exist", userGroupId));
         }
     }
 
@@ -192,16 +184,15 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
      * @throws UserGroupNotFoundException Thrown if no user account with provided id exists.
      */
     private UserGroup retrieveUserGroup(final EvaluationCtx ctx, final String userGroupId)
-        throws WebserverSystemException, UserGroupNotFoundException {
+            throws WebserverSystemException, UserGroupNotFoundException {
 
         UserGroup userGroup = (UserGroup) getFromCache(XmlUtility.NAME_ID, null, null, userGroupId, ctx);
-        if (userGroup == null) {
+        if(userGroup == null) {
             try {
                 userGroup = userGroupDao.retrieveUserGroup(userGroupId);
-            }
-            catch (final Exception e) {
-                throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the user group",
-                    e.getMessage()), e);
+            } catch(final Exception e) {
+                throw new WebserverSystemException(
+                        StringUtility.format("Exception during retrieval of the user group", e.getMessage()), e);
             }
         }
 

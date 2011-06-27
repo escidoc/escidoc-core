@@ -42,7 +42,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
@@ -90,10 +89,10 @@ public class PIDManagerRESTService implements PIDSystem {
      * java.lang.String)
      */
     @Override
-    public String assignPID(final String systemID, final String param) throws PidSystemException,
-        MissingMethodParameterException, WebserverSystemException {
+    public String assignPID(final String systemID, final String param)
+            throws PidSystemException, MissingMethodParameterException, WebserverSystemException {
 
-        if (param == null) {
+        if(param == null) {
             throw new MissingMethodParameterException("Invalid param structure.");
         }
 
@@ -102,8 +101,7 @@ public class PIDManagerRESTService implements PIDSystem {
         try {
             username = EscidocConfiguration.getInstance().get("escidoc-core.PidSystemRESTService.user");
             password = EscidocConfiguration.getInstance().get("escidoc-core.PidSystemRESTService.password");
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -113,18 +111,15 @@ public class PIDManagerRESTService implements PIDSystem {
             final URL url = new URL(this.pidGeneratorServer + this.globalPrefix + '/');
             final HttpResponse httpPostRes = this.connectionUtility.postRequestURL(url, xmlParam, username, password);
             final int status = httpPostRes.getStatusLine().getStatusCode();
-            if (status == HttpURLConnection.HTTP_OK) {
+            if(status == HttpURLConnection.HTTP_OK) {
                 pidResult = obtainPidResult(httpPostRes.getEntity().getContent());
-            }
-            else if (status == HttpURLConnection.HTTP_UNAUTHORIZED) {
+            } else if(status == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 throw new Exception("Authorization at PIDManager fails.");
+            } else {
+                throw new PidSystemException(
+                        EntityUtils.toString(httpPostRes.getEntity(), XmlUtility.CHARACTER_ENCODING));
             }
-            else {
-                throw new PidSystemException(EntityUtils.toString(httpPostRes.getEntity(),
-                    XmlUtility.CHARACTER_ENCODING));
-            }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new PidSystemException(e);
         }
 
@@ -140,7 +135,7 @@ public class PIDManagerRESTService implements PIDSystem {
     @Override
     public String generatePID(final String systemID) throws PidSystemException {
         String result = this.pidNamespace + ':' + this.globalPrefix + this.separator;
-        if (this.localPrefix != null && localPrefix.length() > 0) {
+        if(this.localPrefix != null && localPrefix.length() > 0) {
             result += this.localPrefix + this.separator;
         }
         result += systemID;
@@ -172,7 +167,7 @@ public class PIDManagerRESTService implements PIDSystem {
 
         // fetch suffix from pid and prepare URL
         final String suffix = pid.replace("hdl:" + this.globalPrefix + '/', "");
-        if (suffix.length() < 1) {
+        if(suffix.length() < 1) {
             throw new PidSystemException("Wrong handle identifier.");
         }
 
@@ -182,11 +177,10 @@ public class PIDManagerRESTService implements PIDSystem {
             conn.setRequestMethod("DELETE");
             conn.setUseCaches(false);
             conn.setInstanceFollowRedirects(false);
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+            if(conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new Exception("PID System connetion broken (" + url.toString() + ") " + conn.getResponseCode());
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new PidSystemException(e);
         }
     }
@@ -254,8 +248,8 @@ public class PIDManagerRESTService implements PIDSystem {
      * @return XML data structure for PID Manager enriched with objid.
      */
     private static String preparePidManagerDatastructure(final String systemID, final String param)
-        throws ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError,
-        TransformerException {
+            throws ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError,
+            TransformerException {
 
         final String xmlParam;
 
@@ -264,10 +258,9 @@ public class PIDManagerRESTService implements PIDSystem {
         final Document doc = db.parse(new ByteArrayInputStream(param.getBytes()));
         final NodeList systemIDs = doc.getElementsByTagName("systemID");
 
-        if (systemIDs.getLength() == 1) {
+        if(systemIDs.getLength() == 1) {
             xmlParam = param;
-        }
-        else {
+        } else {
             final Node first = doc.getFirstChild();
             final Node sysid = doc.createElement("systemID");
             sysid.setTextContent(systemID);
@@ -290,8 +283,8 @@ public class PIDManagerRESTService implements PIDSystem {
      * @param in InputStream from PIDManager.
      * @return PID
      */
-    private static String obtainPidResult(final InputStream in) throws ParserConfigurationException, SAXException,
-        IOException {
+    private static String obtainPidResult(final InputStream in)
+            throws ParserConfigurationException, SAXException, IOException {
         String returnValue;
         try {
             final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -300,8 +293,7 @@ public class PIDManagerRESTService implements PIDSystem {
             final NodeList nl = doc.getElementsByTagName("pid");
             final Node n = nl.item(0);
             returnValue = n.getTextContent();
-        }
-        finally {
+        } finally {
             IOUtils.closeStream(in);
         }
         return returnValue;

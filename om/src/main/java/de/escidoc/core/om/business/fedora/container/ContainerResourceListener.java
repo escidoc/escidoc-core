@@ -33,9 +33,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundE
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.service.UserContext;
 
 import java.util.ArrayList;
 import java.util.Collection;

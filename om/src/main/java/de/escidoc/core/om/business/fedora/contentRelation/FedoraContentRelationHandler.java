@@ -42,7 +42,6 @@ import javax.annotation.PostConstruct;
 import org.escidoc.core.services.fedora.ChecksumType;
 import org.escidoc.core.services.fedora.DatastreamState;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -83,7 +82,6 @@ import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundExce
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;

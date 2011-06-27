@@ -26,7 +26,6 @@ import de.escidoc.core.oai.business.filter.SetDefinitionFilter;
 import de.escidoc.core.oai.business.interfaces.SetDefinitionHandlerInterface;
 import de.escidoc.core.oai.business.persistence.SetDefinition;
 import de.escidoc.core.oai.business.persistence.SetDefinitionDaoInterface;
-import de.escidoc.core.oai.business.renderer.VelocityXmlSetDefinitionRenderer;
 import de.escidoc.core.oai.business.renderer.interfaces.SetDefinitionRendererInterface;
 import de.escidoc.core.oai.business.stax.handler.set_definition.SetDefinitionCreateHandler;
 import de.escidoc.core.oai.business.stax.handler.set_definition.SetDefinitionUpdateHandler;

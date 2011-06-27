@@ -23,7 +23,6 @@ package de.escidoc.core.common.util.xml.factory;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.create.ContentRelationCreate;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
@@ -88,7 +87,7 @@ public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvi
 
         // DC (inclusive mapping)-------------------------
         final MdRecordCreate defaultMd = cr.getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
-        if (defaultMd != null) {
+        if(defaultMd != null) {
             final String dcXml = cr.getDC(defaultMd, null);
             values.put(XmlTemplateProvider.DC, dcXml);
         }
@@ -162,7 +161,7 @@ public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvi
         values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
 
         values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE_PREFIX,
-            Constants.CONTENT_RELATIONS_NEW_NS_PREFIX_IN_RELSEXT);
+                Constants.CONTENT_RELATIONS_NEW_NS_PREFIX_IN_RELSEXT);
         values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE, Constants.CONTENT_RELATION_NAMESPACE_URI + '/');
 
         values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);

@@ -24,8 +24,6 @@ import com.googlecode.ehcache.annotations.key.CacheKeyGenerator;
 import org.aopalliance.intercept.MethodInvocation;
 import org.escidoc.core.services.fedora.GetBinaryContentPathParam;
 import org.escidoc.core.services.fedora.GetBinaryContentQueryParam;
-import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
-import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
 
 /**
  * {@link CacheKeyGenerator} for getBinaryContent-Operation in {@link org.escidoc.core.services.fedora

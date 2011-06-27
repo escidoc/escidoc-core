@@ -13,8 +13,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.esidoc.core.utils.Preconditions.checkNotNull;
-
 /**
  * eSciDoc specific implementation of {@link Unmarshaller.Listener}
  *

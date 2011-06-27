@@ -50,8 +50,6 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.om.business.renderer.VelocityXmlContainerFoXmlRenderer;
-import de.escidoc.core.om.business.renderer.VelocityXmlContainerRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterface;
 import org.slf4j.Logger;

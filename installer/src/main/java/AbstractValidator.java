@@ -26,9 +26,8 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-import com.izforge.izpack.installer.AutomatedInstallData;
+
 import com.izforge.izpack.installer.DataValidator;
-import com.izforge.izpack.installer.DataValidator.Status;
 
 /**
  * Basic class for all validators.
@@ -37,45 +36,45 @@ import com.izforge.izpack.installer.DataValidator.Status;
  */
 public abstract class AbstractValidator implements DataValidator {
 
-	protected final StringBuilder errorMessage = new StringBuilder();
+    protected final StringBuilder errorMessage = new StringBuilder();
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * com.izforge.izpack.installer.DataValidator#getDefaultAnswer
-	 * ()
-	 */
-	@Override
-	public boolean getDefaultAnswer() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    /*
+      * (non-Javadoc)
+      * @see
+      * com.izforge.izpack.installer.DataValidator#getDefaultAnswer
+      * ()
+      */
+    @Override
+    public boolean getDefaultAnswer() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * com.izforge.izpack.installer.DataValidator#getErrorMessageId
-	 * ()
-	 */
-	@Override
-	public String getErrorMessageId() {
-		return errorMessage.toString();
-	}
+    /*
+      * (non-Javadoc)
+      * @see
+      * com.izforge.izpack.installer.DataValidator#getErrorMessageId
+      * ()
+      */
+    @Override
+    public String getErrorMessageId() {
+        return errorMessage.toString();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * com.izforge.izpack.installer.DataValidator#getWarningMessageId
-	 * ()
-	 */
-	@Override
-	public String getWarningMessageId() {
-		return "";
-	}
+    /*
+      * (non-Javadoc)
+      * @see
+      * com.izforge.izpack.installer.DataValidator#getWarningMessageId
+      * ()
+      */
+    @Override
+    public String getWarningMessageId() {
+        return "";
+    }
 
-	protected void clearErrorMessage() {
-		if (!errorMessage.toString().isEmpty()) {
-			errorMessage.delete(0, errorMessage.length());
-		}
-	}
+    protected void clearErrorMessage() {
+        if(! errorMessage.toString().isEmpty()) {
+            errorMessage.delete(0, errorMessage.length());
+        }
+    }
 }

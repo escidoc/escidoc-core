@@ -30,7 +30,6 @@
 package de.escidoc.core.sm.business.stax.handler;
 
 import org.joda.time.DateTime;
-import org.joda.time.ReadableDateTime;
 
 /**
  * Holds parameter data.

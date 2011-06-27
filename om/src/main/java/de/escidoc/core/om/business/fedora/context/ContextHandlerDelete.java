@@ -37,8 +37,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
-import org.escidoc.core.services.fedora.DeleteObjectPathParam;
-import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
 
 /**
  * @author Steffen Wagner

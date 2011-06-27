@@ -29,7 +29,6 @@
 package de.escidoc.core.aa.shibboleth;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
@@ -48,23 +47,21 @@ public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPo
     private String sessionInitiatorPath;
 
     @Override
-    public void commence(
-        final HttpServletRequest request, final HttpServletResponse response,
-        final AuthenticationException authException) throws IOException, ServletException {
+    public void commence(final HttpServletRequest request, final HttpServletResponse response,
+                         final AuthenticationException authException) throws IOException, ServletException {
         final HttpServletRequest httpRequest = request;
         // FIXME:URL!!!
         final StringBuilder target = new StringBuilder(this.serviceProviderBaseUrl).append("aa/login");
 
         final String queryString = httpRequest.getQueryString();
-        if (queryString != null) {
+        if(queryString != null) {
             target.append('?');
             target.append(queryString);
         }
         final String redirectUrl =
-            httpRequest.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null ? target.toString() : this.serviceProviderBaseUrl
-                + this.sessionInitiatorPath
-                + "?target="
-                + URLEncoder.encode(target.toString(), XmlUtility.CHARACTER_ENCODING);
+                httpRequest.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null ? target.toString() :
+                        this.serviceProviderBaseUrl + this.sessionInitiatorPath + "?target=" +
+                                URLEncoder.encode(target.toString(), XmlUtility.CHARACTER_ENCODING);
         response.sendRedirect(redirectUrl);
     }
 
@@ -76,7 +73,7 @@ public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPo
     public void setServiceProviderBaseUrl(final String serviceProviderBaseUrl) {
 
         this.serviceProviderBaseUrl =
-            serviceProviderBaseUrl.endsWith("/") ? serviceProviderBaseUrl : serviceProviderBaseUrl + '/';
+                serviceProviderBaseUrl.endsWith("/") ? serviceProviderBaseUrl : serviceProviderBaseUrl + '/';
     }
 
     /**
@@ -87,7 +84,7 @@ public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPo
     public void setSessionInitiatorPath(final String sessionInitiatorPath) {
 
         this.sessionInitiatorPath =
-            sessionInitiatorPath.startsWith("/") ? sessionInitiatorPath.substring(1) : sessionInitiatorPath;
+                sessionInitiatorPath.startsWith("/") ? sessionInitiatorPath.substring(1) : sessionInitiatorPath;
     }
 
 }

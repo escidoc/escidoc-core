@@ -21,7 +21,6 @@
 package de.escidoc.core.common.util.aop;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -44,7 +43,7 @@ public class XmlHeaderInterceptor implements Ordered {
     private static final Pattern XML_DOCUMENT_START_PATTERN = Pattern.compile("<?xml version=");
 
     private static final Pattern XML_DOCUMENT_START_XSLT_PATTERN =
-        Pattern.compile("<?xml version=[^>]+<?xml-stylesheet ");
+            Pattern.compile("<?xml version=[^>]+<?xml-stylesheet ");
 
     /**
      * See Interface for functional description.
@@ -64,9 +63,9 @@ public class XmlHeaderInterceptor implements Ordered {
      * @return Returns the changed result.
      * @throws Throwable Thrown in case of an error.
      */
-    @Around("execution(public java.lang.String de.escidoc.core.*.service.*.*(..))"
-        + " && !execution(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
-        + " && !execution(* de.escidoc.core.common..*.*(..))")
+    @Around("execution(public java.lang.String de.escidoc.core.*.service.*.*(..))" +
+            " && !execution(* de.escidoc.core..*.SemanticStoreHandler*.*(..))" +
+            " && !execution(* de.escidoc.core.common..*.*(..))")
     public Object processResult(final ProceedingJoinPoint joinPoint) throws Throwable {
         return post(joinPoint.proceed());
     }
@@ -82,15 +81,14 @@ public class XmlHeaderInterceptor implements Ordered {
     private static Object post(final Object result) throws WebserverSystemException {
 
         final CharSequence res = (CharSequence) result;
-        if (!XML_DOCUMENT_START_PATTERN.matcher(res).find()) {
+        if(! XML_DOCUMENT_START_PATTERN.matcher(res).find()) {
             final StringBuilder ret = new StringBuilder(XmlUtility.DOCUMENT_START);
             ret.append(XmlUtility.getStylesheetDefinition());
             ret.append(result);
             return ret.toString();
-        }
-        else if (!XML_DOCUMENT_START_XSLT_PATTERN.matcher(res).find()) {
-            return PATTERN_XML_HEADER.matcher(res).replaceFirst(
-                XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition());
+        } else if(! XML_DOCUMENT_START_XSLT_PATTERN.matcher(res).find()) {
+            return PATTERN_XML_HEADER.matcher(res)
+                    .replaceFirst(XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition());
         }
         return result;
     }

@@ -24,14 +24,13 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.persistence.interfaces.ResourceIdentifierDao;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 /**
  * Provider for new eSciDoc object ids.<br> This class prefetches a number of ids and provides ids on request. If no id
- * is available, a set of ids is fetched from a back end.<br> Currently, {@link ResourceIdentifierDao} is used to
- * fetch the ids from a fedora repository.
+ * is available, a set of ids is fetched from a back end.<br> Currently, {@link ResourceIdentifierDao} is used to fetch
+ * the ids from a fedora repository.
  *
  * @author Torsten Tetteroo
  */
@@ -67,8 +66,8 @@ public class EscidocIdProvider {
     public synchronized String[] getNextPids(final int noOfPids) throws SystemException {
 
         final String[] ret = new String[noOfPids];
-        for (int index = 0; index < noOfPids; index++) {
-            if (!storedIds.hasNext()) {
+        for(int index = 0; index < noOfPids; index++) {
+            if(! storedIds.hasNext()) {
                 fetchIds(noOfPids - index);
             }
             ret[index] = storedIds.next();
@@ -94,9 +93,9 @@ public class EscidocIdProvider {
         // I assume that its enough to check the first retrieved pid
         final String id = idArryList.get(0);
 
-        if (!id.equals(id.toLowerCase())) {
-            throw new SystemException("Invalid identifier prefix configured in Fedora. "
-                + "Capital letters are forbidden in eSciDoc as prefix.");
+        if(! id.equals(id.toLowerCase())) {
+            throw new SystemException("Invalid identifier prefix configured in Fedora. " +
+                    "Capital letters are forbidden in eSciDoc as prefix.");
         }
         this.storedIds = idArryList.iterator();
     }
