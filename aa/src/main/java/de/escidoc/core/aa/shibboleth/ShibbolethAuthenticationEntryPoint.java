@@ -65,9 +65,7 @@ public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPo
                 + this.sessionInitiatorPath
                 + "?target="
                 + URLEncoder.encode(target.toString(), XmlUtility.CHARACTER_ENCODING);
-        if (response instanceof HttpServletResponse) {
-            ((HttpServletResponse) response).sendRedirect(redirectUrl);
-        }
+        response.sendRedirect(redirectUrl);
     }
 
     /**
