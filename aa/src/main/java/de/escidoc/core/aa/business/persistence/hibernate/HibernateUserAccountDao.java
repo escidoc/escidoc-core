@@ -476,12 +476,12 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
             || (userAccount.getRoleGrantsByCreatorId() != null && !userAccount.getRoleGrantsByCreatorId().isEmpty())
             || (userAccount.getRoleGrantsByRevokerId() != null && !userAccount.getRoleGrantsByRevokerId().isEmpty())
             || (userAccount.getUserAccountsByCreatorId() != null && !userAccount.getUserAccountsByCreatorId().isEmpty() && (userAccount
-                .getUserAccountsByCreatorId().size() > 1 || !((UserAccount) userAccount
-                .getUserAccountsByCreatorId().iterator().next()).getId().equals(userAccount.getId())))
+                .getUserAccountsByCreatorId().size() > 1 || ! userAccount
+                .getUserAccountsByCreatorId().iterator().next().getId().equals(userAccount.getId())))
             || (userAccount.getUserAccountsByModifiedById() != null
                 && !userAccount.getUserAccountsByModifiedById().isEmpty() && (userAccount
-                .getUserAccountsByModifiedById().size() > 1 || !((UserAccount) userAccount
-                .getUserAccountsByModifiedById().iterator().next()).getId().equals(userAccount.getId())))
+                .getUserAccountsByModifiedById().size() > 1 || ! userAccount
+                .getUserAccountsByModifiedById().iterator().next().getId().equals(userAccount.getId())))
             || (userAccount.getUserGroupsByCreatorId() != null && !userAccount.getUserGroupsByCreatorId().isEmpty())
             || (userAccount.getUserGroupsByModifiedById() != null && !userAccount
                 .getUserGroupsByModifiedById().isEmpty())) {
