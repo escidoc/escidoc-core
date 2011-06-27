@@ -61,6 +61,10 @@ public interface FedoraServiceClient {
      * FIXME Fix
      * {@link FedoraServiceClient#ingest(IngestPathParam, IngestQueryParam, DigitalObjectTO)}
      * and remove this method.
+     * @param path
+     * @param query
+     * @param foxml
+     * @return
      */
     String ingest(@NotNull IngestPathParam path, @NotNull IngestQueryParam query, @NotNull String foxml);
 

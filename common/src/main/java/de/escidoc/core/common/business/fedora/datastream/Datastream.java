@@ -677,6 +677,7 @@ public class Datastream {
      * 
      * @param stream
      *            The string representing the content of this datastream.
+     * @return
      */
     public boolean updateStream(final byte[] stream) {
         if (!XmlUtility.isIdentical(stream, this.stream)) {

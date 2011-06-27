@@ -226,6 +226,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param resourceVersionNumber The resource version number.
      * @param attributeIdValue      The id of the attribute for that the result shall be cached.
      * @param ctx                   The {@link EvaluationCtx} for that the result shall be cached.
+     * @param cacheObject
      * @param result                The Object to cache
      */
     protected final void putInCache(

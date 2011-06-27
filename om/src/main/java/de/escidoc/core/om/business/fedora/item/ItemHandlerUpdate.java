@@ -274,6 +274,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private static void setComponentMetadataRecords(
         final Component c, final Map<String, ByteArrayOutputStream> mdMap,

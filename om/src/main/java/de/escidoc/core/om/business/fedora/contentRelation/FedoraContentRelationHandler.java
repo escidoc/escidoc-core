@@ -838,6 +838,10 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *             If there is no item with <code>id</code> in the repository.
      * @throws SystemException
      *             Thrown in case of an internal system error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected ContentRelationCreate setContentRelation(final String id) throws ContentRelationNotFoundException,
         SystemException, TripleStoreSystemException, IntegritySystemException, FedoraSystemException,
@@ -921,6 +925,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws ContentRelationNotFoundException
      *             Thrown if resource with provided id could not be found in
      *             Fedora repository.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     private static void setRelsExtValues(final ContentRelationCreate cr) throws SystemException,
         ContentRelationNotFoundException, FedoraSystemException, WebserverSystemException {
@@ -1143,6 +1149,9 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *             Thrown if attribute value is missing
      * @throws SystemException
      *             Thrown if internal error occur
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private static ContentRelationCreate parseContentRelation(final String xml) throws MissingAttributeValueException,
         InvalidContentException, SystemException, XmlParserSystemException, WebserverSystemException,
@@ -1284,6 +1293,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *            complete content relation XML
      * @throws SystemException
      *             One of the listeners threw an exception.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireContentRelationModified(final ContentRelationCreate cr, final String xmlData)
         throws SystemException, WebserverSystemException {
@@ -1301,6 +1311,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *            complete content relation XML
      * @throws SystemException
      *             One of the listeners threw an exception.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private void fireContentRelationCreated(final ContentRelationCreate cr, final String xmlData)
         throws SystemException, WebserverSystemException {

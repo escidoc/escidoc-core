@@ -165,6 +165,7 @@ public class SecurityException extends EscidocException {
     /**
      * Sets the redirect location (to the UserManagementWrapper).
      *
+     * @param redirectLocation
      */
     public void setRedirectLocation(final String redirectLocation) {
         this.redirectLocation = redirectLocation;

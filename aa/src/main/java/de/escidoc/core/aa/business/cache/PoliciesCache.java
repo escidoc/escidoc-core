@@ -107,6 +107,7 @@ public class PoliciesCache {
      *
      * @param userOrGroupId The user or group ID..
      * @param roleIsGranted  The Map with key: role ID, value: map with key: resource ID, value: EvaluationResult.
+     * @return
      */
     @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, EvaluationResult>> putRoleIsGrantedEvaluationResult(@PartialCacheKey
@@ -145,6 +146,7 @@ public class PoliciesCache {
      * <p/>
      *
      * @param userId The user ID to use as key for HashMap.
+     * @param policySet
      * @param The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices.
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices.
      */
@@ -173,6 +175,7 @@ public class PoliciesCache {
      * <p/>
      *
      * @param groupId The group ID to use as key for HashMap.
+     * @param policySet
      * @param The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices.
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices.
      */
@@ -187,6 +190,8 @@ public class PoliciesCache {
      *
      * @param userId The user ID to use as key for HashMap.
      * @return The grants of the user in a <code>Map</code>, or <code>null</code>.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     @Cacheable(cacheName = "userGrantsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, List<RoleGrant>>> getUserGrants(final String userId)
@@ -199,6 +204,8 @@ public class PoliciesCache {
      *
      * @param groupId The group ID to use as key for HashMap.
      * @return The grants of the group in a <code>Map</code>, or <code>null</code>.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     @Cacheable(cacheName = "groupGrantsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, List<RoleGrant>>> getGroupGrants(final String groupId)
@@ -211,6 +218,7 @@ public class PoliciesCache {
      *
      * @param handle The handle to use as key for HashMap.
      * @return The details of the user as <code>UserDetails</code>, or <code>null</code>.
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     @Cacheable(cacheName = "userDetailsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public UserDetails getUserDetails(final String handle) throws SqlDatabaseSystemException {

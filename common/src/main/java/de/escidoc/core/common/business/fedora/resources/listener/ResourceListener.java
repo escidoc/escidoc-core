@@ -33,6 +33,7 @@ public interface ResourceListener {
      * A resource was created.
      *
      * @param id      resource id
+     * @param xml
      * @throws SystemException The listener object threw an exception.
      */
     void resourceCreated(String id, String xml) throws SystemException;
@@ -49,6 +50,7 @@ public interface ResourceListener {
      * A resource was modified.
      *
      * @param id      resource id
+     * @param xml
      * @throws SystemException The listener object threw an exception.
      */
     void resourceModified(String id, String xml) throws SystemException;

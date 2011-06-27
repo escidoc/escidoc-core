@@ -104,6 +104,12 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      *            to retrieve.
      * @throws ResourceNotFoundException
      *             Thrown if the Component resource was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public Component(final String id, final String parentId, final DateTime timestamp)
         throws ResourceNotFoundException, ItemNotFoundException, IntegritySystemException, FedoraSystemException,
@@ -555,6 +561,13 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @param itemId
      *            The id of the Item.
      * @return Map of Component properties.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     public Map<String, String> setProperties(final String xml, final String itemId) throws InvalidContentException,
         ComponentNotFoundException, TripleStoreSystemException, EncodingSystemException, FedoraSystemException,

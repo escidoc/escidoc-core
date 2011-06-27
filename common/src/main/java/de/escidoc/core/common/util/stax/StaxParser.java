@@ -191,6 +191,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws IntegritySystemException       eSciDoc specific; thrown by some Handlers.
      * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException
      */
     public void parse(final byte[] in) throws XMLStreamException, ContentModelNotFoundException,
         ContextNotFoundException, MissingContentException, LockingException, ReadonlyElementViolationException,
@@ -241,6 +242,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws IntegritySystemException       eSciDoc specific; thrown by some Handlers.
      * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
      * @throws XmlCorruptedException          eSciDoc specific; thrown by some Handlers.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException
      */
     public void parse(final InputStream in) throws XMLStreamException, ContentModelNotFoundException,
         ContextNotFoundException, MissingContentException, LockingException, ReadonlyElementViolationException,
@@ -296,6 +298,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *                                        eSciDoc specific; thrown by some Handlers.
      * @throws IntegritySystemException       eSciDoc specific; thrown by some Handlers.
      * @throws XmlCorruptedException          eSciDoc specific; thrown by some Handlers.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException
      */
     public void parse(final String xml) throws EncodingSystemException, ReadonlyElementViolationException,
         ReadonlyAttributeViolationException, ContentModelNotFoundException, ContextNotFoundException,
@@ -354,6 +357,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws MissingMdRecordException       eSciDoc specific; thrown by some Handlers.
      * @throws TmeException                   eSciDoc specific; thrown by some Handlers.
      * @throws XmlCorruptedException          eSciDoc specific; thrown by some Handlers.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException
      */
     protected void parseStream(final InputStream in) throws XMLStreamException, ContentModelNotFoundException,
         ContextNotFoundException, MissingContentException, LockingException, ReadonlyElementViolationException,

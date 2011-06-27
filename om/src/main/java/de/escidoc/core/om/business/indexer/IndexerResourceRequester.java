@@ -150,6 +150,7 @@ public class IndexerResourceRequester {
      *
      * @param identifier identifier
      * @throws SystemException e
+     * @return
      */
     private Object getInternalResource(final String identifier) throws SystemException {
         try {
@@ -208,6 +209,7 @@ public class IndexerResourceRequester {
      *
      * @param identifier identifier
      * @throws SystemException e
+     * @return
      */
     private Object getExternalResource(final String identifier) throws SystemException {
         ByteArrayOutputStream out = null;

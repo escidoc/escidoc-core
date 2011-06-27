@@ -108,8 +108,11 @@ public class SecurityHelper {
      *
      * @param userOrGroupId The user ID or Group ID.
      * @param roleId        The role ID.
+     * @param role
+     * @param ctx
      * @param resourceId    The resource ID. This may be <code>null</code>.
      * @return EvaluationResult EvaluationResult for given user- or groupId, roleId and resourceId.
+     * @throws Exception
      */
     public EvaluationResult getRoleIsGrantedEvaluationResult(
         final String userOrGroupId, final String roleId, final String resourceId, final EscidocRole role,
@@ -274,8 +277,12 @@ public class SecurityHelper {
      * <p/>
      *
      * @param userId The user ID .
+     * @param policyFinder
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices, or
      *         <code>null</code>.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.net.URISyntaxException
+     * @throws com.sun.xacml.UnknownIdentifierException
      */
     public XacmlPolicySet getUserPolicies(final String userId, final PolicyFinder policyFinder)
         throws UnknownIdentifierException, URISyntaxException, WebserverSystemException {
@@ -314,8 +321,12 @@ public class SecurityHelper {
      * <p/>
      *
      * @param groupId The group ID to use as key for HashMap.
+     * @param policyFinder
      * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the group's polices, or
      *         <code>null</code>.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.net.URISyntaxException
+     * @throws com.sun.xacml.UnknownIdentifierException
      */
     public XacmlPolicySet getGroupPolicies(final String groupId, final PolicyFinder policyFinder)
         throws UnknownIdentifierException, URISyntaxException, WebserverSystemException {
@@ -339,6 +350,8 @@ public class SecurityHelper {
      *
      * @param userId The user ID to use as key for HashMap.
      * @return The grants of the user in a <code>Map</code>, or <code>null</code>.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public Map<String, Map<String, List<RoleGrant>>> getUserGrants(final String userId)
         throws UserAccountNotFoundException, SystemException {
@@ -350,6 +363,8 @@ public class SecurityHelper {
      *
      * @param groupId The group ID to use as key for HashMap.
      * @return The grants of the group in a <code>Map</code>, or <code>null</code>.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public Map<String, Map<String, List<RoleGrant>>> getGroupGrants(final String groupId)
         throws ResourceNotFoundException, SystemException {
@@ -361,6 +376,7 @@ public class SecurityHelper {
      *
      * @param handle The handle to use as key for HashMap.
      * @return The details of the user as <code>UserDetails</code>, or <code>null</code>.
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     public UserDetails getUserDetails(final String handle) throws SqlDatabaseSystemException {
         return policiesCache.getUserDetails(handle);

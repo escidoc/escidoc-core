@@ -66,6 +66,7 @@ public class SchemasCache {
      * @return Returns the validator for the schema specified by the provided URL.
      * @throws IOException              Thrown in case of an I/O error.
      * @throws WebserverSystemException Thrown if schema can not be parsed.
+     * @throws java.net.MalformedURLException
      */
     @Cacheable(cacheName = "schemasCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException, MalformedURLException {

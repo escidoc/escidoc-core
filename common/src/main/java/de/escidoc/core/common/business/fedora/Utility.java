@@ -217,6 +217,7 @@ public class Utility {
      *             Thrown in case of an internal error.
      * @throws XmlCorruptedException
      *             Thrown if one of the the given parameters is null
+     * @return
      */
     public static boolean checkOptimisticLockingCriteria(
         final DateTime fedoraLatestVersionDate, final DateTime updateLatestVersionDate, final String label)
