@@ -708,84 +708,6 @@
             </exclusions>
           </dependency>
           <dependency>
-            <groupId>org.fcrepo</groupId>
-            <artifactId>fcrepo-common</artifactId>
-            <version>${fcrepo.version}</version>
-            <exclusions>
-              <exclusion>
-                <groupId>org.openrdf.sesame</groupId>
-                <artifactId>sesame-model</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>org.fcrepo</groupId>
-                <artifactId>fcrepo-generate</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>org.fcrepo</groupId>
-                <artifactId>sunxacml</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>org.apache.lucene</groupId>
-                <artifactId>lucene-core</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>org.fcrepo</groupId>
-                <artifactId>jta</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>org.slf4j</groupId>
-                <artifactId>log4j-over-slf4j</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>org.fcrepo</groupId>
-                <artifactId>axis</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>org.fcrepo</groupId>
-                <artifactId>mulgara-core</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>wsdl4j</groupId>
-                <artifactId>wsdl4j</artifactId>
-              </exclusion>
-            </exclusions>
-          </dependency>
-          <dependency>
-            <groupId>org.fcrepo</groupId>
-            <artifactId>fcrepo-client-admin</artifactId>
-            <version>${fcrepo.version}</version>
-            <exclusions>
-              <exclusion>
-                <groupId>org.openrdf.sesame</groupId>
-                <artifactId>sesame-model</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>batik</groupId>
-                <artifactId>batik-swing</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>org.fcrepo</groupId>
-                <artifactId>mulgara-core</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>org.fcrepo</groupId>
-                <artifactId>sunxacml</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>owlapi</groupId>
-                <artifactId>owlapi</artifactId>
-              </exclusion>
-              <exclusion>
-                <groupId>gnu.getopt</groupId>
-                <artifactId>java-getopt</artifactId>
-              </exclusion>
-            </exclusions>
-          </dependency>
-          <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>1.6.2</version>
@@ -1828,16 +1750,6 @@
         <version>1.0</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.axis</groupId>
-        <artifactId>axis</artifactId>
-        <version>1.4</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.axis</groupId>
-        <artifactId>axis-jaxrpc</artifactId>
-        <version>1.4</version>
-      </dependency>
-      <dependency>
         <groupId>org.apache.ws.security</groupId>
         <artifactId>wss4j</artifactId>
         <version>1.5.11</version>
@@ -1924,72 +1836,6 @@
         <groupId>mptstore</groupId>
         <artifactId>mptstore-oracle</artifactId>
         <version>0.9.4</version>
-      </dependency>
-      <dependency>
-        <groupId>org.fcrepo</groupId>
-        <artifactId>fcrepo-client-admin</artifactId>
-        <version>${fcrepo.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-bundle</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>com.sun.jersey.contribs</groupId>
-            <artifactId>jersey-multipart</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>batik</groupId>
-            <artifactId>batik-swing</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.fcrepo</groupId>
-            <artifactId>mulgara-core</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.fcrepo</groupId>
-            <artifactId>sunxacml</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>owlapi</groupId>
-            <artifactId>owlapi</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>gnu.getopt</groupId>
-            <artifactId>java-getopt</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.fcrepo</groupId>
-        <artifactId>fcrepo-common</artifactId>
-        <version>${fcrepo.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>org.fcrepo</groupId>
-            <artifactId>fcrepo-generate</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.fcrepo</groupId>
-            <artifactId>sunxacml</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-core</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.z3950.zing</groupId>
