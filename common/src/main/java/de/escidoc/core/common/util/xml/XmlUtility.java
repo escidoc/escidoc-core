@@ -120,7 +120,7 @@ public final class XmlUtility {
      * Pattern used to detect Object type is in resource type format, e.g. http://escidoc.de/core/01/resources/OrganizationalUnit
      */
     public static final Pattern PATTERN_RESOURCE_OBJECT_TYPE =
-        Pattern.compile('^' + Constants.RESOURCES_NS_URI + ".*$");
+            Pattern.compile('^' + Constants.RESOURCES_NS_URI + ".*$");
 
     /**
      * The UTF-8 character encoding used in eSciDoc.
@@ -136,7 +136,7 @@ public final class XmlUtility {
      * Head of document.
      */
     public static final String DOCUMENT_START =
-        "<?xml version=\"" + XML_VERSION + "\" encoding=\"" + CHARACTER_ENCODING + "\"?>\n";
+            "<?xml version=\"" + XML_VERSION + "\" encoding=\"" + CHARACTER_ENCODING + "\"?>\n";
 
     /**
      * CDATA start.
@@ -169,10 +169,10 @@ public final class XmlUtility {
     public static final String ESC_QUOT = "&quot;";
 
     private static final Pattern PATTERN_ESCAPE_NEEDED =
-        Pattern.compile(AMPERSAND + '|' + LESS_THAN + '|' + GREATER_THAN + '|' + QUOT + '|' + APOS);
+            Pattern.compile(AMPERSAND + '|' + LESS_THAN + '|' + GREATER_THAN + '|' + QUOT + '|' + APOS);
 
-    private static final Pattern PATTERN_UNESCAPE_NEEDED =
-        Pattern.compile(ESC_AMPERSAND + '|' + ESC_LESS_THAN + '|' + ESC_GREATER_THAN + '|' + ESC_QUOT + '|' + ESC_APOS);
+    private static final Pattern PATTERN_UNESCAPE_NEEDED = Pattern.compile(
+            ESC_AMPERSAND + '|' + ESC_LESS_THAN + '|' + ESC_GREATER_THAN + '|' + ESC_QUOT + '|' + ESC_APOS);
 
     private static final Pattern PATTERN_AMPERSAND = Pattern.compile('(' + AMPERSAND + ')');
 
@@ -437,7 +437,7 @@ public final class XmlUtility {
     public static final String NAME_UNSECURED_ACTIONS = "unsecured-actions";
 
     public static final String XPATH_USER_ACCOUNT_ORGANIZATIONAL_UNIT =
-        "/user-account/properties/organizational-units/organizational-unit";
+            "/user-account/properties/organizational-units/organizational-unit";
 
     public static final String BASE_AA = "/aa/";
 
@@ -485,8 +485,8 @@ public final class XmlUtility {
      * The thread-safe compiled pattern to extract a title from an XML representation of a resource.
      */
     private static final Pattern PATTERN_NAME_FROM_XML =
-        Pattern
-            .compile(".*?<.*?:" + NAME_NAME + ">(.*?)</.*?:" + NAME_NAME + ">.*", Pattern.DOTALL | Pattern.MULTILINE);
+            Pattern.compile(".*?<.*?:" + NAME_NAME + ">(.*?)</.*?:" + NAME_NAME + ">.*",
+                    Pattern.DOTALL | Pattern.MULTILINE);
 
     private static final Pattern PATTERN_ID_WITHOUT_VERSION = Pattern.compile("([a-zA-Z]+:[a-zA-Z0-9]+):[0-9]+");
 
@@ -495,7 +495,7 @@ public final class XmlUtility {
     public static final String ERR_MSG_MISSING_ATTRIBUTE = "Missing attribute";
 
     private static final StackKeyedObjectPool TRANSFORMER_POOL =
-        new StackKeyedObjectPool(new PoolableTransformerFactory());
+            new StackKeyedObjectPool(new PoolableTransformerFactory());
 
     /**
      * Simple proxy method that can decide about the resource type and return the matching schema location.
@@ -507,7 +507,7 @@ public final class XmlUtility {
     public static String getSchemaLocationForResource(final ResourceType type) throws WebserverSystemException {
 
         final String schemaLocation;
-        switch (type) {
+        switch(type) {
             case ITEM:
                 schemaLocation = getItemSchemaLocation();
                 break;
@@ -971,15 +971,13 @@ public final class XmlUtility {
      *                       <code>false</code> ).
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
-    public static void addElement(
-        final XMLStreamWriter writer, final String elementName, final String elementContent, final String namespaceUri,
-        final boolean createEmpty) throws XMLStreamException {
-        if (elementContent == null) {
-            if (createEmpty) {
+    public static void addElement(final XMLStreamWriter writer, final String elementName, final String elementContent,
+                                  final String namespaceUri, final boolean createEmpty) throws XMLStreamException {
+        if(elementContent == null) {
+            if(createEmpty) {
                 writer.writeEmptyElement(namespaceUri, elementName);
             }
-        }
-        else {
+        } else {
             writer.writeStartElement(namespaceUri, elementName);
             writer.writeCharacters(elementContent);
             writer.writeEndElement();
@@ -998,16 +996,14 @@ public final class XmlUtility {
      *                       <code>false</code> ).
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
-    public static void addElement(
-        final XMLStreamWriter writer, final String elementName, final DateTime elementContent,
-        final String namespaceUri, final boolean createEmpty) throws XMLStreamException {
+    public static void addElement(final XMLStreamWriter writer, final String elementName, final DateTime elementContent,
+                                  final String namespaceUri, final boolean createEmpty) throws XMLStreamException {
 
-        if (elementContent == null) {
-            if (createEmpty) {
+        if(elementContent == null) {
+            if(createEmpty) {
                 writer.writeEmptyElement(namespaceUri, elementName);
             }
-        }
-        else {
+        } else {
             writer.writeStartElement(namespaceUri, elementName);
             writer.writeCharacters(elementContent.withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
             writer.writeEndElement();
@@ -1023,14 +1019,14 @@ public final class XmlUtility {
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
     public static void addLastModificationDateAttribute(final XMLStreamWriter writer, final DateTime modifiedDate)
-        throws XMLStreamException {
+            throws XMLStreamException {
 
-        if (modifiedDate == null) {
+        if(modifiedDate == null) {
             return;
         }
 
-        writer.writeAttribute("last-modification-date", modifiedDate.withZone(DateTimeZone.UTC).toString(
-            Constants.TIMESTAMP_FORMAT));
+        writer.writeAttribute("last-modification-date",
+                modifiedDate.withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
     }
 
     /**
@@ -1057,9 +1053,9 @@ public final class XmlUtility {
      * @param namespaceUri The namespace URI of the new element.
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
-    public static void addReferencingElement(
-        final XMLStreamWriter writer, final String elementName, final String xlinkTitle, final String xlinkHref,
-        final String namespaceUri) throws XMLStreamException {
+    public static void addReferencingElement(final XMLStreamWriter writer, final String elementName,
+                                             final String xlinkTitle, final String xlinkHref, final String namespaceUri)
+            throws XMLStreamException {
 
         writer.writeStartElement(namespaceUri, elementName);
         addXlinkAttributes(writer, xlinkTitle, xlinkHref);
@@ -1077,10 +1073,10 @@ public final class XmlUtility {
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
     public static void addXlinkAttributes(final XMLStreamWriter writer, final String xlinkTitle, final String xlinkHref)
-        throws XMLStreamException {
+            throws XMLStreamException {
 
         writer.writeAttribute(Constants.XLINK_NS_URI, "type", "simple");
-        if (xlinkTitle != null) {
+        if(xlinkTitle != null) {
             writer.writeAttribute(Constants.XLINK_NS_URI, "title", xlinkTitle);
         }
         writer.writeAttribute(Constants.XLINK_NS_URI, "href", xlinkHref);
@@ -1096,8 +1092,8 @@ public final class XmlUtility {
      */
     public static void addXmlBaseAttribute(final XMLStreamWriter writer) throws XMLStreamException, IOException {
 
-        writer.writeAttribute(Constants.XML_NS_URI, "base", EscidocConfiguration.getInstance().get(
-            EscidocConfiguration.ESCIDOC_CORE_BASEURL));
+        writer.writeAttribute(Constants.XML_NS_URI, "base",
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
     }
 
     /**
@@ -1126,7 +1122,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException     Thrown in case of any other failure.
      */
     public ByteArrayInputStream createValidatedByteArrayInputStream(final String xmlData, final String schemaUri)
-        throws XmlCorruptedException, WebserverSystemException, XmlSchemaValidationException {
+            throws XmlCorruptedException, WebserverSystemException, XmlSchemaValidationException {
 
         final ByteArrayInputStream byteArrayInputStream = convertToByteArrayInputStream(xmlData);
         validate(byteArrayInputStream, schemaUri);
@@ -1145,27 +1141,23 @@ public final class XmlUtility {
      * @throws WebserverSystemException     Thrown in any other case.
      */
     public void validate(final ByteArrayInputStream byteArrayInputStream, final String schemaUri)
-        throws XmlCorruptedException, XmlSchemaValidationException, WebserverSystemException {
+            throws XmlCorruptedException, XmlSchemaValidationException, WebserverSystemException {
 
         try {
             final Validator validator = getSchema(schemaUri).newValidator();
             validator.validate(new SAXSource(new InputSource(byteArrayInputStream)));
-        }
-        catch (final SAXParseException e) {
+        } catch(final SAXParseException e) {
             final String errorMsg =
-                "Error in line " + e.getLineNumber() + ", column " + e.getColumnNumber() + ". " + e.getMessage();
-            if (e.getMessage().startsWith("cvc")) {
+                    "Error in line " + e.getLineNumber() + ", column " + e.getColumnNumber() + ". " + e.getMessage();
+            if(e.getMessage().startsWith("cvc")) {
                 throw new XmlSchemaValidationException(errorMsg, e);
-            }
-            else {
+            } else {
                 throw new XmlCorruptedException(errorMsg, e);
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new WebserverSystemException(e.getMessage(), e);
-        }
-        finally {
-            if (byteArrayInputStream != null) {
+        } finally {
+            if(byteArrayInputStream != null) {
                 byteArrayInputStream.reset();
             }
         }
@@ -1183,10 +1175,11 @@ public final class XmlUtility {
      * @throws WebserverSystemException     Thrown in any other case.
      * @throws XmlParserSystemException     Thrown if the expected root element raise an unexpected error.
      */
-    public void validate(final String xmlData, final String schemaUri, final String root) throws XmlCorruptedException,
-        XmlSchemaValidationException, WebserverSystemException, XmlParserSystemException {
+    public void validate(final String xmlData, final String schemaUri, final String root)
+            throws XmlCorruptedException, XmlSchemaValidationException, WebserverSystemException,
+            XmlParserSystemException {
 
-        if (root.length() > 0) {
+        if(root.length() > 0) {
             checkRootElement(xmlData, root);
         }
         validate(xmlData, schemaUri);
@@ -1200,27 +1193,23 @@ public final class XmlUtility {
      * @throws XmlCorruptedException    Thrown if the document has not the expected element.
      * @throws XmlParserSystemException Thrown if the expected root element raise an unexpected error.
      */
-    private static void checkRootElement(final String xmlData, final String expectedRoot) throws XmlCorruptedException,
-        XmlParserSystemException {
+    private static void checkRootElement(final String xmlData, final String expectedRoot)
+            throws XmlCorruptedException, XmlParserSystemException {
 
         final StaxParser sp = new StaxParser();
         final CheckRootElementStaxHandler checkRoot = new CheckRootElementStaxHandler(expectedRoot);
         sp.addHandler(checkRoot);
         try {
             sp.parse(xmlData);
-        }
-        catch (final InvalidXmlException e) {
+        } catch(final InvalidXmlException e) {
             throw new XmlCorruptedException("Xml Document has wrong root element, expected '" + expectedRoot + "'.", e);
-        }
-        catch (final WstxParsingException e) {
+        } catch(final WstxParsingException e) {
             throw new XmlCorruptedException(e.getMessage(), e);
-        }
-        catch (final WebserverSystemException e) {
+        } catch(final WebserverSystemException e) {
             // ignore, check was successful and parsing aborted
-        }
-        catch (final Exception e) {
-            handleUnexpectedStaxParserException("Check for root '" + expectedRoot
-                + "' element raised unexpected exception! ", e);
+        } catch(final Exception e) {
+            handleUnexpectedStaxParserException(
+                    "Check for root '" + expectedRoot + "' element raised unexpected exception! ", e);
         }
     }
 
@@ -1233,8 +1222,8 @@ public final class XmlUtility {
      * @throws XmlSchemaValidationException Thrown if both validation fail or only one validation is executed and fails
      * @throws WebserverSystemException     Thrown in any other case.
      */
-    public void validate(final String xmlData, final String schemaUri) throws XmlCorruptedException,
-        XmlSchemaValidationException, WebserverSystemException {
+    public void validate(final String xmlData, final String schemaUri)
+            throws XmlCorruptedException, XmlSchemaValidationException, WebserverSystemException {
 
         validate(convertToByteArrayInputStream(xmlData), schemaUri);
     }
@@ -1249,8 +1238,8 @@ public final class XmlUtility {
      *                                      fails
      * @throws WebserverSystemException     Thrown in any other case.
      */
-    public void validate(final String xmlData, final ResourceType resourceType) throws XmlCorruptedException,
-        XmlSchemaValidationException, WebserverSystemException {
+    public void validate(final String xmlData, final ResourceType resourceType)
+            throws XmlCorruptedException, XmlSchemaValidationException, WebserverSystemException {
         validate(xmlData, getSchemaLocationForResource(resourceType));
 
     }
@@ -1265,8 +1254,7 @@ public final class XmlUtility {
 
         try {
             return new ByteArrayInputStream(str.getBytes(CHARACTER_ENCODING));
-        }
-        catch (final UnsupportedEncodingException e) {
+        } catch(final UnsupportedEncodingException e) {
             // this should not happen
             return new ByteArrayInputStream("".getBytes());
         }
@@ -1282,20 +1270,18 @@ public final class XmlUtility {
         final ByteArrayOutputStream stream = new ByteArrayOutputStream();
         try {
             stream.write(str.getBytes(CHARACTER_ENCODING));
-        }
-        catch (final UnsupportedEncodingException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final UnsupportedEncodingException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on writing to stream.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on writing to stream.", e);
             }
-        }
-        catch (final IOException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final IOException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on writing to stream.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on writing to stream.", e);
             }
         }
@@ -1312,7 +1298,7 @@ public final class XmlUtility {
      */
     public static String getIdFromURI(final String uri) {
 
-        if (uri == null) {
+        if(uri == null) {
             return null;
         }
         final Matcher matcher = PATTERN_GET_ID_FROM_URI_OR_FEDORA_ID.matcher(uri);
@@ -1346,12 +1332,11 @@ public final class XmlUtility {
     public static String getIdFromStartElement(final StartElement element) throws MissingAttributeValueException {
 
         try {
-            final String objid =
-                element.indexOfAttribute(null, NAME_OBJID) == -1 ? getIdFromURI(element.getAttributeValue(
-                    Constants.XLINK_NS_URI, NAME_HREF)) : element.getAttributeValue(null, NAME_OBJID);
+            final String objid = element.indexOfAttribute(null, NAME_OBJID) == - 1 ?
+                    getIdFromURI(element.getAttributeValue(Constants.XLINK_NS_URI, NAME_HREF)) :
+                    element.getAttributeValue(null, NAME_OBJID);
             return objid;
-        }
-        catch (final NoSuchAttributeException e) {
+        } catch(final NoSuchAttributeException e) {
             throwMissingAttributeValueException(element, NAME_OBJID + '|' + NAME_HREF);
             return null;
         }
@@ -1367,7 +1352,7 @@ public final class XmlUtility {
 
         String result = objid;
         final Matcher m = PATTERN_ID_WITHOUT_VERSION.matcher(objid);
-        if (m.find()) {
+        if(m.find()) {
             result = m.group(1);
         }
         return result;
@@ -1382,7 +1367,7 @@ public final class XmlUtility {
     public static String getVersionNumberFromObjid(final CharSequence objid) {
         String version = null;
         final Matcher m = PATTERN_VERSION_NUMBER.matcher(objid);
-        if (m.find()) {
+        if(m.find()) {
             version = m.group(1);
         }
         return version;
@@ -1429,23 +1414,22 @@ public final class XmlUtility {
      * @throws EncodingSystemException If a wrong Encoding is detected.
      * @throws XmlCorruptedException   If the given XML is not valid.
      */
-    public static TaskParamHandler parseTaskParam(final String param) throws XmlCorruptedException,
-        EncodingSystemException {
+    public static TaskParamHandler parseTaskParam(final String param)
+            throws XmlCorruptedException, EncodingSystemException {
         return parseTaskParam(param, true);
     }
 
     public static TaskParamHandler parseTaskParam(final String param, final boolean checkLastModificationDate)
-        throws XmlCorruptedException, EncodingSystemException {
+            throws XmlCorruptedException, EncodingSystemException {
 
         final StaxParser staxParser = new StaxParser();
         final TaskParamHandler result = new TaskParamHandler(staxParser);
-        if (param != null) {
+        if(param != null) {
             result.setCheckLastModificationDate(checkLastModificationDate);
             final ByteArrayInputStream xmlDataIs;
             try {
                 xmlDataIs = new ByteArrayInputStream(param.getBytes(CHARACTER_ENCODING));
-            }
-            catch (final UnsupportedEncodingException e) {
+            } catch(final UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
             final List<DefaultHandler> handlerChain = new ArrayList<DefaultHandler>();
@@ -1453,8 +1437,7 @@ public final class XmlUtility {
             staxParser.setHandlerChain(handlerChain);
             try {
                 staxParser.parse(xmlDataIs);
-            }
-            catch (final Exception e) {
+            } catch(final Exception e) {
                 throw new XmlCorruptedException(e.getMessage(), e);
             }
 
@@ -1474,9 +1457,8 @@ public final class XmlUtility {
 
         try {
             return EscidocConfiguration.getInstance().appendToSelfURL(
-                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) + '/');
-        }
-        catch (final IOException e) {
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) + '/');
+        } catch(final IOException e) {
             throw new WebserverSystemException("Error accessing Escidoc configuration!", e);
         }
     }
@@ -1490,14 +1472,12 @@ public final class XmlUtility {
      */
     public static String getStylesheetDefinition() throws WebserverSystemException {
 
-        if (stylesheetDefinition == null) {
+        if(stylesheetDefinition == null) {
             try {
                 final String xslt = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSLT_STD);
-                stylesheetDefinition =
-                    xslt != null && xslt.length() > 0 ? "<?xml-stylesheet type=\"text/xsl\" " + "href=\""
-                        + getEscidocBaseUrl() + xslt + "\"?>\n" : "";
-            }
-            catch (final IOException e) {
+                stylesheetDefinition = xslt != null && xslt.length() > 0 ?
+                        "<?xml-stylesheet type=\"text/xsl\" " + "href=\"" + getEscidocBaseUrl() + xslt + "\"?>\n" : "";
+            } catch(final IOException e) {
                 throw new WebserverSystemException(e.getMessage(), e);
             }
         }
@@ -1510,7 +1490,7 @@ public final class XmlUtility {
      */
     public static String getAdminDescriptorSchemaLocation() throws WebserverSystemException {
         final String subPath = "context/0.4/context.xsd";
-        if (contextRestSchemaLocation == null) {
+        if(contextRestSchemaLocation == null) {
             contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + subPath;
         }
         return contextRestSchemaLocation;
@@ -1521,9 +1501,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContainerSchemaLocation() throws WebserverSystemException {
-        if (containerRestSchemaLocation == null) {
+        if(containerRestSchemaLocation == null) {
             containerRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION + "/container.xsd";
+                    getSchemaBaseUrl() + "rest/container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION +
+                            "/container.xsd";
         }
         return containerRestSchemaLocation;
     }
@@ -1533,7 +1514,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getSpoTaskParamSchemaLocation() throws WebserverSystemException {
-        if (spoTaskParamSchemaLocation == null) {
+        if(spoTaskParamSchemaLocation == null) {
             spoTaskParamSchemaLocation = getSchemaBaseUrl() + "common/0.3/query.xsd";
         }
         return spoTaskParamSchemaLocation;
@@ -1544,7 +1525,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContainerMembersFilterSchemaLocation() throws WebserverSystemException {
-        if (containerMembersFilterRestSchemaLocation == null) {
+        if(containerMembersFilterRestSchemaLocation == null) {
             containerMembersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/container/0.3/filter-members.xsd";
         }
         return containerMembersFilterRestSchemaLocation;
@@ -1555,7 +1536,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContainersFilterSchemaLocation() throws WebserverSystemException {
-        if (containersFilterRestSchemaLocation == null) {
+        if(containersFilterRestSchemaLocation == null) {
             containersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/container/0.3/filter-containers.xsd";
         }
         return containersFilterRestSchemaLocation;
@@ -1566,10 +1547,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContentModelSchemaLocation() throws WebserverSystemException {
-        final String result;
         final String contentModelXsd =
-            "content-model" + Constants.CONTENT_MODEL_NS_URI_SCHEMA_VERSION + "/content-model.xsd";
-        if (contentModelRestSchemaLocation == null) {
+                "content-model" + Constants.CONTENT_MODEL_NS_URI_SCHEMA_VERSION + "/content-model.xsd";
+        if(contentModelRestSchemaLocation == null) {
             contentModelRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentModelXsd;
         }
         return contentModelRestSchemaLocation;
@@ -1581,7 +1561,7 @@ public final class XmlUtility {
      */
     public static String getContextSchemaLocation() throws WebserverSystemException {
         final String contextXsd = "context" + Constants.CONTEXT_NS_URI_SCHEMA_VERSION + "/context.xsd";
-        if (contextRestSchemaLocation == null) {
+        if(contextRestSchemaLocation == null) {
             contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contextXsd;
         }
         return contextRestSchemaLocation;
@@ -1593,8 +1573,8 @@ public final class XmlUtility {
      */
     public static String getContentRelationSchemaLocation() throws WebserverSystemException {
         final String contentRelationXsd =
-            "content-relation" + Constants.CONTENT_RELATION_NS_URI_SCHEMA_VERSION + "/content-relation.xsd";
-        if (contentRelationRestSchemaLocation == null) {
+                "content-relation" + Constants.CONTENT_RELATION_NS_URI_SCHEMA_VERSION + "/content-relation.xsd";
+        if(contentRelationRestSchemaLocation == null) {
             contentRelationRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentRelationXsd;
         }
         return contentRelationRestSchemaLocation;
@@ -1606,7 +1586,7 @@ public final class XmlUtility {
      */
     public static String getSetDefinitionSchemaLocation() throws WebserverSystemException {
         final String setDefinitionXsd = "set-definition/0.1/set-definition.xsd";
-        if (setDefinitionRestSchemaLocation == null) {
+        if(setDefinitionRestSchemaLocation == null) {
             setDefinitionRestSchemaLocation = getSchemaBaseUrl() + "rest/" + setDefinitionXsd;
         }
         return setDefinitionRestSchemaLocation;
@@ -1617,7 +1597,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContextsFilterSchemaLocation() throws WebserverSystemException {
-        if (contextsFilterSchemaLocationRest == null) {
+        if(contextsFilterSchemaLocationRest == null) {
             contextsFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/context/0.3/filter-contexts.xsd";
         }
         return contextsFilterSchemaLocationRest;
@@ -1628,7 +1608,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContextMembersFilterSchemaLocation() throws WebserverSystemException {
-        if (contextMembersFilterSchemaLocationRest == null) {
+        if(contextMembersFilterSchemaLocationRest == null) {
             contextMembersFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/" + "context/0.3/filter-contexts.xsd";
         }
         return contextMembersFilterSchemaLocationRest;
@@ -1666,9 +1646,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getItemSchemaLocation() throws WebserverSystemException {
-        if (itemRestSchemaLocation == null) {
+        if(itemRestSchemaLocation == null) {
             itemRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
+                    getSchemaBaseUrl() + "rest/item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
         }
         return itemRestSchemaLocation;
     }
@@ -1678,7 +1658,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getUpdateRelationsSchemaLocation() throws WebserverSystemException {
-        if (updateRelationsSchemaLocation == null) {
+        if(updateRelationsSchemaLocation == null) {
             updateRelationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/update-relations.xsd";
         }
         return updateRelationsSchemaLocation;
@@ -1689,7 +1669,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getRelationsSchemaLocation() throws WebserverSystemException {
-        if (relationsSchemaLocation == null) {
+        if(relationsSchemaLocation == null) {
             relationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/relations.xsd";
         }
         return relationsSchemaLocation;
@@ -1700,10 +1680,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getOrganizationalUnitSchemaLocation() throws WebserverSystemException {
-        if (organizationalUnitRestSchemaLocation == null) {
-            organizationalUnitRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
-                    + Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION + "/organizational-unit.xsd";
+        if(organizationalUnitRestSchemaLocation == null) {
+            organizationalUnitRestSchemaLocation = getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT +
+                    Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION + "/organizational-unit.xsd";
         }
         return organizationalUnitRestSchemaLocation;
     }
@@ -1713,10 +1692,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getOrganizationalUnitListSchemaLocation() throws WebserverSystemException {
-        if (organizationalUnitListRestSchemaLocation == null) {
-            organizationalUnitListRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
-                    + Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION + "/organizational-unit-list.xsd";
+        if(organizationalUnitListRestSchemaLocation == null) {
+            organizationalUnitListRestSchemaLocation = getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT +
+                    Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION + "/organizational-unit-list.xsd";
         }
         return organizationalUnitListRestSchemaLocation;
     }
@@ -1726,9 +1704,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getOrganizationalUnitPathListSchemaLocation() throws WebserverSystemException {
-        if (organizationalUnitPathListRestSchemaLocation == null) {
+        if(organizationalUnitPathListRestSchemaLocation == null) {
             organizationalUnitPathListRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-path-list.xsd";
+                    getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-path-list.xsd";
         }
         return organizationalUnitPathListRestSchemaLocation;
     }
@@ -1738,9 +1716,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getOrganizationalUnitRefListSchemaLocation() throws WebserverSystemException {
-        if (organizationalUnitRefListRestSchemaLocation == null) {
+        if(organizationalUnitRefListRestSchemaLocation == null) {
             organizationalUnitRefListRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-ref-list.xsd";
+                    getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-ref-list.xsd";
         }
         return organizationalUnitRefListRestSchemaLocation;
     }
@@ -1750,7 +1728,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getFilterSchemaLocation() throws WebserverSystemException {
-        if (filterSchemaLocationRest == null) {
+        if(filterSchemaLocationRest == null) {
             filterSchemaLocationRest = getSchemaBaseUrl() + "rest/common/0.4/filter.xsd";
         }
         return filterSchemaLocationRest;
@@ -1761,7 +1739,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getPdpRequestsSchemaLocation() throws WebserverSystemException {
-        if (pdpRequestsSchemaLocation == null) {
+        if(pdpRequestsSchemaLocation == null) {
             pdpRequestsSchemaLocation = getSchemaBaseUrl() + "rest/pdp/0.3/requests.xsd";
         }
         return pdpRequestsSchemaLocation;
@@ -1781,7 +1759,7 @@ public final class XmlUtility {
      */
     public static String getStagingFileSchemaLocation() throws WebserverSystemException {
 
-        if (stagingFileSchemaLocation == null) {
+        if(stagingFileSchemaLocation == null) {
             stagingFileSchemaLocation = getSchemaBaseUrl() + "rest/staging-file/0.3/staging-file.xsd";
         }
         return stagingFileSchemaLocation;
@@ -1792,7 +1770,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getTmeRequestsSchemaLocation() throws WebserverSystemException {
-        if (tmeRequestsSchemaLocation == null) {
+        if(tmeRequestsSchemaLocation == null) {
             tmeRequestsSchemaLocation = getSchemaBaseUrl() + "tme/0.1/request.xsd";
         }
         return tmeRequestsSchemaLocation;
@@ -1849,7 +1827,7 @@ public final class XmlUtility {
      */
     public static String getStatisticDataSchemaLocation() throws WebserverSystemException {
 
-        if (statisticDataSchemaLocation == null) {
+        if(statisticDataSchemaLocation == null) {
             statisticDataSchemaLocation = getSchemaBaseUrl() + "statistic-data/0.3/statistic-data.xsd";
         }
         return statisticDataSchemaLocation;
@@ -1860,10 +1838,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getAggregationDefinitionSchemaLocation() throws WebserverSystemException {
-        if (aggregationDefinitionRestSchemaLocation == null) {
-            aggregationDefinitionRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/aggregation-definition"
-                    + Constants.AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION + "/aggregation-definition.xsd";
+        if(aggregationDefinitionRestSchemaLocation == null) {
+            aggregationDefinitionRestSchemaLocation = getSchemaBaseUrl() + "rest/aggregation-definition" +
+                    Constants.AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION + "/aggregation-definition.xsd";
         }
         return aggregationDefinitionRestSchemaLocation;
     }
@@ -1873,10 +1850,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getReportDefinitionSchemaLocation() throws WebserverSystemException {
-        if (reportDefinitionRestSchemaLocation == null) {
+        if(reportDefinitionRestSchemaLocation == null) {
             reportDefinitionRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/report-definition" + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION
-                    + "/report-definition.xsd";
+                    getSchemaBaseUrl() + "rest/report-definition" + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION +
+                            "/report-definition.xsd";
         }
         return reportDefinitionRestSchemaLocation;
     }
@@ -1886,9 +1863,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getScopeSchemaLocation() throws WebserverSystemException {
-        if (scopeRestSchemaLocation == null) {
+        if(scopeRestSchemaLocation == null) {
             scopeRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/scope" + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
+                    getSchemaBaseUrl() + "rest/scope" + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
         }
         return scopeRestSchemaLocation;
     }
@@ -1898,9 +1875,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getReportSchemaLocation() throws WebserverSystemException {
-        if (reportRestSchemaLocation == null) {
+        if(reportRestSchemaLocation == null) {
             reportRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/report" + Constants.REPORT_NS_URI_SCHEMA_VERSION + "/report.xsd";
+                    getSchemaBaseUrl() + "rest/report" + Constants.REPORT_NS_URI_SCHEMA_VERSION + "/report.xsd";
         }
         return reportRestSchemaLocation;
     }
@@ -1910,10 +1887,10 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getReportParametersSchemaLocation() throws WebserverSystemException {
-        if (reportParametersRestSchemaLocation == null) {
+        if(reportParametersRestSchemaLocation == null) {
             reportParametersRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/report" + Constants.REPORT_PARAMETERS_NS_URI_SCHEMA_VERSION
-                    + "/report-parameters.xsd";
+                    getSchemaBaseUrl() + "rest/report" + Constants.REPORT_PARAMETERS_NS_URI_SCHEMA_VERSION +
+                            "/report-parameters.xsd";
         }
         return reportParametersRestSchemaLocation;
     }
@@ -1924,10 +1901,9 @@ public final class XmlUtility {
      */
     public static String getPreprocessingInformationSchemaLocation() throws WebserverSystemException {
 
-        if (preprocessingInformationSchemaLocation == null) {
-            preprocessingInformationSchemaLocation =
-                getSchemaBaseUrl() + "soap/preprocessing-information"
-                    + Constants.PREPROCESSING_INFORMATION_NS_URI_SCHEMA_VERSION + "/preprocessing-information.xsd";
+        if(preprocessingInformationSchemaLocation == null) {
+            preprocessingInformationSchemaLocation = getSchemaBaseUrl() + "soap/preprocessing-information" +
+                    Constants.PREPROCESSING_INFORMATION_NS_URI_SCHEMA_VERSION + "/preprocessing-information.xsd";
         }
         return preprocessingInformationSchemaLocation;
     }
@@ -1937,7 +1913,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getXmlSchemaSchemaLocation() throws WebserverSystemException {
-        if (xmlSchemaSchemaLocation == null) {
+        if(xmlSchemaSchemaLocation == null) {
             xmlSchemaSchemaLocation = getSchemaBaseUrl() + "common/0.2/xml-schema.xsd";
         }
         return xmlSchemaSchemaLocation;
@@ -1950,7 +1926,7 @@ public final class XmlUtility {
      */
     private static String getSchemaLocation(final String commonPart) throws WebserverSystemException {
         String result = REST_SCHEMA_LOCATIONS.get(commonPart);
-        if (result == null) {
+        if(result == null) {
             result = getSchemaBaseUrl() + "rest/" + commonPart;
             REST_SCHEMA_LOCATIONS.put(commonPart, result);
         }
@@ -1966,7 +1942,7 @@ public final class XmlUtility {
      */
     public static String escapeForbiddenXmlCharacters(final String xmlText) {
         String result = xmlText;
-        if (result != null && PATTERN_ESCAPE_NEEDED.matcher(result).find()) {
+        if(result != null && PATTERN_ESCAPE_NEEDED.matcher(result).find()) {
             result = PATTERN_AMPERSAND.matcher(result).replaceAll(ESC_AMPERSAND);
             result = PATTERN_LESS_THAN.matcher(result).replaceAll(ESC_LESS_THAN);
             result = PATTERN_GREATER_THAN.matcher(result).replaceAll(ESC_GREATER_THAN);
@@ -1985,7 +1961,7 @@ public final class XmlUtility {
      */
     public static String unescapeForbiddenXmlCharacters(final String xmlText) {
         String result = xmlText;
-        if (result != null && PATTERN_UNESCAPE_NEEDED.matcher(result).find()) {
+        if(result != null && PATTERN_UNESCAPE_NEEDED.matcher(result).find()) {
             result = PATTERN_ESC_LESS_THAN.matcher(result).replaceAll(LESS_THAN);
             result = PATTERN_ESC_GREATER_THAN.matcher(result).replaceAll(GREATER_THAN);
             result = PATTERN_ESC_QUOT.matcher(result).replaceAll(QUOT);
@@ -2003,7 +1979,7 @@ public final class XmlUtility {
      * @throws XmlParserSystemException Thrown in case of an internal system error.
      */
     public static void handleUnexpectedStaxParserException(final String message, final Exception e)
-        throws XmlParserSystemException {
+            throws XmlParserSystemException {
         final String text = message != null ? message + e.getMessage() : e.getMessage();
         throw new XmlParserSystemException(text, e);
     }
@@ -2018,8 +1994,7 @@ public final class XmlUtility {
     public static String getEscidocBaseUrl() throws WebserverSystemException {
         try {
             return EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException("Error accessing Escidoc configuration!", e);
         }
     }
@@ -2038,7 +2013,7 @@ public final class XmlUtility {
     private static XMLOutputFactory getInitilizedXmlOutputFactory(final boolean repairing) {
         final XMLOutputFactory xmlof = XMLOutputFactory.newInstance();
         xmlof.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES, repairing);
-        if (repairing) {
+        if(repairing) {
             xmlof.setProperty(XMLOutputFactory2.P_AUTOMATIC_NS_PREFIX, "ext");
         }
         xmlof.setProperty(XMLOutputFactory2.P_ATTR_VALUE_ESCAPER, new StaxAttributeEscapingWriterFactory());
@@ -2065,7 +2040,7 @@ public final class XmlUtility {
      * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
     public static XMLStreamWriter createXmlStreamWriterNamespaceRepairing(final OutputStream out)
-        throws XMLStreamException {
+            throws XMLStreamException {
 
         return getInitilizedXmlOutputFactory(true).createXMLStreamWriter(out);
     }
@@ -2101,9 +2076,9 @@ public final class XmlUtility {
      * @throws MissingAttributeValueException Throws created exception.
      */
     public static void throwMissingAttributeValueException(final AbstractElement element, final String attributeName)
-        throws MissingAttributeValueException {
-        throw new MissingAttributeValueException(StringUtility.format(ERR_MSG_MISSING_ATTRIBUTE, element.getPath(),
-            attributeName, element.getLocationString()));
+            throws MissingAttributeValueException {
+        throw new MissingAttributeValueException(StringUtility
+                .format(ERR_MSG_MISSING_ATTRIBUTE, element.getPath(), attributeName, element.getLocationString()));
     }
 
     /**
@@ -2116,7 +2091,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException If an error occurs.
      */
     public static String createDC(final String nsUri, final String mdRecordXml, final String objID)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
         return createDC(nsUri, mdRecordXml, objID, null);
     }
 
@@ -2130,64 +2105,59 @@ public final class XmlUtility {
      * @return The content of the DC datastream or null if content is empty.
      * @throws WebserverSystemException If an error occurs.
      */
-    public static String createDC(
-        final String nsUri, final String mdRecordXml, final CharSequence objID, final String contentModelID)
-        throws WebserverSystemException {
+    public static String createDC(final String nsUri, final String mdRecordXml, final CharSequence objID,
+                                  final String contentModelID) throws WebserverSystemException {
         String result = null;
         Transformer t = null;
         final String transformerKey = nsUri + ';' + contentModelID;
         try {
             t = (Transformer) TRANSFORMER_POOL.borrowObject(transformerKey);
-            if (objID != null && objID.length() > 0) {
+            if(objID != null && objID.length() > 0) {
                 t.setParameter("ID", objID);
-            }
-            else {
+            } else {
                 t.clearParameters();
             }
             final ByteArrayOutputStream out = new ByteArrayOutputStream();
             t.transform(new StreamSource(new ByteArrayInputStream(mdRecordXml.getBytes(CHARACTER_ENCODING))),
-                new StreamResult(out));
+                    new StreamResult(out));
 
             result = out.toString(CHARACTER_ENCODING).trim();
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new WebserverSystemException("Mapping of Metadata to DC failed.", e);
-        }
-        finally {
+        } finally {
             try {
                 TRANSFORMER_POOL.returnObject(transformerKey, t);
-            }
-            catch (final Exception e) {
-                if (LOGGER.isWarnEnabled()) {
+            } catch(final Exception e) {
+                if(LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Returning transformer to pool failed.");
                 }
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Returning transformer to pool failed.", e);
                 }
             }
         }
         // check if result is empty
-        if (result != null && result.length() == 0) {
+        if(result != null && result.length() == 0) {
             result = null;
         }
         return result;
     }
 
     public static final boolean isIdentical(byte[] xml1, byte[] xml2) {
-        if (xml1 == null) {
+        if(xml1 == null) {
             return xml2 == null;
         }
-        if (xml2 == null) {
+        if(xml2 == null) {
             return xml1 == null;
         }
         return isIdentical(IOUtils.newStringFromBytes(xml1), IOUtils.newStringFromBytes(xml2));
     }
 
     public static final boolean isIdentical(String xml1, String xml2) {
-        if (xml1 == null) {
+        if(xml1 == null) {
             return xml2 == null;
         }
-        if (xml2 == null) {
+        if(xml2 == null) {
             return xml1 == null;
         }
         XMLUnit.setIgnoreComments(true);
@@ -2196,11 +2166,9 @@ public final class XmlUtility {
         try {
             Diff diff = XMLUnit.compareXML(xml1, xml2);
             return diff.identical();
-        }
-        catch (SAXException e) {
+        } catch(SAXException e) {
             throw new RuntimeException("Error on comparing XML.", e);
-        }
-        catch (IOException e) {
+        } catch(IOException e) {
             throw new RuntimeException("Error on comparing XML.", e);
         }
     }

@@ -50,8 +50,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.SchemaBaseResourceResolver;
 
 /**
- * Cache for xml <code>Schema</code> objects.<br> This cache is used to avoid multiple parsing of the same
- * schema.
+ * Cache for xml <code>Schema</code> objects.<br> This cache is used to avoid multiple parsing of the same schema.
  *
  * @author Michael Hoppe
  */
@@ -66,12 +65,13 @@ public class SchemasCache {
      * @return Returns the validator for the schema specified by the provided URL.
      * @throws IOException              Thrown in case of an I/O error.
      * @throws WebserverSystemException Thrown if schema can not be parsed.
-     * @throws java.net.MalformedURLException
      */
-    @Cacheable(cacheName = "schemasCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
-    public Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException, MalformedURLException {
+    @Cacheable(cacheName = "schemasCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
+            properties = {@Property(name = "includeMethod", value = "false")}))
+    public Schema getSchema(final String schemaUri)
+            throws IOException, WebserverSystemException, MalformedURLException {
 
-        Schema schema = null;
+        Schema schema;
         final URLConnection conn = new URL(schemaUri).openConnection();
         final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
@@ -80,8 +80,7 @@ public class SchemasCache {
 
         try {
             schema = sf.newSchema(new SAXSource(new InputSource(conn.getInputStream())));
-        }
-        catch (final SAXException e) {
+        } catch(final SAXException e) {
             throw new WebserverSystemException("Problem with schema " + schemaUri + ". ", e);
         }
         return schema;

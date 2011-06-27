@@ -96,7 +96,7 @@ public class ConnectionUtility {
 
     private static final int HTTP_RESPONSE_CLASS = 100;
 
-    private int timeout = -1;
+    private int timeout = - 1;
 
     private DefaultHttpClient httpClient;
 
@@ -131,7 +131,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException Thrown if connection failed.
      */
     public String getRequestURLAsString(final URL url, final String username, final String password)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
 
         final HttpResponse httpResponse = getRequestURL(url, username, password);
         return readResponse(httpResponse);
@@ -168,12 +168,11 @@ public class ConnectionUtility {
         final String password;
 
         final String userinfo = url.getUserInfo();
-        if (userinfo != null) {
+        if(userinfo != null) {
             final String[] loginValues = SPLIT_PATTERN.split(":");
             username = loginValues[0];
             password = loginValues[1];
-        }
-        else {
+        } else {
             username = EscidocConfiguration.FEDORA_USER;
             password = EscidocConfiguration.FEDORA_PASSWORD;
         }
@@ -193,7 +192,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException Thrown if connection failed.
      */
     public HttpResponse getRequestURL(final URL url, final String username, final String password)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
 
         setAuthentication(url, username, password);
         return get(url.toString());
@@ -225,7 +224,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException Thrown if connection failed.
      */
     public HttpResponse postRequestURL(final URL url, final String body, final String username, final String password)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
 
         setAuthentication(url, username, password);
         return post(url.toString(), body);
@@ -240,7 +239,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException e
      */
     public void setAuthentication(final URL url, final String username, final String password)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
 
         final CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
@@ -254,20 +253,21 @@ public class ConnectionUtility {
         final HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
 
             @Override
-            public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
+            public void process(final HttpRequest request, final HttpContext context)
+                    throws HttpException, IOException {
 
                 final AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
                 final CredentialsProvider credsProvider =
-                    (CredentialsProvider) context.getAttribute(ClientContext.CREDS_PROVIDER);
+                        (CredentialsProvider) context.getAttribute(ClientContext.CREDS_PROVIDER);
                 final HttpHost targetHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
 
                 // If not auth scheme has been initialized yet
-                if (authState.getAuthScheme() == null) {
+                if(authState.getAuthScheme() == null) {
                     final AuthScope authScope = new AuthScope(targetHost.getHostName(), targetHost.getPort());
                     // Obtain credentials matching the target host
                     final Credentials creds = credsProvider.getCredentials(authScope);
                     // If found, generate BasicScheme preemptively
-                    if (creds != null) {
+                    if(creds != null) {
                         authState.setAuthScheme(new BasicScheme());
                         authState.setCredentials(creds);
                     }
@@ -302,22 +302,20 @@ public class ConnectionUtility {
      */
     private HttpHost getProxyHost() throws WebserverSystemException {
         try {
-            if (!this.proxyConfigured) {
+            if(! this.proxyConfigured) {
                 final String proxyHostName =
-                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
+                        EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
                 final String proxyPort =
-                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
-                if (proxyHostName != null && proxyHostName.trim().length() != 0) {
-                    this.proxyHost =
-                        proxyPort != null && proxyPort.trim().length() != 0 ? new HttpHost(proxyHostName, Integer
-                            .parseInt(proxyPort)) : new HttpHost(proxyHostName);
+                        EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
+                if(proxyHostName != null && proxyHostName.trim().length() != 0) {
+                    this.proxyHost = proxyPort != null && proxyPort.trim().length() != 0 ?
+                            new HttpHost(proxyHostName, Integer.parseInt(proxyPort)) : new HttpHost(proxyHostName);
                 }
                 this.proxyConfigured = true;
             }
             return this.proxyHost;
 
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -330,29 +328,26 @@ public class ConnectionUtility {
      */
     private void setProxy(final CharSequence url) throws WebserverSystemException {
         try {
-            if (this.proxyHost != null) {
+            if(this.proxyHost != null) {
                 String nonProxyHosts =
-                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_NON_PROXY_HOSTS);
-                if (nonProxyHosts != null && nonProxyHosts.trim().length() != 0) {
+                        EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_NON_PROXY_HOSTS);
+                if(nonProxyHosts != null && nonProxyHosts.trim().length() != 0) {
                     nonProxyHosts = nonProxyHosts.replaceAll("\\.", "\\\\.");
                     nonProxyHosts = nonProxyHosts.replaceAll("\\*", "");
                     nonProxyHosts = nonProxyHosts.replaceAll("\\?", "\\\\?");
                     final Pattern nonProxyPattern = Pattern.compile(nonProxyHosts);
                     final Matcher nonProxyMatcher = nonProxyPattern.matcher(url);
-                    if (nonProxyMatcher.find()) {
+                    if(nonProxyMatcher.find()) {
                         this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, null);
-                    }
-                    else {
+                    } else {
                         this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.proxyHost);
                     }
-                }
-                else {
+                } else {
                     this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.proxyHost);
 
                 }
             }
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -365,15 +360,14 @@ public class ConnectionUtility {
      * @throws WebserverSystemException e
      */
     public DefaultHttpClient getHttpClient(final String url) throws WebserverSystemException {
-        if (this.httpClient == null) {
+        if(this.httpClient == null) {
 
             final HttpParams params = new BasicHttpParams();
-            if (this.timeout != -1) {
+            if(this.timeout != - 1) {
                 // TODO: Maybe separate Connection and SO timeout...
                 HttpConnectionParams.setConnectionTimeout(params, this.timeout);
                 HttpConnectionParams.setSoTimeout(params, this.timeout);
-            }
-            else {
+            } else {
                 HttpConnectionParams.setConnectionTimeout(params, DEFAULT_CONNECTION_TIMEOUT);
                 HttpConnectionParams.setSoTimeout(params, DEFAULT_SO_TIMEOUT);
             }
@@ -399,7 +393,7 @@ public class ConnectionUtility {
 
             this.httpClient = new DefaultHttpClient(cm, params);
         }
-        if (getProxyHost() != null && url != null) {
+        if(getProxyHost() != null && url != null) {
             setProxy(url);
         }
         return this.httpClient;
@@ -427,10 +421,10 @@ public class ConnectionUtility {
      */
     private HttpResponse get(final String url, final Cookie cookie) throws WebserverSystemException {
 
-        HttpResponse httpResponse = null;
+        HttpResponse httpResponse;
         try {
             final HttpGet httpGet = new HttpGet(new URI(url));
-            if (cookie != null) {
+            if(cookie != null) {
                 HttpClientParams.setCookiePolicy(httpGet.getParams(), CookiePolicy.BEST_MATCH);
                 httpGet.setHeader("Cookie", cookie.getName() + '=' + cookie.getValue());
             }
@@ -438,7 +432,7 @@ public class ConnectionUtility {
 
             final int responseCode = httpResponse.getStatusLine().getStatusCode();
 
-            if (responseCode / HTTP_RESPONSE_CLASS != HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS) {
+            if(responseCode / HTTP_RESPONSE_CLASS != HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS) {
                 final String errorPage = readResponse(httpResponse);
 
                 // TODO logging, Url abgelöst?
@@ -446,11 +440,9 @@ public class ConnectionUtility {
                 // + "' failed with response code " + responseCode);
                 throw new WebserverSystemException("HTTP connection to \"" + url + "\" failed: " + errorPage);
             }
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
-        }
-        catch (final URISyntaxException e) {
+        } catch(final URISyntaxException e) {
             throw new WebserverSystemException("Illegal URL '" + url + "'.", e);
         }
         return httpResponse;
@@ -478,7 +470,8 @@ public class ConnectionUtility {
      * @return HttpResponse
      * @throws WebserverSystemException If connection failed.
      */
-    private HttpResponse post(final String url, final String body, final Cookie cookie) throws WebserverSystemException {
+    private HttpResponse post(final String url, final String body, final Cookie cookie)
+            throws WebserverSystemException {
 
         final HttpResponse httpResponse;
         try {
@@ -486,14 +479,13 @@ public class ConnectionUtility {
             // entitys für Body Posts
             final HttpPost httpPost = new HttpPost(url);
 
-            if (cookie != null) {
+            if(cookie != null) {
                 HttpClientParams.setCookiePolicy(httpPost.getParams(), CookiePolicy.BEST_MATCH);
                 httpPost.setHeader("Cookie", cookie.getName() + '=' + cookie.getValue());
             }
 
             httpResponse = getHttpClient(url).execute(httpPost);
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -510,8 +502,7 @@ public class ConnectionUtility {
     public static String readResponse(final HttpResponse httpResponse) throws WebserverSystemException {
         try {
             return EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -521,7 +512,7 @@ public class ConnectionUtility {
      */
     public void setTimeout(final int timeout) {
         this.timeout = timeout;
-        if (this.httpClient != null) {
+        if(this.httpClient != null) {
 
             httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, timeout);
             // TODO:

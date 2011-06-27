@@ -287,10 +287,8 @@ public class Examples {
             WebserverSystemException, InvalidContentException, ContentModelNotFoundException, XmlCorruptedException,
             AuthenticationException, MissingMdRecordException, ReferencedResourceNotFoundException,
             ContextNotFoundException, MissingMethodParameterException, UnsupportedEncodingException {
-        String result = null;
         final String createXml = this.containerHandler.create(MessageFormat.format(xml, contextId, contentModelId));
-        result = getObjectId(createXml, ResourceType.CONTAINER);
-        return result;
+        return getObjectId(createXml, ResourceType.CONTAINER);
     }
 
     /**
@@ -324,9 +322,8 @@ public class Examples {
             XPathExpressionException, ReadonlyElementViolationException, LockingException, ParserConfigurationException,
             ContentModelNotFoundException, OrganizationalUnitNotFoundException, ContextNameNotUniqueException,
             ReadonlyAttributeViolationException, MissingMethodParameterException, UnsupportedEncodingException {
-        String result = null;
         final String createXml = this.contextHandler.create(MessageFormat.format(xml, new Date().getTime(), ouId));
-        result = getObjectId(createXml, ResourceType.CONTEXT);
+        String result = getObjectId(createXml, ResourceType.CONTEXT);
         this.contextHandler.open(result, createTaskParam(getLastModificationDate(createXml, ResourceType.CONTEXT)));
         return result;
     }
@@ -363,10 +360,9 @@ public class Examples {
             ContentModelNotFoundException, ComponentNotFoundException, ReadonlyVersionException, FileNotFoundException,
             ItemNotFoundException, ReadonlyAttributeViolationException, MissingMdRecordException,
             ReferencedResourceNotFoundException, MissingMethodParameterException, UnsupportedEncodingException {
-        String result = null;
         final String createXml =
                 this.containerHandler.createItem(containerId, MessageFormat.format(xml, contextId, contentModelId));
-        result = getObjectId(createXml, ResourceType.ITEM);
+        String result = getObjectId(createXml, ResourceType.ITEM);
         final String submitXml =
                 this.itemHandler.submit(result, createTaskParam(getLastModificationDate(createXml, ResourceType.ITEM)));
         final String objectPidXml =
@@ -390,9 +386,8 @@ public class Examples {
             WebserverSystemException, XmlCorruptedException, OrganizationalUnitNotFoundException,
             AuthenticationException, MissingMdRecordException, InvalidXmlException, MissingMethodParameterException,
             UnsupportedEncodingException {
-        String result = null;
         final String createXml = this.organizationalUnitHandler.create(xml);
-        result = getObjectId(createXml, ResourceType.OU);
+        String result = getObjectId(createXml, ResourceType.OU);
         this.organizationalUnitHandler
                 .open(result, createTaskParam(getLastModificationDate(createXml, ResourceType.OU)));
         return result;

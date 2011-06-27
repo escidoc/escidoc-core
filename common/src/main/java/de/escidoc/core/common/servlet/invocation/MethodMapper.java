@@ -82,8 +82,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws IOException                  If anything fails.
      * @throws TransformerException         Thrown if an xml transformation fails.
      */
-    public MethodMapper(final String descriptor) throws ParserConfigurationException, SAXException, IOException,
-        TransformerException {
+    public MethodMapper(final String descriptor)
+            throws ParserConfigurationException, SAXException, IOException, TransformerException {
 
         final Collection<String> paths = new ArrayList<String>();
         paths.add(descriptor);
@@ -99,8 +99,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws IOException                  If anything fails.
      * @throws TransformerException         Thrown if an xml transformation fails.
      */
-    public MethodMapper(final Collection<String> descriptors) throws ParserConfigurationException, SAXException,
-        IOException, TransformerException {
+    public MethodMapper(final Collection<String> descriptors)
+            throws ParserConfigurationException, SAXException, IOException, TransformerException {
 
         setDescriptorFilenames(descriptors);
     }
@@ -115,15 +115,15 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws TransformerException         Thrown if an xml transformation fails.
      */
     public final void setDescriptorFilenames(final Iterable<String> descriptorFilenames)
-        throws ParserConfigurationException, SAXException, IOException, TransformerException, FileNotFoundException {
+            throws ParserConfigurationException, SAXException, IOException, TransformerException,
+            FileNotFoundException {
 
         this.descriptorFilenames = new ArrayList<String>();
-        for (String descriptor : descriptorFilenames) {
+        for(String descriptor : descriptorFilenames) {
             descriptor = descriptor.trim();
-            if (descriptor.startsWith("/")) {
+            if(descriptor.startsWith("/")) {
                 this.descriptorFilenames.add(descriptor);
-            }
-            else {
+            } else {
                 this.descriptorFilenames.add('/' + descriptor);
             }
         }
@@ -139,14 +139,14 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws TransformerException         Thrown if an xml transformation fails.
      */
     private void init() throws ParserConfigurationException, SAXException, IOException, TransformerException,
-        FileNotFoundException {
+            FileNotFoundException {
 
         final Iterator<String> iter = this.descriptorFilenames.iterator();
         this.methodMappings = new ArrayList<Document>();
-        while (iter.hasNext()) {
+        while(iter.hasNext()) {
             final String filename = iter.next();
             final Document document = getDocument(filename);
-            if (document != null) {
+            if(document != null) {
                 this.methodMappings.add(document);
             }
         }
@@ -155,21 +155,21 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
         // Debug output
         final Iterator<Node> defIter = getDefinitions(DEFINITION_VAR_ELEMENT).iterator();
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("Definitions (Variables):");
         }
-        if (LOGGER.isDebugEnabled()) {
-            while (defIter.hasNext()) {
+        if(LOGGER.isDebugEnabled()) {
+            while(defIter.hasNext()) {
                 final Node next = defIter.next();
-                LOGGER.debug("Node: " + next.getNodeName() + " name='"
-                    + getAttributeValue(next, DEFINITION_VAR_NAME_ATTR) + "', regexp='"
-                    + getAttributeValue(next, DEFINITION_VAR_REGEXP_ATTR) + '\'');
+                LOGGER.debug(
+                        "Node: " + next.getNodeName() + " name='" + getAttributeValue(next, DEFINITION_VAR_NAME_ATTR) +
+                                "', regexp='" + getAttributeValue(next, DEFINITION_VAR_REGEXP_ATTR) + '\'');
             }
         }
         final Iterator<String> resIter = getResources().keySet().iterator();
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("Resources:");
-            while (resIter.hasNext()) {
+            while(resIter.hasNext()) {
                 LOGGER.debug(getResources().get(resIter.next()).toString());
             }
         }
@@ -185,10 +185,10 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     private Collection<Node> initDefinitions(final String type) throws TransformerException {
         final Collection<Node> result = new ArrayList<Node>();
         final String xPath = appendToXpath(appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT, DEFINITION_ELEMENT), type);
-        for (final Document methodMapping : this.methodMappings) {
+        for(final Document methodMapping : this.methodMappings) {
             final NodeList methodDefinitions = parse(xPath, methodMapping);
             final int noOfDefinitions = methodDefinitions.getLength();
-            for (int i = 0; i < noOfDefinitions; ++i) {
+            for(int i = 0; i < noOfDefinitions; ++ i) {
                 result.add(methodDefinitions.item(i));
             }
         }
@@ -206,10 +206,10 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         final Map<String, Resource> result = new HashMap<String, Resource>();
 
         final String xPath = appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT, RESOURCE_ELEMENT);
-        for (final Document methodMapping : this.methodMappings) {
+        for(final Document methodMapping : this.methodMappings) {
             final NodeList resourcesNodes = parse(xPath, methodMapping);
             final int noOfResources = resourcesNodes.getLength();
-            for (int i = 0; i < noOfResources; ++i) {
+            for(int i = 0; i < noOfResources; ++ i) {
                 final Node resource = resourcesNodes.item(i);
                 result.put(getAttributeValue(resource, RESOURCE_URI_ATTR), new Resource(resource, getDefinitions()));
             }
@@ -227,11 +227,12 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws EncodingSystemException e
      */
     @Override
-    public BeanMethod getMethod(final HttpServletRequest request) throws MethodNotFoundException,
-        EncodingSystemException {
+    public BeanMethod getMethod(final HttpServletRequest request)
+            throws MethodNotFoundException, EncodingSystemException {
 
-        return getMethod(request.getRequestURI(), request.getQueryString(), "GET".equals(request.getMethod()) ? request
-            .getParameterMap() : null, request.getMethod(), Resource.getRequestBody(request));
+        return getMethod(request.getRequestURI(), request.getQueryString(),
+                "GET".equals(request.getMethod()) ? request.getParameterMap() : null, request.getMethod(),
+                Resource.getRequestBody(request));
     }
 
     /**
@@ -247,21 +248,19 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws EncodingSystemException e
      */
     @Override
-    public BeanMethod getMethod(
-        final String uri, final String query, final Map<String, String[]> parameters, final String httpMethod,
-        final Object body) throws MethodNotFoundException, EncodingSystemException {
-        String decodedUri = null;
+    public BeanMethod getMethod(final String uri, final String query, final Map<String, String[]> parameters,
+                                final String httpMethod, final Object body)
+            throws MethodNotFoundException, EncodingSystemException {
+        String decodedUri;
         try {
             decodedUri = URLDecoder.decode(uri, XmlUtility.CHARACTER_ENCODING);
-        }
-        catch (final UnsupportedEncodingException e) {
+        } catch(final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
         final Resource resource = getResource(decodedUri);
-        if (resource != null) {
+        if(resource != null) {
             return resource.getMethod(decodedUri, query, parameters, httpMethod, body);
-        }
-        else {
+        } else {
             throw new MethodNotFoundException("Could not identify resource matching uri '" + uri + "'.");
         }
 
@@ -280,8 +279,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         // FIXME: Remove this iteration. All base-URIs are like
         // /<ir, um, oum, ...>/<resourcename>
         final Map<String, Resource> resourcesMap = getResources();
-        for (final Entry<String, Resource> stringResourceEntry : resourcesMap.entrySet()) {
-            if (uri.startsWith(stringResourceEntry.getKey())) {
+        for(final Entry<String, Resource> stringResourceEntry : resourcesMap.entrySet()) {
+            if(uri.startsWith(stringResourceEntry.getKey())) {
                 result = stringResourceEntry.getValue();
                 break;
             }
@@ -324,7 +323,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      */
     public void putDefinitions(final String type, final Collection<Node> newDefinitions) {
 
-        if (this.definitions == null) {
+        if(this.definitions == null) {
             this.definitions = new HashMap<String, Collection>();
         }
         this.definitions.put(type, newDefinitions);

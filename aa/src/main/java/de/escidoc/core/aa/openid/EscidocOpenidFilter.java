@@ -40,25 +40,18 @@ import org.springframework.security.openid.OpenIDAuthenticationToken;
 
 /**
  * @author MIH
- *
  */
 public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
+
     /**
-     * Authentication has two phases.
-     * <ol>
-     * <li>The initial submission of the claimed OpenID. A redirect to the URL returned from the consumer
-     * will be performed and null will be returned.</li>
-     * <li>The redirection from the OpenID server to the return_to URL, once it has authenticated the user</li>
-     * </ol>
+     * Authentication has two phases. <ol> <li>The initial submission of the claimed OpenID. A redirect to the URL
+     * returned from the consumer will be performed and null will be returned.</li> <li>The redirection from the OpenID
+     * server to the return_to URL, once it has authenticated the user</li> </ol>
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-        throws AuthenticationException, IOException {
-        OpenIDAuthenticationToken token;
-
-        String identity = request.getParameter("openid.identity");
+            throws AuthenticationException, IOException {
         return super.attemptAuthentication(request, response);
-
     }
 
 }

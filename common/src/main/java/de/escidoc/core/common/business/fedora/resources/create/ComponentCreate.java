@@ -95,7 +95,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      */
     public void addMdRecord(final MdRecordCreate mdRecord) {
 
-        if (this.mdRecords == null) {
+        if(this.mdRecords == null) {
             this.mdRecords = new ArrayList<MdRecordCreate>();
         }
 
@@ -110,9 +110,9 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      */
     public MdRecordCreate getMetadataRecord(final String name) {
 
-        if (this.mdRecords != null) {
-            for (final MdRecordCreate mdRecord : this.mdRecords) {
-                if (mdRecord.getName().equals(name)) {
+        if(this.mdRecords != null) {
+            for(final MdRecordCreate mdRecord : this.mdRecords) {
+                if(mdRecord.getName().equals(name)) {
                     return mdRecord;
                 }
             }
@@ -160,7 +160,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
     public String getFOXML() throws SystemException, IOException, WebserverSystemException {
 
         // objid
-        if (getObjid() == null) {
+        if(getObjid() == null) {
             setObjid(this.idProvider.getNextPid());
         }
 
@@ -190,17 +190,16 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      */
     public String getDC() throws WebserverSystemException, EncodingSystemException {
 
-        if (this.dcXml == null) {
+        if(this.dcXml == null) {
             final MdRecordCreate mdRecord = getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
 
-            if (mdRecord != null) {
+            if(mdRecord != null) {
                 try {
                     // no content model id for component dc-mapping, default
                     // mapping
                     // should be applied
                     this.dcXml = getDC(mdRecord, null);
-                }
-                catch (final Exception e) {
+                } catch(final Exception e) {
                     LOGGER.info("DC mapping of to create resource failed. " + e);
                 }
             }
@@ -218,21 +217,21 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @throws SystemException         Thrown if getting new objid from ID-Provider or Fedora synchronization failed.
      * @throws IOException             Thrown if preparing of properties, meta data record failed.
      */
-    public String persist(final boolean forceSync) throws SystemException, InvalidContentException, IOException,
-        WebserverSystemException, EncodingSystemException {
+    public String persist(final boolean forceSync)
+            throws SystemException, InvalidContentException, IOException, WebserverSystemException,
+            EncodingSystemException {
 
         validate();
         final String foxml = getFOXML();
         final IngestPathParam path = new IngestPathParam();
         final IngestQueryParam query = new IngestQueryParam();
-        String returnValue = null;
+        String returnValue;
         try {
             returnValue = this.fedoraServiceClient.ingest(path, query, foxml);
-        }
-        catch (Exception e) {
+        } catch(Exception e) {
             throw new FedoraSystemException("Ingest to Fedora failed.", e);
         }
-        if (forceSync) {
+        if(forceSync) {
             this.fedoraServiceClient.sync();
         }
         return returnValue;
@@ -245,7 +244,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      */
     @Override
     public String call() throws IOException, InvalidContentException, SystemException, FedoraSystemException,
-        WebserverSystemException, EncodingSystemException {
+            WebserverSystemException, EncodingSystemException {
 
         persist(false);
         return getObjid();
@@ -286,14 +285,14 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
 
         valueMap.put(XmlTemplateProvider.CONTENT_CATEGORY, this.properties.getContentCatagory());
 
-        if (this.content.getDataLocation() == null) {
-            if (this.content.getDataLocation() != null) {
+        if(this.content.getDataLocation() == null) {
+            if(this.content.getDataLocation() != null) {
                 valueMap.put(XmlTemplateProvider.REF, this.content.getDataLocation().toString());
                 valueMap.put(XmlTemplateProvider.REF_TYPE, "URL");
-            }
-            else {
-                this.content.setDataLocation(uploadBase64EncodedContent(getContent().getContent(), "content "
-                    + getObjid(), this.properties.getMimeType()));
+            } else {
+                this.content.setDataLocation(
+                        uploadBase64EncodedContent(getContent().getContent(), "content " + getObjid(),
+                                this.properties.getMimeType()));
                 valueMap.put(XmlTemplateProvider.REF, this.content.getDataLocation().toString());
                 valueMap.put(XmlTemplateProvider.REF_TYPE, "URL");
             }
@@ -341,14 +340,13 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
         final Map<String, String> values = new HashMap<String, String>();
 
         try {
-            values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance().get(
-                EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
-        }
-        catch (final IOException e) {
-            if (LOGGER.isWarnEnabled()) {
+            values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance()
+                    .get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
+        } catch(final IOException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("No configuration can be found.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("No configuration can be found.", e);
             }
         }
@@ -367,14 +365,13 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @return The url to the staging area where the resulting file is accessible.
      * @throws WebserverSystemException In case of an internal error during decoding or storing the content.
      */
-    private String uploadBase64EncodedContent(final String contentAsString, final String fileName, final String mimeType)
-        throws WebserverSystemException {
+    private String uploadBase64EncodedContent(final String contentAsString, final String fileName,
+                                              final String mimeType) throws WebserverSystemException {
         final String uploadUrl;
         try {
             final byte[] streamContent = Base64.decodeBase64(contentAsString.getBytes());
             uploadUrl = this.utility.upload(streamContent, fileName, mimeType);
-        }
-        catch (final FileSystemException e) {
+        } catch(final FileSystemException e) {
             throw new WebserverSystemException("Error while uploading of content to the staging area. ", e);
         }
 
@@ -390,13 +387,14 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
 
         // FIXME this is schema work !!!
         // check if storage type is selected
-        if (this.content.getStorageType() == null) {
+        if(this.content.getStorageType() == null) {
             throw new InvalidContentException("Attribute 'storage' is missing.");
         }
 
         // check if storage attributes fits to content
-        if ((this.content.getStorageType() == StorageType.EXTERNAL_URL || this.content.getStorageType() == StorageType.EXTERNAL_MANAGED)
-            && this.content.getDataLocation() == null && this.content.getContent() != null) {
+        if((this.content.getStorageType() == StorageType.EXTERNAL_URL ||
+                this.content.getStorageType() == StorageType.EXTERNAL_MANAGED) &&
+                this.content.getDataLocation() == null && this.content.getContent() != null) {
             throw new InvalidContentException("Attribute 'storage' fits not to inline content.");
         }
     }

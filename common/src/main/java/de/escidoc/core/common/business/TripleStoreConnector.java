@@ -90,15 +90,11 @@ public class TripleStoreConnector {
     private FedoraServiceClient fedoraServiceClient;
 
     /**
-     * @param spoQuery
-     * @param outputFormat
      * @throws TripleStoreSystemException TODO move to TriplestoreUtility implementation
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException
-     * @return
      */
-    public String requestMPT(final String spoQuery, final String outputFormat) throws TripleStoreSystemException,
-        InvalidTripleStoreOutputFormatException, InvalidTripleStoreQueryException {
+    public String requestMPT(final String spoQuery, final String outputFormat)
+            throws TripleStoreSystemException, InvalidTripleStoreOutputFormatException,
+            InvalidTripleStoreQueryException {
         final RisearchPathParam path = new RisearchPathParam();
         final RisearchQueryParam query = new RisearchQueryParam();
         query.setFormat(outputFormat);
@@ -109,40 +105,36 @@ public class TripleStoreConnector {
         try {
             final Stream stream = this.fedoraServiceClient.risearch(path, query);
             String responseContent = new String(stream.getBytes(), Encodings.UTF8);
-            if (responseContent == null || responseContent.length() == 0) {
+            if(responseContent == null || responseContent.length() == 0) {
                 return null;
             }
             return responseContent;
-        }
-        catch (ServerWebApplicationException e) {
+        } catch(ServerWebApplicationException e) {
             final InputStream inputStream = (InputStream) e.getResponse().getEntity();
-            String responseContent = null;
+            String responseContent;
             try {
                 responseContent = IOUtils.newStringFromStream(inputStream);
-            }
-            catch (IOException e1) {
+            } catch(IOException e1) {
                 throw new TripleStoreSystemException("Request to MPT failed.", e);
             }
             final Pattern p = Pattern.compile(QUERY_ERROR);
             final Matcher m = p.matcher(responseContent);
-            if (m.find()) {
+            if(m.find()) {
                 LOGGER.error(responseContent);
                 final Pattern p1 = Pattern.compile(PARSE_ERROR);
                 final Matcher m1 = p1.matcher(responseContent);
                 final Pattern p2 = Pattern.compile(FORMAT_ERROR);
                 final Matcher m2 = p2.matcher(responseContent);
                 responseContent = XmlUtility.CDATA_START + responseContent + XmlUtility.CDATA_END;
-                if (m1.find()) {
+                if(m1.find()) {
                     throw new InvalidTripleStoreQueryException(responseContent);
-                }
-                else if (m2.find()) {
+                } else if(m2.find()) {
                     throw new InvalidTripleStoreOutputFormatException(responseContent);
                 }
             }
             responseContent = XmlUtility.CDATA_START + responseContent + XmlUtility.CDATA_END;
             throw new TripleStoreSystemException("Request to MPT failed." + responseContent);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new TripleStoreSystemException("Request to MPT failed.", e);
         }
     }

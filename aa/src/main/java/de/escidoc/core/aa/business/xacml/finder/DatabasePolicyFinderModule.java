@@ -143,10 +143,10 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     @Override
     public PolicyFinderResult findPolicy(final URI idReference, final int type) {
 
-        if (type != PolicyReference.POLICY_REFERENCE && type != PolicyReference.POLICYSET_REFERENCE) {
+        if(type != PolicyReference.POLICY_REFERENCE && type != PolicyReference.POLICYSET_REFERENCE) {
             throw new IllegalArgumentException(StringUtility.format("Illegal type", type));
         }
-        if (type != PolicyReference.POLICYSET_REFERENCE) {
+        if(type != PolicyReference.POLICYSET_REFERENCE) {
             return new PolicyFinderResult();
         }
 
@@ -154,34 +154,30 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         // containing <roleName>/<user or group>/<userOrGroupId>
         final String[] parts = SPLIT_PATTERN.split(idReference.toString());
         final StringBuilder roleIdentifier = new StringBuilder("");
-        if (parts.length > 2) {
-            for (int i = 0; i < parts.length - 2; i++) {
+        if(parts.length > 2) {
+            for(int i = 0; i < parts.length - 2; i++) {
                 roleIdentifier.append(parts[i]);
             }
-        }
-        else {
+        } else {
             roleIdentifier.append(idReference);
         }
         final URI roleIdentifierUri;
         try {
             roleIdentifierUri = new URI(roleIdentifier.toString());
-        }
-        catch (final URISyntaxException e1) {
+        } catch(final URISyntaxException e1) {
             return createProcessingError("Error during resolving policy reference. ", e1);
         }
 
-        XacmlPolicySet result = null;
+        XacmlPolicySet result;
         try {
             result = securityHelper.getRolePolicySet(roleIdentifierUri);
-        }
-        catch (final WebserverSystemException e) {
+        } catch(final WebserverSystemException e) {
             return createProcessingError("Error during resolving policy reference. ", e);
         }
 
         try {
             result = CustomPolicyBuilder.regeneratePolicySet(result, idReference.toString());
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             return createProcessingError("Error during resolving policy reference. ", e);
         }
         return new PolicyFinderResult(result);
@@ -211,7 +207,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
             // first get the user id and action from the request
             final String userId =
-                FinderModuleHelper.retrieveSingleSubjectAttribute(context, Constants.URI_SUBJECT_ID, true);
+                    FinderModuleHelper.retrieveSingleSubjectAttribute(context, Constants.URI_SUBJECT_ID, true);
 
             // get policySet for policies attached to the user
             final XacmlPolicySet userPolicySet = getUserPolicies(userId);
@@ -219,21 +215,19 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
             // get policySet for policies attached via groups the user belongs
             // to
-            if (!UserContext.isIdOfAnonymousUser(userId)) {
+            if(! UserContext.isIdOfAnonymousUser(userId)) {
                 final XacmlPolicySet userGroupsPolicySet = getUserGroupPolicies(userId);
-                if (userGroupsPolicySet != null) {
+                if(userGroupsPolicySet != null) {
                     policies.add(userGroupsPolicySet);
                 }
             }
 
-            final XacmlPolicySet result =
-                new XacmlPolicySet("UserGroupPolicies-" + userId,
+            final XacmlPolicySet result = new XacmlPolicySet("UserGroupPolicies-" + userId,
                     XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES, null, policies);
 
             return new PolicyFinderResult(result);
 
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             return createProcessingError("Exception happened while searching for policies: ", e);
         }
     }
@@ -244,8 +238,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @param userId The userId.
      * @return Returns the created <code>XacmlPolicySet</code> object for the user.
      */
-    private XacmlPolicySet getUserPolicies(final String userId) throws UnknownIdentifierException, URISyntaxException,
-        WebserverSystemException {
+    private XacmlPolicySet getUserPolicies(final String userId)
+            throws UnknownIdentifierException, URISyntaxException, WebserverSystemException {
         return securityHelper.getUserPolicies(userId, this.policyFinder);
     }
 
@@ -256,36 +250,35 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @param userId The userId.
      * @return Returns the created <code>XacmlPolicySet</code> object for the user.
      */
-    private XacmlPolicySet getUserGroupPolicies(final String userId) throws UnknownIdentifierException,
-        URISyntaxException, SystemException {
+    private XacmlPolicySet getUserGroupPolicies(final String userId)
+            throws UnknownIdentifierException, URISyntaxException, SystemException {
 
         final List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
         // get groups the user belongs to
         Set<String> userGroups = null;
         try {
             userGroups = securityHelper.getUserGroups(userId);
-        }
-        catch (UserAccountNotFoundException e) {
+        } catch(UserAccountNotFoundException e) {
             // The caller doesn't expect to get an exception from here if
             // the user doesn't exist.
-            if (LOGGER.isWarnEnabled()) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on retrieving user-groups.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on retrieving ser-groups.", e);
             }
         }
-        if (userGroups != null && !userGroups.isEmpty()) {
-            for (final String groupId : userGroups) {
+        if(userGroups != null && ! userGroups.isEmpty()) {
+            for(final String groupId : userGroups) {
                 final XacmlPolicySet groupPolicySet = securityHelper.getGroupPolicies(groupId, this.policyFinder);
-                if (groupPolicySet.getChildren() != null && !groupPolicySet.getChildren().isEmpty()) {
+                if(groupPolicySet.getChildren() != null && ! groupPolicySet.getChildren().isEmpty()) {
                     policies.add(groupPolicySet);
                 }
             }
         }
-        if (!policies.isEmpty()) {
+        if(! policies.isEmpty()) {
             return new XacmlPolicySet("GroupPolicies-" + userId,
-                XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES, null, policies);
+                    XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES, null, policies);
         }
         return null;
 
@@ -312,7 +305,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      */
     public void setPolicyFinder(final PolicyFinder policyFinder) {
 
-        if (policyFinder == null) {
+        if(policyFinder == null) {
             throw new IllegalArgumentException("Policy finder must be provided.");
         }
         this.policyFinder = policyFinder;

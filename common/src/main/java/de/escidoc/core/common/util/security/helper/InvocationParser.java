@@ -92,12 +92,10 @@ public class InvocationParser {
      * @throws MissingMethodParameterException
      *                                        Thrown if an argument has not been provided but is needed for
      *                                        authorization.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     public List<Map<String, String>> buildRequestsList(final Object[] arguments, final MethodMapping methodMapping)
-        throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
-        WebserverSystemException, XmlCorruptedException {
+            throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
+            WebserverSystemException, XmlCorruptedException {
 
         return buildRequestsList(arguments, methodMapping, true);
     }
@@ -115,12 +113,10 @@ public class InvocationParser {
      * @throws MissingMethodParameterException
      *                                        Thrown if an argument has not been provided but is needed for
      *                                        authorization.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     public List<Map<String, String>> buildRequestsList(final Object argument, final MethodMapping methodMapping)
-        throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
-        WebserverSystemException, XmlCorruptedException {
+            throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
+            WebserverSystemException, XmlCorruptedException {
 
         return buildRequestsList(argument, methodMapping, false);
     }
@@ -139,13 +135,11 @@ public class InvocationParser {
      * @throws MissingMethodParameterException
      *                                        Thrown if an argument has not been provided but is needed for
      *                                        authorization.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
-    private List<Map<String, String>> buildRequestsList(
-        final Object arguments, final MethodMapping methodMapping, final boolean isArray)
-        throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
-        WebserverSystemException, XmlCorruptedException {
+    private List<Map<String, String>> buildRequestsList(final Object arguments, final MethodMapping methodMapping,
+                                                        final boolean isArray)
+            throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
+            WebserverSystemException, XmlCorruptedException {
 
         final Set<InvocationMapping> invocationMappings = methodMapping.getInvocationMappings();
 
@@ -159,7 +153,7 @@ public class InvocationParser {
             try {
                 // setup subject
                 String id = UserContext.getId();
-                if (id == null) {
+                if(id == null) {
                     id = UserContext.ANONYMOUS_IDENTIFIER;
                 }
                 request.put(AttributeIds.URN_SUBJECT_ID, id);
@@ -169,15 +163,13 @@ public class InvocationParser {
 
                 // setup action
                 request.put(AttributeIds.URN_ACTION_ID, methodMapping.getActionName());
-            }
-            catch (final IndexOutOfBoundsException e) {
+            } catch(final IndexOutOfBoundsException e) {
                 break;
             }
 
             requests.add(request);
             index++;
-        }
-        while (!methodMapping.isSingleResource());
+        } while(! methodMapping.isSingleResource());
 
         return requests;
     }
@@ -202,14 +194,14 @@ public class InvocationParser {
      * @throws MissingElementValueException   Thrown if an invocation mapping references an element in an argument that
      *                                        holds XML data but the element cannot be found.
      * @throws WebserverSystemException       Thrown if there is a problem with an invocation mapping.
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
-    private Map<String, String> setupResourceAttributes(
-        final Object arguments, final Iterable<InvocationMapping> invocationMappings, final boolean isArray,
-        final int index) throws MissingMethodParameterException, MissingAttributeValueException,
-        MissingElementValueException, WebserverSystemException, XmlCorruptedException {
+    private Map<String, String> setupResourceAttributes(final Object arguments,
+                                                        final Iterable<InvocationMapping> invocationMappings,
+                                                        final boolean isArray, final int index)
+            throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
+            WebserverSystemException, XmlCorruptedException {
 
-        if (arguments == null || invocationMappings == null) {
+        if(arguments == null || invocationMappings == null) {
             return new HashMap<String, String>();
         }
 
@@ -218,18 +210,17 @@ public class InvocationParser {
         boolean subresourceIdProvided = false;
 
         // for each invocation mapping...
-        for (final InvocationMapping invocationMapping : invocationMappings) {
+        for(final InvocationMapping invocationMapping : invocationMappings) {
             // FIXME: resolve this
             final StringAttribute value = getValueForInvocationMapping(arguments, isArray, index, invocationMapping);
 
             // and put the resource attribute in the Vector
-            if (value != null) {
+            if(value != null) {
                 final String attributeId = invocationMapping.getAttributeId();
-                if (attributeId.equals(EvaluationCtx.RESOURCE_ID)) {
+                if(attributeId.equals(EvaluationCtx.RESOURCE_ID)) {
                     // found the resource ID
                     resourceIdProvided = true;
-                }
-                else if (matcherSubresource.reset(attributeId).matches()) {
+                } else if(matcherSubresource.reset(attributeId).matches()) {
                     resourceAttributes.put(AttributeIds.URN_SUBRESOURCE_ATTR, value.getValue());
                     subresourceIdProvided = true;
                 }
@@ -238,12 +229,12 @@ public class InvocationParser {
         }
 
         // we need the resource-id. If not provided, create empty element
-        if (!resourceIdProvided) {
+        if(! resourceIdProvided) {
             resourceAttributes.put(EvaluationCtx.RESOURCE_ID, "");
         }
 
         // we need the subresource-id. If not provided, create empty element
-        if (!subresourceIdProvided) {
+        if(! subresourceIdProvided) {
             resourceAttributes.put(AttributeIds.URN_SUBRESOURCE_ATTR, "");
         }
 
@@ -262,59 +253,53 @@ public class InvocationParser {
      * @throws MissingMethodParameterException
      *                                  Thrown if a mandatory method parameter is not provided.
      * @throws WebserverSystemException Thrown in case of an internal error.
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
-    private StringAttribute getValueForInvocationMapping(
-        final Object arguments, final boolean isArray, final int index, final InvocationMapping invocationMapping)
-        throws WebserverSystemException, MissingMethodParameterException, XmlCorruptedException {
+    private StringAttribute getValueForInvocationMapping(final Object arguments, final boolean isArray, final int index,
+                                                         final InvocationMapping invocationMapping)
+            throws WebserverSystemException, MissingMethodParameterException, XmlCorruptedException {
 
         // set the value
         final StringAttribute value;
-        if (invocationMapping.getMappingType() == InvocationMapping.VALUE_MAPPING) {
+        if(invocationMapping.getMappingType() == InvocationMapping.VALUE_MAPPING) {
             // fetch the value from inside the invocation mapping
             value = new StringAttribute(invocationMapping.getValue());
-        }
-        else {
+        } else {
             // Get the current object addressed by the invocation mapping
             final Object currentObject;
-            if (isArray) {
+            if(isArray) {
                 currentObject = ((Object[]) arguments)[invocationMapping.getPosition()];
-            }
-            else {
-                if (invocationMapping.getPosition() != 0) {
-                    throw new WebserverSystemException("Invocation mapping error. Position "
-                        + invocationMapping.getPosition() + " invalid for single argument, must be 0. [id="
-                        + invocationMapping.getId() + ']');
+            } else {
+                if(invocationMapping.getPosition() != 0) {
+                    throw new WebserverSystemException(
+                            "Invocation mapping error. Position " + invocationMapping.getPosition() +
+                                    " invalid for single argument, must be 0. [id=" + invocationMapping.getId() + ']');
                 }
                 currentObject = arguments;
             }
 
             // assert the addressed object has been provided
-            if (currentObject == null) {
-                throw new MissingMethodParameterException("The parameter at specified " + "position must be provided"
-                    + (invocationMapping.getPosition() + 1));
+            if(currentObject == null) {
+                throw new MissingMethodParameterException("The parameter at specified " + "position must be provided" +
+                        (invocationMapping.getPosition() + 1));
             }
-            if (invocationMapping.getMappingType() == InvocationMapping.SIMPLE_ATTRIBUTE_MAPPING) {
+            if(invocationMapping.getMappingType() == InvocationMapping.SIMPLE_ATTRIBUTE_MAPPING) {
                 value = new StringAttribute(currentObject.toString());
-            }
-            else if (invocationMapping.getMappingType() == InvocationMapping.XML_ATTRIBUTE_MAPPING
-                || invocationMapping.getMappingType() == InvocationMapping.OPTIONAL_XML_ATTRIBUTE_MAPPING) {
+            } else if(invocationMapping.getMappingType() == InvocationMapping.XML_ATTRIBUTE_MAPPING ||
+                    invocationMapping.getMappingType() == InvocationMapping.OPTIONAL_XML_ATTRIBUTE_MAPPING) {
                 // fetch the value from XML document
                 final Document document;
                 try {
                     document = documentsCache.retrieveDocument(currentObject);
-                }
-                catch (final SAXException e) {
-                    throw new XmlCorruptedException(StringUtility.format("Parsing of provided XML data failed. ", e
-                        .getMessage()), e);
-                }
-                catch (final Exception e) {
+                } catch(final SAXException e) {
+                    throw new XmlCorruptedException(
+                            StringUtility.format("Parsing of provided XML data failed. ", e.getMessage()), e);
+                } catch(final Exception e) {
                     throw new WebserverSystemException("Internal error. Parsing of XML failed.", e);
                 }
 
                 String path = invocationMapping.getPath();
                 boolean extractObjidNeeded = false;
-                if (path.startsWith("extractObjid:")) {
+                if(path.startsWith("extractObjid:")) {
                     path = path.substring("extractObjid:".length());
                     extractObjidNeeded = true;
                 }
@@ -322,56 +307,51 @@ public class InvocationParser {
                 final NodeList nodeList;
                 try {
                     nodeList = XPathAPI.selectNodeList(document, xpath);
-                }
-                catch (final TransformerException e) {
-                    throw new WebserverSystemException(StringUtility.format("Invocation mapping error. Xpath invalid?",
-                        xpath, index, invocationMapping.getId()), e);
+                } catch(final TransformerException e) {
+                    throw new WebserverSystemException(StringUtility
+                            .format("Invocation mapping error. Xpath invalid?", xpath, index,
+                                    invocationMapping.getId()), e);
                 }
 
-                if (nodeList == null || nodeList.getLength() == 0) {
-                    if (index > 0) {
+                if(nodeList == null || nodeList.getLength() == 0) {
+                    if(index > 0) {
                         throw new IndexOutOfBoundsException();
-                    }
-                    else if (invocationMapping.getMappingType() == InvocationMapping.XML_ATTRIBUTE_MAPPING) {
-                        throw new XmlCorruptedException(StringUtility.format("Expected value not found "
-                            + "in provided XML data ", xpath));
-                    }
-                    else {
+                    } else if(invocationMapping.getMappingType() == InvocationMapping.XML_ATTRIBUTE_MAPPING) {
+                        throw new XmlCorruptedException(
+                                StringUtility.format("Expected value not found " + "in provided XML data ", xpath));
+                    } else {
                         // skip undefined optional attribute by setting
                         // the value to null.
                         value = null;
                     }
-                }
-                else {
+                } else {
                     int length = 1;
-                    if (invocationMapping.isMultiValue()) {
+                    if(invocationMapping.isMultiValue()) {
                         length = nodeList.getLength();
                     }
                     final Collection<String> values = new HashSet<String>();
-                    for (int i = 0; i < length; i++) {
+                    for(int i = 0; i < length; i++) {
                         final Node node = nodeList.item(i);
-                        String tmpValue = null;
-                        if (node.getFirstChild() != null) {
+                        String tmpValue;
+                        if(node.getFirstChild() != null) {
                             tmpValue = node.getFirstChild().getNodeValue();
-                        }
-                        else {
+                        } else {
                             tmpValue = "";
                         }
-                        if (tmpValue != null) {
-                            if (extractObjidNeeded) {
+                        if(tmpValue != null) {
+                            if(extractObjidNeeded) {
                                 tmpValue = XmlUtility.getIdFromURI(tmpValue);
                             }
                             values.add(tmpValue.trim());
                         }
                     }
-                    if (values.isEmpty()) {
+                    if(values.isEmpty()) {
                         value = null;
-                    }
-                    else {
+                    } else {
                         final StringBuilder valueBuf = new StringBuilder("");
-                        for (final String val : values) {
-                            if (!val.isEmpty()) {
-                                if (valueBuf.length() > 0) {
+                        for(final String val : values) {
+                            if(! val.isEmpty()) {
+                                if(valueBuf.length() > 0) {
                                     valueBuf.append(' ');
                                 }
                                 valueBuf.append(val);
@@ -380,10 +360,10 @@ public class InvocationParser {
                         value = new StringAttribute(valueBuf.toString());
                     }
                 }
-            }
-            else {
-                throw new WebserverSystemException(StringUtility.format("Unsupported invocation mapping type",
-                    invocationMapping.getMappingType(), invocationMapping.getId()));
+            } else {
+                throw new WebserverSystemException(StringUtility
+                        .format("Unsupported invocation mapping type", invocationMapping.getMappingType(),
+                                invocationMapping.getId()));
             }
         }
         return value;

@@ -119,16 +119,13 @@ public class IndexingHandler implements ResourceListener {
         final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         try {
             this.docBuilder = docBuilderFactory.newDocumentBuilder();
-        }
-        catch (final ParserConfigurationException e) {
+        } catch(final ParserConfigurationException e) {
             throw new SystemException(e.getMessage(), e);
         }
         try {
-            this.notifyIndexerEnabled =
-                EscidocConfiguration.getInstance().getAsBoolean(
-                    EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED);
-        }
-        catch (final IOException e) {
+            this.notifyIndexerEnabled = EscidocConfiguration.getInstance()
+                    .getAsBoolean(EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED);
+        } catch(final IOException e) {
             throw new SystemException(e.getMessage(), e);
         }
     }
@@ -142,26 +139,26 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be stored.
      */
     @Override
-    public void resourceCreated(final String id, final String xml) throws SystemException, WebserverSystemException,
-        ApplicationServerSystemException {
-        if (!this.notifyIndexerEnabled) {
+    public void resourceCreated(final String id, final String xml)
+            throws SystemException, WebserverSystemException, ApplicationServerSystemException {
+        if(! this.notifyIndexerEnabled) {
             return;
         }
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing STARTING, xml is " + xml);
         }
-        if (xml != null && xml.length() > 0) {
-            if (LOGGER.isDebugEnabled()) {
+        if(xml != null && xml.length() > 0) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("writing xml in cache");
             }
             indexingCacheHandler.writeObjectInCache(id, xml);
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("gsearchindexing caching xml via deviation handler " + " finished.");
             }
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
         addResource(id, objectType, xml);
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing whole indexing of resource " + id + " of type " + objectType + " finished");
         }
     }
@@ -173,16 +170,16 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be deleted.
      */
     @Override
-    public void resourceDeleted(final String id) throws SystemException, WebserverSystemException,
-        TripleStoreSystemException {
-        if (!this.notifyIndexerEnabled) {
+    public void resourceDeleted(final String id)
+            throws SystemException, WebserverSystemException, TripleStoreSystemException {
+        if(! this.notifyIndexerEnabled) {
             return;
         }
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing STARTING deletion");
         }
         deleteResource(id);
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing whole deletion of resource " + id + " finished");
         }
     }
@@ -194,21 +191,22 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be deleted and newly created.
      */
     @Override
-    public void resourceModified(final String id, final String xml) throws SystemException, TripleStoreSystemException,
-        WebserverSystemException, ApplicationServerSystemException {
-        if (!this.notifyIndexerEnabled) {
+    public void resourceModified(final String id, final String xml)
+            throws SystemException, TripleStoreSystemException, WebserverSystemException,
+            ApplicationServerSystemException {
+        if(! this.notifyIndexerEnabled) {
             return;
         }
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing STARTING, xml is " + xml);
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
         indexingCacheHandler.removeObjectFromCache(id, xml);
-        if (xml != null && xml.length() > 0) {
+        if(xml != null && xml.length() > 0) {
             indexingCacheHandler.writeObjectInCache(id, xml);
         }
         addResource(id, objectType, xml);
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing whole indexing of resource " + id + " of type " + objectType + " finished");
         }
     }
@@ -223,10 +221,11 @@ public class IndexingHandler implements ResourceListener {
      * @param xml        xml of the resource to index.
      * @throws SystemException e
      */
-    private void addResource(final String resource, final String objectType, final String xml) throws SystemException,
-        WebserverSystemException, ApplicationServerSystemException, TripleStoreSystemException {
+    private void addResource(final String resource, final String objectType, final String xml)
+            throws SystemException, WebserverSystemException, ApplicationServerSystemException,
+            TripleStoreSystemException {
         indexResource(resource, objectType,
-            de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE, xml);
+                de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE, xml);
     }
 
     /**
@@ -235,10 +234,10 @@ public class IndexingHandler implements ResourceListener {
      * @param resource href of the resource to index.
      * @throws SystemException e
      */
-    private void deleteResource(final String resource) throws SystemException, ApplicationServerSystemException,
-        TripleStoreSystemException {
+    private void deleteResource(final String resource)
+            throws SystemException, ApplicationServerSystemException, TripleStoreSystemException {
         doIndexing(resource, null,
-            de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE, false, null);
+                de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE, false, null);
     }
 
     /**
@@ -252,46 +251,45 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException e
      */
     private void indexResource(final String resource, final String objectType, final String action, final String xml)
-        throws SystemException, WebserverSystemException, ApplicationServerSystemException, TripleStoreSystemException {
+            throws SystemException, WebserverSystemException, ApplicationServerSystemException,
+            TripleStoreSystemException {
 
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("Do indexing for resource " + resource + ", objectType: " + objectType);
         }
 
         // check if there exist indexing-parameters for given resource.
         // If not, do nothing.
-        if (getObjectTypeParameters().get(objectType) != null) {
+        if(getObjectTypeParameters().get(objectType) != null) {
             boolean indexAsynch = false;
             boolean indexSynch = false;
-            for (final Map<String, Object> indexParameters : getObjectTypeParameters().get(objectType).values()) {
-                if (indexParameters.get("indexAsynchronous") != null
-                    && Boolean.valueOf((String) indexParameters.get("indexAsynchronous"))) {
+            for(final Map<String, Object> indexParameters : getObjectTypeParameters().get(objectType).values()) {
+                if(indexParameters.get("indexAsynchronous") != null &&
+                        Boolean.valueOf((String) indexParameters.get("indexAsynchronous"))) {
                     indexAsynch = true;
-                }
-                else {
+                } else {
                     indexSynch = true;
                 }
             }
-            if (indexSynch) {
-                if (LOGGER.isDebugEnabled()) {
+            if(indexSynch) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("indexing synchronously");
                 }
                 doIndexing(resource, objectType, action, false, xml);
             }
-            if (indexAsynch) {
-                if (LOGGER.isDebugEnabled()) {
+            if(indexAsynch) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("indexing asynchronously");
                 }
                 final IndexRequest indexRequest =
-                    IndexRequestBuilder
-                        .createIndexRequest().withResource(resource).withObjectType(objectType).withAction(action)
-                        .withData(xml).withIsReindexerCaller(false).build();
+                        IndexRequestBuilder.createIndexRequest().withResource(resource).withObjectType(objectType)
+                                .withAction(action).withData(xml).withIsReindexerCaller(false).build();
                 this.indexService.index(indexRequest);
             }
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("gsearchindexing resource " + resource + " of type " + objectType + ", action=" + action
-                + " finished");
+        if(LOGGER.isDebugEnabled()) {
+            LOGGER.debug("gsearchindexing resource " + resource + " of type " + objectType + ", action=" + action +
+                    " finished");
         }
     }
 
@@ -306,37 +304,35 @@ public class IndexingHandler implements ResourceListener {
      * @param xml        object-representation in xml.
      * @throws SystemException e
      */
-    public void doIndexing(
-        final String resource, final String objectType, final String action, final boolean isAsynch, final String xml)
-        throws SystemException, WebserverSystemException, TripleStoreSystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("calling do Indexing with resource: " + resource + ", objectType: " + objectType
-                + ", action: " + action + ", isAsynch: " + isAsynch + ", xml: " + xml);
+    public void doIndexing(final String resource, final String objectType, final String action, final boolean isAsynch,
+                           final String xml)
+            throws SystemException, WebserverSystemException, TripleStoreSystemException {
+        if(LOGGER.isDebugEnabled()) {
+            LOGGER.debug(
+                    "calling do Indexing with resource: " + resource + ", objectType: " + objectType + ", action: " +
+                            action + ", isAsynch: " + isAsynch + ", xml: " + xml);
         }
-        if (action == null
-            || action
-                .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)) {
+        if(action == null || action.equalsIgnoreCase(
+                de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)) {
 
             // get Index-Parameters for resourceName
             final Map<String, Map<String, Object>> resourceParameters = getObjectTypeParameters().get(objectType);
-            if (resourceParameters == null) {
+            if(resourceParameters == null) {
                 return;
             }
-            for (final String indexName : resourceParameters.keySet()) {
-                if (LOGGER.isDebugEnabled()) {
+            for(final String indexName : resourceParameters.keySet()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("indexing for index " + indexName);
                 }
                 doIndexing(resource, objectType, indexName, action, isAsynch, xml);
             }
-        }
-        else if (action
-            .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE)) {
+        } else if(action.equalsIgnoreCase(
+                de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE)) {
             gsearchHandler.requestDeletion(resource, null, null);
             gsearchHandler.requestDeletion(resource, null, Constants.LATEST_VERSION_PID_SUFFIX);
             gsearchHandler.requestDeletion(resource, null, Constants.LATEST_RELEASE_PID_SUFFIX);
-        }
-        else if (action
-            .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)) {
+        } else if(action.equalsIgnoreCase(
+                de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)) {
             gsearchHandler.requestCreateEmpty(null);
         }
     }
@@ -352,24 +348,23 @@ public class IndexingHandler implements ResourceListener {
      * @param xml        object-representation in xml.
      * @throws SystemException e
      */
-    public void doIndexing(
-        final String resource, final String objectType, final String indexName, final String action,
-        final boolean isAsynch, final String xml) throws SystemException, WebserverSystemException,
-        ApplicationServerSystemException {
+    public void doIndexing(final String resource, final String objectType, final String indexName, final String action,
+                           final boolean isAsynch, final String xml)
+            throws SystemException, WebserverSystemException, ApplicationServerSystemException {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("indexing " + resource + ", objectType: " + objectType + ", indexName: " + indexName
-                + ", action: " + action + ", isAsynch: " + isAsynch + ", xml: " + xml);
+        if(LOGGER.isDebugEnabled()) {
+            LOGGER.debug("indexing " + resource + ", objectType: " + objectType + ", indexName: " + indexName +
+                    ", action: " + action + ", isAsynch: " + isAsynch + ", xml: " + xml);
         }
 
         // get Index-Parameters for resourceName
         final Map<String, Map<String, Object>> resourceParameters = getObjectTypeParameters().get(objectType);
-        if (resourceParameters == null) {
+        if(resourceParameters == null) {
             return;
         }
         final Map<String, Object> parameters = resourceParameters.get(indexName);
 
-        if (parameters == null) {
+        if(parameters == null) {
             return;
         }
 
@@ -377,52 +372,48 @@ public class IndexingHandler implements ResourceListener {
         String pidSuffix = null;
         String latestReleasedVersion = null;
         // Check if latest released version has to get indexed
-        if (parameters.get("indexReleasedVersion") != null
-            && (Boolean.valueOf((String) parameters.get("indexReleasedVersion")) || "both".equals(parameters
-                .get("indexReleasedVersion")))) {
+        if(parameters.get("indexReleasedVersion") != null &&
+                (Boolean.valueOf((String) parameters.get("indexReleasedVersion")) ||
+                        "both".equals(parameters.get("indexReleasedVersion")))) {
             // get latest released version
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("index released version, so do checks");
             }
-            latestReleasedVersion =
-                tripleStoreUtility.getPropertiesElements(XmlUtility.getIdFromURI(resource),
+            latestReleasedVersion = tripleStoreUtility.getPropertiesElements(XmlUtility.getIdFromURI(resource),
                     TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
-            final String thisVersion =
-                tripleStoreUtility.getPropertiesElements(XmlUtility.getIdFromURI(resource),
+            final String thisVersion = tripleStoreUtility.getPropertiesElements(XmlUtility.getIdFromURI(resource),
                     TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
 
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("latest released version: " + latestReleasedVersion + ", thisVersion: " + thisVersion);
             }
-            if (Boolean.valueOf((String) parameters.get("indexReleasedVersion"))) {
-                if (latestReleasedVersion == null || thisVersion == null) {
-                    if (LOGGER.isDebugEnabled()) {
+            if(Boolean.valueOf((String) parameters.get("indexReleasedVersion"))) {
+                if(latestReleasedVersion == null || thisVersion == null) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("returning");
                     }
                     return;
                 }
-                if (!latestReleasedVersion.equals(thisVersion)) {
+                if(! latestReleasedVersion.equals(thisVersion)) {
                     // adapt resource
                     versionedResource = resource + ':' + latestReleasedVersion;
                 }
-            }
-            else {
-                pidSuffix =
-                    latestReleasedVersion == null ? Constants.LATEST_VERSION_PID_SUFFIX : latestReleasedVersion
-                        .equals(thisVersion) ? Constants.LATEST_RELEASE_PID_SUFFIX : Constants.LATEST_VERSION_PID_SUFFIX;
+            } else {
+                pidSuffix = latestReleasedVersion == null ? Constants.LATEST_VERSION_PID_SUFFIX :
+                        latestReleasedVersion.equals(thisVersion) ? Constants.LATEST_RELEASE_PID_SUFFIX :
+                                Constants.LATEST_VERSION_PID_SUFFIX;
             }
         }
 
-        if (action == null
-            || action
-                .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)) {
+        if(action == null || action.equalsIgnoreCase(
+                de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)) {
             try {
                 // check the asynch-mode
-                if (parameters.get("indexAsynchronous") == null
-                    || !Boolean.valueOf((String) parameters.get("indexAsynchronous")).equals(isAsynch)) {
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("is Asynch: " + isAsynch + " and indexAsynchronous-param is "
-                            + parameters.get("indexAsynchronous") + ", so returning");
+                if(parameters.get("indexAsynchronous") == null ||
+                        ! Boolean.valueOf((String) parameters.get("indexAsynchronous")).equals(isAsynch)) {
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("is Asynch: " + isAsynch + " and indexAsynchronous-param is " +
+                                parameters.get("indexAsynchronous") + ", so returning");
                     }
                     return;
                 }
@@ -431,57 +422,54 @@ public class IndexingHandler implements ResourceListener {
                 // shall be in the index
                 // (prerequisite is an xpath-Expression)
                 final int prerequisite = checkPrerequisites(xml, parameters, resource, null);
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("prerequisites found " + prerequisite);
                 }
-                if (prerequisite == Constants.DO_NOTHING) {
-                    if (LOGGER.isDebugEnabled()) {
+                if(prerequisite == Constants.DO_NOTHING) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("returning");
                     }
                     return;
                 }
 
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Updating index " + indexName + " with " + versionedResource);
                 }
-                if (prerequisite == Constants.DO_DELETE) {
-                    if (LOGGER.isDebugEnabled()) {
+                if(prerequisite == Constants.DO_DELETE) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("request deletion " + indexName + " with " + resource);
                     }
                     gsearchHandler.requestDeletion(resource, indexName, pidSuffix);
-                }
-                else {
-                    if (LOGGER.isDebugEnabled()) {
+                } else {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("request indexing " + indexName + " with " + versionedResource);
                     }
-                    if (pidSuffix != null && pidSuffix.equals(Constants.LATEST_RELEASE_PID_SUFFIX)) {
-                        gsearchHandler.requestDeletion(versionedResource, indexName,
-                            Constants.LATEST_VERSION_PID_SUFFIX);
+                    if(pidSuffix != null && pidSuffix.equals(Constants.LATEST_RELEASE_PID_SUFFIX)) {
+                        gsearchHandler
+                                .requestDeletion(versionedResource, indexName, Constants.LATEST_VERSION_PID_SUFFIX);
                     }
-                    if (pidSuffix != null && pidSuffix.equals(Constants.LATEST_VERSION_PID_SUFFIX)
-                        && latestReleasedVersion != null) {
+                    if(pidSuffix != null && pidSuffix.equals(Constants.LATEST_VERSION_PID_SUFFIX) &&
+                            latestReleasedVersion != null) {
                         // reindex latest released version
                         gsearchHandler.requestIndexing(versionedResource + ':' + latestReleasedVersion, indexName,
-                            Constants.LATEST_RELEASE_PID_SUFFIX, (String) parameters.get("indexFulltextVisibilities"));
+                                Constants.LATEST_RELEASE_PID_SUFFIX,
+                                (String) parameters.get("indexFulltextVisibilities"));
                     }
-                    gsearchHandler.requestIndexing(versionedResource, indexName, pidSuffix, (String) parameters
-                        .get("indexFulltextVisibilities"));
+                    gsearchHandler.requestIndexing(versionedResource, indexName, pidSuffix,
+                            (String) parameters.get("indexFulltextVisibilities"));
                 }
-            }
-            catch (final Exception e) {
+            } catch(final Exception e) {
                 throw new SystemException(e.getMessage(), e);
             }
-        }
-        else if (action
-            .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE)) {
-            if (LOGGER.isDebugEnabled()) {
+        } else if(action.equalsIgnoreCase(
+                de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE)) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("request deletion " + indexName + ", resource " + resource);
             }
             gsearchHandler.requestDeletion(resource, indexName, pidSuffix);
-        }
-        else if (action
-            .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)) {
-            if (LOGGER.isDebugEnabled()) {
+        } else if(action.equalsIgnoreCase(
+                de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("request createEmpty " + indexName);
             }
             gsearchHandler.requestCreateEmpty(indexName);
@@ -502,57 +490,54 @@ public class IndexingHandler implements ResourceListener {
      * @param domObject  Dom-Object that holds resource-xml.
      * @return int action to take (delete, update, nothing)
      */
-    private int checkPrerequisites(
-        String xml, final Map<String, Object> parameters, final String resource, Document domObject)
-        throws SystemException {
-        if (LOGGER.isDebugEnabled()) {
+    private int checkPrerequisites(String xml, final Map<String, Object> parameters, final String resource,
+                                   Document domObject) throws SystemException {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("prerequisites is " + parameters.get("prerequisites"));
         }
-        if (parameters.get("prerequisites") == null) {
+        if(parameters.get("prerequisites") == null) {
             return Constants.DO_UPDATE;
         }
         try {
             final HashMap<String, String> prerequisites = (HashMap<String, String>) parameters.get("prerequisites");
-            if (prerequisites.get("indexingPrerequisiteXpath") == null
-                && prerequisites.get("deletePrerequisiteXpath") == null) {
+            if(prerequisites.get("indexingPrerequisiteXpath") == null &&
+                    prerequisites.get("deletePrerequisiteXpath") == null) {
                 return Constants.DO_UPDATE;
-            }
-            else {
-                if (xml == null) {
-                    if (LOGGER.isDebugEnabled()) {
+            } else {
+                if(xml == null) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("xml is null, requesting it from cache");
                     }
                     xml = indexingCacheHandler.retrieveObjectFromCache(resource);
                 }
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("xml is: " + xml);
                 }
-                if (domObject == null) {
+                if(domObject == null) {
                     domObject = getXmlAsDocument(xml);
                 }
-                if (prerequisites.get("indexingPrerequisiteXpath") != null) {
+                if(prerequisites.get("indexingPrerequisiteXpath") != null) {
                     final Node updateNode =
-                        XPathAPI.selectSingleNode(domObject, prerequisites.get("indexingPrerequisiteXpath"));
-                    if (LOGGER.isDebugEnabled()) {
+                            XPathAPI.selectSingleNode(domObject, prerequisites.get("indexingPrerequisiteXpath"));
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("gsearchindexing xpath-exec on DOM-Object " + " finished");
                     }
-                    if (updateNode != null) {
+                    if(updateNode != null) {
                         return Constants.DO_UPDATE;
                     }
                 }
-                if (prerequisites.get("deletePrerequisiteXpath") != null) {
+                if(prerequisites.get("deletePrerequisiteXpath") != null) {
                     final Node deleteNode =
-                        XPathAPI.selectSingleNode(domObject, prerequisites.get("deletePrerequisiteXpath"));
-                    if (LOGGER.isDebugEnabled()) {
+                            XPathAPI.selectSingleNode(domObject, prerequisites.get("deletePrerequisiteXpath"));
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("gsearchindexing xpath-exec on DOM-Object " + " finished");
                     }
-                    if (deleteNode != null) {
+                    if(deleteNode != null) {
                         return Constants.DO_DELETE;
                     }
                 }
             }
-        }
-        catch (final TransformerException e) {
+        } catch(final TransformerException e) {
             throw new SystemException(e.getMessage(), e);
         }
         return Constants.DO_NOTHING;
@@ -571,16 +556,15 @@ public class IndexingHandler implements ResourceListener {
         boolean result = false;
         final Map<String, Map<String, Object>> resourceParameters = getObjectTypeParameters().get(objectType);
 
-        if (id != null && resourceParameters != null) {
-            if (indexName == null || indexName.trim().length() == 0 || "all".equalsIgnoreCase(indexName)) {
-                for (final String indexName2 : resourceParameters.keySet()) {
+        if(id != null && resourceParameters != null) {
+            if(indexName == null || indexName.trim().length() == 0 || "all".equalsIgnoreCase(indexName)) {
+                for(final String indexName2 : resourceParameters.keySet()) {
                     result = exists(id, indexName2);
-                    if (result) {
+                    if(result) {
                         break;
                     }
                 }
-            }
-            else {
+            } else {
                 result = exists(id, indexName);
             }
         }
@@ -609,30 +593,29 @@ public class IndexingHandler implements ResourceListener {
             final DefaultHttpClient client = new DefaultHttpClient(cm, params);
 
             final StringBuilder query = new StringBuilder("");
-            for (int i = 0; i < Constants.INDEX_PRIM_KEY_FIELDS.length; i++) {
-                if (query.length() > 0) {
+            for(int i = 0; i < Constants.INDEX_PRIM_KEY_FIELDS.length; i++) {
+                if(query.length() > 0) {
                     query.append(" or ");
                 }
                 query.append(Constants.INDEX_PRIM_KEY_FIELDS[i]).append('=').append(id);
             }
 
-            final HttpUriRequest httpGet =
-                new HttpGet(EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/"
-                    + indexName + "?query=" + URLEncoder.encode(query.toString(), "UTF-8"));
+            final HttpUriRequest httpGet = new HttpGet(
+                    EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/" + indexName +
+                            "?query=" + URLEncoder.encode(query.toString(), "UTF-8"));
 
             final HttpResponse response = client.execute(httpGet);
-            if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
+            if(response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                 final Pattern numberOfRecordsPattern = Pattern.compile("numberOfRecords>(.*?)<");
 
                 final Matcher m =
-                    numberOfRecordsPattern.matcher(EntityUtils.toString(response.getEntity(), HTTP.UTF_8));
+                        numberOfRecordsPattern.matcher(EntityUtils.toString(response.getEntity(), HTTP.UTF_8));
 
-                if (m.find()) {
+                if(m.find()) {
                     result = Integer.parseInt(m.group(1)) > 0;
                 }
             }
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new SystemException(e.getMessage(), e);
         }
         return result;
@@ -645,18 +628,17 @@ public class IndexingHandler implements ResourceListener {
      * @return List of PIDs
      * @throws SystemException Thrown if a framework internal error occurs.
      */
-    public Set<String> getPids(final String objectType, final String indexName) throws SystemException,
-        WebserverSystemException {
+    public Set<String> getPids(final String objectType, final String indexName)
+            throws SystemException, WebserverSystemException {
         final Map<String, Map<String, Object>> resourceParameters = getObjectTypeParameters().get(objectType);
         Set<String> result = new HashSet<String>();
 
-        if (resourceParameters != null) {
-            if (indexName == null || indexName.trim().length() == 0 || "all".equalsIgnoreCase(indexName)) {
-                for (final String indexName2 : resourceParameters.keySet()) {
+        if(resourceParameters != null) {
+            if(indexName == null || indexName.trim().length() == 0 || "all".equalsIgnoreCase(indexName)) {
+                for(final String indexName2 : resourceParameters.keySet()) {
                     result.addAll(getPids(indexName2));
                 }
-            }
-            else {
+            } else {
                 result = getPids(indexName);
             }
         }
@@ -685,40 +667,35 @@ public class IndexingHandler implements ResourceListener {
             final SrwScanResponseHandler handler = new SrwScanResponseHandler(sp);
             sp.addHandler(handler);
 
-            final String query =
-                Constants.SRW_MAXIMUM_TERMS_MATCHER.reset(Constants.SRW_SCAN_PARAMS).replaceFirst(
-                    Integer.toString(Constants.SRW_MAXIMUM_SCAN_TERMS));
+            final String query = Constants.SRW_MAXIMUM_TERMS_MATCHER.reset(Constants.SRW_SCAN_PARAMS)
+                    .replaceFirst(Integer.toString(Constants.SRW_MAXIMUM_SCAN_TERMS));
             String lastTerm = "";
-            String lastLastTerm = "";
+            String lastLastTerm;
             boolean running = true;
-            while (running) {
+            while(running) {
                 handler.resetNoOfDocumentTerms();
-                final HttpGet httpGet =
-                    new HttpGet(EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/"
-                        + indexName + Constants.SRW_TERM_MATCHER.reset(query).replaceFirst(lastTerm));
+                final HttpGet httpGet = new HttpGet(
+                        EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/" + indexName +
+                                Constants.SRW_TERM_MATCHER.reset(query).replaceFirst(lastTerm));
 
                 final HttpResponse response = client.execute(httpGet);
-                if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
+                if(response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                     lastLastTerm = handler.getLastTerm();
                     sp.parse(new ByteArrayInputStream(EntityUtils.toByteArray(response.getEntity())));
                     lastTerm = handler.getLastTerm();
-                }
-                else {
+                } else {
                     throw new WebserverSystemException(response.getStatusLine().getReasonPhrase());
                 }
-                if (handler.getNoOfDocumentTerms() == 0) {
+                if(handler.getNoOfDocumentTerms() == 0) {
                     running = false;
-                }
-                else if (lastTerm.equals(lastLastTerm)) {
+                } else if(lastTerm.equals(lastLastTerm)) {
                     throw new SystemException("duplicate PID in Scan Operation");
                 }
             }
             return handler.getTerms();
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new SystemException(e.getMessage(), e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new SystemException(e.getMessage(), e);
         }
     }
@@ -730,12 +707,12 @@ public class IndexingHandler implements ResourceListener {
      * @throws IOException e
      */
     private Iterable<String> getIndexNames() throws IOException, ApplicationServerSystemException {
-        if (this.indexNames == null) {
+        if(this.indexNames == null) {
             // Get index names from gsearch-config
             final Map<String, Map<String, String>> indexConfig = gsearchHandler.getIndexConfigurations();
             this.indexNames = new ArrayList<String>();
             indexNames.addAll(indexConfig.keySet());
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("configured indexNames: " + indexConfig.keySet());
             }
         }
@@ -752,79 +729,77 @@ public class IndexingHandler implements ResourceListener {
         // Build IndexInfo HashMap
         this.objectTypeParameters = new HashMap<String, Map<String, Map<String, Object>>>();
         final String searchPropertiesDirectory =
-            EscidocConfiguration.getInstance().get(EscidocConfiguration.SEARCH_PROPERTIES_DIRECTORY);
-        for (final String indexName : getIndexNames()) {
-            if (LOGGER.isDebugEnabled()) {
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.SEARCH_PROPERTIES_DIRECTORY);
+        for(final String indexName : getIndexNames()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("getting configuration for index " + indexName);
             }
             final Properties indexProps = new Properties();
             InputStream propStream = null;
             try {
-                propStream =
-                    IndexingHandler.class.getResourceAsStream('/' + searchPropertiesDirectory + "/index/" + indexName
-                        + "/index.object-types.properties");
-                if (propStream == null) {
-                    throw new SystemException(searchPropertiesDirectory + "/index/" + indexName
-                        + "/index.object-types.properties " + "not found in classpath");
+                propStream = IndexingHandler.class.getResourceAsStream(
+                        '/' + searchPropertiesDirectory + "/index/" + indexName + "/index.object-types.properties");
+                if(propStream == null) {
+                    throw new SystemException(
+                            searchPropertiesDirectory + "/index/" + indexName + "/index.object-types.properties " +
+                                    "not found in classpath");
                 }
                 indexProps.load(propStream);
-            }
-            finally {
+            } finally {
                 IOUtils.closeStream(propStream);
             }
             final Pattern objectTypePattern = Pattern.compile(".*?\\.(.*?)\\..*");
             final Matcher objectTypeMatcher = objectTypePattern.matcher("");
             final Collection<String> objectTypes = new HashSet<String>();
-            for (final Object o : indexProps.keySet()) {
+            for(final Object o : indexProps.keySet()) {
                 final String key = (String) o;
-                if (key.startsWith("Resource")) {
+                if(key.startsWith("Resource")) {
                     final String propVal = indexProps.getProperty(key);
-                    if (LOGGER.isDebugEnabled()) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("found property " + key + ':' + propVal);
                     }
                     objectTypeMatcher.reset(key);
-                    if (!objectTypeMatcher.matches()) {
+                    if(! objectTypeMatcher.matches()) {
                         throw new IOException(key + " is not a supported property");
                     }
                     final String objectType =
-                        de.escidoc.core.common.business.Constants.RESOURCES_NS_URI + objectTypeMatcher.group(1);
-                    if (objectTypeParameters.get(objectType) == null) {
-                        if (LOGGER.isDebugEnabled()) {
+                            de.escidoc.core.common.business.Constants.RESOURCES_NS_URI + objectTypeMatcher.group(1);
+                    if(objectTypeParameters.get(objectType) == null) {
+                        if(LOGGER.isDebugEnabled()) {
                             LOGGER.debug("initializing HashMap for objectType " + objectType);
                         }
                         objectTypeParameters.put(objectType, new HashMap<String, Map<String, Object>>());
                     }
-                    if (objectTypeParameters.get(objectType).get(indexName) == null) {
+                    if(objectTypeParameters.get(objectType).get(indexName) == null) {
                         objectTypeParameters.get(objectType).put(indexName, new HashMap<String, Object>());
-                        if (LOGGER.isDebugEnabled()) {
+                        if(LOGGER.isDebugEnabled()) {
                             LOGGER.debug("adding " + indexName + " to " + objectType);
                         }
                         objectTypes.add(objectType);
                     }
-                    if (key.contains("Prerequisite")) {
-                        if (objectTypeParameters.get(objectType).get(indexName).get("prerequisites") == null) {
-                            objectTypeParameters.get(objectType).get(indexName).put("prerequisites",
-                                new HashMap<String, String>());
+                    if(key.contains("Prerequisite")) {
+                        if(objectTypeParameters.get(objectType).get(indexName).get("prerequisites") == null) {
+                            objectTypeParameters.get(objectType).get(indexName)
+                                    .put("prerequisites", new HashMap<String, String>());
                         }
                         ((Map<String, String>) objectTypeParameters.get(objectType).get(indexName).get("prerequisites"))
-                            .put(key.replaceFirst(".*\\.", ""), propVal);
-                        if (LOGGER.isDebugEnabled()) {
+                                .put(key.replaceFirst(".*\\.", ""), propVal);
+                        if(LOGGER.isDebugEnabled()) {
                             LOGGER.debug("adding prerequisite " + key + ':' + propVal);
                         }
-                    }
-                    else {
+                    } else {
                         objectTypeParameters.get(objectType).get(indexName).put(key.replaceFirst(".*\\.", ""), propVal);
-                        if (LOGGER.isDebugEnabled()) {
+                        if(LOGGER.isDebugEnabled()) {
                             LOGGER.debug("adding parameter " + key + ':' + propVal);
                         }
                     }
                 }
             }
-            for (final String objectType : objectTypes) {
-                if (objectTypeParameters.get(objectType).get(indexName).get("indexAsynchronous") == null) {
+            for(final String objectType : objectTypes) {
+                if(objectTypeParameters.get(objectType).get(indexName).get("indexAsynchronous") == null) {
                     objectTypeParameters.get(objectType).get(indexName).put("indexAsynchronous", "false");
                 }
-                if (objectTypeParameters.get(objectType).get(indexName).get("indexReleasedVersion") == null) {
+                if(objectTypeParameters.get(objectType).get(indexName).get("indexReleasedVersion") == null) {
                     objectTypeParameters.get(objectType).get(indexName).put("indexReleasedVersion", "false");
                 }
             }
@@ -841,8 +816,7 @@ public class IndexingHandler implements ResourceListener {
         try {
             final InputStream in = new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING));
             return docBuilder.parse(new InputSource(in));
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new SystemException(e.getMessage(), e);
         }
     }
@@ -852,11 +826,10 @@ public class IndexingHandler implements ResourceListener {
      * @throws WebserverSystemException e
      */
     public Map<String, Map<String, Map<String, Object>>> getObjectTypeParameters() throws WebserverSystemException {
-        if (this.objectTypeParameters == null) {
+        if(this.objectTypeParameters == null) {
             try {
                 getIndexConfigs();
-            }
-            catch (final Exception e) {
+            } catch(final Exception e) {
                 throw new WebserverSystemException(e.getMessage(), e);
             }
         }
