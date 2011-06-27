@@ -74,13 +74,16 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
      * @param taskParam SPO query parameter and return representation type.
      *                  <p/>
      *                  <pre>
-     *                                    &lt;param&gt;
-     *                                        &lt;query&gt;&lt;info:fedora/escidoc:111&gt;
-     *                                        &lt;http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf&gt;
-     *                                   /query&gt;
-     *                                        &lt;format&gt;N-Triples&lt;/format&gt;
-     *                                        &lt;/param&gt;
-     *                                   </pre>
+     *                                                                                       &lt;param&gt;
+     *
+     *                  &lt;query&gt;&lt;info:fedora/escidoc:111&gt;
+     *
+     *                  &lt;http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf&gt;
+     *                                                                                      /query&gt;
+     *
+     *                  &lt;format&gt;N-Triples&lt;/format&gt;
+     *                                                                                           &lt;/param&gt;
+     *                                                                                      </pre>
      * @return Returns XML representation of the query result.
      * @throws InvalidTripleStoreQueryException
      *          Thrown if triple store query is invalid.
