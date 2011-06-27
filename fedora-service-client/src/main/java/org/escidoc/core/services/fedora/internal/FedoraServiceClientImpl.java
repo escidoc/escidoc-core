@@ -454,8 +454,8 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @Cacheable(cacheName = "Fedora.DatastreamBinaryContent", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetBinaryContentKeyGenerator"))
+    /*@Cacheable(cacheName = "Fedora.DatastreamBinaryContent", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetBinaryContentKeyGenerator"))*/
     public Stream getBinaryContent(final String pid, final String dsId, final DateTime versionDate) {
         final GetBinaryContentPathParam path =
                 new GetBinaryContentPathParam(pid, dsId, versionDate.withZone(DateTimeZone.UTC).toString());
