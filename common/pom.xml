@@ -246,11 +246,6 @@
             <groupId>xmlunit</groupId>
             <artifactId>xmlunit</artifactId>
         </dependency>
-		<!-- TODO: Remove as soon as all external libraries (Fedora) migration to new http client. -->
-		<dependency>
-			<groupId>commons-httpclient</groupId>
-			<artifactId>commons-httpclient</artifactId>
-		</dependency>
 	</dependencies>
 
 </project>
