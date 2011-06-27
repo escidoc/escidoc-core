@@ -31,6 +31,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.engine.SessionFactoryImplementor;
 import org.hibernate.impl.SessionFactoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,14 +62,13 @@ public class LockHandler extends JdbcDaoSupport {
      * Initialize and get the database dependent locked value.
      */
     public void init() {
-        lockedValue = ((SessionFactoryImpl) sessionFactory).getDialect().toBooleanValueString(LOCKED_VALUE);
+        lockedValue = ((SessionFactoryImplementor) sessionFactory).getDialect().toBooleanValueString(LOCKED_VALUE);
     }
 
     /**
      * Wrapper of setDataSource to enable bean stuff generation for this handler.
-     * 
-     * @param myDataSource
-     *            The {@link DataSource} to wrap.
+     *
+     * @param myDataSource The {@link DataSource} to wrap.
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);
@@ -76,9 +76,8 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Wrapper of setSessionFactory to enable bean stuff generation for this handler.
-     * 
-     * @param sessionFactory
-     *            The sessionFactory to set.
+     *
+     * @param sessionFactory The sessionFactory to set.
      */
     public final void setSessionFactory(final SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -86,22 +85,18 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Lock an object and forbid further modifications.
-     * 
-     * @param objid
-     *            The id of the object to lock.
-     * @param lockOwner
-     *            The id of the lock owner.
-     * @throws SqlDatabaseSystemException
-     *             Thrown if an error occurs accessing the database.
+     *
+     * @param objid     The id of the object to lock.
+     * @param lockOwner The id of the lock owner.
+     * @throws SqlDatabaseSystemException Thrown if an error occurs accessing the database.
      */
     public void lock(final String objid, final String[] lockOwner) throws SqlDatabaseSystemException {
 
         try {
             getJdbcTemplate().execute(
-                "INSERT INTO om.lockstatus (objid, owner, ownertitle, locked) " + "VALUES ('" + objid + "','"
-                    + lockOwner[0] + "','" + lockOwner[1] + "', " + lockedValue + ')');
-        }
-        catch (final DataAccessException e) {
+                    "INSERT INTO om.lockstatus (objid, owner, ownertitle, locked) " + "VALUES ('" + objid + "','" +
+                            lockOwner[0] + "','" + lockOwner[1] + "', " + lockedValue + ')');
+        } catch(final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
             // TODO throw this Exception
             // throw new SqlDatabaseSystemException("Could not lock object '"
@@ -111,18 +106,15 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Unlock an object and permit further modifications.
-     * 
-     * @param objid
-     *            The id of the object to unlock.
-     * @throws SqlDatabaseSystemException
-     *             Thrown if an error occurs accessing the database.
+     *
+     * @param objid The id of the object to unlock.
+     * @throws SqlDatabaseSystemException Thrown if an error occurs accessing the database.
      */
     public void unlock(final String objid) throws SqlDatabaseSystemException {
 
         try {
             getJdbcTemplate().update("DELETE FROM om.lockstatus WHERE objid = ?", objid);
-        }
-        catch (final DataAccessException e) {
+        } catch(final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
             // TODO throw this Exception
             // throw new SqlDatabaseSystemException("Could not unlock object '"
@@ -132,35 +124,32 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Get the lock owner of a locked object.
-     * 
-     * @param objid
-     *            The id of the object to unlock.
+     *
+     * @param objid The id of the object to unlock.
      * @return The lock owner.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public String getLockOwner(final String objid) throws WebserverSystemException {
 
-        if (objid == null) {
+        if(objid == null) {
             throw new NullPointerException("Objid for lock owner check is null");
         }
 
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
-            return getJdbcTemplate().queryForObject("SELECT owner FROM om.lockstatus WHERE objid = ?",
-                new Object[] { objid }, String.class);
-        }
-        catch (final IncorrectResultSizeDataAccessException e) {
+            return getJdbcTemplate()
+                    .queryForObject("SELECT owner FROM om.lockstatus WHERE objid = ?", new Object[]{objid},
+                            String.class);
+        } catch(final IncorrectResultSizeDataAccessException e) {
             //          implementation is crud, but anyway having no lock entry mean resource is not locked
             //            if (LOGGER.isWarnEnabled()) {
             //                LOGGER.warn("Error on quering for lock owner.");
             //            }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on quering for lock owner.", e);
             }
             return null;
-        }
-        catch (final DataAccessException e) {
+        } catch(final DataAccessException e) {
             throw new WebserverSystemException("Error on quering for lock owner.", e);
             // TODO throw this Exception
             // throw new SqlDatabaseSystemException(
@@ -170,29 +159,26 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Gets the title for the lock owner of the specified object.
-     * 
-     * @param objid
-     *            The internal id of the object.
+     *
+     * @param objid The internal id of the object.
      * @return Returns the title of the lock owner.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public String getLockOwnerTitle(final String objid) throws WebserverSystemException {
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
-            return getJdbcTemplate().queryForObject("SELECT ownertitle FROM om.lockstatus WHERE objid = ?",
-                new Object[] { objid }, String.class);
-        }
-        catch (final IncorrectResultSizeDataAccessException e) {
-            if (LOGGER.isWarnEnabled()) {
+            return getJdbcTemplate()
+                    .queryForObject("SELECT ownertitle FROM om.lockstatus WHERE objid = ?", new Object[]{objid},
+                            String.class);
+        } catch(final IncorrectResultSizeDataAccessException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on quering for lock owner title.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on quering for lock owner title.", e);
             }
             return null;
-        }
-        catch (final DataAccessException e) {
+        } catch(final DataAccessException e) {
             throw new WebserverSystemException(e);
             // TODO throw this Exception
             // throw new SqlDatabaseSystemException(
@@ -202,40 +188,35 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Get the lock owner of a locked object.
-     * 
-     * @param objid
-     *            The id of the object to unlock.
+     *
+     * @param objid The id of the object to unlock.
      * @return The lock owner.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public String getLockDate(final String objid) throws WebserverSystemException {
         final String result;
 
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
-            final Timestamp ts =
-                getJdbcTemplate().queryForObject("SELECT lock_timestamp FROM om.lockstatus WHERE objid = ?",
-                    new Object[] { objid }, Timestamp.class);
+            final Timestamp ts = getJdbcTemplate()
+                    .queryForObject("SELECT lock_timestamp FROM om.lockstatus WHERE objid = ?", new Object[]{objid},
+                            Timestamp.class);
             final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
             cal.setTimeInMillis(ts.getTime());
             final XMLGregorianCalendar xmlcal =
-                DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) cal);
+                    DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) cal);
             result = xmlcal.toString();
-        }
-        catch (final IncorrectResultSizeDataAccessException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final IncorrectResultSizeDataAccessException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on quering for lock date.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on quering for lock date.", e);
             }
             return null;
-        }
-        catch (final DataAccessException e) {
+        } catch(final DataAccessException e) {
             throw new WebserverSystemException(e);
-        }
-        catch (final DatatypeConfigurationException e) {
+        } catch(final DatatypeConfigurationException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -244,31 +225,28 @@ public class LockHandler extends JdbcDaoSupport {
 
     /**
      * Get the lock status of an object.
-     * 
-     * @param objid
-     *            The id of the object.
+     *
+     * @param objid The id of the object.
      * @return The lock status. Returns true if object is locked, false otherwise.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public boolean isLocked(final String objid) throws WebserverSystemException {
 
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
-            return getJdbcTemplate().queryForObject("SELECT locked FROM om.lockstatus WHERE objid = ?",
-                new Object[] { objid }, Boolean.class);
-        }
-        catch (final IncorrectResultSizeDataAccessException e) {
+            return getJdbcTemplate()
+                    .queryForObject("SELECT locked FROM om.lockstatus WHERE objid = ?", new Object[]{objid},
+                            Boolean.class);
+        } catch(final IncorrectResultSizeDataAccessException e) {
             // implementation is crud, but anyway having no lock entry mean resource is not locked
             // if (LOGGER.isWarnEnabled()) {
             // LOGGER.warn("Error on quering for lock.");
             // }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on quering for lock.", e);
             }
             return false;
-        }
-        catch (final DataAccessException e) {
+        } catch(final DataAccessException e) {
             throw new WebserverSystemException("Could not find lock status for object '" + objid + '!', e);
         }
     }
