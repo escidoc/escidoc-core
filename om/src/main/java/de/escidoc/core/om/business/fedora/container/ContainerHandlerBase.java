@@ -121,26 +121,24 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws WebserverSystemException   In case of an internal error.
      * @throws IntegritySystemException   If the integrity of the repository is violated.
      */
-    protected void setItem(final String id) throws ItemNotFoundException, WebserverSystemException,
-        XmlParserSystemException, TripleStoreSystemException, IntegritySystemException {
+    protected void setItem(final String id)
+            throws ItemNotFoundException, WebserverSystemException, XmlParserSystemException,
+            TripleStoreSystemException, IntegritySystemException {
 
         try {
 
             this.item = new Item(id);
 
-        }
-        catch (final FedoraSystemException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final FedoraSystemException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on setting item.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on setting item.", e);
             }
-        }
-        catch (final StreamNotFoundException e) {
+        } catch(final StreamNotFoundException e) {
             throw new ItemNotFoundException(e);
-        }
-        catch (final ResourceNotFoundException e) {
+        } catch(final ResourceNotFoundException e) {
             throw new ItemNotFoundException(e);
         }
     }
@@ -151,21 +149,16 @@ public class ContainerHandlerBase extends HandlerBase {
      * @param id The ID of the container which should be bound to this Handler.
      * @throws ContainerNotFoundException If there is no container with <code>id</code> in the repository.
      * @throws SystemException            Thrown in case of an internal system error.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    public void setContainer(final String id) throws ContainerNotFoundException, SystemException,
-        TripleStoreSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException {
+    public void setContainer(final String id)
+            throws ContainerNotFoundException, SystemException, IntegritySystemException, XmlParserSystemException,
+            WebserverSystemException {
 
         try {
             this.container = new Container(id);
-        }
-        catch (final StreamNotFoundException e) {
+        } catch(final StreamNotFoundException e) {
             throw new IntegritySystemException(e);
-        }
-        catch (final ResourceNotFoundException e) {
+        } catch(final ResourceNotFoundException e) {
             throw new ContainerNotFoundException(e);
         }
 
@@ -180,8 +173,8 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws EncodingSystemException  In case of an encoding failure.
      * @throws WebserverSystemException Thrown if converting character encoding failed.
      */
-    protected String getVersions() throws EncodingSystemException, WebserverSystemException, FedoraSystemException,
-        StreamNotFoundException {
+    protected String getVersions()
+            throws EncodingSystemException, WebserverSystemException, FedoraSystemException, StreamNotFoundException {
 
         return getContainer().getWov().toStringUTF8();
     }
@@ -193,9 +186,9 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws LockingException         If the container is locked and the current user is not the one who locked it.
      */
     protected void checkLocked() throws LockingException, WebserverSystemException {
-        if (getContainer().isLocked() && !getContainer().getLockOwner().equals(Utility.getCurrentUser()[0])) {
-            throw new LockingException("Container + " + getContainer().getId() + " is locked by "
-                + XmlUtility.escapeForbiddenXmlCharacters(getContainer().getLockOwner()) + '.');
+        if(getContainer().isLocked() && ! getContainer().getLockOwner().equals(Utility.getCurrentUser()[0])) {
+            throw new LockingException("Container + " + getContainer().getId() + " is locked by " +
+                    XmlUtility.escapeForbiddenXmlCharacters(getContainer().getLockOwner()) + '.');
         }
     }
 
@@ -206,8 +199,8 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws WebserverSystemException   In case of an internal error.
      * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    protected void checkNotReleased() throws InvalidStatusException, WebserverSystemException,
-        TripleStoreSystemException {
+    protected void checkNotReleased()
+            throws InvalidStatusException, WebserverSystemException, TripleStoreSystemException {
         checkNotStatus(Constants.STATUS_RELEASED);
     }
 
@@ -218,8 +211,8 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException If the triple store reports an error.
      * @throws WebserverSystemException   In case of an internal error.
      */
-    protected void checkNotSubmitted() throws InvalidStatusException, WebserverSystemException,
-        TripleStoreSystemException {
+    protected void checkNotSubmitted()
+            throws InvalidStatusException, WebserverSystemException, TripleStoreSystemException {
         checkNotStatus(Constants.STATUS_SUBMITTED);
     }
 
@@ -231,14 +224,13 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException If the triple store reports an error.
      * @throws WebserverSystemException   In case of an internal error.
      */
-    protected void checkNotStatus(final String status) throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException {
+    protected void checkNotStatus(final String status)
+            throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
 
-        final String curStatus =
-            getTripleStoreUtility()
+        final String curStatus = getTripleStoreUtility()
                 .getPropertiesElements(getContainer().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
-        if (!status.equals(curStatus)) {
+        if(! status.equals(curStatus)) {
             throw new InvalidStatusException("The object is in not state '" + status + "'.");
         }
     }
@@ -252,20 +244,19 @@ public class ContainerHandlerBase extends HandlerBase {
      */
     protected void checkReleased() throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
 
-        final String status =
-            getTripleStoreUtility()
+        final String status = getTripleStoreUtility()
                 .getPropertiesElements(getContainer().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
-        if (status.equals(Constants.STATUS_RELEASED)
-            && getTripleStoreUtility().getPropertiesElements(getContainer().getId(),
-                TripleStoreUtility.PROP_LATEST_VERSION_STATUS).equals(Constants.STATUS_RELEASED)) {
+        if(status.equals(Constants.STATUS_RELEASED) && getTripleStoreUtility()
+                .getPropertiesElements(getContainer().getId(), TripleStoreUtility.PROP_LATEST_VERSION_STATUS)
+                .equals(Constants.STATUS_RELEASED)) {
             // check if the version is in status released
             // FIXME check if the LATEST version is in status released. That
             // seems to be the same because all methods that call checkReleased
             // also call checkLatestVersion. But the semantic should be true
             // without another method call. (? FRS)
-            throw new InvalidStatusException("The object is in state '" + Constants.STATUS_RELEASED
-                + "' and can not be" + " changed.");
+            throw new InvalidStatusException(
+                    "The object is in state '" + Constants.STATUS_RELEASED + "' and can not be" + " changed.");
         }
     }
 
@@ -287,24 +278,23 @@ public class ContainerHandlerBase extends HandlerBase {
             // get status from version-history/version[@objid='id']/
             // version-status[@timestamp='timestamp']
             final String xpathTimestamp =
-                "/version-history/version[@objid='" + getContainer().getLatestVersionId() + "']/timestamp";
+                    "/version-history/version[@objid='" + getContainer().getLatestVersionId() + "']/timestamp";
             final String timestamp = xpath.evaluate(xpathTimestamp, xmlDom);
 
             // fetch the status with the newest timestamp
             final String xpathStatus =
-                "/version-history/version[@objid='" + getContainer().getLatestVersionId() + "'][@timestamp='"
-                    + timestamp + "']/version-status";
+                    "/version-history/version[@objid='" + getContainer().getLatestVersionId() + "'][@timestamp='" +
+                            timestamp + "']/version-status";
 
             status = xpath.evaluate(xpathStatus, xmlDom);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new InvalidStatusException("Error on checking version.", e);
         }
 
         // In first release, if object is once released no changes are allowed
-        if (status.equals(checkStatus)) {
-            throw new InvalidStatusException("The object is in state '" + checkStatus + "' and can not be"
-                + " changed.");
+        if(status.equals(checkStatus)) {
+            throw new InvalidStatusException(
+                    "The object is in state '" + checkStatus + "' and can not be" + " changed.");
         }
     }
 
@@ -316,14 +306,15 @@ public class ContainerHandlerBase extends HandlerBase {
      *                                  <code>checkStatus</code>.
      * @throws IntegritySystemException Thrown if version status could not be obtained.
      */
-    protected void checkVersionStatus(final String checkStatus) throws InvalidStatusException, IntegritySystemException {
+    protected void checkVersionStatus(final String checkStatus)
+            throws InvalidStatusException, IntegritySystemException {
 
         final String status = getContainer().getVersionStatus();
 
         // In first release, if object is once released no changes are allowed
-        if (!status.equals(checkStatus)) {
-            throw new InvalidStatusException("The object is in state '" + checkStatus + "' and can not be"
-                + " changed.");
+        if(! status.equals(checkStatus)) {
+            throw new InvalidStatusException(
+                    "The object is in state '" + checkStatus + "' and can not be" + " changed.");
         }
     }
 
@@ -334,15 +325,15 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException If the triple store reports an error.
      * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    protected void checkNoObjectPidAssigned() throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException {
+    protected void checkNoObjectPidAssigned()
+            throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
 
-        final String pid =
-            getTripleStoreUtility().getPropertiesElements(getContainer().getId(), TripleStoreUtility.PROP_OBJECT_PID);
+        final String pid = getTripleStoreUtility()
+                .getPropertiesElements(getContainer().getId(), TripleStoreUtility.PROP_OBJECT_PID);
         // In first release, if object is once released no changes are allowed
-        if (pid != null && pid.length() > 0) {
-            throw new InvalidStatusException("The object is already assigned with PID '" + pid
-                + "' and can not be reassigned.");
+        if(pid != null && pid.length() > 0) {
+            throw new InvalidStatusException(
+                    "The object is already assigned with PID '" + pid + "' and can not be reassigned.");
         }
     }
 
@@ -353,8 +344,8 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws InvalidStatusException     If object version hasPID assigned already.
      * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    protected void checkNoVersionPidAssigned(final String versionId) throws InvalidStatusException,
-        TripleStoreSystemException {
+    protected void checkNoVersionPidAssigned(final String versionId)
+            throws InvalidStatusException, TripleStoreSystemException {
 
         // expand this method to support more than one pid system
 
@@ -368,15 +359,14 @@ public class ContainerHandlerBase extends HandlerBase {
             // get status from /version-history/version[@objid='id']/pid
             final String xpathPid = "/version-history/version[@objid='" + versionId + "']/pid";
             pid = xpath.evaluate(xpathPid, xmlDom);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new InvalidStatusException("Error on checking version.", e);
         }
 
         // FIXME pid structure check ?
-        if (pid.length() > 0) {
-            throw new InvalidStatusException("This object version is already assigned with PID '" + pid
-                + "' and can not be reassigned.");
+        if(pid.length() > 0) {
+            throw new InvalidStatusException(
+                    "This object version is already assigned with PID '" + pid + "' and can not be reassigned.");
         }
     }
 
@@ -388,16 +378,15 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws WebserverSystemException   In case of an internal error.
      * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    protected void checkWithdrawn(final String additionalMessage) throws InvalidStatusException,
-        TripleStoreSystemException, WebserverSystemException {
+    protected void checkWithdrawn(final String additionalMessage)
+            throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
 
-        final String status =
-            getTripleStoreUtility()
+        final String status = getTripleStoreUtility()
                 .getPropertiesElements(getContainer().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
-        if (status.equals(Constants.STATUS_WITHDRAWN)) {
-            throw new InvalidStatusException("The object is in state '" + Constants.STATUS_WITHDRAWN + "'. "
-                + additionalMessage);
+        if(status.equals(Constants.STATUS_WITHDRAWN)) {
+            throw new InvalidStatusException(
+                    "The object is in state '" + Constants.STATUS_WITHDRAWN + "'. " + additionalMessage);
 
         }
     }
@@ -417,7 +406,7 @@ public class ContainerHandlerBase extends HandlerBase {
      */
     protected void checkLatestVersion() throws ReadonlyVersionException {
         final String thisVersion = container.getVersionNumber();
-        if (thisVersion != null && !thisVersion.equals(container.getLatestVersionNumber())) {
+        if(thisVersion != null && ! thisVersion.equals(container.getLatestVersionNumber())) {
             throw new ReadonlyVersionException("Only latest version can be modified.");
         }
     }
@@ -427,13 +416,13 @@ public class ContainerHandlerBase extends HandlerBase {
      *
      * @param status A status.
      * @throws InvalidStatusException If container is not in the specified status .
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkStatus(final String status) throws InvalidStatusException, TripleStoreSystemException {
         final String objectStatus =
-            getTripleStoreUtility().getPropertiesElements(container.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
-        if (!objectStatus.equals(status)) {
-            throw new InvalidStatusException("Container " + container.getId() + " is in status '" + objectStatus + "'.");
+                getTripleStoreUtility().getPropertiesElements(container.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
+        if(! objectStatus.equals(status)) {
+            throw new InvalidStatusException(
+                    "Container " + container.getId() + " is in status '" + objectStatus + "'.");
         }
     }
 
@@ -446,15 +435,15 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws InvalidStatusException     Thrown if the Context is not in the requested status.
      * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    protected void checkContextStatus(final String contextId, final String status) throws InvalidStatusException,
-        TripleStoreSystemException, WebserverSystemException {
+    protected void checkContextStatus(final String contextId, final String status)
+            throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
 
         final String curStatus =
-            getTripleStoreUtility().getPropertiesElements(contextId, TripleStoreUtility.PROP_PUBLIC_STATUS);
+                getTripleStoreUtility().getPropertiesElements(contextId, TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
-        if (!curStatus.equals(status)) {
-            throw new InvalidStatusException("The Context is in state '" + curStatus + "' and not in status " + status
-                + '.');
+        if(! curStatus.equals(status)) {
+            throw new InvalidStatusException(
+                    "The Context is in state '" + curStatus + "' and not in status " + status + '.');
         }
     }
 
@@ -463,13 +452,13 @@ public class ContainerHandlerBase extends HandlerBase {
      *
      * @param status A status.
      * @throws InvalidStatusException If container is in the specified status.
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkStatusNot(final String status) throws InvalidStatusException, TripleStoreSystemException {
         final String objectStatus =
-            getTripleStoreUtility().getPropertiesElements(container.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
-        if (objectStatus.equals(status)) {
-            throw new InvalidStatusException("Container " + container.getId() + " is in status '" + objectStatus + "'.");
+                getTripleStoreUtility().getPropertiesElements(container.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
+        if(objectStatus.equals(status)) {
+            throw new InvalidStatusException(
+                    "Container " + container.getId() + " is in status '" + objectStatus + "'.");
         }
     }
 }

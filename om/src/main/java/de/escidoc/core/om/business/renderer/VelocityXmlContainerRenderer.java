@@ -95,9 +95,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @see ContainerRendererInterface#render(Container)
      */
     @Override
-    public String render(final Container container) throws SystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+    public String render(final Container container)
+            throws SystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+            XmlParserSystemException, WebserverSystemException {
 
         // Container container = containerHandler.getContainer();
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -131,8 +131,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * )
      */
     @Override
-    public String renderProperties(final Container container) throws WebserverSystemException,
-        TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException {
+    public String renderProperties(final Container container)
+            throws WebserverSystemException, TripleStoreSystemException, EncodingSystemException,
+            IntegritySystemException, FedoraSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
@@ -168,8 +169,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @return Returns the XML representation of the sub resource <code>ou-parents</code> of an organizational unit.
      */
     @Override
-    public String renderRelations(final Container container) throws WebserverSystemException,
-        TripleStoreSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+    public String renderRelations(final Container container)
+            throws WebserverSystemException, TripleStoreSystemException, IntegritySystemException,
+            FedoraSystemException, XmlParserSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
@@ -193,8 +195,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final Map<String, Object> values = new HashMap<String, Object>();
         VelocityXmlCommonRenderer.addXlinkValues(values);
         VelocityXmlCommonRenderer.addStructuralRelationsValues(values);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, ISODateTimeFormat.dateTime().withZone(
-            DateTimeZone.UTC).print(System.currentTimeMillis()));
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
+                ISODateTimeFormat.dateTime().withZone(DateTimeZone.UTC).print(System.currentTimeMillis()));
         values.put("isRootParents", XmlTemplateProvider.TRUE);
         addParentsValues(containerId, values);
         VelocityXmlCommonRenderer.addParentsNamespaceValues(values);
@@ -206,34 +208,32 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *
      * @param containerId The container for that data shall be created.
      * @param values      The map to add values to.
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void addParentsValues(final String containerId, final Map<String, Object> values)
-        throws TripleStoreSystemException {
+            throws TripleStoreSystemException {
         values.put("parentsHref", XmlUtility.getContainerParentsHref(XmlUtility.getContainerHref(containerId)));
         values.put("parentsTitle", "parents of container " + containerId);
         final StringBuffer query =
-            this.tripleStoreUtility.getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER);
+                this.tripleStoreUtility.getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER);
 
-        if (query.length() > 0) {
-            query.append(this.tripleStoreUtility.getRetrieveWhereClause(true, TripleStoreUtility.PROP_MEMBER,
-                containerId, null, null, null));
+        if(query.length() > 0) {
+            query.append(this.tripleStoreUtility
+                    .getRetrieveWhereClause(true, TripleStoreUtility.PROP_MEMBER, containerId, null, null, null));
             List<String> ids = new ArrayList<String>();
             try {
                 ids = this.tripleStoreUtility.retrieve(query.toString());
-            }
-            catch (final TripleStoreSystemException e) {
-                if (LOGGER.isWarnEnabled()) {
+            } catch(final TripleStoreSystemException e) {
+                if(LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on quering triple store.");
                 }
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on quering triple store.", e);
                 }
             }
 
             final Iterator<String> idIter = ids.iterator();
             final Collection<Map<String, String>> entries = new ArrayList<Map<String, String>>(ids.size());
-            while (idIter.hasNext()) {
+            while(idIter.hasNext()) {
                 final Map<String, String> entry = new HashMap<String, String>(THREE);
                 final String id = idIter.next();
                 entry.put("id", id);
@@ -242,7 +242,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
                 entries.add(entry);
             }
-            if (!entries.isEmpty()) {
+            if(! entries.isEmpty()) {
                 values.put(XmlTemplateProvider.VAR_PARENTS, entries);
             }
         }
@@ -276,15 +276,10 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *
      * @param values    The map to add values to.
      * @param container The Container.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private static void addPropertiesValus(final Map<String, Object> values, final Container container)
-        throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
-        WebserverSystemException {
+            throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+            WebserverSystemException {
 
         final Map<String, String> properties = container.getResourceProperties();
         final String id = container.getId();
@@ -293,20 +288,20 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         // status
         values.put("containerStatus", container.getStatus());
         values.put("containerCreationDate", container.getCreationDate());
-        values.put(XmlTemplateProvider.VAR_CONTAINER_STATUS_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(properties
-            .get(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
+        values.put(XmlTemplateProvider.VAR_CONTAINER_STATUS_COMMENT,
+                XmlUtility.escapeForbiddenXmlCharacters(properties.get(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
         // name
         values.put("containerName", container.getTitle());
         // description
         final String description = container.getDescription();
-        if (description != null) {
+        if(description != null) {
             values.put("containerDescription", PropertyMapKeys.CURRENT_VERSION_DESCRIPTION);
         }
 
         // context
         values.put("containerContextId", properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
-        values.put("containerContextHref", Constants.CONTEXT_URL_BASE
-            + properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
+        values.put("containerContextHref",
+                Constants.CONTEXT_URL_BASE + properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
         values.put("containerContextTitle", properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_TITLE));
         // content model
         final String contentModelId = properties.get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
@@ -321,7 +316,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("containerCreatedByTitle", properties.get(PropertyMapKeys.CREATED_BY_TITLE));
 
         // lock -status, -owner, -date
-        if (container.isLocked()) {
+        if(container.isLocked()) {
             values.put("containerLocked", XmlTemplateProvider.TRUE);
             final String lockOwnerId = container.getLockOwner();
             values.put("containerLockStatus", "locked");
@@ -329,8 +324,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             values.put("containerLockOwnerHref", XmlUtility.getUserAccountHref(lockOwnerId));
             values.put("containerLockOwnerId", lockOwnerId);
             values.put("containerLockOwnerTitle", container.getLockOwnerTitle());
-        }
-        else {
+        } else {
             values.put("containerLocked", XmlTemplateProvider.FALSE);
             values.put("containerLockStatus", "unlocked");
         }
@@ -338,13 +332,13 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final String currentVersionId = container.getFullId();
         final String latestVersionNumber = properties.get(PropertyMapKeys.LATEST_VERSION_NUMBER);
         String curVersionNumber = container.getVersionId();
-        if (curVersionNumber == null) {
+        if(curVersionNumber == null) {
             curVersionNumber = latestVersionNumber;
         }
 
         // pid ---------------
         final String pid = container.getObjectPid();
-        if (pid != null && pid.length() > 0) {
+        if(pid != null && pid.length() > 0) {
             values.put("containerPid", pid);
         }
         // current version
@@ -352,51 +346,50 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("containerCurrentVersionTitle", "current version");
         values.put("containerCurrentVersionId", currentVersionId);
         values.put("containerCurrentVersionNumber", curVersionNumber);
-        values.put("containerCurrentVersionComment", XmlUtility.escapeForbiddenXmlCharacters(properties
-            .get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
+        values.put("containerCurrentVersionComment", XmlUtility
+                .escapeForbiddenXmlCharacters(properties.get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
 
         // modified by
 
         final String modifiedById = properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID);
-        values.put("containerCurrentVersionModifiedByTitle", properties
-            .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
+        values.put("containerCurrentVersionModifiedByTitle",
+                properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
         values.put("containerCurrentVersionModifiedByHref", XmlUtility.getUserAccountHref(modifiedById));
         values.put("containerCurrentVersionModifiedById", modifiedById);
 
         final String versionPid = container.getVersionPid();
         // container
-        if (versionPid != null && versionPid.length() != 0) {
+        if(versionPid != null && versionPid.length() != 0) {
             values.put("containerCurrentVersionPID", versionPid);
         }
         values.put("containerCurrentVersionDate", container.getVersionDate());
 
-        if (curVersionNumber.equals(latestVersionNumber)) {
+        if(curVersionNumber.equals(latestVersionNumber)) {
             final String latestVersionStatus = properties.get(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS);
             values.put("containerCurrentVersionStatus", latestVersionStatus);
 
-            if (latestVersionStatus.equals(Constants.STATUS_RELEASED)) {
+            if(latestVersionStatus.equals(Constants.STATUS_RELEASED)) {
                 final String latestReleasePid =
-                    container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_PID);
-                if (latestReleasePid != null && latestReleasePid.length() != 0) {
+                        container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_PID);
+                if(latestReleasePid != null && latestReleasePid.length() != 0) {
                     values.put("containerCurrentVersionPID", latestReleasePid);
                 }
             }
 
-        }
-        else {
-            values.put("containerCurrentVersionStatus", container.getResourceProperties().get(
-                PropertyMapKeys.CURRENT_VERSION_STATUS));
+        } else {
+            values.put("containerCurrentVersionStatus",
+                    container.getResourceProperties().get(PropertyMapKeys.CURRENT_VERSION_STATUS));
 
-            values.put("containerCurrentVersionComment", XmlUtility.escapeForbiddenXmlCharacters(container
-                .getResourceProperties().get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
-            values.put("containerCurrentVersionModifiedById", container.getResourceProperties().get(
-                PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
+            values.put("containerCurrentVersionComment", XmlUtility.escapeForbiddenXmlCharacters(
+                    container.getResourceProperties().get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
+            values.put("containerCurrentVersionModifiedById",
+                    container.getResourceProperties().get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
 
-            values.put("containerCurrentVersionModifiedByHref", container.getResourceProperties().get(
-                PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_HREF));
+            values.put("containerCurrentVersionModifiedByHref",
+                    container.getResourceProperties().get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_HREF));
 
-            values.put("containerCurrentVersionModifiedByTitle", properties
-                .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
+            values.put("containerCurrentVersionModifiedByTitle",
+                    properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
         }
 
         // latest version
@@ -407,19 +400,19 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("containerLatestVersionNumber", latestVersionNumber);
         // latest release
         final String containerStatus = container.getStatus();
-        if (containerStatus.equals(Constants.STATUS_RELEASED) || containerStatus.equals(Constants.STATUS_WITHDRAWN)) {
-            values.put("containerLatestReleaseHref", container.getHrefWithoutVersionNumber() + ':'
-                + container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+        if(containerStatus.equals(Constants.STATUS_RELEASED) || containerStatus.equals(Constants.STATUS_WITHDRAWN)) {
+            values.put("containerLatestReleaseHref", container.getHrefWithoutVersionNumber() + ':' +
+                    container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
 
-            values.put("containerLatestReleaseId", id + ':'
-                + container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+            values.put("containerLatestReleaseId",
+                    id + ':' + container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
             values.put("containerLatestReleaseTitle", "latest release");
-            values.put("containerLatestReleaseNumber", container.getResourceProperties().get(
-                PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
-            values.put("containerLatestReleaseDate", container.getResourceProperties().get(
-                PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
+            values.put("containerLatestReleaseNumber",
+                    container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+            values.put("containerLatestReleaseDate",
+                    container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
             final String latestReleasePid = container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_PID);
-            if (latestReleasePid != null && latestReleasePid.length() != 0) {
+            if(latestReleasePid != null && latestReleasePid.length() != 0) {
                 values.put("containerLatestReleasePid", latestReleasePid);
             }
         }
@@ -428,13 +421,12 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             final Datastream cmsDs = container.getCts();
             final String xml = cmsDs.toStringUTF8();
             values.put(XmlTemplateProvider.CONTAINER_CONTENT_MODEL_SPECIFIC, xml);
-        }
-        catch (final StreamNotFoundException e) {
+        } catch(final StreamNotFoundException e) {
             // This element is now optional.
-            if (LOGGER.isWarnEnabled()) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on getting container content model.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on getting container content model.", e);
             }
         }
@@ -446,20 +438,16 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @param container The Container.
      * @param values    The map to add values to.
      * @throws SystemException Thrown in case of an internal error.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private void addStructMapValus(final Container container, final Map<String, Object> values) throws SystemException,
-        WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
+    private void addStructMapValus(final Container container, final Map<String, Object> values)
+            throws SystemException, WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         values.put("structMapTitle", "StructMap of Container");
         values.put("structMapHref", container.getHref() + "/struct-map");
 
         try {
             addMemberRefs(container, values);
-        }
-        catch (final MissingMethodParameterException e) {
+        } catch(final MissingMethodParameterException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -474,8 +462,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private void addMemberRefs(final Container container, final Map<String, Object> values) throws SystemException,
-        MissingMethodParameterException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+    private void addMemberRefs(final Container container, final Map<String, Object> values)
+            throws SystemException, MissingMethodParameterException, TripleStoreSystemException,
+            WebserverSystemException, XmlParserSystemException {
 
         final UserFilter ufilter = new UserFilter();
 
@@ -484,39 +473,37 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final Collection<Map<String, String>> items = new ArrayList<Map<String, String>>();
         final Collection<Map<String, String>> containers = new ArrayList<Map<String, String>>();
 
-        while (idIter.hasNext()) {
+        while(idIter.hasNext()) {
             final Map<String, String> entry = new HashMap<String, String>(3);
             final String id = idIter.next();
             final String objectType = this.tripleStoreUtility.getObjectType(id);
-            if (Constants.ITEM_OBJECT_TYPE.equals(objectType) || Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
+            if(Constants.ITEM_OBJECT_TYPE.equals(objectType) || Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
                 entry.put("memberId", id);
                 entry.put("memberTitle", this.tripleStoreUtility.getTitle(id));
-                if (objectType.equals(Constants.ITEM_OBJECT_TYPE)) {
+                if(objectType.equals(Constants.ITEM_OBJECT_TYPE)) {
 
                     items.add(entry);
                     entry.put("memberHref", XmlUtility.BASE_OM + "item/" + id);
                     entry.put("elementName", "item-ref");
-                }
-                else {
+                } else {
 
                     containers.add(entry);
                     entry.put("memberHref", XmlUtility.BASE_OM + "container/" + id);
                     entry.put("elementName", "container-ref");
                 }
 
-            }
-            else {
+            } else {
                 final String msg =
-                    "FedoraContainerHandler.getMemberRefs: can not " + "write member entry to struct-map for "
-                        + "object with unknown type: " + id + '.';
+                        "FedoraContainerHandler.getMemberRefs: can not " + "write member entry to struct-map for " +
+                                "object with unknown type: " + id + '.';
                 LOGGER.error(msg);
             }
 
         }
-        if (!items.isEmpty()) {
+        if(! items.isEmpty()) {
             values.put("items", items);
         }
-        if (!containers.isEmpty()) {
+        if(! containers.isEmpty()) {
             values.put("containers", containers);
         }
     }
@@ -529,22 +516,21 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws WebserverSystemException If an error occurs.
      */
     private void addResourcesValues(final FedoraResource container, final Map<String, Object> values)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", XmlUtility.getContainerResourcesHref(container.getHref()));
         values.put("membersHref", container.getHref() + "/resources/members");
         values.put("membersTitle", "Members ");
         values.put("versionHistoryTitle", "Version History");
-        values.put("versionHistoryHref", XmlUtility.getContainerResourcesHref(container.getHref()) + '/'
-            + Elements.ELEMENT_RESOURCES_VERSION_HISTORY);
+        values.put("versionHistoryHref", XmlUtility.getContainerResourcesHref(container.getHref()) + '/' +
+                Elements.ELEMENT_RESOURCES_VERSION_HISTORY);
 
         // add operations from Fedora service definitions
         // FIXME use container properties instead of triplestore util
         try {
             values.put("resourceOperationNames", this.tripleStoreUtility.getMethodNames(container.getId()));
-        }
-        catch (final TripleStoreSystemException e) {
+        } catch(final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -561,7 +547,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws IntegritySystemException If the repository integrity is violated.
      */
     private void addMdRecordsValues(final Container container, final Map<String, Object> values)
-        throws EncodingSystemException, FedoraSystemException, WebserverSystemException, IntegritySystemException {
+            throws EncodingSystemException, FedoraSystemException, WebserverSystemException, IntegritySystemException {
 
         values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX, Constants.METADATARECORDS_NAMESPACE_PREFIX);
         values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
@@ -572,7 +558,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final Collection<Datastream> mdRecordsDatastreams = mdRecords.values();
         final Iterator<Datastream> it = mdRecordsDatastreams.iterator();
         final StringBuilder content = new StringBuilder();
-        while (it.hasNext()) {
+        while(it.hasNext()) {
             final Datastream mdRecord = it.next();
             final String md = renderMetadataRecord(container, mdRecord, false);
             content.append(md);
@@ -593,18 +579,18 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws WebserverSystemException If an error occurs.
      */
     @Override
-    public String renderMetadataRecord(
-        final Container container, final Datastream mdRecord, final boolean isRootMdRecord)
-        throws EncodingSystemException, FedoraSystemException, WebserverSystemException {
+    public String renderMetadataRecord(final Container container, final Datastream mdRecord,
+                                       final boolean isRootMdRecord)
+            throws EncodingSystemException, FedoraSystemException, WebserverSystemException {
 
-        if (mdRecord.isDeleted()) {
+        if(mdRecord.isDeleted()) {
             return "";
         }
 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
-        values.put("mdRecordHref", XmlUtility.getContainerMdRecordsHref(container.getHref()) + "/md-record/"
-            + mdRecord.getName());
+        values.put("mdRecordHref",
+                XmlUtility.getContainerMdRecordsHref(container.getHref()) + "/md-record/" + mdRecord.getName());
         values.put(XmlTemplateProvider.MD_RECORD_NAME, mdRecord.getName());
         values.put("mdRecordTitle", mdRecord.getName());
         values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, isRootMdRecord);
@@ -613,10 +599,10 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final String mdRecordContent = mdRecord.toStringUTF8();
         values.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecordContent);
         final List<String> altIds = mdRecord.getAlternateIDs();
-        if (!Constants.UNKNOWN.equals(altIds.get(1))) {
+        if(! Constants.UNKNOWN.equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
-        if (!Constants.UNKNOWN.equals(altIds.get(2))) {
+        if(! Constants.UNKNOWN.equals(altIds.get(2))) {
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
         }
 
@@ -632,8 +618,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws IntegritySystemException If the repository integrity is violated.
      */
     @Override
-    public String renderMetadataRecords(final Container container) throws EncodingSystemException,
-        FedoraSystemException, WebserverSystemException, IntegritySystemException {
+    public String renderMetadataRecords(final Container container)
+            throws EncodingSystemException, FedoraSystemException, WebserverSystemException, IntegritySystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
@@ -652,8 +638,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException Thrown in case of an internal error.
      */
     @Override
-    public String renderStructMap(final Container container) throws SystemException, WebserverSystemException,
-        TripleStoreSystemException, XmlParserSystemException {
+    public String renderStructMap(final Container container)
+            throws SystemException, WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);

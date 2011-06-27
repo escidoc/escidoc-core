@@ -207,9 +207,8 @@ public class MdRecordCreate implements Serializable {
      *
      * @return FoXML representation of metadata record.
      * @throws SystemException Thrown if rendering failed.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    public String getFOXML() throws SystemException, WebserverSystemException {
+    public String getFOXML() throws SystemException {
 
         final Map<String, String> templateValues = getValueMap();
         return ItemFoXmlProvider.getInstance().getMetadataFoXml(templateValues);

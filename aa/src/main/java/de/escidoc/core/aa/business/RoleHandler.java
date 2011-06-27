@@ -136,7 +136,7 @@ public class RoleHandler implements RoleHandlerInterface {
      */
     @Override
     public String create(final String xmlData) throws XmlCorruptedException, UniqueConstraintViolationException,
-        SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        SystemException, WebserverSystemException {
 
         final EscidocRole role = new EscidocRole();
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
@@ -453,8 +453,6 @@ public class RoleHandler implements RoleHandlerInterface {
      * account of the current, authenticated user.
      *
      * @param role The <code>EscidocRole</code> object to modify.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private void setModificationValues(final EscidocRole role) throws SqlDatabaseSystemException,
         WebserverSystemException {
@@ -476,7 +474,6 @@ public class RoleHandler implements RoleHandlerInterface {
      * @param id The id of the role.
      * @return Returns the fetched <code>EscidocRoleObject</code>.
      * @throws RoleNotFoundException Thrown if a role with the provided id does not exist.
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private EscidocRole fetchRole(final String id) throws RoleNotFoundException, SqlDatabaseSystemException {
 

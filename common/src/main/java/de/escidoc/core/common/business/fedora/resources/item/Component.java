@@ -70,7 +70,7 @@ import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInte
 
 /**
  * Component resource of eSciDoc.
- * 
+ *
  * @author Frank Schwichtenberg
  */
 @Configurable(preConstruction = true)
@@ -91,29 +91,17 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     private ItemFoXmlRendererInterface foxmlRenderer;
 
     /**
-     * Constructs the Component with the specified id from the Repository. The
-     * datastreams are instantiated and retrieved if the related getter is
-     * called.
-     * 
-     * @param id
-     *            The id of an item managed in Fedora.
-     * @param parentId
-     *            The id of the parent object.
-     * @param timestamp
-     *            The timestamp which specifies the version of the datastreams
-     *            to retrieve.
-     * @throws ResourceNotFoundException
-     *             Thrown if the Component resource was not found.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * Constructs the Component with the specified id from the Repository. The datastreams are instantiated and
+     * retrieved if the related getter is called.
+     *
+     * @param id        The id of an item managed in Fedora.
+     * @param parentId  The id of the parent object.
+     * @param timestamp The timestamp which specifies the version of the datastreams to retrieve.
+     * @throws ResourceNotFoundException Thrown if the Component resource was not found.
      */
     public Component(final String id, final String parentId, final DateTime timestamp)
-        throws ResourceNotFoundException, ItemNotFoundException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        throws ResourceNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
         super(id);
         this.parent = parentId;
         this.parentVersionDate = timestamp;
@@ -121,8 +109,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         init();
     }
 
-    protected void init() throws ResourceNotFoundException, ItemNotFoundException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    protected void init() throws ResourceNotFoundException, IntegritySystemException, FedoraSystemException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         /*
          * There was no StreamNotFoundException thrown before from this method
@@ -165,15 +153,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     }
 
     /**
-     * Retrieving some values from Fedora & TripleStore and keep it in internal
-     * HashMap.
-     * 
-     * @throws TripleStoreSystemException
-     *             Thrown if request to TripleStore failed.
-     * @throws XmlParserSystemException
-     *             Thrown if parsing of RELS-EXT failed.
-     * @throws WebserverSystemException
-     *             Thrown if request to TripleStore failed.
+     * Retrieving some values from Fedora & TripleStore and keep it in internal HashMap.
+     *
+     * @throws TripleStoreSystemException Thrown if request to TripleStore failed.
+     * @throws XmlParserSystemException   Thrown if parsing of RELS-EXT failed.
+     * @throws WebserverSystemException   Thrown if request to TripleStore failed.
      */
     private void getSomeValuesFromFedora() throws TripleStoreSystemException, WebserverSystemException,
         XmlParserSystemException {
@@ -218,7 +202,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     /**
      * Get Content as Stream.
-     * 
+     *
      * @return content
      */
     public Datastream getContent() {
@@ -533,8 +517,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     /**
      * @return the href
-     * @deprecated This href does not contain the items version number. Use
-     *             Item.getHref() + Component.getHrefPart() instead.
+     * @deprecated This href does not contain the items version number. Use Item.getHref() + Component.getHrefPart()
+     *             instead.
      */
     @Override
     @Deprecated
@@ -550,24 +534,14 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     }
 
     /**
-     * Set the Component properties. ! Side effect: the RELS-EXT of the
-     * Component is updated with the new obtained values.
+     * Set the Component properties. ! Side effect: the RELS-EXT of the Component is updated with the new obtained
+     * values.
      * <p/>
-     * Once meant as setter-like method. Compare to setMdRecord, setMdRecords,
-     * setContent (FRS).
-     * 
-     * @param xml
-     *            The XML with properties section of Component.
-     * @param itemId
-     *            The id of the Item.
+     * Once meant as setter-like method. Compare to setMdRecord, setMdRecords, setContent (FRS).
+     *
+     * @param xml    The XML with properties section of Component.
+     * @param itemId The id of the Item.
      * @return Map of Component properties.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     public Map<String, String> setProperties(final String xml, final String itemId) throws InvalidContentException,
         ComponentNotFoundException, TripleStoreSystemException, EncodingSystemException, FedoraSystemException,
@@ -606,10 +580,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     /**
      * Obtains values from RelsExt.
-     * 
+     *
      * @return map with predictate and objects
-     * @throws XmlParserSystemException
-     *             Thrown if parse of RELS-EXT failed.
+     * @throws XmlParserSystemException Thrown if parse of RELS-EXT failed.
      */
     private Map<String, String> obtainRelsExtValues() throws XmlParserSystemException {
 

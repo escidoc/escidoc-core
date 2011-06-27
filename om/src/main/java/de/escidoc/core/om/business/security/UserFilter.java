@@ -59,22 +59,16 @@ public class UserFilter {
     /**
      * Get the list of the member (structural relation) of the Container.
      *
-     * @param container
      * @return List of Container member (if <code>filter != null</code> filtered)
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      */
-    public List<String> getMemberRefList(final Container container) throws MissingMethodParameterException,
-        SystemException, XmlParserSystemException, WebserverSystemException {
+    public List<String> getMemberRefList(final Container container)
+            throws MissingMethodParameterException, SystemException, WebserverSystemException {
 
         final List<String> memberRefs;
 
-        if (container.getVersionNumber() == null) {
+        if(container.getVersionNumber() == null) {
             memberRefs = this.tripleStoreUtility.getContainerMemberList(container.getId(), null, null);
-        }
-        else {
+        } else {
             // A work around until Fedora makes restrictions on the FOXML-size:
             // RELS-EXT is now unversioned and therefore a Stream
             // Escidoc_RELS_EXT
@@ -88,8 +82,7 @@ public class UserFilter {
             sp.addHandler(rerle);
             try {
                 sp.parse(container.getEscidocRelsExt().getStream());
-            }
-            catch (final Exception e) {
+            } catch(final Exception e) {
                 throw new XmlParserSystemException("Unexpected exception.", e);
             }
             memberRefs = rerle.getEntries().get(Constants.STRUCTURAL_RELATIONS_NS_URI + "member");

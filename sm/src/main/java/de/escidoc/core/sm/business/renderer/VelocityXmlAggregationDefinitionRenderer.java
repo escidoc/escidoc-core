@@ -78,8 +78,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * @see de.escidoc.core.sm.business.renderer.interfaces.AggregationDefinitionRendererInterface#render(AggregationDefinition)
      */
     @Override
-    public String render(final AggregationDefinition aggregationDefinition) throws SystemException,
-        WebserverSystemException {
+    public String render(final AggregationDefinition aggregationDefinition) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootAggregationDefinition", XmlTemplateProvider.TRUE);
         addAggregationDefinitionNamespaceValues(values);
@@ -222,7 +221,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
     @Override
     public String renderAggregationDefinitions(
         final Collection<AggregationDefinition> aggregationDefinitions, final RecordPacking recordPacking)
-        throws SystemException, WebserverSystemException {
+        throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -250,7 +249,6 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * Adds the aggregation definition name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addAggregationDefinitionNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -267,7 +265,6 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * Adds the aggregation definition list name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addAggregationDefinitionListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {

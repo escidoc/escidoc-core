@@ -73,8 +73,7 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * @see de.escidoc.core.sm.business.renderer.interfaces.ReportRendererInterface#render(List, ReportDefinition)
      */
     @Override
-    public String render(final List dbResult, final ReportDefinition reportDefinition) throws SystemException,
-        WebserverSystemException {
+    public String render(final List dbResult, final ReportDefinition reportDefinition) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         addReportNamespaceValues(values);
@@ -157,7 +156,6 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * Adds the scope name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addReportNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
         addEscidocBaseUrl(values);

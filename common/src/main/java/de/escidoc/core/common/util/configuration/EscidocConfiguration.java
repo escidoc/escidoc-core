@@ -199,7 +199,6 @@ public final class EscidocConfiguration {
     /**
      * Private Constructor, in order to prevent instantiation of this utility class. read the Properties and fill it in
      * properties attribute.
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private EscidocConfiguration() throws SystemException {
         System.setProperty("java.awt.headless", "true");
@@ -382,9 +381,8 @@ public final class EscidocConfiguration {
      * @param filename The name of the properties file.
      * @return The properties.
      * @throws IOException If access to the specified file fails.
-     * @throws java.io.FileNotFoundException
      */
-    private static Properties getProperties(final String filename) throws IOException, FileNotFoundException {
+    private static Properties getProperties(final String filename) throws IOException {
 
         final Properties result = new Properties();
         final InputStream propertiesStream = getInputStream(filename);
@@ -399,7 +397,7 @@ public final class EscidocConfiguration {
      * @return The InputStream or null if the file could not be located.
      * @throws FileNotFoundException If access to the specified file fails.
      */
-    private static InputStream getInputStream(final String filename) throws IOException, FileNotFoundException {
+    private static InputStream getInputStream(final String filename) throws IOException {
         final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
         final Resource[] resource = applicationContext.getResources("classpath*:" + filename);
         if (resource.length == 0) {

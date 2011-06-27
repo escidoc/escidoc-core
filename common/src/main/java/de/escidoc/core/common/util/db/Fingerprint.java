@@ -44,7 +44,7 @@ import de.escidoc.core.common.util.IOUtils;
 /**
  * This class represents the table structure and the index list of a database. It can be used to compare the current
  * structure with a structure stored in a file to see if the database is in the expected state.
- * 
+ *
  * @author André Schenk
  */
 public class Fingerprint implements Comparable<Object> {
@@ -90,16 +90,12 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Create a new finger print from the given database connection.
-     * 
-     * @param conn
-     *            database connection
-     * @throws IOException
-     *             Thrown if the XML file could not be written.
-     * @throws SQLException
-     *             Thrown if an SQL statement failed to be executed.
-     * @throws java.io.FileNotFoundException
+     *
+     * @param conn database connection
+     * @throws IOException  Thrown if the XML file could not be written.
+     * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
-    public Fingerprint(final Connection conn) throws IOException, SQLException, FileNotFoundException {
+    public Fingerprint(final Connection conn) throws IOException, SQLException {
         final ArrayList<Schema> schemas = new ArrayList<Schema>();
 
         for (final String schemaName : getSchemaNames(conn)) {
@@ -120,9 +116,8 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Compares to finger prints.
-     * 
-     * @param o
-     *            the Object to be compared.
+     *
+     * @param o the Object to be compared.
      * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than
      *         the specified object.
      */
@@ -145,9 +140,8 @@ public class Fingerprint implements Comparable<Object> {
     /**
      * Compares this finger print to the specified object. The result is true if and only if the argument is not null
      * and is a Fingerprint object that represents the same database structure as this object.
-     * 
-     * @param anObject
-     *            The object to compare this finger print against
+     *
+     * @param anObject The object to compare this finger print against
      * @return true if the given object represents a finger print equivalent to this finger print, false otherwise
      */
     @Override
@@ -157,16 +151,12 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Get a list of all table columns for the given combination of schema name and table name.
-     * 
-     * @param conn
-     *            database connection
-     * @param schema
-     *            schema name
-     * @param table
-     *            table name
+     *
+     * @param conn   database connection
+     * @param schema schema name
+     * @param table  table name
      * @return list of all table columns
-     * @throws SQLException
-     *             Thrown if an SQL statement failed to be executed.
+     * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
     private static String[] getColumns(final Connection conn, final String schema, final String table)
         throws SQLException {
@@ -198,16 +188,12 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Get a list of all foreign keys that are defined for the table.
-     * 
-     * @param conn
-     *            database connection
-     * @param schema
-     *            schema name
-     * @param table
-     *            table name
+     *
+     * @param conn   database connection
+     * @param schema schema name
+     * @param table  table name
      * @return list of all foreign keys
-     * @throws SQLException
-     *             Thrown if an SQL statement failed to be executed.
+     * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
     private static String[] getImportedKeys(final Connection conn, final String schema, final String table)
         throws SQLException {
@@ -235,16 +221,12 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Get a list of all table indexes for the given combination of schema name and table name.
-     * 
-     * @param conn
-     *            database connection
-     * @param schema
-     *            schema name
-     * @param table
-     *            table name
+     *
+     * @param conn   database connection
+     * @param schema schema name
+     * @param table  table name
      * @return list of all table indexes
-     * @throws SQLException
-     *             Thrown if an SQL statement failed to be executed.
+     * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
     private static String[] getIndexInfo(final Connection conn, final String schema, final String table)
         throws SQLException {
@@ -272,16 +254,12 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Get a list of all primary keys that are defined for the table.
-     * 
-     * @param conn
-     *            database connection
-     * @param schema
-     *            schema name
-     * @param table
-     *            table name
+     *
+     * @param conn   database connection
+     * @param schema schema name
+     * @param table  table name
      * @return list of all primary keys
-     * @throws SQLException
-     *             Thrown if an SQL statement failed to be executed.
+     * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
     private static String[] getPrimaryKeys(final Connection conn, final String schema, final String table)
         throws SQLException {
@@ -309,12 +287,10 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Get a list of all schemas for the given connection.
-     * 
-     * @param conn
-     *            database connection
+     *
+     * @param conn database connection
      * @return list of all schemas
-     * @throws SQLException
-     *             Thrown if an SQL statement failed to be executed.
+     * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
     private static String[] getSchemaNames(final Connection conn) throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
@@ -337,7 +313,7 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Get all schemas.
-     * 
+     *
      * @return schema list
      */
     public Schema[] getSchemas() {
@@ -346,7 +322,7 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * This class will never be inserted into a HashMap/HashTable.
-     * 
+     *
      * @return a hash code value for this object.
      */
     @Override
@@ -357,14 +333,11 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Get a list of all tables for the given schema.
-     * 
-     * @param conn
-     *            database connection
-     * @param schema
-     *            schema name
+     *
+     * @param conn   database connection
+     * @param schema schema name
      * @return list of all tables
-     * @throws SQLException
-     *             Thrown if an SQL statement failed to be executed.
+     * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
     private static String[] getTableNames(final Connection conn, final String schema) throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
@@ -388,12 +361,10 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Reads the next object from the underlying input stream.
-     * 
-     * @param filename
-     *            source from which to read the object.
+     *
+     * @param filename source from which to read the object.
      * @return the next object read
-     * @throws FileNotFoundException
-     *             Thrown if the given file could not be found.
+     * @throws FileNotFoundException Thrown if the given file could not be found.
      */
     public static Fingerprint readObject(final String filename) throws FileNotFoundException {
         return readObject(new FileInputStream(filename));
@@ -401,9 +372,8 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Reads the next object from the underlying input stream.
-     * 
-     * @param input
-     *            source from which to read the object.
+     *
+     * @param input source from which to read the object.
      * @return the next object read
      */
     public static Fingerprint readObject(final InputStream input) {
@@ -415,9 +385,8 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Set the schemas.
-     * 
-     * @param schemas
-     *            schema list
+     *
+     * @param schemas schema list
      */
     public final void setSchemas(final Schema[] schemas) {
         if (schemas != null) {
@@ -428,11 +397,9 @@ public class Fingerprint implements Comparable<Object> {
 
     /**
      * Write an XML representation of the specified object to the output.
-     * 
-     * @param o
-     *            The object to be written to the stream.
-     * @throws IOException
-     *             Thrown if the object could not be written.
+     *
+     * @param o The object to be written to the stream.
+     * @throws IOException Thrown if the object could not be written.
      */
     public final void writeObject(final OutputStream o) throws IOException {
         final XMLEncoder e = new XMLEncoder(new BufferedOutputStream(o));

@@ -71,7 +71,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
      * @see de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface#render(UserGroup)
      */
     @Override
-    public String render(final UserGroup userGroup) throws SystemException, WebserverSystemException {
+    public String render(final UserGroup userGroup) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootUserGroup", XmlTemplateProvider.TRUE);
         addCommonValues(values);
@@ -254,7 +254,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
      */
     @Override
     public String renderUserGroups(final List<UserGroup> userGroups, final RecordPacking recordPacking)
-        throws SystemException, WebserverSystemException {
+        throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootUserGroup", XmlTemplateProvider.TRUE);

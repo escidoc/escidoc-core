@@ -87,8 +87,6 @@ public class GenericResourcePid extends GenericResource {
      * XPath for objectPid in the item XML representation is /&lt;resource&gt;/properties/pid
      * <p/>
      * ObjectPid is part of the RELS-EXT (and therefore in the TripleStore)
-     *
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public void removeObjectPid() throws WebserverSystemException {
         final Map<String, List<StartElementWithChildElements>> deleteFromRelsExt =
@@ -111,14 +109,9 @@ public class GenericResourcePid extends GenericResource {
      *
      * @param pid The PID which is to assign as object PID.
      * @throws SystemException Thrown in case of internal error.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    public void setObjectPid(final String pid) throws SystemException, TripleStoreSystemException,
-        EncodingSystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
+    public void setObjectPid(final String pid) throws SystemException, EncodingSystemException, FedoraSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         if (!validPidStructure(pid)) {
             throw new SystemException("Invalid structure for Persistent Identifier");
@@ -202,8 +195,8 @@ public class GenericResourcePid extends GenericResource {
 
     /**
      * Update RELS-EXT with object PID. The pid is written to RELS-EXT ( <code>properties/pid</code>).
-     * @param pid persistent identifier
      *
+     * @param pid persistent identifier
      * @throws FedoraSystemException      If Fedora reports an error.
      * @throws EncodingSystemException    If an encoding failure occurs.
      * @throws XmlParserSystemException   If parsing of XMl data fails.

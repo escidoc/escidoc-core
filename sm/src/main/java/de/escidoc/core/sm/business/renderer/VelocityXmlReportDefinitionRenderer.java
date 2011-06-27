@@ -70,7 +70,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * @see de.escidoc.core.sm.business.renderer.interfaces.ReportDefinitionRendererInterface#render(ReportDefinition)
      */
     @Override
-    public String render(final ReportDefinition reportDefinition) throws SystemException, WebserverSystemException {
+    public String render(final ReportDefinition reportDefinition) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootReportDefinition", XmlTemplateProvider.TRUE);
         addReportDefinitionNamespaceValues(values);
@@ -148,8 +148,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      */
     @Override
     public String renderReportDefinitions(
-        final Collection<ReportDefinition> reportDefinitions, final RecordPacking recordPacking)
-        throws SystemException, WebserverSystemException {
+        final Collection<ReportDefinition> reportDefinitions, final RecordPacking recordPacking) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -180,7 +179,6 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * Adds the report definition name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addReportDefinitionNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -197,7 +195,6 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * Adds the report definition list name space values.
      *
      * @param values The {@link Map} to that the values shall be added.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static void addReportDefinitionListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {

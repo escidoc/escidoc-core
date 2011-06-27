@@ -88,7 +88,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     private final List<String> orgunits = new ArrayList<String>();
 
     private static final String ORGANIZATIONAL_UNIT_PATH =
-        "/context/properties/organizational-units/organizational-unit";
+            "/context/properties/organizational-units/organizational-unit";
 
     /**
      * Handler to update Context properties.
@@ -115,25 +115,26 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @return The element.
      */
     @Override
-    public StartElement startElement(final StartElement element) throws InvalidContentException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException, MissingAttributeValueException,
-        OrganizationalUnitNotFoundException, InvalidStatusException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+    public StartElement startElement(final StartElement element)
+            throws InvalidContentException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
+            MissingAttributeValueException, OrganizationalUnitNotFoundException, InvalidStatusException,
+            TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
         // String theName = element.getLocalName();
 
-        if (ORGANIZATIONAL_UNIT_PATH.equals(currentPath)) {
+        if(ORGANIZATIONAL_UNIT_PATH.equals(currentPath)) {
             final String id = XmlUtility.getIdFromStartElement(element);
 
             this.utility.checkIsOrganizationalUnit(id);
 
             final String orgUnitStatus =
-                this.tripleStoreUtility.getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
+                    this.tripleStoreUtility.getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-            if (!orgUnitStatus.equals(Constants.STATUS_OU_OPENED)) {
-                throw new InvalidStatusException("Organizational unit with id " + id + " should be in status "
-                    + Constants.STATUS_OU_OPENED + " but is in status " + orgUnitStatus);
+            if(! orgUnitStatus.equals(Constants.STATUS_OU_OPENED)) {
+                throw new InvalidStatusException(
+                        "Organizational unit with id " + id + " should be in status " + Constants.STATUS_OU_OPENED +
+                                " but is in status " + orgUnitStatus);
             }
             this.orgunits.add(id);
         }
@@ -147,40 +148,40 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String data, final StartElement element) throws TripleStoreSystemException,
-        SystemException, MissingElementValueException, WebserverSystemException {
+    public String characters(final String data, final StartElement element)
+            throws SystemException, MissingElementValueException {
         final String curPath = parser.getCurPath();
 
-        if (curPath.startsWith(this.propertiesPath)) {
+        if(curPath.startsWith(this.propertiesPath)) {
             // name
-            if (curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_NAME)) {
-                if (data.length() == 0) {
+            if(curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_NAME)) {
+                if(data.length() == 0) {
                     throw new MissingElementValueException("element 'name' is empty.");
                 }
-                if (checkValueChanged(Elements.ELEMENT_NAME, data)) {
+                if(checkValueChanged(Elements.ELEMENT_NAME, data)) {
                     this.changedValuesInDc.put(Elements.ELEMENT_NAME, data);
                 }
             }
 
             // type
-            else if (curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_TYPE)) {
-                if (data.length() == 0) {
+            else if(curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_TYPE)) {
+                if(data.length() == 0) {
                     throw new MissingElementValueException("element 'type' is empty.");
                 }
-                if (checkValueChanged(Elements.ELEMENT_TYPE, data)) {
+                if(checkValueChanged(Elements.ELEMENT_TYPE, data)) {
                     this.changedValuesInRelsExt.put(Elements.ELEMENT_TYPE, data);
                 }
 
             }
             // description
-            else if (curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_DESCRIPTION)) {
+            else if(curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_DESCRIPTION)) {
                 deletableValues.remove(Elements.ELEMENT_DESCRIPTION);
-                if (this.tripleStoreUtility.getPropertiesElements(this.contextId, Constants.DC_NS_URI
-                    + Elements.ELEMENT_DESCRIPTION) == null) {
+                if(this.tripleStoreUtility
+                        .getPropertiesElements(this.contextId, Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION) ==
+                        null) {
                     valuesToAdd.put(Elements.ELEMENT_DESCRIPTION, data);
-                }
-                else {
-                    if (checkValueChanged(Elements.ELEMENT_DESCRIPTION, data)) {
+                } else {
+                    if(checkValueChanged(Elements.ELEMENT_DESCRIPTION, data)) {
                         this.changedValuesInDc.put(Elements.ELEMENT_DESCRIPTION, data);
                     }
                 }
@@ -220,20 +221,18 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @param value value
      * @return true If value does not compares to the reopsitory value. false If value compares to the respository
      *         value.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private boolean checkValueChanged(final String key, final String value) throws TripleStoreSystemException,
-        WebserverSystemException {
+    private boolean checkValueChanged(final String key, final String value)
+            throws TripleStoreSystemException, WebserverSystemException {
 
-        final String repositoryValue =
-            key.equals(Elements.ELEMENT_DESCRIPTION) ? this.tripleStoreUtility.getPropertiesElements(this.contextId,
-                Constants.DC_NS_URI + key) : key.equals(Elements.ELEMENT_NAME) ? this.tripleStoreUtility
-                .getTitle(this.contextId) : this.tripleStoreUtility.getPropertiesElements(this.contextId,
-                Constants.PROPERTIES_NS_URI + key);
+        final String repositoryValue = key.equals(Elements.ELEMENT_DESCRIPTION) ?
+                this.tripleStoreUtility.getPropertiesElements(this.contextId, Constants.DC_NS_URI + key) :
+                key.equals(Elements.ELEMENT_NAME) ? this.tripleStoreUtility.getTitle(this.contextId) :
+                        this.tripleStoreUtility
+                                .getPropertiesElements(this.contextId, Constants.PROPERTIES_NS_URI + key);
 
         boolean changed = false;
-        if (!XmlUtility.escapeForbiddenXmlCharacters(value).equals(repositoryValue)) {
+        if(! XmlUtility.escapeForbiddenXmlCharacters(value).equals(repositoryValue)) {
             changed = true;
         }
 

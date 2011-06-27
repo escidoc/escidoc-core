@@ -67,31 +67,30 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      *      java.lang.String,java.lang.String,java.lang.String)
      */
     @Override
-    public EscidocBinaryContent getDatastreamDissemination(
-        final String pid, final String dsID, final Map<String, String[]> parameters) throws Exception {
+    public EscidocBinaryContent getDatastreamDissemination(final String pid, final String dsID,
+                                                           final Map<String, String[]> parameters) throws Exception {
 
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid + ", DSID:" + dsID);
         }
         EscidocBinaryContent escidocBinaryContent = null;
         try {
             final MIMETypedStream mimeTypedStream = (MIMETypedStream) this.indexerResourceRequester.getResource(dsID);
-            if (mimeTypedStream != null && mimeTypedStream.getStream() != null) {
+            if(mimeTypedStream != null && mimeTypedStream.getStream() != null) {
                 escidocBinaryContent = new EscidocBinaryContent();
                 escidocBinaryContent.setMimeType(mimeTypedStream.getMIMEType());
                 escidocBinaryContent.setContent(new ByteArrayInputStream(mimeTypedStream.getStream()));
             }
-        }
-        catch (final Exception e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on getting datastream dissemination.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on getting datastream dissemination.", e);
             }
             throw e;
         }
-        if (escidocBinaryContent != null) {
+        if(escidocBinaryContent != null) {
             return escidocBinaryContent;
         }
         LOGGER.error(StringUtility.format("could not get resource for cache", dsID));
@@ -109,19 +108,18 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      */
     @Override
     public String export(final String pid, final Map<String, String[]> parameters) throws Exception {
-        if (LOGGER.isDebugEnabled()) {
+        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid);
         }
         final String xml;
 
         try {
             xml = (String) this.indexerResourceRequester.getResource(pid);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             LOGGER.error(e.toString());
             throw e;
         }
-        if (xml != null) {
+        if(xml != null) {
             return xml;
         }
         LOGGER.info("Could not get resource " + pid + " for cache.");
@@ -135,7 +133,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * @param xml xml-representation of the object
      */
     @Override
-    public void cache(final String pid, final String xml) throws SystemException, TripleStoreSystemException {
+    public void cache(final String pid, final String xml) throws SystemException {
         this.indexerResourceRequester.setResource(pid, xml);
     }
 

@@ -17,7 +17,7 @@ import java.nio.charset.Charset;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants=true, inspectInterfaces = true)
+        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class IOUtils {
 
     private final static Logger LOG = LoggerFactory.getLogger(IOUtils.class);
@@ -27,14 +27,12 @@ public final class IOUtils {
     private IOUtils() {
     }
 
-    public static int copy(@NotNull final InputStream input,
-                           @NotNull final OutputStream output)
-            throws IOException {
+    public static int copy(@NotNull final InputStream input, @NotNull final OutputStream output) throws IOException {
         return copy(input, output, DEFAULT_BUFFER_SIZE);
     }
 
-    public static int copyAndCloseInput(@NotNull final InputStream input,
-                                        @NotNull final OutputStream output) throws IOException {
+    public static int copyAndCloseInput(@NotNull final InputStream input, @NotNull final OutputStream output)
+            throws IOException {
         try {
             return copy(input, output, DEFAULT_BUFFER_SIZE);
         } finally {
@@ -42,8 +40,7 @@ public final class IOUtils {
         }
     }
 
-    public static int copyAndCloseInput(@NotNull final InputStream input,
-                                        @NotNull final OutputStream output,
+    public static int copyAndCloseInput(@NotNull final InputStream input, @NotNull final OutputStream output,
                                         final int bufferSize) throws IOException {
         try {
             return copy(input, output, bufferSize);
@@ -52,21 +49,20 @@ public final class IOUtils {
         }
     }
 
-    public static int copy(@NotNull final InputStream input,
-                           @NotNull final OutputStream output,
-                           int bufferSize) throws IOException {
+    public static int copy(@NotNull final InputStream input, @NotNull final OutputStream output, int bufferSize)
+            throws IOException {
         int avail = input.available();
-        if (avail > 262144) {
+        if(avail > 262144) {
             avail = 262144;
         }
-        if (avail > bufferSize) {
+        if(avail > bufferSize) {
             bufferSize = avail;
         }
         final byte[] buffer = new byte[bufferSize];
         int n;
         n = input.read(buffer);
         int total = 0;
-        while (-1 != n) {
+        while(- 1 != n) {
             output.write(buffer, 0, n);
             total += n;
             n = input.read(buffer);
@@ -76,7 +72,7 @@ public final class IOUtils {
 
     public static byte[] readBytesFromStream(@NotNull final InputStream input) throws IOException {
         int i = input.available();
-        if (i < DEFAULT_BUFFER_SIZE) {
+        if(i < DEFAULT_BUFFER_SIZE) {
             i = DEFAULT_BUFFER_SIZE;
         }
         ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
@@ -88,9 +84,9 @@ public final class IOUtils {
     public static String newStringFromBytes(final byte[] bytes, final String charsetName) {
         try {
             return new String(bytes, charsetName);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Impossible failure: Charset.forName(\"" + charsetName + "\") returns " +
-                    "invalid name.");
+        } catch(UnsupportedEncodingException e) {
+            throw new RuntimeException(
+                    "Impossible failure: Charset.forName(\"" + charsetName + "\") returns " + "invalid name.");
         }
     }
 
@@ -98,15 +94,13 @@ public final class IOUtils {
         return newStringFromBytes(bytes, Encodings.UTF8);
     }
 
-    public static String newStringFromBytes(final byte[] bytes,
-                                            final String charsetName,
-                                            final int start,
+    public static String newStringFromBytes(final byte[] bytes, final String charsetName, final int start,
                                             final int length) {
         try {
             return new String(bytes, start, length, charsetName);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Impossible failure: Charset.forName(\"" + charsetName + "\") returns invalid " +
-                    "name.");
+        } catch(UnsupportedEncodingException e) {
+            throw new RuntimeException(
+                    "Impossible failure: Charset.forName(\"" + charsetName + "\") returns invalid " + "name.");
 
         }
     }
@@ -115,10 +109,9 @@ public final class IOUtils {
         return newStringFromBytes(bytes, Encodings.UTF8, start, length);
     }
 
-    public static String newStringFromStream(final InputStream input, final String charsetName) throws IOException,
-            UnsupportedEncodingException {
+    public static String newStringFromStream(final InputStream input, final String charsetName) throws IOException {
         int i = input.available();
-        if (i < DEFAULT_BUFFER_SIZE) {
+        if(i < DEFAULT_BUFFER_SIZE) {
             i = DEFAULT_BUFFER_SIZE;
         }
         final ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
@@ -127,18 +120,17 @@ public final class IOUtils {
         return bos.toString(charsetName);
     }
 
-    public static String newStringFromStream(final InputStream input) throws IOException,
-            UnsupportedEncodingException {
+    public static String newStringFromStream(final InputStream input) throws IOException {
         return newStringFromStream(input, Encodings.UTF8);
     }
 
     public static void closeStream(Closeable closeable) {
-        if (closeable == null) {
+        if(closeable == null) {
             return;
         }
         try {
             closeable.close();
-        } catch (final IOException e) {
+        } catch(final IOException e) {
             LOG.error("Error on closing stream.", e);
         }
     }

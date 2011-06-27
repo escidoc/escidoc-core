@@ -99,8 +99,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * #render(de.escidoc.core.om.business.fedora.resources.Context)
      */
     @Override
-    public String render(final FedoraContextHandler contextHandler) throws SystemException, EncodingSystemException,
-        FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
+    public String render(final FedoraContextHandler contextHandler)
+            throws SystemException, FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
 
         final Context context = contextHandler.getContext();
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -127,7 +127,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     @Override
     public String renderAdminDescriptors(final FedoraContextHandler contextHandler, final Map<String, Object> values)
-        throws FedoraSystemException, WebserverSystemException, EncodingSystemException {
+            throws FedoraSystemException, WebserverSystemException, EncodingSystemException {
 
         addCommonValues(contextHandler.getContext(), values);
 
@@ -135,11 +135,11 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         final Set<String> keys = admDescs.keySet();
 
-        if (!admDescs.isEmpty()) {
+        if(! admDescs.isEmpty()) {
             final Iterator<String> it = keys.iterator();
             final Collection<String> admDescriptors = new ArrayList<String>();
 
-            while (it.hasNext()) {
+            while(it.hasNext()) {
                 final String name = it.next();
                 final Datastream adm = admDescs.get(name);
                 admDescriptors.add(renderAdminDescriptor(contextHandler, name, adm, false));
@@ -169,16 +169,16 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
 
     @Override
-    public String renderAdminDescriptor(
-        final FedoraContextHandler contextHandler, final String name, final Datastream admDesc, final boolean isRoot)
-        throws EncodingSystemException, WebserverSystemException {
-        if (admDesc.isDeleted()) {
+    public String renderAdminDescriptor(final FedoraContextHandler contextHandler, final String name,
+                                        final Datastream admDesc, final boolean isRoot)
+            throws EncodingSystemException, WebserverSystemException {
+        if(admDesc.isDeleted()) {
             return "";
         }
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(contextHandler.getContext(), values);
-        values.put("admHref", XmlUtility.getContextHref(contextHandler.getContext().getId())
-            + "/admin-descriptors/admin-descriptor/" + name);
+        values.put("admHref", XmlUtility.getContextHref(contextHandler.getContext().getId()) +
+                "/admin-descriptors/admin-descriptor/" + name);
         values.put("admName", name);
         values.put("admRecordTitle", name + " admin descriptor.");
         values.put(XmlTemplateProvider.IS_ROOT_RESOURCES, isRoot);
@@ -186,8 +186,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         final String admContent;
         try {
             admContent = new String(admDesc.getStream(), XmlUtility.CHARACTER_ENCODING);
-        }
-        catch (final UnsupportedEncodingException e) {
+        } catch(final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
         values.put("admRecordContent", admContent);
@@ -212,8 +211,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
         try {
             addPropertiesValues(context, values);
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -252,8 +250,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     @Override
     public String renderMemberList(final FedoraContextHandler contextHandler, final List<String> memberList)
-        throws SystemException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+            throws SystemException, AuthorizationException, TripleStoreSystemException, IntegritySystemException,
+            FedoraSystemException, XmlParserSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final Context context = contextHandler.getContext();
@@ -274,8 +272,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     @Override
     public String renderMemberRefList(final FedoraContextHandler contextHandler, final List<String> memberList)
-        throws SystemException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+            throws SystemException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
+            IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final Context context = contextHandler.getContext();
@@ -293,15 +291,14 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private void addCommonValues(final Context context, final Map<String, Object> values)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
 
         DateTime lastModDate = null;
 
         try {
             lastModDate = context.getLastModificationDate();
             values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lastModDate.toString());
-        }
-        catch (FedoraSystemException e) {
+        } catch(FedoraSystemException e) {
             e.printStackTrace();
         }
 
@@ -320,8 +317,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     private static void addXlinkValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, System
-            .getProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
+                System.getProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
     }
@@ -367,11 +364,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param context .
      * @param values  Map with property values. New values are added to this Map.
      * @throws SystemException If anything fails.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private void addPropertiesValues(final Context context, final Map<String, Object> values) throws SystemException,
-        TripleStoreSystemException, WebserverSystemException {
+    private void addPropertiesValues(final Context context, final Map<String, Object> values)
+            throws SystemException, WebserverSystemException {
 
         final Map<String, String> properties = context.getResourceProperties();
 
@@ -380,8 +375,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         values.put("contextName", context.getTitle());
         final String description =
-            this.tripleStoreUtility.getPropertiesElements(context.getId(), Constants.DC_NS_URI + "description");
-        if (description != null) {
+                this.tripleStoreUtility.getPropertiesElements(context.getId(), Constants.DC_NS_URI + "description");
+        if(description != null) {
             values.put("contextDescription", description);
         }
         values.put("contextCreationDate", context.getCreationDate());
@@ -397,8 +392,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         values.put("contextCurrentVersionModifiedById", context.getModifiedBy());
         values.put("contextCurrentVersionModifiedByHref", Constants.USER_ACCOUNT_URL_BASE + context.getModifiedBy());
-        values.put("contextCurrentVersionModifiedByTitle", properties
-            .get(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE));
+        values.put("contextCurrentVersionModifiedByTitle",
+                properties.get(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE));
 
         values.put("organizational-units", getOrganizationalUnitsContext(context.getOrganizationalUnitObjids()));
     }
@@ -408,15 +403,13 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *
      * @param ouids Vector with IDs of OUs.
      * @return Vector with OU description (id, title, href)
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Collection<Map<String, String>> getOrganizationalUnitsContext(final Iterable<String> ouids)
-        throws TripleStoreSystemException, WebserverSystemException {
+            throws TripleStoreSystemException, WebserverSystemException {
 
         final Collection<Map<String, String>> ousContext = new ArrayList<Map<String, String>>();
 
-        for (final String ouid : ouids) {
+        for(final String ouid : ouids) {
             ousContext.add(getOrganizationalUnitContext(ouid));
         }
 
@@ -428,11 +421,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *
      * @param id The Id of the Organizational Unit.
      * @return HashMap with (id, title, href)
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    public Map<String, String> getOrganizationalUnitContext(final String id) throws TripleStoreSystemException,
-        WebserverSystemException {
+    public Map<String, String> getOrganizationalUnitContext(final String id)
+            throws TripleStoreSystemException, WebserverSystemException {
         final Map<String, String> ouContext = new HashMap<String, String>();
 
         ouContext.put("id", id);
@@ -468,20 +459,12 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
     /**
      * Add the values to render the member list.
-     * @param values
-     * @param memberList
      *
      * @throws AuthorizationException Thrown if access to origin Item is restricted.
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void addMemberListValues(final Map<String, Object> values, final Iterable<String> memberList)
-        throws SystemException, AuthorizationException, TripleStoreSystemException, WebserverSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+            throws SystemException, AuthorizationException, TripleStoreSystemException, WebserverSystemException,
+            IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         values.put("memberListNamespacePrefix", Constants.MEMBER_LIST_PREFIX);
         values.put("memberListNamespace", Constants.MEMBER_LIST_NAMESPACE_URI);
@@ -489,24 +472,21 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         final StringBuilder sb = new StringBuilder();
 
-        for (final String objectId : memberList) {
+        for(final String objectId : memberList) {
             final String objectType = this.tripleStoreUtility.getObjectType(objectId);
             try {
-                if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
+                if(Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
                     sb.append(itemHandler.retrieve(objectId));
-                }
-                else if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
+                } else if(Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
                     sb.append(containerHandler.retrieve(objectId));
-                }
-                else {
+                } else {
                     final String msg =
-                        "FedoraContextHandler.retrieveMemberRefs:" + " can not return object with unknown type: "
-                            + objectId + ". Write comment.";
+                            "FedoraContextHandler.retrieveMemberRefs:" + " can not return object with unknown type: " +
+                                    objectId + ". Write comment.";
                     sb.append("<!-- ").append(msg).append(" -->");
                     LOGGER.error(msg);
                 }
-            }
-            catch (final ItemNotFoundException e) {
+            } catch(final ItemNotFoundException e) {
                 final Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
@@ -516,14 +496,13 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider.getInstance().getWithdrawnMessageXml(extValues));
                 LOGGER.debug(msg, e);
-                if (LOGGER.isWarnEnabled()) {
+                if(LOGGER.isWarnEnabled()) {
                     LOGGER.warn(msg);
                 }
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug(msg, e);
                 }
-            }
-            catch (final ComponentNotFoundException e) {
+            } catch(final ComponentNotFoundException e) {
                 final Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
@@ -532,17 +511,15 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 final String msg = "FedoraContextHandler.retrieveMemberRefs:can not retrieve object";
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider.getInstance().getWithdrawnMessageXml(extValues));
-                if (LOGGER.isWarnEnabled()) {
+                if(LOGGER.isWarnEnabled()) {
                     LOGGER.warn(msg);
                 }
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug(msg, e);
                 }
-            }
-            catch (final MissingParameterException e) {
+            } catch(final MissingParameterException e) {
                 throw new SystemException("Should not occure in FedoraContextHandler.retrieveMembers", e);
-            }
-            catch (final ContainerNotFoundException e) {
+            } catch(final ContainerNotFoundException e) {
                 final Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
@@ -551,14 +528,13 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 final String msg = "FedoraContextHandler.retrieveMembers:can not retrieve object";
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider.getInstance().getWithdrawnMessageXml(extValues));
-                if (LOGGER.isWarnEnabled()) {
+                if(LOGGER.isWarnEnabled()) {
                     LOGGER.warn(msg);
                 }
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug(msg, e);
                 }
-            }
-            catch (final EncodingSystemException e) {
+            } catch(final EncodingSystemException e) {
                 throw new SystemException("Should not occure in FedoraContextHandler.retrieveMembers", e);
             }
 
@@ -569,8 +545,6 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
     /**
      * @param id The id of the context.
      * @return Returns the name of a context.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getName(final String id) throws TripleStoreSystemException, WebserverSystemException {
         return getProperty(id, TripleStoreUtility.PROP_NAME);
@@ -580,11 +554,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param id       The id of the context.
      * @param property The name of the property.
      * @return Returns a value of a property of an organizational unit.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private String getProperty(final String id, final String property) throws TripleStoreSystemException,
-        WebserverSystemException {
+    private String getProperty(final String id, final String property)
+            throws TripleStoreSystemException, WebserverSystemException {
         return this.tripleStoreUtility.getPropertiesElements(id, property);
     }
 }

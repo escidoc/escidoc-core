@@ -152,8 +152,8 @@ import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
  * These methods handle strings of xmlData and use the private (get,) set and render methods to set xmlData in the
  * system or get xmlData from the system.
  * <p/>
- * The private set methods take strings of xmlData as parameter and handling objects of type {@link Datastream
- * Stream} that hold the xmlData in an Item or Component object.
+ * The private set methods take strings of xmlData as parameter and handling objects of type {@link Datastream Stream}
+ * that hold the xmlData in an Item or Component object.
  * <p/>
  * To split incoming xmlData into the datastreams it consists of, the {@link StaxParser StaxParser} is used. In order to
  * modify datastreams or handle values provided in datastreams more than one Handler (implementations of {@link
@@ -183,17 +183,16 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     private Utility utility;
 
     @Override
-    public String retrieve(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        SystemException, ComponentNotFoundException, AuthorizationException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+    public String retrieve(final String id)
+            throws ItemNotFoundException, MissingMethodParameterException, SystemException, ComponentNotFoundException,
+            AuthorizationException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+            XmlParserSystemException, WebserverSystemException {
 
         setItem(id);
-        final String message =
-            "You cannot access a full surrogate item representation"
-                + " because you have no access rights on the item " + getOriginId()
-                + " . You can access subressourcess owned by a " + "surrogate item using retrieve methods on "
-                + "subresources.";
+        final String message = "You cannot access a full surrogate item representation" +
+                " because you have no access rights on the item " + getOriginId() +
+                " . You can access subressourcess owned by a " + "surrogate item using retrieve methods on " +
+                "subresources.";
         loadOrigin(message);
 
         return render();
@@ -204,15 +203,15 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#update(String, String)
      */
     @Override
-    public String update(final String id, final String xmlData) throws ItemNotFoundException, FileNotFoundException,
-        InvalidContextException, InvalidStatusException, LockingException, NotPublishedException,
-        MissingLicenceException, ComponentNotFoundException, MissingAttributeValueException, InvalidXmlException,
-        MissingMethodParameterException, InvalidContentException, SystemException, OptimisticLockingException,
-        RelationPredicateNotFoundException, ReferencedResourceNotFoundException, ReadonlyVersionException,
-        MissingMdRecordException, AuthorizationException, ReadonlyElementViolationException,
-        ReadonlyAttributeViolationException, FedoraSystemException, TripleStoreSystemException,
-        WebserverSystemException, EncodingSystemException, IntegritySystemException, XmlParserSystemException,
-        XmlSchemaValidationException, XmlCorruptedException {
+    public String update(final String id, final String xmlData)
+            throws ItemNotFoundException, FileNotFoundException, InvalidContextException, InvalidStatusException,
+            LockingException, NotPublishedException, MissingLicenceException, ComponentNotFoundException,
+            MissingAttributeValueException, InvalidXmlException, MissingMethodParameterException,
+            InvalidContentException, SystemException, OptimisticLockingException, RelationPredicateNotFoundException,
+            ReferencedResourceNotFoundException, ReadonlyVersionException, MissingMdRecordException,
+            AuthorizationException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
+            TripleStoreSystemException, WebserverSystemException, EncodingSystemException, IntegritySystemException,
+            XmlParserSystemException, XmlCorruptedException {
 
         setItem(id);
         final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
@@ -222,21 +221,20 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkWithdrawn(NO_UPDATE_ALLOWED_MSG);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         final String originVersionId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN_VERSION);
-        if (originVersionId != null) {
+        if(originVersionId != null) {
             originId = originId + ':' + originVersionId;
         }
-        final boolean origin =
-            loadOrigin("You cannot update a full surrogate Item representation "
-                + "because you have no access rights on the Item '" + originId
-                + "'. Subressources which are part of the surrogate Item "
-                + "(and not the origin Item) are still accessible. Try " + "using subresource methods.");
+        final boolean origin = loadOrigin("You cannot update a full surrogate Item representation " +
+                "because you have no access rights on the Item '" + originId +
+                "'. Subressources which are part of the surrogate Item " +
+                "(and not the origin Item) are still accessible. Try " + "using subresource methods.");
 
         try {
             final StaxParser sp = new StaxParser();
 
             final OptimisticLockingHandler olh =
-                new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
-                    .getLastModificationDate());
+                    new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE,
+                            getItem().getLastModificationDate());
             sp.addHandler(olh);
             final ContentRelationsUpdateHandler2Edition cruh = new ContentRelationsUpdateHandler2Edition(sp);
             sp.addHandler(cruh);
@@ -250,11 +248,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             NewComponentExtractor nce = null;
             ComponentMdRecordsUpdateHandler cmuh = null;
 
-            if (!origin) {
+            if(! origin) {
                 csh = new ContentStreamHandler(getItem());
                 sp.addHandler(csh);
                 final ComponentUpdateHandler cuh =
-                    new ComponentUpdateHandler(getItem().getId(), "/item/components/component", sp);
+                        new ComponentUpdateHandler(getItem().getId(), "/item/components/component", sp);
                 sp.addHandler(cuh);
                 nce = new NewComponentExtractor(sp);
                 cmuh = new ComponentMdRecordsUpdateHandler("/item/components/component", sp);
@@ -268,7 +266,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             extractPathes.put("/item/resources", null);
             extractPathes.put("/item/md-records/md-record", "name");
             // extractPathes.put("/item/components/component", "objid");
-            if (!origin) {
+            if(! origin) {
                 extractPathes.put("/item/components/component/properties", null);
                 extractPathes.put("/item/components/component/content", null);
                 extractPathes.put("/item/components/component/md-records/md-record", "name");
@@ -278,44 +276,31 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             try {
                 sp.parse(xmlData);
-            }
-            catch (final OptimisticLockingException e) {
+            } catch(final OptimisticLockingException e) {
                 throw e;
-            }
-            catch (final MissingAttributeValueException e) {
+            } catch(final MissingAttributeValueException e) {
                 throw e;
-            }
-            catch (final MissingMdRecordException e) {
+            } catch(final MissingMdRecordException e) {
                 throw e;
-            }
-            catch (final WebserverSystemException e) {
+            } catch(final WebserverSystemException e) {
                 throw e;
-            }
-            catch (final InvalidContentException e) {
+            } catch(final InvalidContentException e) {
                 throw e;
-            }
-            catch (final InvalidXmlException e) {
+            } catch(final InvalidXmlException e) {
                 throw e;
-            }
-            catch (final ReferencedResourceNotFoundException e) {
+            } catch(final ReferencedResourceNotFoundException e) {
                 throw e;
-            }
-            catch (final RelationPredicateNotFoundException e) {
+            } catch(final RelationPredicateNotFoundException e) {
                 throw e;
-            }
-            catch (final TripleStoreSystemException e) {
+            } catch(final TripleStoreSystemException e) {
                 throw e;
-            }
-            catch (final EncodingSystemException e) {
+            } catch(final EncodingSystemException e) {
                 throw e;
-            }
-            catch (final XmlParserSystemException e) {
+            } catch(final XmlParserSystemException e) {
                 throw e;
-            }
-            catch (final XMLStreamException e) {
+            } catch(final XMLStreamException e) {
                 throw new XmlParserSystemException(e);
-            }
-            catch (final Exception e) {
+            } catch(final Exception e) {
                 XmlUtility.handleUnexpectedStaxParserException("", e);
             }
             sp.clearHandlerChain();
@@ -323,25 +308,25 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             final Map<String, Object> streams = me.getOutputStreams();
             try {
                 final Object cmsStream = streams.get(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC);
-                if (cmsStream != null) {
-                    setContentTypeSpecificProperties(((ByteArrayOutputStream) cmsStream)
-                        .toString(XmlUtility.CHARACTER_ENCODING));
+                if(cmsStream != null) {
+                    setContentTypeSpecificProperties(
+                            ((ByteArrayOutputStream) cmsStream).toString(XmlUtility.CHARACTER_ENCODING));
                 }
-            }
-            catch (final UnsupportedEncodingException e) {
+            } catch(final UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
             final Map<String, ByteArrayOutputStream> mdRecordsStreams =
-                (Map<String, ByteArrayOutputStream>) streams.get(XmlUtility.NAME_MDRECORDS);
-            if (mdRecordsStreams != null && !mdRecordsStreams.containsKey("escidoc") && !origin) {
-                throw new MissingMdRecordException("No escidoc internal metadata found " + "(md-record/@name='escidoc'");
+                    (Map<String, ByteArrayOutputStream>) streams.get(XmlUtility.NAME_MDRECORDS);
+            if(mdRecordsStreams != null && ! mdRecordsStreams.containsKey("escidoc") && ! origin) {
+                throw new MissingMdRecordException(
+                        "No escidoc internal metadata found " + "(md-record/@name='escidoc'");
             }
             final Map<String, Map<String, String>> mdRecordsAttributes = mdHandler.getMetadataAttributes();
             final String escidocMdNsUri = mdHandler.getEscidocMdRecordNameSpace();
             setMetadataRecords(mdRecordsStreams, mdRecordsAttributes, escidocMdNsUri);
 
             // set content streams
-            if (!origin) {
+            if(! origin) {
                 setContentStreams(csh.getContentStreams());
             }
             // set content relations
@@ -352,14 +337,14 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             // TODO: Aenderungen an ITEM.RELS-EXT fuer alle components in einem
             // schritt machen + Aenderungen an content relations (? FRS)
             boolean resourceUpdated = false;
-            if (!origin) {
+            if(! origin) {
                 Map<String, Object> components = (Map<String, Object>) streams.get("components");
 
-                if (components == null) {
+                if(components == null) {
                     components = new HashMap<String, Object>();
                 }
                 final Map<String, Map<String, Map<String, String>>> componentMdRecordsAttributes =
-                    cmuh.getMetadataAttributes();
+                        cmuh.getMetadataAttributes();
 
                 final Map<String, String> nsUris = cmuh.getNamespacesMap();
                 components.put("new", nce.getOutputStreams());
@@ -371,25 +356,22 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // check if modified
             final String updatedXmlData;
-            if (resourceUpdated || !startTimestamp.isEqual(getItem().getLastFedoraModificationDate())
-                || getItem().isNewVersion()) {
+            if(resourceUpdated || ! startTimestamp.isEqual(getItem().getLastFedoraModificationDate()) ||
+                    getItem().isNewVersion()) {
                 // object is modified
                 makeVersion("ItemHandler.update()");
                 getItem().persist();
 
                 updatedXmlData = retrieve(getItem().getId());
                 fireItemModified(getItem().getId(), updatedXmlData);
-            }
-            else {
+            } else {
                 updatedXmlData = render();
             }
 
             return updatedXmlData;
-        }
-        catch (final MissingContentException e) {
+        } catch(final MissingContentException e) {
             throw new WebserverSystemException(e);
-        }
-        catch (final MissingElementValueException e) {
+        } catch(final MissingElementValueException e) {
             throw new WebserverSystemException("unreachable", e);
         }
     }
@@ -398,13 +380,14 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * Create an Item.
      */
     @Override
-    public String create(final String xml) throws MissingContentException, ContextNotFoundException,
-        ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
-        MissingElementValueException, ReadonlyAttributeViolationException, XmlCorruptedException,
-        MissingMethodParameterException, FileNotFoundException, SystemException, ReferencedResourceNotFoundException,
-        InvalidContentException, RelationPredicateNotFoundException, MissingMdRecordException, InvalidStatusException,
-        AuthorizationException, EncodingSystemException, IntegritySystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException, FedoraSystemException {
+    public String create(final String xml)
+            throws MissingContentException, ContextNotFoundException, ContentModelNotFoundException,
+            ReadonlyElementViolationException, MissingAttributeValueException, MissingElementValueException,
+            ReadonlyAttributeViolationException, XmlCorruptedException, MissingMethodParameterException,
+            FileNotFoundException, SystemException, ReferencedResourceNotFoundException, InvalidContentException,
+            RelationPredicateNotFoundException, MissingMdRecordException, InvalidStatusException,
+            AuthorizationException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException,
+            WebserverSystemException, FedoraSystemException {
 
         final ItemCreate item = parseItem(xml);
 
@@ -418,10 +401,10 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final String resultItem;
         try {
             resultItem = retrieve(objid);
-        }
-        catch (final ResourceNotFoundException e) {
-            throw new IntegritySystemException("The Item with id '" + objid + "', which was just created, "
-                + "could not be found for retrieve.", e);
+        } catch(final ResourceNotFoundException e) {
+            throw new IntegritySystemException(
+                    "The Item with id '" + objid + "', which was just created, " + "could not be found for retrieve.",
+                    e);
         }
         fireItemCreated(objid, resultItem);
         return resultItem;
@@ -434,14 +417,14 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @return the pid of the ingested item.
      */
     @Override
-    public String ingest(final String xml) throws ReadonlyElementViolationException,
-        ReadonlyAttributeViolationException, MissingContentException, ContextNotFoundException,
-        ContentModelNotFoundException, MissingAttributeValueException, MissingElementValueException,
-        InvalidXmlException, MissingMethodParameterException, FileNotFoundException,
-        ReferencedResourceNotFoundException, InvalidContentException, RelationPredicateNotFoundException,
-        MissingMdRecordException, InvalidStatusException, SystemException, AuthorizationException,
-        EncodingSystemException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException, XmlCorruptedException, FedoraSystemException {
+    public String ingest(final String xml)
+            throws ReadonlyElementViolationException, ReadonlyAttributeViolationException, MissingContentException,
+            ContextNotFoundException, ContentModelNotFoundException, MissingAttributeValueException,
+            MissingElementValueException, InvalidXmlException, MissingMethodParameterException, FileNotFoundException,
+            ReferencedResourceNotFoundException, InvalidContentException, RelationPredicateNotFoundException,
+            MissingMdRecordException, InvalidStatusException, SystemException, AuthorizationException,
+            IntegritySystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException,
+            FedoraSystemException {
 
         final ItemCreate item = parseItem(xml);
         item.setIdProvider(getIdProvider());
@@ -449,17 +432,16 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         item.persist(true);
         final String objid = item.getObjid();
         try {
-            if (EscidocConfiguration.getInstance().getAsBoolean(
-                EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
+            if(EscidocConfiguration.getInstance()
+                    .getAsBoolean(EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
                 fireItemCreated(objid, retrieve(objid));
             }
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new SystemException("The eSciDoc configuration could not be read", e);
-        }
-        catch (final ResourceNotFoundException e) {
-            throw new IntegritySystemException("The Item with id '" + objid + "', which was just ingested, "
-                + "could not be found for retrieve.", e);
+        } catch(final ResourceNotFoundException e) {
+            throw new IntegritySystemException(
+                    "The Item with id '" + objid + "', which was just ingested, " + "could not be found for retrieve.",
+                    e);
         }
         return objid;
 
@@ -469,9 +451,10 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#delete(String)
      */
     @Override
-    public void delete(final String id) throws ItemNotFoundException, AlreadyPublishedException, LockingException,
-        InvalidStatusException, SystemException, AuthorizationException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException {
+    public void delete(final String id)
+            throws ItemNotFoundException, AlreadyPublishedException, LockingException, InvalidStatusException,
+            SystemException, AuthorizationException, TripleStoreSystemException, WebserverSystemException,
+            IntegritySystemException, XmlParserSystemException {
 
         remove(id);
         fireItemDeleted(id);
@@ -481,9 +464,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveProperties(String)
      */
     @Override
-    public String retrieveProperties(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        SystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    public String retrieveProperties(final String id)
+            throws ItemNotFoundException, MissingMethodParameterException, SystemException, IntegritySystemException,
+            FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setItem(id);
         return renderProperties();
@@ -493,20 +476,21 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecords(String)
      */
     @Override
-    public String retrieveMdRecords(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        SystemException, AuthorizationException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+    public String retrieveMdRecords(final String id)
+            throws ItemNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException,
+            IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
+            XmlParserSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         final String originVersionId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN_VERSION);
-        if (originVersionId != null) {
+        if(originVersionId != null) {
             originId = originId + ':' + originVersionId;
         }
-        loadOrigin("You cannot retrieve md-records of the surrogate Item "
-            + "because you have no access rights on the Item '" + originId
-            + "'. Subressources which are part of the surrogate Item "
-            + "(and not the origin Item) are still accessible. Try " + "using subresource methods.");
+        loadOrigin("You cannot retrieve md-records of the surrogate Item " +
+                "because you have no access rights on the Item '" + originId +
+                "'. Subressources which are part of the surrogate Item " +
+                "(and not the origin Item) are still accessible. Try " + "using subresource methods.");
 
         return renderMdRecords(true);
     }
@@ -515,38 +499,35 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecord(String, String)
      */
     @Override
-    public String retrieveMdRecord(final String id, final String mdRecordId) throws ItemNotFoundException,
-        MdRecordNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException,
-        EncodingSystemException, IntegritySystemException, TripleStoreSystemException, WebserverSystemException,
-        FedoraSystemException, XmlParserSystemException {
+    public String retrieveMdRecord(final String id, final String mdRecordId)
+            throws ItemNotFoundException, MdRecordNotFoundException, MissingMethodParameterException, SystemException,
+            AuthorizationException, IntegritySystemException, TripleStoreSystemException, WebserverSystemException,
+            FedoraSystemException, XmlParserSystemException {
 
         setItem(id);
 
         String mdRecord;
         try {
             mdRecord = renderMdRecord(mdRecordId, false, true);
-            if (mdRecord.length() == 0) {
+            if(mdRecord.length() == 0) {
                 throw new MdRecordNotFoundException();
             }
-        }
-        catch (final MdRecordNotFoundException e) {
+        } catch(final MdRecordNotFoundException e) {
             final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
-            if (originObjectId != null) {
-                final String message =
-                    "Md-record with name " + mdRecordId + " is owned by the item " + getOriginId()
-                        + ", which is reffered by a surrogate item " + id + ". You have no access rights on the item "
-                        + getOriginId() + ". Therefore you cannot access any md-records " + "of this item.";
+            if(originObjectId != null) {
+                final String message = "Md-record with name " + mdRecordId + " is owned by the item " + getOriginId() +
+                        ", which is reffered by a surrogate item " + id + ". You have no access rights on the item " +
+                        getOriginId() + ". Therefore you cannot access any md-records " + "of this item.";
                 loadOrigin(message);
                 mdRecord = renderMdRecord(mdRecordId, true, true);
-            }
-            else {
+            } else {
                 throw e;
             }
         }
 
-        if (mdRecord.length() == 0) {
-            throw new MdRecordNotFoundException("Metadata record with name " + mdRecordId + " not found in item " + id
-                + '.');
+        if(mdRecord.length() == 0) {
+            throw new MdRecordNotFoundException(
+                    "Metadata record with name " + mdRecordId + " not found in item " + id + '.');
         }
         return mdRecord;
     }
@@ -557,25 +538,22 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecordContent(String, String)
      */
     @Override
-    public String retrieveMdRecordContent(final String id, final String mdRecordId) throws ItemNotFoundException,
-        MdRecordNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+    public String retrieveMdRecordContent(final String id, final String mdRecordId)
+            throws ItemNotFoundException, MdRecordNotFoundException, MissingMethodParameterException, SystemException,
+            AuthorizationException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+            WebserverSystemException {
         setItem(id);
         String mdRecord;
         try {
             mdRecord = retrieveMdRecord(mdRecordId, false);
-        }
-        catch (final MdRecordNotFoundException e) {
-            String message =
-                "Md-record with name " + mdRecordId + " is owned by the item " + getOriginId()
-                    + ", which is reffered by a surrogate item " + id + ". You have no access rights on the item "
-                    + getOriginId() + ". Therefore you cannot access any md-records " + "of this item.";
+        } catch(final MdRecordNotFoundException e) {
+            String message = "Md-record with name " + mdRecordId + " is owned by the item " + getOriginId() +
+                    ", which is reffered by a surrogate item " + id + ". You have no access rights on the item " +
+                    getOriginId() + ". Therefore you cannot access any md-records " + "of this item.";
             final boolean origin = loadOrigin(message);
-            if (origin) {
+            if(origin) {
                 mdRecord = retrieveMdRecord(mdRecordId, true);
-            }
-            else {
+            } else {
                 message = "Metadata record with name " + mdRecordId + " not found in item " + id + '.';
                 throw new MdRecordNotFoundException(message, e);
             }
@@ -587,29 +565,26 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecordContent(String, String)
      */
     @Override
-    public String retrieveDcRecordContent(final String id) throws ItemNotFoundException,
-        MissingMethodParameterException, SystemException, MdRecordNotFoundException, AuthorizationException,
-        FedoraSystemException, WebserverSystemException, IntegritySystemException, TripleStoreSystemException,
-        XmlParserSystemException {
+    public String retrieveDcRecordContent(final String id)
+            throws ItemNotFoundException, MissingMethodParameterException, SystemException, MdRecordNotFoundException,
+            AuthorizationException, WebserverSystemException, IntegritySystemException, TripleStoreSystemException,
+            XmlParserSystemException {
         setItem(id);
         String dc;
         try {
             final Datastream mdRecord = getItem().getMdRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
-            if (mdRecord.isDeleted()) {
+            if(mdRecord.isDeleted()) {
                 throw new MdRecordNotFoundException();
             }
             dc = getItem().getDc().toString();
-        }
-        catch (final MdRecordNotFoundException e) {
-            String message =
-                "Md-record with name DC" + " is owned by the item " + getOriginId()
-                    + ", which is reffered by a surrogate item " + id + ". You have no access rights on the item "
-                    + getOriginId() + ". Therefore you cannot access any md-records " + "of this item.";
+        } catch(final MdRecordNotFoundException e) {
+            String message = "Md-record with name DC" + " is owned by the item " + getOriginId() +
+                    ", which is reffered by a surrogate item " + id + ". You have no access rights on the item " +
+                    getOriginId() + ". Therefore you cannot access any md-records " + "of this item.";
             final boolean origin = loadOrigin(message);
-            if (origin) {
+            if(origin) {
                 dc = getOriginItem().getDc().toString();
-            }
-            else {
+            } else {
                 message = "Metadata record with name DC" + " not found in item " + id + '.';
                 throw new MdRecordNotFoundException(message, e);
             }
@@ -623,11 +598,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     @Override
     public String updateMetadataRecord(final String id, final String mdRecordId, final String xmlData)
-        throws ItemNotFoundException, XmlSchemaNotFoundException, LockingException, XmlCorruptedException,
-        XmlSchemaValidationException, InvalidContentException, MdRecordNotFoundException, ReadonlyViolationException,
-        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
-        ReadonlyVersionException, AuthorizationException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+            throws ItemNotFoundException, XmlSchemaNotFoundException, LockingException, XmlCorruptedException,
+            XmlSchemaValidationException, InvalidContentException, MdRecordNotFoundException,
+            ReadonlyViolationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+            InvalidStatusException, ReadonlyVersionException, AuthorizationException, IntegritySystemException,
+            FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setItem(id);
         final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
@@ -638,9 +613,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkWithdrawn(NO_UPDATE_ALLOWED_MSG);
 
         final StaxParser sp = new StaxParser();
-        final OptimisticLockingHandler olh =
-            new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
-                .getLastModificationDate());
+        final OptimisticLockingHandler olh = new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE,
+                getItem().getLastModificationDate());
         sp.addHandler(olh);
         final MdRecordsUpdateHandler mdHandler = new MdRecordsUpdateHandler("", sp);
         sp.addHandler(mdHandler);
@@ -650,12 +624,10 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         try {
             sp.parse(xmlData);
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             // the only exception thrown by MultipleExtractor
             throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(e.getMessage(), e);
         }
 
@@ -666,26 +638,23 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final Map<String, String> mdRecordAttributes = mdAttributes.get(mdRecordId);
         try {
             setMetadataRecord(mdRecordId, mdXml.toString(XmlUtility.CHARACTER_ENCODING), mdRecordAttributes);
-        }
-        catch (final UnsupportedEncodingException e) {
+        } catch(final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
-        if (!startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
+        if(! startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
             makeVersion("Item.updateMedataRecord");
             getItem().persist();
             try {
                 fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final ComponentNotFoundException e) {
+            } catch(final ComponentNotFoundException e) {
                 throw new SystemException(e);
             }
         }
         final String newMdRecord;
         try {
             newMdRecord = retrieveMdRecord(getItem().getId(), mdRecordId);
-        }
-        catch (final MdRecordNotFoundException e) {
+        } catch(final MdRecordNotFoundException e) {
             throw new IntegritySystemException("After succesfully update metadata.", e);
         }
 
@@ -697,11 +666,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     @Override
     @Deprecated
-    public String createMetadataRecord(final String id, final String xmlData) throws ItemNotFoundException,
-        XmlSchemaNotFoundException, SystemException, XmlSchemaValidationException, LockingException,
-        MissingAttributeValueException, InvalidStatusException, MissingMethodParameterException, XmlCorruptedException,
-        ComponentNotFoundException, AuthorizationException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+    public String createMetadataRecord(final String id, final String xmlData)
+            throws ItemNotFoundException, XmlSchemaNotFoundException, SystemException, XmlSchemaValidationException,
+            LockingException, MissingAttributeValueException, InvalidStatusException, MissingMethodParameterException,
+            XmlCorruptedException, ComponentNotFoundException, AuthorizationException, IntegritySystemException,
+            FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
 
         return createMdRecord(id, xmlData);
     }
@@ -715,10 +684,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#createMdRecord(String, String)
      */
     @Override
-    public String createMdRecord(final String id, final String xmlData) throws ItemNotFoundException, SystemException,
-        XmlSchemaValidationException, LockingException, MissingAttributeValueException, InvalidStatusException,
-        ComponentNotFoundException, AuthorizationException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+    public String createMdRecord(final String id, final String xmlData)
+            throws ItemNotFoundException, SystemException, XmlSchemaValidationException, LockingException,
+            MissingAttributeValueException, InvalidStatusException, ComponentNotFoundException, AuthorizationException,
+            IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
+            XmlParserSystemException {
 
         setItem(id);
         final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
@@ -736,16 +706,15 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         // retrieve name from xml
         try {
             sp.parse(xmlData);
-        }
-        catch (final Exception e) {
-            throw new WebserverSystemException("Unexpected exception while parsing xml data in "
-                + "FedoraItemHandler.createMetadataRecord.", e);
+        } catch(final Exception e) {
+            throw new WebserverSystemException(
+                    "Unexpected exception while parsing xml data in " + "FedoraItemHandler.createMetadataRecord.", e);
         }
         final Map map = me.getOutputStreams();
         final Map mdRecords = (Map) map.get(XmlUtility.NAME_MDRECORDS);
         final Set keySet = mdRecords.keySet();
         final Iterator it = keySet.iterator();
-        if (!it.hasNext()) {
+        if(! it.hasNext()) {
             throw new XmlSchemaValidationException("No name found for metadata datastream.");
         }
         final String name = (String) it.next();
@@ -753,8 +722,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final byte[] xmlDataBytes;
         try {
             xmlDataBytes = xmlData.getBytes(XmlUtility.CHARACTER_ENCODING);
-        }
-        catch (final UnsupportedEncodingException e) {
+        } catch(final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
         final Datastream newMDS = new Datastream(name, getItem().getId(), xmlDataBytes, MimeTypes.TEXT_XML);
@@ -765,7 +733,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         newMDS.persist(false);
 
         final DateTime endTimestamp = getItem().getLastFedoraModificationDate();
-        if (!startTimestamp.equals(endTimestamp)) {
+        if(! startTimestamp.equals(endTimestamp)) {
             makeVersion("Item.createMetadataRecord");
             getItem().persist();
         }
@@ -773,14 +741,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         try {
             newMdRecord = retrieveMdRecord(getItem().getId(), name);
             fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-        }
-        catch (final ItemNotFoundException e) {
+        } catch(final ItemNotFoundException e) {
             throw new IntegritySystemException("After succesfully create metadata.", e);
-        }
-        catch (final MdRecordNotFoundException e) {
+        } catch(final MdRecordNotFoundException e) {
             throw new IntegritySystemException("After succesfully create metadata.", e);
-        }
-        catch (final MissingMethodParameterException e) {
+        } catch(final MissingMethodParameterException e) {
             throw new IntegritySystemException("After succesfully create metadata.", e);
         }
 
@@ -791,19 +756,20 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveComponents(String)
      */
     @Override
-    public String retrieveComponents(final String id) throws ItemNotFoundException, ComponentNotFoundException,
-        MissingMethodParameterException, SystemException, AuthorizationException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException,
-        EncodingSystemException {
+    public String retrieveComponents(final String id)
+            throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
+            AuthorizationException, WebserverSystemException, IntegritySystemException, FedoraSystemException,
+            XmlParserSystemException, EncodingSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         final String originVersionId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN_VERSION);
-        if (originVersionId != null) {
+        if(originVersionId != null) {
             originId = originId + ':' + originVersionId;
         }
-        loadOrigin("You have no access rights on the item " + originId + " , which is reffered by a surrogate item "
-            + id + ". Therefore you cannot access any subressources of this item.");
+        loadOrigin(
+                "You have no access rights on the item " + originId + " , which is reffered by a surrogate item " + id +
+                        ". Therefore you cannot access any subressources of this item.");
 
         return renderComponents(true);
     }
@@ -815,24 +781,19 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @return list of content relations
      * @throws ItemNotFoundException Thrown if an item with the specified id could not be found.
      * @throws SystemException       If an error occurs.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    private String retrieveContentRelations(final String id) throws ItemNotFoundException, SystemException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+    private String retrieveContentRelations(final String id)
+            throws ItemNotFoundException, SystemException, FedoraSystemException, TripleStoreSystemException,
+            XmlParserSystemException, WebserverSystemException {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         setItem(id);
-        filterParams.put("query", new String[] { "\"/subject/id\"=" + getItem().getId() + " or " + "\"/subject/id\"="
-            + getItem().getFullId() + " or " + "\"/object/id\"=" + getItem().getId() + " or " + "\"/object/id\"="
-            + getItem().getFullId() });
+        filterParams.put("query", new String[]{
+                "\"/subject/id\"=" + getItem().getId() + " or " + "\"/subject/id\"=" + getItem().getFullId() + " or " +
+                        "\"/object/id\"=" + getItem().getId() + " or " + "\"/object/id\"=" + getItem().getFullId()});
 
         final String searchResponse =
-            contentRelationHandler.retrieveContentRelations(new LuceneRequestParameters(filterParams));
+                contentRelationHandler.retrieveContentRelations(new LuceneRequestParameters(filterParams));
         return transformSearchResponse2relations(searchResponse);
 
     }
@@ -867,14 +828,14 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
-    public String updateComponents(final String id, final String xmlData) throws ItemNotFoundException,
-        ComponentNotFoundException, FileNotFoundException, XmlSchemaValidationException, LockingException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException, MissingAttributeValueException,
-        AlreadyPublishedException, UserNotFoundException, InvalidStatusException, SystemException,
-        MissingMethodParameterException, OptimisticLockingException, MissingContentException,
-        MissingElementValueException, InvalidContentException, XmlCorruptedException, ReadonlyVersionException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException,
-        EncodingSystemException, IntegritySystemException {
+    public String updateComponents(final String id, final String xmlData)
+            throws ItemNotFoundException, ComponentNotFoundException, FileNotFoundException,
+            XmlSchemaValidationException, LockingException, ReadonlyElementViolationException,
+            ReadonlyAttributeViolationException, MissingAttributeValueException, AlreadyPublishedException,
+            UserNotFoundException, InvalidStatusException, SystemException, MissingMethodParameterException,
+            OptimisticLockingException, MissingContentException, MissingElementValueException, InvalidContentException,
+            XmlCorruptedException, ReadonlyVersionException, TripleStoreSystemException, XmlParserSystemException,
+            WebserverSystemException, EncodingSystemException, IntegritySystemException {
 
         setItem(id);
         checkLatestVersion();
@@ -890,13 +851,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
 
         final StaxParser sp = new StaxParser();
-        final OptimisticLockingHandler olh =
-            new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
-                .getLastModificationDate());
+        final OptimisticLockingHandler olh = new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE,
+                getItem().getLastModificationDate());
         sp.addHandler(olh);
 
         final ComponentMdRecordsUpdateHandler cmuh =
-            new ComponentMdRecordsUpdateHandler("/components/component/md-records", sp);
+                new ComponentMdRecordsUpdateHandler("/components/component/md-records", sp);
         sp.addHandler(cmuh);
         // extract datastreams from xmlData
         final HashMap<String, String> extractPathes = new HashMap<String, String>();
@@ -911,12 +871,10 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         try {
             sp.parse(xmlData);
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             // the only exception thrown from MultipleExtractor
             throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
@@ -927,24 +885,22 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         String updatedXmlData = null;
         try {
             updatedXmlData = retrieveComponents(id);
-        }
-        catch (final AuthorizationException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final AuthorizationException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on retrieving components.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on retrieving components.", e);
             }
             // can not occur
         }
 
-        if (!startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
+        if(! startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
             makeVersion("Item.updateComponents");
             getItem().persist();
             try {
                 fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
+            } catch(final AuthorizationException e) {
                 throw new SystemException(e);
             }
         }
@@ -956,9 +912,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveResources(String)
      */
     @Override
-    public String retrieveResources(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        WebserverSystemException, TripleStoreSystemException, IntegritySystemException, FedoraSystemException,
-        XmlParserSystemException {
+    public String retrieveResources(final String id)
+            throws ItemNotFoundException, MissingMethodParameterException, WebserverSystemException,
+            TripleStoreSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         setItem(id);
         return renderResources();
@@ -968,31 +924,28 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveResources(String)
      */
     @Override
-    public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map<String, String[]> parameters) throws SystemException,
-        ItemNotFoundException, OperationNotFoundException, TripleStoreSystemException, WebserverSystemException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+    public EscidocBinaryContent retrieveResource(final String id, final String resourceName,
+                                                 final Map<String, String[]> parameters)
+            throws SystemException, ItemNotFoundException, OperationNotFoundException, WebserverSystemException,
+            EncodingSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType(MimeTypes.TEXT_XML);
 
-        if ("version-history".equals(resourceName)) {
+        if("version-history".equals(resourceName)) {
             try {
-                content.setContent(new ByteArrayInputStream(retrieveVersionHistory(id).getBytes(
-                    XmlUtility.CHARACTER_ENCODING)));
+                content.setContent(
+                        new ByteArrayInputStream(retrieveVersionHistory(id).getBytes(XmlUtility.CHARACTER_ENCODING)));
                 return content;
-            }
-            catch (final UnsupportedEncodingException e) {
+            } catch(final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
-        }
-        else if ("relations".equals(resourceName)) {
+        } else if("relations".equals(resourceName)) {
             try {
-                content.setContent(new ByteArrayInputStream(retrieveContentRelations(id).getBytes(
-                    XmlUtility.CHARACTER_ENCODING)));
+                content.setContent(
+                        new ByteArrayInputStream(retrieveContentRelations(id).getBytes(XmlUtility.CHARACTER_ENCODING)));
                 return content;
-            }
-            catch (final UnsupportedEncodingException e) {
+            } catch(final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -1002,35 +955,35 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final Stream stream = this.getFedoraServiceClient().getDissemination(id, contentModelId, resourceName);
         try {
             content.setContent(stream.getInputStream());
-        }
-        catch (IOException e) {
+        } catch(IOException e) {
             throw new FedoraSystemException("Error on reading stream.", e);
         }
         return content;
     }
 
     @Override
-    public String retrieveRelations(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        SystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+    public String retrieveRelations(final String id)
+            throws ItemNotFoundException, MissingMethodParameterException, SystemException, FedoraSystemException,
+            TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
         setItem(id);
         return renderRelations();
     }
 
     @Override
-    public String retrieveComponent(final String id, final String componentId) throws ItemNotFoundException,
-        ComponentNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException,
-        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException,
-        XmlParserSystemException, EncodingSystemException {
+    public String retrieveComponent(final String id, final String componentId)
+            throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
+            AuthorizationException, WebserverSystemException, IntegritySystemException, FedoraSystemException,
+            XmlParserSystemException, EncodingSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         final String originVersionId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN_VERSION);
-        if (originVersionId != null) {
+        if(originVersionId != null) {
             originId = originId + ':' + originVersionId;
         }
-        loadOrigin("You have no access rights on the item " + originId + " , which is reffered by a surrogate item "
-            + id + ". Therefore you cannot access any subressources of this item.");
+        loadOrigin(
+                "You have no access rights on the item " + originId + " , which is reffered by a surrogate item " + id +
+                        ". Therefore you cannot access any subressources of this item.");
 
         return renderComponent(componentId, true);
     }
@@ -1039,47 +992,48 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see ItemHandlerInterface #retrieveComponentMdRecords(java.lang.String,java.lang.String)
      */
     @Override
-    public String retrieveComponentMdRecords(final String id, final String componentId) throws ItemNotFoundException,
-        ComponentNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException,
-        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException,
-        XmlParserSystemException, EncodingSystemException {
+    public String retrieveComponentMdRecords(final String id, final String componentId)
+            throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
+            AuthorizationException, WebserverSystemException, IntegritySystemException, FedoraSystemException,
+            XmlParserSystemException, EncodingSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         final String originVersionId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN_VERSION);
-        if (originVersionId != null) {
+        if(originVersionId != null) {
             originId = originId + ':' + originVersionId;
         }
-        loadOrigin("You have no access rights on the item " + originId + " , which is reffered by a surrogate item "
-            + id + ". Therefore you cannot access any subressources of this item.");
+        loadOrigin(
+                "You have no access rights on the item " + originId + " , which is reffered by a surrogate item " + id +
+                        ". Therefore you cannot access any subressources of this item.");
 
         return renderComponentMdRecords(componentId, true);
     }
 
     @Override
     public String retrieveComponentMdRecord(final String id, final String componentId, final String mdRecordId)
-        throws ItemNotFoundException, ComponentNotFoundException, MdRecordNotFoundException,
-        MissingMethodParameterException, SystemException, AuthorizationException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException,
-        EncodingSystemException {
+            throws ItemNotFoundException, ComponentNotFoundException, MdRecordNotFoundException,
+            MissingMethodParameterException, SystemException, AuthorizationException, TripleStoreSystemException,
+            WebserverSystemException, IntegritySystemException, XmlParserSystemException, EncodingSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         final String originVersionId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN_VERSION);
-        if (originVersionId != null) {
+        if(originVersionId != null) {
             originId = originId + ':' + originVersionId;
         }
-        loadOrigin("You have no access rights on the item " + originId + " , which is reffered by a surrogate item "
-            + id + ". Therefore you cannot access any subressources of this item.");
+        loadOrigin(
+                "You have no access rights on the item " + originId + " , which is reffered by a surrogate item " + id +
+                        ". Therefore you cannot access any subressources of this item.");
 
         return renderComponentMdRecord(componentId, mdRecordId, true);
     }
 
     @Override
-    public void deleteComponent(final String itemId, final String componentId) throws LockingException,
-        MissingMethodParameterException, SystemException, InvalidStatusException, ComponentNotFoundException,
-        ItemNotFoundException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    public void deleteComponent(final String itemId, final String componentId)
+            throws LockingException, MissingMethodParameterException, SystemException, InvalidStatusException,
+            ComponentNotFoundException, ItemNotFoundException, IntegritySystemException, FedoraSystemException,
+            TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setItem(itemId);
 
@@ -1093,8 +1047,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         try {
             fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-        }
-        catch (final AuthorizationException e) {
+        } catch(final AuthorizationException e) {
             throw new SystemException(e);
         }
     }
@@ -1107,32 +1060,28 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws MissingAttributeValueException cf. Interface
      */
     @Override
-    public String createComponent(final String id, final String xmlData) throws ItemNotFoundException,
-        MissingContentException, LockingException, MissingElementValueException, XmlCorruptedException,
-        InvalidStatusException, MissingMethodParameterException, FileNotFoundException, InvalidContentException,
-        SystemException, XmlSchemaValidationException, OptimisticLockingException, MissingAttributeValueException,
-        ComponentNotFoundException, FedoraSystemException, XmlParserSystemException, WebserverSystemException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException, EncodingSystemException,
-        IntegritySystemException, TripleStoreSystemException {
+    public String createComponent(final String id, final String xmlData)
+            throws ItemNotFoundException, MissingContentException, LockingException, MissingElementValueException,
+            XmlCorruptedException, InvalidStatusException, MissingMethodParameterException, FileNotFoundException,
+            InvalidContentException, SystemException, XmlSchemaValidationException, OptimisticLockingException,
+            MissingAttributeValueException, ComponentNotFoundException, XmlParserSystemException,
+            WebserverSystemException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
+            EncodingSystemException, IntegritySystemException, TripleStoreSystemException {
 
         setItem(id);
         final StaxParser sp = new StaxParser();
-        sp.addHandler(new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
-            .getLastModificationDate()));
+        sp.addHandler(new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE,
+                getItem().getLastModificationDate()));
 
         try {
             sp.parse(xmlData);
-        }
-        catch (final OptimisticLockingException e) {
+        } catch(final OptimisticLockingException e) {
             throw e;
-        }
-        catch (final MissingAttributeValueException e) {
+        } catch(final MissingAttributeValueException e) {
             throw e;
-        }
-        catch (final WebserverSystemException e) {
+        } catch(final WebserverSystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         sp.clearHandlerChain();
@@ -1142,8 +1091,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         try {
             fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-        }
-        catch (final AuthorizationException e) {
+        } catch(final AuthorizationException e) {
             throw new SystemException(e);
         }
 
@@ -1155,19 +1103,18 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     @Override
     public String updateComponent(final String id, final String componentId, final String xmlData)
-        throws ItemNotFoundException, ComponentNotFoundException, LockingException, XmlSchemaValidationException,
-        FileNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
-        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        XmlCorruptedException, ReadonlyAttributeViolationException, MissingContentException, InvalidContentException,
-        ReadonlyVersionException, AuthorizationException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+            throws ItemNotFoundException, ComponentNotFoundException, LockingException, XmlSchemaValidationException,
+            FileNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
+            InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+            XmlCorruptedException, ReadonlyAttributeViolationException, MissingContentException,
+            InvalidContentException, ReadonlyVersionException, AuthorizationException, IntegritySystemException,
+            FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setItem(id);
-        if (!getItem().getComponentIds().contains(componentId)) {
+        if(! getItem().getComponentIds().contains(componentId)) {
             try {
                 getItem().addComponent(new Component(componentId, getItem().getId(), null));
-            }
-            catch (final ResourceNotFoundException e) {
+            } catch(final ResourceNotFoundException e) {
                 throw new ComponentNotFoundException(e);
             }
         }
@@ -1184,9 +1131,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         extractPathes.put("/component/content", null);
 
         final StaxParser sp = new StaxParser();
-        final OptimisticLockingHandler olh =
-            new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
-                .getLastModificationDate());
+        final OptimisticLockingHandler olh = new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE,
+                getItem().getLastModificationDate());
         sp.addHandler(olh);
         final ComponentMdRecordsUpdateHandler cmuh = new ComponentMdRecordsUpdateHandler("/component/md-records", sp);
         sp.addHandler(cmuh);
@@ -1195,24 +1141,22 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         try {
             sp.parse(xmlData);
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             // the only exception MultipleExtractor throws
             throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
         final Map<String, Object> compsMap = (Map<String, Object>) me.getOutputStreams().get("components");
         final Map compMap = (Map) compsMap.get(componentId);
 
-        setComponent(getItem().getComponent(componentId), compMap, cmuh.getMetadataAttributes().get(componentId), cmuh
-            .getNamespacesMap().get(componentId));
+        setComponent(getItem().getComponent(componentId), compMap, cmuh.getMetadataAttributes().get(componentId),
+                cmuh.getNamespacesMap().get(componentId));
 
         final String updatedXmlData = retrieveComponent(id, componentId);
 
-        if (!startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
+        if(! startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
             makeVersion("Item.updateComponent");
             getItem().persist();
 
@@ -1223,11 +1167,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     @Override
-    public String release(final String id, final String param) throws ItemNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        ReadonlyViolationException, ReadonlyVersionException, ComponentNotFoundException, XmlCorruptedException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        WebserverSystemException, XmlParserSystemException, ApplicationServerSystemException {
+    public String release(final String id, final String param)
+            throws ItemNotFoundException, LockingException, InvalidStatusException, MissingMethodParameterException,
+            SystemException, OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException,
+            ComponentNotFoundException, XmlCorruptedException, IntegritySystemException, FedoraSystemException,
+            TripleStoreSystemException, WebserverSystemException, XmlParserSystemException,
+            ApplicationServerSystemException {
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -1238,14 +1183,15 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkReleased();
         checkPid();
 
-        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Item " + getItem().getId())) {
+        if(Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
 
             // check version status
             final String curStatus = getItem().getProperty(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS);
-            if (!Constants.STATUS_SUBMITTED.equals(curStatus)) {
-                throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_SUBMITTED
-                    + "' and can not be " + Constants.STATUS_RELEASED + '.');
+            if(! Constants.STATUS_SUBMITTED.equals(curStatus)) {
+                throw new InvalidStatusException(
+                        "The object is not in state '" + Constants.STATUS_SUBMITTED + "' and can not be " +
+                                Constants.STATUS_RELEASED + '.');
             }
 
             // set status "released"
@@ -1258,18 +1204,17 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             // getUtility().notifyIndexerAddPublication(getItem().getHref());
             try {
                 fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
+            } catch(final AuthorizationException e) {
                 throw new SystemException(e);
             }
             // find surrogate items which reference this item by a floating
             // reference, recache them and if necessary reindex them.
             final List<String> surrogateItemIds = getTripleStoreUtility().getSurrogates(getItem().getId());
             final Collection<String> referencedSurrogateItemIds = new ArrayList<String>();
-            for (final String surrogateId : surrogateItemIds) {
+            for(final String surrogateId : surrogateItemIds) {
                 final String versionId =
-                    getTripleStoreUtility().getRelation(surrogateId, TripleStoreUtility.PROP_ORIGIN_VERSION);
-                if (versionId == null) {
+                        getTripleStoreUtility().getRelation(surrogateId, TripleStoreUtility.PROP_ORIGIN_VERSION);
+                if(versionId == null) {
                     setOriginId(getItem().getId());
                     setOriginItem(getItem());
                     referencedSurrogateItemIds.add(surrogateId);
@@ -1283,11 +1228,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     @Override
-    public String submit(final String id, final String param) throws ItemNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        ReadonlyViolationException, ReadonlyVersionException, ComponentNotFoundException, XmlCorruptedException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        WebserverSystemException, XmlParserSystemException {
+    public String submit(final String id, final String param)
+            throws ItemNotFoundException, LockingException, InvalidStatusException, MissingMethodParameterException,
+            SystemException, OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException,
+            ComponentNotFoundException, XmlCorruptedException, IntegritySystemException, FedoraSystemException,
+            TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -1297,14 +1242,14 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLocked();
         checkReleased();
 
-        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Item " + getItem().getId())) {
+        if(Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
 
             // check version status
             final String curStatus = getItem().getVersionStatus();
-            if (!(Constants.STATUS_PENDING.equals(curStatus) || Constants.STATUS_IN_REVISION.equals(curStatus))) {
-                throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_PENDING + "' or '"
-                    + Constants.STATUS_IN_REVISION + "' and can not be" + " submitted.");
+            if(! (Constants.STATUS_PENDING.equals(curStatus) || Constants.STATUS_IN_REVISION.equals(curStatus))) {
+                throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_PENDING + "' or '" +
+                        Constants.STATUS_IN_REVISION + "' and can not be" + " submitted.");
             }
 
             // set status "submited"
@@ -1314,8 +1259,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             try {
                 fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
+            } catch(final AuthorizationException e) {
                 throw new SystemException(e);
             }
         }
@@ -1324,11 +1268,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     @Override
-    public String revise(final String id, final String param) throws ItemNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        ReadonlyViolationException, ReadonlyVersionException, XmlCorruptedException, ComponentNotFoundException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        WebserverSystemException, XmlParserSystemException {
+    public String revise(final String id, final String param)
+            throws ItemNotFoundException, LockingException, InvalidStatusException, MissingMethodParameterException,
+            SystemException, OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException,
+            XmlCorruptedException, ComponentNotFoundException, IntegritySystemException, FedoraSystemException,
+            TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -1338,8 +1282,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLocked();
         checkVersionStatus(Constants.STATUS_SUBMITTED);
 
-        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Item " + getItem().getId())) {
+        if(Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
 
             // set status "in-revision"
             // only renew the timestamp and set status with version entry
@@ -1348,8 +1292,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             try {
                 fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
+            } catch(final AuthorizationException e) {
                 throw new SystemException(e);
             }
         }
@@ -1358,22 +1301,23 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     @Override
-    public String withdraw(final String id, final String param) throws ItemNotFoundException, NotPublishedException,
-        LockingException, AlreadyWithdrawnException, InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException,
-        ComponentNotFoundException, XmlCorruptedException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+    public String withdraw(final String id, final String param)
+            throws ItemNotFoundException, NotPublishedException, LockingException, AlreadyWithdrawnException,
+            InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+            ReadonlyViolationException, ReadonlyVersionException, ComponentNotFoundException, XmlCorruptedException,
+            IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
+            XmlParserSystemException {
 
         // we want special exceptions if already withdrawn, so check something
         // before setItem()
         this.utility.checkIsItem(id);
 
         final String curStatus =
-            getTripleStoreUtility().getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
-        if (curStatus.equals(Constants.STATUS_WITHDRAWN)) {
+                getTripleStoreUtility().getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
+        if(curStatus.equals(Constants.STATUS_WITHDRAWN)) {
             throw new AlreadyWithdrawnException("The object is already withdrawn");
         }
-        if (!curStatus.equals(Constants.STATUS_RELEASED)) {
+        if(! curStatus.equals(Constants.STATUS_RELEASED)) {
             throw new NotPublishedException("The object is not in state 'released' and can not be " + "withdrawn.");
         }
 
@@ -1382,9 +1326,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
 
         String withdrawComment = taskParameter.getWithdrawComment();
-        if (withdrawComment == null) {
+        if(withdrawComment == null) {
             withdrawComment = taskParameter.getComment();
-            if (withdrawComment == null) {
+            if(withdrawComment == null) {
                 throw new MissingMethodParameterException("No withdraw comment found.");
             }
         }
@@ -1392,8 +1336,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLatestVersion();
         checkLocked();
 
-        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Item " + getItem().getId())) {
+        if(Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
 
             makeVersion(withdrawComment, Constants.STATUS_WITHDRAWN);
             getItem().persist();
@@ -1402,8 +1346,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             try {
                 fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
+            } catch(final AuthorizationException e) {
                 throw new SystemException(e);
             }
         }
@@ -1412,60 +1355,52 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     @Override
-    public String addContentRelations(final String id, final String param) throws SystemException,
-        ItemNotFoundException, OptimisticLockingException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, AlreadyExistsException, InvalidStatusException, InvalidContentException,
-        InvalidXmlException, ReadonlyAttributeViolationException, MissingElementValueException, LockingException,
-        ReadonlyElementViolationException, ReadonlyVersionException, ComponentNotFoundException, XmlCorruptedException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+    public String addContentRelations(final String id, final String param)
+            throws SystemException, ItemNotFoundException, OptimisticLockingException,
+            ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
+            InvalidStatusException, InvalidContentException, InvalidXmlException, ReadonlyAttributeViolationException,
+            MissingElementValueException, LockingException, ReadonlyElementViolationException, ReadonlyVersionException,
+            ComponentNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+            XmlParserSystemException, WebserverSystemException {
 
         setItem(id);
         checkLatestVersion();
         checkLocked();
         checkWithdrawn("Adding of content relations is not allowed.");
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
-        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Item " + id);
+        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Item " + id);
 
         final StaxParser sp = new StaxParser();
 
         final ContentRelationsAddHandler2Edition addHandler =
-            new ContentRelationsAddHandler2Edition(sp, getItem().getId());
+                new ContentRelationsAddHandler2Edition(sp, getItem().getId());
         sp.addHandler(addHandler);
         try {
             sp.parse(param);
             sp.clearHandlerChain();
-        }
-        catch (final MissingElementValueException e) {
+        } catch(final MissingElementValueException e) {
             throw e;
-        }
-        catch (final ReferencedResourceNotFoundException e) {
+        } catch(final ReferencedResourceNotFoundException e) {
             throw e;
-        }
-        catch (final RelationPredicateNotFoundException e) {
+        } catch(final RelationPredicateNotFoundException e) {
             throw e;
-        }
-        catch (final InvalidContentException e) {
+        } catch(final InvalidContentException e) {
             throw e;
-        }
-        catch (final InvalidXmlException e) {
+        } catch(final InvalidXmlException e) {
             throw e;
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw e;
-        }
-        catch (final AlreadyExistsException e) {
+        } catch(final AlreadyExistsException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
         final List<Map<String, String>> relationsData = addHandler.getRelations();
 
-        if (relationsData != null && !relationsData.isEmpty()) {
+        if(relationsData != null && ! relationsData.isEmpty()) {
             final List<StartElementWithChildElements> elements = new ArrayList<StartElementWithChildElements>();
-            for (final Map<String, String> relation : relationsData) {
+            for(final Map<String, String> relation : relationsData) {
                 final String predicateValue = relation.get("predicateValue");
                 final String predicateNs = relation.get("predicateNs");
                 final String target = relation.get("target");
@@ -1474,8 +1409,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 newContentRelationElement.setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
                 newContentRelationElement.setNamespace(predicateNs);
                 final Attribute resource =
-                    new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
-                        "info:fedora/" + target);
+                        new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
+                                "info:fedora/" + target);
                 newContentRelationElement.addAttribute(resource);
                 // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
@@ -1490,11 +1425,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             try {
                 fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final MissingMethodParameterException e) {
+            } catch(final MissingMethodParameterException e) {
                 throw new SystemException(e);
-            }
-            catch (final AuthorizationException e) {
+            } catch(final AuthorizationException e) {
                 throw new SystemException(e);
             }
         }
@@ -1503,11 +1436,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     @Override
-    public String removeContentRelations(final String id, final String param) throws SystemException,
-        ItemNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
-        ContentRelationNotFoundException, LockingException, ReadonlyViolationException, ReadonlyVersionException,
-        ComponentNotFoundException, XmlCorruptedException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    public String removeContentRelations(final String id, final String param)
+            throws SystemException, ItemNotFoundException, OptimisticLockingException, InvalidStatusException,
+            MissingElementValueException, ContentRelationNotFoundException, LockingException,
+            ReadonlyViolationException, ReadonlyVersionException, ComponentNotFoundException, XmlCorruptedException,
+            IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+            WebserverSystemException {
 
         setItem(id);
         checkLatestVersion();
@@ -1515,43 +1449,38 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         checkLocked();
         checkWithdrawn("Removing of content relations is not allowed.");
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
-        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Item " + id);
+        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Item " + id);
 
         final StaxParser sp = new StaxParser();
 
         final ContentRelationsRemoveHandler2Edition removeHandler =
-            new ContentRelationsRemoveHandler2Edition(sp, getItem().getId());
+                new ContentRelationsRemoveHandler2Edition(sp, getItem().getId());
         sp.addHandler(removeHandler);
         try {
             sp.parse(param);
             sp.clearHandlerChain();
-        }
-        catch (final MissingElementValueException e) {
+        } catch(final MissingElementValueException e) {
             throw new MissingElementValueException(e);
-        }
-        catch (final ContentRelationNotFoundException e) {
+        } catch(final ContentRelationNotFoundException e) {
             throw new ContentRelationNotFoundException(e);
-        }
-        catch (final TripleStoreSystemException e) {
+        } catch(final TripleStoreSystemException e) {
             throw new TripleStoreSystemException(e);
-        }
-        catch (final WebserverSystemException e) {
+        } catch(final WebserverSystemException e) {
             throw new TripleStoreSystemException(e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
         final List<Map<String, String>> relationsData = removeHandler.getRelations();
-        if (relationsData != null && !relationsData.isEmpty()) {
+        if(relationsData != null && ! relationsData.isEmpty()) {
             final Map<String, List<StartElementWithChildElements>> toRemove =
-                new TreeMap<String, List<StartElementWithChildElements>>();
+                    new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator = relationsData.iterator();
             final HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
-                new HashMap<String, List<StartElementWithChildElements>>();
+                    new HashMap<String, List<StartElementWithChildElements>>();
             boolean resourceUpdated = false;
-            while (iterator.hasNext()) {
+            while(iterator.hasNext()) {
                 resourceUpdated = true;
                 final Map<String, String> relation = iterator.next();
 
@@ -1564,16 +1493,15 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 newContentRelationElement.setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
                 newContentRelationElement.setNamespace(predicateNs);
                 final Attribute resource =
-                    new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
-                        "info:fedora/" + target);
+                        new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
+                                "info:fedora/" + target);
                 newContentRelationElement.addAttribute(resource);
                 newContentRelationElement.setChildrenElements(null);
-                if (predicateValuesVectorAssignment.containsKey(predicateValue)) {
+                if(predicateValuesVectorAssignment.containsKey(predicateValue)) {
                     final List<StartElementWithChildElements> vector =
-                        predicateValuesVectorAssignment.get(predicateValue);
+                            predicateValuesVectorAssignment.get(predicateValue);
                     vector.add(newContentRelationElement);
-                }
-                else {
+                } else {
                     final List<StartElementWithChildElements> vector = new ArrayList<StartElementWithChildElements>();
                     vector.add(newContentRelationElement);
                     predicateValuesVectorAssignment.put(predicateValue, vector);
@@ -1582,8 +1510,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             }
 
             final Set<Entry<String, List<StartElementWithChildElements>>> entrySet =
-                predicateValuesVectorAssignment.entrySet();
-            for (final Entry<String, List<StartElementWithChildElements>> anEntrySet : entrySet) {
+                    predicateValuesVectorAssignment.entrySet();
+            for(final Entry<String, List<StartElementWithChildElements>> anEntrySet : entrySet) {
                 final Entry<String, List<StartElementWithChildElements>> entry = anEntrySet;
                 final String predicateValue = entry.getKey();
                 final List<StartElementWithChildElements> elements = entry.getValue();
@@ -1593,18 +1521,16 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             final byte[] relsExtNewBytes = Utility.updateRelsExt(null, toRemove, null, getItem(), null);
             getItem().setRelsExt(relsExtNewBytes);
 
-            if (resourceUpdated || !startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
+            if(resourceUpdated || ! startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
                 makeVersion("Item.removeContentRelations");
                 getItem().persist();
             }
 
             try {
                 fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
+            } catch(final AuthorizationException e) {
                 throw new SystemException(e);
-            }
-            catch (final MissingMethodParameterException e) {
+            } catch(final MissingMethodParameterException e) {
                 throw new SystemException(e);
             }
         }
@@ -1616,11 +1542,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * Lock an Item for other user access.
      */
     @Override
-    public String lock(final String id, final String param) throws ItemNotFoundException, LockingException,
-        InvalidContentException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        ComponentNotFoundException, InvalidStatusException, XmlCorruptedException, EncodingSystemException,
-        FedoraSystemException, TripleStoreSystemException, SqlDatabaseSystemException, WebserverSystemException,
-        IntegritySystemException, XmlParserSystemException {
+    public String lock(final String id, final String param)
+            throws ItemNotFoundException, LockingException, InvalidContentException, MissingMethodParameterException,
+            SystemException, OptimisticLockingException, ComponentNotFoundException, InvalidStatusException,
+            XmlCorruptedException, FedoraSystemException, TripleStoreSystemException, SqlDatabaseSystemException,
+            WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         setItem(id);
         checkWithdrawn("No modification allowed.");
@@ -1628,16 +1554,15 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         checkLocked();
 
-        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Item " + getItem().getId())) {
+        if(Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
             getItem().setLocked(true, Utility.getCurrentUser());
             // to lock/unlock is no modification of the object, don't update
             // timestamp
 
             try {
                 fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
+            } catch(final AuthorizationException e) {
                 throw new SystemException(e);
             }
         }
@@ -1646,18 +1571,19 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     @Override
-    public String unlock(final String id, final String param) throws ItemNotFoundException, LockingException,
-        MissingMethodParameterException, SystemException, OptimisticLockingException, ComponentNotFoundException,
-        XmlCorruptedException, EncodingSystemException, FedoraSystemException, SqlDatabaseSystemException,
-        WebserverSystemException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException {
+    public String unlock(final String id, final String param)
+            throws ItemNotFoundException, LockingException, MissingMethodParameterException, SystemException,
+            OptimisticLockingException, ComponentNotFoundException, XmlCorruptedException, FedoraSystemException,
+            SqlDatabaseSystemException, WebserverSystemException, IntegritySystemException, TripleStoreSystemException,
+            XmlParserSystemException {
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         // checked by AA
         // checkLocked();
 
-        if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Item " + getItem().getId())) {
+        if(Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Item " + getItem().getId())) {
 
             getItem().setLocked(false, null);
             // to lock/unlock is no modification of the object, don't update
@@ -1665,8 +1591,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             try {
                 fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
+            } catch(final AuthorizationException e) {
                 throw new SystemException(e);
             }
         }
@@ -1675,9 +1600,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     @Override
-    public String retrieveVersionHistory(final String id) throws ItemNotFoundException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, WebserverSystemException, TripleStoreSystemException,
-        XmlParserSystemException {
+    public String retrieveVersionHistory(final String id)
+            throws ItemNotFoundException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+            WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         setItem(id);
         final String versionsXml;
@@ -1688,15 +1613,13 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             // "xlink:type=\"simple\"",
             // "xml:base=\"" + XmlUtility.getEscidocBaseUrl()
             // + "\" xlink:type=\"simple\" ");
-            versionsXml =
-                getVersions().replaceFirst(
-                    '<' + Constants.WOV_NAMESPACE_PREFIX + ':' + Elements.ELEMENT_WOV_VERSION_HISTORY,
-                    "<?xml version=\"1.0\" encoding=\"UTF-8\"?><" + Constants.WOV_NAMESPACE_PREFIX + ':'
-                        + Elements.ELEMENT_WOV_VERSION_HISTORY + " xml:base=\"" + XmlUtility.getEscidocBaseUrl()
-                        + "\" " + Elements.ATTRIBUTE_LAST_MODIFICATION_DATE + "=\""
-                        + getItem().getLastModificationDate() + "\" ");
-        }
-        catch (final StreamNotFoundException e) {
+            versionsXml = getVersions()
+                    .replaceFirst('<' + Constants.WOV_NAMESPACE_PREFIX + ':' + Elements.ELEMENT_WOV_VERSION_HISTORY,
+                            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><" + Constants.WOV_NAMESPACE_PREFIX + ':' +
+                                    Elements.ELEMENT_WOV_VERSION_HISTORY + " xml:base=\"" +
+                                    XmlUtility.getEscidocBaseUrl() + "\" " + Elements.ATTRIBUTE_LAST_MODIFICATION_DATE +
+                                    "=\"" + getItem().getLastModificationDate() + "\" ");
+        } catch(final StreamNotFoundException e) {
             throw new IntegritySystemException("Version history not found.", e);
         }
 
@@ -1711,8 +1634,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws SystemException       cf. Interface
      */
     @Override
-    public String retrieveParents(final String id) throws ItemNotFoundException, SystemException,
-        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
+    public String retrieveParents(final String id)
+            throws ItemNotFoundException, SystemException, IntegritySystemException, WebserverSystemException {
         this.utility.checkIsItem(id);
         return renderParents(id);
     }
@@ -1725,29 +1648,29 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     public String retrieveItems(final SRURequestParameters parameters) throws WebserverSystemException {
         final StringWriter result = new StringWriter();
 
-        if (parameters.isExplain()) {
+        if(parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.ITEM);
-        }
-        else {
-            sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.ITEM }, parameters);
+        } else {
+            sruRequest.searchRetrieve(result, new ResourceType[]{ResourceType.ITEM}, parameters);
         }
         return result.toString();
     }
 
     @Override
-    public String retrieveComponentProperties(final String id, final String componentId) throws ItemNotFoundException,
-        ComponentNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException,
-        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
-        XmlParserSystemException {
+    public String retrieveComponentProperties(final String id, final String componentId)
+            throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
+            AuthorizationException, TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
+            XmlParserSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         final String originVersionId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN_VERSION);
-        if (originVersionId != null) {
+        if(originVersionId != null) {
             originId = originId + ':' + originVersionId;
         }
-        loadOrigin("You have no access rights on the item " + originId + " , which is reffered by a surrogate item "
-            + id + ". Therefore you cannot access any subressources of this item.");
+        loadOrigin(
+                "You have no access rights on the item " + originId + " , which is reffered by a surrogate item " + id +
+                        ". Therefore you cannot access any subressources of this item.");
 
         return renderComponentProperties(componentId);
     }
@@ -1769,9 +1692,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws ItemNotFoundException TODO
      */
     @Override
-    public String moveToContext(final String id, final String taskParam) throws ItemNotFoundException,
-        ContextNotFoundException, InvalidContentException, LockingException, InvalidStatusException,
-        MissingMethodParameterException, SystemException {
+    public String moveToContext(final String id, final String taskParam)
+            throws ItemNotFoundException, ContextNotFoundException, InvalidContentException, LockingException,
+            InvalidStatusException, MissingMethodParameterException, SystemException {
         // FIXME
         throw new UnsupportedOperationException();
     }
@@ -1779,16 +1702,10 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     /**
      * @param comment Optional comment to associate with the created version or event.
      * @throws SystemException If an error occures.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    private void makeVersion(final String comment) throws SystemException, TripleStoreSystemException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
-        XmlParserSystemException {
+    private void makeVersion(final String comment)
+            throws SystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+            WebserverSystemException, XmlParserSystemException {
         makeVersion(comment, null);
     }
 
@@ -1797,31 +1714,14 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      *
      * @param xml the String containing the item xml
      * @return ItemCreate
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
-     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingContentException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    private static ItemCreate parseItem(final String xml) throws WebserverSystemException, XmlParserSystemException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException, ContentModelNotFoundException,
-        ContextNotFoundException, MissingContentException, MissingAttributeValueException,
-        MissingElementValueException, XmlCorruptedException, InvalidContentException,
-        ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
-        MissingMdRecordException, EncodingSystemException, TripleStoreSystemException, IntegritySystemException {
+    private static ItemCreate parseItem(final String xml)
+            throws WebserverSystemException, XmlParserSystemException, ReadonlyElementViolationException,
+            ReadonlyAttributeViolationException, ContentModelNotFoundException, ContextNotFoundException,
+            MissingContentException, MissingAttributeValueException, MissingElementValueException,
+            XmlCorruptedException, InvalidContentException, ReferencedResourceNotFoundException, InvalidStatusException,
+            RelationPredicateNotFoundException, MissingMdRecordException, EncodingSystemException,
+            TripleStoreSystemException, IntegritySystemException {
 
         final StaxParser sp = new StaxParser();
 
@@ -1830,32 +1730,23 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         try {
             sp.parse(xml);
-        }
-        catch (final LockingException e) {
+        } catch(final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (LastModificationDateMissingException e) {
+        } catch(LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
-        }
-        catch (final OptimisticLockingException e) {
+        } catch(final OptimisticLockingException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (final AlreadyExistsException e) {
+        } catch(final AlreadyExistsException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (final OrganizationalUnitNotFoundException e) {
+        } catch(final OrganizationalUnitNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (final ContentRelationNotFoundException e) {
+        } catch(final ContentRelationNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (final PidAlreadyAssignedException e) {
+        } catch(final PidAlreadyAssignedException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (final TmeException e) {
+        } catch(final TmeException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
@@ -1866,16 +1757,10 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @param comment   Optional comment to associate with the created version or event.
      * @param newStatus The status of the new version.
      * @throws SystemException If an error occures.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    private void makeVersion(final String comment, final String newStatus) throws SystemException,
-        TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
-        WebserverSystemException, XmlParserSystemException {
+    private void makeVersion(final String comment, final String newStatus)
+            throws SystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+            WebserverSystemException, XmlParserSystemException {
         getUtility().makeVersion(comment, newStatus, getItem());
     }
 
@@ -1906,45 +1791,39 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws SystemException Thrown in case of an internal error.
      */
     private static void setMetadataRecord(final String name, final String xml, final Map<String, String> mdAttributes)
-        throws SystemException {
+            throws SystemException {
         // this method must be reimplemented to use set-method in item
         throw new SystemException("Not yet implemented.");
     }
 
     /**
-     * Creates Stream objects from the ByteArrayOutputStreams in <code>mdMap</code> and calls Item.setMdRecords with
-     * a HashMap which contains the metadata datastreams as Stream objects.
+     * Creates Stream objects from the ByteArrayOutputStreams in <code>mdMap</code> and calls Item.setMdRecords with a
+     * HashMap which contains the metadata datastreams as Stream objects.
      *
      * @param mdMap           A HashMap which contains the metadata datastreams as ByteArrayOutputStream.
      * @param mdAttributesMap A HashMap which contains the metadata attributes.
-     * @param escidocMdRecordnsUri
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    private void setMetadataRecords(
-        final Map<String, ByteArrayOutputStream> mdMap, final Map<String, Map<String, String>> mdAttributesMap,
-        final String escidocMdRecordnsUri) throws TripleStoreSystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, WebserverSystemException {
+    private void setMetadataRecords(final Map<String, ByteArrayOutputStream> mdMap,
+                                    final Map<String, Map<String, String>> mdAttributesMap,
+                                    final String escidocMdRecordnsUri)
+            throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+            WebserverSystemException {
         final Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
-        if (mdMap == null) {
+        if(mdMap == null) {
             getItem().setMdRecords(dsMap);
-        }
-        else {
-            for (final String o : mdMap.keySet()) {
+        } else {
+            for(final String o : mdMap.keySet()) {
                 final String name = o;
                 final ByteArrayOutputStream stream = mdMap.get(name);
                 final byte[] xmlBytes = stream.toByteArray();
                 HashMap<String, String> mdProperties = null;
-                if ("escidoc".equals(name)) {
+                if("escidoc".equals(name)) {
                     mdProperties = new HashMap<String, String>();
                     mdProperties.put("nsUri", escidocMdRecordnsUri);
 
                 }
                 final Datastream ds =
-                    new Datastream(name, getItem().getId(), xmlBytes, MimeTypes.TEXT_XML, mdProperties);
+                        new Datastream(name, getItem().getId(), xmlBytes, MimeTypes.TEXT_XML, mdProperties);
                 final Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
                 ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
                 ds.addAlternateId(mdRecordAttributes.get("type"));
@@ -1956,8 +1835,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     /**
-     * Creates Stream objects from the values in <code>contentStreamMap</code> and calls Item.setContentStreams with
-     * a HashMap which contains the metadata datastreams as Stream objects.
+     * Creates Stream objects from the values in <code>contentStreamMap</code> and calls Item.setContentStreams with a
+     * HashMap which contains the metadata datastreams as Stream objects.
      *
      * @param contentStreamMap A HashMap which contains the metadata datastreams as ByteArrayOutputStream.
      * @throws IntegritySystemException e
@@ -1966,30 +1845,27 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     @Deprecated
     private void setContentStreams(final Map<String, Map<String, Object>> contentStreamMap)
-        throws FedoraSystemException, WebserverSystemException, IntegritySystemException {
+            throws FedoraSystemException, WebserverSystemException, IntegritySystemException {
         final Map<String, Datastream> contentStreamDatastreams = new HashMap<String, Datastream>();
 
-        for (final Entry<String, Map<String, Object>> stringMapEntry : contentStreamMap.entrySet()) {
+        for(final Entry<String, Map<String, Object>> stringMapEntry : contentStreamMap.entrySet()) {
             final Map<String, Object> csValues = stringMapEntry.getValue();
             final Datastream ds;
-            if (csValues.containsKey(Elements.ELEMENT_CONTENT)) {
+            if(csValues.containsKey(Elements.ELEMENT_CONTENT)) {
                 final ByteArrayOutputStream stream = (ByteArrayOutputStream) csValues.get(Elements.ELEMENT_CONTENT);
                 final byte[] xmlBytes = stream.toByteArray();
-                ds =
-                    new Datastream(stringMapEntry.getKey(), getItem().getId(), xmlBytes, (String) csValues
-                        .get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
-            }
-            else if (csValues.containsKey(Elements.ATTRIBUTE_XLINK_HREF)) {
-                ds =
-                    new Datastream(stringMapEntry.getKey(), getItem().getId(), (String) csValues
-                        .get(Elements.ATTRIBUTE_XLINK_HREF), (String) csValues.get(Elements.ATTRIBUTE_STORAGE),
+                ds = new Datastream(stringMapEntry.getKey(), getItem().getId(), xmlBytes,
                         (String) csValues.get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
-            }
-            else {
+            } else if(csValues.containsKey(Elements.ATTRIBUTE_XLINK_HREF)) {
+                ds = new Datastream(stringMapEntry.getKey(), getItem().getId(),
+                        (String) csValues.get(Elements.ATTRIBUTE_XLINK_HREF),
+                        (String) csValues.get(Elements.ATTRIBUTE_STORAGE),
+                        (String) csValues.get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
+            } else {
                 throw new IntegritySystemException("Content streams has neither href nor content.");
             }
             String title = (String) csValues.get(Elements.ATTRIBUTE_XLINK_TITLE);
-            if (title == null) {
+            if(title == null) {
                 title = "";
             }
             ds.setLabel(title.trim());
@@ -2017,18 +1893,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws AuthorizationException         Thrown if permissions are restricted on origin Item.
      * @throws MissingAttributeValueException Thrown if required attribute is missing.
      * @throws XmlCorruptedException          e
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    private void validateCreate(final ItemCreate item) throws InvalidStatusException, MissingMdRecordException,
-        InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
-        AuthorizationException, MissingAttributeValueException, XmlCorruptedException, EncodingSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException, IntegritySystemException,
-        FedoraSystemException {
+    private void validateCreate(final ItemCreate item)
+            throws InvalidStatusException, MissingMdRecordException, InvalidContentException,
+            ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AuthorizationException,
+            MissingAttributeValueException, XmlCorruptedException, EncodingSystemException, TripleStoreSystemException,
+            XmlParserSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException {
 
         /*
          * Distinguish between create and ingest in the business level and not
@@ -2048,8 +1918,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         // check status public status of Item
         final StatusType publicStatus = item.getProperties().getObjectProperties().getStatus();
 
-        if (publicStatus != StatusType.PENDING) {
-            if (LOGGER.isDebugEnabled()) {
+        if(publicStatus != StatusType.PENDING) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("New Items has to be in public-status '" + StatusType.PENDING + "'.");
             }
             item.getProperties().getObjectProperties().setStatus(StatusType.PENDING);
@@ -2077,12 +1947,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws EncodingSystemException        Thrown if encoding is invalid.
      * @throws TripleStoreSystemException     Thrown if access to TripleStore failed.
      * @throws WebserverSystemException       Thrown in case of internal error.
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
-    private void validateIngest(final ItemCreate item) throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException, MissingMdRecordException, InvalidContentException,
-        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, EncodingSystemException,
-        XmlParserSystemException, MissingAttributeValueException, XmlCorruptedException {
+    private void validateIngest(final ItemCreate item)
+            throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException,
+            MissingMdRecordException, InvalidContentException, ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException, EncodingSystemException, XmlParserSystemException,
+            MissingAttributeValueException, XmlCorruptedException {
 
         /*
          * see validateCreate
@@ -2091,21 +1961,20 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         // check status public status of Item
         final StatusType publicStatus = item.getProperties().getObjectProperties().getStatus();
-        if (publicStatus == StatusType.RELEASED) {
+        if(publicStatus == StatusType.RELEASED) {
             // check if we need a PID if the release an Item and if the PID is
             // given.
-            if (!Boolean.valueOf(System.getProperty("cmm.Item.objectPid.releaseWithoutPid"))
+            if(! Boolean.valueOf(System.getProperty("cmm.Item.objectPid.releaseWithoutPid"))
 
-            && item.getProperties().getObjectProperties().getPid() == null) {
+                    && item.getProperties().getObjectProperties().getPid() == null) {
                 throw new InvalidStatusException("Item with public-status released requires an PID.");
             }
             item.getProperties().getCurrentVersion().setStatus(StatusType.RELEASED);
             item.getProperties().setLatestReleasedVersion(item.getProperties().getCurrentVersion());
-        }
-        else if (publicStatus != StatusType.PENDING) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("New Items has to be in public-status '" + StatusType.PENDING + "' or '"
-                    + StatusType.RELEASED);
+        } else if(publicStatus != StatusType.PENDING) {
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug(
+                        "New Items has to be in public-status '" + StatusType.PENDING + "' or '" + StatusType.RELEASED);
             }
             item.getProperties().getObjectProperties().setStatus(StatusType.PENDING);
             item.getProperties().getCurrentVersion().setStatus(StatusType.PENDING);
@@ -2135,22 +2004,24 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws WebserverSystemException       Thrown in case of internal error.
      * @throws XmlCorruptedException          e
      */
-    private void validate(final ItemCreate item) throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException, MissingMdRecordException, InvalidContentException, XmlCorruptedException,
-        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, EncodingSystemException,
-        XmlParserSystemException, MissingAttributeValueException {
+    private void validate(final ItemCreate item)
+            throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException,
+            MissingMdRecordException, InvalidContentException, XmlCorruptedException,
+            ReferencedResourceNotFoundException, RelationPredicateNotFoundException, EncodingSystemException,
+            XmlParserSystemException, MissingAttributeValueException {
 
         checkContextStatus(item.getProperties().getObjectProperties().getContextId(), Constants.STATUS_CONTEXT_OPENED);
 
         // validate Content Relations
         final Iterator<RelationCreate> it = item.getRelations().iterator();
-        if (it != null) {
-            while (it.hasNext()) {
+        if(it != null) {
+            while(it.hasNext()) {
                 final RelationCreate relation = it.next();
                 checkRefElement(relation.getTarget());
-                if (!ContentRelationsUtility.validPredicate(relation.getPredicateNs() + '#' + relation.getPredicate())) {
-                    throw new RelationPredicateNotFoundException("Predicate '" + relation.getPredicate()
-                        + "' is invalid. ");
+                if(! ContentRelationsUtility
+                        .validPredicate(relation.getPredicateNs() + '#' + relation.getPredicate())) {
+                    throw new RelationPredicateNotFoundException(
+                            "Predicate '" + relation.getPredicate() + "' is invalid. ");
                 }
             }
         }
@@ -2166,63 +2037,58 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws InvalidContentException Thrown if content is invalid.
      * @throws InvalidStatusException  Thrown if status of origin Item in invalid.
      * @throws AuthorizationException  Thrown if access to origin Item is denied.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    private void validateOriginItem(final ItemCreate item) throws InvalidContentException, InvalidStatusException,
-        AuthorizationException, TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
-        FedoraSystemException, XmlParserSystemException {
+    private void validateOriginItem(final ItemCreate item)
+            throws InvalidContentException, InvalidStatusException, AuthorizationException, TripleStoreSystemException,
+            WebserverSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         String origin = item.getProperties().getObjectProperties().getOrigin();
-        if (origin != null) {
+        if(origin != null) {
             final String objid = item.getProperties().getObjectProperties().getOriginObjectId();
             final String versionNumber = item.getProperties().getObjectProperties().getOriginVersionId();
             // in a case of a floating reference to the origin item
             // ensure, that a latest release and not a latest version
             // of the origin item will be fetched.
             final String publicStatus =
-                getTripleStoreUtility().getPropertiesElements(objid, TripleStoreUtility.PROP_PUBLIC_STATUS);
-            if (publicStatus == null) {
+                    getTripleStoreUtility().getPropertiesElements(objid, TripleStoreUtility.PROP_PUBLIC_STATUS);
+            if(publicStatus == null) {
                 throw new InvalidContentException("A referenced Item '" + origin + "' does not exist.");
-            }
-            else if (publicStatus.equals(Constants.STATUS_WITHDRAWN)) {
-                throw new InvalidStatusException("The referenced Item '" + origin
-                    + "' is in status 'withdrawn'. The surrogate Item can " + "not be created.");
+            } else if(publicStatus.equals(Constants.STATUS_WITHDRAWN)) {
+                throw new InvalidStatusException(
+                        "The referenced Item '" + origin + "' is in status 'withdrawn'. The surrogate Item can " +
+                                "not be created.");
             }
 
             final String latestReleaseNumber =
-                getTripleStoreUtility().getPropertiesElements(objid, TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
-            if (latestReleaseNumber == null) {
+                    getTripleStoreUtility().getPropertiesElements(objid, TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
+            if(latestReleaseNumber == null) {
                 throw new InvalidStatusException("The referenced Item with id '" + origin + "' is not released.");
             }
-            if (versionNumber == null) {
+            if(versionNumber == null) {
                 origin = objid + ':' + latestReleaseNumber;
             }
 
-            if (!checkUserRights(origin)) {
-                throw new AuthorizationException("You can not create a surrogate Item based " + "on the Item '"
-                    + origin + "' because you have no access " + "rights on this Item.");
+            if(! checkUserRights(origin)) {
+                throw new AuthorizationException(
+                        "You can not create a surrogate Item based " + "on the Item '" + origin +
+                                "' because you have no access " + "rights on this Item.");
             }
             try {
                 setOriginItem(origin);
-            }
-            catch (final ItemNotFoundException e) {
+            } catch(final ItemNotFoundException e) {
                 // Ignore FindBugs
                 throw new InvalidContentException("The referenced Item '" + origin + "' does not exist.");
             }
 
-            if (getOriginItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
-                throw new InvalidContentException("A referenced original Item should be "
-                    + "a regular Item, not a surrogate Item.");
+            if(getOriginItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
+                throw new InvalidContentException(
+                        "A referenced original Item should be " + "a regular Item, not a surrogate Item.");
             }
             final String versionStatus =
-                getOriginItem().getResourceProperties().get(PropertyMapKeys.CURRENT_VERSION_STATUS);
-            if (!versionStatus.equals(Constants.STATUS_RELEASED)) {
-                throw new InvalidStatusException("The referenced Item version is not released. "
-                    + "You can create a surrogate Item only based on a " + "released Item version.");
+                    getOriginItem().getResourceProperties().get(PropertyMapKeys.CURRENT_VERSION_STATUS);
+            if(! versionStatus.equals(Constants.STATUS_RELEASED)) {
+                throw new InvalidStatusException("The referenced Item version is not released. " +
+                        "You can create a surrogate Item only based on a " + "released Item version.");
             }
         }
 
@@ -2236,8 +2102,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws MissingMdRecordException Thrown if the mandatory MdRecortd with name "escidoc" is missing.
      * @throws InvalidContentException  Thrown if content is invalid.
      */
-    private static void checkMetadataRecords(final ItemCreate item) throws MissingMdRecordException,
-        InvalidContentException {
+    private static void checkMetadataRecords(final ItemCreate item)
+            throws MissingMdRecordException, InvalidContentException {
 
         /*
          * TODO move Item validation to seperate validation class.
@@ -2246,32 +2112,31 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         // check if md-record with name 'escidoc'
 
-        if (mdRecords == null || mdRecords.size() < 1) {
-            if (item.getProperties().getObjectProperties().getOrigin() == null) {
-                throw new MissingMdRecordException("The Item representation doesn't contain a "
-                    + "mandatory md-record. A regular Item must contain a " + "mandatory md-record.");
+        if(mdRecords == null || mdRecords.size() < 1) {
+            if(item.getProperties().getObjectProperties().getOrigin() == null) {
+                throw new MissingMdRecordException("The Item representation doesn't contain a " +
+                        "mandatory md-record. A regular Item must contain a " + "mandatory md-record.");
             }
 
-        }
-        else {
+        } else {
 
             final Collection<String> mdRecordNames = new ArrayList<String>();
-            for (final MdRecordCreate mdRecord : mdRecords) {
+            for(final MdRecordCreate mdRecord : mdRecords) {
 
                 final String name = mdRecord.getName();
 
                 // check uniqueness of names
-                if (mdRecordNames.contains(name)) {
-                    throw new InvalidContentException("Metadata 'md-record' with name='" + name
-                        + "' exists multiple times.");
+                if(mdRecordNames.contains(name)) {
+                    throw new InvalidContentException(
+                            "Metadata 'md-record' with name='" + name + "' exists multiple times.");
                 }
 
                 mdRecordNames.add(name);
             }
-            if (!mdRecordNames.contains(Elements.MANDATORY_MD_RECORD_NAME)
-                && item.getProperties().getObjectProperties().getOrigin() == null) {
-                throw new MissingMdRecordException("The item representation doesn't contain a "
-                    + "mandatory md-record. A regular item must contain a " + "mandatory md-record. ");
+            if(! mdRecordNames.contains(Elements.MANDATORY_MD_RECORD_NAME) &&
+                    item.getProperties().getObjectProperties().getOrigin() == null) {
+                throw new MissingMdRecordException("The item representation doesn't contain a " +
+                        "mandatory md-record. A regular item must contain a " + "mandatory md-record. ");
             }
 
         }
@@ -2286,17 +2151,18 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      *                                    Thrown if no resource under provided id exists.
      * @throws WebserverSystemException   Thrown if creating instance of TripleStoreUtility failed.
      */
-    private void checkRefElement(final String targetId) throws InvalidContentException, TripleStoreSystemException,
-        ReferencedResourceNotFoundException, WebserverSystemException {
+    private void checkRefElement(final String targetId)
+            throws InvalidContentException, TripleStoreSystemException, ReferencedResourceNotFoundException,
+            WebserverSystemException {
 
         final String targetObjectType = getTripleStoreUtility().getObjectType(targetId);
-        if (targetObjectType == null) {
+        if(targetObjectType == null) {
             throw new ReferencedResourceNotFoundException("Resource with id '" + targetId + "' does not exist.");
         }
-        if (!Constants.ITEM_OBJECT_TYPE.equals(targetObjectType)
-            && !Constants.CONTAINER_OBJECT_TYPE.equals(targetObjectType)) {
-            throw new InvalidContentException("A related resource '" + targetId
-                + "' is neither 'Item' nor 'Container' ");
+        if(! Constants.ITEM_OBJECT_TYPE.equals(targetObjectType) &&
+                ! Constants.CONTAINER_OBJECT_TYPE.equals(targetObjectType)) {
+            throw new InvalidContentException(
+                    "A related resource '" + targetId + "' is neither 'Item' nor 'Container' ");
         }
     }
 

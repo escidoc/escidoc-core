@@ -117,8 +117,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      */
     @Override
     public String create(final String xmlData) throws InvalidSqlException, MissingMethodParameterException,
-        ScopeNotFoundException, ScopeContextViolationException, SystemException, SqlDatabaseSystemException,
-        WebserverSystemException {
+        ScopeNotFoundException, ScopeContextViolationException, SystemException, WebserverSystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -158,9 +157,9 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      *
      * @param id resource id.
      * @throws ReportDefinitionNotFoundException
-     *                         e.
+     *          e.
      * @throws MissingMethodParameterException
-     *                         e.
+     *          e.
      * @see de.escidoc.core.sm.business.interfaces.ReportDefinitionHandlerInterface#delete(java.lang.String)
      */
     @Override
@@ -262,7 +261,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
     @Override
     public String update(final String id, final String xmlData) throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException,
-        SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        SystemException, WebserverSystemException {
         if (id == null || id.length() == 0) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -310,7 +309,6 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      * @throws ScopeContextViolationException ex
      * @throws InvalidSqlException            ex
      * @throws ScopeNotFoundException         ex
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private void checkSql(final String sql, final String scopeId) throws ScopeContextViolationException,
         InvalidSqlException, ScopeNotFoundException, SqlDatabaseSystemException {

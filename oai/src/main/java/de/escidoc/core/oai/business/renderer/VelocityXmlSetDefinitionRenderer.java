@@ -62,7 +62,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      * @see SetDefinitionRendererInterface#render(SetDefinition)
      */
     @Override
-    public String render(final SetDefinition setDefinition) throws SystemException, WebserverSystemException {
+    public String render(final SetDefinition setDefinition) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootSetDefinition", XmlTemplateProvider.TRUE);
         addCommonValues(values);
@@ -78,7 +78,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      * @throws SystemException Thrown in case of an internal error.
      */
     private static void addSetDefinitionValues(final SetDefinition setDefinition, final Map<String, Object> values)
-        throws SystemException {
+            throws SystemException {
         DateTime lmd = new DateTime(setDefinition.getLastModificationDate(), DateTimeZone.UTC);
         values.put("setDefinitionLastModificationDate", lmd.toString());
         values.put("setDefinitionHref", setDefinition.getHref());
@@ -108,7 +108,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      */
     @Override
     public String renderSetDefinitions(final List<SetDefinition> setDefinitions, final RecordPacking recordPacking)
-        throws SystemException, WebserverSystemException {
+            throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootSetDefinition", "false");
@@ -117,8 +117,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
         addSetDefinitionListValues(values);
 
         final Collection<Map<String, Object>> setDefinitionsValues =
-            new ArrayList<Map<String, Object>>(setDefinitions.size());
-        for (final SetDefinition setDefinition : setDefinitions) {
+                new ArrayList<Map<String, Object>>(setDefinitions.size());
+        for(final SetDefinition setDefinition : setDefinitions) {
             final Map<String, Object> setDefinitionValues = new HashMap<String, Object>();
             addSetDefinitionValues(setDefinition, setDefinitionValues);
             setDefinitionsValues.add(setDefinitionValues);

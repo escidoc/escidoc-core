@@ -42,7 +42,7 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
     /**
      * Application build date, YYYY, MM, DD.
      */
-    private static final int[] DATE = { 2008, 2, 21 };
+    private static final int[] DATE = {2008, 2, 21};
 
     /**
      * Application release number.
@@ -53,15 +53,14 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
      * Application invocation syntax.
      */
     private static final String USAGE =
-        "java " + NAME + " [-c config] " + "[-m module] [-h handler] [-e encoding] [-H handler] [-o output] "
-            + "[-x saxclass] [-t tempdir] [-b bufsize] [-l loglevel] [[-krs] " + "dir-file-or-uri [...]]";
+            "java " + NAME + " [-c config] " + "[-m module] [-h handler] [-e encoding] [-H handler] [-o output] " +
+                    "[-x saxclass] [-t tempdir] [-b bufsize] [-l loglevel] [[-krs] " + "dir-file-or-uri [...]]";
 
     /**
      * Copyright information.
      */
-    private static final String RIGHTS =
-        "Copyright 2004-2008 by the President and Fellows of Harvard College. "
-            + "Released under the GNU Lesser General Public License.";
+    private static final String RIGHTS = "Copyright 2004-2008 by the President and Fellows of Harvard College. " +
+            "Released under the GNU Lesser General Public License.";
 
     /**
      * Relative path to the JHove configuration file within the class path.
@@ -86,13 +85,12 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
      * configuration file for JHove.
      *
      * @throws IOException Thrown if the configuration file could not be loaded or copied.
-     * @throws java.io.FileNotFoundException
      */
-    public JhoveHandler() throws IOException, FileNotFoundException {
+    public JhoveHandler() throws IOException {
         OutputStream outputStream = null;
         try {
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
-            if (inputStream == null) {
+            if(inputStream == null) {
                 throw new FileNotFoundException(CONFIG_FILE + " not found!");
             }
 
@@ -101,8 +99,7 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
             inputStream = new BufferedInputStream(inputStream);
             outputStream = new FileOutputStream(this.jhoveConfigFile);
             IOUtils.copyAndCloseInput(inputStream, outputStream);
-        }
-        finally {
+        } finally {
             IOUtils.closeStream(outputStream);
         }
     }
@@ -142,12 +139,12 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
             final String handlerName = "xml";
             final OutputHandler handler = je.getHandler(handlerName);
 
-            if (handler == null) {
+            if(handler == null) {
                 throw new JhoveException("Jhove configuration error! Handler '" + handlerName + "' not found!");
             }
 
             je.setTempDirectory(System.getProperty("java.io.tmpdir"));
-            je.setBufferSize(-1);
+            je.setBufferSize(- 1);
             je.setChecksumFlag(false);
             je.setShowRawFlag(false);
             je.setSignatureFlag(false);
@@ -156,30 +153,26 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
             outputFileReader = new BufferedReader(new FileReader(outputFile));
 
             String line;
-            while ((line = outputFileReader.readLine()) != null) {
+            while((line = outputFileReader.readLine()) != null) {
                 result.append(line);
                 result.append('\n');
             }
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new SystemException("Error in Jhove output handling!", e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new TmeException(e.getMessage(), e);
-        }
-        finally {
-            if (outputFile != null) {
+        } finally {
+            if(outputFile != null) {
                 outputFile.delete();
             }
-            if (outputFileReader != null) {
+            if(outputFileReader != null) {
                 try {
                     outputFileReader.close();
-                }
-                catch (final IOException e) {
-                    if (LOGGER.isWarnEnabled()) {
+                } catch(final IOException e) {
+                    if(LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on closing file stream.");
                     }
-                    if (LOGGER.isDebugEnabled()) {
+                    if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on closing file stream.", e);
                     }
                 }

@@ -81,10 +81,9 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws SAXException                 If anything fails.
      * @throws IOException                  If anything fails.
      * @throws TransformerException         Thrown if an xml transformation fails.
-     * @throws java.io.FileNotFoundException
      */
     public MethodMapper(final String descriptor) throws ParserConfigurationException, SAXException, IOException,
-        TransformerException, FileNotFoundException {
+        TransformerException {
 
         final Collection<String> paths = new ArrayList<String>();
         paths.add(descriptor);
@@ -99,10 +98,9 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws SAXException                 If anything fails.
      * @throws IOException                  If anything fails.
      * @throws TransformerException         Thrown if an xml transformation fails.
-     * @throws java.io.FileNotFoundException
      */
     public MethodMapper(final Collection<String> descriptors) throws ParserConfigurationException, SAXException,
-        IOException, TransformerException, FileNotFoundException {
+        IOException, TransformerException {
 
         setDescriptorFilenames(descriptors);
     }
@@ -115,7 +113,6 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws SAXException                 If anything fails.
      * @throws IOException                  If anything fails.
      * @throws TransformerException         Thrown if an xml transformation fails.
-     * @throws java.io.FileNotFoundException
      */
     public final void setDescriptorFilenames(final Iterable<String> descriptorFilenames)
         throws ParserConfigurationException, SAXException, IOException, TransformerException, FileNotFoundException {
@@ -140,7 +137,6 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws SAXException                 If anything fails.
      * @throws IOException                  If anything fails.
      * @throws TransformerException         Thrown if an xml transformation fails.
-     * @throws java.io.FileNotFoundException
      */
     private void init() throws ParserConfigurationException, SAXException, IOException, TransformerException,
         FileNotFoundException {

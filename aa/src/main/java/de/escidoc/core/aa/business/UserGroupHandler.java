@@ -174,7 +174,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     @Override
     public String create(final String xmlData) throws UniqueConstraintViolationException, XmlCorruptedException,
-        SystemException, XmlParserSystemException, SqlDatabaseSystemException, WebserverSystemException {
+        SystemException, SqlDatabaseSystemException, WebserverSystemException {
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
         final StaxParser sp = new StaxParser();
         final GroupCreateUpdateHandler groupHandler = new GroupCreateUpdateHandler(sp);
@@ -223,8 +223,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String groupId) throws SystemException, SqlDatabaseSystemException,
-        UserGroupNotFoundException {
+    public String retrieve(final String groupId) throws SystemException, UserGroupNotFoundException {
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
@@ -566,8 +565,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         throws OrganizationalUnitNotFoundException, UserAccountNotFoundException, UserGroupNotFoundException,
         InvalidContentException, MissingMethodParameterException, SystemException, AuthenticationException,
         AuthorizationException, OptimisticLockingException, XmlCorruptedException,
-        UserGroupHierarchyViolationException, XmlParserSystemException, SqlDatabaseSystemException,
-        WebserverSystemException {
+        UserGroupHierarchyViolationException, SqlDatabaseSystemException, WebserverSystemException {
 
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
@@ -822,8 +820,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @return Map with replaced cql-query (userId replaced with groupIds)
      * @throws InvalidSearchQueryException e
      * @throws SystemException             e
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private Map<String, String[]> fixCqlUserFilter(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException, SqlDatabaseSystemException, TripleStoreSystemException {
@@ -923,7 +919,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param userGroupId       id of the user group, the member should be added to
      * @param memberCandidateId id of the member candidate user group
      * @return true if the user group hierarchy will not be violated false if the user group hierarchy will be violated
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private boolean isCycleFree(final String userGroupId, final String memberCandidateId)
         throws SqlDatabaseSystemException {
@@ -1064,7 +1059,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     /**
      * Retrieves a list of userGroupIds by querying for userId-selector.
      *
-     * @param userIds
      * @param activeOnly if true, only return active groups
      * @return HashSet userGroupIds
      * @throws UserAccountNotFoundException e
@@ -1129,7 +1123,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     /**
      * Retrieves a list of userGroupIds by querying for groupId-selector.
      *
-     * @param userGroupIds
      * @param activeOnly if true, only retrun active groups.
      * @return HashSet userGroupIds
      * @throws SqlDatabaseSystemException e
@@ -1177,7 +1170,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param totalList total list of all Parents.
      * @return List of ancestor-orgUnits
      * @throws SystemException If anything fails while computing the pathes.
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private List<String> getOrgUnitPathList(final String orgUnitId, final List<String> totalList)
         throws SystemException, TripleStoreSystemException {
@@ -1613,9 +1605,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param groupProperties map which contains all properties of the user group
      * @return true if the modification values were changed
      * @throws UniqueConstraintViolationException
-     *                         The label of the given user group has already been used.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     *          The label of the given user group has already been used.
      */
     private boolean setModificationValues(final UserGroup userGroup, final Map<String, String> groupProperties)
         throws UniqueConstraintViolationException, SqlDatabaseSystemException, WebserverSystemException {

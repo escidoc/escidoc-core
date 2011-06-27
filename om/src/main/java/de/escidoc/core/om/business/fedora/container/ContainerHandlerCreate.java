@@ -58,27 +58,16 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
      * Get FoXML of Container.
      *
      * @param containerDataStreams Map with datastreams of the Container.
-     * @param metadataHandler
      * @param containerId          objid of the Container.
-     * @param contentModel
-     * @param properties
-     * @param members
-     * @param lastModificationDate
-     * @param contentRelations
-     * @param comment
-     * @param propertiesAsReferences
      * @return FoXML of Container.
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    protected String getContainerFoxml(
-        final Map<String, Object> containerDataStreams, final MetadataHandler metadataHandler,
-        final String containerId, final String contentModel, final Map<String, String> properties,
-        final List<String> members, final String lastModificationDate,
-        final List<Map<String, String>> contentRelations, final String comment,
-        final Map<String, String> propertiesAsReferences) throws SystemException, EncodingSystemException,
-        WebserverSystemException {
+    protected String getContainerFoxml(final Map<String, Object> containerDataStreams,
+                                       final MetadataHandler metadataHandler, final String containerId,
+                                       final String contentModel, final Map<String, String> properties,
+                                       final List<String> members, final String lastModificationDate,
+                                       final List<Map<String, String>> contentRelations, final String comment,
+                                       final Map<String, String> propertiesAsReferences)
+            throws SystemException, WebserverSystemException {
 
         final Map<String, Map<String, String>> metadataAttributes = metadataHandler.getMetadataAttributes();
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -89,7 +78,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         values.put(XmlTemplateProvider.PUBLIC_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
         values.put(XmlTemplateProvider.VERSION_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
 
-        if (properties.get(Elements.ELEMENT_PUBLIC_STATUS).equals(StatusType.RELEASED.toString())) {
+        if(properties.get(Elements.ELEMENT_PUBLIC_STATUS).equals(StatusType.RELEASED.toString())) {
             // if status release add release number and date (date is later
             // to update)
             values.put(XmlTemplateProvider.LATEST_RELEASE_DATE, XmlTemplateProvider.PLACEHOLDER);
@@ -99,55 +88,50 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         // dc-mapping prototyping
         final String dcXml;
         try {
-            dcXml =
-                XmlUtility.createDC(metadataHandler.getEscidocMdRecordNameSpace(),
+            dcXml = XmlUtility.createDC(metadataHandler.getEscidocMdRecordNameSpace(),
                     ((ByteArrayOutputStream) ((Map) containerDataStreams.get(XmlUtility.NAME_MDRECORDS))
-                        .get(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING))
-                        .toString(XmlUtility.CHARACTER_ENCODING), containerId, contentModel);
-        }
-        catch (final UnsupportedEncodingException e) {
+                            .get(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING))
+                            .toString(XmlUtility.CHARACTER_ENCODING), containerId, contentModel);
+        } catch(final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
-        if (dcXml != null && dcXml.trim().length() > 0) {
+        if(dcXml != null && dcXml.trim().length() > 0) {
             values.put(XmlTemplateProvider.DC, dcXml);
         }
 
-        for (final Entry<String, Object> entry : containerDataStreams.entrySet()) {
+        for(final Entry<String, Object> entry : containerDataStreams.entrySet()) {
             final String outsideKey = entry.getKey();
-            if (entry.getValue() instanceof ByteArrayOutputStream) {
+            if(entry.getValue() instanceof ByteArrayOutputStream) {
                 final ByteArrayOutputStream outsideValue = (ByteArrayOutputStream) entry.getValue();
                 try {
                     // now we map to Velocity Variable Names
-                    if (outsideKey.equals(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC)) {
-                        values.put(XmlTemplateProvider.CONTENT_MODEL_SPECIFIC, outsideValue
-                            .toString(XmlUtility.CHARACTER_ENCODING));
-                    }
-                    else {
+                    if(outsideKey.equals(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC)) {
+                        values.put(XmlTemplateProvider.CONTENT_MODEL_SPECIFIC,
+                                outsideValue.toString(XmlUtility.CHARACTER_ENCODING));
+                    } else {
                         values.put(outsideKey, outsideValue.toString(XmlUtility.CHARACTER_ENCODING));
                     }
-                }
-                catch (final UnsupportedEncodingException e) {
+                } catch(final UnsupportedEncodingException e) {
                     throw new EncodingSystemException(e);
                 }
 
-            }
-            else if (XmlUtility.NAME_MDRECORDS.equals(outsideKey)) {
+            } else if(XmlUtility.NAME_MDRECORDS.equals(outsideKey)) {
 
                 final Map insideHash = (Map) entry.getValue();
-                if (!insideHash.isEmpty()) {
+                if(! insideHash.isEmpty()) {
                     final Collection<Map<String, String>> mdRecords =
-                        new ArrayList<Map<String, String>>(insideHash.size());
+                            new ArrayList<Map<String, String>>(insideHash.size());
                     values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
                     final Set content2 = insideHash.entrySet();
-                    for (final Object aContent2 : content2) {
+                    for(final Object aContent2 : content2) {
                         final Map<String, String> mdRecord = new HashMap<String, String>();
                         final Entry entry2 = (Entry) aContent2;
                         final String insideKey = (String) entry2.getKey();
                         final Map<String, String> mdAttributes = metadataAttributes.get(insideKey);
                         String schema = null;
                         String type = null;
-                        if (mdAttributes != null) {
+                        if(mdAttributes != null) {
                             schema = mdAttributes.get("schema");
                             type = mdAttributes.get("type");
                         }
@@ -156,11 +140,10 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                         mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, type);
                         mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, insideKey);
                         try {
-                            mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT, insideValue
-                                .toString(XmlUtility.CHARACTER_ENCODING));
+                            mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT,
+                                    insideValue.toString(XmlUtility.CHARACTER_ENCODING));
 
-                        }
-                        catch (final UnsupportedEncodingException e) {
+                        } catch(final UnsupportedEncodingException e) {
                             throw new EncodingSystemException(e);
                         }
                         mdRecords.add(mdRecord);
@@ -169,7 +152,8 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
             }
         }
 
-        return getFoxmlContainerRenderer().render(values, properties, members, containerId, lastModificationDate,
-            contentRelations, comment, propertiesAsReferences);
+        return getFoxmlContainerRenderer()
+                .render(values, properties, members, containerId, lastModificationDate, contentRelations, comment,
+                        propertiesAsReferences);
     }
 }

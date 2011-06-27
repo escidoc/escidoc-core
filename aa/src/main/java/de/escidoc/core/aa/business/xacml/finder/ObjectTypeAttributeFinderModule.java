@@ -110,8 +110,8 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws SystemException, AuthorizationException, AuthenticationException,
-        ResourceNotFoundException, MissingMethodParameterException, IntegritySystemException,
-        TripleStoreSystemException, SqlDatabaseSystemException {
+        ResourceNotFoundException, MissingMethodParameterException, TripleStoreSystemException,
+        SqlDatabaseSystemException {
 
         return FinderModuleHelper.isNewResourceId(resourceId) ? resolveObjectTypeNew(attributeIdValue, ctx) : resolveObjectType(
             attributeIdValue, resourceId, resourceObjid);
@@ -130,14 +130,11 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
      * @throws AuthenticationException   e
      * @throws AuthorizationException    e
      * @throws ResourceNotFoundException e
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private Object[] resolveObjectType(
         final String attributeIdValue, final String resourceId, final String resourceObjid) throws SystemException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, ResourceNotFoundException,
-        IntegritySystemException, TripleStoreSystemException, SqlDatabaseSystemException {
+        TripleStoreSystemException, SqlDatabaseSystemException {
 
         EvaluationResult result = null;
         final String objectType = objectAttributeResolver.resolveObjectType(resourceObjid);

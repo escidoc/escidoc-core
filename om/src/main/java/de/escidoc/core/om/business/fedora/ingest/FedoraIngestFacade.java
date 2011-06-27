@@ -63,7 +63,7 @@ public class FedoraIngestFacade implements IngestFacade {
      * according to the rule implemented in the injected Formatter instance.
      */
     @Override
-    public String ingest(final String xmlData) throws EscidocException, InvalidResourceException {
+    public String ingest(final String xmlData) throws EscidocException {
         final ResourceMapperBean bean = this.resourceMapperDao.getIngestableForResource(xmlData);
         final String objectId = bean.getResource().ingest(xmlData);
         final Map<String, String> values = new HashMap<String, String>();

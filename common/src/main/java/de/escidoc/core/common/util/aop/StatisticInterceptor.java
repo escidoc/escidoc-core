@@ -44,27 +44,27 @@ import java.util.regex.Pattern;
  * Interceptor used to create statistic data for the eSciDoc base services.
  * <p/>
  * <p/>
- * This Interceptor is invoked every time an service calls one of its classes.<br/> It must be the first interceptor
- * in the chain.<br/> This interceptor performs user authentication, too, as the user data is needed for the
+ * This Interceptor is invoked every time an service calls one of its classes.<br/> It must be the first interceptor in
+ * the chain.<br/> This interceptor performs user authentication, too, as the user data is needed for the
  * statistics.<br/> This interceptor stores in the thread local <code>StatisticDataVo</code> object the following
  * information before calling the handler method: <ul> <li><code>PARAM_HANDLER</code>, the name of the called
  * handler.</li> <li><code>PARAM_REQUEST</code>, the name of the called handler method.</li>
- * <li><code>PARAM_INTERNAL</code>, the flag indicating if this is an internal call from one infrastructure service
- * to another ( <code>VALUE_INTERNAL_TRUE</code>), or if it is an external call from a non-infrastructure service
- * or application (<code>VALUE_INTERNAL_FALSE</code> ).</li> <li><code>PARAM_USER_ID</code>, the id of the user
- * performing the current request.</li> <li><code>PARAM_OBJECT_ID</code>, the id of the accessed resource, if this is
- * available in the first parameter. To check this, it is asserted that the first parameter does not seem to contain XML
- * data, i.e. does not contain a &lt;</li> </ul> After the handler method call, the interceptor adds the following
- * information and sends the statistics data to the <code>StatisticQueueHandler</code>. <ul>
- * <li><code>PARAM_SUCCESS</code>, flag indicating if the method call has successfully returned
- * (<code>VALUE_SUCCESS_TRUE</code>) or if an exception has occurred (<code>VALUE_SUCCESS_FALSE</code>).</li>
- * <li><code>PARAM_ELAPSED_TIME</code>, the elapsed time from start of this interceptor to the returning from the called
- * method.</li> <li><code>PARAM_EXCEPTION_NAME</code>, in case of an error, the name of the exception.</li>
- * <li><code>PARAM_EXCEPTION_MESSAGE</code>, in case of an error, the message of the exception.</li>
- * <li><code>PARAM_EXCEPTION_SOURCE</code>, in case of an error, the source of the top level exception. This source
- * information consist of the full class name, the method name and the line from that the exception has been
- * thrown.</li> </ul> <br/> The called business methods may add further information to the statistic data record. For
- * information about how to access the thread local statistic data record and adding information to it.
+ * <li><code>PARAM_INTERNAL</code>, the flag indicating if this is an internal call from one infrastructure service to
+ * another ( <code>VALUE_INTERNAL_TRUE</code>), or if it is an external call from a non-infrastructure service or
+ * application (<code>VALUE_INTERNAL_FALSE</code> ).</li> <li><code>PARAM_USER_ID</code>, the id of the user performing
+ * the current request.</li> <li><code>PARAM_OBJECT_ID</code>, the id of the accessed resource, if this is available in
+ * the first parameter. To check this, it is asserted that the first parameter does not seem to contain XML data, i.e.
+ * does not contain a &lt;</li> </ul> After the handler method call, the interceptor adds the following information and
+ * sends the statistics data to the <code>StatisticQueueHandler</code>. <ul> <li><code>PARAM_SUCCESS</code>, flag
+ * indicating if the method call has successfully returned (<code>VALUE_SUCCESS_TRUE</code>) or if an exception has
+ * occurred (<code>VALUE_SUCCESS_FALSE</code>).</li> <li><code>PARAM_ELAPSED_TIME</code>, the elapsed time from start of
+ * this interceptor to the returning from the called method.</li> <li><code>PARAM_EXCEPTION_NAME</code>, in case of an
+ * error, the name of the exception.</li> <li><code>PARAM_EXCEPTION_MESSAGE</code>, in case of an error, the message of
+ * the exception.</li> <li><code>PARAM_EXCEPTION_SOURCE</code>, in case of an error, the source of the top level
+ * exception. This source information consist of the full class name, the method name and the line from that the
+ * exception has been thrown.</li> </ul> <br/> The called business methods may add further information to the statistic
+ * data record. For information about how to access the thread local statistic data record and adding information to
+ * it.
  *
  * @author Torsten Tetteroo
  */
@@ -121,9 +121,6 @@ public class StatisticInterceptor implements Ordered {
      * @param joinPoint The current {@link ProceedingJoinPoint}.
      * @return Returns the changed result.
      * @throws Throwable Thrown in case of an error.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
-     * @throws Exception
      */
     @Around("execution(public * de.escidoc.core.*.service.*.*(..))"
         + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
@@ -131,8 +128,7 @@ public class StatisticInterceptor implements Ordered {
         + " && !execution(* de.escidoc.core..*.StatisticService*.*(..))"
         + " && !execution(* de.escidoc.core.common..*.*(..))" + " && if(" + "false" + ')')
     // enable this aspect only if you need
-    public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable, SystemException,
-        Exception, WebserverSystemException {
+    public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable, Exception {
         final long invocationStartTime = System.currentTimeMillis();
         boolean successful = true;
         boolean internal = false;

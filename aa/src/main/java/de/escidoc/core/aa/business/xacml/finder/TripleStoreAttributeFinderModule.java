@@ -223,8 +223,7 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
     @Override
     protected boolean assertAttribute(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType) throws EscidocException,
-        ResourceNotFoundException, WebserverSystemException {
+        final String resourceVersionNumber, final int designatorType) throws EscidocException, WebserverSystemException {
 
         // make sure it is an eSciDoc resource attribute and an id of the
         // resource for that the attribute shall be found
@@ -280,8 +279,7 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws TripleStoreSystemException, SystemException,
-        ResourceNotFoundException {
+        final String resourceVersionNumber) throws SystemException, ResourceNotFoundException {
 
         List<String> cachedAttribute = new ArrayList<String>();
         final MapResult mapresult = mapIt(attributeIdValue);
@@ -344,11 +342,10 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
      * @return List
      * @throws ResourceNotFoundException e
      * @throws SystemException           e
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected List<String> getHierarchicalCachedAttributes(
         final Collection<String> attributesList, final List<String> totalAttributesList, final MapResult mapresult)
-        throws ResourceNotFoundException, SystemException, TripleStoreSystemException {
+        throws ResourceNotFoundException, SystemException {
         List<String> hierarchicalAttributesList = totalAttributesList;
         if (attributesList != null && !attributesList.isEmpty()) {
             for (final String attribute : attributesList) {

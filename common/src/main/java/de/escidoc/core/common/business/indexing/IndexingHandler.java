@@ -138,12 +138,12 @@ public class IndexingHandler implements ResourceListener {
     /**
      * Resource was created, so write indexes.
      *
-     * @param id      resource id
+     * @param id resource id
      * @throws SystemException The resource could not be stored.
      */
     @Override
-    public void resourceCreated(final String id, final String xml) throws SystemException, TripleStoreSystemException,
-        WebserverSystemException, ApplicationServerSystemException {
+    public void resourceCreated(final String id, final String xml) throws SystemException, WebserverSystemException,
+        ApplicationServerSystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }
@@ -173,8 +173,8 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be deleted.
      */
     @Override
-    public void resourceDeleted(final String id) throws SystemException, ApplicationServerSystemException,
-        WebserverSystemException, TripleStoreSystemException {
+    public void resourceDeleted(final String id) throws SystemException, WebserverSystemException,
+        TripleStoreSystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }
@@ -190,7 +190,7 @@ public class IndexingHandler implements ResourceListener {
     /**
      * Replace a resource in the indexes.
      *
-     * @param id      resource id
+     * @param id resource id
      * @throws SystemException The resource could not be deleted and newly created.
      */
     @Override
@@ -222,9 +222,6 @@ public class IndexingHandler implements ResourceListener {
      * @param objectType type of object to index.
      * @param xml        xml of the resource to index.
      * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     private void addResource(final String resource, final String objectType, final String xml) throws SystemException,
         WebserverSystemException, ApplicationServerSystemException, TripleStoreSystemException {
@@ -237,12 +234,9 @@ public class IndexingHandler implements ResourceListener {
      *
      * @param resource href of the resource to index.
      * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
-    private void deleteResource(final String resource) throws SystemException, WebserverSystemException,
-        ApplicationServerSystemException, TripleStoreSystemException {
+    private void deleteResource(final String resource) throws SystemException, ApplicationServerSystemException,
+        TripleStoreSystemException {
         doIndexing(resource, null,
             de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE, false, null);
     }
@@ -256,9 +250,6 @@ public class IndexingHandler implements ResourceListener {
      * @param action     indexing-action (update or delete).
      * @param xml        object-representation in xml.
      * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     private void indexResource(final String resource, final String objectType, final String action, final String xml)
         throws SystemException, WebserverSystemException, ApplicationServerSystemException, TripleStoreSystemException {
@@ -314,13 +305,10 @@ public class IndexingHandler implements ResourceListener {
      * @param isAsynch   boolean called asynch.
      * @param xml        object-representation in xml.
      * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     public void doIndexing(
         final String resource, final String objectType, final String action, final boolean isAsynch, final String xml)
-        throws SystemException, ApplicationServerSystemException, WebserverSystemException, TripleStoreSystemException {
+        throws SystemException, WebserverSystemException, TripleStoreSystemException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("calling do Indexing with resource: " + resource + ", objectType: " + objectType
                 + ", action: " + action + ", isAsynch: " + isAsynch + ", xml: " + xml);
@@ -363,14 +351,11 @@ public class IndexingHandler implements ResourceListener {
      * @param isAsynch   boolean called asynch.
      * @param xml        object-representation in xml.
      * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     public void doIndexing(
         final String resource, final String objectType, final String indexName, final String action,
-        final boolean isAsynch, final String xml) throws SystemException, TripleStoreSystemException,
-        WebserverSystemException, ApplicationServerSystemException {
+        final boolean isAsynch, final String xml) throws SystemException, WebserverSystemException,
+        ApplicationServerSystemException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("indexing " + resource + ", objectType: " + objectType + ", indexName: " + indexName
@@ -516,7 +501,6 @@ public class IndexingHandler implements ResourceListener {
      * @param resource   String resource-identifier.
      * @param domObject  Dom-Object that holds resource-xml.
      * @return int action to take (delete, update, nothing)
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private int checkPrerequisites(
         String xml, final Map<String, Object> parameters, final String resource, Document domObject)
@@ -582,10 +566,8 @@ public class IndexingHandler implements ResourceListener {
      * @param indexName  name of the index (null or "all" means to search in all indexes)
      * @return true if the resource already exists
      * @throws SystemException Thrown if a framework internal error occurs.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    public boolean exists(final String id, final String objectType, final String indexName) throws SystemException,
-        WebserverSystemException {
+    public boolean exists(final String id, final String objectType, final String indexName) throws SystemException {
         boolean result = false;
         final Map<String, Map<String, Object>> resourceParameters = getObjectTypeParameters().get(objectType);
 
@@ -659,11 +641,9 @@ public class IndexingHandler implements ResourceListener {
     /**
      * Return all PIDs contained in given index.
      *
-     * @param objectType
      * @param indexName name of the index
      * @return List of PIDs
      * @throws SystemException Thrown if a framework internal error occurs.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public Set<String> getPids(final String objectType, final String indexName) throws SystemException,
         WebserverSystemException {
@@ -747,8 +727,7 @@ public class IndexingHandler implements ResourceListener {
      * Get Names of available indexes from gsearch-config.
      *
      * @return COllection with indexNames
-     * @throws IOException     e
-     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
+     * @throws IOException e
      */
     private Iterable<String> getIndexNames() throws IOException, ApplicationServerSystemException {
         if (this.indexNames == null) {
@@ -768,7 +747,6 @@ public class IndexingHandler implements ResourceListener {
      *
      * @throws IOException     e
      * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     private void getIndexConfigs() throws IOException, SystemException, ApplicationServerSystemException {
         // Build IndexInfo HashMap
@@ -858,7 +836,6 @@ public class IndexingHandler implements ResourceListener {
      *
      * @param xml xml
      * @return Document xml as dom-Document
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private Document getXmlAsDocument(final String xml) throws SystemException {
         try {

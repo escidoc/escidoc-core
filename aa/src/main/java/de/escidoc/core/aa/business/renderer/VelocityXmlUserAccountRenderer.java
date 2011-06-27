@@ -75,7 +75,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      * @see UserAccountRendererInterface# render(Map)
      */
     @Override
-    public String render(final UserAccount userAccount) throws SystemException, WebserverSystemException {
+    public String render(final UserAccount userAccount) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -277,7 +277,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      */
     @Override
     public String renderUserAccounts(final List<UserAccount> userAccounts, final RecordPacking recordPacking)
-        throws SystemException, WebserverSystemException {
+        throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootUserAccount", XmlTemplateProvider.TRUE);

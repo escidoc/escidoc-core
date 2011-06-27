@@ -156,10 +156,8 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @return FoXML
      * @throws SystemException Thrown if getting new objid from ID-Provider failed.
      * @throws IOException     Thrown if preparing of properties, meta data record failed.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    public String getFOXML() throws SystemException, IOException, EncodingSystemException, WebserverSystemException {
+    public String getFOXML() throws SystemException, IOException, WebserverSystemException {
 
         // objid
         if (getObjid() == null) {
@@ -219,12 +217,9 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @throws InvalidContentException Thrown if validation of Component structure failed.
      * @throws SystemException         Thrown if getting new objid from ID-Provider or Fedora synchronization failed.
      * @throws IOException             Thrown if preparing of properties, meta data record failed.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String persist(final boolean forceSync) throws SystemException, InvalidContentException, IOException,
-        FedoraSystemException, WebserverSystemException, EncodingSystemException {
+        WebserverSystemException, EncodingSystemException {
 
         validate();
         final String foxml = getFOXML();

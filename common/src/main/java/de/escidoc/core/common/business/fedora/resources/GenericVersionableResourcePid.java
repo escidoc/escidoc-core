@@ -118,8 +118,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws SystemException Thrown in case of internal error.
      */
     @Override
-    public void setObjectPid(final String pid) throws SystemException, IntegritySystemException, FedoraSystemException,
-        WebserverSystemException, EncodingSystemException, TripleStoreSystemException, XmlParserSystemException {
+    public void setObjectPid(final String pid) throws SystemException, FedoraSystemException, WebserverSystemException,
+        EncodingSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         super.setObjectPid(pid);
 
@@ -203,12 +203,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * Set the versionPID.
      *
      * @param pid The to assign PID.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public void setVersionPid(final String pid) throws TripleStoreSystemException, IntegritySystemException,
         FedoraSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException {
@@ -231,12 +225,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * Set the latest release pid. It's insert to the RELS-EXT.
      * <p/>
      * Precondition: The method checks not if the version is released! This check is part of the method caller.
-     *
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void setLatestReleasePid() throws TripleStoreSystemException, IntegritySystemException,
         WebserverSystemException, FedoraSystemException, XmlParserSystemException {
@@ -273,10 +261,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * Set the latestReleasePid.
      *
      * @param pid The to PID of the latest released version.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public void setLatestReleasePid(final String pid) throws TripleStoreSystemException, FedoraSystemException,
         XmlParserSystemException, WebserverSystemException {
@@ -347,12 +331,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * Update RELS-EXT with version PID.
      *
      * @param pid Persistent Identifier
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private void setPidToRelsExt(final String pid) throws TripleStoreSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
@@ -719,10 +697,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * @return Vector with HashMaps of relations.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public List<Map<String, String>> getRelations() throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException {

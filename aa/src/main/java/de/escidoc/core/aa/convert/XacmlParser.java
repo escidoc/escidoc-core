@@ -226,14 +226,9 @@ public class XacmlParser {
      *
      * @param file file to be parsed
      * @throws Exception Thrown in case of an internal error.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws java.io.FileNotFoundException
-     * @throws javax.xml.stream.XMLStreamException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
-    public void parse(final File file) throws Exception, FileNotFoundException, XMLStreamException,
-        WebserverSystemException, XmlParserSystemException, XmlCorruptedException {
+    public void parse(final File file) throws Exception, XMLStreamException, WebserverSystemException,
+        XmlParserSystemException, XmlCorruptedException {
         this.role = new EscidocRole();
         initFactory();
 

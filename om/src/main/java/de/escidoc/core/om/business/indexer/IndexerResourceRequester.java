@@ -63,9 +63,8 @@ import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 /**
  * @author Michael Hoppe
  *         <p/>
- *         Class gets resources for indexer, 
- *         either from eSciDocCore-Framework or from external URL.
- *         Caches resources in resourcesCache.
+ *         Class gets resources for indexer, either from eSciDocCore-Framework or from external URL. Caches resources in
+ *         resourcesCache.
  */
 @Service
 public class IndexerResourceRequester {
@@ -92,15 +91,14 @@ public class IndexerResourceRequester {
      * @param identifier identifier
      * @return Object resource-object
      * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
-    public Object getResource(final String identifier) throws SystemException, TripleStoreSystemException {
+    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
+            properties = {@Property(name = "includeMethod", value = "false")}))
+    public Object getResource(final String identifier) throws SystemException {
         final String href = getHref(identifier);
-        if (identifier.startsWith("http")) {
+        if(identifier.startsWith("http")) {
             return getExternalResource(href);
-        }
-        else {
+        } else {
             return getInternalResource(href);
         }
     }
@@ -111,14 +109,12 @@ public class IndexerResourceRequester {
      * @param identifier identifier
      * @return Object resource-object
      * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    public Object getResourceUncached(final String identifier) throws SystemException, TripleStoreSystemException {
+    public Object getResourceUncached(final String identifier) throws SystemException {
         final String href = getHref(identifier);
-        if (identifier.startsWith("http")) {
+        if(identifier.startsWith("http")) {
             return getExternalResource(href);
-        }
-        else {
+        } else {
             return getInternalResource(href);
         }
     }
@@ -127,12 +123,13 @@ public class IndexerResourceRequester {
      * Set resource with given identifier in cache.
      *
      * @param identifier identifier
-     * @param resource resource-object
+     * @param resource   resource-object
      * @return Object resource-object
      */
-    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
+            properties = {@Property(name = "includeMethod", value = "false")}))
     public Object setResource(@PartialCacheKey
-    final String identifier, final Object resource) {
+                              final String identifier, final Object resource) {
         return resource;
     }
 
@@ -141,7 +138,8 @@ public class IndexerResourceRequester {
      *
      * @param identifier identifier
      */
-    @TriggersRemove(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
+            properties = {@Property(name = "includeMethod", value = "false")}))
     public void deleteResource(final String identifier) {
     }
 
@@ -150,55 +148,48 @@ public class IndexerResourceRequester {
      *
      * @param identifier identifier
      * @throws SystemException e
-     * @return
      */
     private Object getInternalResource(final String identifier) throws SystemException {
         try {
             final BeanMethod method = methodMapper.getMethod(identifier, null, null, "GET", "");
             final Object content = method.invokeWithProtocol(null);
-            if (content != null && "EscidocBinaryContent".equals(content.getClass().getSimpleName())) {
+            if(content != null && "EscidocBinaryContent".equals(content.getClass().getSimpleName())) {
                 final EscidocBinaryContent escidocBinaryContent = (EscidocBinaryContent) content;
                 final ByteArrayOutputStream out = new ByteArrayOutputStream();
                 final InputStream in = escidocBinaryContent.getContent();
                 try {
                     final byte[] bytes = new byte[BUFFER_SIZE];
                     int i;
-                    while ((i = in.read(bytes)) > -1) {
+                    while((i = in.read(bytes)) > - 1) {
                         out.write(bytes, 0, i);
                     }
                     out.flush();
                     final MIMETypedStream stream =
-                        new MIMETypedStream(escidocBinaryContent.getMimeType(), out.toByteArray(), null);
+                            new MIMETypedStream(escidocBinaryContent.getMimeType(), out.toByteArray(), null);
                     return stream;
-                }
-                catch (final Exception e) {
+                } catch(final Exception e) {
                     throw new SystemException(e);
-                }
-                finally {
+                } finally {
                     IOUtils.closeStream(in);
                     IOUtils.closeStream(out);
                 }
-            }
-            else if (content != null) {
+            } else if(content != null) {
                 final String xml = (String) content;
                 return xml;
             }
-        }
-        catch (final InvocationTargetException e) {
-            if (!"AuthorizationException".equals(e.getTargetException().getClass().getSimpleName())
-                && !"InvalidStatusException".equals(e.getTargetException().getClass().getSimpleName())) {
+        } catch(final InvocationTargetException e) {
+            if(! "AuthorizationException".equals(e.getTargetException().getClass().getSimpleName()) &&
+                    ! "InvalidStatusException".equals(e.getTargetException().getClass().getSimpleName())) {
                 throw new SystemException(e);
             }
-        }
-        catch (final MethodNotFoundException e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final MethodNotFoundException e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on caching internal resource.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on caching internal resource.", e);
             }
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new SystemException(e);
         }
         return null;
@@ -209,7 +200,6 @@ public class IndexerResourceRequester {
      *
      * @param identifier identifier
      * @throws SystemException e
-     * @return
      */
     private Object getExternalResource(final String identifier) throws SystemException {
         ByteArrayOutputStream out = null;
@@ -217,32 +207,30 @@ public class IndexerResourceRequester {
         try {
             final HttpResponse httpResponse = connectionUtility.getRequestURL(new URL(identifier));
 
-            if (httpResponse != null) {
+            if(httpResponse != null) {
 
                 // TODO testen ob header mitgeschickt wird
                 final Header ctype = httpResponse.getFirstHeader("Content-Type");
                 final String mimeType =
-                    ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
+                        ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
 
                 out = new ByteArrayOutputStream();
                 in = httpResponse.getEntity().getContent();
                 int byteval;
-                while ((byteval = in.read()) > -1) {
+                while((byteval = in.read()) > - 1) {
                     out.write(byteval);
                 }
                 final MIMETypedStream stream = new MIMETypedStream(mimeType, out.toByteArray(), null);
                 return stream;
             }
-        }
-        catch (final Exception e) {
-            if (LOGGER.isWarnEnabled()) {
+        } catch(final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on caching external resource.");
             }
-            if (LOGGER.isDebugEnabled()) {
+            if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on caching external resource.", e);
             }
-        }
-        finally {
+        } finally {
             IOUtils.closeStream(in);
             IOUtils.closeStream(out);
         }
@@ -255,22 +243,21 @@ public class IndexerResourceRequester {
      * @param identifier identifier
      * @return String href
      * @throws SystemException e
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    private String getHref(final String identifier) throws SystemException, TripleStoreSystemException {
+    private String getHref(final String identifier) throws SystemException {
         String href = identifier;
-        if (!href.contains("/")) {
+        if(! href.contains("/")) {
             // objectId provided, generate href
             // get object-type
             href = XmlUtility.getObjidWithoutVersion(href);
             final String objectType = tripleStoreUtility.getObjectType(href);
-            if (objectType == null) {
+            if(objectType == null) {
                 throw new SystemException("couldnt get objectType for object " + href);
             }
 
             href = this.tripleStoreUtility.getHref(objectType, identifier);
         }
-        if (!href.startsWith("http") && !href.startsWith("/")) {
+        if(! href.startsWith("http") && ! href.startsWith("/")) {
             href = '/' + href;
         }
         return href;

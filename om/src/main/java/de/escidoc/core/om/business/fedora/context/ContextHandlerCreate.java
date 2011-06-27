@@ -113,19 +113,13 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      *                                        Thrown if related organizational unit(s) could not be found.
      * @throws SystemException                Thrown if anything else fails.
      * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    public String createContext(final String xmlData) throws ContextNameNotUniqueException,
-        ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
-        MissingElementValueException, ReadonlyAttributeViolationException, InvalidContentException,
-        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+    public String createContext(final String xmlData)
+            throws ContextNameNotUniqueException, ContentModelNotFoundException, ReadonlyElementViolationException,
+            MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
+            InvalidContentException, OrganizationalUnitNotFoundException, SystemException, InvalidStatusException,
+            IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+            WebserverSystemException {
 
         final String contextId = getIdProvider().getNextPid();
         final String createComment = "Object " + contextId + " created.";
@@ -145,47 +139,33 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
         try {
             sp.parse(xmlData);
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final LockingException e) {
+        } catch(final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final OptimisticLockingException e) {
+        } catch(final OptimisticLockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final AlreadyExistsException e) {
+        } catch(final AlreadyExistsException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final ReferencedResourceNotFoundException e) {
+        } catch(final ReferencedResourceNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final RelationPredicateNotFoundException e) {
+        } catch(final RelationPredicateNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final ContentRelationNotFoundException e) {
+        } catch(final ContentRelationNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final ContextNotFoundException e) {
+        } catch(final ContextNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final MissingContentException e) {
+        } catch(final MissingContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final PidAlreadyAssignedException e) {
+        } catch(final PidAlreadyAssignedException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final MissingMdRecordException e) {
+        } catch(final MissingMdRecordException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final InvalidXmlException e) {
+        } catch(final InvalidXmlException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final LastModificationDateMissingException e) {
+        } catch(final LastModificationDateMissingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final TmeException e) {
+        } catch(final TmeException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -193,7 +173,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         final Map<String, Object> properties = propertiesHandler.getPropertiesMap();
 
         // check that at least one OU is given
-        if (propertiesHandler.getOrganizationalUnits().isEmpty()) {
+        if(propertiesHandler.getOrganizationalUnits().isEmpty()) {
             throw new InvalidContentException("No 'organizational-unit' element is given.");
         }
 
@@ -207,7 +187,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
         // name must be unique
         final String name = (String) properties.remove(Elements.ELEMENT_NAME);
-        if (getTripleStoreUtility().getContextForName(name) != null) {
+        if(getTripleStoreUtility().getContextForName(name) != null) {
             throw new ContextNameNotUniqueException();
         }
         // set title in triple store (title == name)
@@ -217,16 +197,16 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         // .get(TripleStoreUtility.PROP_NAME));
         final Map<String, String> dcProperties = new HashMap<String, String>();
         final String description = (String) properties.remove(Elements.ELEMENT_DESCRIPTION);
-        if (description != null && description.length() > 0) {
+        if(description != null && description.length() > 0) {
             dcProperties.put(Elements.ELEMENT_DESCRIPTION, description);
         }
         dcProperties.put(Elements.ELEMENT_DC_TITLE, name);
 
         final Map<String, String> propertiesAsReferences = new HashMap<String, String>();
-        propertiesAsReferences.put(Elements.ELEMENT_MODIFIED_BY, (String) properties
-            .remove(Elements.ELEMENT_MODIFIED_BY));
         propertiesAsReferences
-            .put(Elements.ELEMENT_CREATED_BY, (String) properties.remove(Elements.ELEMENT_CREATED_BY));
+                .put(Elements.ELEMENT_MODIFIED_BY, (String) properties.remove(Elements.ELEMENT_MODIFIED_BY));
+        propertiesAsReferences
+                .put(Elements.ELEMENT_CREATED_BY, (String) properties.remove(Elements.ELEMENT_CREATED_BY));
 
         // get modified data streams
         final Map<String, Object> streams = me.getOutputStreams();
@@ -234,7 +214,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         streams.remove("resources");
 
         final String contextFoxml =
-            buildContextFoxml(contextId, properties, dcProperties, propertiesAsReferences, streams);
+                buildContextFoxml(contextId, properties, dcProperties, propertiesAsReferences, streams);
         final IngestPathParam path = new IngestPathParam();
         final IngestQueryParam query = new IngestQueryParam();
         this.getFedoraServiceClient().ingest(path, query, contextFoxml);
@@ -253,12 +233,12 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      * @param dataStreams            Data streams of that context object
      * @return foxml String
      * @throws SystemException Thrown if the FOXML rendering failed.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    protected String buildContextFoxml(
-        final String id, final Map<String, Object> properties, final Map<String, String> dcProperties,
-        final Map<String, String> propertiesAsReferences, final Map<String, Object> dataStreams)
-        throws SystemException, WebserverSystemException {
+    protected String buildContextFoxml(final String id, final Map<String, Object> properties,
+                                       final Map<String, String> dcProperties,
+                                       final Map<String, String> propertiesAsReferences,
+                                       final Map<String, Object> dataStreams)
+            throws SystemException, WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("id", id);
@@ -266,21 +246,20 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
         final Collection<Map<String, String>> adminDescriptors = new ArrayList<Map<String, String>>();
 
-        for (final Entry<String, Object> stringObjectEntry : dataStreams.entrySet()) {
+        for(final Entry<String, Object> stringObjectEntry : dataStreams.entrySet()) {
             final Map<String, String> adminDescriptor = new HashMap<String, String>();
             adminDescriptor.put("name", stringObjectEntry.getKey());
             adminDescriptor.put("id", stringObjectEntry.getKey());
             try {
-                adminDescriptor.put("ds", ((ByteArrayOutputStream) stringObjectEntry.getValue())
-                    .toString(XmlUtility.CHARACTER_ENCODING));
-            }
-            catch (final UnsupportedEncodingException e) {
+                adminDescriptor.put("ds",
+                        ((ByteArrayOutputStream) stringObjectEntry.getValue()).toString(XmlUtility.CHARACTER_ENCODING));
+            } catch(final UnsupportedEncodingException e) {
                 throw new SystemException(e);
             }
             adminDescriptors.add(adminDescriptor);
         }
 
-        if (!adminDescriptors.isEmpty()) {
+        if(! adminDescriptors.isEmpty()) {
             values.put("adminDescriptors", adminDescriptors);
         }
 
@@ -308,10 +287,9 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      * @param properties HashMap with item properties
      * @param contextId  context id
      * @return String RELS-EXT
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String buildContextRelsExt(final String contextId, final Map<String, Object> properties)
-        throws WebserverSystemException {
+            throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -325,7 +303,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      */
     public ContextFoXmlRendererInterface getFoxmlRenderer() {
 
-        if (this.foxmlRenderer == null) {
+        if(this.foxmlRenderer == null) {
             this.foxmlRenderer = new VelocityXmlContextFoXmlRenderer();
         }
         return this.foxmlRenderer;

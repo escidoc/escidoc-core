@@ -258,8 +258,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException, UserAccountNotFoundException,
-        ResourceNotFoundException, WebserverSystemException, SystemException, TripleStoreSystemException,
+        final String resourceVersionNumber) throws EscidocException, ResourceNotFoundException, SystemException,
         SqlDatabaseSystemException {
 
         // determine the id of the user account and to simplify the further
@@ -391,12 +390,9 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @param userAccount The user account to fetch the value from.
      * @param getChildren if also children of userAccountous are to be fetched.
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private EvaluationResult fetchUserAccountOus(final UserAccount userAccount, final boolean getChildren)
-        throws TripleStoreSystemException, SystemException, SqlDatabaseSystemException {
+        throws SystemException {
 
         final String ouAttributeName;
         try {
@@ -470,7 +466,6 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @param userAccountId The id of the user account to fetch the value from.
      * @param attributeId   The name of the attribute.
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private EvaluationResult fetchRoleScopes(final String userAccountId, final CharSequence attributeId)
         throws SqlDatabaseSystemException, SystemException {

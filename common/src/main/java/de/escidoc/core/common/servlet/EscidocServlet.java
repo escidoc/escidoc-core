@@ -199,7 +199,7 @@ public class EscidocServlet extends HttpServlet {
      */
     @Override
     public void service(final ServletRequest request, final ServletResponse response) throws ServletException,
-        IOException, UnsupportedEncodingException {
+        IOException {
 
         try {
             final String protocol = request.getProtocol();
@@ -324,7 +324,6 @@ public class EscidocServlet extends HttpServlet {
      * @param e            The exception to handle.
      * @return Returns <code>true</code> if the exception has been handled.
      * @throws IOException In case of any failure.
-     * @throws java.io.UnsupportedEncodingException
      */
     private static boolean handleException(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse, final BeanMethod method,
@@ -398,7 +397,6 @@ public class EscidocServlet extends HttpServlet {
      * @throws TransformerException         If anything fails.
      * @throws ParserConfigurationException If anything fails.
      * @throws SAXException                 If anything fails.
-     * @throws java.io.FileNotFoundException
      */
     private static MapperInterface getMethodMapper(final String filename) throws IOException, TransformerException,
         ParserConfigurationException, SAXException, FileNotFoundException {
@@ -411,12 +409,12 @@ public class EscidocServlet extends HttpServlet {
     }
 
     /**
-     * Handles a response for a method that returns a string value.
-     * Returned string might be gzip compressed if param 'compressionIsAccepted' is true.
+     * Handles a response for a method that returns a string value. Returned string might be gzip compressed if param
+     * 'compressionIsAccepted' is true.
      *
-     * @param httpResponse The {@link HttpServletResponse} object.
-     * @param httpMethod   The http method of the request.
-     * @param result       The {@link String} object that shall be sent in the response.
+     * @param httpResponse          The {@link HttpServletResponse} object.
+     * @param httpMethod            The http method of the request.
+     * @param result                The {@link String} object that shall be sent in the response.
      * @param compressionIsAccepted defines if returned sting object will be gzip compressed
      * @throws IOException If anything fails.
      */
@@ -551,8 +549,8 @@ public class EscidocServlet extends HttpServlet {
     }
 
     /**
-     * Sends the gzip compressed http response with provided status and the provided text in the response body. <br/> Before sending,
-     * the no-cache headers are added.
+     * Sends the gzip compressed http response with provided status and the provided text in the response body. <br/>
+     * Before sending, the no-cache headers are added.
      *
      * @param httpResponse The {@link HttpServletResponse} object.
      * @param text         The {@link String} object to be sent in the response body.
@@ -616,7 +614,6 @@ public class EscidocServlet extends HttpServlet {
      * @param httpResponse The http response.
      * @param exception    The exception that causes the redirect.
      * @throws IOException If anything fails.
-     * @throws java.io.UnsupportedEncodingException
      */
     private static void doRedirect(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse, final SecurityException exception)

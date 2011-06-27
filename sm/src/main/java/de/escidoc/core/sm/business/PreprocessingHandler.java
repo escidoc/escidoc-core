@@ -66,7 +66,7 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
      */
     @Override
     public void preprocess(final String aggregationDefinitionId, final String xmlData)
-        throws MissingMethodParameterException, SystemException, StatisticPreprocessingSystemException {
+        throws MissingMethodParameterException, SystemException {
 
         //parse
         final StaxParser sp = new StaxParser();

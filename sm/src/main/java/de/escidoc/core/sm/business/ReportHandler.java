@@ -89,7 +89,7 @@ public class ReportHandler implements ReportHandlerInterface {
      */
     @Override
     public String retrieve(final String xml) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
-        InvalidSqlException, SystemException, SqlDatabaseSystemException {
+        InvalidSqlException, SystemException {
         if (xml == null || xml.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }

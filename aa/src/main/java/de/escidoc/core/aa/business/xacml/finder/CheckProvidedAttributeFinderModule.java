@@ -120,7 +120,7 @@ public class CheckProvidedAttributeFinderModule extends AbstractAttributeFinderM
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws SystemException, ResourceNotFoundException, WebserverSystemException {
+        final String resourceVersionNumber) throws SystemException, ResourceNotFoundException {
 
         final AttributeValue providedAttributesIds =
             ctx.getEnvironmentAttribute(Constants.URI_XMLSCHEMA_STRING, getAttributeId(), null).getAttributeValue();

@@ -95,7 +95,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
     private static final String DATASTREAM_CONTENT = "content";
 
     private static final Pattern PATTERN_INVALID_FOXML =
-        Pattern.compile("fedora.server.errors.ObjectValidityException");
+            Pattern.compile("fedora.server.errors.ObjectValidityException");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandlerCreate.class);
 
@@ -108,8 +108,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @return RELS-EXT XML representation of Component
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    protected String getComponentRelsExtWithVelocity(
-        final String id, final Map<String, String> properties, final boolean inCreate) throws WebserverSystemException {
+    protected String getComponentRelsExtWithVelocity(final String id, final Map<String, String> properties,
+                                                     final boolean inCreate) throws WebserverSystemException {
 
         return getFoxmlRenderer().renderComponentRelsExt(id, properties, inCreate);
     }
@@ -124,80 +124,73 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @param nsUri              Name space URI
      * @param storage            Type of storage.
      * @return FoXML representation of Component
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
-    private String getComponentFoxmlWithVelocity(
-        final String id, final String contentMimeType, final Map dataStreams,
-        final Map<String, Map<String, String>> metadataAttributes, final String nsUri, final String storage)
-        throws WebserverSystemException, EncodingSystemException, InvalidContentException, TripleStoreSystemException {
+    private String getComponentFoxmlWithVelocity(final String id, final String contentMimeType, final Map dataStreams,
+                                                 final Map<String, Map<String, String>> metadataAttributes,
+                                                 final String nsUri, final String storage)
+            throws WebserverSystemException, EncodingSystemException, InvalidContentException,
+            TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         // dc-mapping prototyping
-        if (dataStreams.containsKey(XmlUtility.NAME_MDRECORDS)
-            && ((Map) dataStreams.get(XmlUtility.NAME_MDRECORDS)).containsKey(Elements.MANDATORY_MD_RECORD_NAME)) {
+        if(dataStreams.containsKey(XmlUtility.NAME_MDRECORDS) &&
+                ((Map) dataStreams.get(XmlUtility.NAME_MDRECORDS)).containsKey(Elements.MANDATORY_MD_RECORD_NAME)) {
             final String dcXml;
             try {
                 // no content model id for component dc-mapping, default mapping
                 // should be applied
-                dcXml =
-                    XmlUtility.createDC(nsUri, ((ByteArrayOutputStream) ((Map) dataStreams
-                        .get(XmlUtility.NAME_MDRECORDS)).get(Elements.MANDATORY_MD_RECORD_NAME))
-                        .toString(XmlUtility.CHARACTER_ENCODING), id, null);
-            }
-            catch (final UnsupportedEncodingException e) {
+                dcXml = XmlUtility.createDC(nsUri,
+                        ((ByteArrayOutputStream) ((Map) dataStreams.get(XmlUtility.NAME_MDRECORDS))
+                                .get(Elements.MANDATORY_MD_RECORD_NAME)).toString(XmlUtility.CHARACTER_ENCODING), id,
+                        null);
+            } catch(final UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
-            if (dcXml != null) {
+            if(dcXml != null) {
                 values.put(XmlTemplateProvider.DC, dcXml);
             }
         }
         values.put(XmlTemplateProvider.OBJID, id);
         values.put(XmlTemplateProvider.TITLE, "Component " + id);
 
-        if (dataStreams.get(Datastream.RELS_EXT_DATASTREAM) != null) {
+        if(dataStreams.get(Datastream.RELS_EXT_DATASTREAM) != null) {
             values.put(XmlTemplateProvider.RELS_EXT, dataStreams.get(Datastream.RELS_EXT_DATASTREAM));
         }
 
-        if (dataStreams.get("uploadUrl") != null) {
+        if(dataStreams.get("uploadUrl") != null) {
             values.put(XmlTemplateProvider.MIME_TYPE, contentMimeType);
             final String theUrl = Utility.processUrl((String) dataStreams.get("uploadUrl"), null, null);
             values.put(XmlTemplateProvider.REF, theUrl);
             values.put(XmlTemplateProvider.REF_TYPE, "URL");
-            if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)) {
+            if(storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)) {
                 values.put(XmlTemplateProvider.CONTROL_GROUP, "R");
-            }
-            else if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED)) {
+            } else if(storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED)) {
                 values.put(XmlTemplateProvider.CONTROL_GROUP, "E");
-            }
-            else if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
+            } else if(storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
                 values.put(XmlTemplateProvider.CONTROL_GROUP, "M");
             }
             values.put(XmlTemplateProvider.REF_TYPE, "URL");
             try {
-                values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
-            }
-            catch (final IOException e) {
-                if (LOGGER.isWarnEnabled()) {
+                values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance()
+                        .get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
+            } catch(final IOException e) {
+                if(LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on loading configuration.");
                 }
-                if (LOGGER.isDebugEnabled()) {
+                if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on loading configuration.", e);
                 }
             }
         }
 
-        if (dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS) != null) {
+        if(dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS) != null) {
             final Map mdRecordsStreams = (Map) dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS);
-            if (!mdRecordsStreams.isEmpty()) {
+            if(! mdRecordsStreams.isEmpty()) {
                 final Collection<Map<String, String>> mdRecords =
-                    new ArrayList<Map<String, String>>(mdRecordsStreams.size());
+                        new ArrayList<Map<String, String>>(mdRecordsStreams.size());
                 values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
 
-                for (final Object o : mdRecordsStreams.keySet()) {
+                for(final Object o : mdRecordsStreams.keySet()) {
                     final String key = (String) o;
                     final ByteArrayOutputStream mdRecordStream = (ByteArrayOutputStream) mdRecordsStreams.get(key);
 
@@ -206,7 +199,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
                     final Map<String, String> mdAttributes = metadataAttributes.get(key);
                     String schema = null;
                     String type = null;
-                    if (mdAttributes != null) {
+                    if(mdAttributes != null) {
                         schema = mdAttributes.get("schema");
                         type = mdAttributes.get("type");
                     }
@@ -215,11 +208,10 @@ public class ItemHandlerCreate extends ItemResourceListener {
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, type);
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, key);
                     try {
-                        mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecordStream
-                            .toString(XmlUtility.CHARACTER_ENCODING));
+                        mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT,
+                                mdRecordStream.toString(XmlUtility.CHARACTER_ENCODING));
 
-                    }
-                    catch (final UnsupportedEncodingException e) {
+                    } catch(final UnsupportedEncodingException e) {
                         throw new EncodingSystemException(e);
                     }
                     mdRecords.add(mdRecord);
@@ -232,18 +224,11 @@ public class ItemHandlerCreate extends ItemResourceListener {
     /**
      * Get WOV as XML representation.
      *
-     * @param id
-     * @param title
-     * @param versionNo
-     * @param lastModificationDate
-     * @param versionStatus
-     * @param comment
      * @return XML representation of WOV
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    protected String getWovDatastream(
-        final String id, final String title, final String versionNo, final String lastModificationDate,
-        final String versionStatus, final String comment) throws WebserverSystemException {
+    protected String getWovDatastream(final String id, final String title, final String versionNo,
+                                      final String lastModificationDate, final String versionStatus,
+                                      final String comment) throws WebserverSystemException {
         return getFoxmlRenderer().renderWov(id, title, versionNo, lastModificationDate, versionStatus, comment);
 
     }
@@ -266,18 +251,13 @@ public class ItemHandlerCreate extends ItemResourceListener {
      *                                      If a read-only attribute is set.
      * @throws InvalidContentException      If there is invalid content in xml data.
      * @throws MissingContentException      If some required content is missing in xml data.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    public String addComponent(final String xmlData) throws SystemException, XmlCorruptedException,
-        XmlSchemaValidationException, LockingException, InvalidStatusException, FileNotFoundException,
-        MissingElementValueException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
-        InvalidContentException, MissingContentException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    public String addComponent(final String xmlData)
+            throws SystemException, XmlCorruptedException, XmlSchemaValidationException, LockingException,
+            InvalidStatusException, FileNotFoundException, MissingElementValueException,
+            ReadonlyElementViolationException, ReadonlyAttributeViolationException, InvalidContentException,
+            MissingContentException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+            XmlParserSystemException, WebserverSystemException {
 
         // TODO move all precondition checks to service method
         // checkLocked();
@@ -319,29 +299,21 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
         try {
             sp.parse(xmlData);
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new XmlParserSystemException(e);
-        }
-        catch (final MissingElementValueException e) {
+        } catch(final MissingElementValueException e) {
             throw e;
-        }
-        catch (final ReadonlyElementViolationException e) {
+        } catch(final ReadonlyElementViolationException e) {
             throw e;
-        }
-        catch (final ReadonlyAttributeViolationException e) {
+        } catch(final ReadonlyAttributeViolationException e) {
             throw e;
-        }
-        catch (final InvalidContentException e) {
+        } catch(final InvalidContentException e) {
             throw e;
-        }
-        catch (final MissingContentException e) {
+        } catch(final MissingContentException e) {
             throw e;
-        }
-        catch (final WebserverSystemException e) {
+        } catch(final WebserverSystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -358,19 +330,19 @@ public class ItemHandlerCreate extends ItemResourceListener {
         final Map componentStreams = (Map) components.get(componentId);
         final Map<String, Map<String, String>> componentMdAttributes = cmh.getMetadataAttributes().get(componentId);
         final String escidocMdNsUri = cmh.getNamespacesMap().get(componentId);
-        if (componentBinary.get("storage") == null) {
+        if(componentBinary.get("storage") == null) {
             throw new InvalidContentException("The attribute 'storage' of the element " + "'content' is missing.");
         }
-        if (componentBinary.get(DATASTREAM_CONTENT) != null
-            && (componentBinary.get("storage").equals(
-                de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL) || componentBinary
-                .get("storage").equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED))) {
+        if(componentBinary.get(DATASTREAM_CONTENT) != null && (componentBinary.get("storage")
+                .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL) ||
+                componentBinary.get("storage")
+                        .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED))) {
             throw new InvalidContentException(
-                "The component section 'content' with the attribute 'storage' set to 'external-url' "
-                    + "or 'external-managed' may not have an inline content.");
+                    "The component section 'content' with the attribute 'storage' set to 'external-url' " +
+                            "or 'external-managed' may not have an inline content.");
         }
         handleComponent(componentId, properties, componentBinary, componentStreams, componentMdAttributes,
-            escidocMdNsUri);
+                escidocMdNsUri);
 
         final AddNewSubTreesToDatastream addNewEntriesHandler = new AddNewSubTreesToDatastream("/RDF", sp);
 
@@ -385,8 +357,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
         newComponentIdElement.setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         newComponentIdElement.setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
         final Attribute resource =
-            new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
-                + componentId);
+                new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
+                        "info:fedora/" + componentId);
         newComponentIdElement.addAttribute(resource);
         newComponentIdElement.setChildrenElements(null);
         final List<StartElementWithChildElements> elements = new ArrayList<StartElementWithChildElements>();
@@ -397,11 +369,9 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
         try {
             sp.parse(getItem().getRelsExt().getStream());
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new XmlParserSystemException(e.getMessage(), e);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new WebserverSystemException(e);
         }
         sp.clearHandlerChain();
@@ -409,15 +379,13 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
         try {
             getItem().setRelsExt(relsExtNew);
-        }
-        catch (final StreamNotFoundException e1) {
+        } catch(final StreamNotFoundException e1) {
             throw new IntegritySystemException(e1);
         }
         this.getFedoraServiceClient().sync();
         try {
             this.getTripleStoreUtility().reinitialize();
-        }
-        catch (TripleStoreSystemException e) {
+        } catch(TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
         }
         final String component;
@@ -426,8 +394,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             getItem().addComponent(c);
 
             component = renderComponent(componentId, false);
-        }
-        catch (final ResourceNotFoundException e) {
+        } catch(final ResourceNotFoundException e) {
             throw new IntegritySystemException("Component not found.", e);
         }
         return component;
@@ -441,29 +408,13 @@ public class ItemHandlerCreate extends ItemResourceListener {
      *
      * @param xmlData eSciDoc XML representation of Component.
      * @return objid of the new Component
-     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
-     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
-     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingContentException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    public String createComponent(final String xmlData) throws SystemException, XmlCorruptedException,
-        XmlSchemaValidationException, LockingException, InvalidStatusException, FileNotFoundException,
-        MissingElementValueException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
-        InvalidContentException, MissingContentException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    public String createComponent(final String xmlData)
+            throws SystemException, XmlCorruptedException, XmlSchemaValidationException, LockingException,
+            InvalidStatusException, FileNotFoundException, MissingElementValueException,
+            ReadonlyElementViolationException, ReadonlyAttributeViolationException, InvalidContentException,
+            MissingContentException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+            XmlParserSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
         // find out the creator of the component
@@ -496,29 +447,21 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
         try {
             sp.parse(xmlData);
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new XmlParserSystemException(e);
-        }
-        catch (final MissingElementValueException e) {
+        } catch(final MissingElementValueException e) {
             throw e;
-        }
-        catch (final ReadonlyElementViolationException e) {
+        } catch(final ReadonlyElementViolationException e) {
             throw e;
-        }
-        catch (final ReadonlyAttributeViolationException e) {
+        } catch(final ReadonlyAttributeViolationException e) {
             throw e;
-        }
-        catch (final InvalidContentException e) {
+        } catch(final InvalidContentException e) {
             throw e;
-        }
-        catch (final MissingContentException e) {
+        } catch(final MissingContentException e) {
             throw e;
-        }
-        catch (final WebserverSystemException e) {
+        } catch(final WebserverSystemException e) {
             throw e;
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -535,19 +478,19 @@ public class ItemHandlerCreate extends ItemResourceListener {
         final Map componentStreams = (Map) components.get(componentId);
         final Map<String, Map<String, String>> componentMdAttributes = cmh.getMetadataAttributes().get(componentId);
         final String escidocMdNsUri = cmh.getNamespacesMap().get(componentId);
-        if (componentBinary.get("storage") == null) {
+        if(componentBinary.get("storage") == null) {
             throw new InvalidContentException("The attribute 'storage' of the element " + "'content' is missing.");
         }
-        if (componentBinary.get(DATASTREAM_CONTENT) != null
-            && (componentBinary.get("storage").equals(
-                de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL) || componentBinary
-                .get("storage").equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED))) {
+        if(componentBinary.get(DATASTREAM_CONTENT) != null && (componentBinary.get("storage")
+                .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL) ||
+                componentBinary.get("storage")
+                        .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED))) {
             throw new InvalidContentException(
-                "The component section 'content' with the attribute 'storage' set to 'external-url' "
-                    + "or 'external-managed' may not have an inline content.");
+                    "The component section 'content' with the attribute 'storage' set to 'external-url' " +
+                            "or 'external-managed' may not have an inline content.");
         }
         handleComponent(componentId, properties, componentBinary, componentStreams, componentMdAttributes,
-            escidocMdNsUri);
+                escidocMdNsUri);
 
         return componentId;
     }
@@ -570,44 +513,40 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws EncodingSystemException  If encoding fails.
      * @throws WebserverSystemException In case of an internal error.
      * @throws FileNotFoundException    If binary content can not be retrieved.
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
-    protected void handleComponent(
-        final String componentId, final Map<String, String> properties, final Map<String, String> binaryContent,
-        final Map datastreams, final Map<String, Map<String, String>> mdRecordAttributes, final String nsUri)
-        throws FileNotFoundException, WebserverSystemException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, InvalidContentException, TripleStoreSystemException {
+    protected void handleComponent(final String componentId, final Map<String, String> properties,
+                                   final Map<String, String> binaryContent, final Map datastreams,
+                                   final Map<String, Map<String, String>> mdRecordAttributes, final String nsUri)
+            throws FileNotFoundException, WebserverSystemException, EncodingSystemException, IntegritySystemException,
+            FedoraSystemException, InvalidContentException, TripleStoreSystemException {
 
-        if (datastreams.containsKey(DATASTREAM_CONTENT)) {
+        if(datastreams.containsKey(DATASTREAM_CONTENT)) {
             datastreams.remove(DATASTREAM_CONTENT);
         }
         String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
-        if (mimeType == null || mimeType.length() == 0) {
+        if(mimeType == null || mimeType.length() == 0) {
             mimeType = FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
         }
         datastreams.put(Datastream.RELS_EXT_DATASTREAM, getComponentRelsExtWithVelocity(componentId, properties, true));
-        if (datastreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS) == null) {
+        if(datastreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS) == null) {
             datastreams.put(FoXmlProvider.DATASTREAM_MD_RECORDS, new HashMap());
         }
         String uploadUrl = binaryContent.get(FoXmlProvider.DATASTREAM_UPLOAD_URL);
-        if (binaryContent.get(DATASTREAM_CONTENT) != null) {
+        if(binaryContent.get(DATASTREAM_CONTENT) != null) {
             final String fileName = "component " + componentId;
             uploadUrl = uploadBase64EncodedContent(binaryContent.get(DATASTREAM_CONTENT), fileName, mimeType);
         }
         datastreams.put(FoXmlProvider.DATASTREAM_UPLOAD_URL, uploadUrl);
         try {
             final String componentFoxml =
-                getComponentFoxmlWithVelocity(componentId, mimeType, datastreams, mdRecordAttributes, nsUri,
-                    binaryContent.get(FoXmlProvider.DATASTREAM_STORAGE_ATTRIBUTE));
+                    getComponentFoxmlWithVelocity(componentId, mimeType, datastreams, mdRecordAttributes, nsUri,
+                            binaryContent.get(FoXmlProvider.DATASTREAM_STORAGE_ATTRIBUTE));
             final IngestPathParam path = new IngestPathParam();
             final IngestQueryParam query = new IngestQueryParam();
             this.getFedoraServiceClient().ingest(path, query, componentFoxml);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             final Matcher invalidFoxml = PATTERN_INVALID_FOXML.matcher(e.getCause().getMessage());
-            if (invalidFoxml.find()) {
+            if(invalidFoxml.find()) {
                 throw new IntegritySystemException(e);
             }
             handleFedoraUploadError(uploadUrl, e);

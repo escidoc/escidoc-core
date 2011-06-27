@@ -66,7 +66,7 @@ import java.util.Map;
 @Service("service.OrganizationalUnitHandler")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class OrganizationalUnitHandler
-    implements de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface {
+        implements de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface {
 
     @Autowired
     @Qualifier("business.FedoraOrganizationalUnitHandler")
@@ -83,10 +83,7 @@ public class OrganizationalUnitHandler
     }
 
     @Override
-    public String ingest(final String xmlData) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException, MissingAttributeValueException, MissingElementValueException,
-        OrganizationalUnitNotFoundException, InvalidXmlException, XmlCorruptedException, InvalidStatusException,
-        EscidocException {
+    public String ingest(final String xmlData) throws InvalidXmlException, EscidocException {
 
         return business.ingest(xmlData);
     }
@@ -112,10 +109,10 @@ public class OrganizationalUnitHandler
      * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#create(java.lang.String)
      */
     @Override
-    public String create(final String xml) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException, MissingAttributeValueException, MissingElementValueException,
-        OrganizationalUnitNotFoundException, InvalidStatusException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMdRecordException {
+    public String create(final String xml)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+            MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
+            InvalidStatusException, XmlCorruptedException, XmlSchemaValidationException, MissingMdRecordException {
 
         return business.create(xml);
     }
@@ -126,9 +123,10 @@ public class OrganizationalUnitHandler
      * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, InvalidStatusException,
-        OrganizationalUnitHasChildrenException, SystemException {
+    public void delete(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, InvalidStatusException, OrganizationalUnitHasChildrenException,
+            SystemException {
 
         business.delete(id);
     }
@@ -140,10 +138,11 @@ public class OrganizationalUnitHandler
      *      java.lang.String)
      */
     @Override
-    public String update(final String id, final String user) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException,
-        OptimisticLockingException, OrganizationalUnitHierarchyViolationException, InvalidXmlException,
-        MissingElementValueException, InvalidStatusException {
+    public String update(final String id, final String user)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException, OptimisticLockingException,
+            OrganizationalUnitHierarchyViolationException, InvalidXmlException, MissingElementValueException,
+            InvalidStatusException {
 
         return business.update(id, user);
     }
@@ -152,9 +151,10 @@ public class OrganizationalUnitHandler
      * See Interface for functional description.
      */
     @Override
-    public String updateMdRecords(final String id, final String xml) throws AuthenticationException,
-        AuthorizationException, InvalidXmlException, InvalidStatusException, MissingMethodParameterException,
-        OptimisticLockingException, OrganizationalUnitNotFoundException, MissingElementValueException, SystemException {
+    public String updateMdRecords(final String id, final String xml)
+            throws AuthenticationException, AuthorizationException, InvalidXmlException, InvalidStatusException,
+            MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitNotFoundException,
+            MissingElementValueException, SystemException {
 
         return business.updateMdRecords(id, xml);
     }
@@ -163,10 +163,10 @@ public class OrganizationalUnitHandler
      * See Interface for functional description.
      */
     @Override
-    public String updateParents(final String id, final String xml) throws AuthenticationException,
-        AuthorizationException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
-        OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
-        MissingElementValueException, SystemException, InvalidStatusException {
+    public String updateParents(final String id, final String xml)
+            throws AuthenticationException, AuthorizationException, InvalidXmlException,
+            MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitHierarchyViolationException,
+            OrganizationalUnitNotFoundException, MissingElementValueException, SystemException, InvalidStatusException {
 
         return business.updateParents(id, xml);
     }
@@ -177,8 +177,9 @@ public class OrganizationalUnitHandler
      * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public String retrieve(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException {
 
         return business.retrieve(id);
     }
@@ -189,22 +190,24 @@ public class OrganizationalUnitHandler
      * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveProperties(java.lang.String)
      */
     @Override
-    public String retrieveProperties(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveProperties(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException {
         return business.retrieveProperties(id);
     }
 
     @Override
     public EscidocBinaryContent retrieveResource(final String id, final String resourceName)
-        throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OperationNotFoundException, SystemException {
+            throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, OperationNotFoundException, SystemException {
 
         return business.retrieveResource(id, resourceName);
     }
 
     @Override
-    public String retrieveResources(final String ouId) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveResources(final String ouId)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException {
 
         return business.retrieveResources(ouId);
     }
@@ -215,8 +218,9 @@ public class OrganizationalUnitHandler
      * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveMdRecords(java.lang.String)
      */
     @Override
-    public String retrieveMdRecords(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveMdRecords(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException {
 
         return business.retrieveMdRecords(id);
     }
@@ -225,9 +229,9 @@ public class OrganizationalUnitHandler
      * See Interface for functional description.
      */
     @Override
-    public String retrieveMdRecord(final String id, final String name) throws AuthenticationException,
-        AuthorizationException, MdRecordNotFoundException, MissingMethodParameterException,
-        OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveMdRecord(final String id, final String name)
+            throws AuthenticationException, AuthorizationException, MdRecordNotFoundException,
+            MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
         return business.retrieveMdRecord(id, name);
     }
 
@@ -237,8 +241,9 @@ public class OrganizationalUnitHandler
      * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveParents(java.lang.String)
      */
     @Override
-    public String retrieveParents(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveParents(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException {
         return business.retrieveParents(id);
     }
 
@@ -248,8 +253,9 @@ public class OrganizationalUnitHandler
      * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveParentObjects(java.lang.String)
      */
     @Override
-    public String retrieveParentObjects(final String ouId) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveParentObjects(final String ouId)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException {
 
         return business.retrieveParentObjects(ouId);
     }
@@ -262,8 +268,9 @@ public class OrganizationalUnitHandler
      * #retrieveSuccessors(java.lang.String)
      */
     @Override
-    public String retrieveSuccessors(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveSuccessors(final String id)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException {
 
         return business.retrieveSuccessors(id);
     }
@@ -274,8 +281,9 @@ public class OrganizationalUnitHandler
      * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveChildObjects(java.lang.String)
      */
     @Override
-    public String retrieveChildObjects(final String ouId) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public String retrieveChildObjects(final String ouId)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, SystemException {
 
         return business.retrieveChildObjects(ouId);
     }
@@ -286,8 +294,9 @@ public class OrganizationalUnitHandler
      * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrievePathList(java.lang.String)
      */
     @Override
-    public String retrievePathList(final String ouId) throws AuthenticationException, AuthorizationException,
-        OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException {
+    public String retrievePathList(final String ouId)
+            throws AuthenticationException, AuthorizationException, OrganizationalUnitNotFoundException,
+            SystemException, MissingMethodParameterException {
         return business.retrievePathList(ouId);
     }
 
@@ -298,7 +307,7 @@ public class OrganizationalUnitHandler
      */
     @Override
     public String retrieveOrganizationalUnits(final Map<String, String[]> filter)
-        throws MissingMethodParameterException, SystemException, InvalidSearchQueryException, InvalidXmlException {
+            throws MissingMethodParameterException, SystemException, InvalidSearchQueryException, InvalidXmlException {
 
         return business.retrieveOrganizationalUnits(new LuceneRequestParameters(filter));
     }
@@ -307,9 +316,10 @@ public class OrganizationalUnitHandler
      * See Interface for functional description.
      */
     @Override
-    public String close(final String id, final String taskParam) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
-        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException {
+    public String close(final String id, final String taskParam)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, InvalidStatusException, SystemException, OptimisticLockingException,
+            InvalidXmlException {
 
         return business.close(id, taskParam);
     }
@@ -318,9 +328,10 @@ public class OrganizationalUnitHandler
      * See Interface for functional description.
      */
     @Override
-    public String open(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, InvalidStatusException, SystemException,
-        OptimisticLockingException, InvalidXmlException {
+    public String open(final String id, final String taskParam)
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            OrganizationalUnitNotFoundException, InvalidStatusException, SystemException, OptimisticLockingException,
+            InvalidXmlException {
 
         return business.open(id, taskParam);
     }

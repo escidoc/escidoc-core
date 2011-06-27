@@ -73,8 +73,9 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public String deleteObjects(final String taskParam) throws SystemException, AuthenticationException,
-        AuthorizationException, XmlCorruptedException, EncodingSystemException, ApplicationServerSystemException {
+    public String deleteObjects(final String taskParam)
+            throws SystemException, AuthenticationException, AuthorizationException, XmlCorruptedException,
+            ApplicationServerSystemException {
         return business.deleteObjects(taskParam);
     }
 
@@ -117,8 +118,8 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public void decreaseReindexStatus(final String objectTypeXml) throws InvalidXmlException, SystemException,
-        AuthenticationException, AuthorizationException {
+    public void decreaseReindexStatus(final String objectTypeXml)
+            throws InvalidXmlException, SystemException, AuthenticationException, AuthorizationException {
         business.decreaseReindexStatus(objectTypeXml);
     }
 
@@ -136,9 +137,9 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException      Thrown if authorization fails.
      */
     @Override
-    public String reindex(final String clearIndex, final String indexNamePrefix) throws SystemException,
-        InvalidSearchQueryException, AuthenticationException, AuthorizationException, ApplicationServerSystemException,
-        FedoraSystemException, WebserverSystemException {
+    public String reindex(final String clearIndex, final String indexNamePrefix)
+            throws SystemException, InvalidSearchQueryException, AuthenticationException, AuthorizationException,
+            ApplicationServerSystemException, FedoraSystemException, WebserverSystemException {
         return business.reindex(Boolean.valueOf(clearIndex), indexNamePrefix);
     }
 
@@ -160,8 +161,9 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public String getIndexConfiguration() throws AuthenticationException, AuthorizationException,
-        TripleStoreSystemException, EncodingSystemException, WebserverSystemException {
+    public String getIndexConfiguration()
+            throws AuthenticationException, AuthorizationException, TripleStoreSystemException, EncodingSystemException,
+            WebserverSystemException {
         return this.business.getIndexConfiguration();
     }
 
@@ -175,8 +177,9 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException  Thrown if authorization fails.
      */
     @Override
-    public String getRepositoryInfo() throws AuthenticationException, AuthorizationException,
-        TripleStoreSystemException, EncodingSystemException, WebserverSystemException {
+    public String getRepositoryInfo()
+            throws AuthenticationException, AuthorizationException, TripleStoreSystemException, EncodingSystemException,
+            WebserverSystemException {
         return this.business.getRepositoryInfo();
     }
 
@@ -193,8 +196,8 @@ public class AdminHandler implements AdminHandlerInterface {
      */
     @Override
     @Deprecated
-    public String loadExamples(final String type) throws InvalidSearchQueryException, SystemException,
-        AuthenticationException, AuthorizationException {
+    public String loadExamples(final String type)
+            throws InvalidSearchQueryException, SystemException, AuthenticationException, AuthorizationException {
         return this.business.loadExamples(type);
     }
 }

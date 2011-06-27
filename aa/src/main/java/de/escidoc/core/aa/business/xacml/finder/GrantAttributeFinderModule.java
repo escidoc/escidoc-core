@@ -137,8 +137,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws TripleStoreSystemException, SystemException, GrantNotFoundException,
-        SqlDatabaseSystemException, WebserverSystemException, ResourceNotFoundException {
+        final String resourceVersionNumber) throws SystemException, WebserverSystemException, ResourceNotFoundException {
 
         final EvaluationResult result;
         final String resolvedAttributeIdValue;
@@ -186,16 +185,10 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param resolvableAttribute resolvable part of attribute
      * @param tail                tail after resolvable part
      * @return Object[] result
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private Object[] resolveAssignedOnAttribute(
         final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
-        throws TripleStoreSystemException, SystemException, GrantNotFoundException, ResourceNotFoundException,
-        WebserverSystemException {
+        throws SystemException, ResourceNotFoundException {
         EvaluationResult result;
         final String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_RESOURCE_ID, true);
@@ -266,14 +259,10 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param resolvableAttribute resolvable part of attribute
      * @param tail                tail after resolvable part
      * @return Object[] result
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
      */
     private Object[] resolveCreatedByAttribute(
         final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
-        throws GrantNotFoundException, SqlDatabaseSystemException, ResourceNotFoundException, WebserverSystemException {
+        throws SqlDatabaseSystemException, ResourceNotFoundException, WebserverSystemException {
         final String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_RESOURCE_ID, true);
         final String grantId =
@@ -299,13 +288,10 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param resolvableAttribute resolvable part of attribute
      * @param tail                tail after resolvable part
      * @return Object[] result
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
      */
     private Object[] resolveRoleAttribute(
         final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
-        throws GrantNotFoundException, WebserverSystemException, ResourceNotFoundException {
+        throws WebserverSystemException, ResourceNotFoundException {
         final String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_RESOURCE_ID, true);
         final String grantId =

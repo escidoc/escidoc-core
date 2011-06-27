@@ -83,9 +83,8 @@ import org.joda.time.DateTimeZone;
 /**
  * Item for create method.
  * <p/>
- * Attention! This is only a helper class for the transition to integrate this
- * functionality into the Item class.
- * 
+ * Attention! This is only a helper class for the transition to integrate this functionality into the Item class.
+ *
  * @author Steffen Wagner
  */
 @Configurable
@@ -124,9 +123,8 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Set ItemProperties.
-     * 
-     * @param properties
-     *            The properties of Item.
+     *
+     * @param properties The properties of Item.
      */
     public void setProperties(final ItemProperties properties) {
 
@@ -135,9 +133,8 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Add a metadata record to the Component.
-     * 
-     * @param mdRecord
-     *            The new MetadataRecord.
+     *
+     * @param mdRecord The new MetadataRecord.
      */
     public void addMdRecord(final MdRecordCreate mdRecord) {
 
@@ -150,10 +147,8 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Set Components.
-     * 
-     * @param components
-     *            Vector with new set of Components. Existing Components are
-     *            removed.
+     *
+     * @param components Vector with new set of Components. Existing Components are removed.
      */
     public void setComponents(final List<ComponentCreate> components) {
 
@@ -162,9 +157,8 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Add a Component to the list of Components.
-     * 
-     * @param component
-     *            New Component.
+     *
+     * @param component New Component.
      */
     public void addComponent(final ComponentCreate component) {
 
@@ -173,9 +167,8 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Delete Component.
-     * 
-     * @param component
-     *            Component to delete.
+     *
+     * @param component Component to delete.
      */
     public void delComponent(final ComponentCreate component) {
 
@@ -184,7 +177,7 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Get Components of Item.
-     * 
+     *
      * @return Vector with all Components of Item.
      */
     public List<ComponentCreate> getComponents() {
@@ -194,11 +187,10 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Injects the {@link EscidocIdProvider}.
-     * 
-     * @param idProvider
-     *            The {@link EscidocIdProvider} to set.
-     *            <p/>
-     *            FIXME This Spring construct seams not to work.
+     *
+     * @param idProvider The {@link EscidocIdProvider} to set.
+     *                   <p/>
+     *                   FIXME This Spring construct seams not to work.
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
 
@@ -207,40 +199,22 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Persist whole Item to Repository and force TripleStore sync.
-     * 
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void persist() throws SystemException, InvalidStatusException, MissingMdRecordException,
         FileNotFoundException, InvalidContentException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, MissingAttributeValueException, IntegritySystemException,
-        FedoraSystemException {
+        RelationPredicateNotFoundException, MissingAttributeValueException, FedoraSystemException {
 
         persist(true);
     }
 
     /**
      * Persist whole Item to Repository.
-     * 
-     * @param forceSync
-     *            Set true to force synchronous sync of TripleStore.
-     * @throws SystemException
-     *             Thrown if an unexpected error occurs
-     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     *
+     * @param forceSync Set true to force synchronous sync of TripleStore.
+     * @throws SystemException Thrown if an unexpected error occurs
      */
     public void persist(final boolean forceSync) throws SystemException, FileNotFoundException,
-        InvalidContentException, IntegritySystemException, FedoraSystemException {
+        InvalidContentException, FedoraSystemException {
 
         if (getProperties().getObjectProperties().getOrigin() == null) {
             persistComponents();
@@ -330,12 +304,10 @@ public class ItemCreate extends GenericResourceCreate {
      * Get DC (mapped from default metadata). Value is cached.
      * <p/>
      * Precondition: objid has to be set before getDC is called.
-     * 
+     *
      * @return DC or null if default metadata is missing).
-     * @throws WebserverSystemException
-     *             Thrown if an error occurs during DC creation.
-     * @throws EncodingSystemException
-     *             Thrown if the conversion to default encoding failed.
+     * @throws WebserverSystemException Thrown if an error occurs during DC creation.
+     * @throws EncodingSystemException  Thrown if the conversion to default encoding failed.
      */
     public String getDC() throws WebserverSystemException, EncodingSystemException {
 
@@ -356,7 +328,7 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Get vector of all MdRecords.
-     * 
+     *
      * @return All MdRecords.
      */
     public List<MdRecordCreate> getMetadataRecords() {
@@ -365,9 +337,8 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Get Metadatarecord by name.
-     * 
-     * @param name
-     *            Name of MetadataRecord.
+     *
+     * @param name Name of MetadataRecord.
      * @return MetadataRecord with required name or null.
      */
     public MdRecordCreate getMetadataRecord(final String name) {
@@ -382,8 +353,7 @@ public class ItemCreate extends GenericResourceCreate {
     }
 
     /**
-     * @param relations
-     *            the relations to set
+     * @param relations the relations to set
      */
     public void setRelations(final RelationsCreate relations) {
         this.relations = relations;
@@ -397,24 +367,21 @@ public class ItemCreate extends GenericResourceCreate {
     }
 
     /**
-     * @param contentStream
-     *            the contentStreams to set
+     * @param contentStream the contentStreams to set
      */
     public void addContentStream(final ContentStreamCreate contentStream) {
         this.contentStreams.add(contentStream);
     }
 
     /**
-     * @param contentStream
-     *            the contentStreams to delete
+     * @param contentStream the contentStreams to delete
      */
     public void delContentStreams(final ContentStreamCreate contentStream) {
         this.contentStreams.remove(contentStream);
     }
 
     /**
-     * @param contentStreams
-     *            the contentStreams to set
+     * @param contentStreams the contentStreams to set
      */
     public void setContentStreams(final List<ContentStreamCreate> contentStreams) {
         this.contentStreams = contentStreams;
@@ -429,7 +396,7 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Get Properties of Item.
-     * 
+     *
      * @return ItemProperties
      */
     public ItemProperties getProperties() {
@@ -486,10 +453,9 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Render an initial WOV.
-     * 
+     *
      * @return XML representation of Whole Object Versioning (WoV)
-     * @throws WebserverSystemException
-     *             Thrown if rendering failed.
+     * @throws WebserverSystemException Thrown if rendering failed.
      */
     private String getWov() throws WebserverSystemException {
 
@@ -540,31 +506,23 @@ public class ItemCreate extends GenericResourceCreate {
     }
 
     /**
-     * Render Object FoXML with Components, ContentStreams and DC but with
-     * incomplete RELS-EXT and without WOV.
+     * Render Object FoXML with Components, ContentStreams and DC but with incomplete RELS-EXT and without WOV.
      * <p/>
-     * WOV is excluded and RELS-EXT incomplete because of non existing timestamp
-     * (which is to add in a later step to the object).
+     * WOV is excluded and RELS-EXT incomplete because of non existing timestamp (which is to add in a later step to the
+     * object).
      * <p/>
-     * It is important that the RELS-EXT datastream at least of the datastreams,
-     * because the create timestamp of the RELS-EXT is used as creation
-     * timestamp of the resource. But the timestamps of the datastreams (even if
-     * they are created with one request) could be differ. And it may happen,
-     * that the RELS-EXT is not created at least. If the timestamp of RELS-EXT
-     * is older than other datastreams than are these other datastreams not part
-     * of the specified version (because only these datastreams are part of the
-     * resource which are equal or older than the timestamp of the version).
+     * It is important that the RELS-EXT datastream at least of the datastreams, because the create timestamp of the
+     * RELS-EXT is used as creation timestamp of the resource. But the timestamps of the datastreams (even if they are
+     * created with one request) could be differ. And it may happen, that the RELS-EXT is not created at least. If the
+     * timestamp of RELS-EXT is older than other datastreams than are these other datastreams not part of the specified
+     * version (because only these datastreams are part of the resource which are equal or older than the timestamp of
+     * the version).
      * <p/>
-     * Creating the RELS-EXT datastream afterward with a separate could be a
-     * performance issue.
-     * 
+     * Creating the RELS-EXT datastream afterward with a separate could be a performance issue.
+     *
      * @return FoXML representation of Item.
-     * @throws SystemException
-     *             Thrown if rendering of Item or sub-elements failed.
-     * @throws UnsupportedEncodingException
-     *             Thrown if conversion to default character set failed.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws SystemException              Thrown if rendering of Item or sub-elements failed.
+     * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      */
     private String getMinimalFoXML() throws SystemException, UnsupportedEncodingException, EncodingSystemException,
         WebserverSystemException {
@@ -606,11 +564,9 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Compile all values for RELS-EXT and render XML representation.
-     * 
+     *
      * @return RELS-EXT XML snippet
-     * @throws SystemException
-     *             Thrown if renderer failed.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws SystemException Thrown if renderer failed.
      */
     private String renderRelsExt() throws SystemException, WebserverSystemException {
 
@@ -632,12 +588,6 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Persist all Components of the Item.
-     * 
-     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void persistComponents() throws SystemException, FileNotFoundException, InvalidContentException,
         IntegritySystemException, FedoraSystemException {
@@ -686,9 +636,8 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Prepare values for FOXML Template Renderer (Velocity).
-     * 
+     *
      * @return HashMap with template values.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private Map<String, String> preparePropertiesValueMap() throws WebserverSystemException {
 
@@ -787,7 +736,7 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Getting Namespaces for RelsExt as Map.
-     * 
+     *
      * @return HashMap with namespace values for XML representation.
      */
     private static Map<String, String> getRelsExtNamespaceValues() {
@@ -820,9 +769,8 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Try a rollback by removing created Resources.
-     * 
-     * @param componentIds
-     *            Fedora objid of resources which are to purge.
+     *
+     * @param componentIds Fedora objid of resources which are to purge.
      */
     private void rollbackCreate(final Iterable<String> componentIds) {
         for (final String componentId : componentIds) {
@@ -842,17 +790,13 @@ public class ItemCreate extends GenericResourceCreate {
     }
 
     /**
-     * TODO remove this method if Fedora has fixed the timestamp bug (Fedora 3.0
-     * and 3.1 do not update the object timestamp during create. It happens that
-     * timestamps of streams are newer than the object timestamp. This failure
+     * TODO remove this method if Fedora has fixed the timestamp bug (Fedora 3.0 and 3.1 do not update the object
+     * timestamp during create. It happens that timestamps of streams are newer than the object timestamp. This failure
      * not occurs during a later update.).
-     * 
-     * @param objid
-     *            The id of the Fedora Object.
-     * @return LastModificationDate of the Object (with workaround for Fedora
-     *         bug).
-     * @throws FedoraSystemException
-     *             Thrown if request to Fedora failed.
+     *
+     * @param objid The id of the Fedora Object.
+     * @return LastModificationDate of the Object (with workaround for Fedora bug).
+     * @throws FedoraSystemException Thrown if request to Fedora failed.
      */
     private DateTime getLastModificationDateByWorkaround(final String objid) throws FedoraSystemException {
         final GetDatastreamProfilePathParam path =
@@ -864,7 +808,7 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Get objid with version suffix 123:1.
-     * 
+     *
      * @return objid with version suffix.
      */
     private String getObjidWithVersionSuffix() {
@@ -874,7 +818,7 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Get href with version suffix.
-     * 
+     *
      * @return Put on Version suffix
      */
     @Deprecated
@@ -888,7 +832,7 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Get a vector with all ids of the Components.
-     * 
+     *
      * @return Component objid
      */
     private List<String> getComponentIds() {
@@ -906,17 +850,12 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Handle a Fedora Exception thrown while uploading content.
-     * 
-     * @param url
-     *            The URL.
-     * @param e
-     *            The Fedora Exception.
-     * @throws FileNotFoundException
-     *             Thrown if the resource ref of Fedora content is not
-     *             accessible.
-     * @throws FedoraSystemException
-     *             Thrown if the reason for the Fedora Exception was not an
-     *             unaccible content resource (file).
+     *
+     * @param url The URL.
+     * @param e   The Fedora Exception.
+     * @throws FileNotFoundException Thrown if the resource ref of Fedora content is not accessible.
+     * @throws FedoraSystemException Thrown if the reason for the Fedora Exception was not an unaccible content resource
+     *                               (file).
      */
     private static void handleFedoraUploadError(final String url, final FedoraSystemException e)
         throws FileNotFoundException, FedoraSystemException {
@@ -957,7 +896,7 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Create Vector/HashMap structure to transfer date to velocity.
-     * 
+     *
      * @return Vector with HashMaps of ContentRelation values.
      */
     private List<HashMap<String, String>> prepareContentRelationsValueMap() {
@@ -987,9 +926,9 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Get ContentStreams Vector/HashMap Structure for Velocity.
-     * 
-     * @return Vector which contains a HashMap with all values for each
-     *         ContentStream. HashMap keys are keys for Velocity template.
+     *
+     * @return Vector which contains a HashMap with all values for each ContentStream. HashMap keys are keys for
+     *         Velocity template.
      */
     private List<HashMap<String, String>> getContentStreamsMap() {
         /*

@@ -93,7 +93,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @param containerHandler The container handler bean to inject.
      */
     public void setContainerHandler(
-        final de.escidoc.core.om.business.interfaces.ContainerHandlerInterface containerHandler) {
+            final de.escidoc.core.om.business.interfaces.ContainerHandlerInterface containerHandler) {
 
         this.handler = containerHandler;
     }
@@ -106,11 +106,12 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData) throws ContextNotFoundException, ContentModelNotFoundException,
-        InvalidContentException, MissingMethodParameterException, XmlCorruptedException,
-        MissingAttributeValueException, MissingElementValueException, SystemException,
-        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AuthenticationException,
-        AuthorizationException, InvalidStatusException, MissingMdRecordException, XmlSchemaValidationException {
+    public String create(final String xmlData)
+            throws ContextNotFoundException, ContentModelNotFoundException, InvalidContentException,
+            MissingMethodParameterException, XmlCorruptedException, MissingAttributeValueException,
+            MissingElementValueException, SystemException, ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException, AuthenticationException, AuthorizationException, InvalidStatusException,
+            MissingMdRecordException, XmlSchemaValidationException {
 
         return handler.create(xmlData);
     }
@@ -121,8 +122,9 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws ContainerNotFoundException, LockingException, InvalidStatusException,
-        SystemException, MissingMethodParameterException, AuthenticationException, AuthorizationException {
+    public void delete(final String id)
+            throws ContainerNotFoundException, LockingException, InvalidStatusException, SystemException,
+            MissingMethodParameterException, AuthenticationException, AuthorizationException {
 
         handler.delete(id);
     }
@@ -133,8 +135,9 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws MissingMethodParameterException, ContainerNotFoundException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String retrieve(final String id)
+            throws MissingMethodParameterException, ContainerNotFoundException, AuthenticationException,
+            AuthorizationException, SystemException {
 
         return handler.retrieve(id);
     }
@@ -146,11 +149,12 @@ public class ContainerHandler implements ContainerHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData) throws ContainerNotFoundException, LockingException,
-        InvalidContentException, MissingMethodParameterException, InvalidXmlException, OptimisticLockingException,
-        InvalidStatusException, ReadonlyVersionException, SystemException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, AuthenticationException, AuthorizationException,
-        MissingAttributeValueException, MissingMdRecordException {
+    public String update(final String id, final String xmlData)
+            throws ContainerNotFoundException, LockingException, InvalidContentException,
+            MissingMethodParameterException, InvalidXmlException, OptimisticLockingException, InvalidStatusException,
+            ReadonlyVersionException, SystemException, ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException, AuthenticationException, AuthorizationException,
+            MissingAttributeValueException, MissingMdRecordException {
 
         return handler.update(id, xmlData);
     }
@@ -168,8 +172,8 @@ public class ContainerHandler implements ContainerHandlerInterface {
      */
     @Override
     public String retrieveMembers(final String id, final Map<String, String[]> filter)
-        throws ContainerNotFoundException, InvalidSearchQueryException, MissingMethodParameterException,
-        SystemException {
+            throws ContainerNotFoundException, InvalidSearchQueryException, MissingMethodParameterException,
+            SystemException {
 
         return handler.retrieveMembers(id, new LuceneRequestParameters(filter));
     }
@@ -180,17 +184,18 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @return List of Tocs
      */
     @Override
-    public String retrieveTocs(final String id, final Map<String, String[]> filter) throws ContainerNotFoundException,
-        InvalidXmlException, InvalidSearchQueryException, MissingMethodParameterException, SystemException {
+    public String retrieveTocs(final String id, final Map<String, String[]> filter)
+            throws ContainerNotFoundException, InvalidXmlException, InvalidSearchQueryException,
+            MissingMethodParameterException, SystemException {
 
         return handler.retrieveTocs(id, new LuceneRequestParameters(filter));
     }
 
     @Override
-    public String addMembers(final String id, final String taskParam) throws ContainerNotFoundException,
-        LockingException, InvalidContentException, OptimisticLockingException, MissingMethodParameterException,
-        SystemException, InvalidContextException, AuthenticationException, AuthorizationException,
-        MissingAttributeValueException {
+    public String addMembers(final String id, final String taskParam)
+            throws ContainerNotFoundException, LockingException, InvalidContentException, OptimisticLockingException,
+            MissingMethodParameterException, SystemException, InvalidContextException, AuthenticationException,
+            AuthorizationException, MissingAttributeValueException {
 
         return handler.addMembers(id, taskParam);
     }
@@ -201,18 +206,19 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @return last-modification-date within XML (result.xsd)
      */
     @Override
-    public String addTocs(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
-        InvalidContentException, OptimisticLockingException, MissingMethodParameterException, SystemException,
-        InvalidContextException, AuthenticationException, AuthorizationException, MissingAttributeValueException {
+    public String addTocs(final String id, final String taskParam)
+            throws ContainerNotFoundException, LockingException, InvalidContentException, OptimisticLockingException,
+            MissingMethodParameterException, SystemException, InvalidContextException, AuthenticationException,
+            AuthorizationException, MissingAttributeValueException {
 
         return handler.addTocs(id, taskParam);
     }
 
     @Override
-    public String removeMembers(final String id, final String taskParam) throws ContextNotFoundException,
-        LockingException, XmlSchemaValidationException, ItemNotFoundException, InvalidContextStatusException,
-        InvalidItemStatusException, AuthenticationException, AuthorizationException, SystemException,
-        ContainerNotFoundException, InvalidContentException {
+    public String removeMembers(final String id, final String taskParam)
+            throws ContextNotFoundException, LockingException, XmlSchemaValidationException, ItemNotFoundException,
+            InvalidContextStatusException, InvalidItemStatusException, AuthenticationException, AuthorizationException,
+            SystemException, ContainerNotFoundException, InvalidContentException {
 
         return handler.removeMembers(id, taskParam);
     }
@@ -230,9 +236,9 @@ public class ContainerHandler implements ContainerHandlerInterface {
      */
     @Override
     @Deprecated
-    public String createMetadataRecord(final String id, final String xmlData) throws ContainerNotFoundException,
-        InvalidXmlException, LockingException, MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String createMetadataRecord(final String id, final String xmlData)
+            throws ContainerNotFoundException, InvalidXmlException, LockingException, MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, SystemException {
 
         return handler.createMdRecord(id, xmlData);
     }
@@ -243,9 +249,9 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @see ContainerHandlerInterface #createMdRecord(java.lang.String, java.lang.String)
      */
     @Override
-    public String createMdRecord(final String id, final String xmlData) throws ContainerNotFoundException,
-        InvalidXmlException, LockingException, MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String createMdRecord(final String id, final String xmlData)
+            throws ContainerNotFoundException, InvalidXmlException, LockingException, MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, SystemException {
 
         return handler.createMdRecord(id, xmlData);
     }
@@ -256,68 +262,73 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @see ContainerHandlerInterface #retrieveMdRecord(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrieveMdRecord(final String id, final String mdRecordId) throws ContainerNotFoundException,
-        MissingMethodParameterException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
-        SystemException {
+    public String retrieveMdRecord(final String id, final String mdRecordId)
+            throws ContainerNotFoundException, MissingMethodParameterException, MdRecordNotFoundException,
+            AuthenticationException, AuthorizationException, SystemException {
 
         return handler.retrieveMdRecord(id, mdRecordId);
     }
 
     @Override
-    public String retrieveMdRecordContent(final String id, final String mdRecordId) throws ContainerNotFoundException,
-        MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException {
+    public String retrieveMdRecordContent(final String id, final String mdRecordId)
+            throws ContainerNotFoundException, MdRecordNotFoundException, AuthenticationException,
+            AuthorizationException, MissingMethodParameterException, SystemException {
 
         return handler.retrieveMdRecordContent(id, mdRecordId);
     }
 
     @Override
-    public String retrieveDcRecordContent(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveDcRecordContent(final String id)
+            throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
         return handler.retrieveDcRecordContent(id);
     }
 
     @Override
     public String updateMetadataRecord(final String id, final String mdRecordId, final String xmlData)
-        throws ContainerNotFoundException, LockingException, XmlSchemaNotFoundException, MdRecordNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
-        InvalidXmlException, InvalidStatusException, ReadonlyVersionException, XmlSchemaValidationException {
+            throws ContainerNotFoundException, LockingException, XmlSchemaNotFoundException, MdRecordNotFoundException,
+            MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
+            InvalidXmlException, InvalidStatusException, ReadonlyVersionException {
 
         return handler.updateMetadataRecord(id, mdRecordId, xmlData);
     }
 
     @Override
-    public String retrieveMdRecords(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveMdRecords(final String id)
+            throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
 
         return handler.retrieveMdRecords(id);
     }
 
     @Override
-    public String retrieveProperties(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveProperties(final String id)
+            throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
 
         return handler.retrieveProperties(id);
     }
 
     @Override
-    public String retrieveResources(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveResources(final String id)
+            throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
 
         return handler.retrieveResources(id);
     }
 
     @Override
-    public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map<String, String[]> parameters) throws SystemException,
-        ContainerNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        OperationNotFoundException {
+    public EscidocBinaryContent retrieveResource(final String id, final String resourceName,
+                                                 final Map<String, String[]> parameters)
+            throws SystemException, ContainerNotFoundException, MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, OperationNotFoundException {
         return handler.retrieveResource(id, resourceName, parameters);
     }
 
     @Override
-    public String retrieveStructMap(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveStructMap(final String id)
+            throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
 
         return handler.retrieveStructMap(id);
     }
@@ -329,8 +340,9 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * retrieveVersions(java.lang.String)
      */
     @Override
-    public String retrieveVersionHistory(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveVersionHistory(final String id)
+            throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
         return handler.retrieveVersionHistory(id);
     }
 
@@ -340,8 +352,9 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @see ContainerHandlerInterface #retrieveParents(java.lang.String)
      */
     @Override
-    public String retrieveParents(final String id) throws ContainerNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveParents(final String id)
+            throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
         return handler.retrieveParents(id);
     }
 
@@ -351,8 +364,9 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @see ContainerHandlerInterface #retrieveContentRelations(java.lang.String)
      */
     @Override
-    public String retrieveRelations(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveRelations(final String id)
+            throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
         return handler.retrieveRelations(id);
     }
 
@@ -361,83 +375,87 @@ public class ContainerHandler implements ContainerHandlerInterface {
     //
 
     @Override
-    public String release(final String id, final String lastModified) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, AuthenticationException, ReadonlyVersionException,
-        AuthorizationException, InvalidStatusException, SystemException, OptimisticLockingException,
-        InvalidXmlException {
+    public String release(final String id, final String lastModified)
+            throws ContainerNotFoundException, LockingException, MissingMethodParameterException,
+            AuthenticationException, ReadonlyVersionException, AuthorizationException, InvalidStatusException,
+            SystemException, OptimisticLockingException, InvalidXmlException {
 
         return handler.release(id, lastModified);
     }
 
     @Override
-    public String submit(final String id, final String lastModified) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        InvalidStatusException, SystemException, OptimisticLockingException, ReadonlyVersionException,
-        InvalidXmlException {
+    public String submit(final String id, final String lastModified)
+            throws ContainerNotFoundException, LockingException, MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, InvalidStatusException, SystemException,
+            OptimisticLockingException, ReadonlyVersionException, InvalidXmlException {
 
         return handler.submit(id, lastModified);
     }
 
     @Override
-    public String withdraw(final String id, final String lastModified) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        InvalidStatusException, SystemException, OptimisticLockingException, AlreadyWithdrawnException,
-        ReadonlyVersionException, InvalidXmlException {
+    public String withdraw(final String id, final String lastModified)
+            throws ContainerNotFoundException, LockingException, MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, InvalidStatusException, SystemException,
+            OptimisticLockingException, AlreadyWithdrawnException, ReadonlyVersionException, InvalidXmlException {
 
         return handler.withdraw(id, lastModified);
     }
 
     @Override
-    public String revise(final String id, final String lastModified) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, InvalidStatusException, SystemException,
-        OptimisticLockingException, ReadonlyVersionException, XmlCorruptedException {
+    public String revise(final String id, final String lastModified)
+            throws ContainerNotFoundException, LockingException, MissingMethodParameterException,
+            InvalidStatusException, SystemException, OptimisticLockingException, ReadonlyVersionException,
+            XmlCorruptedException {
 
         return handler.revise(id, lastModified);
     }
 
     @Override
-    public String lock(final String id, final String lastModified) throws ContainerNotFoundException, LockingException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
-        OptimisticLockingException, InvalidStatusException, InvalidXmlException {
+    public String lock(final String id, final String lastModified)
+            throws ContainerNotFoundException, LockingException, MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, SystemException, OptimisticLockingException,
+            InvalidStatusException, InvalidXmlException {
 
         return handler.lock(id, lastModified);
     }
 
     @Override
-    public String unlock(final String id, final String lastModified) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        SystemException, OptimisticLockingException, InvalidStatusException, InvalidXmlException {
+    public String unlock(final String id, final String lastModified)
+            throws ContainerNotFoundException, LockingException, MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, SystemException, OptimisticLockingException,
+            InvalidStatusException, InvalidXmlException {
 
         return handler.unlock(id, lastModified);
     }
 
     @Override
-    public String moveToContext(final String containerId, final String taskParam) throws ContainerNotFoundException,
-        ContextNotFoundException, InvalidContentException, LockingException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String moveToContext(final String containerId, final String taskParam)
+            throws ContainerNotFoundException, ContextNotFoundException, InvalidContentException, LockingException,
+            MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
         return handler.moveToContext(containerId, taskParam);
     }
 
     @Override
-    public String createItem(final String containerId, final String xmlData) throws ContainerNotFoundException,
-        MissingContentException, ContextNotFoundException, ContentModelNotFoundException,
-        ReadonlyElementViolationException, MissingAttributeValueException, MissingElementValueException,
-        ReadonlyAttributeViolationException, MissingMethodParameterException, InvalidXmlException,
-        FileNotFoundException, LockingException, InvalidContentException, InvalidContextException,
-        RelationPredicateNotFoundException, ReferencedResourceNotFoundException, SystemException,
-        AuthenticationException, AuthorizationException, MissingMdRecordException, InvalidStatusException {
+    public String createItem(final String containerId, final String xmlData)
+            throws ContainerNotFoundException, MissingContentException, ContextNotFoundException,
+            ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
+            MissingElementValueException, ReadonlyAttributeViolationException, MissingMethodParameterException,
+            InvalidXmlException, FileNotFoundException, LockingException, InvalidContentException,
+            InvalidContextException, RelationPredicateNotFoundException, ReferencedResourceNotFoundException,
+            SystemException, AuthenticationException, AuthorizationException, MissingMdRecordException,
+            InvalidStatusException {
 
         return handler.createItem(containerId, xmlData);
     }
 
     @Override
     public String createContainer(final String containerId, final String xmlData)
-        throws MissingMethodParameterException, ContainerNotFoundException, LockingException, ContextNotFoundException,
-        ContentModelNotFoundException, InvalidContentException, InvalidXmlException, MissingAttributeValueException,
-        MissingElementValueException, AuthenticationException, AuthorizationException, InvalidContextException,
-        RelationPredicateNotFoundException, InvalidStatusException, ReferencedResourceNotFoundException,
-        SystemException, MissingMdRecordException {
+            throws MissingMethodParameterException, ContainerNotFoundException, LockingException,
+            ContextNotFoundException, ContentModelNotFoundException, InvalidContentException, InvalidXmlException,
+            MissingAttributeValueException, MissingElementValueException, AuthenticationException,
+            AuthorizationException, InvalidContextException, RelationPredicateNotFoundException, InvalidStatusException,
+            ReferencedResourceNotFoundException, SystemException, MissingMdRecordException {
 
         return handler.createContainer(containerId, xmlData);
     }
@@ -448,8 +466,8 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @see ContainerHandlerInterface #retrieveContainers(java.util.Map)
      */
     @Override
-    public String retrieveContainers(final Map<String, String[]> filter) throws MissingMethodParameterException,
-        InvalidSearchQueryException, InvalidXmlException, SystemException {
+    public String retrieveContainers(final Map<String, String[]> filter)
+            throws MissingMethodParameterException, InvalidSearchQueryException, InvalidXmlException, SystemException {
 
         return handler.retrieveContainers(new LuceneRequestParameters(filter));
     }
@@ -460,11 +478,12 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws ReadonlyVersionException cf. Interface
      */
     @Override
-    public String addContentRelations(final String id, final String param) throws SystemException,
-        ContainerNotFoundException, OptimisticLockingException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, AlreadyExistsException, InvalidStatusException, InvalidXmlException,
-        MissingElementValueException, LockingException, ReadonlyVersionException, InvalidContentException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException {
+    public String addContentRelations(final String id, final String param)
+            throws SystemException, ContainerNotFoundException, OptimisticLockingException,
+            ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
+            InvalidStatusException, InvalidXmlException, MissingElementValueException, LockingException,
+            ReadonlyVersionException, InvalidContentException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException {
 
         return handler.addContentRelations(id, param);
     }
@@ -475,10 +494,10 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws ReadonlyVersionException cf. Interface
      */
     @Override
-    public String removeContentRelations(final String id, final String param) throws SystemException,
-        ContainerNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
-        InvalidXmlException, ContentRelationNotFoundException, LockingException, ReadonlyVersionException,
-        AuthenticationException, AuthorizationException {
+    public String removeContentRelations(final String id, final String param)
+            throws SystemException, ContainerNotFoundException, OptimisticLockingException, InvalidStatusException,
+            MissingElementValueException, InvalidXmlException, ContentRelationNotFoundException, LockingException,
+            ReadonlyVersionException, AuthenticationException, AuthorizationException {
 
         return handler.removeContentRelations(id, param);
     }
@@ -487,9 +506,9 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * See Interface for functional description.
      */
     @Override
-    public String assignObjectPid(final String id, final String param) throws InvalidStatusException,
-        ContainerNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
-        SystemException, InvalidXmlException {
+    public String assignObjectPid(final String id, final String param)
+            throws InvalidStatusException, ContainerNotFoundException, LockingException,
+            MissingMethodParameterException, OptimisticLockingException, SystemException, InvalidXmlException {
 
         return handler.assignObjectPid(id, param);
     }
@@ -500,9 +519,9 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws ReadonlyVersionException Thrown if a provided container version id is not a latest version.
      */
     @Override
-    public String assignVersionPid(final String id, final String param) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        InvalidStatusException, XmlCorruptedException, ReadonlyVersionException {
+    public String assignVersionPid(final String id, final String param)
+            throws ContainerNotFoundException, LockingException, MissingMethodParameterException, SystemException,
+            OptimisticLockingException, InvalidStatusException, XmlCorruptedException, ReadonlyVersionException {
 
         return handler.assignVersionPid(id, param);
     }

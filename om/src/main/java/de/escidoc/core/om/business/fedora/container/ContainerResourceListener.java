@@ -93,11 +93,9 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @param id      container id
      * @param xmlData complete container XML
      * @throws SystemException One of the listeners threw an exception.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    protected void fireContainerCreated(final String id, final String xmlData) throws SystemException,
-        WebserverSystemException {
-        for (final ResourceListener containerListener : this.containerListeners) {
+    protected void fireContainerCreated(final String id, final String xmlData) throws SystemException {
+        for(final ResourceListener containerListener : this.containerListeners) {
             containerListener.resourceCreated(id, xmlData);
         }
     }
@@ -109,7 +107,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @throws SystemException One of the listeners threw an exception.
      */
     protected void fireContainerDeleted(final String id) throws SystemException {
-        for (final ResourceListener containerListener : this.containerListeners) {
+        for(final ResourceListener containerListener : this.containerListeners) {
             containerListener.resourceDeleted(id);
         }
     }
@@ -120,16 +118,13 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @param id container id
      * @throws ContainerNotFoundException Thrown if a container with the provided id does not exist in the framework.
      * @throws SystemException            One of the listeners threw an exception.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    protected void fireContainerModified(final String id) throws ContainerNotFoundException, SystemException,
-        WebserverSystemException, TripleStoreSystemException, IntegritySystemException, XmlParserSystemException {
+    protected void fireContainerModified(final String id)
+            throws ContainerNotFoundException, SystemException, TripleStoreSystemException, IntegritySystemException,
+            XmlParserSystemException {
         setContainer(id);
         final String xml = getContainerXml(getContainer());
-        for (final ResourceListener containerListener : this.containerListeners) {
+        for(final ResourceListener containerListener : this.containerListeners) {
             containerListener.resourceModified(id, xml);
         }
     }
@@ -140,11 +135,9 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @param id      container id
      * @param xmlData complete container XML
      * @throws SystemException One of the listeners threw an exception.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    protected void fireContainerModified(final String id, final String xmlData) throws SystemException,
-        WebserverSystemException {
-        for (final ResourceListener containerListener : this.containerListeners) {
+    protected void fireContainerModified(final String id, final String xmlData) throws SystemException {
+        for(final ResourceListener containerListener : this.containerListeners) {
             containerListener.resourceModified(id, xmlData);
         }
     }
@@ -157,7 +150,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      */
     protected void fireContainerMembersModified(final String id) throws SystemException {
 
-        for (final ResourceListener containerMemberListener : this.containerMemberListeners) {
+        for(final ResourceListener containerMemberListener : this.containerMemberListeners) {
             containerMemberListener.resourceModified(id, null);
         }
     }

@@ -57,7 +57,7 @@ import java.io.IOException;
 
 /**
  * Staging File Handler implementation.
- * 
+ *
  * @author Torsten Tetteroo
  */
 @Service("business.StagingFileHandler")
@@ -71,21 +71,21 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface
-     *      #create(de.escidoc.core.om.service.result.EscidocBinaryContent)
+     *
+     * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface #create(de.escidoc.core.om.service.result.EscidocBinaryContent)
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public String create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SqlDatabaseSystemException, WebserverSystemException {
+    public String create(final EscidocBinaryContent binaryContent)
+            throws MissingMethodParameterException, AuthenticationException, AuthorizationException,
+            SqlDatabaseSystemException, WebserverSystemException {
 
         StagingFile stagingFile = StagingUtil.generateStagingFile(true, this.dao);
-        if (stagingFile == null) {
+        if(stagingFile == null) {
             throw new MissingMethodParameterException("Missing staging file.");
         }
 
-        if (binaryContent == null || binaryContent.getContent() == null) {
+        if(binaryContent == null || binaryContent.getContent() == null) {
             throw new MissingMethodParameterException("Binary content must be provided.");
         }
         String token = stagingFile.getToken();
@@ -93,8 +93,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
         try {
             stagingFile.read(binaryContent.getContent());
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new MissingMethodParameterException("Binary content must be provided.", e);
         }
         stagingFile.setMimeType(binaryContent.getMimeType());
@@ -122,20 +121,16 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
             writer.flush();
 
             return out.toString(XmlUtility.CHARACTER_ENCODING);
-        }
-        catch (final XMLStreamException e) {
+        } catch(final XMLStreamException e) {
             throw new WebserverSystemException(e.getMessage(), e);
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e.getMessage(), e);
-        }
-        finally {
+        } finally {
             try {
-                if (binaryContent.getContent() != null) {
+                if(binaryContent.getContent() != null) {
                     binaryContent.getContent().close();
                 }
-            }
-            catch (final IOException e) {
+            } catch(final IOException e) {
                 LOGGER.error("error on closing stream", e);
             }
         }
@@ -143,13 +138,13 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
     /**
      * See Interface for functional description.
-     * 
+     *
      * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public EscidocBinaryContent retrieve(final String stagingFileId) throws StagingFileNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-        SqlDatabaseSystemException {
+    public EscidocBinaryContent retrieve(final String stagingFileId)
+            throws StagingFileNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
 
         final StagingFile stagingFile = getStagingFile(stagingFileId);
         final EscidocBinaryContent binaryContent = new EscidocBinaryContent();
@@ -157,8 +152,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         binaryContent.setFileName(stagingFile.getReference());
         try {
             binaryContent.setContent(stagingFile.getFileInputStream());
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new StagingFileNotFoundException("Binary content of addressed staging file cannot be found.", e);
         }
 
@@ -172,9 +166,8 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
     /**
      * Setter for the dao.
-     * 
-     * @param dao
-     *            The data access object.
+     *
+     * @param dao The data access object.
      */
     public void setDao(final StagingFileDao dao) {
         this.dao = dao;
@@ -182,27 +175,24 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
     /**
      * Retrieve the staging file with the provided id.
-     * 
-     * @param stagingFileId
-     *            The StagingFile id.
+     *
+     * @param stagingFileId The StagingFile id.
      * @return The staging file.
      * @throws MissingMethodParameterException
-     *             Thrown in case of missing id.
-     * @throws StagingFileNotFoundException
-     *             Thrown if no staging file with provided id exists.
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     *                                      Thrown in case of missing id.
+     * @throws StagingFileNotFoundException Thrown if no staging file with provided id exists.
      */
-    private StagingFile getStagingFile(final String stagingFileId) throws MissingMethodParameterException,
-        StagingFileNotFoundException, SqlDatabaseSystemException {
+    private StagingFile getStagingFile(final String stagingFileId)
+            throws MissingMethodParameterException, StagingFileNotFoundException, SqlDatabaseSystemException {
 
-        if (stagingFileId == null) {
+        if(stagingFileId == null) {
             throw new MissingMethodParameterException("staging file id must be provided.");
         }
 
         final StagingFile result = dao.findStagingFile(stagingFileId);
-        if (result == null || result.isExpired()) {
-            throw new StagingFileNotFoundException(StringUtility.format(
-                "Provided id does not match valid staging file.", stagingFileId));
+        if(result == null || result.isExpired()) {
+            throw new StagingFileNotFoundException(
+                    StringUtility.format("Provided id does not match valid staging file.", stagingFileId));
         }
         return result;
     }

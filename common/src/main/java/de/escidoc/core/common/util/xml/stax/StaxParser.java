@@ -111,12 +111,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @param in XML
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
-     * @throws javax.xml.stream.XMLStreamException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
-    public void parse(final InputStream in) throws Exception, XMLStreamException, XmlParserSystemException,
-        XmlCorruptedException {
+    public void parse(final InputStream in) throws Exception, XmlParserSystemException, XmlCorruptedException {
         if (this.handlerChain == null || handlerChain.isEmpty()) {
             throw new XMLStreamException("Parser has no handlers. Try StaxParser sp.addHandler"
                 + "(new DefaultHandler());");
@@ -130,9 +126,6 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @param in XML
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
-     * @throws javax.xml.stream.XMLStreamException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     protected void parseStream(final InputStream in) throws Exception, XmlParserSystemException, XMLStreamException,
         XmlCorruptedException {
@@ -200,8 +193,6 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @param in XML
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
-     * @throws javax.xml.stream.XMLStreamException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     protected void parseEvents(final InputStream in) throws Exception, XMLStreamException, XmlCorruptedException {
 
@@ -304,8 +295,6 @@ public class StaxParser implements DefaultHandlerStackInterface {
     /**
      * Inserts the specified Handler at the specified position in the handler chain. Shifts the element currently at
      * that position (if any) and any subsequent elements to the right (adds one to their indices).
-     * @param index
-     * @param dh
      */
     public void addHandler(final int index, final DefaultHandler dh) {
         handlerChain.add(index, dh);
@@ -318,7 +307,6 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @param e {@link StartElement StartElement}
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain.
-     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     protected void handle(final StartElement e) throws Exception, XmlCorruptedException {
 

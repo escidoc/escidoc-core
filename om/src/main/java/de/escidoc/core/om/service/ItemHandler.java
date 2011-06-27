@@ -109,12 +109,13 @@ public class ItemHandler implements ItemHandlerInterface {
      * See Interface for functional description.
      */
     @Override
-    public String create(final String xmlData) throws MissingContentException, ContextNotFoundException,
-        ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
-        MissingElementValueException, ReadonlyAttributeViolationException, AuthenticationException,
-        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
-        FileNotFoundException, SystemException, InvalidContentException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, MissingMdRecordException, InvalidStatusException {
+    public String create(final String xmlData)
+            throws MissingContentException, ContextNotFoundException, ContentModelNotFoundException,
+            ReadonlyElementViolationException, MissingAttributeValueException, MissingElementValueException,
+            ReadonlyAttributeViolationException, AuthenticationException, AuthorizationException, XmlCorruptedException,
+            XmlSchemaValidationException, MissingMethodParameterException, FileNotFoundException, SystemException,
+            InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
+            MissingMdRecordException, InvalidStatusException {
 
         return handler.create(xmlData);
     }
@@ -125,9 +126,9 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws ItemNotFoundException, AlreadyPublishedException, LockingException,
-        AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
-        SystemException {
+    public void delete(final String id)
+            throws ItemNotFoundException, AlreadyPublishedException, LockingException, AuthenticationException,
+            AuthorizationException, InvalidStatusException, MissingMethodParameterException, SystemException {
 
         handler.delete(id);
     }
@@ -138,8 +139,9 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws ItemNotFoundException, ComponentNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
+    public String retrieve(final String id)
+            throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
 
         return handler.retrieve(id);
     }
@@ -151,14 +153,14 @@ public class ItemHandler implements ItemHandlerInterface {
      *      java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData) throws ItemNotFoundException, FileNotFoundException,
-        InvalidContextException, InvalidStatusException, LockingException, NotPublishedException,
-        MissingLicenceException, ComponentNotFoundException, MissingContentException, AuthenticationException,
-        AuthorizationException, InvalidXmlException, MissingMethodParameterException, InvalidContentException,
-        SystemException, OptimisticLockingException, AlreadyExistsException, ReadonlyViolationException,
-        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, ReadonlyVersionException,
-        MissingAttributeValueException, MissingMdRecordException, XmlSchemaValidationException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException {
+    public String update(final String id, final String xmlData)
+            throws ItemNotFoundException, FileNotFoundException, InvalidContextException, InvalidStatusException,
+            LockingException, NotPublishedException, MissingLicenceException, ComponentNotFoundException,
+            MissingContentException, AuthenticationException, AuthorizationException, InvalidXmlException,
+            MissingMethodParameterException, InvalidContentException, SystemException, OptimisticLockingException,
+            AlreadyExistsException, ReadonlyViolationException, ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException, ReadonlyVersionException, MissingAttributeValueException,
+            MissingMdRecordException, ReadonlyAttributeViolationException {
 
         return handler.update(id, xmlData);
     }
@@ -169,12 +171,12 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws MissingAttributeValueException cf. Interface
      */
     @Override
-    public String createComponent(final String id, final String xmlData) throws MissingContentException,
-        ItemNotFoundException, ComponentNotFoundException, LockingException, MissingElementValueException,
-        AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
-        FileNotFoundException, InvalidXmlException, InvalidContentException, SystemException,
-        ReadonlyViolationException, OptimisticLockingException, MissingAttributeValueException,
-        ReadonlyAttributeViolationException, XmlSchemaValidationException {
+    public String createComponent(final String id, final String xmlData)
+            throws MissingContentException, ItemNotFoundException, ComponentNotFoundException, LockingException,
+            MissingElementValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
+            MissingMethodParameterException, FileNotFoundException, InvalidXmlException, InvalidContentException,
+            SystemException, ReadonlyViolationException, OptimisticLockingException, MissingAttributeValueException,
+            ReadonlyAttributeViolationException, XmlSchemaValidationException {
 
         return handler.createComponent(id, xmlData);
     }
@@ -185,9 +187,9 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see ItemHandlerInterface #retrieveComponent(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrieveComponent(final String id, final String componentId) throws ItemNotFoundException,
-        ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException {
+    public String retrieveComponent(final String id, final String componentId)
+            throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
 
         return handler.retrieveComponent(id, componentId);
     }
@@ -198,9 +200,9 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see ItemHandlerInterface #retrieveComponentMdRecords(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrieveComponentMdRecords(final String id, final String componentId) throws ItemNotFoundException,
-        ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException {
+    public String retrieveComponentMdRecords(final String id, final String componentId)
+            throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
         return handler.retrieveComponentMdRecords(id, componentId);
     }
 
@@ -211,8 +213,8 @@ public class ItemHandler implements ItemHandlerInterface {
      */
     @Override
     public String retrieveComponentMdRecord(final String id, final String componentId, final String mdRecordId)
-        throws ItemNotFoundException, AuthenticationException, AuthorizationException, ComponentNotFoundException,
-        MdRecordNotFoundException, MissingMethodParameterException, SystemException {
+            throws ItemNotFoundException, AuthenticationException, AuthorizationException, ComponentNotFoundException,
+            MdRecordNotFoundException, MissingMethodParameterException, SystemException {
         return handler.retrieveComponentMdRecord(id, componentId, mdRecordId);
     }
 
@@ -223,11 +225,11 @@ public class ItemHandler implements ItemHandlerInterface {
      */
     @Override
     public String updateComponent(final String id, final String componentId, final String xmlData)
-        throws ItemNotFoundException, ComponentNotFoundException, LockingException, FileNotFoundException,
-        MissingAttributeValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
-        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
-        ReadonlyViolationException, MissingContentException, InvalidContentException, ReadonlyVersionException,
-        ReadonlyElementViolationException, XmlSchemaValidationException {
+            throws ItemNotFoundException, ComponentNotFoundException, LockingException, FileNotFoundException,
+            MissingAttributeValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
+            MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
+            ReadonlyViolationException, MissingContentException, InvalidContentException, ReadonlyVersionException,
+            ReadonlyElementViolationException, XmlSchemaValidationException {
 
         return handler.updateComponent(id, componentId, xmlData);
     }
@@ -238,8 +240,9 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see ItemHandlerInterface #retrieveComponents(java.lang.String)
      */
     @Override
-    public String retrieveComponents(final String id) throws ItemNotFoundException, AuthenticationException,
-        AuthorizationException, ComponentNotFoundException, MissingMethodParameterException, SystemException {
+    public String retrieveComponents(final String id)
+            throws ItemNotFoundException, AuthenticationException, AuthorizationException, ComponentNotFoundException,
+            MissingMethodParameterException, SystemException {
 
         return handler.retrieveComponents(id);
     }
@@ -250,9 +253,9 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see ItemHandlerInterface #retrieveComponentProperties(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrieveComponentProperties(final String id, final String componentId) throws ItemNotFoundException,
-        ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException {
+    public String retrieveComponentProperties(final String id, final String componentId)
+            throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
 
         return handler.retrieveComponentProperties(id, componentId);
     }
@@ -266,10 +269,10 @@ public class ItemHandler implements ItemHandlerInterface {
      */
     @Override
     @Deprecated
-    public String createMetadataRecord(final String id, final String xmlData) throws ItemNotFoundException,
-        ComponentNotFoundException, XmlSchemaNotFoundException, LockingException, MissingAttributeValueException,
-        AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
-        SystemException, InvalidXmlException, XmlSchemaValidationException {
+    public String createMetadataRecord(final String id, final String xmlData)
+            throws ItemNotFoundException, ComponentNotFoundException, XmlSchemaNotFoundException, LockingException,
+            MissingAttributeValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
+            MissingMethodParameterException, SystemException, InvalidXmlException {
 
         return handler.createMetadataRecord(id, xmlData);
     }
@@ -280,42 +283,44 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see ItemHandlerInterface #createMetadataRecord(java.lang.String, java.lang.String)
      */
     @Override
-    public String createMdRecord(final String id, final String xmlData) throws ItemNotFoundException, SystemException,
-        LockingException, MissingAttributeValueException, InvalidStatusException, ComponentNotFoundException,
-        MissingMethodParameterException, AuthorizationException, AuthenticationException, XmlSchemaValidationException {
+    public String createMdRecord(final String id, final String xmlData)
+            throws ItemNotFoundException, SystemException, LockingException, MissingAttributeValueException,
+            InvalidStatusException, ComponentNotFoundException, MissingMethodParameterException, AuthorizationException,
+            AuthenticationException, XmlSchemaValidationException {
 
         return handler.createMdRecord(id, xmlData);
     }
 
     @Override
-    public EscidocBinaryContent retrieveContent(final String id, final String contentId) throws ItemNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-        InvalidStatusException, ResourceNotFoundException, ComponentNotFoundException {
+    public EscidocBinaryContent retrieveContent(final String id, final String contentId)
+            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException, InvalidStatusException, ResourceNotFoundException,
+            ComponentNotFoundException {
 
         return handler.retrieveContent(id, contentId);
     }
 
     @Override
     public EscidocBinaryContent retrieveContentStreamContent(final String itemId, final String name)
-        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, ItemNotFoundException,
-        SystemException, ContentStreamNotFoundException {
+            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+            ItemNotFoundException, SystemException, ContentStreamNotFoundException {
         return handler.retrieveContentStreamContent(itemId, name);
     }
 
     @Override
-    public EscidocBinaryContent retrieveContent(
-        final String id, final String contentId, final String transformer, final String param)
-        throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException, InvalidStatusException {
+    public EscidocBinaryContent retrieveContent(final String id, final String contentId, final String transformer,
+                                                final String param)
+            throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException, InvalidStatusException {
 
         return handler.retrieveContent(id, contentId, transformer, param);
     }
 
     @Override
-    public EscidocServiceRedirectInterface redirectContentService(
-        final String id, final String contentId, final String transformer, final String clientService)
-        throws ItemNotFoundException, ComponentNotFoundException, AuthorizationException,
-        MissingMethodParameterException, SystemException, InvalidStatusException {
+    public EscidocServiceRedirectInterface redirectContentService(final String id, final String contentId,
+                                                                  final String transformer, final String clientService)
+            throws ItemNotFoundException, ComponentNotFoundException, AuthorizationException,
+            MissingMethodParameterException, SystemException, InvalidStatusException {
 
         return handler.redirectContentService(id, contentId, transformer, clientService);
     }
@@ -326,25 +331,25 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see ItemHandlerInterface #retrieveMdRecord(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrieveMdRecord(final String id, final String mdRecordId) throws ItemNotFoundException,
-        MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException {
+    public String retrieveMdRecord(final String id, final String mdRecordId)
+            throws ItemNotFoundException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
 
         return handler.retrieveMdRecord(id, mdRecordId);
     }
 
     @Override
-    public String retrieveMdRecordContent(final String id, final String mdRecordId) throws ItemNotFoundException,
-        MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException {
+    public String retrieveMdRecordContent(final String id, final String mdRecordId)
+            throws ItemNotFoundException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
 
         return handler.retrieveMdRecordContent(id, mdRecordId);
     }
 
     @Override
-    public String retrieveDcRecordContent(final String id) throws ItemNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, MdRecordNotFoundException,
-        SystemException {
+    public String retrieveDcRecordContent(final String id)
+            throws ItemNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, MdRecordNotFoundException, SystemException {
         return handler.retrieveDcRecordContent(id);
     }
 
@@ -355,10 +360,10 @@ public class ItemHandler implements ItemHandlerInterface {
      */
     @Override
     public String updateMdRecord(final String id, final String mdRecordId, final String xmlData)
-        throws ItemNotFoundException, XmlSchemaNotFoundException, LockingException, InvalidContentException,
-        MdRecordNotFoundException, AuthenticationException, AuthorizationException, InvalidStatusException,
-        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
-        ReadonlyViolationException, ReadonlyVersionException, XmlSchemaValidationException {
+            throws ItemNotFoundException, XmlSchemaNotFoundException, LockingException, InvalidContentException,
+            MdRecordNotFoundException, AuthenticationException, AuthorizationException, InvalidStatusException,
+            MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
+            ReadonlyViolationException, ReadonlyVersionException, XmlSchemaValidationException {
 
         return handler.updateMetadataRecord(id, mdRecordId, xmlData);
     }
@@ -369,8 +374,9 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see ItemHandlerInterface #retrieveMdRecords(java.lang.String)
      */
     @Override
-    public String retrieveMdRecords(final String id) throws ItemNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException {
+    public String retrieveMdRecords(final String id)
+            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
 
         return handler.retrieveMdRecords(id);
     }
@@ -382,8 +388,9 @@ public class ItemHandler implements ItemHandlerInterface {
      * retrieveContentStreams(java.lang.String)
      */
     @Override
-    public String retrieveContentStreams(final String id) throws ItemNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException {
+    public String retrieveContentStreams(final String id)
+            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
         return handler.retrieveContentStreams(id);
     }
 
@@ -394,9 +401,9 @@ public class ItemHandler implements ItemHandlerInterface {
      * retrieveContentStream(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrieveContentStream(final String id, final String name) throws ItemNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-        ContentStreamNotFoundException {
+    public String retrieveContentStream(final String id, final String name)
+            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException, ContentStreamNotFoundException {
         return handler.retrieveContentStream(id, name);
     }
 
@@ -406,30 +413,33 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see ItemHandlerInterface #retrieveProperties(java.lang.String)
      */
     @Override
-    public String retrieveProperties(final String id) throws ItemNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException {
+    public String retrieveProperties(final String id)
+            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
 
         return handler.retrieveProperties(id);
     }
 
     @Override
-    public String retrieveResources(final String id) throws ItemNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException {
+    public String retrieveResources(final String id)
+            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
 
         return handler.retrieveResources(id);
     }
 
     @Override
-    public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map<String, String[]> parameters)
-        throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException, OperationNotFoundException {
+    public EscidocBinaryContent retrieveResource(final String id, final String resourceName,
+                                                 final Map<String, String[]> parameters)
+            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException, OperationNotFoundException {
         return handler.retrieveResource(id, resourceName, parameters);
     }
 
     @Override
-    public String retrieveVersionHistory(final String id) throws ItemNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException {
+    public String retrieveVersionHistory(final String id)
+            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
         return handler.retrieveVersionHistory(id);
     }
 
@@ -439,41 +449,44 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see ItemHandlerInterface #retrieveParents(java.lang.String)
      */
     @Override
-    public String retrieveParents(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public String retrieveParents(final String id)
+            throws ItemNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
         return handler.retrieveParents(id);
     }
 
     @Override
-    public String retrieveRelations(final String id) throws ItemNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException {
+    public String retrieveRelations(final String id)
+            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException {
 
         return handler.retrieveRelations(id);
     }
 
     @Override
-    public String release(final String id, final String lastModified) throws ItemNotFoundException,
-        ComponentNotFoundException, LockingException, InvalidStatusException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException {
+    public String release(final String id, final String lastModified)
+            throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidStatusException,
+            AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+            OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException {
 
         return handler.release(id, lastModified);
     }
 
     @Override
-    public String submit(final String id, final String lastModified) throws ItemNotFoundException,
-        ComponentNotFoundException, LockingException, InvalidStatusException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException {
+    public String submit(final String id, final String lastModified)
+            throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidStatusException,
+            AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+            OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException {
 
         return handler.submit(id, lastModified);
     }
 
     @Override
-    public String revise(final String id, final String lastModified) throws AuthenticationException,
-        AuthorizationException, ItemNotFoundException, ComponentNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        ReadonlyViolationException, ReadonlyVersionException, InvalidContentException, XmlCorruptedException {
+    public String revise(final String id, final String lastModified)
+            throws AuthenticationException, AuthorizationException, ItemNotFoundException, ComponentNotFoundException,
+            LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
+            OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidContentException,
+            XmlCorruptedException {
 
         return handler.revise(id, lastModified);
     }
@@ -482,11 +495,11 @@ public class ItemHandler implements ItemHandlerInterface {
      * See Interface for functional description.
      */
     @Override
-    public String withdraw(final String id, final String lastModified) throws ItemNotFoundException,
-        ComponentNotFoundException, NotPublishedException, LockingException, AlreadyWithdrawnException,
-        AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException,
-        InvalidXmlException {
+    public String withdraw(final String id, final String lastModified)
+            throws ItemNotFoundException, ComponentNotFoundException, NotPublishedException, LockingException,
+            AlreadyWithdrawnException, AuthenticationException, AuthorizationException, InvalidStatusException,
+            MissingMethodParameterException, SystemException, OptimisticLockingException, ReadonlyViolationException,
+            ReadonlyVersionException, InvalidXmlException {
 
         return handler.withdraw(id, lastModified);
     }
@@ -495,10 +508,10 @@ public class ItemHandler implements ItemHandlerInterface {
      * See Interface for functional description.
      */
     @Override
-    public String lock(final String id, final String lastModified) throws ItemNotFoundException,
-        ComponentNotFoundException, LockingException, InvalidContentException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        InvalidXmlException, InvalidStatusException {
+    public String lock(final String id, final String lastModified)
+            throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidContentException,
+            AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+            OptimisticLockingException, InvalidXmlException, InvalidStatusException {
 
         return handler.lock(id, lastModified);
     }
@@ -507,9 +520,10 @@ public class ItemHandler implements ItemHandlerInterface {
      * See Interface for functional description.
      */
     @Override
-    public String unlock(final String id, final String lastModified) throws ItemNotFoundException,
-        ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException {
+    public String unlock(final String id, final String lastModified)
+            throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
+            AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+            InvalidXmlException {
 
         return handler.unlock(id, lastModified);
     }
@@ -518,9 +532,9 @@ public class ItemHandler implements ItemHandlerInterface {
      * See Interface for functional description.
      */
     @Override
-    public void deleteComponent(final String itemId, final String componentId) throws ItemNotFoundException,
-        ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException, InvalidStatusException {
+    public void deleteComponent(final String itemId, final String componentId)
+            throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
+            AuthorizationException, MissingMethodParameterException, SystemException, InvalidStatusException {
 
         handler.deleteComponent(itemId, componentId);
     }
@@ -529,9 +543,10 @@ public class ItemHandler implements ItemHandlerInterface {
      * See Interface for functional description.
      */
     @Override
-    public String moveToContext(final String id, final String taskParam) throws ContextNotFoundException,
-        InvalidContentException, ItemNotFoundException, LockingException, InvalidStatusException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public String moveToContext(final String id, final String taskParam)
+            throws ContextNotFoundException, InvalidContentException, ItemNotFoundException, LockingException,
+            InvalidStatusException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+            SystemException {
 
         return handler.moveToContext(id, taskParam);
     }
@@ -553,10 +568,10 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws XmlCorruptedException Thrown if a provided item version id is not a latest version.
      */
     @Override
-    public String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
-        ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
-        XmlCorruptedException, ReadonlyVersionException {
+    public String assignVersionPid(final String id, final String taskParam)
+            throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
+            AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+            InvalidStatusException, XmlCorruptedException, ReadonlyVersionException {
 
         return handler.assignVersionPid(id, taskParam);
     }
@@ -565,10 +580,10 @@ public class ItemHandler implements ItemHandlerInterface {
      * See Interface for functional description.
      */
     @Override
-    public String assignObjectPid(final String id, final String taskParam) throws ItemNotFoundException,
-        ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
-        XmlCorruptedException, PidSystemException {
+    public String assignObjectPid(final String id, final String taskParam)
+            throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
+            AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+            InvalidStatusException, XmlCorruptedException, PidSystemException {
 
         return handler.assignObjectPid(id, taskParam);
     }
@@ -580,9 +595,9 @@ public class ItemHandler implements ItemHandlerInterface {
      */
     @Override
     public String assignContentPid(final String id, final String componentId, final String taskParam)
-        throws ItemNotFoundException, LockingException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
-        ComponentNotFoundException, XmlCorruptedException, ReadonlyVersionException, PidSystemException {
+            throws ItemNotFoundException, LockingException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
+            ComponentNotFoundException, XmlCorruptedException, ReadonlyVersionException, PidSystemException {
         return handler.assignContentPid(id, componentId, taskParam);
     }
 
@@ -592,12 +607,12 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws ReadonlyViolationException cf. Interface
      */
     @Override
-    public String addContentRelations(final String id, final String param) throws SystemException,
-        ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
-        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
-        InvalidStatusException, InvalidXmlException, MissingElementValueException, LockingException,
-        ReadonlyViolationException, InvalidContentException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, ReadonlyVersionException, ReadonlyAttributeViolationException {
+    public String addContentRelations(final String id, final String param)
+            throws SystemException, ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
+            ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
+            InvalidStatusException, InvalidXmlException, MissingElementValueException, LockingException,
+            ReadonlyViolationException, InvalidContentException, AuthenticationException, AuthorizationException,
+            MissingMethodParameterException, ReadonlyVersionException, ReadonlyAttributeViolationException {
 
         return handler.addContentRelations(id, param);
     }
@@ -608,11 +623,11 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws ReadonlyViolationException cf. Interface
      */
     @Override
-    public String removeContentRelations(final String id, final String param) throws SystemException,
-        ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException, InvalidStatusException,
-        MissingElementValueException, InvalidContentException, InvalidXmlException, ContentRelationNotFoundException,
-        AlreadyDeletedException, LockingException, ReadonlyViolationException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, ReadonlyVersionException {
+    public String removeContentRelations(final String id, final String param)
+            throws SystemException, ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
+            InvalidStatusException, MissingElementValueException, InvalidContentException, InvalidXmlException,
+            ContentRelationNotFoundException, AlreadyDeletedException, LockingException, ReadonlyViolationException,
+            AuthenticationException, AuthorizationException, MissingMethodParameterException, ReadonlyVersionException {
 
         return handler.removeContentRelations(id, param);
 

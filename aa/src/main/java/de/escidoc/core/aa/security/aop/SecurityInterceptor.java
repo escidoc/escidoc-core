@@ -123,39 +123,31 @@ public class SecurityInterceptor implements Ordered {
      * <p/>
      * It does the following steps: <ul> <li>Fetch the credentials (techUser, handle) of the current user from class
      * <code>UserContext</code>.</li> <li>Checks the technical username. Has to be either <ul>
-     * <li><code>ShibbolethUser</code>, which means that the service has been invoked from via a webservice,
-     * </li> <li><code>internal</code>, which means that the service has been called internally from another
-     * component and <code>INTERNAL_INTERCEPTION</code> is turned off, or</li>
-     * <li><code>authorization</code>, which means that the service has been called internally from the authorization
-     * component.</li> </ul> <li>In case the technical username is <code>internal</code>, no further security checks are
-     * done, the intercepted method is invoked and its return value is returned to the originally invoking method.</li>
-     * <li>In case the technical username is <code>ShibbolethUser</code>, the following steps are executed.</li> <li>The
-     * private method <code>doAuthentication</code> is called, which returns the "real" username for the handle fetched
-     * from <code>UserContext</code>.</li> <li>The private method <code>doAuthorisation</code> is called, which calls
-     * the XACML engine with the current input parameters in order to decide whether invoking the intercepted method is
+     * <li><code>ShibbolethUser</code>, which means that the service has been invoked from via a webservice, </li>
+     * <li><code>internal</code>, which means that the service has been called internally from another component and
+     * <code>INTERNAL_INTERCEPTION</code> is turned off, or</li> <li><code>authorization</code>, which means that the
+     * service has been called internally from the authorization component.</li> </ul> <li>In case the technical
+     * username is <code>internal</code>, no further security checks are done, the intercepted method is invoked and its
+     * return value is returned to the originally invoking method.</li> <li>In case the technical username is
+     * <code>ShibbolethUser</code>, the following steps are executed.</li> <li>The private method
+     * <code>doAuthentication</code> is called, which returns the "real" username for the handle fetched from
+     * <code>UserContext</code>.</li> <li>The private method <code>doAuthorisation</code> is called, which calls the
+     * XACML engine with the current input parameters in order to decide whether invoking the intercepted method is
      * permitted or denied. In case of denial, an exception is thrown.</li> <li>The intercepted method is invoked,
      * returning some return values.</li> <li>If the return values are a list of objects, these have to filtered before
-     * returned to the invoking service. For this the private method <code>doFiltering</code> is called, which returns the
-     * (filtered) return value of the intercepted method.</li> <li>The (filtered) return value of the intercepted method
-     * is returned back to the invoking service.</li> </ul>
+     * returned to the invoking service. For this the private method <code>doFiltering</code> is called, which returns
+     * the (filtered) return value of the intercepted method.</li> <li>The (filtered) return value of the intercepted
+     * method is returned back to the invoking service.</li> </ul>
      *
      * @param joinPoint The current {@link JoinPoint}.
      * @throws Throwable Thrown in case of an error.
-     * @return
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
     @Around("execution(public * de.escidoc.core.*.service.*.*(..))"
         + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
         + " && !within(de.escidoc.core.common.util.aop..*)")
-    public Object authorize(final ProceedingJoinPoint joinPoint) throws Throwable, MissingAttributeValueException,
-        AuthorizationException, ResourceNotFoundException, MissingElementValueException, InvalidXmlException,
-        MissingMethodParameterException, WebserverSystemException {
+    public Object authorize(final ProceedingJoinPoint joinPoint) throws Throwable, AuthorizationException,
+        ResourceNotFoundException, MissingElementValueException, InvalidXmlException, MissingMethodParameterException,
+        WebserverSystemException {
         final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         final Method calledMethod = methodSignature.getMethod();
         final String target = getTargetInterface(joinPoint);

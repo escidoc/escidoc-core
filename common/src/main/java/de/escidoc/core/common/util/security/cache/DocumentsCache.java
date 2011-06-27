@@ -49,8 +49,8 @@ import com.googlecode.ehcache.annotations.Property;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
- * Cache for xml <code>Document</code> objects.<br> This cache is used to avoid multiple parsing of the same
- * document. It provides an method to retrieve a document with creation of not found documents.
+ * Cache for xml <code>Document</code> objects.<br> This cache is used to avoid multiple parsing of the same document.
+ * It provides an method to retrieve a document with creation of not found documents.
  *
  * @author Michael Hoppe
  */
@@ -65,11 +65,10 @@ public class DocumentsCache {
      * @throws IOException                  Thrown in case of an i/o error.
      * @throws ParserConfigurationException Thrown in case of an error in parser configuration
      * @throws SAXException                 Thrown in case of a parse error
-     * @throws java.io.UnsupportedEncodingException
      */
     @Cacheable(cacheName = "documentsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Document retrieveDocument(final Object documentData) throws IOException, ParserConfigurationException,
-        SAXException, UnsupportedEncodingException {
+        SAXException {
         final DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document =
             builder.parse(new ByteArrayInputStream(((String) documentData).getBytes(XmlUtility.CHARACTER_ENCODING)));

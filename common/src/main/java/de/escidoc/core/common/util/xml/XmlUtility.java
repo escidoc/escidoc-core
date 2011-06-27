@@ -1108,9 +1108,8 @@ public final class XmlUtility {
      * @return Returns the validator for the schema specified by the provided URL.
      * @throws IOException              Thrown in case of an I/O error.
      * @throws WebserverSystemException Thrown if schema can not be parsed.
-     * @throws java.net.MalformedURLException
      */
-    public Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException, MalformedURLException {
+    public Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException {
 
         return schemasCache.getSchema(schemaUri);
     }
@@ -1404,10 +1403,8 @@ public final class XmlUtility {
 
     /**
      * Convert the given date into a XML compliant format in UTC.
-     * 
-     * @param date
-     *            date
-     * 
+     *
+     * @param date date
      * @return normalized date string
      */
     public static String normalizeDate(final Date date) {
@@ -1416,10 +1413,8 @@ public final class XmlUtility {
 
     /**
      * Convert the given date string into a XML compliant format in UTC.
-     * 
-     * @param date
-     *            date string
-     * 
+     *
+     * @param date date string
      * @return normalized date string
      */
     public static String normalizeDate(final String date) {
@@ -1985,7 +1980,7 @@ public final class XmlUtility {
     /**
      * Replace all escape sequences for forbidden charcters with their readable.
      *
-     * @param xmlText     The xml text with escape sequences.
+     * @param xmlText The xml text with escape sequences.
      * @return The resulting text with unescaped characters.
      */
     public static String unescapeForbiddenXmlCharacters(final String xmlText) {

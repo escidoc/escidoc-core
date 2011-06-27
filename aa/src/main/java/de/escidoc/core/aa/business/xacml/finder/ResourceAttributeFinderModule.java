@@ -145,8 +145,8 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws OptimisticLockingException, MissingAttributeValueException,
-        SystemException, ComponentNotFoundException, ResourceNotFoundException, UniqueConstraintViolationException,
-        ItemNotFoundException, InvalidXmlException, ContainerNotFoundException, WebserverSystemException {
+        SystemException, ResourceNotFoundException, UniqueConstraintViolationException, InvalidXmlException,
+        ContainerNotFoundException {
 
         final EvaluationResult result;
         final String resolvedAttributeIdValue;
@@ -184,20 +184,12 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * @param resourceId               The id of the container/item.
      * @param resolvedAttributeIdValue The attribute id for that the value shall be fetched.
      * @return Returns an <code>EvaluationResult</code> object containing the requested attribute.
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
-     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private EvaluationResult fetchItemOrContainerAttribute(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
         final String resolvedAttributeIdValue) throws MissingAttributeValueException, OptimisticLockingException,
         SystemException, UniqueConstraintViolationException, ItemNotFoundException, InvalidXmlException,
-        ContainerNotFoundException, WebserverSystemException {
+        ContainerNotFoundException {
 
         // A previous parse process could have stored the found
         // attributes in the cache. Here, we try to get it from the cache.
@@ -279,15 +271,6 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * @param ctx              The evaluation context.
      * @param itemId           The id of the item.
      * @return Returns an <code>EvaluationResult</code> object containing the requested attribute.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
-     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     private EvaluationResult fetchComponentAttribute(
         final String attributeIdValue, final EvaluationCtx ctx, final String itemId) throws SystemException,

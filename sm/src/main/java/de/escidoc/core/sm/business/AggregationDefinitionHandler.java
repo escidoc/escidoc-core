@@ -118,7 +118,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
     @Override
     @Transactional(rollbackFor = { SystemException.class, RuntimeException.class })
     public String create(final String xmlData) throws MissingMethodParameterException, ScopeNotFoundException,
-        SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        SystemException, WebserverSystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -178,9 +178,9 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
      *
      * @param id resource id.
      * @throws AggregationDefinitionNotFoundException
-     *                         e.
+     *          e.
      * @throws MissingMethodParameterException
-     *                         e.
+     *          e.
      * @see de.escidoc.core.sm.business.interfaces .AggregationDefinitionHandlerInterface #delete(java.lang.String)
      */
     @Override
@@ -253,7 +253,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
      */
     @Override
     public String retrieveAggregationDefinitions(final Map<String, String[]> parameters)
-        throws InvalidSearchQueryException, SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        throws InvalidSearchQueryException, SystemException, WebserverSystemException {
         final String result;
         final SRURequestParameters params = new DbRequestParameters(parameters);
         final String query = params.getQuery();

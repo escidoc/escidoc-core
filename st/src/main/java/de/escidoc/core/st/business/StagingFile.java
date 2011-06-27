@@ -53,7 +53,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
      */
     public boolean hasFile() {
 
-        if (getReference() == null) {
+        if(getReference() == null) {
             return false;
         }
         return new File(getReference()).exists();
@@ -67,7 +67,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
      */
     public boolean canRead() {
 
-        if (getReference() == null) {
+        if(getReference() == null) {
             return false;
         }
         return new File(getReference()).canRead();
@@ -81,7 +81,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
      */
     public boolean canWrite() {
 
-        if (getReference() == null) {
+        if(getReference() == null) {
             return false;
         }
         return new File(getReference()).canWrite();
@@ -105,7 +105,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
      */
     private File getFile() throws IOException {
 
-        if (!hasFile()) {
+        if(! hasFile()) {
             throw new IOException();
         }
         return new File(getReference());
@@ -120,11 +120,11 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
      */
     public File createFile() throws IOException {
 
-        if (getReference() == null) {
+        if(getReference() == null) {
             throw new IOException();
         }
         final File file = new File(getReference());
-        if (!file.exists()) {
+        if(! file.exists()) {
             file.getParentFile().mkdirs();
             file.createNewFile();
         }
@@ -141,8 +141,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
 
         try {
             return new FileInputStream(getFile());
-        }
-        catch (final FileNotFoundException e) {
+        } catch(final FileNotFoundException e) {
             throw new IOException(e);
         }
     }
@@ -155,14 +154,13 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
      */
     public void write(final OutputStream outputStream) throws IOException {
 
-        if (outputStream == null) {
+        if(outputStream == null) {
             throw new IOException();
         }
         try {
             InputStream inputStream = getFileInputStream();
             IOUtils.copyAndCloseInput(inputStream, outputStream);
-        }
-        finally {
+        } finally {
             IOUtils.closeStream(outputStream);
         }
     }
@@ -174,20 +172,18 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
      *
      * @param inputStream The input stream to read the content from.
      * @throws IOException If operation fails.
-     * @throws java.io.FileNotFoundException
      */
-    public void read(final InputStream inputStream) throws IOException, FileNotFoundException {
+    public void read(final InputStream inputStream) throws IOException {
 
-        if (inputStream == null) {
+        if(inputStream == null) {
             throw new IOException();
         }
         OutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(createFile());
             IOUtils.copyAndCloseInput(inputStream, outputStream);
-        }
-        finally {
-            if (outputStream != null) {
+        } finally {
+            if(outputStream != null) {
                 outputStream.close();
             }
         }
@@ -201,7 +197,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
      */
     public void clear() throws IOException {
 
-        if (hasFile()) {
+        if(hasFile()) {
             getFile().delete();
             setReference(null);
         }

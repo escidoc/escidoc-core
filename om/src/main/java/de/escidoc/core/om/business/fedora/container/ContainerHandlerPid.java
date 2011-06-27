@@ -78,11 +78,11 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface
      * #assignObjectPid(java.lang.String, java.lang.String)
      */
-    public String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
-        ContainerNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
-        SystemException, XmlCorruptedException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, PidSystemException, WebserverSystemException,
-        XmlParserSystemException {
+    public String assignObjectPid(final String id, final String taskParam)
+            throws InvalidStatusException, ContainerNotFoundException, LockingException,
+            MissingMethodParameterException, OptimisticLockingException, SystemException, XmlCorruptedException,
+            IntegritySystemException, FedoraSystemException, TripleStoreSystemException, PidSystemException,
+            WebserverSystemException, XmlParserSystemException {
 
         setContainer(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
@@ -90,15 +90,14 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         checkStatusNot(Constants.STATUS_WITHDRAWN);
         checkNoObjectPidAssigned();
 
-        Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Container " + id);
+        Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Container " + id);
 
         String pid = taskParameter.getPid();
-        if (pid == null) {
+        if(pid == null) {
             // get PID from external PID System
             pid = getPid(id, taskParam);
-        }
-        else if (! GenericResourcePid.validPidStructure(pid)) {
+        } else if(! GenericResourcePid.validPidStructure(pid)) {
             throw new XmlCorruptedException("Empty pid element of taskParam.");
         }
 
@@ -126,25 +125,18 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @throws XmlCorruptedException      Thrown if taskParam is invalid.
      * @throws ReadonlyVersionException   Thrown if a provided container version id is not a latest version.
      * @throws SystemException            Thrown if internal error occures.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.PidSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    public String assignVersionPid(final String id, final String taskParam) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        InvalidStatusException, XmlCorruptedException, ReadonlyVersionException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, PidSystemException,
-        WebserverSystemException, XmlParserSystemException {
+    public String assignVersionPid(final String id, final String taskParam)
+            throws ContainerNotFoundException, LockingException, MissingMethodParameterException, SystemException,
+            OptimisticLockingException, InvalidStatusException, XmlCorruptedException, ReadonlyVersionException,
+            IntegritySystemException, FedoraSystemException, TripleStoreSystemException, PidSystemException,
+            WebserverSystemException, XmlParserSystemException {
 
         setContainer(id);
-        if (!getContainer().isLatestVersion()) {
-            throw new ReadonlyVersionException("The version " + getContainer().getVersionNumber()
-                + " is not a latest version of the container. " + " Assignment of version PID is restricted to "
-                + "the latest version.");
+        if(! getContainer().isLatestVersion()) {
+            throw new ReadonlyVersionException(
+                    "The version " + getContainer().getVersionNumber() + " is not a latest version of the container. " +
+                            " Assignment of version PID is restricted to " + "the latest version.");
         }
         // check Container status/values
         checkLocked();
@@ -155,15 +147,14 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         checkVersionPidAssignable(id);
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
-        Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Container " + getContainer().getId());
+        Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Container " + getContainer().getId());
 
         String pid = taskParameter.getPid();
-        if (pid == null) {
+        if(pid == null) {
             // get PID from external PID System
             pid = getPid(id, taskParam);
-        }
-        else if (! GenericResourcePid.validPidStructure(pid)) {
+        } else if(! GenericResourcePid.validPidStructure(pid)) {
             throw new XmlCorruptedException("Empty pid element of taskParam.");
         }
 
@@ -186,13 +177,13 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      *                                  Thrown if necessary parameter not part of the param XML structure.
      * @throws WebserverSystemException Thrown by assignPid().
      */
-    public String getPid(final String id, final String param) throws PidSystemException,
-        MissingMethodParameterException, WebserverSystemException {
+    public String getPid(final String id, final String param)
+            throws PidSystemException, MissingMethodParameterException, WebserverSystemException {
 
-        if (this.pidGenFactory == null) {
+        if(this.pidGenFactory == null) {
             this.pidGenFactory = PIDSystemFactory.getInstance();
         }
-        if (this.pidGen == null) {
+        if(this.pidGen == null) {
             this.pidGen = pidGenFactory.getPIDGenerator();
         }
 
@@ -210,12 +201,13 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
     protected void checkPid() throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
         // this is part of a content model (which is currently missing)
 
-        if (!releasableObjectPid()) {
+        if(! releasableObjectPid()) {
             throw new InvalidStatusException("ObjectPid is missing! " + "A released Container must have an objectPid.");
         }
 
-        if (!releasableVersionPid()) {
-            throw new InvalidStatusException("VersionPid is missing! " + "A released Container must have a versionPid.");
+        if(! releasableVersionPid()) {
+            throw new InvalidStatusException(
+                    "VersionPid is missing! " + "A released Container must have a versionPid.");
         }
     }
 
@@ -238,8 +230,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
             // get status from version-history/version[@objid='id']/pid
             final String xpathPid = "/version-history/version[@objid='" + versionId + "']/pid";
             pid = xpath.evaluate(xpathPid, xmlDom);
-        }
-        catch (final Exception e) {
+        } catch(final Exception e) {
             throw new InvalidStatusException(e);
         }
 
@@ -252,9 +243,9 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         // throw new InvalidStatusException(msg);
         // }
         // FIXME pid structure check ?
-        if (pid.length() > 0) {
-            throw new InvalidStatusException("This object version is already assigned with PID '" + pid
-                + "' and can not be reassigned.");
+        if(pid.length() > 0) {
+            throw new InvalidStatusException(
+                    "This object version is already assigned with PID '" + pid + "' and can not be reassigned.");
         }
     }
 
@@ -266,7 +257,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @throws WebserverSystemException   Thrown if check of existing versionPID throws Exception.
      */
     protected boolean releasableObjectPid() throws TripleStoreSystemException, WebserverSystemException {
-        if (Boolean.valueOf(System.getProperty("cmm.Container.objectPid.releaseWithoutPid"))) {
+        if(Boolean.valueOf(System.getProperty("cmm.Container.objectPid.releaseWithoutPid"))) {
             return true;
         } // objectPid is needed
         return getContainer().hasObjectPid();
@@ -279,7 +270,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @throws WebserverSystemException Thrown if check of existing versionPID throws Exception.
      */
     protected boolean releasableVersionPid() throws WebserverSystemException {
-        if (Boolean.valueOf(System.getProperty("cmm.Container.versionPid.releaseWithoutPid"))) {
+        if(Boolean.valueOf(System.getProperty("cmm.Container.versionPid.releaseWithoutPid"))) {
             return true;
         }
 
@@ -292,18 +283,16 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      *
      * @param versionId ID of container object
      * @throws InvalidStatusException thrown if assignment is forbidden
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    protected void checkObjectPidAssignable(final String versionId) throws InvalidStatusException,
-        TripleStoreSystemException {
+    protected void checkObjectPidAssignable(final String versionId)
+            throws InvalidStatusException, TripleStoreSystemException {
 
-        final String pid =
-            getTripleStoreUtility().getPropertiesElements(getContainer().getId(),
-                TripleStoreUtility.PROP_LATEST_RELEASE_PID);
+        final String pid = getTripleStoreUtility()
+                .getPropertiesElements(getContainer().getId(), TripleStoreUtility.PROP_LATEST_RELEASE_PID);
 
-        if (pid != null && pid.length() > 0) {
-            throw new InvalidStatusException("The object is already assigned with PID '" + pid
-                + "' and can not be reassigned.");
+        if(pid != null && pid.length() > 0) {
+            throw new InvalidStatusException(
+                    "The object is already assigned with PID '" + pid + "' and can not be reassigned.");
         }
     }
 
@@ -322,16 +311,14 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         final DateTime lmd;
         try {
             lmd = getContainer().getLastModificationDate();
-        }
-        catch (final FedoraSystemException e) {
+        } catch(final FedoraSystemException e) {
             throw new WebserverSystemException(e);
         }
 
         final String result;
         try {
             result = Utility.prepareReturnXml(lmd, "<pid>" + pid + "</pid>\n");
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw new WebserverSystemException(e);
         }
         return result;

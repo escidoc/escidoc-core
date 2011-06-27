@@ -235,8 +235,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String userId) throws UserAccountNotFoundException, SystemException,
-        SqlDatabaseSystemException {
+    public String retrieve(final String userId) throws UserAccountNotFoundException, SystemException {
 
         final UserAccount userAccount = dao.retrieveUserAccount(userId);
         assertUserAccount(userId, userAccount);
@@ -253,8 +252,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveCurrentUser(java.lang.String)
      */
     @Override
-    public String retrieveCurrentUser() throws UserAccountNotFoundException, SystemException,
-        SqlDatabaseSystemException, WebserverSystemException {
+    public String retrieveCurrentUser() throws UserAccountNotFoundException, SystemException, WebserverSystemException {
         if (StringUtils.isEmpty(UserContext.getId())) {
             throw new UserAccountNotFoundException("No user logged in");
         }
@@ -280,8 +278,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String create(final String xmlData) throws UniqueConstraintViolationException, XmlCorruptedException,
-        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException, SqlDatabaseSystemException,
-        WebserverSystemException {
+        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException, WebserverSystemException {
 
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
 
@@ -367,7 +364,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     public String update(final String userId, final String xmlData) throws UserAccountNotFoundException,
         UniqueConstraintViolationException, XmlCorruptedException, MissingAttributeValueException,
         OptimisticLockingException, OrganizationalUnitNotFoundException, SystemException, InvalidStatusException,
-        SqlDatabaseSystemException, WebserverSystemException {
+        WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -438,8 +435,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public void updatePassword(final String userId, final String taskParam) throws UserAccountNotFoundException,
         InvalidStatusException, XmlCorruptedException, MissingMethodParameterException, OptimisticLockingException,
-        AuthenticationException, AuthorizationException, SystemException, EncodingSystemException,
-        XmlParserSystemException, SqlDatabaseSystemException, WebserverSystemException {
+        AuthenticationException, AuthorizationException, SystemException, XmlParserSystemException,
+        SqlDatabaseSystemException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         if (!userAccount.getActive()) {
@@ -491,8 +488,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveResources(java.lang.String)
      */
     @Override
-    public String retrieveResources(final String userId) throws UserAccountNotFoundException, SystemException,
-        SqlDatabaseSystemException {
+    public String retrieveResources(final String userId) throws UserAccountNotFoundException, SystemException {
 
         return renderer.renderResources(retrieveUserAccountById(userId));
     }
@@ -551,8 +547,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveCurrentGrants(java.lang.String)
      */
     @Override
-    public String retrieveCurrentGrants(final String userId) throws UserAccountNotFoundException, SystemException,
-        SqlDatabaseSystemException {
+    public String retrieveCurrentGrants(final String userId) throws UserAccountNotFoundException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final List<RoleGrant> currentGrants = fetchCurrentGrants(userId);
@@ -593,7 +588,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String retrieveGrants(final Map<String, String[]> filter) throws InvalidSearchQueryException,
-        SystemException, WebserverSystemException {
+        SystemException {
 
         final SRURequestParameters parameters = new DbRequestParameters(filter);
 
@@ -694,7 +689,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String retrieveGrant(final String userId, final String grantId) throws GrantNotFoundException,
-        UserAccountNotFoundException, SystemException, SqlDatabaseSystemException {
+        UserAccountNotFoundException, SystemException {
 
         return renderer.renderGrant(retrieveGrantByIds(userId, grantId));
     }
@@ -716,7 +711,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public void activate(final String userId, final String taskParam) throws AlreadyActiveException,
         UserAccountNotFoundException, XmlCorruptedException, MissingAttributeValueException,
-        OptimisticLockingException, SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        OptimisticLockingException, SystemException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -781,7 +776,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public void deactivate(final String userId, final String taskParam) throws AlreadyDeactiveException,
         UserAccountNotFoundException, XmlCorruptedException, MissingAttributeValueException,
-        OptimisticLockingException, SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        OptimisticLockingException, SystemException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -848,7 +843,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public String createGrant(final String userId, final String grantXML) throws AlreadyExistsException,
         UserAccountNotFoundException, InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
-        SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        SystemException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final RoleGrant grant = new RoleGrant();
@@ -996,7 +991,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public void revokeGrant(final String userId, final String grantId, final String taskParam)
         throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
-        MissingAttributeValueException, SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        MissingAttributeValueException, SystemException, WebserverSystemException {
 
         final RoleGrant grant = retrieveGrantByIds(userId, grantId);
 
@@ -1055,8 +1050,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR")
     public void revokeGrants(final String userId, final String taskParam) throws UserAccountNotFoundException,
         GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
-        SystemException, AuthorizationException, XmlParserSystemException, SqlDatabaseSystemException,
-        WebserverSystemException {
+        SystemException, AuthorizationException, SqlDatabaseSystemException, WebserverSystemException {
 
         // check if user exists
         retrieveUserAccountById(userId);
@@ -1186,7 +1180,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String retrieveUserAccounts(final Map<String, String[]> filter) throws InvalidSearchQueryException,
-        SystemException, SqlDatabaseSystemException, WebserverSystemException, TripleStoreSystemException {
+        SystemException, WebserverSystemException, TripleStoreSystemException {
 
         Map<String, String[]> castedFilter = filter;
 
@@ -1287,11 +1281,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @return Map with replaced cql-query (groupId replaced with userIds)
      * @throws InvalidSearchQueryException e
      * @throws SystemException             e
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private Map<String, String[]> fixCqlGroupFilter(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, SystemException, SqlDatabaseSystemException, TripleStoreSystemException {
+        throws InvalidSearchQueryException, SystemException, TripleStoreSystemException {
 
         Map<String, String[]> returnFilter = filter;
         final Object[] queryPartsObject = filter.get(Constants.SRU_PARAMETER_QUERY);
@@ -1388,11 +1380,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @throws UserGroupNotFoundException e
      * @throws SystemException            e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveUsersForGroup(java.lang.String)
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private Set<String> retrieveUsersForGroup(final String groupId) throws UserGroupNotFoundException, SystemException,
-        SqlDatabaseSystemException, TripleStoreSystemException {
+        TripleStoreSystemException {
         // may not return null but empty list!!
         final Set<String> userIds = new HashSet<String>();
 
@@ -1468,10 +1458,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @param totalList total list of all Children.
      * @return List of child-orgUnits
      * @throws SystemException If anything fails while computing the paths.
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private List<String> getOrgUnitChildrenPathList(final String orgUnitId, final List<String> totalList)
-        throws SystemException, TripleStoreSystemException {
+        throws SystemException {
 
         List<String> addableList = totalList;
         final List<String> orgUnitIds = tripleStoreUtility.getChildren(orgUnitId);
@@ -1738,8 +1727,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * current, authenticated user.
      *
      * @param userAccount The <code>UserAccount</code> object to modify.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private void setModificationValues(final UserAccount userAccount) throws SqlDatabaseSystemException,
         WebserverSystemException {
@@ -1796,8 +1783,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrievePreferences(java.lang.String)
      */
     @Override
-    public String retrievePreferences(final String userId) throws UserAccountNotFoundException, SystemException,
-        SqlDatabaseSystemException {
+    public String retrievePreferences(final String userId) throws UserAccountNotFoundException, SystemException {
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final Set<UserPreference> currentPreferences = userAccount.getUserPreferencesByUserId();
         return renderer.renderPreferences(userAccount, currentPreferences);
@@ -1816,7 +1802,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String retrievePreference(final String userId, final String name) throws UserAccountNotFoundException,
-        PreferenceNotFoundException, SystemException, SqlDatabaseSystemException {
+        PreferenceNotFoundException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final Set<UserPreference> currentPreferences = userAccount.getUserPreferencesByUserId();
@@ -1852,7 +1838,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public String createPreference(final String userId, final String preferenceXML) throws AlreadyExistsException,
         UserAccountNotFoundException, PreferenceNotFoundException, XmlCorruptedException, SystemException,
-        SqlDatabaseSystemException, WebserverSystemException {
+        WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -1925,7 +1911,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     public String updatePreference(final String userId, final String preferenceName, final String preferenceXML)
         throws AlreadyExistsException, UserAccountNotFoundException, PreferenceNotFoundException,
         XmlCorruptedException, SystemException, OptimisticLockingException, MissingAttributeValueException,
-        SqlDatabaseSystemException, WebserverSystemException {
+        WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final Set<UserPreference> userPreferences = userAccount.getUserPreferencesByUserId();
@@ -2044,7 +2030,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public String updatePreferences(final String userId, final String preferencesXML)
         throws UserAccountNotFoundException, XmlCorruptedException, SystemException, OptimisticLockingException,
-        MissingAttributeValueException, SqlDatabaseSystemException, WebserverSystemException {
+        MissingAttributeValueException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -2127,8 +2113,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String createAttribute(final String userId, final String attributeXML) throws AlreadyExistsException,
-        UserAccountNotFoundException, XmlCorruptedException, SystemException, SqlDatabaseSystemException,
-        WebserverSystemException {
+        UserAccountNotFoundException, XmlCorruptedException, SystemException, WebserverSystemException {
 
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(attributeXML);
         final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_ATTRIBUTE);
@@ -2187,8 +2172,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveAttributes(java.lang.String)
      */
     @Override
-    public String retrieveAttributes(final String userId) throws UserAccountNotFoundException, SystemException,
-        SqlDatabaseSystemException {
+    public String retrieveAttributes(final String userId) throws UserAccountNotFoundException, SystemException {
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final Set<UserAttribute> currentAttributes = userAccount.getUserAttributesByUserId();
         return renderer.renderAttributes(userAccount, currentAttributes);
@@ -2208,7 +2192,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String retrieveNamedAttributes(final String userId, final String name) throws UserAccountNotFoundException,
-        UserAttributeNotFoundException, SystemException, SqlDatabaseSystemException {
+        UserAttributeNotFoundException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final Set<UserAttribute> currentAttributes = userAccount.getUserAttributesByUserId();
@@ -2239,7 +2223,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String retrieveAttribute(final String userId, final String attributeId) throws UserAccountNotFoundException,
-        UserAttributeNotFoundException, SystemException, SqlDatabaseSystemException {
+        UserAttributeNotFoundException, SystemException {
         final UserAttribute attribute;
         try {
             attribute = retrieveAttributeById(userId, attributeId, true);
@@ -2270,8 +2254,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public String updateAttribute(final String userId, final String attributeId, final String attributeXML)
         throws UserAccountNotFoundException, OptimisticLockingException, ReadonlyElementViolationException,
-        UserAttributeNotFoundException, XmlCorruptedException, SystemException, SqlDatabaseSystemException,
-        WebserverSystemException {
+        UserAttributeNotFoundException, XmlCorruptedException, SystemException, WebserverSystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final UserAttribute userAttribute = retrieveAttributeById(userId, attributeId, false);
@@ -2348,7 +2331,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String retrievePermissionFilterQuery(final Map<String, String[]> parameters)
-        throws InvalidSearchQueryException, SystemException, WebserverSystemException {
+        throws InvalidSearchQueryException, SystemException {
         final Set<ResourceType> resourceTypes = EnumSet.noneOf(ResourceType.class);
         final String[] types = parameters.get("index");
         if (types != null) {

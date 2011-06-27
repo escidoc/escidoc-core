@@ -79,9 +79,8 @@ public class ResourceDefinitionCreate {
      *
      * @return FoXML representation of metadata record.
      * @throws SystemException Thrown if rendering failed.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    public String getFOXML() throws SystemException, WebserverSystemException {
+    public String getFOXML() throws SystemException {
 
         final Map<String, String> templateValues = getValueMap();
         return ItemFoXmlProvider.getInstance().getMetadataFoXml(templateValues);
@@ -101,7 +100,7 @@ public class ResourceDefinitionCreate {
         return this.xsltHref;
     }
 
-    public void setXsltHref(final String xsltHref) throws MalformedURLException, IOException {
+    public void setXsltHref(final String xsltHref) throws IOException {
         final URL url =
             xsltHref.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.ESCIDOC_CORE_BASEURL)

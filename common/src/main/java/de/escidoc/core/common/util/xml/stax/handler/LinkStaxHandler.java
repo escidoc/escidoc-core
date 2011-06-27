@@ -80,9 +80,9 @@ public class LinkStaxHandler extends DefaultHandler {
      * @param elementPath    The path to the link element that shall be handled by this handler.
      * @param hrefBaseUri    The base uri of the href pointing to the object that is referenced by the link that shall
      *                       be parsed by this handler.
-     * @param exceptionClass The type of the exception to throw if href base uri is not matched. This
-     *                       parameter must not be <code>null</code> and must be an instance of {@link
-     *                       EscidocException}, but this is not checked!.
+     * @param exceptionClass The type of the exception to throw if href base uri is not matched. This parameter must not
+     *                       be <code>null</code> and must be an instance of {@link EscidocException}, but this is not
+     *                       checked!.
      */
     public LinkStaxHandler(final String elementPath, final String hrefBaseUri, final Class exceptionClass) {
 
@@ -99,8 +99,7 @@ public class LinkStaxHandler extends DefaultHandler {
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element) throws EscidocException, SystemException,
-        WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws EscidocException {
         final String currentPath = element.getPath();
         if (isNotReady() && currentPath.equals(this.elementPath)) {
             this.href = null;

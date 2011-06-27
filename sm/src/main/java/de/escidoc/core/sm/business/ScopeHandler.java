@@ -89,7 +89,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     @Override
     public String create(final String xmlData) throws MissingMethodParameterException, SystemException,
-        SqlDatabaseSystemException, WebserverSystemException {
+        WebserverSystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -148,7 +148,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     @Override
     public String retrieve(final String id) throws ScopeNotFoundException, MissingMethodParameterException,
-        SystemException, SqlDatabaseSystemException {
+        SystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -217,7 +217,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     @Override
     public String update(final String id, final String xmlData) throws ScopeNotFoundException,
-        MissingMethodParameterException, SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        MissingMethodParameterException, SystemException, WebserverSystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }

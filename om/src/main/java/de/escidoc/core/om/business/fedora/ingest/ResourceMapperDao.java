@@ -56,7 +56,6 @@ public class ResourceMapperDao {
 
     /**
      * Set the resourceMappers (see spring-beans.xml for configuration).
-     * @param resourceMappers
      */
     public void setResourceMappers(final List<ResourceMapperBean> resourceMappers) {
         this.resourceMappers = resourceMappers;
@@ -65,21 +64,16 @@ public class ResourceMapperDao {
     /**
      * Returns the IngestableResource upon the first match.
      *
-     * @param xmlData
      * @return the IngestableResource responsible for the given resource.
-     * @throws de.escidoc.core.common.exceptions.EscidocException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidResourceException
      */
-    public ResourceMapperBean getIngestableForResource(final String xmlData) throws EscidocException,
-        InvalidResourceException {
+    public ResourceMapperBean getIngestableForResource(final String xmlData) throws EscidocException {
         final StringBuilder exceptions = new StringBuilder();
-        for (final ResourceMapperBean bean : getResourceMappers()) {
+        for(final ResourceMapperBean bean : getResourceMappers()) {
             try {
-                if (bean.getValidator().isResourceValid(xmlData, bean.getResourceType())) {
+                if(bean.getValidator().isResourceValid(xmlData, bean.getResourceType())) {
                     return bean;
                 }
-            }
-            catch (final InvalidResourceException e) {
+            } catch(final InvalidResourceException e) {
                 // possible smell here. how to better communicate exceptions in
                 // this case ?
                 exceptions.append("Not a valid ").append(bean.getResourceType()).append(" : ").append(e).append('\n');
@@ -87,8 +81,8 @@ public class ResourceMapperDao {
 
         }
         // for valid resources this code should never be reached
-        throw new InvalidResourceException("The given resource is invalid. It cannot be validated against any schema: "
-            + exceptions);
+        throw new InvalidResourceException(
+                "The given resource is invalid. It cannot be validated against any schema: " + exceptions);
     }
 
 }

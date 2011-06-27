@@ -329,17 +329,15 @@ public final class FinderModuleHelper {
      * @param whereClause     The where clause to "select" the values that shall be returned. This clause should be
      *                        created by using one of the appropriate methods provided by this class.
      * @param objectId        The id of the resource object for that the values hall be retrieved.
-     * @param predicateId
      * @param tsu             The {@link TripleStoreUtility} to use.
      * @return Returns the specified attribute of the specified resource.<br> This is a list of string values and may be
      *         empty.
      * @throws ResourceNotFoundException Thrown if a resource with the provided id cannot be found in the triple store.
      * @throws SystemException           Thrown in case of an internal error.
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public static List<String> retrieveFromTripleStore(
         final boolean targetIsSubject, final StringBuffer whereClause, final String objectId, final String predicateId,
-        final TripleStoreUtility tsu) throws ResourceNotFoundException, SystemException, TripleStoreSystemException {
+        final TripleStoreUtility tsu) throws ResourceNotFoundException, SystemException {
 
         final StringBuffer query = tsu.getRetrieveSelectClause(targetIsSubject, predicateId).append(whereClause);
         final List<String> result = tsu.retrieve(query.toString());
@@ -356,7 +354,6 @@ public final class FinderModuleHelper {
      * @param tsu The {@link TripleStoreUtility} to use.
      * @return Returns an empty list or throws an exception.
      * @throws ResourceNotFoundException Thrown if a resource with the provided id is not found.
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private static List<String> handleAttributeFromTripleStoreNotFound(final String id, final TripleStoreUtility tsu)
         throws ResourceNotFoundException, TripleStoreSystemException {

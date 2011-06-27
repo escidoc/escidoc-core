@@ -247,8 +247,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      */
     @Override
     public boolean[] evaluateRequestList(final List<Map<String, String>> requests) throws ResourceNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
-        WebserverSystemException {
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
         final boolean[] allowedObjects = new boolean[requests.size()];
         int i = 0;
@@ -361,13 +360,13 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * See Interface for functional description.
      *
      * @return List, marked with allowed or denied
-     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface#evaluateMethodForList(java.lang.String, java.lang.String,
-     *      List)
+     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface#evaluateMethodForList(java.lang.String,
+     *      java.lang.String, List)
      */
     @Override
     public List<Object[]> evaluateMethodForList(
         final String resourceName, final String methodName, final List<Object[]> argumentList)
-        throws ResourceNotFoundException, SystemException, IntegritySystemException, WebserverSystemException {
+        throws ResourceNotFoundException, SystemException, WebserverSystemException {
 
         // convert the resourceName if provided in triple store format
         final String convertedResourceName = FinderModuleHelper.convertObjectType(resourceName, false);
@@ -534,7 +533,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      *
      * @param status The XACML status to encode.
      * @return Returns the encoded status.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String encode(final Status status) throws WebserverSystemException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -581,7 +579,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      *         (in the same order).
      * @throws XmlSchemaValidationException Thrown in case of a schema validation error or a corrupted xml.
      * @throws SystemException              Thrown in case of an internal error.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private List<ResponseCtx> doEvaluate(final CharSequence requestsXml) throws XmlSchemaValidationException,
         SystemException, WebserverSystemException {

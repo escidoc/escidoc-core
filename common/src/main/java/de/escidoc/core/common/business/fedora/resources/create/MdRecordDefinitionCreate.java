@@ -91,7 +91,7 @@ public class MdRecordDefinitionCreate {
      * @throws IOException           If the eSciDoc configuration file can not be read. FIXME should probably not be
      *                               thrown so late.
      */
-    public void setSchemaHref(final String schemaHref) throws MalformedURLException, IOException {
+    public void setSchemaHref(final String schemaHref) throws IOException {
         final URL url =
             schemaHref.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.ESCIDOC_CORE_BASEURL)
@@ -137,7 +137,6 @@ public class MdRecordDefinitionCreate {
      *
      * @return FoXML representation of metadata record.
      * @throws SystemException Thrown if rendering failed.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public String getFOXML() throws SystemException, WebserverSystemException {
 

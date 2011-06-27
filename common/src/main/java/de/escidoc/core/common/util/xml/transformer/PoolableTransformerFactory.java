@@ -143,12 +143,9 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * @return Returns the {@link URL} to the addressed style sheet. If no style sheet can be identified for the
      *         provided key, the default one identified by constant <code>XSL_MAPPING_UNKNOWN_TO_DC</code> is returned.
      * @throws IOException Thrown if retrieving values from eSciDoc properties (configuration) failed.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws java.net.MalformedURLException
      */
     private InputStream mapKeyToXslt(final String key) throws WebserverSystemException, FedoraSystemException,
-        IOException, MalformedURLException {
+        IOException {
         final String[] keyParts = SPLIT_PATTERN.split(key);
         final String nsUri = keyParts[0];
         final String contentModelId = keyParts[1];

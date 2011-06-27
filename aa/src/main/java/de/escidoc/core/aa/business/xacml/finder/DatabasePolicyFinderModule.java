@@ -243,9 +243,6 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      *
      * @param userId The userId.
      * @return Returns the created <code>XacmlPolicySet</code> object for the user.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws java.net.URISyntaxException
-     * @throws com.sun.xacml.UnknownIdentifierException
      */
     private XacmlPolicySet getUserPolicies(final String userId) throws UnknownIdentifierException, URISyntaxException,
         WebserverSystemException {
@@ -258,12 +255,9 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      *
      * @param userId The userId.
      * @return Returns the created <code>XacmlPolicySet</code> object for the user.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws java.net.URISyntaxException
-     * @throws com.sun.xacml.UnknownIdentifierException
      */
     private XacmlPolicySet getUserGroupPolicies(final String userId) throws UnknownIdentifierException,
-        URISyntaxException, WebserverSystemException, SystemException {
+        URISyntaxException, SystemException {
 
         final List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
         // get groups the user belongs to
