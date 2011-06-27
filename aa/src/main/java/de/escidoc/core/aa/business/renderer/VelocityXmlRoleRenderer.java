@@ -138,7 +138,6 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
      * @param values
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    @SuppressWarnings("unchecked")
     private static void addRoleValues(final EscidocRole role, final Map<String, Object> values)
         throws WebserverSystemException {
 

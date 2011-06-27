@@ -118,7 +118,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao implements UserG
             throw new SqlDatabaseSystemException(e);
         }
         catch (final HibernateException e) {
-            //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
+            // noinspection ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(convertHibernateAccessException(e)); // Ignore FindBugs
         }
         catch (final IllegalStateException e) {

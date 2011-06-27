@@ -19,7 +19,7 @@ import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-@SuppressWarnings({"JavaDoc", "JavaDoc"})
+@SuppressWarnings({"JavaDoc"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Stream extends OutputStream {
 

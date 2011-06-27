@@ -2365,7 +2365,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
                 }
             }
         }
-        // noinspection RedundantCast
         return Utility.prepareReturnXml(null, "<filter>"
             + permissionsQuery.getFilterQuery(resourceTypes, this.utility.getCurrentUserId(), new FilterInterface() {
                 @Override
