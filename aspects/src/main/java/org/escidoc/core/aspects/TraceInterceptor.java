@@ -40,7 +40,7 @@ public class TraceInterceptor {
     @Around("execution(public * de.escidoc.core..*.* (..))"
             + " && !within(org.escidoc.core.aspects..*)"
             + " && !within(de.escidoc.core.common.util.aop..*)"
-            + " && if(" + "false" + ")") // enable this aspect only if you need to trace
+            + " && if(" + "false" + ')') // enable this aspect only if you need to trace
     public Object traceMethod(final ProceedingJoinPoint joinPoint) throws Throwable, Exception {
         if (LOGGER.isDebugEnabled()) {
             final StaticPart staticPart = joinPoint.getStaticPart();

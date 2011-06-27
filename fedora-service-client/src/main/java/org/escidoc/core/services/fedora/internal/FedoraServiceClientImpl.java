@@ -405,7 +405,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         query.setType("triples");
         query.setLang("spo");
         query.setFormat("N-Triples");
-        query.setQuery("* <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <" + resourceType + ">");
+        query.setQuery("* <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <" + resourceType + '>');
         return parseIdsFromStream(this.fedoraService.risearch(path, query));
     }
 

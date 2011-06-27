@@ -129,7 +129,7 @@ public class StatisticInterceptor implements Ordered {
         + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
         + " && !execution(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
         + " && !execution(* de.escidoc.core..*.StatisticService*.*(..))"
-        + " && !execution(* de.escidoc.core.common..*.*(..))" + " && if(" + "false" + ")")
+        + " && !execution(* de.escidoc.core.common..*.*(..))" + " && if(" + "false" + ')')
     // enable this aspect only if you need
     public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable, SystemException,
         Exception, WebserverSystemException {
