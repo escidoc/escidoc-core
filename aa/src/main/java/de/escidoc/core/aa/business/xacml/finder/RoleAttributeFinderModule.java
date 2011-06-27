@@ -73,7 +73,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     private static final String ROLE_ATTRS = "(id|created-by|modified-by|name)";
 
     private static final Pattern PATTERN_PARSE_ROLE_ATTRIBUTE_ID =
-            Pattern.compile('(' + AttributeIds.ROLE_ATTR_PREFIX + ROLE_ATTRS + ")(:.*){0,1}");
+        Pattern.compile('(' + AttributeIds.ROLE_ATTR_PREFIX + ROLE_ATTRS + ")(:.*){0,1}");
 
     /**
      * This attribute matches the id of the role.
@@ -106,14 +106,15 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
      *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String, java.lang.String, int)
      */
     @Override
-    protected boolean assertAttribute(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
-                                      final String resourceObjid, final String resourceVersionNumber,
-                                      final int designatorType) throws EscidocException {
+    protected boolean assertAttribute(
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
         // make sure attribute id is escidoc internal format and not empty
         // as this finder cannot resolve attributes of new resources.
-        if(! super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
-                designatorType) || FinderModuleHelper.isNewResourceId(resourceId)) {
+        if (!super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType)
+            || FinderModuleHelper.isNewResourceId(resourceId)) {
 
             return false;
         }
@@ -130,32 +131,38 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
      *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    protected Object[] resolveLocalPart(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
-                                        final String resourceObjid, final String resourceVersionNumber)
-            throws RoleNotFoundException, WebserverSystemException {
+    protected Object[] resolveLocalPart(
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber) throws RoleNotFoundException, WebserverSystemException {
 
         EvaluationResult result = null;
         final String resolvedAttributeIdValue;
         final Matcher roleAttributeMatcher = PATTERN_PARSE_ROLE_ATTRIBUTE_ID.matcher(attributeIdValue);
-        if(roleAttributeMatcher.find()) {
+        if (roleAttributeMatcher.find()) {
             resolvedAttributeIdValue = roleAttributeMatcher.group(1);
             final EscidocRole role = retrieveRole(ctx, resourceId);
-            if(resolvedAttributeIdValue.equals(ATTR_ROLE_ID)) {
+            if (resolvedAttributeIdValue.equals(ATTR_ROLE_ID)) {
                 result = CustomEvaluationResultBuilder.createSingleStringValueResult(role.getId());
-            } else if(resolvedAttributeIdValue.equals(ATTR_ROLE_CREATED_BY)) {
-                result = CustomEvaluationResultBuilder
-                        .createSingleStringValueResult(role.getUserAccountByCreatorId().getId());
-            } else if(resolvedAttributeIdValue.equals(ATTR_ROLE_MODIFIED_BY)) {
-                result = CustomEvaluationResultBuilder
-                        .createSingleStringValueResult(role.getUserAccountByModifiedById().getId());
-            } else if(resolvedAttributeIdValue.equals(ATTR_ROLE_NAME)) {
+            }
+            else if (resolvedAttributeIdValue.equals(ATTR_ROLE_CREATED_BY)) {
+                result =
+                    CustomEvaluationResultBuilder.createSingleStringValueResult(role
+                        .getUserAccountByCreatorId().getId());
+            }
+            else if (resolvedAttributeIdValue.equals(ATTR_ROLE_MODIFIED_BY)) {
+                result =
+                    CustomEvaluationResultBuilder.createSingleStringValueResult(role
+                        .getUserAccountByModifiedById().getId());
+            }
+            else if (resolvedAttributeIdValue.equals(ATTR_ROLE_NAME)) {
                 result = CustomEvaluationResultBuilder.createSingleStringValueResult(role.getRoleName());
             }
-        } else {
+        }
+        else {
             return null;
         }
 
-        return new Object[]{result, resolvedAttributeIdValue};
+        return new Object[] { result, resolvedAttributeIdValue };
     }
 
     /**
@@ -167,20 +174,21 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws RoleNotFoundException    Thrown if no role with provided id exists.
      */
-    private EscidocRole retrieveRole(final EvaluationCtx ctx, final String roleId)
-            throws WebserverSystemException, RoleNotFoundException {
+    private EscidocRole retrieveRole(final EvaluationCtx ctx, final String roleId) throws WebserverSystemException,
+        RoleNotFoundException {
 
         EscidocRole role = (EscidocRole) getFromCache(XmlUtility.NAME_ID, null, null, roleId, ctx);
-        if(role == null) {
+        if (role == null) {
             try {
                 role = roleDao.retrieveRole(roleId);
-                if(role == null) {
+                if (role == null) {
                     throw new RoleNotFoundException(StringUtility.format("Role not found", roleId));
                 }
                 putInCache(XmlUtility.NAME_ID, null, null, roleId, ctx, role);
-            } catch(final SqlDatabaseSystemException e) {
-                throw new WebserverSystemException(
-                        StringUtility.format("Exception during retrieval of the role", e.getMessage()), e);
+            }
+            catch (final SqlDatabaseSystemException e) {
+                throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the role", e
+                    .getMessage()), e);
             }
         }
 

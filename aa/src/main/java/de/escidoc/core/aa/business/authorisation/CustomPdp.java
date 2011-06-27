@@ -241,8 +241,8 @@ public class CustomPdp {
      * @throws ParsingException         if the Request is invalid
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public ResponseCtx evaluate(final String requestFile)
-            throws ParsingException, WebserverSystemException, FileNotFoundException {
+    public ResponseCtx evaluate(final String requestFile) throws ParsingException, WebserverSystemException,
+        FileNotFoundException {
         // setup the request based on the file
         final RequestCtx request = RequestCtx.getInstance(new FileInputStream(requestFile));
 
@@ -296,8 +296,7 @@ public class CustomPdp {
      *
      * @param partlyResolveableAttrFinder <code>PartlyResolveableAttributeFinderModule</code> object to inject.
      */
-    public void setPartlyResolveableAttrFinder(
-            final PartlyResolveableAttributeFinderModule partlyResolveableAttrFinder) {
+    public void setPartlyResolveableAttrFinder(final PartlyResolveableAttributeFinderModule partlyResolveableAttrFinder) {
         this.partlyResolveableAttrFinder = partlyResolveableAttrFinder;
     }
 
@@ -417,7 +416,7 @@ public class CustomPdp {
      *         the {@link NewOuParentsAttributeFinderModule} to inject.
      */
     public void setNewOuParentsAttributeFinderModule(
-            final NewOuParentsAttributeFinderModule newOuParentsAttributeFinderModule) {
+        final NewOuParentsAttributeFinderModule newOuParentsAttributeFinderModule) {
         this.newOuParentsAttributeFinderModule = newOuParentsAttributeFinderModule;
     }
 

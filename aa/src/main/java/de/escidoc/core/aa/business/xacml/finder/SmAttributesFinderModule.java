@@ -81,18 +81,18 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
     private static final String RESOLVABLE_SM_ATTRS = ATTR_SCOPE + '|' + ATTR_ALLOWED_ROLE;
 
     private static final String VALID_SM_ATTRIBUTE_PREFIXES =
-            AttributeIds.RESOURCE_AGGREGATION_DEFINITION_ATTR_PREFIX + ".*|" +
-                    AttributeIds.REPORT_DEFINITION_ATTR_PREFIX + ".*|" + AttributeIds.REPORT_ATTR_PREFIX + ".*";
+        AttributeIds.RESOURCE_AGGREGATION_DEFINITION_ATTR_PREFIX + ".*|" + AttributeIds.REPORT_DEFINITION_ATTR_PREFIX
+            + ".*|" + AttributeIds.REPORT_ATTR_PREFIX + ".*";
 
-    private static final Pattern PATTERN_PARSE_SM_ATTRIBUTE_ID = Pattern.compile(
-            "((" + VALID_SM_ATTRIBUTE_PREFIXES + ")(" + RESOLVABLE_SM_ATTRS + "))(-new){0,1}(:(.*)){0,1}" + '|' +
-                    AttributeIds.URN_STATISTIC_SCOPE_ID);
+    private static final Pattern PATTERN_PARSE_SM_ATTRIBUTE_ID =
+        Pattern.compile("((" + VALID_SM_ATTRIBUTE_PREFIXES + ")(" + RESOLVABLE_SM_ATTRS + "))(-new){0,1}(:(.*)){0,1}"
+            + '|' + AttributeIds.URN_STATISTIC_SCOPE_ID);
 
     private static final Pattern PATTERN_VALID_ATTRIBUTE_ID = Pattern.compile(VALID_SM_ATTRIBUTE_PREFIXES);
 
     private static final Pattern SCOPE_PATTERN =
-            Pattern.compile(".*<[^>]*?scope[^>]*?objid=\"(.*?)\".*" + "|.*<[^>]*?scope[^>]*?href=\"[^\"]*/(.*?)\".*",
-                    Pattern.DOTALL + Pattern.MULTILINE);
+        Pattern.compile(".*<[^>]*?scope[^>]*?objid=\"(.*?)\".*" + "|.*<[^>]*?scope[^>]*?href=\"[^\"]*/(.*?)\".*",
+            Pattern.DOTALL + Pattern.MULTILINE);
 
     // private static final Pattern CREATED_BY_PATTERN =
     // Pattern.compile(StringUtility.concatenateToString(
@@ -108,8 +108,8 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
     // Pattern.DOTALL
     // + Pattern.MULTILINE);
 
-    private static final Pattern ALLOWED_ROLE_PATTERN = Pattern.compile(
-            "<[^>]*?allowed-role[^>]*?objid=\"(.*?)\"" + "|<[^>]*?allowed-role[^>]*?href=\"[^\"]*/(.*?)\"",
+    private static final Pattern ALLOWED_ROLE_PATTERN =
+        Pattern.compile("<[^>]*?allowed-role[^>]*?objid=\"(.*?)\"" + "|<[^>]*?allowed-role[^>]*?href=\"[^\"]*/(.*?)\"",
             Pattern.DOTALL + Pattern.MULTILINE);
 
     @Autowired
@@ -128,12 +128,12 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * See Interface for functional description.
      */
     @Override
-    protected boolean assertAttribute(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
-                                      final String resourceObjid, final String resourceVersionNumber,
-                                      final int designatorType) throws EscidocException {
+    protected boolean assertAttribute(
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
-        if(! super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
-                designatorType)) {
+        if (!super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType)) {
 
             return false;
         }
@@ -148,47 +148,51 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * See Interface for functional description.
      */
     @Override
-    protected Object[] resolveLocalPart(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
-                                        final String resourceObjid, final String resourceVersionNumber)
-            throws AggregationDefinitionNotFoundException, ScopeNotFoundException, WebserverSystemException,
-            ReportDefinitionNotFoundException {
+    protected Object[] resolveLocalPart(
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber) throws AggregationDefinitionNotFoundException, ScopeNotFoundException,
+        WebserverSystemException, ReportDefinitionNotFoundException {
 
         final EvaluationResult result;
         String resolvedAttributeIdValue;
 
         final Matcher smAttributeMatcher = PATTERN_PARSE_SM_ATTRIBUTE_ID.matcher(attributeIdValue);
-        if(smAttributeMatcher.find()) {
+        if (smAttributeMatcher.find()) {
             resolvedAttributeIdValue = smAttributeMatcher.group(1);
             String attributePrefix = smAttributeMatcher.group(2);
-            if(resolvedAttributeIdValue == null && attributePrefix == null) {
+            if (resolvedAttributeIdValue == null && attributePrefix == null) {
                 resolvedAttributeIdValue = smAttributeMatcher.group(0);
                 attributePrefix = smAttributeMatcher.group(0);
             }
             final String attributeId = smAttributeMatcher.group(3);
 
             final String resourceXml;
-            if(attributePrefix.equals(AttributeIds.RESOURCE_AGGREGATION_DEFINITION_ATTR_PREFIX)) {
+            if (attributePrefix.equals(AttributeIds.RESOURCE_AGGREGATION_DEFINITION_ATTR_PREFIX)) {
                 resourceXml = retrieveAggregationDefinition(ctx, resourceId);
                 result = evaluateResult(resourceXml, resolvedAttributeIdValue, attributeId);
-            } else if(attributePrefix.equals(AttributeIds.REPORT_DEFINITION_ATTR_PREFIX) ||
-                    attributePrefix.equals(AttributeIds.REPORT_ATTR_PREFIX)) {
+            }
+            else if (attributePrefix.equals(AttributeIds.REPORT_DEFINITION_ATTR_PREFIX)
+                || attributePrefix.equals(AttributeIds.REPORT_ATTR_PREFIX)) {
                 resourceXml = retrieveReportDefinition(ctx, resourceId);
                 result = evaluateResult(resourceXml, resolvedAttributeIdValue, attributeId);
 
-            } else if(attributePrefix.equals(AttributeIds.URN_STATISTIC_SCOPE_ID)) {
+            }
+            else if (attributePrefix.equals(AttributeIds.URN_STATISTIC_SCOPE_ID)) {
                 retrieveScope(ctx, resourceId);
                 result = CustomEvaluationResultBuilder.createSingleStringValueResult(resourceId);
-            } else {
+            }
+            else {
                 return null;
             }
-            if(result == null) {
+            if (result == null) {
                 return null;
             }
-        } else {
+        }
+        else {
             return null;
         }
 
-        return new Object[]{result, resolvedAttributeIdValue};
+        return new Object[] { result, resolvedAttributeIdValue };
     }
 
     /**
@@ -199,15 +203,15 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * @param attributeId         The id of the attribute.
      * @return EvaluationResult result.
      */
-    private static EvaluationResult evaluateResult(final CharSequence resourceXml, final String resolvableAttribute,
-                                                   final String attributeId) {
+    private static EvaluationResult evaluateResult(
+        final CharSequence resourceXml, final String resolvableAttribute, final String attributeId) {
         EvaluationResult result = null;
 
-        if(ATTR_SCOPE.equals(attributeId)) {
+        if (ATTR_SCOPE.equals(attributeId)) {
             final Matcher matcher = SCOPE_PATTERN.matcher(resourceXml);
-            if(matcher.find()) {
+            if (matcher.find()) {
                 String objId = matcher.group(1);
-                if(objId == null) {
+                if (objId == null) {
                     objId = matcher.group(2);
                 }
                 result = CustomEvaluationResultBuilder.createSingleStringValueResult(objId.trim());
@@ -236,18 +240,20 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
             // CustomEvaluationResultBuilder
             // .createSingleStringValueResult(objId.trim());
             // }
-        } else if(ATTR_ALLOWED_ROLE.equals(attributeId)) {
+        }
+        else if (ATTR_ALLOWED_ROLE.equals(attributeId)) {
             final Matcher matcher = ALLOWED_ROLE_PATTERN.matcher(resourceXml);
             final StringBuilder roles = new StringBuilder("");
-            while(matcher.find()) {
+            while (matcher.find()) {
                 String roleId = matcher.group(1);
-                if(roleId == null) {
+                if (roleId == null) {
                     roleId = matcher.group(2);
                 }
                 roles.append(' ').append(roleId.trim());
             }
             result = CustomEvaluationResultBuilder.createSingleStringValueResult(roles.toString());
-        } else {
+        }
+        else {
             return null;
         }
         return result;
@@ -264,29 +270,32 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      *                                  Thrown if no aggregation definition with provided id exists.
      */
     private String retrieveAggregationDefinition(final EvaluationCtx ctx, final String aggregationDefinitionId)
-            throws WebserverSystemException, AggregationDefinitionNotFoundException {
+        throws WebserverSystemException, AggregationDefinitionNotFoundException {
 
         final StringBuilder key = new StringBuilder(XmlUtility.NAME_ID).append(aggregationDefinitionId);
         String aggregationDefinitionXml =
-                (String) getFromCache(XmlUtility.NAME_AGGREGATION_DEFINITION, null, null, key.toString(), ctx);
-        if(aggregationDefinitionXml == null) {
+            (String) getFromCache(XmlUtility.NAME_AGGREGATION_DEFINITION, null, null, key.toString(), ctx);
+        if (aggregationDefinitionXml == null) {
             try {
                 aggregationDefinitionXml = aggregationDefinitionHandler.retrieve(aggregationDefinitionId);
-                if(aggregationDefinitionXml == null) {
-                    throw new AggregationDefinitionNotFoundException(
-                            StringUtility.format("Aggregation definition not found", aggregationDefinitionId));
+                if (aggregationDefinitionXml == null) {
+                    throw new AggregationDefinitionNotFoundException(StringUtility.format(
+                        "Aggregation definition not found", aggregationDefinitionId));
                 }
                 putInCache(XmlUtility.NAME_AGGREGATION_DEFINITION, null, null, key.toString(), ctx,
-                        aggregationDefinitionXml);
-            } catch(final MissingMethodParameterException e) {
-                throw new WebserverSystemException(
-                        StringUtility.format("Exception during aggregation definition retrieval", e.getMessage()), e);
-            } catch(final SecurityException e) {
-                throw new WebserverSystemException(
-                        "Security exception during " + "AggregationDefinitionHandler.retrieve call.", e);
-            } catch(final SystemException e) {
-                throw new WebserverSystemException(
-                        StringUtility.format("Exception during aggregation definition retrieval", e.getMessage()), e);
+                    aggregationDefinitionXml);
+            }
+            catch (final MissingMethodParameterException e) {
+                throw new WebserverSystemException(StringUtility.format(
+                    "Exception during aggregation definition retrieval", e.getMessage()), e);
+            }
+            catch (final SecurityException e) {
+                throw new WebserverSystemException("Security exception during "
+                    + "AggregationDefinitionHandler.retrieve call.", e);
+            }
+            catch (final SystemException e) {
+                throw new WebserverSystemException(StringUtility.format(
+                    "Exception during aggregation definition retrieval", e.getMessage()), e);
             }
         }
 
@@ -304,28 +313,31 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      *                                  Thrown if no report definition with provided id exists.
      */
     private String retrieveReportDefinition(final EvaluationCtx ctx, final String reportDefinitionId)
-            throws WebserverSystemException, ReportDefinitionNotFoundException {
+        throws WebserverSystemException, ReportDefinitionNotFoundException {
 
         final StringBuilder key = new StringBuilder(XmlUtility.NAME_ID).append(reportDefinitionId);
         String reportDefinitionXml =
-                (String) getFromCache(XmlUtility.NAME_REPORT_DEFINITION, null, null, key.toString(), ctx);
-        if(reportDefinitionXml == null) {
+            (String) getFromCache(XmlUtility.NAME_REPORT_DEFINITION, null, null, key.toString(), ctx);
+        if (reportDefinitionXml == null) {
             try {
                 reportDefinitionXml = reportDefinitionHandler.retrieve(reportDefinitionId);
-                if(reportDefinitionXml == null) {
-                    throw new ReportDefinitionNotFoundException(
-                            StringUtility.format("Report definition not found", reportDefinitionId));
+                if (reportDefinitionXml == null) {
+                    throw new ReportDefinitionNotFoundException(StringUtility.format("Report definition not found",
+                        reportDefinitionId));
                 }
                 putInCache(XmlUtility.NAME_REPORT_DEFINITION, null, null, key.toString(), ctx, reportDefinitionXml);
-            } catch(final MissingMethodParameterException e) {
-                throw new WebserverSystemException(
-                        StringUtility.format("Exception during report definition retrieval", e.getMessage()), e);
-            } catch(final SecurityException e) {
-                throw new WebserverSystemException(
-                        "Security exception during " + "ReportDefinitionHandler.retrieve call.", e);
-            } catch(final SystemException e) {
-                throw new WebserverSystemException(
-                        StringUtility.format("Exception during report definition retrieval", e.getMessage()), e);
+            }
+            catch (final MissingMethodParameterException e) {
+                throw new WebserverSystemException(StringUtility.format("Exception during report definition retrieval",
+                    e.getMessage()), e);
+            }
+            catch (final SecurityException e) {
+                throw new WebserverSystemException("Security exception during "
+                    + "ReportDefinitionHandler.retrieve call.", e);
+            }
+            catch (final SystemException e) {
+                throw new WebserverSystemException(StringUtility.format("Exception during report definition retrieval",
+                    e.getMessage()), e);
             }
         }
 
@@ -341,26 +353,29 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws ScopeNotFoundException   Thrown if no scope with provided id exists.
      */
-    private String retrieveScope(final EvaluationCtx ctx, final String scopeId)
-            throws WebserverSystemException, ScopeNotFoundException {
+    private String retrieveScope(final EvaluationCtx ctx, final String scopeId) throws WebserverSystemException,
+        ScopeNotFoundException {
 
         final StringBuilder key = new StringBuilder(XmlUtility.NAME_ID).append(scopeId);
         String scopeXml = (String) getFromCache(XmlUtility.NAME_SCOPE, null, null, key.toString(), ctx);
-        if(scopeXml == null) {
+        if (scopeXml == null) {
             try {
                 scopeXml = scopeHandler.retrieve(scopeId);
-                if(scopeXml == null) {
+                if (scopeXml == null) {
                     throw new ScopeNotFoundException(StringUtility.format("Scope not found", scopeId));
                 }
                 putInCache(XmlUtility.NAME_SCOPE, null, null, key.toString(), ctx, scopeXml);
-            } catch(final MissingMethodParameterException e) {
-                throw new WebserverSystemException(
-                        StringUtility.format("Exception during retrieval of the scope", e.getMessage()), e);
-            } catch(final SecurityException e) {
+            }
+            catch (final MissingMethodParameterException e) {
+                throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the scope", e
+                    .getMessage()), e);
+            }
+            catch (final SecurityException e) {
                 throw new WebserverSystemException("Security exception during ScopeHandler.retrieve call.", e);
-            } catch(final SystemException e) {
-                throw new WebserverSystemException(
-                        StringUtility.format("Exception during retrieval of the scope", e.getMessage()), e);
+            }
+            catch (final SystemException e) {
+                throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the scope", e
+                    .getMessage()), e);
             }
         }
 
@@ -372,8 +387,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      *
      * @param aggregationDefinitionHandler The aggregateion definition handler.
      */
-    public void setAggregationDefinitionHandler(
-            final AggregationDefinitionHandlerInterface aggregationDefinitionHandler) {
+    public void setAggregationDefinitionHandler(final AggregationDefinitionHandlerInterface aggregationDefinitionHandler) {
         this.aggregationDefinitionHandler = aggregationDefinitionHandler;
     }
 

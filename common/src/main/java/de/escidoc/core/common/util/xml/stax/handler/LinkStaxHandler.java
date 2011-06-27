@@ -83,7 +83,8 @@ public class LinkStaxHandler extends DefaultHandler {
      */
     public LinkStaxHandler(final String elementPath, final String hrefBaseUri, final Class exceptionClass) {
 
-        this(elementPath);
+        this.elementPath = elementPath;
+        this.parentPath = elementPath.substring(0, elementPath.lastIndexOf('/'));
         this.hrefBaseUri = hrefBaseUri;
         this.exceptionClass = exceptionClass;
     }

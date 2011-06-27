@@ -99,7 +99,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
         try {
             final AttributeValue[] argValues = new AttributeValue[inputs.size()];
             final EvaluationResult result = evalArgs(inputs, ctx, argValues);
-            if(result != null) {
+            if (result != null) {
                 return result;
             }
             // Get the role name from the input and check if it is the dummy
@@ -109,20 +109,22 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
             final String policyId = ((StringAttribute) argValues[0]).getValue();
             final String[] parts = SPLIT_PATTERN.split(policyId);
             final StringBuilder roleIdentifier = new StringBuilder("");
-            if(parts.length > 2) {
-                for(int i = 0; i < parts.length - 2; i++) {
+            if (parts.length > 2) {
+                for (int i = 0; i < parts.length - 2; i++) {
                     roleIdentifier.append(parts[i]);
                 }
-            } else {
+            }
+            else {
                 roleIdentifier.append(policyId);
             }
             final String roleId = roleIdentifier.toString();
-            if(PATTERN_DEFAULT_USER_ROLE_ID.matcher(roleId).find()) {
+            if (PATTERN_DEFAULT_USER_ROLE_ID.matcher(roleId).find()) {
                 return EvaluationResult.getInstance(true);
             }
             // Get the userOrGroupid from the policyId
-            final String userOrGroupId = parts.length > 2 ? parts[parts.length - 1] :
-                    FinderModuleHelper.retrieveSingleSubjectAttribute(ctx, Constants.URI_SUBJECT_ID, true);
+            final String userOrGroupId =
+                parts.length > 2 ? parts[parts.length - 1] : FinderModuleHelper.retrieveSingleSubjectAttribute(ctx,
+                    Constants.URI_SUBJECT_ID, true);
 
             // Get the resource id from the context
             final String resourceId = FinderModuleHelper.getResourceId(ctx);
@@ -132,9 +134,11 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
             return securityHelper.getRoleIsGrantedEvaluationResult(userOrGroupId, role.getId(), resourceId, role, ctx);
 
-        } catch(final ResourceNotFoundException e) {
+        }
+        catch (final ResourceNotFoundException e) {
             return CustomEvaluationResultBuilder.createResourceNotFoundResult(e);
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             return CustomEvaluationResultBuilder.createProcessingErrorResult(e);
         }
     }

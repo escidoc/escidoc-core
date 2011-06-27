@@ -43,7 +43,7 @@ import org.springframework.security.ldap.userdetails.LdapUserDetailsImpl;
  */
 public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
 
-    private static final long serialVersionUID = - 3856754429168330690L;
+    private static final long serialVersionUID = -3856754429168330690L;
 
     private final Map<String, List<String>> stringAttributes = new HashMap<String, List<String>>();
 
@@ -58,7 +58,7 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
      * @param value value of attribute
      */
     public void addStringAttribute(final String name, final String value) {
-        if(stringAttributes.get(name) == null) {
+        if (stringAttributes.get(name) == null) {
             stringAttributes.put(name, new ArrayList<String>());
         }
         stringAttributes.get(name).add(value);
@@ -118,7 +118,7 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
 
     @Override
     public boolean equals(final Object obj) {
-        if(obj instanceof EscidocLdapUserDetails) {
+        if (obj instanceof EscidocLdapUserDetails) {
             return dn.equals(((EscidocLdapUserDetails) obj).dn);
         }
         return false;

@@ -83,12 +83,13 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
      * @throws EscidocException e
      */
     @Override
-    protected boolean assertAttribute(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
-                                      final String resourceObjid, final String resourceVersionNumber,
-                                      final int designatorType) throws EscidocException {
+    protected boolean assertAttribute(
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
         return super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
-                designatorType) && AttributeIds.URN_OBJECT_TYPE.equals(attributeIdValue);
+            designatorType)
+            && AttributeIds.URN_OBJECT_TYPE.equals(attributeIdValue);
     }
 
     /**
@@ -102,13 +103,14 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
      * @return Object[]
      */
     @Override
-    protected Object[] resolveLocalPart(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
-                                        final String resourceObjid, final String resourceVersionNumber)
-            throws SystemException, AuthorizationException, AuthenticationException, ResourceNotFoundException,
-            MissingMethodParameterException, TripleStoreSystemException, SqlDatabaseSystemException {
+    protected Object[] resolveLocalPart(
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber) throws SystemException, AuthorizationException, AuthenticationException,
+        ResourceNotFoundException, MissingMethodParameterException, TripleStoreSystemException,
+        SqlDatabaseSystemException {
 
-        return FinderModuleHelper.isNewResourceId(resourceId) ? resolveObjectTypeNew(attributeIdValue, ctx) :
-                resolveObjectType(attributeIdValue, resourceId, resourceObjid);
+        return FinderModuleHelper.isNewResourceId(resourceId) ? resolveObjectTypeNew(attributeIdValue, ctx) : resolveObjectType(
+            attributeIdValue, resourceId, resourceObjid);
     }
 
     /**
@@ -125,26 +127,26 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
      * @throws AuthorizationException    e
      * @throws ResourceNotFoundException e
      */
-    private Object[] resolveObjectType(final String attributeIdValue, final String resourceId,
-                                       final String resourceObjid)
-            throws SystemException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-            ResourceNotFoundException, TripleStoreSystemException, SqlDatabaseSystemException {
+    private Object[] resolveObjectType(
+        final String attributeIdValue, final String resourceId, final String resourceObjid) throws SystemException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, ResourceNotFoundException,
+        TripleStoreSystemException, SqlDatabaseSystemException {
 
         EvaluationResult result = null;
         final String objectType = objectAttributeResolver.resolveObjectType(resourceObjid);
-        if(objectType != null) {
+        if (objectType != null) {
             result = CustomEvaluationResultBuilder.createSingleStringValueResult(objectType);
         }
 
         // if no object-type could be determined, throw a resource not found
         // exception.
-        if(result == null) {
+        if (result == null) {
             final String msg = StringUtility.format("Resource not found", resourceId);
             LOGGER.debug(msg);
             throw new ResourceNotFoundException(msg);
         }
 
-        return new Object[]{result, attributeIdValue};
+        return new Object[] { result, attributeIdValue };
     }
 
     /**
@@ -157,22 +159,23 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
      * @throws ResourceNotFoundException e
      */
     private Object[] resolveObjectTypeNew(final String attributeIdValue, final EvaluationCtx ctx)
-            throws ResourceNotFoundException {
+        throws ResourceNotFoundException {
 
         EvaluationResult result =
-                (EvaluationResult) getFromCache(AttributeIds.URN_OBJECT_TYPE_NEW, null, null, null, ctx);
-        if(result != null) {
-            return new Object[]{result, attributeIdValue};
+            (EvaluationResult) getFromCache(AttributeIds.URN_OBJECT_TYPE_NEW, null, null, null, ctx);
+        if (result != null) {
+            return new Object[] { result, attributeIdValue };
         }
 
         final String objectType;
         try {
             objectType = fetchSingleResourceAttribute(ctx, AttributeIds.URN_OBJECT_TYPE_NEW);
-        } catch(final WebserverSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final WebserverSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on fetching resource attribute.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on fetching resource attribute.", e);
             }
             // This can happen due to an internal error or because the
@@ -183,7 +186,7 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
         }
         result = CustomEvaluationResultBuilder.createSingleStringValueResult(objectType);
         putInCache(AttributeIds.URN_OBJECT_TYPE_NEW, null, null, null, ctx, result);
-        return new Object[]{result, attributeIdValue};
+        return new Object[] { result, attributeIdValue };
     }
 
     /**

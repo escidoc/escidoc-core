@@ -92,7 +92,7 @@ public class SecurityHelper {
      * The pattern to find the position to insert the "-new" marker in attribute ids for new resources.
      */
     private static final Pattern PATTERN_FIND_PLACE_FOR_MARKER =
-            Pattern.compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX + "[^:]*:[^:]*)(:{0,1}.*)");
+        Pattern.compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX + "[^:]*:[^:]*)(:{0,1}.*)");
 
     /**
      * The replacement pattern to insert the "-new" marker at the found position.
@@ -109,19 +109,20 @@ public class SecurityHelper {
      * @param resourceId    The resource ID. This may be <code>null</code>.
      * @return EvaluationResult EvaluationResult for given user- or groupId, roleId and resourceId.
      */
-    public EvaluationResult getRoleIsGrantedEvaluationResult(final String userOrGroupId, final String roleId,
-                                                             final String resourceId, final EscidocRole role,
-                                                             final EvaluationCtx ctx) throws Exception {
+    public EvaluationResult getRoleIsGrantedEvaluationResult(
+        final String userOrGroupId, final String roleId, final String resourceId, final EscidocRole role,
+        final EvaluationCtx ctx) throws Exception {
         Map<String, Map<String, EvaluationResult>> result =
-                policiesCache.getRoleIsGrantedEvaluationResultCached(userOrGroupId);
-        if(result == null) {
+            policiesCache.getRoleIsGrantedEvaluationResultCached(userOrGroupId);
+        if (result == null) {
             result = new HashMap<String, Map<String, EvaluationResult>>();
         }
 
-        if(! result.isEmpty() && result.get(roleId) != null && ! result.get(roleId).isEmpty()) {
-            if(result.get(roleId).get(null) != null) {
+        if (!result.isEmpty() && result.get(roleId) != null && !result.get(roleId).isEmpty()) {
+            if (result.get(roleId).get(null) != null) {
                 return result.get(roleId).get(null);
-            } else if(result.get(roleId).get(resourceId) != null) {
+            }
+            else if (result.get(roleId).get(resourceId) != null) {
                 return result.get(roleId).get(resourceId);
             }
         }
@@ -129,15 +130,16 @@ public class SecurityHelper {
         Map<String, Map<String, List<RoleGrant>>> roleGrants;
         try {
             roleGrants = getUserGrants(userOrGroupId);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             roleGrants = getGroupGrants(userOrGroupId);
         }
         // check if role is granted to the user or one of his groups
         final Map<String, List<RoleGrant>> grantsOfRole = roleGrants.get(role.getId());
-        if(grantsOfRole == null) {
+        if (grantsOfRole == null) {
             // No grant of the role is found, i.e. the role has not been
             // granted to the user. Therefore, false is returned.
-            if(result.get(roleId) == null) {
+            if (result.get(roleId) == null) {
                 result.put(roleId, new HashMap<String, EvaluationResult>());
             }
             result.get(roleId).put(null, EvaluationResult.getInstance(false));
@@ -146,49 +148,51 @@ public class SecurityHelper {
             return EvaluationResult.getInstance(false);
         }
         // At least one grant of the role is owned by the user.
-        else if(! role.isLimited()) {
+        else if (!role.isLimited()) {
             // The role has been granted to the user. As this is an
             // unlimited role, this grant is valid for all objects,
             // therefore true is returned.
-            if(result.get(roleId) == null) {
+            if (result.get(roleId) == null) {
                 result.put(roleId, new HashMap<String, EvaluationResult>());
             }
             result.get(roleId).put(null, EvaluationResult.getInstance(true));
             policiesCache.clearRoleIsGranted(userOrGroupId);
             policiesCache.putRoleIsGrantedEvaluationResult(userOrGroupId, result);
             return EvaluationResult.getInstance(true);
-        } else {
+        }
+        else {
             // The role has been granted to the user. As this is a limited
             // role, further checks have to be performed.
 
             // Get the object type from the context
             final String objectType =
-                    FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_OBJECT_TYPE, true);
+                FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_OBJECT_TYPE, true);
 
-            if(role.getObjectTypes().contains(objectType)) {
+            if (role.getObjectTypes().contains(objectType)) {
                 // role is defined for the object type. Find the related
                 // scope definition
-                for(final ScopeDef scopeDef : role.getScopeDefs()) {
-                    if(scopeDef.getObjectType().equals(objectType)) {
+                for (final ScopeDef scopeDef : role.getScopeDefs()) {
+                    if (scopeDef.getObjectType().equals(objectType)) {
                         // scope definition for the current object type has
                         // been found
                         String scopeDefAttributeId = scopeDef.getAttributeId();
-                        if(scopeDefAttributeId == null) {
+                        if (scopeDefAttributeId == null) {
                             // The role is a limited one, but it is valid
                             // for all objects of the object type.
                             // Therefore, true is returned here, as the role
                             // has been granted to the user.
-                            if(FinderModuleHelper.isNewResourceId(resourceId)) {
+                            if (FinderModuleHelper.isNewResourceId(resourceId)) {
                                 return EvaluationResult.getInstance(true);
                             }
-                            if(result.get(roleId) == null) {
+                            if (result.get(roleId) == null) {
                                 result.put(roleId, new HashMap<String, EvaluationResult>());
                             }
                             result.get(roleId).put(resourceId, EvaluationResult.getInstance(true));
                             policiesCache.clearRoleIsGranted(userOrGroupId);
                             policiesCache.putRoleIsGrantedEvaluationResult(userOrGroupId, result);
                             return EvaluationResult.getInstance(true);
-                        } else {
+                        }
+                        else {
                             // The role is a limited one and is limited to
                             // objects related to the object identified by
                             // the scope definition's attribute id (for that
@@ -198,19 +202,22 @@ public class SecurityHelper {
 
                             // Resolve the scope definition's attribute
                             final Set<String> resolvedAttributeValues;
-                            if(FinderModuleHelper.isNewResourceId(resourceId)) {
+                            if (FinderModuleHelper.isNewResourceId(resourceId)) {
                                 final Matcher matcher = PATTERN_FIND_PLACE_FOR_MARKER.matcher(scopeDefAttributeId);
-                                if(matcher.find()) {
+                                if (matcher.find()) {
                                     scopeDefAttributeId = matcher.replaceAll(PATTERN_INSERT_MARKER);
                                 }
-                                resolvedAttributeValues = FinderModuleHelper
-                                        .retrieveMultiResourceAttribute(ctx, new URI(scopeDefAttributeId), false);
+                                resolvedAttributeValues =
+                                    FinderModuleHelper.retrieveMultiResourceAttribute(ctx,
+                                        new URI(scopeDefAttributeId), false);
 
-                            } else {
+                            }
+                            else {
                                 // for existing resources, the existing
                                 // attribute is resolved
-                                resolvedAttributeValues = FinderModuleHelper
-                                        .retrieveMultiResourceAttribute(ctx, new URI(scopeDefAttributeId), false);
+                                resolvedAttributeValues =
+                                    FinderModuleHelper.retrieveMultiResourceAttribute(ctx,
+                                        new URI(scopeDefAttributeId), false);
                             }
 
                             // the resolved attribute may be empty, e.g.
@@ -220,14 +227,14 @@ public class SecurityHelper {
                             // in this case (see issue 529). Otherwise, it
                             // has to be checked if the user has a grant
                             // for the addressed object.
-                            if(resolvedAttributeValues != null && ! resolvedAttributeValues.isEmpty()) {
-                                for(final String resolvedAttributeValue : resolvedAttributeValues) {
+                            if (resolvedAttributeValues != null && !resolvedAttributeValues.isEmpty()) {
+                                for (final String resolvedAttributeValue : resolvedAttributeValues) {
                                     final Collection grantsOfRoleAndObject = grantsOfRole.get(resolvedAttributeValue);
-                                    if(grantsOfRoleAndObject != null && ! grantsOfRoleAndObject.isEmpty()) {
-                                        if(FinderModuleHelper.isNewResourceId(resourceId)) {
+                                    if (grantsOfRoleAndObject != null && !grantsOfRoleAndObject.isEmpty()) {
+                                        if (FinderModuleHelper.isNewResourceId(resourceId)) {
                                             return EvaluationResult.getInstance(true);
                                         }
-                                        if(result.get(roleId) == null) {
+                                        if (result.get(roleId) == null) {
                                             result.put(roleId, new HashMap<String, EvaluationResult>());
                                         }
                                         result.get(roleId).put(resourceId, EvaluationResult.getInstance(true));
@@ -238,17 +245,18 @@ public class SecurityHelper {
                                 }
                             }
                         }
-                    } else {
+                    }
+                    else {
                         // scope definitions for other object types than the
                         // object type of the current resource are skipped.
                         continue;
                     }
                 }
             }
-            if(FinderModuleHelper.isNewResourceId(resourceId)) {
+            if (FinderModuleHelper.isNewResourceId(resourceId)) {
                 return EvaluationResult.getInstance(false);
             }
-            if(result.get(roleId) == null) {
+            if (result.get(roleId) == null) {
                 result.put(roleId, new HashMap<String, EvaluationResult>());
             }
             result.get(roleId).put(resourceId, EvaluationResult.getInstance(false));
@@ -267,9 +275,9 @@ public class SecurityHelper {
      *         <code>null</code>.
      */
     public XacmlPolicySet getUserPolicies(final String userId, final PolicyFinder policyFinder)
-            throws UnknownIdentifierException, URISyntaxException, WebserverSystemException {
+        throws UnknownIdentifierException, URISyntaxException, WebserverSystemException {
         XacmlPolicySet result = policiesCache.getUserPolicies(userId);
-        if(result != null) {
+        if (result != null) {
             return result;
         }
 
@@ -277,20 +285,21 @@ public class SecurityHelper {
 
         // retrieve user's roles policies
         final XacmlPolicySet rolesPolicySet = retrieveUserRolesPolicies(userId, policyFinder);
-        if(rolesPolicySet != null) {
+        if (rolesPolicySet != null) {
             policies.add(rolesPolicySet);
         }
 
         // add the default policies
         final AbstractPolicy defPolicies = retrieveDefaultPolicies(policyFinder);
-        if(defPolicies != null) {
+        if (defPolicies != null) {
             policies.add(defPolicies);
         }
 
-        result = new XacmlPolicySet("Policies-" + userId,
+        result =
+            new XacmlPolicySet("Policies-" + userId,
                 XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES, null, policies);
 
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(result.toString());
         }
         policiesCache.clearUserPolicies(userId);
@@ -306,14 +315,15 @@ public class SecurityHelper {
      *         <code>null</code>.
      */
     public XacmlPolicySet getGroupPolicies(final String groupId, final PolicyFinder policyFinder)
-            throws UnknownIdentifierException, URISyntaxException, WebserverSystemException {
+        throws UnknownIdentifierException, URISyntaxException, WebserverSystemException {
         XacmlPolicySet result = policiesCache.getGroupPolicies(groupId);
-        if(result != null) {
+        if (result != null) {
             return result;
         }
         result = retrieveGroupRolesPolicies(groupId, policyFinder);
-        if(result == null) {
-            result = new XacmlPolicySet("roles-" + groupId,
+        if (result == null) {
+            result =
+                new XacmlPolicySet("roles-" + groupId,
                     XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES, null,
                     new ArrayList<AbstractPolicy>());
         }
@@ -328,7 +338,7 @@ public class SecurityHelper {
      * @return The grants of the user in a <code>Map</code>, or <code>null</code>.
      */
     public Map<String, Map<String, List<RoleGrant>>> getUserGrants(final String userId)
-            throws UserAccountNotFoundException, SystemException {
+        throws UserAccountNotFoundException, SystemException {
         return policiesCache.getUserGrants(userId);
     }
 
@@ -339,7 +349,7 @@ public class SecurityHelper {
      * @return The grants of the group in a <code>Map</code>, or <code>null</code>.
      */
     public Map<String, Map<String, List<RoleGrant>>> getGroupGrants(final String groupId)
-            throws ResourceNotFoundException, SystemException {
+        throws ResourceNotFoundException, SystemException {
         return policiesCache.getGroupGrants(groupId);
     }
 
@@ -567,7 +577,8 @@ public class SecurityHelper {
     public void clearRole(final String roleId) throws SystemException {
         try {
             policiesCache.clearRolePolicies(new URI(roleId));
-        } catch(final URISyntaxException e) {
+        }
+        catch (final URISyntaxException e) {
             throw new SystemException(e);
         }
 
@@ -610,21 +621,22 @@ public class SecurityHelper {
      * @throws WebserverSystemException In case of an internal error.
      */
     private XacmlPolicySet retrieveUserRolesPolicies(final String userId, final PolicyFinder policyFinder)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
 
-        if(UserContext.isIdOfAnonymousUser(userId)) {
+        if (UserContext.isIdOfAnonymousUser(userId)) {
             return null;
         }
 
         try {
             final Map<String, Map<String, List<RoleGrant>>> roleGrants = getUserGrants(userId);
 
-            if(roleGrants == null || roleGrants.isEmpty()) {
+            if (roleGrants == null || roleGrants.isEmpty()) {
                 return null;
             }
 
             return retrieveRolesPolicies(roleGrants, userId, policyFinder, true);
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -642,33 +654,34 @@ public class SecurityHelper {
      *         provided user id matches the anonymous user, <code>null</code> is returned.
      * @throws WebserverSystemException In case of an internal error.
      */
-    private XacmlPolicySet retrieveRolesPolicies(final Map<String, Map<String, List<RoleGrant>>> roleGrants,
-                                                 final String userOrGroupId, final PolicyFinder policyFinder,
-                                                 final boolean isUser) throws WebserverSystemException {
+    private XacmlPolicySet retrieveRolesPolicies(
+        final Map<String, Map<String, List<RoleGrant>>> roleGrants, final String userOrGroupId,
+        final PolicyFinder policyFinder, final boolean isUser) throws WebserverSystemException {
 
         String userOrGroupIdentifier = "user";
-        if(! isUser) {
+        if (!isUser) {
             userOrGroupIdentifier = "group";
         }
         final List<AbstractPolicy> rolesPolicies = new ArrayList<AbstractPolicy>();
         try {
-            for(final Object o : roleGrants.keySet()) {
+            for (final Object o : roleGrants.keySet()) {
                 final String roleId = (String) o;
                 final EscidocRole role = getRole(roleId);
                 // The policyId is concatenated String
                 // containing <roleName>/<user or group>/<userOrGroupId>
                 final URI policySetId =
-                        new URI(role.getPolicySetId().toString() + '/' + userOrGroupIdentifier + '/' + userOrGroupId);
-                rolesPolicies
-                        .add(new XacmlPolicyReference(policySetId, PolicyReference.POLICYSET_REFERENCE, policyFinder));
+                    new URI(role.getPolicySetId().toString() + '/' + userOrGroupIdentifier + '/' + userOrGroupId);
+                rolesPolicies.add(new XacmlPolicyReference(policySetId, PolicyReference.POLICYSET_REFERENCE,
+                    policyFinder));
             }
 
-            if(! rolesPolicies.isEmpty()) {
+            if (!rolesPolicies.isEmpty()) {
                 return new XacmlPolicySet("roles-" + userOrGroupId, OrderedPermitOverridesPolicyAlg.algId, null,
-                        rolesPolicies);
+                    rolesPolicies);
             }
 
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
         return null;
@@ -684,11 +697,13 @@ public class SecurityHelper {
      */
     private AbstractPolicy retrieveDefaultPolicies(final PolicyFinder policyFinder) throws WebserverSystemException {
 
-        if(this.defaultPolicies == null) {
+        if (this.defaultPolicies == null) {
             try {
-                this.defaultPolicies = new XacmlPolicyReference(new URI(EscidocRole.DEFAULT_USER_ROLE_ID),
+                this.defaultPolicies =
+                    new XacmlPolicyReference(new URI(EscidocRole.DEFAULT_USER_ROLE_ID),
                         PolicyReference.POLICYSET_REFERENCE, policyFinder);
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -707,17 +722,18 @@ public class SecurityHelper {
      * @throws WebserverSystemException In case of an internal error.
      */
     private XacmlPolicySet retrieveGroupRolesPolicies(final String groupId, final PolicyFinder policyFinder)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
 
         XacmlPolicySet policies = null;
         try {
             final Map<String, Map<String, List<RoleGrant>>> roleGrants = getGroupGrants(groupId);
             // cache grants for later retrieval during policy evaluation
-            if(roleGrants != null && ! roleGrants.isEmpty()) {
+            if (roleGrants != null && !roleGrants.isEmpty()) {
                 policies = retrieveRolesPolicies(roleGrants, groupId, policyFinder, false);
             }
             return policies;
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
     }

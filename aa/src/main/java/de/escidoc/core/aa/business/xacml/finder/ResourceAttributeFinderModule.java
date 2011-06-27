@@ -103,14 +103,14 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * specific part of the attribute, too.
      */
     private static final Pattern PATTERN_PARSE_COMPONENT_ATTRIBUTE_ID =
-            Pattern.compile('(' + AttributeIds.ITEM_COMPONENT_ATTR_PREFIX + "[^:]+).*");
+        Pattern.compile('(' + AttributeIds.ITEM_COMPONENT_ATTR_PREFIX + "[^:]+).*");
 
     /**
      * Pattern used to parse the attribute id and extract local part (that can be resolved), the "object-type" of the
      * local part, and the tailing part.
      */
     private static final Pattern PATTERN_PARSE_ATTRIBUTE_ID =
-            Pattern.compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX + "[^:]+:([^:]+)):{0,1}(.+){0,1}");
+        Pattern.compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX + "[^:]+:([^:]+)):{0,1}(.+){0,1}");
 
     @Autowired
     @Qualifier("service.ItemHandler")
@@ -127,12 +127,12 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String, java.lang.String, int)
      */
     @Override
-    protected boolean assertAttribute(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
-                                      final String resourceObjid, final String resourceVersionNumber,
-                                      final int designatorType) throws EscidocException {
+    protected boolean assertAttribute(
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
-        return ! (! super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
-                designatorType) || FinderModuleHelper.isNewResourceId(resourceId));
+        return !(!super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType) || FinderModuleHelper.isNewResourceId(resourceId));
 
     }
 
@@ -143,34 +143,36 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    protected Object[] resolveLocalPart(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
-                                        final String resourceObjid, final String resourceVersionNumber)
-            throws OptimisticLockingException, MissingAttributeValueException, SystemException,
-            ResourceNotFoundException, UniqueConstraintViolationException, InvalidXmlException,
-            ContainerNotFoundException {
+    protected Object[] resolveLocalPart(
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber) throws OptimisticLockingException, MissingAttributeValueException,
+        SystemException, ResourceNotFoundException, UniqueConstraintViolationException, InvalidXmlException,
+        ContainerNotFoundException {
 
         final EvaluationResult result;
         final String resolvedAttributeIdValue;
 
         final Matcher matcherComponent = PATTERN_PARSE_COMPONENT_ATTRIBUTE_ID.matcher(attributeIdValue);
-        if(matcherComponent.find()) {
+        if (matcherComponent.find()) {
             resolvedAttributeIdValue = matcherComponent.group(1);
             result = fetchComponentAttribute(resolvedAttributeIdValue, ctx, resourceId);
-        } else {
+        }
+        else {
             final Matcher matcher = PATTERN_PARSE_ATTRIBUTE_ID.matcher(attributeIdValue);
-            if(matcher.find()) {
+            if (matcher.find()) {
                 resolvedAttributeIdValue = matcher.group(1);
                 result = fetchItemOrContainerAttribute(attributeIdValue, ctx, resourceId, resolvedAttributeIdValue);
-            } else {
+            }
+            else {
                 return null;
             }
         }
 
-        if(result == null) {
+        if (result == null) {
             return null;
         }
 
-        return new Object[]{result, resolvedAttributeIdValue};
+        return new Object[] { result, resolvedAttributeIdValue };
 
     }
 
@@ -184,59 +186,72 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * @param resolvedAttributeIdValue The attribute id for that the value shall be fetched.
      * @return Returns an <code>EvaluationResult</code> object containing the requested attribute.
      */
-    private EvaluationResult fetchItemOrContainerAttribute(final String attributeIdValue, final EvaluationCtx ctx,
-                                                           final String resourceId,
-                                                           final String resolvedAttributeIdValue)
-            throws MissingAttributeValueException, OptimisticLockingException, SystemException,
-            UniqueConstraintViolationException, ItemNotFoundException, InvalidXmlException, ContainerNotFoundException {
+    private EvaluationResult fetchItemOrContainerAttribute(
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
+        final String resolvedAttributeIdValue) throws MissingAttributeValueException, OptimisticLockingException,
+        SystemException, UniqueConstraintViolationException, ItemNotFoundException, InvalidXmlException,
+        ContainerNotFoundException {
 
         // A previous parse process could have stored the found
         // attributes in the cache. Here, we try to get it from the cache.
         EvaluationResult result =
-                (EvaluationResult) getFromCache(resourceId, null, null, resolvedAttributeIdValue, ctx);
-        if(result == null) {
-            if(attributeIdValue.startsWith(AttributeIds.ITEM_ATTR_PREFIX)) {
+            (EvaluationResult) getFromCache(resourceId, null, null, resolvedAttributeIdValue, ctx);
+        if (result == null) {
+            if (attributeIdValue.startsWith(AttributeIds.ITEM_ATTR_PREFIX)) {
                 final String itemXml = retrieveItem(ctx, resourceId);
                 final StaxParser sp = new StaxParser(XmlUtility.NAME_ITEM);
                 ItemStaxHandler itemStaxHandler = new ItemStaxHandler(ctx, resourceId);
                 sp.addHandler(itemStaxHandler);
                 try {
                     sp.parse(new ByteArrayInputStream(itemXml.getBytes(XmlUtility.CHARACTER_ENCODING)));
-                } catch(final MissingAttributeValueException e) {
+                }
+                catch (final MissingAttributeValueException e) {
                     throw e;
-                } catch(final InvalidXmlException e) {
+                }
+                catch (final InvalidXmlException e) {
                     throw e;
-                } catch(final OptimisticLockingException e) {
+                }
+                catch (final OptimisticLockingException e) {
                     throw e;
-                } catch(final UniqueConstraintViolationException e) {
+                }
+                catch (final UniqueConstraintViolationException e) {
                     throw e;
-                } catch(final SystemException e) {
+                }
+                catch (final SystemException e) {
                     throw e;
-                } catch(final Exception e) {
-                    throw new WebserverSystemException(
-                            StringUtility.format("Error during parsing item XML", e.getMessage()), e);
+                }
+                catch (final Exception e) {
+                    throw new WebserverSystemException(StringUtility.format("Error during parsing item XML", e
+                        .getMessage()), e);
                 }
                 handleCache(itemStaxHandler);
-            } else if(attributeIdValue.startsWith(AttributeIds.CONTAINER_ATTR_PREFIX)) {
+            }
+            else if (attributeIdValue.startsWith(AttributeIds.CONTAINER_ATTR_PREFIX)) {
                 final String containerXml = retrieveContainer(ctx, resourceId);
                 final StaxParser sp = new StaxParser(XmlUtility.NAME_CONTAINER);
                 ContainerStaxHandler containerStaxHandler = new ContainerStaxHandler(ctx, resourceId);
                 sp.addHandler(containerStaxHandler);
                 try {
                     sp.parse(new ByteArrayInputStream(containerXml.getBytes(XmlUtility.CHARACTER_ENCODING)));
-                } catch(final MissingAttributeValueException e) {
+                }
+                catch (final MissingAttributeValueException e) {
                     throw e;
-                } catch(final InvalidXmlException e) {
+                }
+                catch (final InvalidXmlException e) {
                     throw e;
-                } catch(final OptimisticLockingException e) {
+                }
+                catch (final OptimisticLockingException e) {
                     throw e;
-                } catch(final UniqueConstraintViolationException e) {
+                }
+                catch (final UniqueConstraintViolationException e) {
                     throw e;
-                } catch(final SystemException e) {
+                }
+                catch (final SystemException e) {
                     throw e;
-                } catch(final Exception e) {
-                    throw new WebserverSystemException(
-                            StringUtility.format("Error during parsing container XML", e.getMessage()), e);
+                }
+                catch (final Exception e) {
+                    throw new WebserverSystemException(StringUtility.format("Error during parsing container XML", e
+                        .getMessage()), e);
                 }
                 handleCache(containerStaxHandler);
             }
@@ -258,11 +273,11 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * @param itemId           The id of the item.
      * @return Returns an <code>EvaluationResult</code> object containing the requested attribute.
      */
-    private EvaluationResult fetchComponentAttribute(final String attributeIdValue, final EvaluationCtx ctx,
-                                                     final String itemId)
-            throws SystemException, MissingAttributeValueException, OptimisticLockingException,
-            ComponentNotFoundException, ResourceNotFoundException, UniqueConstraintViolationException,
-            ItemNotFoundException, InvalidXmlException, WebserverSystemException {
+    private EvaluationResult fetchComponentAttribute(
+        final String attributeIdValue, final EvaluationCtx ctx, final String itemId) throws SystemException,
+        MissingAttributeValueException, OptimisticLockingException, ComponentNotFoundException,
+        ResourceNotFoundException, UniqueConstraintViolationException, ItemNotFoundException, InvalidXmlException,
+        WebserverSystemException {
 
         // to resolve a component attribute, the id of the component
         // must be known
@@ -271,26 +286,32 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
         // attributes in the cache. Here, we try to get it from the
         // cache.
         EvaluationResult result = (EvaluationResult) getFromCache(componentId, null, null, attributeIdValue, ctx);
-        if(result == null) {
+        if (result == null) {
             final String componentXml = retrieveComponent(ctx, itemId, componentId);
             final StaxParser sp = new StaxParser(XmlUtility.NAME_COMPONENT);
             ComponentStaxHandler componentStaxHandler = new ComponentStaxHandler(ctx, componentId);
             sp.addHandler(componentStaxHandler);
             try {
                 sp.parse(new ByteArrayInputStream(componentXml.getBytes(XmlUtility.CHARACTER_ENCODING)));
-            } catch(final MissingAttributeValueException e) {
+            }
+            catch (final MissingAttributeValueException e) {
                 throw e;
-            } catch(final InvalidXmlException e) {
+            }
+            catch (final InvalidXmlException e) {
                 throw e;
-            } catch(final OptimisticLockingException e) {
+            }
+            catch (final OptimisticLockingException e) {
                 throw e;
-            } catch(final UniqueConstraintViolationException e) {
+            }
+            catch (final UniqueConstraintViolationException e) {
                 throw e;
-            } catch(final SystemException e) {
+            }
+            catch (final SystemException e) {
                 throw e;
-            } catch(final Exception e) {
-                throw new WebserverSystemException(
-                        StringUtility.format("Error during parsing component XML", e.getMessage()), e);
+            }
+            catch (final Exception e) {
+                throw new WebserverSystemException(StringUtility.format("Error during parsing component XML", e
+                    .getMessage()), e);
             }
             handleCache(componentStaxHandler);
 
@@ -312,19 +333,21 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws ItemNotFoundException    Thrown if no item with provided id exists.
      */
-    private String retrieveItem(final EvaluationCtx ctx, final String itemId)
-            throws WebserverSystemException, ItemNotFoundException {
+    private String retrieveItem(final EvaluationCtx ctx, final String itemId) throws WebserverSystemException,
+        ItemNotFoundException {
 
         String itemXml = (String) getFromCache(XmlUtility.NAME_ID, null, null, itemId, ctx);
-        if(itemXml == null) {
+        if (itemXml == null) {
             try {
                 itemXml = itemHandler.retrieve(itemId);
                 putInCache(XmlUtility.NAME_ID, null, null, itemId, ctx, itemXml);
-            } catch(final ItemNotFoundException e) {
+            }
+            catch (final ItemNotFoundException e) {
                 throw e;
-            } catch(final Exception e) {
-                throw new WebserverSystemException(
-                        StringUtility.format("Exception during retrieval of the item", e.getMessage()), e);
+            }
+            catch (final Exception e) {
+                throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the item", e
+                    .getMessage()), e);
             }
         }
 
@@ -343,19 +366,22 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * @throws ComponentNotFoundException Thrown if no component with provided id exists.
      */
     private String retrieveComponent(final EvaluationCtx ctx, final String itemId, final String componentId)
-            throws WebserverSystemException, ItemNotFoundException, ComponentNotFoundException {
+        throws WebserverSystemException, ItemNotFoundException, ComponentNotFoundException {
 
         String componentXml = (String) getFromCache(XmlUtility.NAME_ID, null, null, componentId, ctx);
-        if(componentXml == null) {
+        if (componentXml == null) {
             try {
                 componentXml = itemHandler.retrieveComponent(itemId, componentId);
-            } catch(final ItemNotFoundException e) {
+            }
+            catch (final ItemNotFoundException e) {
                 throw e;
-            } catch(final ComponentNotFoundException e) {
+            }
+            catch (final ComponentNotFoundException e) {
                 throw e;
-            } catch(final Exception e) {
-                throw new WebserverSystemException(
-                        StringUtility.format("Exception during retrieval of the item", e.getMessage()), e);
+            }
+            catch (final Exception e) {
+                throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the item", e
+                    .getMessage()), e);
             }
         }
 
@@ -372,18 +398,20 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * @throws ContainerNotFoundException Thrown if no item with provided id exists.
      */
     private String retrieveContainer(final EvaluationCtx ctx, final String containerId)
-            throws WebserverSystemException, ContainerNotFoundException {
+        throws WebserverSystemException, ContainerNotFoundException {
 
         String containerXml = (String) getFromCache(XmlUtility.NAME_ID, null, null, containerId, ctx);
-        if(containerXml == null) {
+        if (containerXml == null) {
             try {
                 containerXml = containerHandler.retrieve(containerId);
                 putInCache(XmlUtility.NAME_ID, null, null, containerId, ctx, containerXml);
-            } catch(final ContainerNotFoundException e) {
+            }
+            catch (final ContainerNotFoundException e) {
                 throw e;
-            } catch(final Exception e) {
-                throw new WebserverSystemException(
-                        StringUtility.format("Exception during retrieval of the container", e.getMessage()), e);
+            }
+            catch (final Exception e) {
+                throw new WebserverSystemException(StringUtility.format("Exception during retrieval of the container",
+                    e.getMessage()), e);
             }
         }
 
@@ -397,9 +425,9 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      */
     private void handleCache(final ComponentStaxHandler staxHandler) {
         Map<String, String> attributes = staxHandler.getAttributes();
-        for(final Entry<String, String> entry : attributes.entrySet()) {
+        for (final Entry<String, String> entry : attributes.entrySet()) {
             putInCache(staxHandler.getComponentId(), null, null, entry.getKey(), staxHandler.getCtx(),
-                    CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
+                CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
     }
 
@@ -410,19 +438,19 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      */
     private void handleCache(final ItemStaxHandler staxHandler) {
         Map<String, String> stringAttributes = staxHandler.getStringAttributes();
-        for(final Entry<String, String> entry : stringAttributes.entrySet()) {
+        for (final Entry<String, String> entry : stringAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
-                    CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
+                CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
         Map<String, String> superAttributes = staxHandler.getSuperAttributes();
-        for(final Entry<String, String> entry : superAttributes.entrySet()) {
+        for (final Entry<String, String> entry : superAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
-                    CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
+                CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
         Map<String, Collection<StringAttribute>> attributeAttributes = staxHandler.getAttributeAttributes();
-        for(final Entry<String, Collection<StringAttribute>> entry : attributeAttributes.entrySet()) {
+        for (final Entry<String, Collection<StringAttribute>> entry : attributeAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
-                    new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, entry.getValue())));
+                new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, entry.getValue())));
         }
     }
 
@@ -433,19 +461,19 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      */
     private void handleCache(final ContainerStaxHandler staxHandler) {
         Map<String, String> stringAttributes = staxHandler.getStringAttributes();
-        for(final Entry<String, String> entry : stringAttributes.entrySet()) {
+        for (final Entry<String, String> entry : stringAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
-                    CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
+                CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
         Map<String, String> superAttributes = staxHandler.getSuperAttributes();
-        for(final Entry<String, String> entry : superAttributes.entrySet()) {
+        for (final Entry<String, String> entry : superAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
-                    CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
+                CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
         Map<String, Collection<StringAttribute>> attributeAttributes = staxHandler.getAttributeAttributes();
-        for(final Entry<String, Collection<StringAttribute>> entry : attributeAttributes.entrySet()) {
+        for (final Entry<String, Collection<StringAttribute>> entry : attributeAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
-                    new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, entry.getValue())));
+                new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, entry.getValue())));
         }
     }
 

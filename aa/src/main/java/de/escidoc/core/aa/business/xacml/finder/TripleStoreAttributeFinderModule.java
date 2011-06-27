@@ -139,16 +139,17 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
     /**
      * Pattern to detect item attributes that are version dependent: component, modified-by, and version-status.
      */
-    private static final Pattern PATTERN_ITEM_DEPENDENT_ATTRS = Pattern.compile(
-            AttributeIds.URN_ITEM_COMPONENT_ATTR + ".*|" + AttributeIds.URN_ITEM_MODIFIED_BY_ATTR + ".*|" +
-                    AttributeIds.URN_ITEM_VERSION_STATUS_ATTR + ".*");
+    private static final Pattern PATTERN_ITEM_DEPENDENT_ATTRS =
+        Pattern.compile(AttributeIds.URN_ITEM_COMPONENT_ATTR + ".*|" + AttributeIds.URN_ITEM_MODIFIED_BY_ATTR + ".*|"
+            + AttributeIds.URN_ITEM_VERSION_STATUS_ATTR + ".*");
 
     /**
      * Pattern to detect container attributes that are version dependent: member, modified-by, and version-status.
      */
-    private static final Pattern PATTERN_CONTAINER_DEPENDENT_ATTRS = Pattern.compile(
-            AttributeIds.URN_CONTAINER_MEMBER_ATTR + ".*|" + AttributeIds.URN_CONTAINER_VERSION_MODIFIED_BY_ATTR +
-                    ".*|" + AttributeIds.URN_CONTAINER_VERSION_STATUS_ATTR + ".*");
+    private static final Pattern PATTERN_CONTAINER_DEPENDENT_ATTRS =
+        Pattern.compile(AttributeIds.URN_CONTAINER_MEMBER_ATTR + ".*|"
+            + AttributeIds.URN_CONTAINER_VERSION_MODIFIED_BY_ATTR + ".*|"
+            + AttributeIds.URN_CONTAINER_VERSION_STATUS_ATTR + ".*");
 
     /**
      * The mapping from the attribute ids to the ids in the triple store.
@@ -164,7 +165,7 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
     private final MapResult createdByMapResult = new MapResult(TripleStoreUtility.PROP_CREATED_BY_ID, false);
 
     private final MapResult latestVersionNumberMapResult =
-            new MapResult(TripleStoreUtility.PROP_LATEST_VERSION_NUMBER, false);
+        new MapResult(TripleStoreUtility.PROP_LATEST_VERSION_NUMBER, false);
 
     private final MapResult contentModelMapResult = new MapResult(TripleStoreUtility.PROP_CONTENT_MODEL_ID, false);
 
@@ -173,30 +174,30 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
     private final MapResult memberMapResult = new MapResult(TripleStoreUtility.PROP_MEMBER, true);
 
     private final MapResult hierarchicalMemberMapResult =
-            new MapResult(TripleStoreUtility.PROP_MEMBER, true, true, false);
+        new MapResult(TripleStoreUtility.PROP_MEMBER, true, true, false);
 
     private final MapResult parentMapResult = new MapResult(TripleStoreUtility.PROP_PARENT, false);
 
     private final MapResult hierarchicalParentMapResult =
-            new MapResult(TripleStoreUtility.PROP_PARENT, false, true, true);
+        new MapResult(TripleStoreUtility.PROP_PARENT, false, true, true);
 
     private final MapResult componentMapResult = new MapResult(TripleStoreUtility.PROP_COMPONENT, false);
 
     private final MapResult latestReleaseNumberMapResult =
-            new MapResult(TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER, false);
+        new MapResult(TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER, false);
 
     private final MapResult latestReleasePidMapResult =
-            new MapResult(TripleStoreUtility.PROP_LATEST_RELEASE_PID, false);
+        new MapResult(TripleStoreUtility.PROP_LATEST_RELEASE_PID, false);
 
     private final MapResult latestVersionUserMapResult =
-            new MapResult(TripleStoreUtility.PROP_LATEST_VERSION_USER_ID, false);
+        new MapResult(TripleStoreUtility.PROP_LATEST_VERSION_USER_ID, false);
 
     private final MapResult latestVersionStatusMapResult =
-            new MapResult(TripleStoreUtility.PROP_LATEST_VERSION_STATUS, false);
+        new MapResult(TripleStoreUtility.PROP_LATEST_VERSION_STATUS, false);
 
     private final MapResult organizationalUnitMapResult =
-            new MapResult(de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI + "organizational-unit",
-                    false);
+        new MapResult(de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI + "organizational-unit",
+            false);
 
     /**
      * The constructor.
@@ -219,16 +220,17 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
      * specified version number does not match the latest-version-number.
      */
     @Override
-    protected boolean assertAttribute(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
-                                      final String resourceObjid, final String resourceVersionNumber,
-                                      final int designatorType) throws EscidocException, WebserverSystemException {
+    protected boolean assertAttribute(
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType) throws EscidocException, WebserverSystemException {
 
         // make sure it is an eSciDoc resource attribute and an id of the
         // resource for that the attribute shall be found
         // is specified, as this handler is not able to resolve values of
         // not existing resources.
-        if(! super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
-                designatorType) || FinderModuleHelper.isNewResourceId(resourceId)) {
+        if (!super.assertAttribute(attributeIdValue, ctx, resourceId, resourceObjid, resourceVersionNumber,
+            designatorType)
+            || FinderModuleHelper.isNewResourceId(resourceId)) {
 
             return false;
         }
@@ -236,7 +238,7 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
         // The handler is responsible if the resource id does not
         // contain a version number (resourceVersionNumber == null), as in this
         // case always the latest version shall be addressed.
-        if(resourceVersionNumber != null) {
+        if (resourceVersionNumber != null) {
             // It is responsible, too, if the version number specified in the
             // resource id matches the latest-version number.
             // And it is responsible to fetch all non-version specific
@@ -247,20 +249,21 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
 
             // item components, modified-by, and version-status are version
             // specific.
-            if(PATTERN_ITEM_DEPENDENT_ATTRS.matcher(attributeIdValue).find()) {
-                final String latestVersionNumber = fetchSingleResourceAttribute(ctx, resourceObjid,
-                        AttributeIds.URN_ITEM_LATEST_VERSION_NUMBER_ATTR);
-                if(! latestVersionNumber.equals(resourceVersionNumber)) {
+            if (PATTERN_ITEM_DEPENDENT_ATTRS.matcher(attributeIdValue).find()) {
+                final String latestVersionNumber =
+                    fetchSingleResourceAttribute(ctx, resourceObjid, AttributeIds.URN_ITEM_LATEST_VERSION_NUMBER_ATTR);
+                if (!latestVersionNumber.equals(resourceVersionNumber)) {
                     return false;
                 }
             }
             // container members, modified-by, and version-status are version
             // specific.
-            else if(PATTERN_CONTAINER_DEPENDENT_ATTRS.matcher(attributeIdValue).find()) {
+            else if (PATTERN_CONTAINER_DEPENDENT_ATTRS.matcher(attributeIdValue).find()) {
 
-                final String latestVersionNumber = fetchSingleResourceAttribute(ctx, resourceObjid,
+                final String latestVersionNumber =
+                    fetchSingleResourceAttribute(ctx, resourceObjid,
                         AttributeIds.URN_CONTAINER_LATEST_VERSION_NUMBER_ATTR);
-                if(! latestVersionNumber.equals(resourceVersionNumber)) {
+                if (!latestVersionNumber.equals(resourceVersionNumber)) {
                     return false;
                 }
             }
@@ -273,55 +276,60 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
      * See Interface for functional description.
      */
     @Override
-    protected Object[] resolveLocalPart(final String attributeIdValue, final EvaluationCtx ctx, final String resourceId,
-                                        final String resourceObjid, final String resourceVersionNumber)
-            throws SystemException, ResourceNotFoundException {
+    protected Object[] resolveLocalPart(
+        final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber) throws SystemException, ResourceNotFoundException {
 
         List<String> cachedAttribute = new ArrayList<String>();
         final MapResult mapresult = mapIt(attributeIdValue);
 
-        if(mapresult == null) {
+        if (mapresult == null) {
             return null;
         }
 
         EvaluationResult result;
-        if(! mapresult.getresolvableAttributeId().equals(attributeIdValue)) {
+        if (!mapresult.getresolvableAttributeId().equals(attributeIdValue)) {
             try {
-                result = ctx.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING,
-                        new URI(mapresult.getresolvableAttributeId()), null);
-            } catch(final URISyntaxException e) {
+                result =
+                    ctx.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING, new URI(mapresult
+                        .getresolvableAttributeId()), null);
+            }
+            catch (final URISyntaxException e) {
                 result = CustomEvaluationResultBuilder.createSyntaxErrorResult(e);
             }
-            return new Object[]{result, mapresult.getresolvableAttributeId()};
+            return new Object[] { result, mapresult.getresolvableAttributeId() };
         }
 
-        if(mapresult.isHierarchical()) {
-            if(mapresult.isIncludeHierarchyBase()) {
+        if (mapresult.isHierarchical()) {
+            if (mapresult.isIncludeHierarchyBase()) {
                 cachedAttribute.add(resourceObjid);
             }
             final Collection<String> attributesList = new ArrayList<String>();
             attributesList.add(resourceObjid);
             cachedAttribute = getHierarchicalCachedAttributes(attributesList, cachedAttribute, mapresult);
-        } else {
-            cachedAttribute = FinderModuleHelper.retrieveFromTripleStore(mapresult.isInverse(),
-                    mapresult.getResolveCurrentWhereClause(resourceObjid, this.tsu), resourceObjid,
-                    mapresult.getCacheId(), this.tsu);
+        }
+        else {
+            cachedAttribute =
+                FinderModuleHelper.retrieveFromTripleStore(mapresult.isInverse(), mapresult
+                    .getResolveCurrentWhereClause(resourceObjid, this.tsu), resourceObjid, mapresult.getCacheId(),
+                    this.tsu);
         }
 
         final List<StringAttribute> stringAttributes = new ArrayList<StringAttribute>();
-        if(cachedAttribute.isEmpty()) {
+        if (cachedAttribute.isEmpty()) {
             // if Attribute was not found it is not there
             // to avoid repeatedly resolving, put marker in EvaluationCtx
             stringAttributes.add(new StringAttribute("nonresolvable"));
-        } else {
-            for(final String stringAttribute : cachedAttribute) {
+        }
+        else {
+            for (final String stringAttribute : cachedAttribute) {
                 stringAttributes.add(new StringAttribute(stringAttribute));
             }
         }
 
         result = new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, stringAttributes));
 
-        return new Object[]{result, mapresult.getresolvableAttributeId()};
+        return new Object[] { result, mapresult.getresolvableAttributeId() };
     }
 
     /**
@@ -334,20 +342,20 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
      * @throws ResourceNotFoundException e
      * @throws SystemException           e
      */
-    protected List<String> getHierarchicalCachedAttributes(final Collection<String> attributesList,
-                                                           final List<String> totalAttributesList,
-                                                           final MapResult mapresult)
-            throws ResourceNotFoundException, SystemException {
+    protected List<String> getHierarchicalCachedAttributes(
+        final Collection<String> attributesList, final List<String> totalAttributesList, final MapResult mapresult)
+        throws ResourceNotFoundException, SystemException {
         List<String> hierarchicalAttributesList = totalAttributesList;
-        if(attributesList != null && ! attributesList.isEmpty()) {
-            for(final String attribute : attributesList) {
-                final List<String> theseAttributes = FinderModuleHelper.retrieveFromTripleStore(mapresult.isInverse(),
-                        mapresult.getResolveCurrentWhereClause(attribute, this.tsu), attribute, mapresult.getCacheId(),
-                        this.tsu);
-                if(theseAttributes != null && ! theseAttributes.isEmpty()) {
+        if (attributesList != null && !attributesList.isEmpty()) {
+            for (final String attribute : attributesList) {
+                final List<String> theseAttributes =
+                    FinderModuleHelper
+                        .retrieveFromTripleStore(mapresult.isInverse(), mapresult.getResolveCurrentWhereClause(
+                            attribute, this.tsu), attribute, mapresult.getCacheId(), this.tsu);
+                if (theseAttributes != null && !theseAttributes.isEmpty()) {
                     hierarchicalAttributesList.addAll(theseAttributes);
                     hierarchicalAttributesList =
-                            getHierarchicalCachedAttributes(theseAttributes, hierarchicalAttributesList, mapresult);
+                        getHierarchicalCachedAttributes(theseAttributes, hierarchicalAttributesList, mapresult);
                 }
             }
         }
@@ -616,51 +624,50 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
      */
     public MapResult mapIt(final String attributeIdValue) {
 
-        if(attributeIdValue == null) {
+        if (attributeIdValue == null) {
             return null;
         }
 
         final String[] elements =
-                SPLIT_PATTERN.split(attributeIdValue.substring(AttributeIds.RESOURCE_ATTR_PREFIX_LENGTH));
+            SPLIT_PATTERN.split(attributeIdValue.substring(AttributeIds.RESOURCE_ATTR_PREFIX_LENGTH));
 
         String currentPath = "";
         String longestPath = null;
         MapResult longestMatch = null;
         String contentModelTitle = null;
         String contentTypePredicateId = null;
-        int indexLongestMatch = - 1;
-        for(int i = 0; i < elements.length; i++) {
+        int indexLongestMatch = -1;
+        for (int i = 0; i < elements.length; i++) {
             String element = elements[i];
             final int dotIndex = element.indexOf('.');
-            if(dotIndex != - 1) {
+            if (dotIndex != -1) {
                 contentModelTitle = element.substring(dotIndex + 1);
                 element = element.substring(0, dotIndex);
                 elements[i] = element;
             }
             currentPath = i == 0 ? element : StringUtility.concatenateWithColon(currentPath, element).toString();
 
-            if(mapping.get(currentPath) != null) {
+            if (mapping.get(currentPath) != null) {
                 longestMatch =
-                        new MapResult(mapping.get(currentPath).getCacheId(), mapping.get(currentPath).isInverse(),
-                                mapping.get(currentPath).isHierarchical(),
-                                mapping.get(currentPath).isIncludeHierarchyBase());
+                    new MapResult(mapping.get(currentPath).getCacheId(), mapping.get(currentPath).isInverse(), mapping
+                        .get(currentPath).isHierarchical(), mapping.get(currentPath).isIncludeHierarchyBase());
                 longestPath = currentPath;
                 indexLongestMatch = i;
             }
-            if(contentModelTitle != null) {
+            if (contentModelTitle != null) {
                 contentTypePredicateId = TripleStoreUtility.PROP_CONTENT_MODEL_ID;
                 break;
             }
         }
-        if(indexLongestMatch == - 1) {
+        if (indexLongestMatch == -1) {
             return null;
         }
 
         String tail = null;
-        if(indexLongestMatch < elements.length - 1) {
+        if (indexLongestMatch < elements.length - 1) {
             final StringBuilder tailBuf = new StringBuilder(AttributeIds.RESOURCE_ATTR_PREFIX);
             tail = AttributeIds.RESOURCE_ATTR_PREFIX;
-            for(int i = indexLongestMatch; i < elements.length; i++) {
+            for (int i = indexLongestMatch; i < elements.length; i++) {
                 tailBuf.append(elements[i]);
                 tailBuf.append(':');
             }

@@ -63,7 +63,7 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
      * contains the extracted Attributes that have value type StringAttribute
      */
     private final HashMap<String, Collection<StringAttribute>> attributeAttributes =
-            new HashMap<String, Collection<StringAttribute>>();
+        new HashMap<String, Collection<StringAttribute>>();
 
     /**
      * The constructor.
@@ -74,7 +74,7 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
     public ContainerStaxHandler(final EvaluationCtx ctx, final String resourceId) {
 
         super(ctx, resourceId, AttributeIds.URN_CONTAINER_VERSION_MODIFIED_BY_ATTR,
-                AttributeIds.URN_CONTAINER_PUBLIC_STATUS_ATTR, AttributeIds.URN_CONTAINER_VERSION_STATUS_ATTR);
+            AttributeIds.URN_CONTAINER_PUBLIC_STATUS_ATTR, AttributeIds.URN_CONTAINER_VERSION_STATUS_ATTR);
     }
 
     /**
@@ -87,16 +87,18 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
     public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
 
         super.startElement(element);
-        if(isNotReady() && ! isInMetadata()) {
+        if (isNotReady() && !isInMetadata()) {
 
             final String localName = element.getLocalName();
-            if(XmlUtility.NAME_ITEM_REF.equals(localName)) {
+            if (XmlUtility.NAME_ITEM_REF.equals(localName)) {
                 itemIds.add(new StringAttribute(XmlUtility.getIdFromStartElement(element)));
-            } else if(XmlUtility.NAME_CONTAINER_REF.equals(localName)) {
+            }
+            else if (XmlUtility.NAME_CONTAINER_REF.equals(localName)) {
                 containerIds.add(new StringAttribute(XmlUtility.getIdFromStartElement(element)));
-            } else if(XmlUtility.NAME_LOCK_OWNER.equals(localName)) {
-                stringAttributes
-                        .put(AttributeIds.URN_CONTAINER_LOCK_OWNER_ATTR, XmlUtility.getIdFromStartElement(element));
+            }
+            else if (XmlUtility.NAME_LOCK_OWNER.equals(localName)) {
+                stringAttributes.put(AttributeIds.URN_CONTAINER_LOCK_OWNER_ATTR, XmlUtility
+                    .getIdFromStartElement(element));
             }
         }
 
@@ -112,9 +114,9 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
     public EndElement endElement(final EndElement element) throws Exception {
 
         super.endElement(element);
-        if(isNotReady() && ! isInMetadata() && XmlUtility.NAME_MEMBER.equals(element.getLocalName())) {
+        if (isNotReady() && !isInMetadata() && XmlUtility.NAME_MEMBER.equals(element.getLocalName())) {
             final Collection<StringAttribute> memberIds =
-                    new ArrayList<StringAttribute>(containerIds.size() + itemIds.size());
+                new ArrayList<StringAttribute>(containerIds.size() + itemIds.size());
             memberIds.addAll(this.containerIds);
             memberIds.addAll(this.itemIds);
             attributeAttributes.put(AttributeIds.URN_CONTAINER_MEMBER_ATTR, memberIds);

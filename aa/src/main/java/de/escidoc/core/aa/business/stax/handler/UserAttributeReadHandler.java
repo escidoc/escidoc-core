@@ -42,7 +42,7 @@ public class UserAttributeReadHandler extends DefaultHandler {
 
     @Override
     public String characters(final String data, final StartElement element) throws Exception {
-        if(element.getLocalName().equals(Elements.ELEMENT_USER_ATTRIBUTE)) {
+        if (element.getLocalName().equals(Elements.ELEMENT_USER_ATTRIBUTE)) {
             final String name = element.getAttributeValue(null, "name");
             this.attributes.put(name, data);
         }
