@@ -93,44 +93,36 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
      * @throws SystemException            Thrown in case of internal error.
      * @see ItemHandlerInterface #assignContentPid(java.lang.String,java.lang.String, java.lang.String)
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.PidSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public String assignContentPid(final String id, final String componentId, final String taskParam)
-        throws ItemNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
-        InvalidStatusException, ComponentNotFoundException, SystemException, XmlCorruptedException,
-        ReadonlyVersionException, EncodingSystemException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, PidSystemException, WebserverSystemException, IntegritySystemException {
+            throws ItemNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
+            InvalidStatusException, ComponentNotFoundException, SystemException, XmlCorruptedException,
+            ReadonlyVersionException, EncodingSystemException, FedoraSystemException, TripleStoreSystemException,
+            XmlParserSystemException, PidSystemException, WebserverSystemException, IntegritySystemException {
 
         setItem(id);
 
         // we can only update the latest version
-        if (!getItem().isLatestVersion()) {
-            throw new ReadonlyVersionException("Version " + getItem().getVersionNumber()
-                + " is not a latest version of the item. " + "Assignment of version PID is restricted"
-                + " to the latest version.");
+        if(! getItem().isLatestVersion()) {
+            throw new ReadonlyVersionException(
+                    "Version " + getItem().getVersionNumber() + " is not a latest version of the item. " +
+                            "Assignment of version PID is restricted" + " to the latest version.");
         }
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
         checkLocked();
         checkContentPidAssignable(componentId);
 
-        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Item " + getItem().getId());
+        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Item " + getItem().getId());
 
         final Component component = getItem().getComponent(componentId);
 
         String pid = taskParameter.getPid();
-        if (pid == null) {
+        if(pid == null) {
             // get PID from external PID System
             pid = getPid(component.getId(), taskParam);
-        }
-        else if (! GenericResourcePid.validPidStructure(pid)) {
+        } else if(! GenericResourcePid.validPidStructure(pid)) {
             throw new XmlCorruptedException("Empty pid element of taskParam.");
         }
         component.setObjectPid(pid);
@@ -156,50 +148,40 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws XmlCorruptedException      Thrown if taskParam has invalid XML.
      * @throws SystemException            Thrown in case of internal error.
      * @see ItemHandlerInterface #assignObjectPid(java.lang.String,java.lang.String)
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.PidSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    public String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
-        ItemNotFoundException, ComponentNotFoundException, LockingException, MissingMethodParameterException,
-        OptimisticLockingException, XmlCorruptedException, SystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, PidSystemException,
-        WebserverSystemException, XmlParserSystemException {
+    public String assignObjectPid(final String id, final String taskParam)
+            throws InvalidStatusException, ItemNotFoundException, ComponentNotFoundException, LockingException,
+            MissingMethodParameterException, OptimisticLockingException, XmlCorruptedException, SystemException,
+            EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+            PidSystemException, WebserverSystemException, XmlParserSystemException {
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
         checkLocked();
         checkObjectPidAssignable();
 
-        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Item " + getItem().getId());
+        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Item " + getItem().getId());
 
         String pid = taskParameter.getPid();
-        if (pid == null) {
+        if(pid == null) {
             // get PID from external PID System
             pid = getPid(id, taskParam);
-        }
-        else if (! GenericResourcePid.validPidStructure(pid)) {
+        } else if(! GenericResourcePid.validPidStructure(pid)) {
             throw new XmlCorruptedException("Empty pid element of taskParam.");
         }
 
         getItem().setObjectPid(pid);
         getItem().persist();
 
-        if (getItem().isLatestVersion()) {
-            final String message =
-                "You cannot access a full surrogate item representation"
-                    + " because you have no access rights on the item " + getOriginId()
-                    + " . You can access subressourcess owned by a " + "surrogate item using retrieve methods on "
-                    + "subresources.";
+        if(getItem().isLatestVersion()) {
+            final String message = "You cannot access a full surrogate item representation" +
+                    " because you have no access rights on the item " + getOriginId() +
+                    " . You can access subressourcess owned by a " + "surrogate item using retrieve methods on " +
+                    "subresources.";
             try {
                 loadOrigin(message);
-            }
-            catch (AuthorizationException e) {
+            } catch(AuthorizationException e) {
                 throw new SystemException(e);
             }
 
@@ -227,58 +209,48 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws SystemException            Thrown in case of internal error.
      * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
      * @see ItemHandlerInterface #assignVersionPid(java.lang.String,java.lang.String)
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.PidSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
-     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
-    public String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
-        LockingException, MissingMethodParameterException, OptimisticLockingException, InvalidStatusException,
-        XmlCorruptedException, SystemException, ComponentNotFoundException, ReadonlyVersionException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        PidSystemException, WebserverSystemException, XmlParserSystemException {
+    public String assignVersionPid(final String id, final String taskParam)
+            throws ItemNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
+            InvalidStatusException, XmlCorruptedException, SystemException, ComponentNotFoundException,
+            ReadonlyVersionException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
+            TripleStoreSystemException, PidSystemException, WebserverSystemException, XmlParserSystemException {
 
         setItem(id);
 
         // we can only update the latest version
-        if (!getItem().isLatestVersion()) {
-            throw new ReadonlyVersionException("Version " + getItem().getVersionNumber()
-                + " is not a latest version of the item. " + "Assignment of version PID is restricted"
-                + " to the latest version.");
+        if(! getItem().isLatestVersion()) {
+            throw new ReadonlyVersionException(
+                    "Version " + getItem().getVersionNumber() + " is not a latest version of the item. " +
+                            "Assignment of version PID is restricted" + " to the latest version.");
         }
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
         checkLocked();
         checkItemVersionPidAssignable();
 
-        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
-            .getLastModificationDate(), "Item " + getItem().getId());
+        Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(),
+                taskParameter.getLastModificationDate(), "Item " + getItem().getId());
 
         String pid = taskParameter.getPid();
-        if (pid == null) {
+        if(pid == null) {
             // get PID from external PID System
             pid = getPid(id, taskParam);
-        }
-        else if (! GenericResourcePid.validPidStructure(pid)) {
+        } else if(! GenericResourcePid.validPidStructure(pid)) {
             throw new XmlCorruptedException("Empty pid element of taskParam.");
         }
 
         getItem().setVersionPid(pid);
         getItem().persist();
 
-        if (getItem().isLatestVersion()) {
-            final String message =
-                "You cannot access a full surrogate item representation"
-                    + " because you have no access rights on the item " + getOriginId()
-                    + " . You can access subressourcess owned by a " + "surrogate item using retrieve methods on "
-                    + "subresources.";
+        if(getItem().isLatestVersion()) {
+            final String message = "You cannot access a full surrogate item representation" +
+                    " because you have no access rights on the item " + getOriginId() +
+                    " . You can access subressourcess owned by a " + "surrogate item using retrieve methods on " +
+                    "subresources.";
             try {
                 loadOrigin(message);
-            }
-            catch (AuthorizationException e) {
+            } catch(AuthorizationException e) {
                 throw new SystemException(e);
             }
             fireItemModified(getItem().getId(), render());
@@ -298,13 +270,13 @@ public class ItemHandlerPid extends ItemHandlerContent {
      *                                  Thrown if necessary parameters are not part of the param XML structure.
      * @throws WebserverSystemException Thrown by assignPid().
      */
-    public String getPid(final String id, final String param) throws PidSystemException,
-        MissingMethodParameterException, WebserverSystemException {
+    public String getPid(final String id, final String param)
+            throws PidSystemException, MissingMethodParameterException, WebserverSystemException {
 
-        if (this.pidGenFactory == null) {
+        if(this.pidGenFactory == null) {
             this.pidGenFactory = PIDSystemFactory.getInstance();
         }
-        if (this.pidGen == null) {
+        if(this.pidGen == null) {
             this.pidGen = pidGenFactory.getPIDGenerator();
         }
 
@@ -321,19 +293,19 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws IntegritySystemException   If the integrity of the repository is violated.
      */
     protected void checkPid() throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException,
-        IntegritySystemException {
+            IntegritySystemException {
         // this is part of a content model (which is currently missing)
 
-        if (!releasableContentPid()) {
-            throw new InvalidStatusException("ContentPid is missing! "
-                + "Every content of a released item must have a contentPid.");
+        if(! releasableContentPid()) {
+            throw new InvalidStatusException(
+                    "ContentPid is missing! " + "Every content of a released item must have a contentPid.");
         }
 
-        if (!releasableObjectPid()) {
+        if(! releasableObjectPid()) {
             throw new InvalidStatusException("ObjectPid is missing! " + "A released item must have an objectPid.");
         }
 
-        if (!releasableVersionPid()) {
+        if(! releasableVersionPid()) {
             throw new InvalidStatusException("VersionPid is missing! " + "A released item must have a versionPid.");
         }
     }
@@ -342,47 +314,40 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * Check if the Item has fulfilled all pre-conditions in relation to PID for the release process.
      *
      * @return true if all pre-conditions are fulfilled otherwise false.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private boolean releasableContentPid() throws WebserverSystemException, TripleStoreSystemException {
         boolean result;
 
-        if (Boolean.valueOf(System.getProperty("cmm.Item.contentPid.releaseWithoutPid"))) {
+        if(Boolean.valueOf(System.getProperty("cmm.Item.contentPid.releaseWithoutPid"))) {
             result = true;
-        }
-        else {
+        } else {
             // FIXME an exception is content model TOC, since we have a real
             // content model object here is a workaround
             try {
                 final String curCm = getItem().getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
                 final String tocCm = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
 
-                if (curCm.endsWith(tocCm)) {
+                if(curCm.endsWith(tocCm)) {
                     result = true;
-                }
-                else {
+                } else {
                     result = true;
 
                     final Collection<String> componentIds = getItem().getComponentIds();
 
-                    if (componentIds != null) {
-                        for (final String componentId : componentIds) {
-                            if (!getItem().getComponent(componentId).hasObjectPid()) {
+                    if(componentIds != null) {
+                        for(final String componentId : componentIds) {
+                            if(! getItem().getComponent(componentId).hasObjectPid()) {
                                 result = false;
                                 break;
                             }
                         }
                     }
                 }
-            }
-            catch (final ComponentNotFoundException e) {
+            } catch(final ComponentNotFoundException e) {
                 throw new WebserverSystemException(e);
-            }
-            catch (final IOException e) {
+            } catch(final IOException e) {
                 throw new WebserverSystemException(e);
-            }
-            catch (final SystemException e) {
+            } catch(final SystemException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -397,7 +362,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws WebserverSystemException   Thrown if check of existing versionPID throws Exception.
      */
     protected boolean releasableObjectPid() throws TripleStoreSystemException, WebserverSystemException {
-        if (Boolean.valueOf(System.getProperty("cmm.Item.objectPid.releaseWithoutPid"))) {
+        if(Boolean.valueOf(System.getProperty("cmm.Item.objectPid.releaseWithoutPid"))) {
             return true;
         } // objectPid is needed
         // FIXME an exception is content model TOC, since we have a real
@@ -406,11 +371,10 @@ public class ItemHandlerPid extends ItemHandlerContent {
         final String tocCm;
         try {
             tocCm = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
-        if (curCm.endsWith(tocCm)) {
+        if(curCm.endsWith(tocCm)) {
             return true;
         }
         return getItem().hasObjectPid();
@@ -424,9 +388,9 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws IntegritySystemException   If the integrity of the repository is violated.
      * @throws TripleStoreSystemException Thrown if TripleStore request failed.
      */
-    protected boolean releasableVersionPid() throws WebserverSystemException, IntegritySystemException,
-        TripleStoreSystemException {
-        if (Boolean.valueOf(System.getProperty("cmm.Item.versionPid.releaseWithoutPid"))) {
+    protected boolean releasableVersionPid()
+            throws WebserverSystemException, IntegritySystemException, TripleStoreSystemException {
+        if(Boolean.valueOf(System.getProperty("cmm.Item.versionPid.releaseWithoutPid"))) {
             return true;
         }
         // FIXME an exception is content model TOC, since we have a real
@@ -435,11 +399,10 @@ public class ItemHandlerPid extends ItemHandlerContent {
         final String tocCm;
         try {
             tocCm = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
-        }
-        catch (final IOException e) {
+        } catch(final IOException e) {
             throw new WebserverSystemException(e);
         }
-        if (curCm.endsWith(tocCm)) {
+        if(curCm.endsWith(tocCm)) {
             return true;
         }
 
@@ -454,15 +417,10 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws InvalidStatusException     If item status is not released
      * @throws SystemException            Thrown if instance of configuration throws exception.
      * @throws ComponentNotFoundException Thrown if the component with the given componentId could not be found
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
-     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    private void checkContentPidAssignable(final String componentId) throws InvalidStatusException, SystemException,
-        ComponentNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        WebserverSystemException, XmlParserSystemException {
+    private void checkContentPidAssignable(final String componentId)
+            throws InvalidStatusException, SystemException, ComponentNotFoundException, IntegritySystemException,
+            FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
 
         checkStatus(Constants.STATUS_WITHDRAWN);
         checkVersionStatusNot(Constants.STATUS_WITHDRAWN);
@@ -471,25 +429,25 @@ public class ItemHandlerPid extends ItemHandlerContent {
         final Boolean setPidBeforeRelease;
         try {
             setPidAfterRelease =
-                Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.contentPid.setPidAfterRelease"));
+                    Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.contentPid.setPidAfterRelease"));
             setPidBeforeRelease =
-                Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.contentPid.setPidBeforeRelease"));
-        }
-        catch (final Exception e) {
+                    Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.contentPid.setPidBeforeRelease"));
+        } catch(final Exception e) {
             throw new SystemException(e);
         }
 
-        if (!setPidBeforeRelease) {
+        if(! setPidBeforeRelease) {
             checkVersionStatus(Constants.STATUS_RELEASED);
         }
-        if (!setPidAfterRelease) {
+        if(! setPidAfterRelease) {
             checkVersionStatusNot(Constants.STATUS_RELEASED);
         }
 
         final String pid = getItem().getComponent(componentId).getObjectPid();
-        if (pid != null && pid.length() > 0) {
-            throw new InvalidStatusException("This object version (" + getItem().getVersionId()
-                + ") is already assigned with PID '" + pid + "' and can not be reassigned.");
+        if(pid != null && pid.length() > 0) {
+            throw new InvalidStatusException(
+                    "This object version (" + getItem().getVersionId() + ") is already assigned with PID '" + pid +
+                            "' and can not be reassigned.");
         }
     }
 
@@ -498,11 +456,9 @@ public class ItemHandlerPid extends ItemHandlerContent {
      *
      * @throws InvalidStatusException If item status is not released
      * @throws SystemException        Thrown if instance of configuration throws exception.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    private void checkItemVersionPidAssignable() throws InvalidStatusException, SystemException,
-        IntegritySystemException, WebserverSystemException {
+    private void checkItemVersionPidAssignable()
+            throws InvalidStatusException, SystemException, IntegritySystemException, WebserverSystemException {
 
         checkStatus(Constants.STATUS_WITHDRAWN);
         checkVersionStatusNot(Constants.STATUS_WITHDRAWN);
@@ -511,25 +467,25 @@ public class ItemHandlerPid extends ItemHandlerContent {
         final Boolean setPidBeforeRelease;
         try {
             setPidAfterRelease =
-                Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.versionPid.setPidAfterRelease"));
+                    Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.versionPid.setPidAfterRelease"));
             setPidBeforeRelease =
-                Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.versionPid.setPidBeforeRelease"));
-        }
-        catch (final Exception e) {
+                    Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.versionPid.setPidBeforeRelease"));
+        } catch(final Exception e) {
             throw new SystemException(e);
         }
 
-        if (!setPidBeforeRelease) {
+        if(! setPidBeforeRelease) {
             checkVersionStatus(Constants.STATUS_RELEASED);
         }
-        if (!setPidAfterRelease) {
+        if(! setPidAfterRelease) {
             checkVersionStatusNot(Constants.STATUS_RELEASED);
         }
 
         final String pid = getItem().getVersionPid();
-        if (pid != null && pid.length() > 0) {
-            throw new InvalidStatusException("This object version (" + getItem().getVersionId()
-                + ") is already assigned with PID '" + pid + "' and can not be reassigned.");
+        if(pid != null && pid.length() > 0) {
+            throw new InvalidStatusException(
+                    "This object version (" + getItem().getVersionId() + ") is already assigned with PID '" + pid +
+                            "' and can not be reassigned.");
         }
     }
 
@@ -538,11 +494,9 @@ public class ItemHandlerPid extends ItemHandlerContent {
      *
      * @throws InvalidStatusException If item status is not released
      * @throws SystemException        Thrown if instance of configuration throws exception.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    protected void checkObjectPidAssignable() throws InvalidStatusException, SystemException,
-        TripleStoreSystemException, WebserverSystemException {
+    protected void checkObjectPidAssignable()
+            throws InvalidStatusException, SystemException, TripleStoreSystemException, WebserverSystemException {
 
         checkStatus(Constants.STATUS_WITHDRAWN);
 
@@ -550,25 +504,25 @@ public class ItemHandlerPid extends ItemHandlerContent {
         final Boolean setPidBeforeRelease;
         try {
             setPidAfterRelease =
-                Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.objectPid.setPidAfterRelease"));
+                    Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.objectPid.setPidAfterRelease"));
             setPidBeforeRelease =
-                Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.objectPid.setPidBeforeRelease"));
-        }
-        catch (final Exception e) {
+                    Boolean.valueOf(EscidocConfiguration.getInstance().get("cmm.Item.objectPid.setPidBeforeRelease"));
+        } catch(final Exception e) {
             throw new SystemException(e);
         }
 
-        if (!setPidBeforeRelease) {
+        if(! setPidBeforeRelease) {
             checkNotStatus(Constants.STATUS_RELEASED);
         }
-        if (!setPidAfterRelease) {
+        if(! setPidAfterRelease) {
             checkStatus(Constants.STATUS_RELEASED);
         }
 
         final String pid = getItem().getObjectPid();
-        if (pid != null) {
-            throw new InvalidStatusException("This object (" + getItem().getFullId()
-                + ") is already assigned with PID '" + pid + "' and can not be reassigned.");
+        if(pid != null) {
+            throw new InvalidStatusException(
+                    "This object (" + getItem().getFullId() + ") is already assigned with PID '" + pid +
+                            "' and can not be reassigned.");
         }
     }
 
@@ -579,11 +533,11 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws TripleStoreSystemException If the triple store reports an error.
      * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    protected void checkNoObjectPidAssigned() throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException {
-        if (getItem().hasObjectPid()) {
-            throw new InvalidStatusException("The object is already assigned with a objectPID "
-                + "and can not be reassigned.");
+    protected void checkNoObjectPidAssigned()
+            throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
+        if(getItem().hasObjectPid()) {
+            throw new InvalidStatusException(
+                    "The object is already assigned with a objectPID " + "and can not be reassigned.");
         }
     }
 
@@ -602,16 +556,14 @@ public class ItemHandlerPid extends ItemHandlerContent {
         final DateTime lmd;
         try {
             lmd = getItem().getLastModificationDate();
-        }
-        catch (final FedoraSystemException e) {
+        } catch(final FedoraSystemException e) {
             throw new WebserverSystemException(e);
         }
 
         final String result;
         try {
             result = Utility.prepareReturnXml(lmd, "<pid>" + pid + "</pid>\n");
-        }
-        catch (final SystemException e) {
+        } catch(final SystemException e) {
             throw new WebserverSystemException(e);
         }
         return result;
