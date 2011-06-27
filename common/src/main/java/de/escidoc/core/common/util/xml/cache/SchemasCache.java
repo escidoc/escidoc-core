@@ -71,13 +71,13 @@ public class SchemasCache {
     public Schema getSchema(final String schemaUri)
             throws IOException, WebserverSystemException, MalformedURLException {
 
-        final Schema schema;
         final URLConnection conn = new URL(schemaUri).openConnection();
         final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
         // set resource resolver to change schema-location-host
         sf.setResourceResolver(new SchemaBaseResourceResolver());
 
+        final Schema schema;
         try {
             schema = sf.newSchema(new SAXSource(new InputSource(conn.getInputStream())));
         } catch(final SAXException e) {

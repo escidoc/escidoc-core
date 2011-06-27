@@ -58,8 +58,7 @@ public final class IOUtils {
             bufferSize = avail;
         }
         final byte[] buffer = new byte[bufferSize];
-        int n;
-        n = input.read(buffer);
+        int n = input.read(buffer);
         int total = 0;
         while(- 1 != n) {
             output.write(buffer, 0, n);

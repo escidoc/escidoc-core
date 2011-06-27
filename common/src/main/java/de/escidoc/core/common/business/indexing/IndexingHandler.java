@@ -670,7 +670,6 @@ public class IndexingHandler implements ResourceListener {
             final String query = Constants.SRW_MAXIMUM_TERMS_MATCHER.reset(Constants.SRW_SCAN_PARAMS)
                     .replaceFirst(Integer.toString(Constants.SRW_MAXIMUM_SCAN_TERMS));
             String lastTerm = "";
-            String lastLastTerm;
             boolean running = true;
             while(running) {
                 handler.resetNoOfDocumentTerms();
@@ -679,6 +678,7 @@ public class IndexingHandler implements ResourceListener {
                                 Constants.SRW_TERM_MATCHER.reset(query).replaceFirst(lastTerm));
 
                 final HttpResponse response = client.execute(httpGet);
+                String lastLastTerm;
                 if(response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                     lastLastTerm = handler.getLastTerm();
                     sp.parse(new ByteArrayInputStream(EntityUtils.toByteArray(response.getEntity())));

@@ -91,8 +91,8 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
         try {
             stream.lock();
         } catch(final IOException e) {
-            final String errorMessage = "Error on locking stream.";
             if(LOG.isWarnEnabled()) {
+                final String errorMessage = "Error on locking stream.";
                 LOG.warn(errorMessage, e);
             }
         }

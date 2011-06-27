@@ -25,7 +25,6 @@ public final class FileUtils {
 
     public static File createTempFile(String prefix, String suffix, final File parentDir, final boolean deleteOnExit)
             throws IOException {
-        final File result;
         final File parent = (parentDir == null) ? getDefaultTempDirectory() : parentDir;
         if(suffix == null) {
             suffix = ".tmp";
@@ -35,7 +34,7 @@ public final class FileUtils {
         } else if(prefix.length() < 3) {
             prefix += "escidoc";
         }
-        result = File.createTempFile(prefix, suffix, parent);
+        final File result = File.createTempFile(prefix, suffix, parent);
         //if parentDir is null, we're in our default dir
         //which will get completely wiped on exit from our exit
         //hook.  No need to set deleteOnExit() which leaks memory.

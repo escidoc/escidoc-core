@@ -49,9 +49,8 @@ public class ElementStreamFilter implements StreamFilter {
 
     public ElementStreamFilter(final XMLStreamReader reader) {
         final XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
-        final XMLStreamReader filteredXmlStreamReader;
         try {
-            filteredXmlStreamReader = xmlInputFactory.createFilteredReader(reader, this);
+            final XMLStreamReader filteredXmlStreamReader = xmlInputFactory.createFilteredReader(reader, this);
         } catch(XMLStreamException e) {
             final String errorMessage = "Error on creating XML reader.";
             if(LOG.isDebugEnabled()) {

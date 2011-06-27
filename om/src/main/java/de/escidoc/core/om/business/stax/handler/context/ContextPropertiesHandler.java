@@ -113,9 +113,8 @@ public class ContextPropertiesHandler extends DefaultHandler {
             if(curPath.equals(propertiesPath + "/organizational-units/organizational-unit")) {
 
                 try {
-                    final String id;
                     final String xlinkHref = element.getAttribute(Constants.XLINK_URI, "href").getValue();
-                    id = XmlUtility.getIdFromURI(xlinkHref);
+                    final String id = XmlUtility.getIdFromURI(xlinkHref);
 
                     if(! xlinkHref.equals("/oum/organizational-unit/" + id)) {
                         throw new OrganizationalUnitNotFoundException(

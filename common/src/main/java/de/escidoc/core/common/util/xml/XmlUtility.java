@@ -1474,8 +1474,8 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getAdminDescriptorSchemaLocation() throws WebserverSystemException {
-        final String subPath = "context/0.4/context.xsd";
         if(contextRestSchemaLocation == null) {
+            final String subPath = "context/0.4/context.xsd";
             contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + subPath;
         }
         return contextRestSchemaLocation;
@@ -1532,9 +1532,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContentModelSchemaLocation() throws WebserverSystemException {
-        final String contentModelXsd =
-                "content-model" + Constants.CONTENT_MODEL_NS_URI_SCHEMA_VERSION + "/content-model.xsd";
         if(contentModelRestSchemaLocation == null) {
+            final String contentModelXsd =
+                    "content-model" + Constants.CONTENT_MODEL_NS_URI_SCHEMA_VERSION + "/content-model.xsd";
             contentModelRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentModelXsd;
         }
         return contentModelRestSchemaLocation;
@@ -1545,8 +1545,8 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContextSchemaLocation() throws WebserverSystemException {
-        final String contextXsd = "context" + Constants.CONTEXT_NS_URI_SCHEMA_VERSION + "/context.xsd";
         if(contextRestSchemaLocation == null) {
+            final String contextXsd = "context" + Constants.CONTEXT_NS_URI_SCHEMA_VERSION + "/context.xsd";
             contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contextXsd;
         }
         return contextRestSchemaLocation;
@@ -1557,9 +1557,9 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getContentRelationSchemaLocation() throws WebserverSystemException {
-        final String contentRelationXsd =
-                "content-relation" + Constants.CONTENT_RELATION_NS_URI_SCHEMA_VERSION + "/content-relation.xsd";
         if(contentRelationRestSchemaLocation == null) {
+            final String contentRelationXsd =
+                    "content-relation" + Constants.CONTENT_RELATION_NS_URI_SCHEMA_VERSION + "/content-relation.xsd";
             contentRelationRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentRelationXsd;
         }
         return contentRelationRestSchemaLocation;
@@ -1570,8 +1570,8 @@ public final class XmlUtility {
      * @throws WebserverSystemException In case of an error.
      */
     public static String getSetDefinitionSchemaLocation() throws WebserverSystemException {
-        final String setDefinitionXsd = "set-definition/0.1/set-definition.xsd";
         if(setDefinitionRestSchemaLocation == null) {
+            final String setDefinitionXsd = "set-definition/0.1/set-definition.xsd";
             setDefinitionRestSchemaLocation = getSchemaBaseUrl() + "rest/" + setDefinitionXsd;
         }
         return setDefinitionRestSchemaLocation;

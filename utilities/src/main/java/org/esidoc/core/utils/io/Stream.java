@@ -259,7 +259,6 @@ public final class Stream extends OutputStream {
             writeCacheTo(out);
             return;
         }
-        int count = 0;
         if(this.isInMemory()) {
             if(this.currentStream instanceof ByteArrayOutputStream) {
                 byte bytes[] = ((ByteArrayOutputStream) this.currentStream).toByteArray();
@@ -272,6 +271,7 @@ public final class Stream extends OutputStream {
             final FileInputStream fin = new FileInputStream(this.tempFile);
             final byte bytes[] = new byte[1024];
             int x = fin.read(bytes);
+            int count = 0;
             while(x != - 1) {
                 if((count + x) > limit) {
                     x = limit - count;

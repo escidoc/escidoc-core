@@ -159,10 +159,10 @@ public class StatisticInterceptor implements Ordered {
             // get callee and method info
             final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             // get interface info
-            final String interfaceInfo = VALUE_INTERFACE_REST;
             // create a new statistic data record stored in thread local for this scope
             final StatisticRecordBuilder statisticRecordBuilder = StatisticRecordBuilder.createStatisticRecord();
             handleObjectIds(statisticRecordBuilder, methodSignature.getMethod().getName(), joinPoint.getArgs());
+            final String interfaceInfo = VALUE_INTERFACE_REST;
             final StatisticRecord statisticRecord = statisticRecordBuilder.withParameter(PARAM_HANDLER,
                     methodSignature.getDeclaringTypeName().replaceAll("\\.interfaces", "").replaceAll("Interface$", ""))
                     .withParameter(PARAM_REQUEST, methodSignature.getMethod().getName())
