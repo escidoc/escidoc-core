@@ -678,11 +678,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      */
     public List<String> getPropertiesElementsVector(final String pid, final String fullPropertyElementName,
                                                     final boolean targetIsSubject) throws TripleStoreSystemException {
-
-        final List<String> result =
-                targetIsSubject ? new ArrayList<String>(executeQueryId(pid, targetIsSubject, fullPropertyElementName)) :
-                        getPropertiesElementsVector(pid, fullPropertyElementName);
-        return result;
+        return targetIsSubject ? new ArrayList<String>(executeQueryId(pid, targetIsSubject, fullPropertyElementName)) :
+                getPropertiesElementsVector(pid, fullPropertyElementName);
+        ;
 
     }
 

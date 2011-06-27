@@ -68,8 +68,6 @@ public class DocumentsCache {
     public Document retrieveDocument(final Object documentData)
             throws IOException, ParserConfigurationException, SAXException {
         final DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        final Document document = builder.parse(
-                new ByteArrayInputStream(((String) documentData).getBytes(XmlUtility.CHARACTER_ENCODING)));
-        return document;
+        return builder.parse(new ByteArrayInputStream(((String) documentData).getBytes(XmlUtility.CHARACTER_ENCODING)));
     }
 }

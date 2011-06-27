@@ -361,10 +361,8 @@ public class Datastream {
                     location = null;
                 } else if(location.startsWith("/")) {
                     // assuming relative URL
-                    final String string =
-                            EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) +
-                                    location;
-                    location = string;
+                    location = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) +
+                            location;
                 }
             } catch(final IOException e) {
                 throw new WebserverSystemException(e);

@@ -163,9 +163,7 @@ public class IndexerResourceRequester {
                         out.write(bytes, 0, i);
                     }
                     out.flush();
-                    final MIMETypedStream stream =
-                            new MIMETypedStream(escidocBinaryContent.getMimeType(), out.toByteArray(), null);
-                    return stream;
+                    return new MIMETypedStream(escidocBinaryContent.getMimeType(), out.toByteArray(), null);
                 } catch(final Exception e) {
                     throw new SystemException(e);
                 } finally {
@@ -173,8 +171,7 @@ public class IndexerResourceRequester {
                     IOUtils.closeStream(out);
                 }
             } else if(content != null) {
-                final String xml = (String) content;
-                return xml;
+                return (String) content;
             }
         } catch(final InvocationTargetException e) {
             if(! "AuthorizationException".equals(e.getTargetException().getClass().getSimpleName()) &&
@@ -219,8 +216,7 @@ public class IndexerResourceRequester {
                 while((byteval = in.read()) > - 1) {
                     out.write(byteval);
                 }
-                final MIMETypedStream stream = new MIMETypedStream(mimeType, out.toByteArray(), null);
-                return stream;
+                return new MIMETypedStream(mimeType, out.toByteArray(), null);
             }
         } catch(final Exception e) {
             if(LOGGER.isWarnEnabled()) {

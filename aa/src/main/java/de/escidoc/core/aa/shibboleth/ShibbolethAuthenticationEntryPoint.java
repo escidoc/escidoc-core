@@ -49,19 +49,17 @@ public class ShibbolethAuthenticationEntryPoint implements AuthenticationEntryPo
     @Override
     public void commence(final HttpServletRequest request, final HttpServletResponse response,
                          final AuthenticationException authException) throws IOException, ServletException {
-        final HttpServletRequest httpRequest = request;
         // FIXME:URL!!!
         final StringBuilder target = new StringBuilder(this.serviceProviderBaseUrl).append("aa/login");
 
-        final String queryString = httpRequest.getQueryString();
+        final String queryString = request.getQueryString();
         if(queryString != null) {
             target.append('?');
             target.append(queryString);
         }
-        final String redirectUrl =
-                httpRequest.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null ? target.toString() :
-                        this.serviceProviderBaseUrl + this.sessionInitiatorPath + "?target=" +
-                                URLEncoder.encode(target.toString(), XmlUtility.CHARACTER_ENCODING);
+        final String redirectUrl = request.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null ? target.toString() :
+                this.serviceProviderBaseUrl + this.sessionInitiatorPath + "?target=" +
+                        URLEncoder.encode(target.toString(), XmlUtility.CHARACTER_ENCODING);
         response.sendRedirect(redirectUrl);
     }
 

@@ -1318,10 +1318,9 @@ public final class XmlUtility {
     public static String getIdFromStartElement(final StartElement element) throws MissingAttributeValueException {
 
         try {
-            final String objid = element.indexOfAttribute(null, NAME_OBJID) == - 1 ?
+            return element.indexOfAttribute(null, NAME_OBJID) == - 1 ?
                     getIdFromURI(element.getAttributeValue(Constants.XLINK_NS_URI, NAME_HREF)) :
                     element.getAttributeValue(null, NAME_OBJID);
-            return objid;
         } catch(final NoSuchAttributeException e) {
             throwMissingAttributeValueException(element, NAME_OBJID + '|' + NAME_HREF);
             return null;

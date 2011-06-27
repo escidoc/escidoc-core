@@ -1511,9 +1511,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             final Set<Entry<String, List<StartElementWithChildElements>>> entrySet =
                     predicateValuesVectorAssignment.entrySet();
             for(final Entry<String, List<StartElementWithChildElements>> anEntrySet : entrySet) {
-                final Entry<String, List<StartElementWithChildElements>> entry = anEntrySet;
-                final String predicateValue = entry.getKey();
-                final List<StartElementWithChildElements> elements = entry.getValue();
+                final String predicateValue = anEntrySet.getKey();
+                final List<StartElementWithChildElements> elements = anEntrySet.getValue();
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
             }
 
@@ -1811,9 +1810,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         if(mdMap == null) {
             getItem().setMdRecords(dsMap);
         } else {
-            for(final String o : mdMap.keySet()) {
-                final String name = o;
-                final ByteArrayOutputStream stream = mdMap.get(name);
+            for(final String name : mdMap.keySet()) {
+                final ByteArrayOutputStream stream = mdMap.get(o);
                 final byte[] xmlBytes = stream.toByteArray();
                 HashMap<String, String> mdProperties = null;
                 if("escidoc".equals(name)) {
