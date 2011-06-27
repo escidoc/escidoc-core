@@ -3,6 +3,7 @@ package org.escidoc.core.services.fedora;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.Encoded;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -138,6 +139,7 @@ public interface FedoraServiceRESTEndpoint {
         @NotNull @QueryParam("") GetDatastreamHistoryQueryParam query);
 
     @GET
+    @Encoded
     @Path("/risearch")
     @Produces(MimeTypes.ALL)
     @Consumes(MimeTypes.ALL)

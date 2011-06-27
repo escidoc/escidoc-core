@@ -22,10 +22,12 @@ package org.esidoc.core.utils.io;
 
 /**
  * Class with constants for encodings.
- *
+ * 
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public final class Encodings {
+
+    public final static String ISO_8859_1 = "ISO8859_1";
 
     public final static String UTF8 = "UTF-8";
 
@@ -34,6 +36,5 @@ public final class Encodings {
      */
     private Encodings() {
     }
-
 
 }
