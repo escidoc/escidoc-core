@@ -867,7 +867,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 final AddDatastreamPathParam path = new AddDatastreamPathParam(getContext().getId(), name);
                 final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
                 query.setAltIDs(Arrays
-                    .asList(new String[] { de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID }));
+                    .asList(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID));
                 query.setDsLabel(name);
                 query.setVersionable(Boolean.TRUE);
                 final Stream stream = new Stream();
