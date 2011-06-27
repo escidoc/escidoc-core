@@ -27,13 +27,13 @@ public final class IOUtils {
     }
 
     public static void copy(@NotNull final InputStream input, @NotNull final OutputStream output) throws IOException {
-        return copy(input, output, DEFAULT_BUFFER_SIZE);
+        copy(input, output, DEFAULT_BUFFER_SIZE);
     }
 
     public static void copyAndCloseInput(@NotNull final InputStream input, @NotNull final OutputStream output)
             throws IOException {
         try {
-            return copy(input, output, DEFAULT_BUFFER_SIZE);
+            copy(input, output, DEFAULT_BUFFER_SIZE);
         } finally {
             closeStream(input);
         }
