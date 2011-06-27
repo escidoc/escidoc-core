@@ -115,7 +115,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         addMdRecordsValues(container, values);
         final List<Map<String, String>> relations = container.getRelations();
         commonRenderer.addRelationsValues(relations, container.getHref(), values);
-        commonRenderer.addRelationsNamespaceValues(values);
+        VelocityXmlCommonRenderer.addRelationsNamespaceValues(values);
         values.put("contentRelationsTitle", "Relations of Container");
 
         return ContainerXmlProvider.getInstance().getContainerXml(values);
@@ -177,7 +177,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         commonRenderer.addRelationsValues(container.getRelations(), container.getHref(), values);
         values.put("contentRelationsTitle", "Relations of Container");
-        commonRenderer.addRelationsNamespaceValues(values);
+        VelocityXmlCommonRenderer.addRelationsNamespaceValues(values);
         return RelationsXmlProvider.getInstance().getRelationsXml(values);
     }
 
@@ -191,13 +191,13 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public String renderParents(final String containerId) throws WebserverSystemException, TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        commonRenderer.addXlinkValues(values);
-        commonRenderer.addStructuralRelationsValues(values);
+        VelocityXmlCommonRenderer.addXlinkValues(values);
+        VelocityXmlCommonRenderer.addStructuralRelationsValues(values);
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, ISODateTimeFormat.dateTime().withZone(
             DateTimeZone.UTC).print(System.currentTimeMillis()));
         values.put("isRootParents", XmlTemplateProvider.TRUE);
         addParentsValues(containerId, values);
-        commonRenderer.addParentsNamespaceValues(values);
+        VelocityXmlCommonRenderer.addParentsNamespaceValues(values);
         return ContainerXmlProvider.getInstance().getParentsXml(values);
     }
 

@@ -100,8 +100,8 @@ public class OptimisticLockingHandler extends DefaultHandler {
 
             final DateTime requestedModificationDate = new DateTime(requestedDate.getValue(), DateTimeZone.UTC);
             if (this.lastModifiedDate != null) {
-                this.utility.checkOptimisticLockingCriteria(this.lastModifiedDate, requestedModificationDate,
-                    this.objectType + " with id " + this.objid);
+                Utility.checkOptimisticLockingCriteria(this.lastModifiedDate, requestedModificationDate,
+                        this.objectType + " with id " + this.objid);
             }
             this.done = true;
 

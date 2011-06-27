@@ -31,6 +31,7 @@ package de.escidoc.core.om.business.fedora.container;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.business.fedora.resources.GenericResourcePid;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -97,7 +98,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
             // get PID from external PID System
             pid = getPid(id, taskParam);
         }
-        else if (!getContainer().validPidStructure(pid)) {
+        else if (! GenericResourcePid.validPidStructure(pid)) {
             throw new XmlCorruptedException("Empty pid element of taskParam.");
         }
 
@@ -162,7 +163,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
             // get PID from external PID System
             pid = getPid(id, taskParam);
         }
-        else if (!getContainer().validPidStructure(pid)) {
+        else if (! GenericResourcePid.validPidStructure(pid)) {
             throw new XmlCorruptedException("Empty pid element of taskParam.");
         }
 

@@ -31,6 +31,7 @@ package de.escidoc.core.om.business.fedora.item;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.business.fedora.resources.GenericResourcePid;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -129,7 +130,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
             // get PID from external PID System
             pid = getPid(component.getId(), taskParam);
         }
-        else if (!getItem().validPidStructure(pid)) {
+        else if (! GenericResourcePid.validPidStructure(pid)) {
             throw new XmlCorruptedException("Empty pid element of taskParam.");
         }
         component.setObjectPid(pid);
@@ -182,7 +183,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
             // get PID from external PID System
             pid = getPid(id, taskParam);
         }
-        else if (!getItem().validPidStructure(pid)) {
+        else if (! GenericResourcePid.validPidStructure(pid)) {
             throw new XmlCorruptedException("Empty pid element of taskParam.");
         }
 
@@ -261,7 +262,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
             // get PID from external PID System
             pid = getPid(id, taskParam);
         }
-        else if (!getItem().validPidStructure(pid)) {
+        else if (! GenericResourcePid.validPidStructure(pid)) {
             throw new XmlCorruptedException("Empty pid element of taskParam.");
         }
 

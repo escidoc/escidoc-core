@@ -108,7 +108,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         }
         xmlUtility.validate(xmlData, XmlUtility.getStatisticDataSchemaLocation());
 
-        final String scopeId = smXmlUtility.getScopeId(xmlData);
+        final String scopeId = SmXmlUtility.getScopeId(xmlData);
 
         if (scopeId == null || scopeId.length() == 0) {
             throw new ScopeNotFoundException("scopeId is null");

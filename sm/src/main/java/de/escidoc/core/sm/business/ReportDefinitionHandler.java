@@ -347,12 +347,12 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
             final Collection<String> allowedPrimKeys = new HashSet<String>();
             for (final AggregationDefinition aggregationDefinition : aggregationDefinitions) {
                 String primKey = aggregationDefinition.getId();
-                primKey = xmlUtility.convertPrimKeyToTableName(primKey);
+                primKey = SmXmlUtility.convertPrimKeyToTableName(primKey);
                 allowedPrimKeys.add(primKey);
             }
 
             // extract tablenames from sql
-            final Collection<String> primKeys = xmlUtility.extractAggregationPrimKeysFromSql(sql);
+            final Collection<String> primKeys = SmXmlUtility.extractAggregationPrimKeysFromSql(sql);
 
             // check primKeys against allowed primKeys
             for (final String primKey : primKeys) {
