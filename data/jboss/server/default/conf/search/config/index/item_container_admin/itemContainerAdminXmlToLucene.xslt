@@ -450,6 +450,7 @@ Notes:
         <xsl:param name="fieldvalue"/>
         <xsl:param name="indextype"/>
         <xsl:param name="store"/>
+        <xsl:param name="noFieldSeparator"/>
         <xsl:if test="string($fieldvalue) and normalize-space($fieldvalue)!=''">
             <IndexField termVector="NO">
                 <xsl:attribute name="index">
@@ -458,9 +459,18 @@ Notes:
                 <xsl:attribute name="store">
                     <xsl:value-of select="$store"/>
                 </xsl:attribute>
-                <xsl:attribute name="IFname">
-                    <xsl:value-of select="concat($context,$FIELDSEPARATOR,$fieldname)"/>
-                </xsl:attribute>
+		        <xsl:choose>
+		            <xsl:when test="$noFieldSeparator='true'">
+		                <xsl:attribute name="IFname">
+		                    <xsl:value-of select="concat($context,$fieldname)"/>
+		                </xsl:attribute>
+		            </xsl:when>
+		            <xsl:otherwise>
+		                <xsl:attribute name="IFname">
+		                    <xsl:value-of select="concat($context,$FIELDSEPARATOR,$fieldname)"/>
+		                </xsl:attribute>
+		            </xsl:otherwise>
+		        </xsl:choose>
                 <xsl:value-of select="$fieldvalue"/>
             </IndexField>
             <xsl:call-template name="writeSortField">
@@ -493,6 +503,7 @@ Notes:
         <xsl:for-each select="xalan:nodeset($userdefined-indexes)/userdefined-index">
             <xsl:variable name="index-name" select="./@name"/>
             <xsl:variable name="context" select="./@context"/>
+            <xsl:variable name="noFieldSeparator" select="./@no-field-separator"/>
             <xsl:for-each select="./element">
                 <xsl:if test="string(.) and normalize-space(.)!=''">
                     <xsl:call-template name="writeIndexField">
@@ -501,6 +512,7 @@ Notes:
                         <xsl:with-param name="fieldvalue" select="."/>
                         <xsl:with-param name="indextype" select="./@index"/>
                         <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                        <xsl:with-param name="noFieldSeparator" select="$noFieldSeparator"/>
                     </xsl:call-template>
                 </xsl:if>
             </xsl:for-each>
@@ -513,18 +525,34 @@ Notes:
     
     <!-- USER DEFINED INDEX FIELDS -->
     <xsl:variable name="userdefined-indexes">
+        <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
         <userdefined-index name="resources/parent">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
                 <xsl:if test="string($objectId) and $objectId != ''">
                 	<xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                 		concat('/ir/', local-name(/*), '/', $objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
                 </xsl:if>
             </element>
         </userdefined-index>
+        
+        <xsl:if test="string($objectId) and $objectId != ''">
+        	<xsl:variable name="parents" select="escidoc-core-accessor:getObjectAttribute(
+                		concat('/ir/', local-name(/*), '/', $objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
+        	<xsl:if test="not($parents)">
+	        	<userdefined-index no-field-separator="true">
+	            	<xsl:attribute name="context">
+	                	<xsl:value-of select="$CONTEXTNAME"/>
+	            	</xsl:attribute>
+	            	<xsl:attribute name="name">
+	                	<xsl:value-of select="concat('top-level-', local-name(/*), 's')"/>
+	            	</xsl:attribute>
+	            	<element index="UN_TOKENIZED">true</element>
+	        	</userdefined-index>
+        	</xsl:if>
+        </xsl:if>
     </xsl:variable>
 
 </xsl:stylesheet>   
