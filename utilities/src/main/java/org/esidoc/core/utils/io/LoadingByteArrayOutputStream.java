@@ -25,7 +25,7 @@ final class LoadingByteArrayOutputStream extends ByteArrayOutputStream {
         super(i);
     }
 
-    public ByteArrayInputStream createInputStream() {
+    public synchronized ByteArrayInputStream createInputStream() {
         return new ByteArrayInputStream(buf, 0, count) {
             public String toString() {
                 return IOUtils.newStringFromBytes(buf, 0, count);
@@ -41,7 +41,7 @@ final class LoadingByteArrayOutputStream extends ByteArrayOutputStream {
         return buf;
     }
 
-    public byte[] getRawBytes() {
+    public synchronized byte[] getRawBytes() {
         return buf;
     }
 }
