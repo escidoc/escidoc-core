@@ -173,7 +173,7 @@ public class IndexerResourceRequester {
                 }
             }
             else if (content != null) {
-                return (String) content;
+                return content;
             }
         }
         catch (final InvocationTargetException e) {
