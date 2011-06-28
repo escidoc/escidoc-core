@@ -65,18 +65,18 @@ public class VelocityXmlCommonRenderer {
      * @param values    The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public void addRelationsValues(final List<Map<String, String>> relations, final String href,
-                                   final Map<String, Object> values)
-            throws FedoraSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException,
-            TripleStoreSystemException {
+    public void addRelationsValues(
+        final List<Map<String, String>> relations, final String href, final Map<String, Object> values)
+        throws FedoraSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException,
+        TripleStoreSystemException {
 
         values.put("contentRelationsHref", href + de.escidoc.core.common.business.fedora.Constants.RELATIONS_URL_PART);
 
         List<Map<String, String>> entries = null;
-        if(relations != null && ! relations.isEmpty()) {
+        if (relations != null && !relations.isEmpty()) {
             final Iterator<Map<String, String>> relIter = relations.iterator();
             entries = new ArrayList<Map<String, String>>(relations.size());
-            while(relIter.hasNext()) {
+            while (relIter.hasNext()) {
                 final Map<String, String> entry = new HashMap<String, String>(3);
                 final Map<String, String> relation = relIter.next();
                 final String targetId = relation.get("target");
@@ -84,9 +84,10 @@ public class VelocityXmlCommonRenderer {
                 entry.put("targetId", targetId);
                 entry.put("predicate", predicate);
                 final String objectType = this.tripleStoreUtility.getObjectType(targetId);
-                if(objectType.endsWith("Item")) {
+                if (objectType.endsWith("Item")) {
                     entry.put("targetHref", XmlUtility.BASE_OM + "item/" + targetId);
-                } else {
+                }
+                else {
                     entry.put("targetHref", XmlUtility.BASE_OM + "container/" + targetId);
                 }
                 final String targetTitle = this.tripleStoreUtility.getTitle(targetId);
@@ -94,7 +95,7 @@ public class VelocityXmlCommonRenderer {
                 entries.add(entry);
             }
         }
-        if(entries != null && ! entries.isEmpty()) {
+        if (entries != null && !entries.isEmpty()) {
             values.put("contentRelations", entries);
         }
     }
@@ -131,12 +132,13 @@ public class VelocityXmlCommonRenderer {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     protected void addCommonValues(final GenericVersionableResourcePid resource, final Map values)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
 
         final DateTime lmd;
         try {
             lmd = resource.getLastModificationDate();
-        } catch(final FedoraSystemException e1) {
+        }
+        catch (final FedoraSystemException e1) {
             throw new WebserverSystemException(e1);
         }
 

@@ -96,9 +96,8 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
      *                                    object but this object is no Content Model a ContentModelNotFoundException is
      *                                    thrown.
      */
-    public ContentModel(final String id)
-            throws TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
-            FedoraSystemException, StreamNotFoundException, ResourceNotFoundException {
+    public ContentModel(final String id) throws TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException, FedoraSystemException, StreamNotFoundException, ResourceNotFoundException {
         super(id);
         this.contentStreams = new HashMap<String, Datastream>();
         this.otherStreams = new HashMap<String, Datastream>();
@@ -106,9 +105,9 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
     }
 
     private void init() throws TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
-            FedoraSystemException, StreamNotFoundException, ResourceNotFoundException {
+        FedoraSystemException, StreamNotFoundException, ResourceNotFoundException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
-                expandPropertiesNamesMapping(getPropertiesNamesMapping()));
+            expandPropertiesNamesMapping(getPropertiesNamesMapping()));
         this.getUtility().checkIsContentModel(this.getId());
         setHref(Constants.CONTENT_MODEL_URL_BASE + getId());
         setTitle(getProperty(TripleStoreUtility.PROP_DC_TITLE));
@@ -126,13 +125,14 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
     @Override
     public Map<String, String> getResourceProperties() throws TripleStoreSystemException, WebserverSystemException {
 
-        if(! this.resourceInit) {
+        if (!this.resourceInit) {
             super.getResourceProperties();
 
             // override dc properties
             try {
                 addResourceProperties(getDublinCorePropertiesMap());
-            } catch(final XmlParserSystemException e) {
+            }
+            catch (final XmlParserSystemException e) {
                 throw new WebserverSystemException(e);
             }
             this.resourceInit = true;
@@ -149,7 +149,8 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         sp.addHandler(dch);
         try {
             sp.parse(getDc().getStream());
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new XmlParserSystemException("Unexpected exception.", e);
         }
         return dch.getPropertiesMap();
@@ -157,11 +158,12 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
     public Datastream getDc() throws FedoraSystemException, WebserverSystemException {
 
-        if(this.dc == null) {
+        if (this.dc == null) {
             final Datastream ds;
             try {
                 ds = new Datastream("DC", getId(), this.getVersionDate());
-            } catch(final StreamNotFoundException e) {
+            }
+            catch (final StreamNotFoundException e) {
                 throw new WebserverSystemException(e);
             }
 
@@ -173,7 +175,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
     public void setDc(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
         final Datastream curDs = getDc();
-        if(! ds.equals(curDs)) {
+        if (!ds.equals(curDs)) {
             this.dc = ds;
             ds.merge();
         }
@@ -222,26 +224,28 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
      * @throws StreamNotFoundException    If a specific datastream can not be found.
      */
     @Override
-    protected final void initDatastream(final DatastreamProfileTO profile)
-            throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException,
-            IntegritySystemException, StreamNotFoundException {
+    protected final void initDatastream(final DatastreamProfileTO profile) throws WebserverSystemException,
+        FedoraSystemException, TripleStoreSystemException, IntegritySystemException, StreamNotFoundException {
 
         super.initDatastream(profile);
 
         final DateTime versionDate = getVersionDate();
 
-        if(profile.getDsAltID().contains("content-stream")) {
+        if (profile.getDsAltID().contains("content-stream")) {
             // found content-stream
             this.contentStreams.put(profile.getDsID(), new Datastream(profile, getId(), versionDate));
-        } else if(DATASTREAM_DS_COMPOSITE_MODEL.equals(profile.getDsID())) {
+        }
+        else if (DATASTREAM_DS_COMPOSITE_MODEL.equals(profile.getDsID())) {
             this.dsCompositeModel = new Datastream(profile, getId(), versionDate);
-        } else if(! (Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID()) || "DC".equals(profile.getDsID()) ||
-                DATASTREAM_WOV.equals(profile.getDsID()))) {
+        }
+        else if (!(Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID()) || "DC".equals(profile.getDsID()) || DATASTREAM_WOV
+            .equals(profile.getDsID()))) {
             this.otherStreams.put(profile.getDsID(), new Datastream(profile, getId(), versionDate));
-        } else {
-            if(LOGGER.isDebugEnabled()) {
-                LOGGER.debug(
-                        "Stream " + getId() + '/' + profile.getDsID() + " not instanziated in ContentModel.<init>.");
+        }
+        else {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Stream " + getId() + '/' + profile.getDsID()
+                    + " not instanziated in ContentModel.<init>.");
             }
         }
     }
@@ -257,7 +261,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames =
-                propertiesNames != null ? propertiesNames : new ArrayList<String>();
+            propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_CATEGORY);
         newPropertiesNames.add(TripleStoreUtility.PROP_DESCRIPTION);
@@ -277,9 +281,9 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
 
         final Map<String, String> newPropertiesNames =
-                propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
-        newPropertiesNames
-                .put(TripleStoreUtility.PROP_CONTENT_CATEGORY, PropertyMapKeys.LATEST_VERSION_CONTENT_CATEGORY);
+            propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
+        newPropertiesNames.put(TripleStoreUtility.PROP_CONTENT_CATEGORY,
+            PropertyMapKeys.LATEST_VERSION_CONTENT_CATEGORY);
         newPropertiesNames.put(TripleStoreUtility.PROP_DESCRIPTION, PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
 
         return newPropertiesNames;
@@ -346,7 +350,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
         try {
             final Datastream dcm = getDsCompositeModel();
-            if(dcm == null) {
+            if (dcm == null) {
                 // in case of no DS_COMPOSITE_MODEL datastream, behave as if the
                 // parser does not found any md-record-definition.
                 // Usually a Content Model should have - at least an empty -
@@ -356,21 +360,24 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
             }
             final String x = dcm.toStringUTF8();
             sp.parse(x);
-        } catch(final IntegritySystemException e) {
+        }
+        catch (final IntegritySystemException e) {
             throw e;
-        } catch(final RuntimeException e) {
+        }
+        catch (final RuntimeException e) {
             throw new WebserverSystemException("Unexpected exception parsing datastream DS-COMPOSITE-MODEL.", e);
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException("Unexpected exception parsing datastream DS-COMPOSITE-MODEL.", e);
         }
 
         return dcmh.getDsTypeModels();
     }
 
-    public Map<String, ResourceDefinitionCreate> getResourceDefinitions()
-            throws WebserverSystemException, IntegritySystemException {
+    public Map<String, ResourceDefinitionCreate> getResourceDefinitions() throws WebserverSystemException,
+        IntegritySystemException {
 
-        if(this.resourceDefinitions == null) {
+        if (this.resourceDefinitions == null) {
             this.resourceDefinitions = new HashMap<String, ResourceDefinitionCreate>();
 
             // get list of service references
@@ -379,11 +386,12 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
                 final Collection<String> pl = new ArrayList<String>();
                 pl.add("info:fedora/fedora-system:def/model#hasService");
                 services = this.getResourceProperties(pl);
-            } catch(final TripleStoreSystemException e) {
+            }
+            catch (final TripleStoreSystemException e) {
                 throw new WebserverSystemException("Can not access triplestore.", e);
             }
 
-            for(final Entry<String, String> entry : services.entrySet()) {
+            for (final Entry<String, String> entry : services.entrySet()) {
                 final String serviceName = entry.getValue().substring(entry.getValue().lastIndexOf('-') + 1);
                 final ResourceDefinitionCreate resourceDef = new ResourceDefinitionCreate();
                 try {
@@ -392,7 +400,8 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
                     resourceDef.setMdRecordName("escdioc");
                     // FIXME create correct href?
                     // resourceDef.setXsltHref("");
-                } catch(final MissingAttributeValueException e) {
+                }
+                catch (final MissingAttributeValueException e) {
                     throw new IntegritySystemException("Service ID but no name.", e);
                 }
                 this.resourceDefinitions.put(serviceName, resourceDef);
@@ -410,24 +419,25 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
         try {
             final Datastream ds =
-                    new Datastream("DS-COMPOSITE-MODEL", getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING),
-                            MimeTypes.TEXT_XML);
+                new Datastream("DS-COMPOSITE-MODEL", getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING),
+                    MimeTypes.TEXT_XML);
             setDsCompositeModel(ds);
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
         }
     }
 
     public void setDsCompositeModel(final Datastream ds) {
 
-        if(! getDsCompositeModel().equals(ds)) {
+        if (!getDsCompositeModel().equals(ds)) {
             this.dsCompositeModel = ds;
             this.setNeedSync(true);
         }
     }
 
-    public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams)
-            throws FedoraSystemException, WebserverSystemException {
+    public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams) throws FedoraSystemException,
+        WebserverSystemException {
 
         final Set<String> namesInFedora = getContentStreams().keySet();
 
@@ -437,21 +447,21 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         // TODO: Check wether contentStreamDatastreams is used outside of this
         // method. If not, replace the following while and for with one
         // entry-set iterator
-        while(nameIt.hasNext()) {
+        while (nameIt.hasNext()) {
             final Entry<String, Datastream> mapEntry = nameIt.next();
             final String name = mapEntry.getKey();
             final Datastream current = mapEntry.getValue();
             // add DS ...
             setContentStream(name, current);
-            if(! namesInFedora.contains(name)) {
+            if (!namesInFedora.contains(name)) {
                 // and remove it from given list
                 nameIt.remove();
             }
         }
 
         // delete data streams which are in fedora but not in given list
-        for(final String nameInFedora : namesInFedora) {
-            if(! contentStreamDatastreams.containsKey(nameInFedora)) {
+        for (final String nameInFedora : namesInFedora) {
+            if (!contentStreamDatastreams.containsKey(nameInFedora)) {
                 final Datastream fedoraDs = getContentStream(nameInFedora);
                 fedoraDs.delete();
                 this.contentStreams.remove(nameInFedora);
@@ -459,8 +469,8 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         }
     }
 
-    public void setContentStream(final String name, final Datastream ds)
-            throws WebserverSystemException, FedoraSystemException {
+    public void setContentStream(final String name, final Datastream ds) throws WebserverSystemException,
+        FedoraSystemException {
         // don't trust the handler
         final List<String> alternateIDs = new ArrayList<String>();
         alternateIDs.add("content-stream");
@@ -472,50 +482,53 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         this.contentStreams.put(name, ds);
     }
 
-    public void setOtherStream(final String name, final Datastream ds)
-            throws WebserverSystemException, FedoraSystemException {
+    public void setOtherStream(final String name, final Datastream ds) throws WebserverSystemException,
+        FedoraSystemException {
         final Datastream curDs = getOtherStream(name);
         setStream(name, ds, curDs);
         this.otherStreams.put(name, ds);
     }
 
     private void setStream(final String name, final Datastream ds, final Datastream curDs)
-            throws WebserverSystemException, FedoraSystemException {
+        throws WebserverSystemException, FedoraSystemException {
         try {
 
             boolean contentChanged = false;
             boolean isNew = false;
 
-            if(curDs == null) {
+            if (curDs == null) {
                 isNew = true;
-            } else {
+            }
+            else {
                 // FIXME change storage and mime-type ? (FRS)
-                if(ds.getLocation() != null && ! ds.getLocation().equals(curDs.getLocation()) &&
-                        ! (ds.getLocation().startsWith("/cmm/content-model/" + getId()) || ds.getLocation().startsWith(
-                                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) +
-                                        "/cmm/content-model/" + getId()))) {
+                if (ds.getLocation() != null
+                    && !ds.getLocation().equals(curDs.getLocation())
+                    && !(ds.getLocation().startsWith("/cmm/content-model/" + getId()) || ds.getLocation().startsWith(
+                        EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL)
+                            + "/cmm/content-model/" + getId()))) {
                     contentChanged = true;
-                } else {
+                }
+                else {
                     ds.setContentUnchanged(true);
                 }
-                if(! curDs.getControlGroup().equals(ds.getControlGroup()) ||
-                        ! curDs.getMimeType().equals(ds.getMimeType()) ||
-                        ds.getLabel() != null && curDs.getLabel() != null && ! curDs.getLabel().equals(ds.getLabel()) ||
-                        ! ds.equals(curDs)) {
+                if (!curDs.getControlGroup().equals(ds.getControlGroup())
+                    || !curDs.getMimeType().equals(ds.getMimeType()) || ds.getLabel() != null
+                    && curDs.getLabel() != null && !curDs.getLabel().equals(ds.getLabel()) || !ds.equals(curDs)) {
                     contentChanged = true;
                 }
             }
 
             // isNew does not indicate that the datastream does not exist
             // in fedora, it may be deleted
-            if(contentChanged || isNew) {
+            if (contentChanged || isNew) {
                 ds.merge();
             }
-        } catch(final FedoraSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final FedoraSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on setting stream.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on setting stream.", e);
             }
             // this is not an update; its a create
@@ -535,7 +548,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
     @Override
     public DateTime persist() throws FedoraSystemException, WebserverSystemException {
 
-        if(this.isNeedSync()) {
+        if (this.isNeedSync()) {
             persistDsCompositeModel();
         }
 
@@ -544,7 +557,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
     private DateTime persistDsCompositeModel() throws FedoraSystemException, WebserverSystemException {
         DateTime timestamp = null;
-        if(this.dsCompositeModel != null) {
+        if (this.dsCompositeModel != null) {
             timestamp = this.dsCompositeModel.merge();
         }
         return timestamp;

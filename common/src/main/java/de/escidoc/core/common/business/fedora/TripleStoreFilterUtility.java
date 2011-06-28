@@ -51,9 +51,9 @@ public interface TripleStoreFilterUtility {
      *
      * @throws SystemException Thrown in case of an internal error that prevents the filtering using user id and role.
      */
-    List<String> evaluate(final String objectType, final Map<String, Object> filterMap,
-                          final String additionalQueryPart, final String whereClause)
-            throws SystemException, MissingMethodParameterException;
+    List<String> evaluate(
+        final String objectType, final Map<String, Object> filterMap, final String additionalQueryPart,
+        final String whereClause) throws SystemException, MissingMethodParameterException;
 
     /**
      * @param id
@@ -63,15 +63,16 @@ public interface TripleStoreFilterUtility {
      */
     List<String> getMemberList(final String id, final String whereClause) throws TripleStoreSystemException;
 
-    List<String> getContainerMemberList(final String containerId, final Map<String, Object> filter,
-                                        final String whereClause)
-            throws SystemException, MissingMethodParameterException;
+    List<String> getContainerMemberList(
+        final String containerId, final Map<String, Object> filter, final String whereClause) throws SystemException,
+        MissingMethodParameterException;
 
-    List<String> getContextMemberList(final String contextId, final Map<String, Object> filterMap,
-                                      final String whereClause) throws SystemException, MissingMethodParameterException;
+    List<String> getContextMemberList(
+        final String contextId, final Map<String, Object> filterMap, final String whereClause) throws SystemException,
+        MissingMethodParameterException;
 
     String getObjectRefs(final String objectType, final Map<String, Object> filterMap, final String whereClause)
-            throws SystemException, MissingMethodParameterException;
+        throws SystemException, MissingMethodParameterException;
 
     /**
      * Reload possibly needed values. Generalization of setUpTableManager which is called after sync of

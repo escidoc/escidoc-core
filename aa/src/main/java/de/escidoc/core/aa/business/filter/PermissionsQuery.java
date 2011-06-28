@@ -98,32 +98,35 @@ public class PermissionsQuery {
      * @throws WebserverSystemException Thrown if a framework internal error occurs.
      */
     private void addAccessRights(final ResourceType resourceType, final StringBuffer statement, final String userId)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
         final List<String> statements = new LinkedList<String>();
         final Map<String, Map<String, List<RoleGrant>>> userGrants = getUserGrants(userId);
         final Map<String, Map<String, List<RoleGrant>>> userGroupGrants = getUserGroupGrants(userId);
         Set<String> hierarchicalContainers = null;
         Set<String> hierarchicalOUs = null;
 
-        for(final String roleId : accessRights.getRoleIds(resourceType)) {
-            if(userGrants.keySet().contains(roleId) || userGroupGrants.keySet().contains(roleId) ||
-                    roleId.equals(AccessRights.getDefaultRole())) {
-                if(hierarchicalContainers == null && accessRights
-                        .needsHierarchicalPermissions(resourceType, roleId, HIERARCHICAL_CONTAINERS_PLACEHOLDER)) {
-                    hierarchicalContainers = getHierarchicalContainers(accessRights
-                            .getOptimizedScopeIds(ResourceType.CONTAINER, userGrants, userGroupGrants, roleId));
+        for (final String roleId : accessRights.getRoleIds(resourceType)) {
+            if (userGrants.keySet().contains(roleId) || userGroupGrants.keySet().contains(roleId)
+                || roleId.equals(AccessRights.getDefaultRole())) {
+                if (hierarchicalContainers == null
+                    && accessRights.needsHierarchicalPermissions(resourceType, roleId,
+                        HIERARCHICAL_CONTAINERS_PLACEHOLDER)) {
+                    hierarchicalContainers =
+                        getHierarchicalContainers(accessRights.getOptimizedScopeIds(ResourceType.CONTAINER, userGrants,
+                            userGroupGrants, roleId));
                 }
-                if(hierarchicalOUs == null &&
-                        accessRights.needsHierarchicalPermissions(resourceType, roleId, HIERARCHICAL_OUS_PLACEHOLDER)) {
-                    hierarchicalOUs = getHierarchicalOUs(
-                            accessRights.getOptimizedScopeIds(ResourceType.OU, userGrants, userGroupGrants, roleId));
+                if (hierarchicalOUs == null
+                    && accessRights.needsHierarchicalPermissions(resourceType, roleId, HIERARCHICAL_OUS_PLACEHOLDER)) {
+                    hierarchicalOUs =
+                        getHierarchicalOUs(accessRights.getOptimizedScopeIds(ResourceType.OU, userGrants,
+                            userGroupGrants, roleId));
                 }
 
-                final String rights = accessRights
-                        .getAccessRights(resourceType, roleId, userId, retrieveGroupsForUser(userId), userGrants,
-                                userGroupGrants, hierarchicalContainers, hierarchicalOUs);
+                final String rights =
+                    accessRights.getAccessRights(resourceType, roleId, userId, retrieveGroupsForUser(userId),
+                        userGrants, userGroupGrants, hierarchicalContainers, hierarchicalOUs);
 
-                if(rights != null && rights.length() > 0) {
+                if (rights != null && rights.length() > 0) {
                     LOGGER.debug("OR access rights for (" + userId + ',' + roleId + "): " + rights);
                     statements.add(rights);
                 }
@@ -142,13 +145,13 @@ public class PermissionsQuery {
      * @throws InvalidSearchQueryException Thrown if the given search query could not be translated into a SQL query.
      * @throws WebserverSystemException    Thrown if a framework internal error occurs.
      */
-    public String getFilterQuery(final Iterable<ResourceType> resourceTypes, final String userId,
-                                 final FilterInterface filter)
-            throws InvalidSearchQueryException, WebserverSystemException {
+    public String getFilterQuery(
+        final Iterable<ResourceType> resourceTypes, final String userId, final FilterInterface filter)
+        throws InvalidSearchQueryException, WebserverSystemException {
         final StringBuffer result = new StringBuffer();
 
-        for(final ResourceType resourceType : resourceTypes) {
-            if(result.length() > 0) {
+        for (final ResourceType resourceType : resourceTypes) {
+            if (result.length() > 0) {
                 result.append(" OR ");
             }
             result.append('(');
@@ -157,52 +160,53 @@ public class PermissionsQuery {
             LOGGER.debug("AA filters: " + result);
 
             // all restricting access rights from another user are ANDed
-            if(filter.getUserId() != null) {
+            if (filter.getUserId() != null) {
                 final List<String> foreignUserRights = new LinkedList<String>();
                 final Map<String, Map<String, List<RoleGrant>>> userGrants = getUserGrants(filter.getUserId());
                 final Map<String, Map<String, List<RoleGrant>>> userGroupGrants =
-                        getUserGroupGrants(filter.getUserId());
+                    getUserGroupGrants(filter.getUserId());
                 Set<String> hierarchicalContainers = null;
 
-                if(accessRights.needsHierarchicalPermissions(resourceType, filter.getRoleId(),
-                        HIERARCHICAL_CONTAINERS_PLACEHOLDER)) {
-                    hierarchicalContainers = getHierarchicalContainers(accessRights
-                            .getOptimizedScopeIds(ResourceType.CONTAINER, userGrants, userGroupGrants,
-                                    filter.getRoleId()));
+                if (accessRights.needsHierarchicalPermissions(resourceType, filter.getRoleId(),
+                    HIERARCHICAL_CONTAINERS_PLACEHOLDER)) {
+                    hierarchicalContainers =
+                        getHierarchicalContainers(accessRights.getOptimizedScopeIds(ResourceType.CONTAINER, userGrants,
+                            userGroupGrants, filter.getRoleId()));
                 }
 
                 Set<String> hierarchicalOUs = null;
 
-                if(accessRights
-                        .needsHierarchicalPermissions(resourceType, filter.getRoleId(), HIERARCHICAL_OUS_PLACEHOLDER)) {
-                    hierarchicalOUs = getHierarchicalOUs(accessRights
-                            .getOptimizedScopeIds(ResourceType.OU, userGrants, userGroupGrants, filter.getRoleId()));
+                if (accessRights.needsHierarchicalPermissions(resourceType, filter.getRoleId(),
+                    HIERARCHICAL_OUS_PLACEHOLDER)) {
+                    hierarchicalOUs =
+                        getHierarchicalOUs(accessRights.getOptimizedScopeIds(ResourceType.OU, userGrants,
+                            userGroupGrants, filter.getRoleId()));
                 }
 
                 final Set<String> groupIds = retrieveGroupsForUser(filter.getUserId());
-                String rights = accessRights
-                        .getAccessRights(resourceType, filter.getRoleId(), filter.getUserId(), groupIds, userGrants,
-                                userGroupGrants, hierarchicalContainers, hierarchicalOUs);
+                String rights =
+                    accessRights.getAccessRights(resourceType, filter.getRoleId(), filter.getUserId(), groupIds,
+                        userGrants, userGroupGrants, hierarchicalContainers, hierarchicalOUs);
 
-                if(rights != null && rights.length() > 0) {
+                if (rights != null && rights.length() > 0) {
                     foreignUserRights.add(rights);
                 }
 
-                if(filter.getRoleId() != null) {
+                if (filter.getRoleId() != null) {
                     // add rules for default role
                     final String containerGrants =
-                            accessRights.ensureNotEmpty(accessRights.getSetAsString(hierarchicalContainers));
+                        accessRights.ensureNotEmpty(accessRights.getSetAsString(hierarchicalContainers));
                     final String ouGrants = accessRights.ensureNotEmpty(accessRights.getSetAsString(hierarchicalOUs));
 
-                    rights = accessRights
-                            .getRoleQuery(resourceType, AccessRights.DEFAULT_ROLE, filter.getUserId(), groupIds,
-                                    userGrants, userGroupGrants, containerGrants, ouGrants);
-                    if(rights != null && rights.length() > 0) {
+                    rights =
+                        accessRights.getRoleQuery(resourceType, AccessRights.DEFAULT_ROLE, filter.getUserId(),
+                            groupIds, userGrants, userGroupGrants, containerGrants, ouGrants);
+                    if (rights != null && rights.length() > 0) {
                         foreignUserRights.add(rights);
                     }
                 }
 
-                if(! foreignUserRights.isEmpty()) {
+                if (!foreignUserRights.isEmpty()) {
                     rights = accessRights.appendAccessRights(foreignUserRights);
                     LOGGER.debug("AND restricting access rights from " + "another user (1): " + rights);
                     result.append(" AND (");
@@ -225,15 +229,16 @@ public class PermissionsQuery {
         final Set<String> result = new HashSet<String>();
 
         try {
-            for(final String containerId : containerIds) {
+            for (final String containerId : containerIds) {
                 final List<String> childContainers = tripleStoreUtility.getAllChildContainers(containerId);
 
                 result.add(containerId);
-                if(childContainers != null) {
+                if (childContainers != null) {
                     result.addAll(childContainers);
                 }
             }
-        } catch(final TripleStoreSystemException e) {
+        }
+        catch (final TripleStoreSystemException e) {
             LOGGER.error("getting child containers from database failed", e);
         }
         return result;
@@ -249,15 +254,16 @@ public class PermissionsQuery {
         final Set<String> result = new HashSet<String>();
 
         try {
-            for(final String ouId : ouIds) {
+            for (final String ouId : ouIds) {
                 final List<String> childOUs = tripleStoreUtility.getAllChildOUs(ouId);
 
                 result.add(ouId);
-                if(childOUs != null) {
+                if (childOUs != null) {
                     result.addAll(childOUs);
                 }
             }
-        } catch(final TripleStoreSystemException e) {
+        }
+        catch (final TripleStoreSystemException e) {
             LOGGER.error("getting child OUs from database failed", e);
         }
         return result;
@@ -274,17 +280,18 @@ public class PermissionsQuery {
         Map<String, Map<String, List<RoleGrant>>> result = null;
         try {
             result = securityHelper.getUserGrants(userId);
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             // The caller doesn't expect to get an exception from here if
             // the group doesn't exist.
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on retrieving grants.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on retrieving grants.", e);
             }
         }
-        if(result == null) {
+        if (result == null) {
             result = new HashMap<String, Map<String, List<RoleGrant>>>();
         }
 
@@ -303,31 +310,32 @@ public class PermissionsQuery {
      */
     private Map<String, Map<String, List<RoleGrant>>> getUserGroupGrants(final String userId) {
         final Map<String, Map<String, List<RoleGrant>>> result = new HashMap<String, Map<String, List<RoleGrant>>>();
-        if(userId != null && userId.length() > 0) {
+        if (userId != null && userId.length() > 0) {
             try {
                 final Set<String> groupIds = securityHelper.getUserGroups(userId);
 
-                if(groupIds != null) {
-                    for(final String groupId : groupIds) {
+                if (groupIds != null) {
+                    for (final String groupId : groupIds) {
                         final Map<String, Map<String, List<RoleGrant>>> currentRoleGrantMap =
-                                securityHelper.getGroupGrants(groupId);
+                            securityHelper.getGroupGrants(groupId);
 
-                        if(currentRoleGrantMap != null) {
-                            for(final Entry<String, Map<String, List<RoleGrant>>> entry : currentRoleGrantMap
-                                    .entrySet()) {
-                                if(! result.containsKey(entry.getKey())) {
+                        if (currentRoleGrantMap != null) {
+                            for (final Entry<String, Map<String, List<RoleGrant>>> entry : currentRoleGrantMap
+                                .entrySet()) {
+                                if (!result.containsKey(entry.getKey())) {
                                     result.put(entry.getKey(), new HashMap<String, List<RoleGrant>>());
                                 }
                                 final Map<String, List<RoleGrant>> currentGrantMap = entry.getValue();
 
-                                for(final Entry<String, List<RoleGrant>> currEntry : currentGrantMap.entrySet()) {
+                                for (final Entry<String, List<RoleGrant>> currEntry : currentGrantMap.entrySet()) {
                                     result.get(entry.getKey()).put(currEntry.getKey(), currEntry.getValue());
                                 }
                             }
                         }
                     }
                 }
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 LOGGER.error("getting the user group grants from AA failed", e);
             }
         }
@@ -343,10 +351,11 @@ public class PermissionsQuery {
     protected Set<String> retrieveGroupsForUser(final String userId) {
         Set<String> result = new HashSet<String>();
 
-        if(userId != null && userId.length() > 0) {
+        if (userId != null && userId.length() > 0) {
             try {
                 result = securityHelper.getUserGroups(userId);
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 LOGGER.error("", e);
             }
         }

@@ -111,42 +111,44 @@ public class AdminHandler {
      * @return total number of objects deleted, ...
      * @throws SystemException thrown in case of an internal error
      */
-    public String deleteObjects(final String taskParam)
-            throws SystemException, ApplicationServerSystemException, XmlCorruptedException {
+    public String deleteObjects(final String taskParam) throws SystemException, ApplicationServerSystemException,
+        XmlCorruptedException {
         final StringBuilder result = new StringBuilder();
         final PurgeStatus purgeStatus = PurgeStatus.getInstance();
 
-        if(purgeStatus.startMethod()) {
+        if (purgeStatus.startMethod()) {
             final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam, false);
 
             try {
-                for(final String id : taskParameter.getIds()) {
+                for (final String id : taskParameter.getIds()) {
                     final PurgeRequest purgeRequest =
-                            PurgeRequestBuilder.createPurgeRequest().withResourceId(id).build();
+                        PurgeRequestBuilder.createPurgeRequest().withResourceId(id).build();
                     this.purgeService.purge(purgeRequest);
-                    if(taskParameter.getKeepInSync()) {
+                    if (taskParameter.getKeepInSync()) {
                         // synchronize search index
                         reindexer.sendDeleteObjectMessage(id);
                     }
                     purgeStatus.inc();
                 }
                 result.append("<message>\n");
-                result.append("scheduling ").append(taskParameter.getIds().size())
-                        .append(" objects(s) for deletion from Fedora\n");
+                result.append("scheduling ").append(taskParameter.getIds().size()).append(
+                    " objects(s) for deletion from Fedora\n");
                 result.append("</message>\n");
-                if(taskParameter.getKeepInSync()) {
+                if (taskParameter.getKeepInSync()) {
                     result.append("<message>\n");
-                    result.append("scheduling ").append(taskParameter.getIds().size())
-                            .append(" object(s) for deletion from search index\n");
+                    result.append("scheduling ").append(taskParameter.getIds().size()).append(
+                        " object(s) for deletion from search index\n");
                     result.append("</message>\n");
                 }
-            } finally {
-                if(taskParameter.getIds().isEmpty()) {
+            }
+            finally {
+                if (taskParameter.getIds().isEmpty()) {
                     purgeStatus.finishMethod();
                 }
                 purgeStatus.setFillingComplete();
             }
-        } else {
+        }
+        else {
             result.append("<message>\n");
             result.append(purgeStatus);
             result.append("</message>\n");
@@ -180,7 +182,7 @@ public class AdminHandler {
      * @param objectType object-type to decrease
      */
     public void decreaseReindexStatus(final String objectType) {
-        if(objectType != null) {
+        if (objectType != null) {
             ReindexStatus.getInstance().dec(ResourceType.getResourceTypeFromUri(objectType));
         }
     }
@@ -195,8 +197,8 @@ public class AdminHandler {
      * @throws SystemException             Thrown if a framework internal error occurs.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public String reindex(final boolean clearIndex, final String indexNamePrefix)
-            throws SystemException, InvalidSearchQueryException, FedoraSystemException, WebserverSystemException {
+    public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException,
+        InvalidSearchQueryException, FedoraSystemException, WebserverSystemException {
         return this.utility.prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
     }
 
@@ -208,11 +210,11 @@ public class AdminHandler {
      * @throws TripleStoreSystemException if anything goes wrong.
      * @throws EncodingSystemException    if anything goes wrong.
      */
-    public String getIndexConfiguration()
-            throws WebserverSystemException, TripleStoreSystemException, EncodingSystemException {
+    public String getIndexConfiguration() throws WebserverSystemException, TripleStoreSystemException,
+        EncodingSystemException {
 
         final Map<String, Map<String, Map<String, Object>>> indexConfiguration =
-                indexingHandler.getObjectTypeParameters();
+            indexingHandler.getObjectTypeParameters();
         return renderer.renderIndexConfiguration(indexConfiguration);
     }
 
@@ -225,8 +227,8 @@ public class AdminHandler {
      * @throws TripleStoreSystemException if anything go wrong.
      * @throws EncodingSystemException    if anything go wrong.
      */
-    public String getRepositoryInfo()
-            throws WebserverSystemException, TripleStoreSystemException, EncodingSystemException {
+    public String getRepositoryInfo() throws WebserverSystemException, TripleStoreSystemException,
+        EncodingSystemException {
 
         final String earliestCreationDate = tripleStoreUtility.getEarliestCreationDate();
         final EscidocConfiguration config;
@@ -237,29 +239,30 @@ public class AdminHandler {
 
         final String buildNr = config.get(EscidocConfiguration.BUILD_NUMBER);
 
-        if(buildNr != null) {
+        if (buildNr != null) {
             properties.setProperty(EscidocConfiguration.BUILD_NUMBER, buildNr);
         }
-        if(gsearchUrl != null) {
+        if (gsearchUrl != null) {
             properties.setProperty(EscidocConfiguration.GSEARCH_URL, gsearchUrl);
         }
         final String baseUrl = config.get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
-        if(baseUrl != null) {
+        if (baseUrl != null) {
             properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL, baseUrl);
         }
         final String name = config.get(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME);
-        if(name != null) {
+        if (name != null) {
             properties.setProperty(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME, name);
         }
         final String email = config.get(EscidocConfiguration.ADMIN_EMAIL);
-        if(email != null) {
+        if (email != null) {
             properties.setProperty(EscidocConfiguration.ADMIN_EMAIL, email);
         }
         properties.setProperty("escidoc-core.earliest-date", earliestCreationDate);
         properties.setProperty("escidoc-core.database.version", frameworkInfo.getVersion().toString());
         try {
             properties.setProperty("escidoc-core.database.consistent", String.valueOf(frameworkInfo.isConsistent()));
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
 
@@ -267,20 +270,22 @@ public class AdminHandler {
         properties.putAll(schemaNamespaces());
 
         final String checksumAlgorithm = config.get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM);
-        if(checksumAlgorithm != null) {
+        if (checksumAlgorithm != null) {
             properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, checksumAlgorithm);
         }
 
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             properties.storeToXML(os, null);
-        } catch(final IOException e) {
+        }
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         final String propertiesXml;
         try {
             propertiesXml = os.toString(XmlUtility.CHARACTER_ENCODING);
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
         return propertiesXml;
@@ -316,13 +321,14 @@ public class AdminHandler {
         final StringBuilder result = new StringBuilder();
 
         // select example package
-        if(! "common".equals(type)) {
+        if (!"common".equals(type)) {
             throw new SystemException("Example set '" + type + "' not supported.");
         }
 
         try {
             result.append(examples.load(EscidocConfiguration.getInstance().appendToSelfURL("/examples/escidoc/")));
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException(e);
         }
 

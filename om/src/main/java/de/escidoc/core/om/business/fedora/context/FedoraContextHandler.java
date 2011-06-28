@@ -141,17 +141,17 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      *                                        e
      * @throws InvalidStatusException         e
      */
-    private String doCreate(final String xmlData, final boolean isCreate)
-            throws ContextNameNotUniqueException, SystemException, ContentModelNotFoundException,
-            ReadonlyElementViolationException, MissingAttributeValueException, MissingElementValueException,
-            ReadonlyAttributeViolationException, InvalidContentException, OrganizationalUnitNotFoundException,
-            InvalidStatusException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-            XmlParserSystemException, WebserverSystemException {
+    private String doCreate(final String xmlData, final boolean isCreate) throws ContextNameNotUniqueException,
+        SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
+        MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
+        InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         final String id = createContext(xmlData);
         try {
             setContext(id);
-        } catch(final ContextNotFoundException e) {
+        }
+        catch (final ContextNotFoundException e) {
             throw new SystemException("Created resource not found.", e);
         }
         final String contextXml = getContextXml(this);
@@ -167,12 +167,11 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * (java.lang.String)
      */
     @Override
-    public String create(final String xmlData)
-            throws ContextNameNotUniqueException, SystemException, ContentModelNotFoundException,
-            ReadonlyElementViolationException, MissingAttributeValueException, MissingElementValueException,
-            ReadonlyAttributeViolationException, InvalidContentException, OrganizationalUnitNotFoundException,
-            InvalidStatusException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
-            TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    public String create(final String xmlData) throws ContextNameNotUniqueException, SystemException,
+        ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
+        MissingElementValueException, ReadonlyAttributeViolationException, InvalidContentException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
         return doCreate(xmlData, true);
     }
 
@@ -180,12 +179,11 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @see IngestableResource#ingest(String)
      */
     @Override
-    public String ingest(final String xmlData)
-            throws ContextNameNotUniqueException, SystemException, ContentModelNotFoundException,
-            ReadonlyElementViolationException, MissingAttributeValueException, MissingElementValueException,
-            ReadonlyAttributeViolationException, InvalidContentException, OrganizationalUnitNotFoundException,
-            InvalidStatusException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-            XmlParserSystemException, WebserverSystemException {
+    public String ingest(final String xmlData) throws ContextNameNotUniqueException, SystemException,
+        ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
+        MissingElementValueException, ReadonlyAttributeViolationException, InvalidContentException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, IntegritySystemException, FedoraSystemException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
         return doCreate(xmlData, false);
 
     }
@@ -198,8 +196,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * (java.lang.String)
      */
     @Override
-    public String retrieve(final String id)
-            throws ContextNotFoundException, SystemException, IntegritySystemException, WebserverSystemException {
+    public String retrieve(final String id) throws ContextNotFoundException, SystemException, IntegritySystemException,
+        WebserverSystemException {
         setContext(id);
         return getContextXml(this);
     }
@@ -211,31 +209,36 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * java.lang.String)
      */
     @Override
-    public EscidocBinaryContent retrieveResource(final String id, final String resourceName,
-                                                 final Map<String, String[]> parameters)
-            throws OperationNotFoundException, ContextNotFoundException, SystemException, WebserverSystemException,
-            TripleStoreSystemException, IntegritySystemException {
+    public EscidocBinaryContent retrieveResource(
+        final String id, final String resourceName, final Map<String, String[]> parameters)
+        throws OperationNotFoundException, ContextNotFoundException, SystemException, WebserverSystemException,
+        TripleStoreSystemException, IntegritySystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType(MimeTypes.TEXT_XML);
 
-        if("members".equals(resourceName)) {
+        if ("members".equals(resourceName)) {
             try {
-                content.setContent(new ByteArrayInputStream(retrieveMembers(id, new LuceneRequestParameters(parameters))
+                content.setContent(new ByteArrayInputStream(
+                    retrieveMembers(id, new LuceneRequestParameters(parameters))
                         .getBytes(XmlUtility.CHARACTER_ENCODING)));
                 return content;
-            } catch(final UnsupportedEncodingException e) {
+            }
+            catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
-        } else if("relations".equals(resourceName)) {
+        }
+        else if ("relations".equals(resourceName)) {
             try {
-                content.setContent(
-                        new ByteArrayInputStream(retrieveContentRelations(id).getBytes(XmlUtility.CHARACTER_ENCODING)));
+                content.setContent(new ByteArrayInputStream(retrieveContentRelations(id).getBytes(
+                    XmlUtility.CHARACTER_ENCODING)));
                 return content;
-            } catch(final UnsupportedEncodingException e) {
+            }
+            catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
-        } else {
+        }
+        else {
             throw new OperationNotFoundException("no virtual resource with that name defined");
         }
     }
@@ -246,9 +249,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @see ContextHandlerInterface#retrieveResources(java.lang.String)
      */
     @Override
-    public String retrieveResources(final String id)
-            throws ContextNotFoundException, WebserverSystemException, TripleStoreSystemException,
-            IntegritySystemException {
+    public String retrieveResources(final String id) throws ContextNotFoundException, WebserverSystemException,
+        TripleStoreSystemException, IntegritySystemException {
 
         setContext(id);
         return getResourcesXml(this);
@@ -260,9 +262,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @see ContextHandlerInterface#retrieveProperties(java.lang.String)
      */
     @Override
-    public String retrieveProperties(final String id)
-            throws ContextNotFoundException, WebserverSystemException, TripleStoreSystemException,
-            IntegritySystemException {
+    public String retrieveProperties(final String id) throws ContextNotFoundException, WebserverSystemException,
+        TripleStoreSystemException, IntegritySystemException {
 
         setContext(id);
         return getPropertiesXml(this);
@@ -275,10 +276,11 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
     public String retrieveContexts(final SRURequestParameters parameters) throws WebserverSystemException {
         final StringWriter result = new StringWriter();
 
-        if(parameters.isExplain()) {
+        if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.CONTEXT);
-        } else {
-            sruRequest.searchRetrieve(result, new ResourceType[]{ResourceType.CONTEXT}, parameters);
+        }
+        else {
+            sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTEXT }, parameters);
         }
         return result.toString();
     }
@@ -288,23 +290,23 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      */
     @Override
     public String retrieveMembers(final String id, final SRURequestParameters parameters)
-            throws ContextNotFoundException, TripleStoreSystemException, IntegritySystemException,
-            WebserverSystemException {
+        throws ContextNotFoundException, TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
         final StringWriter result = new StringWriter();
 
         utility.checkIsContext(id);
-        if(parameters.isExplain()) {
+        if (parameters.isExplain()) {
             // Items and containers are in the same index.
             sruRequest.explain(result, ResourceType.ITEM);
-        } else {
+        }
+        else {
             String query = "\"/properties/context/id\"=" + id;
 
-            if(parameters.getQuery() != null) {
+            if (parameters.getQuery() != null) {
                 query += " AND " + parameters.getQuery();
             }
-            sruRequest.searchRetrieve(result, new ResourceType[]{ResourceType.CONTAINER, ResourceType.ITEM}, query,
-                    parameters.getMaximumRecords(), parameters.getStartRecord(), parameters.getExtraData(),
-                    parameters.getRecordPacking());
+            sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTAINER, ResourceType.ITEM }, query,
+                parameters.getMaximumRecords(), parameters.getStartRecord(), parameters.getExtraData(), parameters
+                    .getRecordPacking());
         }
         return result.toString();
     }
@@ -316,9 +318,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * retrieveAdminDescriptor(java.lang.String, java.lang.String)
      */
     @Override
-    public String retrieveAdminDescriptor(final String id, final String name)
-            throws ContextNotFoundException, AdminDescriptorNotFoundException, EncodingSystemException,
-            FedoraSystemException, WebserverSystemException, IntegritySystemException, TripleStoreSystemException {
+    public String retrieveAdminDescriptor(final String id, final String name) throws ContextNotFoundException,
+        AdminDescriptorNotFoundException, EncodingSystemException, FedoraSystemException, WebserverSystemException,
+        IntegritySystemException, TripleStoreSystemException {
 
         setContext(id);
         return getContextRenderer().renderAdminDescriptor(this, name, getContext().getAdminDescriptor(name), true);
@@ -331,9 +333,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * retrieveAdminDescriptors(java.lang.String)
      */
     @Override
-    public String retrieveAdminDescriptors(final String id)
-            throws ContextNotFoundException, SystemException, TripleStoreSystemException, IntegritySystemException,
-            WebserverSystemException {
+    public String retrieveAdminDescriptors(final String id) throws ContextNotFoundException, SystemException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
         setContext(id);
         return getAdminDescriptorsXml(this);
@@ -347,21 +348,21 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * (java.lang.String, java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData)
-            throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException,
-            ReadonlyAttributeViolationException, ReadonlyElementViolationException, SystemException,
-            ContextNameNotUniqueException, MissingElementValueException, InvalidContentException,
-            EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-            XmlParserSystemException, WebserverSystemException {
+    public String update(final String id, final String xmlData) throws ContextNotFoundException,
+        InvalidStatusException, OptimisticLockingException, ReadonlyAttributeViolationException,
+        ReadonlyElementViolationException, SystemException, ContextNameNotUniqueException,
+        MissingElementValueException, InvalidContentException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setContext(id);
         final String context;
-        if(update(this, xmlData)) {
+        if (update(this, xmlData)) {
             // otherwise we get the pre-update version
             setContext(id);
             context = getContextXml(this);
             fireContextModified(id, context);
-        } else {
+        }
+        else {
             context = getContextXml(this);
         }
 
@@ -376,10 +377,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * .lang.String, java.lang.String)
      */
     @Override
-    public String open(final String id, final String taskParam)
-            throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException, SystemException,
-            LockingException, StreamNotFoundException, FedoraSystemException, WebserverSystemException,
-            EncodingSystemException, XmlCorruptedException, TripleStoreSystemException, IntegritySystemException {
+    public String open(final String id, final String taskParam) throws ContextNotFoundException,
+        InvalidStatusException, OptimisticLockingException, SystemException, LockingException, StreamNotFoundException,
+        FedoraSystemException, WebserverSystemException, EncodingSystemException, XmlCorruptedException,
+        TripleStoreSystemException, IntegritySystemException {
 
         setContext(id);
         open(this, taskParam);
@@ -396,10 +397,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * java.lang.String, java.lang.String)
      */
     @Override
-    public String close(final String id, final String taskParam)
-            throws ContextNotFoundException, OptimisticLockingException, InvalidStatusException, SystemException,
-            LockingException, StreamNotFoundException, FedoraSystemException, WebserverSystemException,
-            EncodingSystemException, XmlCorruptedException, TripleStoreSystemException, IntegritySystemException {
+    public String close(final String id, final String taskParam) throws ContextNotFoundException,
+        OptimisticLockingException, InvalidStatusException, SystemException, LockingException, StreamNotFoundException,
+        FedoraSystemException, WebserverSystemException, EncodingSystemException, XmlCorruptedException,
+        TripleStoreSystemException, IntegritySystemException {
 
         setContext(id);
         close(this, taskParam);
@@ -416,9 +417,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * (java.lang.String)
      */
     @Override
-    public void delete(final String id)
-            throws ContextNotEmptyException, ContextNotFoundException, InvalidStatusException, SystemException,
-            FedoraSystemException, TripleStoreSystemException, WebserverSystemException, IntegritySystemException {
+    public void delete(final String id) throws ContextNotEmptyException, ContextNotFoundException,
+        InvalidStatusException, SystemException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, IntegritySystemException {
 
         setContext(id);
         remove(this);
@@ -433,8 +434,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * updateAdminDescriptor(java.lang.String, java.lang.String)
      */
     @Override
-    public String updateAdminDescriptor(final String id, final String xmlData)
-            throws ContextNotFoundException, OptimisticLockingException, AdminDescriptorNotFoundException {
+    public String updateAdminDescriptor(final String id, final String xmlData) throws ContextNotFoundException,
+        OptimisticLockingException, AdminDescriptorNotFoundException {
 
         // check status(closed)
         // FIXME implement updateAdminDescriptor
@@ -448,9 +449,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @param xmlData complete context XML
      * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireContextModified(final String id, final String xmlData)
-            throws SystemException, WebserverSystemException {
-        for(final ResourceListener contextListener : this.contextListeners) {
+    private void fireContextModified(final String id, final String xmlData) throws SystemException,
+        WebserverSystemException {
+        for (final ResourceListener contextListener : this.contextListeners) {
             contextListener.resourceModified(id, xmlData);
         }
     }
@@ -463,7 +464,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @throws SystemException One of the listeners threw an exception.
      */
     private void fireContextCreated(final String id, final String xmlData) throws SystemException {
-        for(final ResourceListener contextListener : this.contextListeners) {
+        for (final ResourceListener contextListener : this.contextListeners) {
             contextListener.resourceCreated(id, xmlData);
         }
     }
@@ -475,7 +476,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @throws SystemException One of the listeners threw an exception.
      */
     private void fireContextDeleted(final String id) throws SystemException {
-        for(final ResourceListener contextListener : this.contextListeners) {
+        for (final ResourceListener contextListener : this.contextListeners) {
             contextListener.resourceDeleted(id);
         }
     }
@@ -488,19 +489,18 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * @throws ContextNotFoundException Thrown if an item with the specified id could not be found.
      * @throws SystemException          If an error occurs.
      */
-    private String retrieveContentRelations(final String id)
-            throws ContextNotFoundException, SystemException, WebserverSystemException, TripleStoreSystemException,
-            IntegritySystemException {
+    private String retrieveContentRelations(final String id) throws ContextNotFoundException, SystemException,
+        WebserverSystemException, TripleStoreSystemException, IntegritySystemException {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         setContext(id);
-        filterParams.put("query", new String[]{"\"/subject/id\"=" + getContext().getId() + " or " +
-                // "\"/subject/id\"=" + getContext().getFullId() + " or " +
-                // "\"/object/id\"=" + getContext().getFullId() + " or " +
-                "\"/object/id\"=" + getContext().getId()});
+        filterParams.put("query", new String[] { "\"/subject/id\"=" + getContext().getId() + " or " +
+        // "\"/subject/id\"=" + getContext().getFullId() + " or " +
+            // "\"/object/id\"=" + getContext().getFullId() + " or " +
+            "\"/object/id\"=" + getContext().getId() });
 
         final String searchResponse =
-                contentRelationHandler.retrieveContentRelations(new LuceneRequestParameters(filterParams));
+            contentRelationHandler.retrieveContentRelations(new LuceneRequestParameters(filterParams));
         return transformSearchResponse2relations(searchResponse);
 
     }

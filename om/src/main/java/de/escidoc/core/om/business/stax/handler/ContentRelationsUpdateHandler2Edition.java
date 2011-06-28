@@ -90,44 +90,41 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
      * @return The element.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-            throws InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
-            WebserverSystemException, TripleStoreSystemException, EncodingSystemException, XmlParserSystemException,
-            InvalidXmlException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, WebserverSystemException,
+        TripleStoreSystemException, EncodingSystemException, XmlParserSystemException, InvalidXmlException {
         final String currentPath = parser.getCurPath();
         String contentRelationPath = "/item/relations/relation";
-        if(currentPath.startsWith(CONTAINER)) {
+        if (currentPath.startsWith(CONTAINER)) {
             contentRelationPath = "/container/relations/relation";
         }
         final String theName = element.getLocalName();
         final int indexInherited = element.indexOfAttribute(null, "inherited");
-        if(contentRelationPath.equals(currentPath) && indexInherited < 0) {
+        if (contentRelationPath.equals(currentPath) && indexInherited < 0) {
             this.inContentRelation = true;
             final int indexOfObjId = element.indexOfAttribute(null, "objid");
             final int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI, "href");
             String href = null;
-            if(indexOfHref != - 1) {
+            if (indexOfHref != -1) {
                 href = element.getAttribute(indexOfHref).getValue();
-                if(href.length() == 0) {
-                    throw new InvalidContentException(
-                            "The value of attribute 'xlink:href' of " + " the element '" + theName +
-                                    "' may not be an empty string");
+                if (href.length() == 0) {
+                    throw new InvalidContentException("The value of attribute 'xlink:href' of " + " the element '"
+                        + theName + "' may not be an empty string");
                 }
             }
 
             String objid = null;
-            if(indexOfObjId != - 1) {
+            if (indexOfObjId != -1) {
                 objid = element.getAttribute(indexOfObjId).getValue();
-                if(objid.length() == 0) {
-                    throw new InvalidContentException(
-                            "The value of attribute 'objid' of " + " the element '" + theName +
-                                    "' may not be an empty string");
+                if (objid.length() == 0) {
+                    throw new InvalidContentException("The value of attribute 'objid' of " + " the element '" + theName
+                        + "' may not be an empty string");
                 }
             }
             checkRefElement(objid, href);
             final int indexOfPredicate = element.indexOfAttribute(null, "predicate");
             this.predicate = element.getAttribute(indexOfPredicate).getValue();
-            if(! ContentRelationsUtility.validPredicate(this.predicate)) {
+            if (!ContentRelationsUtility.validPredicate(this.predicate)) {
                 throw new RelationPredicateNotFoundException("Predicate " + this.predicate + " is wrong. ");
             }
 
@@ -144,10 +141,10 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
      */
     @Override
     public EndElement endElement(final EndElement element) {
-        if(this.inContentRelation) {
+        if (this.inContentRelation) {
             this.inContentRelation = false;
             final String relationData = this.predicate + "###" + this.targetId;
-            if(! relationsData.contains(relationData)) {
+            if (!relationsData.contains(relationData)) {
                 relationsData.add(relationData);
             }
             this.targetId = null;
@@ -163,39 +160,38 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
         return this.relationsData;
     }
 
-    private void checkRefElement(final String objectId, final String href)
-            throws InvalidContentException, TripleStoreSystemException, ReferencedResourceNotFoundException {
+    private void checkRefElement(final String objectId, final String href) throws InvalidContentException,
+        TripleStoreSystemException, ReferencedResourceNotFoundException {
         this.targetId = null;
         this.targetId = href != null ? Utility.getId(href) : objectId;
         final String targetIdWithoutVersion = XmlUtility.getObjidWithoutVersion(this.targetId);
         final String targetVersion = targetId.replaceFirst(targetIdWithoutVersion, "");
-        if(targetVersion.length() > 0) {
-            throw new InvalidContentException("A relation target may not be referenced by an " +
-                    " identifier containing a version number. Use a floating " +
-                    "identifier like 'escidoc:123' to reference a target");
+        if (targetVersion.length() > 0) {
+            throw new InvalidContentException("A relation target may not be referenced by an "
+                + " identifier containing a version number. Use a floating "
+                + "identifier like 'escidoc:123' to reference a target");
         }
-        if(! this.tripleStoreUtility.exists(this.targetId)) {
-            throw new ReferencedResourceNotFoundException(
-                    "Related target resource with id " + this.targetId + " does not exist.");
+        if (!this.tripleStoreUtility.exists(this.targetId)) {
+            throw new ReferencedResourceNotFoundException("Related target resource with id " + this.targetId
+                + " does not exist.");
         }
         final String targetObjectType = this.tripleStoreUtility.getObjectType(this.targetId);
-        if(! Constants.ITEM_OBJECT_TYPE.equals(targetObjectType) &&
-                ! Constants.CONTAINER_OBJECT_TYPE.equals(targetObjectType)) {
-            throw new InvalidContentException(
-                    "A related resource has to be either 'item' or 'container'. " + "A object with id " +
-                            this.targetId + " is neither 'item' nor 'container' ");
+        if (!Constants.ITEM_OBJECT_TYPE.equals(targetObjectType)
+            && !Constants.CONTAINER_OBJECT_TYPE.equals(targetObjectType)) {
+            throw new InvalidContentException("A related resource has to be either 'item' or 'container'. "
+                + "A object with id " + this.targetId + " is neither 'item' nor 'container' ");
         }
-        if(href != null) {
-            if(targetObjectType.equals(Constants.ITEM_OBJECT_TYPE) && ! href.equals("/ir/item/" + this.targetId)) {
-                throw new InvalidContentException("The 'href' attribute, which represents" +
-                        " a target rest-url has a wrong syntax. The url has to look like: " + "/ir/item/" +
-                        this.targetId);
+        if (href != null) {
+            if (targetObjectType.equals(Constants.ITEM_OBJECT_TYPE) && !href.equals("/ir/item/" + this.targetId)) {
+                throw new InvalidContentException("The 'href' attribute, which represents"
+                    + " a target rest-url has a wrong syntax. The url has to look like: " + "/ir/item/" + this.targetId);
 
-            } else if(targetObjectType.equals(Constants.CONTAINER_OBJECT_TYPE) &&
-                    ! href.equals("/ir/container/" + this.targetId)) {
-                throw new InvalidContentException("The 'href' attribute, which represents" +
-                        " a target rest-url has a wrong syntax. The url has to look like: " + "/ir/container/" +
-                        this.targetId);
+            }
+            else if (targetObjectType.equals(Constants.CONTAINER_OBJECT_TYPE)
+                && !href.equals("/ir/container/" + this.targetId)) {
+                throw new InvalidContentException("The 'href' attribute, which represents"
+                    + " a target rest-url has a wrong syntax. The url has to look like: " + "/ir/container/"
+                    + this.targetId);
 
             }
         }

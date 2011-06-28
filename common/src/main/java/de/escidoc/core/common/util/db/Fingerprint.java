@@ -98,13 +98,13 @@ public class Fingerprint implements Comparable<Object> {
     public Fingerprint(final Connection conn) throws IOException, SQLException {
         final ArrayList<Schema> schemas = new ArrayList<Schema>();
 
-        for(final String schemaName : getSchemaNames(conn)) {
+        for (final String schemaName : getSchemaNames(conn)) {
             final ArrayList<Table> tables = new ArrayList<Table>();
 
-            for(final String tableName : getTableNames(conn, schemaName)) {
-                tables.add(new Table(tableName, getColumns(conn, schemaName, tableName),
-                        getIndexInfo(conn, schemaName, tableName), getPrimaryKeys(conn, schemaName, tableName),
-                        getImportedKeys(conn, schemaName, tableName)));
+            for (final String tableName : getTableNames(conn, schemaName)) {
+                tables.add(new Table(tableName, getColumns(conn, schemaName, tableName), getIndexInfo(conn, schemaName,
+                    tableName), getPrimaryKeys(conn, schemaName, tableName), getImportedKeys(conn, schemaName,
+                    tableName)));
             }
             schemas.add(new Schema(schemaName, tables.toArray(new Table[tables.size()])));
         }
@@ -128,8 +128,8 @@ public class Fingerprint implements Comparable<Object> {
 
         writeObject(b1);
         ((Fingerprint) o).writeObject(b2);
-        return b1.toString().replaceAll(JAVA_VERSION_PATTERN, "")
-                .compareTo(b2.toString().replaceAll(JAVA_VERSION_PATTERN, ""));
+        return b1.toString().replaceAll(JAVA_VERSION_PATTERN, "").compareTo(
+            b2.toString().replaceAll(JAVA_VERSION_PATTERN, ""));
     }
 
     /**
@@ -154,19 +154,19 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
     private static String[] getColumns(final Connection conn, final String schema, final String table)
-            throws SQLException {
+        throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
         ResultSet rs = null;
         try {
             rs = metaData.getColumns(conn.getCatalog(), schema, table, null);
             final int columns = rs.getMetaData().getColumnCount();
-            while(rs.next()) {
+            while (rs.next()) {
                 final StringBuilder column = new StringBuilder();
-                for(int index = 4; (index <= columns) && (index <= 22); index++) {
+                for (int index = 4; (index <= columns) && (index <= 22); index++) {
                     // ignore column position
-                    if(index != 17) {
-                        if(column.length() > 0) {
+                    if (index != 17) {
+                        if (column.length() > 0) {
                             column.append('/');
                         }
                         column.append(rs.getString(index));
@@ -174,7 +174,8 @@ public class Fingerprint implements Comparable<Object> {
                 }
                 result.add(column.toString());
             }
-        } finally {
+        }
+        finally {
             IOUtils.closeResultSet(rs);
         }
         return result.toArray(new String[result.size()]);
@@ -190,23 +191,24 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
     private static String[] getImportedKeys(final Connection conn, final String schema, final String table)
-            throws SQLException {
+        throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
         ResultSet rs = null;
         try {
             rs = metaData.getImportedKeys(conn.getCatalog(), schema, table);
-            while(rs.next()) {
+            while (rs.next()) {
                 final StringBuilder indexInfo = new StringBuilder();
-                for(int index = 4; index <= 14; index++) {
-                    if(indexInfo.length() > 0) {
+                for (int index = 4; index <= 14; index++) {
+                    if (indexInfo.length() > 0) {
                         indexInfo.append('/');
                     }
                     indexInfo.append(rs.getString(index));
                 }
                 result.add(indexInfo.toString());
             }
-        } finally {
+        }
+        finally {
             IOUtils.closeResultSet(rs);
         }
         return result.toArray(new String[result.size()]);
@@ -222,23 +224,24 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
     private static String[] getIndexInfo(final Connection conn, final String schema, final String table)
-            throws SQLException {
+        throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
         ResultSet rs = null;
         try {
             rs = metaData.getIndexInfo(conn.getCatalog(), schema, table, false, true);
-            while(rs.next()) {
+            while (rs.next()) {
                 final StringBuilder indexInfo = new StringBuilder();
-                for(int index = 4; index <= 10; index++) {
-                    if(indexInfo.length() > 0) {
+                for (int index = 4; index <= 10; index++) {
+                    if (indexInfo.length() > 0) {
                         indexInfo.append('/');
                     }
                     indexInfo.append(rs.getString(index));
                 }
                 result.add(indexInfo.toString());
             }
-        } finally {
+        }
+        finally {
             IOUtils.closeResultSet(rs);
         }
         return result.toArray(new String[result.size()]);
@@ -254,23 +257,24 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException Thrown if an SQL statement failed to be executed.
      */
     private static String[] getPrimaryKeys(final Connection conn, final String schema, final String table)
-            throws SQLException {
+        throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
         ResultSet rs = null;
         try {
             rs = metaData.getPrimaryKeys(conn.getCatalog(), schema, table);
-            while(rs.next()) {
+            while (rs.next()) {
                 final StringBuilder indexInfo = new StringBuilder();
-                for(int index = 4; index <= 6; index++) {
-                    if(indexInfo.length() > 0) {
+                for (int index = 4; index <= 6; index++) {
+                    if (indexInfo.length() > 0) {
                         indexInfo.append('/');
                     }
                     indexInfo.append(rs.getString(index));
                 }
                 result.add(indexInfo.toString());
             }
-        } finally {
+        }
+        finally {
             IOUtils.closeResultSet(rs);
         }
         return result.toArray(new String[result.size()]);
@@ -289,13 +293,14 @@ public class Fingerprint implements Comparable<Object> {
         ResultSet rs = null;
         try {
             rs = metaData.getSchemas();
-            while(rs.next()) {
+            while (rs.next()) {
                 final String schema = rs.getString(1);
-                if(KNOWN_SCHEMAS.contains(schema.toLowerCase())) {
+                if (KNOWN_SCHEMAS.contains(schema.toLowerCase())) {
                     result.add(schema);
                 }
             }
-        } finally {
+        }
+        finally {
             IOUtils.closeResultSet(rs);
         }
         return result.toArray(new String[result.size()]);
@@ -334,15 +339,16 @@ public class Fingerprint implements Comparable<Object> {
         final DatabaseMetaData metaData = conn.getMetaData();
         ResultSet rs = null;
         try {
-            rs = metaData.getTables(conn.getCatalog(), schema, null, new String[]{"TABLE"});
-            while(rs.next()) {
+            rs = metaData.getTables(conn.getCatalog(), schema, null, new String[] { "TABLE" });
+            while (rs.next()) {
                 final String name = rs.getString(3);
                 // ignore dynamically created tables for statistics manager
-                if(! "sm".equalsIgnoreCase(schema) || VALID_SM_TABLES.contains(name.toLowerCase())) {
+                if (!"sm".equalsIgnoreCase(schema) || VALID_SM_TABLES.contains(name.toLowerCase())) {
                     result.add(name);
                 }
             }
-        } finally {
+        }
+        finally {
             IOUtils.closeResultSet(rs);
         }
         return result.toArray(new String[result.size()]);
@@ -378,7 +384,7 @@ public class Fingerprint implements Comparable<Object> {
      * @param schemas schema list
      */
     public final void setSchemas(final Schema[] schemas) {
-        if(schemas != null) {
+        if (schemas != null) {
             this.schemas = new Schema[schemas.length];
             System.arraycopy(schemas, 0, this.schemas, 0, this.schemas.length);
         }

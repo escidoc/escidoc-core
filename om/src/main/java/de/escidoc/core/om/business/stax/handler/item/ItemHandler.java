@@ -120,44 +120,53 @@ public class ItemHandler extends DefaultHandler {
      * @return StartElement The StartElement.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-            throws InvalidContentException, MissingAttributeValueException, XMLStreamException,
-            ReadonlyAttributeViolationException, ReadonlyElementViolationException, ContentModelNotFoundException,
-            ContextNotFoundException, WebserverSystemException, IOException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        MissingAttributeValueException, XMLStreamException, ReadonlyAttributeViolationException,
+        ReadonlyElementViolationException, ContentModelNotFoundException, ContextNotFoundException,
+        WebserverSystemException, IOException {
 
-        if(this.parsingProperties) {
+        if (this.parsingProperties) {
             this.propertiesHandler.startElement(element);
-        } else if(this.parsingMetaData) {
+        }
+        else if (this.parsingMetaData) {
             this.metadataHandler.startElement(element);
-        } else if(this.parsingContentStreams) {
+        }
+        else if (this.parsingContentStreams) {
             this.contentStreamsHandler.startElement(element);
-        } else if(this.parsingComponents) {
+        }
+        else if (this.parsingComponents) {
             this.componentsHandler.startElement(element);
-        } else if(this.parsingRelations) {
+        }
+        else if (this.parsingRelations) {
             this.relationHandler.startElement(element);
-        } else {
+        }
+        else {
             final String currentPath = parser.getCurPath();
 
-            if(XPATH_ITEM_PROPERTIES.equals(currentPath)) {
-                if(LOGGER.isDebugEnabled()) {
+            if (XPATH_ITEM_PROPERTIES.equals(currentPath)) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parser reached " + XPATH_ITEM_PROPERTIES);
                 }
                 this.parsingProperties = true;
                 this.propertiesHandler = new ItemPropertiesHandler(this.parser);
                 this.propertiesHandler.startElement(element);
-            } else if(XPATH_ITEM_METADATA.equals(currentPath)) {
+            }
+            else if (XPATH_ITEM_METADATA.equals(currentPath)) {
                 this.parsingMetaData = true;
                 this.metadataHandler = new MetadataHandler2(this.parser, XPATH_ITEM_METADATA);
                 this.metadataHandler.startElement(element);
-            } else if(! this.surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
+            }
+            else if (!this.surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
                 this.parsingComponents = true;
                 this.componentsHandler = new ComponentsHandler(this.parser);
                 this.componentsHandler.startElement(element);
-            } else if(XPATH_ITEM_RELATION.equals(currentPath)) {
+            }
+            else if (XPATH_ITEM_RELATION.equals(currentPath)) {
                 this.parsingRelations = true;
                 this.relationHandler = new RelationHandler2(this.parser, XPATH_ITEM_RELATION);
                 this.relationHandler.startElement(element);
-            } else if(! this.surrogate && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
+            }
+            else if (!this.surrogate && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
                 this.parsingContentStreams = true;
                 this.contentStreamsHandler = new ContentStreamsHandler(this.parser);
                 this.contentStreamsHandler.startElement(element);
@@ -174,28 +183,28 @@ public class ItemHandler extends DefaultHandler {
      * @return StAX EndElement
      */
     @Override
-    public EndElement endElement(final EndElement element)
-            throws MissingContentException, XMLStreamException, MissingAttributeValueException,
-            ContextNotFoundException, ContentModelNotFoundException, UnsupportedEncodingException,
-            InvalidContentException, WebserverSystemException, IntegritySystemException, TripleStoreSystemException,
-            XmlCorruptedException {
+    public EndElement endElement(final EndElement element) throws MissingContentException, XMLStreamException,
+        MissingAttributeValueException, ContextNotFoundException, ContentModelNotFoundException,
+        UnsupportedEncodingException, InvalidContentException, WebserverSystemException, IntegritySystemException,
+        TripleStoreSystemException, XmlCorruptedException {
 
         final String currentPath = parser.getCurPath();
 
-        if(XPATH_ITEM_PROPERTIES.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+        if (XPATH_ITEM_PROPERTIES.equals(currentPath)) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_PROPERTIES);
             }
             // parser leaves the XML component element
             this.parsingProperties = false;
             this.propertiesHandler.endElement(element);
             this.item.setProperties(this.propertiesHandler.getProperties());
-            if(this.propertiesHandler.getProperties().getObjectProperties().getOrigin() != null) {
+            if (this.propertiesHandler.getProperties().getObjectProperties().getOrigin() != null) {
                 this.surrogate = true;
             }
             this.propertiesHandler = null;
-        } else if(XPATH_ITEM_METADATA.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+        }
+        else if (XPATH_ITEM_METADATA.equals(currentPath)) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_METADATA);
             }
             // parser leaves the XML md-records element
@@ -203,16 +212,18 @@ public class ItemHandler extends DefaultHandler {
             this.metadataHandler.endElement(element);
             this.item.addMdRecord(this.metadataHandler.getMetadataRecord());
             this.metadataHandler = null;
-        } else if(! this.surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+        }
+        else if (!this.surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_COMPONENTS);
             }
             this.parsingComponents = false;
             this.componentsHandler.endElement(element);
             this.item.setComponents(this.componentsHandler.getComponents());
             this.componentsHandler = null;
-        } else if(XPATH_ITEM_RELATION.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+        }
+        else if (XPATH_ITEM_RELATION.equals(currentPath)) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_RELATION);
             }
             this.parsingRelations = false;
@@ -221,24 +232,30 @@ public class ItemHandler extends DefaultHandler {
             this.item.getRelations().add(this.relationHandler.getRelation());
             // }
             this.relationHandler = null;
-        } else if(! this.surrogate && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
-            if(LOGGER.isDebugEnabled()) {
+        }
+        else if (!this.surrogate && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_CONTENT_STREAMS);
             }
             this.parsingContentStreams = false;
             this.contentStreamsHandler.endElement(element);
             this.item.setContentStreams(this.contentStreamsHandler.getContentStreams());
             this.contentStreamsHandler = null;
-        } else {
-            if(this.parsingComponents) {
+        }
+        else {
+            if (this.parsingComponents) {
                 this.componentsHandler.endElement(element);
-            } else if(this.parsingProperties) {
+            }
+            else if (this.parsingProperties) {
                 this.propertiesHandler.endElement(element);
-            } else if(this.parsingMetaData) {
+            }
+            else if (this.parsingMetaData) {
                 this.metadataHandler.endElement(element);
-            } else if(this.parsingRelations) {
+            }
+            else if (this.parsingRelations) {
                 this.relationHandler.endElement(element);
-            } else if(this.parsingContentStreams) {
+            }
+            else if (this.parsingContentStreams) {
                 this.contentStreamsHandler.endElement(element);
             }
         }
@@ -254,17 +271,19 @@ public class ItemHandler extends DefaultHandler {
      * @return XML character element.
      */
     @Override
-    public String characters(final String s, final StartElement element)
-            throws InvalidContentException, MissingElementValueException, WebserverSystemException, XMLStreamException,
-            InvalidStatusException {
+    public String characters(final String s, final StartElement element) throws InvalidContentException,
+        MissingElementValueException, WebserverSystemException, XMLStreamException, InvalidStatusException {
 
-        if(this.parsingProperties) {
+        if (this.parsingProperties) {
             this.propertiesHandler.characters(s, element);
-        } else if(this.parsingComponents) {
+        }
+        else if (this.parsingComponents) {
             this.componentsHandler.characters(s, element);
-        } else if(this.parsingMetaData) {
+        }
+        else if (this.parsingMetaData) {
             this.metadataHandler.characters(s, element);
-        } else if(this.parsingContentStreams) {
+        }
+        else if (this.parsingContentStreams) {
             this.contentStreamsHandler.characters(s, element);
         }
 

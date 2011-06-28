@@ -77,7 +77,7 @@ public class StatisticInterceptor implements Ordered {
     private static final Pattern PATTERN_DETERMINE_XML_PARAMETER = Pattern.compile("<");
 
     private static final String MSG_CLASS_CAST_EXCEPTION =
-            "This ClassCastException should occur for binary content, only.";
+        "This ClassCastException should occur for binary content, only.";
 
     private static final String PARAM_ELAPSED_TIME = "elapsed_time";
 
@@ -120,11 +120,11 @@ public class StatisticInterceptor implements Ordered {
      * @return Returns the changed result.
      * @throws Throwable Thrown in case of an error.
      */
-    @Around("execution(public * de.escidoc.core.*.service.*.*(..))" +
-            " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)" +
-            " && !execution(* de.escidoc.core..*.SemanticStoreHandler*.*(..))" +
-            " && !execution(* de.escidoc.core..*.StatisticService*.*(..))" +
-            " && !execution(* de.escidoc.core.common..*.*(..))" + " && if(" + "false" + ')')
+    @Around("execution(public * de.escidoc.core.*.service.*.*(..))"
+        + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
+        + " && !execution(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
+        + " && !execution(* de.escidoc.core..*.StatisticService*.*(..))"
+        + " && !execution(* de.escidoc.core.common..*.*(..))" + " && if(" + "false" + ')')
     // enable this aspect only if you need
     public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable, Exception {
         final long invocationStartTime = System.currentTimeMillis();
@@ -134,28 +134,32 @@ public class StatisticInterceptor implements Ordered {
         String exceptionSource = null;
         try {
             // insert internal (0)/external (1) info
-            if(! UserContext.isExternalUser()) {
+            if (!UserContext.isExternalUser()) {
                 internal = true;
             }
             return proceed(joinPoint);
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             successful = false;
             exceptionName = e.getClass().getName();
             final StackTraceElement[] elements = e.getStackTrace();
-            if(elements != null && elements.length > 0) {
+            if (elements != null && elements.length > 0) {
                 final StackTraceElement element = elements[0];
                 exceptionSource =
-                        StringUtility.format(element.getClassName(), element.getMethodName(), element.getLineNumber());
-            } else {
+                    StringUtility.format(element.getClassName(), element.getMethodName(), element.getLineNumber());
+            }
+            else {
                 exceptionSource = Constants.UNKNOWN;
             }
-            if(e instanceof EscidocException) {
+            if (e instanceof EscidocException) {
                 throw e;
-            } else {
+            }
+            else {
                 // this should not occur. To report this failure, the exception is wrapped by a SystemException
                 throw new SystemException("Service throws unexpected exception. ", e);
             }
-        } finally {
+        }
+        finally {
             // get callee and method info
             final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             // get interface info
@@ -163,11 +167,17 @@ public class StatisticInterceptor implements Ordered {
             final StatisticRecordBuilder statisticRecordBuilder = StatisticRecordBuilder.createStatisticRecord();
             handleObjectIds(statisticRecordBuilder, methodSignature.getMethod().getName(), joinPoint.getArgs());
             final String interfaceInfo = VALUE_INTERFACE_REST;
-            final StatisticRecord statisticRecord = statisticRecordBuilder.withParameter(PARAM_HANDLER,
-                    methodSignature.getDeclaringTypeName().replaceAll("\\.interfaces", "").replaceAll("Interface$", ""))
+            final StatisticRecord statisticRecord =
+                statisticRecordBuilder
+                    .withParameter(
+                        PARAM_HANDLER,
+                        methodSignature.getDeclaringTypeName().replaceAll("\\.interfaces", "").replaceAll("Interface$",
+                            ""))
                     .withParameter(PARAM_REQUEST, methodSignature.getMethod().getName())
-                    .withParameter(PARAM_INTERFACE, interfaceInfo).withParameter(PARAM_INTERNAL, internal)
-                    .withParameter(PARAM_SUCCESSFUL, successful).withParameter(PARAM_EXCEPTION_NAME, exceptionName)
+                    .withParameter(PARAM_INTERFACE, interfaceInfo)
+                    .withParameter(PARAM_INTERNAL, internal)
+                    .withParameter(PARAM_SUCCESSFUL, successful)
+                    .withParameter(PARAM_EXCEPTION_NAME, exceptionName)
                     .withParameter(PARAM_EXCEPTION_SOURCE, exceptionSource)
                     .withParameter(PARAM_USER_ID, UserContext.getId())
                     .withParameter(PARAM_ELAPSED_TIME, String.valueOf(System.currentTimeMillis() - invocationStartTime))
@@ -198,36 +208,37 @@ public class StatisticInterceptor implements Ordered {
      * @param calledMethodName       The name of the called method.
      * @param arguments              The arguments of the method call.
      */
-    private static void handleObjectIds(final StatisticRecordBuilder statisticRecordBuilder,
-                                        final String calledMethodName, final Object[] arguments) {
+    private static void handleObjectIds(
+        final StatisticRecordBuilder statisticRecordBuilder, final String calledMethodName, final Object[] arguments) {
 
-        if(arguments != null && arguments.length > 0) {
-            int indexLastObjid = - 1;
-            for(int i = 0; i < arguments.length; i++) {
-                if(! (arguments[i] instanceof String)) {
+        if (arguments != null && arguments.length > 0) {
+            int indexLastObjid = -1;
+            for (int i = 0; i < arguments.length; i++) {
+                if (!(arguments[i] instanceof String)) {
                     // e.g., this is the case for binary content
                     // (createStagingFile)
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug(MSG_CLASS_CAST_EXCEPTION + calledMethodName);
                     }
                     // Parameter found that is not a string. In this case, the
                     // loop is stopped and no objids are logged, as it seems to
                     // be a special method, e.g. evaluateRetrieve of the PDP.
-                    indexLastObjid = - 1;
+                    indexLastObjid = -1;
                     break;
                 }
                 final CharSequence argument = (CharSequence) arguments[i];
-                if(argument != null && ! PATTERN_DETERMINE_XML_PARAMETER.matcher(argument).find()) {
+                if (argument != null && !PATTERN_DETERMINE_XML_PARAMETER.matcher(argument).find()) {
                     indexLastObjid = i;
-                } else {
+                }
+                else {
                     // First string parameter found that holds xml. Suspend
                     // loop;
                     break;
                 }
             }
-            if(indexLastObjid >= 0) {
+            if (indexLastObjid >= 0) {
                 statisticRecordBuilder.withParameter(PARAM_OBJID, (String) arguments[indexLastObjid]);
-                for(int i = indexLastObjid - 1, parent = 1; i >= 0; i--) {
+                for (int i = indexLastObjid - 1, parent = 1; i >= 0; i--) {
                     statisticRecordBuilder.withParameter(PARAM_PARENT_OBJID + parent, (String) arguments[i]);
                     parent++;
                 }

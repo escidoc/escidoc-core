@@ -79,7 +79,7 @@ public final class EscidocConfiguration {
     public static final String ESCIDOC_CORE_XSD_PATH = "escidoc-core.xsd-path";
 
     public static final String ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM =
-            "escidoc-core.om.content.checksum-algorithm";
+        "escidoc-core.om.content.checksum-algorithm";
 
     public static final String ESCIDOC_CORE_XSLT_STD = "escidoc-core.xslt.std";
 
@@ -128,7 +128,7 @@ public final class EscidocConfiguration {
     public static final String ESCIDOC_CORE_QUEUE_PASSWORD = "escidoc-core.queue.password";
 
     public static final String ESCIDOC_CORE_FILTER_DEFAULT_MAXIMUM_RECORDS =
-            "escidoc-core.filter.default.maximumRecords";
+        "escidoc-core.filter.default.maximumRecords";
 
     public static final String CONTENT_RELATIONS_URL = "escidoc-core.ontology.url";
 
@@ -152,13 +152,13 @@ public final class EscidocConfiguration {
      * This property should be set to the name of the user-attribute that defines the common name of the user.
      */
     public static final String ESCIDOC_CORE_AA_COMMON_NAME_ATTRIBUTE_NAME =
-            "escidoc-core.aa.attribute-name.common-name";
+        "escidoc-core.aa.attribute-name.common-name";
 
     /**
      * This property should be set to the name of the user-attribute that defines the unique loginname of the user.
      */
     public static final String ESCIDOC_CORE_AA_PERSISTENT_ID_ATTRIBUTE_NAME =
-            "escidoc-core.aa.attribute-name.persistent-id";
+        "escidoc-core.aa.attribute-name.persistent-id";
 
     /**
      * Digilib Server (URL).
@@ -177,11 +177,12 @@ public final class EscidocConfiguration {
     static {
         try {
             instance = new EscidocConfiguration();
-        } catch(final EscidocException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final EscidocException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Problem while loading properties.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Problem while loading properties.", e);
             }
         }
@@ -234,7 +235,7 @@ public final class EscidocConfiguration {
     public String get(final String name, final String defaultValue) {
         String prop = (String) properties.get(name);
 
-        if(prop == null) {
+        if (prop == null) {
             prop = defaultValue;
         }
         return prop;
@@ -250,9 +251,9 @@ public final class EscidocConfiguration {
     public boolean getAsBoolean(final String name) {
         Boolean result = false;
         String prop = (String) this.properties.get(name);
-        if(prop != null) {
+        if (prop != null) {
             prop = prop.toLowerCase();
-            if(prop != null && (TRUE.equals(prop) || ONE.equals(prop))) {
+            if (prop != null && (TRUE.equals(prop) || ONE.equals(prop))) {
                 result = true;
             }
         }
@@ -269,9 +270,10 @@ public final class EscidocConfiguration {
         Long returnValue = null;
         try {
             returnValue = Long.parseLong(getProperty(name));
-        } catch(final NumberFormatException e) {
+        }
+        catch (final NumberFormatException e) {
             LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a long!.");
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a long!", e);
             }
         }
@@ -288,9 +290,10 @@ public final class EscidocConfiguration {
         Integer returnValue = null;
         try {
             returnValue = Integer.parseInt(getProperty(name));
-        } catch(final NumberFormatException e) {
+        }
+        catch (final NumberFormatException e) {
             LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a integer!.");
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a integer!", e);
             }
         }
@@ -299,7 +302,7 @@ public final class EscidocConfiguration {
 
     private String getProperty(final String name) {
         final String property = properties.getProperty(name);
-        if(property == null) {
+        if (property == null) {
             LOGGER.error("Missing property '" + name + "'!");
             throw new IllegalStateException("Missing property '" + name + "'!");
         }
@@ -319,22 +322,24 @@ public final class EscidocConfiguration {
         final Properties result;
         try {
             result = getProperties(PROPERTIES_DEFAULT_FILENAME);
-        } catch(final IOException e) {
+        }
+        catch (final IOException e) {
             throw new SystemException("properties not found.", e);
         }
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Default properties: " + result);
         }
         Properties specific;
         try {
             specific = getProperties(PROPERTIES_FILENAME);
-        } catch(final IOException e) {
+        }
+        catch (final IOException e) {
             specific = new Properties();
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on loading specific properties.", e);
             }
         }
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Specific properties: " + specific);
         }
         result.putAll(specific);
@@ -343,24 +348,25 @@ public final class EscidocConfiguration {
         Properties constant = new Properties();
         try {
             constant = getProperties(PROPERTIES_CONSTANT_FILENAME);
-        } catch(final IOException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final IOException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on loading contant properties.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on loading contant properties.", e);
             }
         }
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Constant properties: " + constant);
         }
         result.putAll(constant);
 
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Merged properties: " + result);
         }
         // set Properties as System-Variables
-        for(final Object o : result.keySet()) {
+        for (final Object o : result.keySet()) {
             final String key = (String) o;
             String value = result.getProperty(key);
             value = replaceEnvVariables(value);
@@ -392,9 +398,9 @@ public final class EscidocConfiguration {
      * @throws FileNotFoundException If access to the specified file fails.
      */
     private static InputStream getInputStream(final String filename) throws IOException {
-        final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[]{});
+        final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
         final Resource[] resource = applicationContext.getResources("classpath*:" + filename);
-        if(resource.length == 0) {
+        if (resource.length == 0) {
             throw new FileNotFoundException("Unable to find file '" + filename + "' in classpath.");
         }
         return resource[0].getInputStream();
@@ -408,14 +414,14 @@ public final class EscidocConfiguration {
      */
     private static String replaceEnvVariables(final String property) {
         String replacedProperty = property;
-        if(property.contains("${")) {
+        if (property.contains("${")) {
             final String[] envVariables = SPLIT_PATTERN.split(property);
-            if(envVariables != null) {
-                for(int i = 0; i < envVariables.length; i++) {
+            if (envVariables != null) {
+                for (int i = 0; i < envVariables.length; i++) {
                     envVariables[i] = envVariables[i].replaceFirst(".*?\\$\\{", "");
                     envVariables[i] = envVariables[i].replaceFirst("\\}.*", "");
-                    if(System.getProperty(envVariables[i]) != null &&
-                            System.getProperty(envVariables[i]).length() != 0) {
+                    if (System.getProperty(envVariables[i]) != null
+                        && System.getProperty(envVariables[i]).length() != 0) {
                         String envVariable = System.getProperty(envVariables[i]);
                         envVariable = envVariable.replaceAll("\\\\", "/");
                         replacedProperty = replacedProperty.replaceAll("\\$\\{" + envVariables[i] + '}', envVariable);
@@ -437,8 +443,8 @@ public final class EscidocConfiguration {
 
         String selfUrl = get(ESCIDOC_CORE_SELFURL);
 
-        if(selfUrl != null) {
-            if(selfUrl.endsWith("/")) {
+        if (selfUrl != null) {
+            if (selfUrl.endsWith("/")) {
                 selfUrl = selfUrl.substring(0, selfUrl.length() - 1);
             }
             selfUrl += path;

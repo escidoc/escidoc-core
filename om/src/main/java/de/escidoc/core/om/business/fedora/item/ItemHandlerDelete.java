@@ -80,47 +80,50 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
      * @throws SystemException        Thrown in case of an internal system error.
      * @throws AuthorizationException If further needed access rights are not given.
      */
-    protected void remove(final String id)
-            throws ItemNotFoundException, LockingException, InvalidStatusException, SystemException,
-            AuthorizationException, TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
-            XmlParserSystemException {
+    protected void remove(final String id) throws ItemNotFoundException, LockingException, InvalidStatusException,
+        SystemException, AuthorizationException, TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException, XmlParserSystemException {
 
         // TODO move precondition checks to service method (? FRS)
         setItem(id);
         checkLocked();
         // check if never released
         final String status = getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
-        if(! status.equals(Constants.STATUS_PENDING) && ! status.equals(Constants.STATUS_IN_REVISION)) {
-            throw new InvalidStatusException(
-                    "Item " + getItem().getId() + " is in status " + status + ". Can not delete.");
+        if (!status.equals(Constants.STATUS_PENDING) && !status.equals(Constants.STATUS_IN_REVISION)) {
+            throw new InvalidStatusException("Item " + getItem().getId() + " is in status " + status
+                + ". Can not delete.");
         }
 
         // remove member entries referring this
         final List<String> containers = getTripleStoreUtility().getContainers(getItem().getId());
-        for(final String parent : containers) {
+        for (final String parent : containers) {
             try {
                 final Container container = new Container(parent);
                 // call removeMember with current user context (access rights)
                 final String param =
-                        "<param last-modification-date=\"" + container.getLastModificationDate() + "\"><id>" +
-                                getItem().getId() + "</id></param>";
-                final BeanMethod method = methodMapper
-                        .getMethod("/ir/container/" + parent + "/members/remove", null, null, "POST", param);
+                    "<param last-modification-date=\"" + container.getLastModificationDate() + "\"><id>"
+                        + getItem().getId() + "</id></param>";
+                final BeanMethod method =
+                    methodMapper.getMethod("/ir/container/" + parent + "/members/remove", null, null, "POST", param);
                 method.invokeWithProtocol(UserContext.getHandle());
-            } catch(final InvocationTargetException e) {
+            }
+            catch (final InvocationTargetException e) {
                 // unpack Exception from reflection API
                 final Throwable cause = e.getCause();
-                if(cause instanceof Error) {
+                if (cause instanceof Error) {
                     throw (Error) cause;
-                } else if(cause instanceof AuthorizationException) {
-                    throw (AuthorizationException) cause;
-                } else {
-                    throw new SystemException("An error occured removing member entries for item " + getItem().getId() +
-                            ". Container can not be deleted.", cause); // Ignore FindBugs
                 }
-            } catch(final Exception e) {
-                throw new SystemException("An error occured removing member entries for item " + getItem().getId() +
-                        ". Container can not be deleted.", e);
+                else if (cause instanceof AuthorizationException) {
+                    throw (AuthorizationException) cause;
+                }
+                else {
+                    throw new SystemException("An error occured removing member entries for item " + getItem().getId()
+                        + ". Container can not be deleted.", cause); // Ignore FindBugs
+                }
+            }
+            catch (final Exception e) {
+                throw new SystemException("An error occured removing member entries for item " + getItem().getId()
+                    + ". Container can not be deleted.", e);
             }
         }
         final Stream stream = this.fedoraServiceClient.getObjectXMLAsStream(getItem().getId());
@@ -132,20 +135,23 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
             in = stream.getInputStream();
             sp.parse(in);
             sp.clearHandlerChain();
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(in);
         }
         final List<String> componentIds = cih.getComponentIds();
-        for(final String componentId : componentIds) {
+        for (final String componentId : componentIds) {
             this.getFedoraServiceClient().deleteObject(componentId);
         }
         this.getFedoraServiceClient().deleteObject(getItem().getId());
         this.getFedoraServiceClient().sync();
         try {
             this.getTripleStoreUtility().reinitialize();
-        } catch(TripleStoreSystemException e) {
+        }
+        catch (TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
         }
     }

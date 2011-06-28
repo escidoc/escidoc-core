@@ -42,12 +42,12 @@ public class EscidocOpenidInitializer {
 
     public EscidocOpenidInitializer() {
         final String proxyHostName =
-                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
+            EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
         final String proxyPort = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
-        if(proxyHostName != null && proxyHostName.trim().length() != 0) {
+        if (proxyHostName != null && proxyHostName.trim().length() != 0) {
             final ProxyProperties proxyProps = new ProxyProperties();
             proxyProps.setProxyHostName(proxyHostName);
-            if(proxyPort != null && proxyPort.trim().length() != 0) {
+            if (proxyPort != null && proxyPort.trim().length() != 0) {
                 proxyProps.setProxyPort(Integer.parseInt(proxyPort));
             }
             HttpClientFactory.setProxyProperties(proxyProps);

@@ -114,7 +114,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      */
     @Override
     public String renderScopes(final Collection<Scope> scopes, final RecordPacking recordPacking)
-            throws SystemException, WebserverSystemException {
+        throws SystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -125,15 +125,16 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
         addScopeListNamespaceValues(values);
 
         final List<Map<String, Object>> scopesValues;
-        if(scopes != null) {
+        if (scopes != null) {
             scopesValues = new ArrayList<Map<String, Object>>(scopes.size());
-            for(final Scope scope : scopes) {
+            for (final Scope scope : scopes) {
                 final Map<String, Object> scopeValues = new HashMap<String, Object>();
                 addScopeNamespaceValues(scopeValues);
                 addScopeValues(scope, scopeValues);
                 scopesValues.add(scopeValues);
             }
-        } else {
+        }
+        else {
             scopesValues = new ArrayList<Map<String, Object>>();
         }
         values.put("scopes", scopesValues);

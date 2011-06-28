@@ -116,90 +116,93 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      * @throws WebserverSystemException       Thrown in case of an internal error.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-            throws ContentModelNotFoundException, ContextNotFoundException, MissingAttributeValueException,
-            TripleStoreSystemException, WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws ContentModelNotFoundException,
+        ContextNotFoundException, MissingAttributeValueException, TripleStoreSystemException, WebserverSystemException {
 
         final String curPath = staxParser.getCurPath();
         final String theName = element.getLocalName();
 
-        if(curPath.startsWith(PROPERTIES_PATH)) {
-            if("properties".equals(theName)) {
+        if (curPath.startsWith(PROPERTIES_PATH)) {
+            if ("properties".equals(theName)) {
                 expectedElements.add(Elements.ELEMENT_CONTEXT);
                 expectedElements.add(Elements.ELEMENT_CONTENT_MODEL);
-            } else if(theName.equals(Elements.ELEMENT_CONTEXT)) {
+            }
+            else if (theName.equals(Elements.ELEMENT_CONTEXT)) {
                 expectedElements.remove(theName);
                 String contextId;
                 try {
                     contextId = element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
-                    if(contextId == null || contextId.length() < 1) {
+                    if (contextId == null || contextId.length() < 1) {
                         throw new MissingAttributeValueException("No context id found.");
                     }
-                } catch(final NoSuchAttributeException e) {
+                }
+                catch (final NoSuchAttributeException e) {
                     final String href;
                     try {
                         href = element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
-                    } catch(final NoSuchAttributeException e1) {
-                        if(LOGGER.isWarnEnabled()) {
+                    }
+                    catch (final NoSuchAttributeException e1) {
+                        if (LOGGER.isWarnEnabled()) {
                             LOGGER.warn("Error on getting attribute value.");
                         }
-                        if(LOGGER.isDebugEnabled()) {
+                        if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Error on getting attribute value.", e1);
                         }
                         final String att = Elements.ATTRIBUTE_XLINK_HREF;
                         final String refType = Elements.ELEMENT_CONTEXT;
                         final String objType = "container";
-                        throw new MissingAttributeValueException(
-                                "The attribute " + att + " of " + refType + " is missing in " + objType +
-                                        " for create.", e);
+                        throw new MissingAttributeValueException("The attribute " + att + " of " + refType
+                            + " is missing in " + objType + " for create.", e);
                     }
                     final int indexOfLastSlash = href.lastIndexOf('/');
                     contextId = href.substring(indexOfLastSlash + 1);
-                    if(contextId == null || contextId.length() < 1) {
+                    if (contextId == null || contextId.length() < 1) {
                         throw new MissingAttributeValueException("No context id found.", e);
                     }
-                    if(! href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(Constants.CONTEXT_URL_BASE)) {
-                        throw new ContextNotFoundException(
-                                "The " + Elements.ELEMENT_CONTEXT + " element has a wrong url." +
-                                        "the url have to look like: " + Constants.CONTEXT_URL_BASE + "[id] ", e);
+                    if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(Constants.CONTEXT_URL_BASE)) {
+                        throw new ContextNotFoundException("The " + Elements.ELEMENT_CONTEXT
+                            + " element has a wrong url." + "the url have to look like: " + Constants.CONTEXT_URL_BASE
+                            + "[id] ", e);
                     }
                 }
                 properties.put(theName, contextId);
-            } else if(theName.equals(Elements.ELEMENT_CONTENT_MODEL)) {
+            }
+            else if (theName.equals(Elements.ELEMENT_CONTENT_MODEL)) {
                 expectedElements.remove(theName);
                 String contextId;
                 try {
                     contextId = element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
-                    if(contextId == null || contextId.length() < 1) {
+                    if (contextId == null || contextId.length() < 1) {
                         throw new MissingAttributeValueException("No content-model id found.");
                     }
-                } catch(final NoSuchAttributeException e) {
+                }
+                catch (final NoSuchAttributeException e) {
                     final String href;
                     try {
                         href = element.getAttributeValue(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF);
-                    } catch(final NoSuchAttributeException e1) {
-                        if(LOGGER.isWarnEnabled()) {
+                    }
+                    catch (final NoSuchAttributeException e1) {
+                        if (LOGGER.isWarnEnabled()) {
                             LOGGER.warn("Error on getting attribute value.");
                         }
-                        if(LOGGER.isDebugEnabled()) {
+                        if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Error on getting attribute value.", e1);
                         }
                         final String att = Elements.ATTRIBUTE_XLINK_HREF;
                         final String refType = Elements.ELEMENT_CONTENT_MODEL;
                         final String objType = "container";
-                        throw new MissingAttributeValueException(
-                                "The attribute " + att + " of " + refType + " is missing in " + objType +
-                                        " for create.", e);
+                        throw new MissingAttributeValueException("The attribute " + att + " of " + refType
+                            + " is missing in " + objType + " for create.", e);
                     }
                     final int indexOfLastSlash = href.lastIndexOf('/');
                     contextId = href.substring(indexOfLastSlash + 1);
-                    if(contextId == null || contextId.length() < 1) {
+                    if (contextId == null || contextId.length() < 1) {
                         throw new MissingAttributeValueException("No content-model id found.", e);
                     }
-                    if(! href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(Constants.CONTENT_MODEL_URL_BASE)) {
-                        throw new ContentModelNotFoundException(
-                                "The " + Elements.ELEMENT_CONTENT_MODEL + " element has a wrong url." +
-                                        "the url have to look like: " + Constants.CONTENT_MODEL_URL_BASE + "[id] ", e);
+                    if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(Constants.CONTENT_MODEL_URL_BASE)) {
+                        throw new ContentModelNotFoundException("The " + Elements.ELEMENT_CONTENT_MODEL
+                            + " element has a wrong url." + "the url have to look like: "
+                            + Constants.CONTENT_MODEL_URL_BASE + "[id] ", e);
                     }
                 }
                 properties.put(theName, contextId);
@@ -218,32 +221,34 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      * @throws ContextNotFoundException      Thrown if referenced Context does not exist
      */
     @Override
-    public EndElement endElement(final EndElement element)
-            throws ContentModelNotFoundException, ContextNotFoundException, TripleStoreSystemException,
-            IntegritySystemException, WebserverSystemException, XmlCorruptedException {
-        if(staxParser.getCurPath().equals(PROPERTIES_PATH)) {
-            if(! expectedElements.isEmpty()) {
+    public EndElement endElement(final EndElement element) throws ContentModelNotFoundException,
+        ContextNotFoundException, TripleStoreSystemException, IntegritySystemException, WebserverSystemException,
+        XmlCorruptedException {
+        if (staxParser.getCurPath().equals(PROPERTIES_PATH)) {
+            if (!expectedElements.isEmpty()) {
                 throw new XmlCorruptedException("One of " + expectedElements.toString() + " missing.");
             }
 
             String id = properties.get(Elements.ELEMENT_CONTEXT);
             utility.checkIsContext(id);
             String title = this.tripleStoreUtility.getTitle(id);
-            if(title != null) {
+            if (title != null) {
                 properties.put(Elements.ELEMENT_CONTEXT + "-title", title);
-            } else {
-                throw new IntegritySystemException(
-                        "The title of the " + Elements.ELEMENT_CONTEXT + " with id " + id + " is not set");
+            }
+            else {
+                throw new IntegritySystemException("The title of the " + Elements.ELEMENT_CONTEXT + " with id " + id
+                    + " is not set");
             }
 
             id = properties.get(Elements.ELEMENT_CONTENT_MODEL);
             utility.checkIsContentModel(id);
             title = this.tripleStoreUtility.getTitle(id);
-            if(title != null) {
+            if (title != null) {
                 properties.put(Elements.ELEMENT_CONTENT_MODEL + "-title", title);
-            } else {
-                throw new IntegritySystemException(
-                        "The title of the " + Elements.ELEMENT_CONTENT_MODEL + " with id " + id + " is not set");
+            }
+            else {
+                throw new IntegritySystemException("The title of the " + Elements.ELEMENT_CONTENT_MODEL + " with id "
+                    + id + " is not set");
             }
 
         }
@@ -261,20 +266,23 @@ public class ContainerPropertiesHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element) throws MissingElementValueException {
         final String curPath = staxParser.getCurPath();
         // String theName = element.getLocalName();
-        if(curPath.startsWith(PROPERTIES_PATH)) {
-            if("/container/properties/public-status".equals(curPath)) {
-                if(s != null) {
+        if (curPath.startsWith(PROPERTIES_PATH)) {
+            if ("/container/properties/public-status".equals(curPath)) {
+                if (s != null) {
                     properties.put(Elements.ELEMENT_PUBLIC_STATUS, s);
-                } else {
-                    throw new MissingElementValueException(
-                            "Value of the element " + Elements.ELEMENT_PUBLIC_STATUS + " is missing");
                 }
-            } else if("/container/properties/pid".equals(curPath)) {
-                if(s != null) {
+                else {
+                    throw new MissingElementValueException("Value of the element " + Elements.ELEMENT_PUBLIC_STATUS
+                        + " is missing");
+                }
+            }
+            else if ("/container/properties/pid".equals(curPath)) {
+                if (s != null) {
                     properties.put(Elements.ELEMENT_PID, s);
-                } else {
-                    throw new MissingElementValueException(
-                            "Value of the element " + Elements.ELEMENT_PID + " is missing");
+                }
+                else {
+                    throw new MissingElementValueException("Value of the element " + Elements.ELEMENT_PID
+                        + " is missing");
                 }
             }
         }

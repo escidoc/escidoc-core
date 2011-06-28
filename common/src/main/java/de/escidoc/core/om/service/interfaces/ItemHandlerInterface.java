@@ -140,13 +140,12 @@ public interface ItemHandlerInterface {
      * @throws MissingAttributeValueException It a mandatory attribute value is missing.
      */
     @Validate(param = 0, resolver = "getItemSchemaLocation")
-    String create(String xmlData)
-            throws MissingContentException, ContextNotFoundException, ContentModelNotFoundException,
-            ReadonlyElementViolationException, MissingElementValueException, ReadonlyAttributeViolationException,
-            AuthenticationException, AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
-            MissingMethodParameterException, FileNotFoundException, SystemException, InvalidContentException,
-            ReferencedResourceNotFoundException, RelationPredicateNotFoundException, MissingAttributeValueException,
-            MissingMdRecordException, InvalidStatusException;
+    String create(String xmlData) throws MissingContentException, ContextNotFoundException,
+        ContentModelNotFoundException, ReadonlyElementViolationException, MissingElementValueException,
+        ReadonlyAttributeViolationException, AuthenticationException, AuthorizationException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMethodParameterException, FileNotFoundException, SystemException,
+        InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
+        MissingAttributeValueException, MissingMdRecordException, InvalidStatusException;
 
     /**
      * Delete an Item.<br/> <b>Prerequisites:</b><br/> The Item must exist<br/> The Item has to be in public-status
@@ -166,9 +165,9 @@ public interface ItemHandlerInterface {
      *                                   If a mandatory element value is missing.
      * @throws SystemException           If an error occurs.
      */
-    void delete(String id)
-            throws ItemNotFoundException, AlreadyPublishedException, LockingException, AuthenticationException,
-            AuthorizationException, InvalidStatusException, MissingMethodParameterException, SystemException;
+    void delete(String id) throws ItemNotFoundException, AlreadyPublishedException, LockingException,
+        AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
+        SystemException;
 
     /**
      * Retrieve an Item.<br/>
@@ -192,9 +191,8 @@ public interface ItemHandlerInterface {
      *                                    If a mandatory element value is missing.
      * @throws SystemException            If an error occurs.
      */
-    String retrieve(String id)
-            throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieve(String id) throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException;
 
     /**
      * Update an Item<br/> <b>Prerequisites:</b> <br/> The provided XML data in the body is only accepted if the size is
@@ -260,14 +258,13 @@ public interface ItemHandlerInterface {
      *                                        If the predicate of a given relation is unknown.
      */
     @Validate(param = 1, resolver = "getItemSchemaLocation")
-    String update(String id, String xmlData)
-            throws ItemNotFoundException, FileNotFoundException, InvalidContextException, InvalidStatusException,
-            LockingException, NotPublishedException, MissingLicenceException, ComponentNotFoundException,
-            MissingContentException, MissingAttributeValueException, AuthenticationException, AuthorizationException,
-            InvalidXmlException, MissingMethodParameterException, InvalidContentException, SystemException,
-            OptimisticLockingException, AlreadyExistsException, ReadonlyViolationException,
-            ReferencedResourceNotFoundException, RelationPredicateNotFoundException, ReadonlyVersionException,
-            MissingMdRecordException;
+    String update(String id, String xmlData) throws ItemNotFoundException, FileNotFoundException,
+        InvalidContextException, InvalidStatusException, LockingException, NotPublishedException,
+        MissingLicenceException, ComponentNotFoundException, MissingContentException, MissingAttributeValueException,
+        AuthenticationException, AuthorizationException, InvalidXmlException, MissingMethodParameterException,
+        InvalidContentException, SystemException, OptimisticLockingException, AlreadyExistsException,
+        ReadonlyViolationException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
+        ReadonlyVersionException, MissingMdRecordException;
 
     //
     // Subresources
@@ -311,11 +308,11 @@ public interface ItemHandlerInterface {
      * @throws OptimisticLockingException     If the provided latest-modification-date does not match.
      */
     @Validate(param = 1, resolver = "getItemSchemaLocation")
-    String createComponent(final String id, final String xmlData)
-            throws MissingContentException, ItemNotFoundException, ComponentNotFoundException, LockingException,
-            MissingElementValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
-            MissingMethodParameterException, FileNotFoundException, InvalidXmlException, InvalidContentException,
-            ReadonlyViolationException, SystemException, OptimisticLockingException, MissingAttributeValueException;
+    String createComponent(final String id, final String xmlData) throws MissingContentException,
+        ItemNotFoundException, ComponentNotFoundException, LockingException, MissingElementValueException,
+        AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
+        FileNotFoundException, InvalidXmlException, InvalidContentException, ReadonlyViolationException,
+        SystemException, OptimisticLockingException, MissingAttributeValueException;
 
     /**
      * Delete a Component of an Item.<br/> <b>Prerequisites:</b><br/> The Item must exist<br/> The Component must
@@ -337,9 +334,9 @@ public interface ItemHandlerInterface {
      * @throws SystemException            If an error occurs.
      * @throws InvalidStatusException     Thrown in case of an invalid status.
      */
-    void deleteComponent(final String itemId, final String componentId)
-            throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
-            AuthorizationException, MissingMethodParameterException, SystemException, InvalidStatusException;
+    void deleteComponent(final String itemId, final String componentId) throws ItemNotFoundException,
+        ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, InvalidStatusException;
 
     /**
      * Retrieve a Component of an Item.<br/> <b>Prerequisites:</b><br/> The Item must exist<br/> The Component must
@@ -360,9 +357,9 @@ public interface ItemHandlerInterface {
      *                                    If no data is provided.
      * @throws SystemException            If an error occurs.
      */
-    String retrieveComponent(final String id, final String componentId)
-            throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieveComponent(final String id, final String componentId) throws ItemNotFoundException,
+        ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException;
 
     /**
      * Update a Component of an Item<br/> <b>Prerequisites:</b><br/> The provided XML data in the body is only accepted
@@ -411,10 +408,10 @@ public interface ItemHandlerInterface {
      */
     @Validate(param = 2, resolver = "getItemSchemaLocation")
     String updateComponent(final String id, final String componentId, final String xmlData)
-            throws ItemNotFoundException, ComponentNotFoundException, LockingException, FileNotFoundException,
-            MissingAttributeValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
-            MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
-            ReadonlyViolationException, MissingContentException, InvalidContentException, ReadonlyVersionException;
+        throws ItemNotFoundException, ComponentNotFoundException, LockingException, FileNotFoundException,
+        MissingAttributeValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
+        ReadonlyViolationException, MissingContentException, InvalidContentException, ReadonlyVersionException;
 
     //
     // Subresource - Components
@@ -439,9 +436,8 @@ public interface ItemHandlerInterface {
      *                                    If no data is provided.
      * @throws SystemException            If an error occurs.
      */
-    String retrieveComponents(final String id)
-            throws ItemNotFoundException, AuthenticationException, AuthorizationException, ComponentNotFoundException,
-            MissingMethodParameterException, SystemException;
+    String retrieveComponents(final String id) throws ItemNotFoundException, AuthenticationException,
+        AuthorizationException, ComponentNotFoundException, MissingMethodParameterException, SystemException;
 
     /**
      * Retrieve the properties of a Component of an Item<br/> <b>Prerequisites:</b><br/> The Item must exist<br/> The
@@ -461,9 +457,9 @@ public interface ItemHandlerInterface {
      *                                    If at least one ID is not provided.
      * @throws SystemException            If an error occurs.
      */
-    String retrieveComponentProperties(final String itemId, final String componentId)
-            throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieveComponentProperties(final String itemId, final String componentId) throws ItemNotFoundException,
+        ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException;
 
     /**
      * Retrieve all metadata records of a Component.<br/> <b>Prerequisites:</b><br/> The Item must exist<br/> The
@@ -483,9 +479,9 @@ public interface ItemHandlerInterface {
      *                                    If at least one ID is not provided.
      * @throws SystemException            If an error occurs.
      */
-    String retrieveComponentMdRecords(final String itemId, final String componentId)
-            throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieveComponentMdRecords(final String itemId, final String componentId) throws ItemNotFoundException,
+        ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException;
 
     /**
      * Retrieves a metadata record of a Component.<br/> <b>Prerequisites:</b><br/> The Item must exist<br/> The
@@ -508,8 +504,8 @@ public interface ItemHandlerInterface {
      * @throws SystemException            If an error occurs.
      */
     String retrieveComponentMdRecord(final String id, final String componentId, final String mdRecordId)
-            throws ItemNotFoundException, ComponentNotFoundException, MdRecordNotFoundException,
-            AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException;
+        throws ItemNotFoundException, ComponentNotFoundException, MdRecordNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException;
 
     //
     // Content
@@ -533,9 +529,9 @@ public interface ItemHandlerInterface {
      * @throws SystemException            If an error occurs.
      * @throws InvalidStatusException     Thrown in case of an invalid status.
      */
-    EscidocBinaryContent retrieveContent(final String id, final String contentId)
-            throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException, InvalidStatusException, ResourceNotFoundException;
+    EscidocBinaryContent retrieveContent(final String id, final String contentId) throws ItemNotFoundException,
+        ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException, InvalidStatusException, ResourceNotFoundException;
 
     /**
      * Retrieve the binary content of a ContentStream.<br/>
@@ -557,8 +553,8 @@ public interface ItemHandlerInterface {
      */
     @Deprecated
     EscidocBinaryContent retrieveContentStreamContent(final String itemId, final String name)
-            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
-            ItemNotFoundException, SystemException, ContentStreamNotFoundException;
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, ItemNotFoundException,
+        SystemException, ContentStreamNotFoundException;
 
     /**
      * Retrieve the transformed binary content of a Component of an Item.<br> The transformer of the binary content is
@@ -584,10 +580,10 @@ public interface ItemHandlerInterface {
      * @throws SystemException            If an error occurs.
      * @throws InvalidStatusException     Thrown in case of an invalid status.
      */
-    EscidocBinaryContent retrieveContent(final String id, final String contentId, final String transformer,
-                                         final String param)
-            throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException, InvalidStatusException;
+    EscidocBinaryContent retrieveContent(
+        final String id, final String contentId, final String transformer, final String param)
+        throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, InvalidStatusException;
 
     /**
      * Get a redirect to a content service. For digilib is this a redirect to the digilib user front-end.
@@ -611,10 +607,10 @@ public interface ItemHandlerInterface {
      * @throws SystemException            If an error occurs.
      * @throws InvalidStatusException     Thrown in case of an invalid status.
      */
-    EscidocServiceRedirectInterface redirectContentService(final String id, final String componentId,
-                                                           final String transformer, final String clientService)
-            throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
-            InvalidStatusException, AuthorizationException;
+    EscidocServiceRedirectInterface redirectContentService(
+        final String id, final String componentId, final String transformer, final String clientService)
+        throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
+        InvalidStatusException, AuthorizationException;
 
     //
     // Subresource - metadata record
@@ -652,10 +648,10 @@ public interface ItemHandlerInterface {
      */
     @Deprecated
     @Validate(param = 1, resolver = "getItemSchemaLocation")
-    String createMetadataRecord(final String id, final String xmlData)
-            throws ItemNotFoundException, ComponentNotFoundException, XmlSchemaNotFoundException, LockingException,
-            MissingAttributeValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
-            MissingMethodParameterException, SystemException, InvalidXmlException;
+    String createMetadataRecord(final String id, final String xmlData) throws ItemNotFoundException,
+        ComponentNotFoundException, XmlSchemaNotFoundException, LockingException, MissingAttributeValueException,
+        AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
+        SystemException, InvalidXmlException;
 
     /**
      * Add a Metadata Record to an Item.<br/>
@@ -686,10 +682,9 @@ public interface ItemHandlerInterface {
      * @throws InvalidStatusException         Thrown in case of an invalid status.
      */
     @Validate(param = 1, resolver = "getItemSchemaLocation")
-    String createMdRecord(final String id, final String xmlData)
-            throws ItemNotFoundException, SystemException, InvalidXmlException, LockingException,
-            MissingAttributeValueException, InvalidStatusException, ComponentNotFoundException, AuthorizationException,
-            AuthenticationException, MissingMethodParameterException;
+    String createMdRecord(final String id, final String xmlData) throws ItemNotFoundException, SystemException,
+        InvalidXmlException, LockingException, MissingAttributeValueException, InvalidStatusException,
+        ComponentNotFoundException, AuthorizationException, AuthenticationException, MissingMethodParameterException;
 
     /**
      * Retrieves a metadata record of an Item.<br/> <b>Prerequisites:</b><br/> The Item must exist<br/> The metadata
@@ -708,9 +703,9 @@ public interface ItemHandlerInterface {
      *                                   If at least one ID is not provided.
      * @throws SystemException           If an error occurs.
      */
-    String retrieveMdRecord(final String id, final String mdRecordId)
-            throws ItemNotFoundException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieveMdRecord(final String id, final String mdRecordId) throws ItemNotFoundException,
+        MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException;
 
     /**
      * Retrieves the specified metadata of an Item. In oposite to <code>retrieveMdRecord</code> there is no surrounding
@@ -731,9 +726,9 @@ public interface ItemHandlerInterface {
      *                                   If at least one ID is not provided.
      * @throws SystemException           If an error occurs.
      */
-    String retrieveMdRecordContent(final String id, final String mdRecordId)
-            throws ItemNotFoundException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieveMdRecordContent(final String id, final String mdRecordId) throws ItemNotFoundException,
+        MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException;
 
     /**
      * Retrieves the Dublin Core metadata of an Item.<br/> <b>Prerequisites:</b><br/> The Item must exist<br/> The DC
@@ -750,9 +745,8 @@ public interface ItemHandlerInterface {
      *                                   If at least one ID is not provided.
      * @throws SystemException           If an error occurs.
      */
-    String retrieveDcRecordContent(final String id)
-            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, MdRecordNotFoundException, SystemException;
+    String retrieveDcRecordContent(final String id) throws ItemNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, MdRecordNotFoundException, SystemException;
 
     /**
      * Update a metadata record of an Item.<br/> <b>Prerequisites:</b><br/> The provided XML data in the body is only
@@ -791,11 +785,11 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException   If the Item is not in its latest version specified.
      */
     @Validate(param = 2, resolver = "getItemSchemaLocation")
-    String updateMdRecord(final String id, final String mdRecordId, final String xmlData)
-            throws ItemNotFoundException, XmlSchemaNotFoundException, LockingException, InvalidContentException,
-            MdRecordNotFoundException, AuthenticationException, AuthorizationException, InvalidStatusException,
-            MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
-            ReadonlyViolationException, ReadonlyVersionException;
+    String updateMdRecord(final String id, final String mdRecordId, final String xmlData) throws ItemNotFoundException,
+        XmlSchemaNotFoundException, LockingException, InvalidContentException, MdRecordNotFoundException,
+        AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
+        SystemException, OptimisticLockingException, InvalidXmlException, ReadonlyViolationException,
+        ReadonlyVersionException;
 
     //
     // Subresource - metadata records
@@ -815,9 +809,8 @@ public interface ItemHandlerInterface {
      *                                 If the ID is not provided.
      * @throws SystemException         If an error occurs.
      */
-    String retrieveMdRecords(final String id)
-            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieveMdRecords(final String id) throws ItemNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException;
 
     //
     // Subresource - content-streams
@@ -838,9 +831,8 @@ public interface ItemHandlerInterface {
      * @throws SystemException         If an error occurs.
      */
     @Deprecated
-    String retrieveContentStreams(final String id)
-            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieveContentStreams(final String id) throws ItemNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException;
 
     /**
      * Retrieves a content stream of an Item.<br/> <b>Prerequisites:</b><br/> The Item must exist<br/> The content
@@ -860,9 +852,9 @@ public interface ItemHandlerInterface {
      * @throws SystemException                If an error occurs.
      */
     @Deprecated
-    String retrieveContentStream(final String id, final String name)
-            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException, ContentStreamNotFoundException;
+    String retrieveContentStream(final String id, final String name) throws ItemNotFoundException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        ContentStreamNotFoundException;
 
     //
     // Subresource - properties
@@ -883,9 +875,8 @@ public interface ItemHandlerInterface {
      *                                 If no data is provided.
      * @throws SystemException         If an error occurs.
      */
-    String retrieveProperties(final String id)
-            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieveProperties(final String id) throws ItemNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException;
 
     //
     // Subresource - resources
@@ -908,9 +899,8 @@ public interface ItemHandlerInterface {
      *                                 If no data is provided.
      * @throws SystemException         If an error occurs.
      */
-    String retrieveResources(final String id)
-            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieveResources(final String id) throws ItemNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException;
 
     /**
      * Retrieve the content of the specified virtual Resources of an Item.<br/>
@@ -931,10 +921,10 @@ public interface ItemHandlerInterface {
      * @throws SystemException            If an error occurs.
      * @throws OperationNotFoundException If there is no operation for the given name.
      */
-    EscidocBinaryContent retrieveResource(final String id, final String resourceName,
-                                          final Map<String, String[]> parameters)
-            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException, OperationNotFoundException;
+    EscidocBinaryContent retrieveResource(
+        final String id, final String resourceName, final Map<String, String[]> parameters)
+        throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException, OperationNotFoundException;
 
     /**
      * Retrieve the history of an Item.<br/>
@@ -1132,9 +1122,8 @@ public interface ItemHandlerInterface {
      *                                 If no data is provided.
      * @throws SystemException         If an error occurs.
      */
-    String retrieveVersionHistory(final String id)
-            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieveVersionHistory(final String id) throws ItemNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException;
 
     /**
      * Retrieve a list with references to all Containers to that this Item is directly subordinated.<br /> <br />
@@ -1152,9 +1141,8 @@ public interface ItemHandlerInterface {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
-    String retrieveParents(final String id)
-            throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
-            ItemNotFoundException, SystemException;
+    String retrieveParents(final String id) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, ItemNotFoundException, SystemException;
 
     /**
      * Retrieve the list of Relations of the Item, where the Item is the relations source.<br/>
@@ -1175,9 +1163,8 @@ public interface ItemHandlerInterface {
      *                                 If no data is provided.
      * @throws SystemException         If an error occurs.
      */
-    String retrieveRelations(final String id)
-            throws ItemNotFoundException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException;
+    String retrieveRelations(final String id) throws ItemNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException;
 
     /**
      * Release an Item.<br/>
@@ -1233,10 +1220,10 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException   If the Item is not in its latest version specified.
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      */
-    String release(final String id, final String taskParam)
-            throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidStatusException,
-            AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-            OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException;
+    String release(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
+        LockingException, InvalidStatusException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, ReadonlyViolationException,
+        ReadonlyVersionException, InvalidXmlException;
 
     /**
      * Submit an Item.<br/> <b>Prerequisites:</b><br/>
@@ -1290,10 +1277,10 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException   If the Item is not in its latest version specified.
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      */
-    String submit(final String id, final String taskParam)
-            throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidStatusException,
-            AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-            OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException;
+    String submit(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
+        LockingException, InvalidStatusException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, ReadonlyViolationException,
+        ReadonlyVersionException, InvalidXmlException;
 
     /**
      * Set an Item in revision.<br/>
@@ -1349,11 +1336,10 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException   If the Item is not in its latest version specified.
      * @throws XmlCorruptedException      Thrown if the taskParam has invalid structure.
      */
-    String revise(final String id, final String taskParam)
-            throws AuthenticationException, AuthorizationException, ItemNotFoundException, ComponentNotFoundException,
-            LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
-            InvalidContentException, OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException,
-            XmlCorruptedException;
+    String revise(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
+        ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidStatusException,
+        MissingMethodParameterException, SystemException, InvalidContentException, OptimisticLockingException,
+        ReadonlyViolationException, ReadonlyVersionException, XmlCorruptedException;
 
     /**
      * Withdraw an Item.<br/>
@@ -1411,11 +1397,10 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException   If the Item is not in its latest version specified.
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      */
-    String withdraw(final String id, final String taskParam)
-            throws ItemNotFoundException, ComponentNotFoundException, NotPublishedException, LockingException,
-            AlreadyWithdrawnException, AuthenticationException, AuthorizationException, InvalidStatusException,
-            MissingMethodParameterException, SystemException, OptimisticLockingException, ReadonlyViolationException,
-            ReadonlyVersionException, InvalidXmlException;
+    String withdraw(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
+        NotPublishedException, LockingException, AlreadyWithdrawnException, AuthenticationException,
+        AuthorizationException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException;
 
     /**
      * Lock an Item.<br/>
@@ -1468,10 +1453,10 @@ public interface ItemHandlerInterface {
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      * @throws InvalidStatusException     Thrown if Item is in status withdrawn.
      */
-    String lock(final String id, final String taskParam)
-            throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidContentException,
-            AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-            OptimisticLockingException, InvalidXmlException, InvalidStatusException;
+    String lock(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
+        LockingException, InvalidContentException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
+        InvalidStatusException;
 
     /**
      * Unlock an Item.<br/> The Item will be unlocked.<br>
@@ -1516,10 +1501,9 @@ public interface ItemHandlerInterface {
      * @throws OptimisticLockingException If the provided latest-modification-date does not match.
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      */
-    String unlock(final String id, final String taskParam)
-            throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
-            AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-            InvalidXmlException;
+    String unlock(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
+        LockingException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException, OptimisticLockingException, InvalidXmlException;
 
     /**
      * Move an Item to an other Context<br/>
@@ -1563,10 +1547,9 @@ public interface ItemHandlerInterface {
      *                                  If no data is provided.
      * @throws SystemException          If an error occurs.
      */
-    String moveToContext(final String id, final String taskParam)
-            throws ItemNotFoundException, ContextNotFoundException, InvalidContentException, LockingException,
-            InvalidStatusException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-            SystemException;
+    String moveToContext(final String id, final String taskParam) throws ItemNotFoundException,
+        ContextNotFoundException, InvalidContentException, LockingException, InvalidStatusException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Assign a Persistent Identifier (PID) to a version of an Item.<br/>
@@ -1664,10 +1647,10 @@ public interface ItemHandlerInterface {
      * @throws XmlCorruptedException      Thrown if the taskParam has invalid structure.
      * @throws ReadonlyVersionException   Thrown if a provided Item version id is not a latest version.
      */
-    String assignVersionPid(final String id, final String taskParam)
-            throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
-            AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-            InvalidStatusException, XmlCorruptedException, ReadonlyVersionException;
+    String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
+        ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
+        XmlCorruptedException, ReadonlyVersionException;
 
     /**
      * Assign a Persistent Identifier (PID) to an Item.<br/>
@@ -1757,10 +1740,10 @@ public interface ItemHandlerInterface {
      * @throws InvalidStatusException     Thrown in case of an invalid status.
      * @throws XmlCorruptedException      Thrown if the taskParam has invalid structure.
      */
-    String assignObjectPid(final String id, final String taskParam)
-            throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
-            AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-            InvalidStatusException, XmlCorruptedException;
+    String assignObjectPid(final String id, final String taskParam) throws ItemNotFoundException,
+        ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
+        XmlCorruptedException;
 
     /**
      * Assign a Persistent Identifier to a Component of an Item.
@@ -1857,9 +1840,9 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
      */
     String assignContentPid(final String id, final String componentId, final String taskParam)
-            throws ItemNotFoundException, LockingException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
-            XmlCorruptedException, ComponentNotFoundException, ReadonlyVersionException;
+        throws ItemNotFoundException, LockingException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
+        XmlCorruptedException, ComponentNotFoundException, ReadonlyVersionException;
 
     /**
      * Add new content relations to the Item<br/> <b>Prerequisites:</b><br/>
@@ -1942,12 +1925,12 @@ public interface ItemHandlerInterface {
      * @throws SystemException            If an error occurs.
      */
     @Validate(param = 1, resolver = "getUpdateRelationsSchemaLocation")
-    String addContentRelations(final String id, final String taskParameter)
-            throws SystemException, ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
-            ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
-            InvalidStatusException, InvalidXmlException, MissingElementValueException, LockingException,
-            ReadonlyViolationException, InvalidContentException, AuthenticationException, AuthorizationException,
-            MissingMethodParameterException, ReadonlyVersionException;
+    String addContentRelations(final String id, final String taskParameter) throws SystemException,
+        ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
+        InvalidStatusException, InvalidXmlException, MissingElementValueException, LockingException,
+        ReadonlyViolationException, InvalidContentException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, ReadonlyVersionException;
 
     /**
      * Remove content relations from the Item<br/>
@@ -2028,9 +2011,9 @@ public interface ItemHandlerInterface {
      * @throws SystemException            If an error occurs.
      */
     @Validate(param = 1, resolver = "getUpdateRelationsSchemaLocation")
-    String removeContentRelations(final String id, final String param)
-            throws SystemException, ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
-            InvalidStatusException, MissingElementValueException, InvalidContentException, InvalidXmlException,
-            ContentRelationNotFoundException, AlreadyDeletedException, LockingException, ReadonlyViolationException,
-            AuthenticationException, AuthorizationException, MissingMethodParameterException, ReadonlyVersionException;
+    String removeContentRelations(final String id, final String param) throws SystemException, ItemNotFoundException,
+        ComponentNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
+        InvalidContentException, InvalidXmlException, ContentRelationNotFoundException, AlreadyDeletedException,
+        LockingException, ReadonlyViolationException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, ReadonlyVersionException;
 }

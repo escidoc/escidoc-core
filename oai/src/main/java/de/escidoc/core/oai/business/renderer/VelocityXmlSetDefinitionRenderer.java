@@ -107,7 +107,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      */
     @Override
     public String renderSetDefinitions(final List<SetDefinition> setDefinitions, final RecordPacking recordPacking)
-            throws SystemException {
+        throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootSetDefinition", "false");
@@ -116,8 +116,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
         addSetDefinitionListValues(values);
 
         final Collection<Map<String, Object>> setDefinitionsValues =
-                new ArrayList<Map<String, Object>>(setDefinitions.size());
-        for(final SetDefinition setDefinition : setDefinitions) {
+            new ArrayList<Map<String, Object>>(setDefinitions.size());
+        for (final SetDefinition setDefinition : setDefinitions) {
             final Map<String, Object> setDefinitionValues = new HashMap<String, Object>();
             addSetDefinitionValues(setDefinition, setDefinitionValues);
             setDefinitionsValues.add(setDefinitionValues);

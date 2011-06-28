@@ -100,32 +100,35 @@ public class TaskParamHandler extends DefaultHandler {
 
         final String currentPath = parser.getCurPath();
 
-        if(PARAM_PATH.equals(currentPath)) {
+        if (PARAM_PATH.equals(currentPath)) {
             final int index = element.indexOfAttribute(null, LAST_MODIFICATION_DATE_ATT);
-            if(index != - 1) {
+            if (index != -1) {
                 final String lmd_attr;
                 try {
                     lmd_attr = element.getAttribute(index).getValue();
-                } catch(final IndexOutOfBoundsException e1) {
+                }
+                catch (final IndexOutOfBoundsException e1) {
                     throw new XmlCorruptedException("Error on parsing last modification date attribute", e1);
                 }
                 // If we would have a schema for taskParam, then is the
                 // last-modifiaction-date timestamp already checked by schema
                 // validation.
-                if(this.checkLastModificationDate && lmd_attr == null) {
+                if (this.checkLastModificationDate && lmd_attr == null) {
                     throw new XmlCorruptedException("Last modification date is null");
                 }
                 try {
                     this.lastModificationDate = new DateTime(lmd_attr, DateTimeZone.UTC);
-                } catch(final Exception e) {
-                    if(this.checkLastModificationDate) {
-                        throw new XmlCorruptedException(
-                                "Task param: last-modification-date '" + lmd_attr + "' is no valid timestamp!", e);
+                }
+                catch (final Exception e) {
+                    if (this.checkLastModificationDate) {
+                        throw new XmlCorruptedException("Task param: last-modification-date '" + lmd_attr
+                            + "' is no valid timestamp!", e);
                     }
                 }
             }
 
-        } else if(! currentPath.startsWith(PARAM_PATH)) {
+        }
+        else if (!currentPath.startsWith(PARAM_PATH)) {
             throw new XmlCorruptedException("Task param has wrong root element '" + currentPath + "'!");
         }
         return element;
@@ -142,23 +145,31 @@ public class TaskParamHandler extends DefaultHandler {
     public String characters(final String data, final StartElement element) {
         final String curPath = parser.getCurPath();
 
-        if(curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_WITHDRAW_COMMENT)) {
+        if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_WITHDRAW_COMMENT)) {
             this.withdrawComment = data;
-        } else if(curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_REVOKATION_REMARK)) {
+        }
+        else if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_REVOKATION_REMARK)) {
             this.revokationRemark = data;
-        } else if(curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_COMMENT)) {
+        }
+        else if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_COMMENT)) {
             this.comment = data;
-        } else if(curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_FORMAT)) {
+        }
+        else if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_FORMAT)) {
             this.format = data;
-        } else if(curPath.equals(PARAM_PASSWORD_PATH)) {
+        }
+        else if (curPath.equals(PARAM_PASSWORD_PATH)) {
             this.password = data;
-        } else if(curPath.equals(PARAM_OBJECTTYPE_PATH)) {
+        }
+        else if (curPath.equals(PARAM_OBJECTTYPE_PATH)) {
             this.objectType = data;
-        } else if(curPath.equals(PARAM_PID_PATH)) {
+        }
+        else if (curPath.equals(PARAM_PID_PATH)) {
             this.pid = data;
-        } else if(curPath.equals(PARAM_ID_PATH)) {
+        }
+        else if (curPath.equals(PARAM_ID_PATH)) {
             this.ids.add(data);
-        } else if(curPath.equals(PARAM_SYNC_PATH)) {
+        }
+        else if (curPath.equals(PARAM_SYNC_PATH)) {
             this.keepInSync = Boolean.valueOf(data);
         }
         return data;

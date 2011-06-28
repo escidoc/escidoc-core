@@ -98,31 +98,32 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @see ItemHandlerInterface#retrieveContent(String, String)
      */
     public EscidocBinaryContent retrieveContent(final String id, final String componentId)
-            throws MissingMethodParameterException, InvalidStatusException, ResourceNotFoundException,
-            AuthorizationException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
-            IntegritySystemException, XmlParserSystemException {
+        throws MissingMethodParameterException, InvalidStatusException, ResourceNotFoundException,
+        AuthorizationException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException, XmlParserSystemException {
 
         setItem(id);
         Component component = getItem().getComponent(componentId);
-        if(component == null) {
+        if (component == null) {
             // try to find component by content category
             component = getItem().getComponentsByLocalName().get(componentId);
-            if(component == null) {
-                throw new ComponentNotFoundException(
-                        "The component " + componentId + " does not exist in item " + getItem().getId() + '.');
+            if (component == null) {
+                throw new ComponentNotFoundException("The component " + componentId + " does not exist in item "
+                    + getItem().getId() + '.');
             }
         }
 
         try {
             checkWithdrawn("Content not retrievable.");
-        } catch(final InvalidStatusException e1) {
+        }
+        catch (final InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
         final String visibility = component.getResourceProperties().get(TripleStoreUtility.PROP_VISIBILITY);
 
-        if("private".equals(visibility) && UserContext.isRetrieveRestrictedToReleased()) {
-            throw new AuthorizationException(
-                    "The Content of the component " + componentId + " has visibility 'private'.");
+        if ("private".equals(visibility) && UserContext.isRetrieveRestrictedToReleased()) {
+            throw new AuthorizationException("The Content of the component " + componentId
+                + " has visibility 'private'.");
         }
         final EscidocBinaryContent bin = new EscidocBinaryContent();
 
@@ -130,9 +131,10 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
         // set file name
         final String fileName = properties.get(Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
-        if(fileName != null && fileName.length() > 0) {
+        if (fileName != null && fileName.length() > 0) {
             bin.setFileName(fileName);
-        } else {
+        }
+        else {
             bin.setFileName("Content of component " + componentId);
         }
 
@@ -142,20 +144,24 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         final Datastream content = component.getContent();
         final String storage = content.getControlGroup();
 
-        if("R".equals(storage)) {
+        if ("R".equals(storage)) {
             bin.setRedirectUrl(content.getLocation());
-        } else {
+        }
+        else {
             try {
                 // bin content can be got with the Stream (getContent()),
                 // but try to stream
-                final Stream stream = this.getFedoraServiceClient()
-                        .getBinaryContent(component.getId(), "content", getItem().getVersionDate());
+                final Stream stream =
+                    this.getFedoraServiceClient().getBinaryContent(component.getId(), "content",
+                        getItem().getVersionDate());
                 try {
                     bin.setContent(stream.getInputStream());
-                } catch(IOException e) {
+                }
+                catch (IOException e) {
                     throw new WebserverSystemException("Error on loading binary content.", e);
                 }
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -172,43 +178,45 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @param param       The transformation parameter as HTTP GET String.
      * @return EscidocBinaryContent of the transformed content.
      */
-    public EscidocBinaryContent retrieveContent(final String id, final String componentId, final String transformer,
-                                                final String param)
-            throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
-            InvalidStatusException, AuthorizationException, WebserverSystemException, IntegritySystemException,
-            FedoraSystemException, XmlParserSystemException {
+    public EscidocBinaryContent retrieveContent(
+        final String id, final String componentId, final String transformer, final String param)
+        throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
+        InvalidStatusException, AuthorizationException, WebserverSystemException, IntegritySystemException,
+        FedoraSystemException, XmlParserSystemException {
 
         setItem(id);
         final Component component = getComponent(componentId);
 
         try {
             checkWithdrawn("Content not retrievable.");
-        } catch(final InvalidStatusException e1) {
+        }
+        catch (final InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
         final String visibility = component.getResourceProperties().get(TripleStoreUtility.PROP_VISIBILITY);
 
-        if("private".equals(visibility) && UserContext.isRetrieveRestrictedToReleased()) {
-            throw new AuthorizationException(
-                    "The content of the component " + componentId + " has visibility 'private'.");
+        if ("private".equals(visibility) && UserContext.isRetrieveRestrictedToReleased()) {
+            throw new AuthorizationException("The content of the component " + componentId
+                + " has visibility 'private'.");
         }
         final Datastream content = component.getContent();
 
         final String storage = content.getControlGroup();
 
         final EscidocBinaryContent bin = new EscidocBinaryContent();
-        if("R".equals(storage)) {
+        if ("R".equals(storage)) {
             bin.setRedirectUrl(content.getLocation());
         }
-        final Stream stream = this.getFedoraServiceClient()
-                .getBinaryContent(component.getId(), "content", getItem().getVersionDate());
+        final Stream stream =
+            this.getFedoraServiceClient().getBinaryContent(component.getId(), "content", getItem().getVersionDate());
         try {
             bin.setContent(stream.getInputStream());
-        } catch(IOException e) {
+        }
+        catch (IOException e) {
             throw new WebserverSystemException("Error on loading binary content.", e);
         }
-        bin.setFileName(component.getResourceProperties()
-                .get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
+        bin.setFileName(component.getResourceProperties().get(
+            de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
         return bin;
     }
 
@@ -222,45 +230,49 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @param clientService The client name of the transformation service.
      * @return A HTTP/HTML redirect to the client service.
      */
-    public EscidocServiceRedirectInterface redirectContentService(final String id, final String componentId,
-                                                                  final String transformer, final String clientService)
-            throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
-            InvalidStatusException, AuthorizationException, WebserverSystemException, IntegritySystemException,
-            FedoraSystemException, XmlParserSystemException {
+    public EscidocServiceRedirectInterface redirectContentService(
+        final String id, final String componentId, final String transformer, final String clientService)
+        throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
+        InvalidStatusException, AuthorizationException, WebserverSystemException, IntegritySystemException,
+        FedoraSystemException, XmlParserSystemException {
 
         setItem(id);
         final Component component = getComponent(componentId);
 
         try {
             checkWithdrawn("Content not retrievable.");
-        } catch(final InvalidStatusException e1) {
+        }
+        catch (final InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
         final String visibility = component.getResourceProperties().get(TripleStoreUtility.PROP_VISIBILITY);
 
-        if("private".equals(visibility) && UserContext.isRetrieveRestrictedToReleased()) {
-            throw new AuthorizationException(
-                    "The Content of the component " + componentId + " has visibility 'private'.");
+        if ("private".equals(visibility) && UserContext.isRetrieveRestrictedToReleased()) {
+            throw new AuthorizationException("The Content of the component " + componentId
+                + " has visibility 'private'.");
         }
         final Datastream content = component.getContent();
 
         final String storage = content.getControlGroup();
         final String contentUrl;
-        if("R".equals(storage)) {
+        if ("R".equals(storage)) {
             contentUrl = content.getLocation();
-        } else {
-            contentUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) +
-                    getItem().getHref() + getComponent(componentId).getHrefPart() + "/content";
+        }
+        else {
+            contentUrl =
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) + getItem().getHref()
+                    + getComponent(componentId).getHrefPart() + "/content";
 
         }
 
         final String url;
-        if(transformer.equals(TRANSFORM_SERVICE_DIGILIB) && clientService.equals(TRANSFORM_DIGILIB_CLIENT)) {
+        if (transformer.equals(TRANSFORM_SERVICE_DIGILIB) && clientService.equals(TRANSFORM_DIGILIB_CLIENT)) {
 
             url = getServiceUrl(clientService) + "?fn=" + contentUrl;
-        } else {
-            throw new InvalidParameterException(
-                    "The content transformation service " + transformer + " is not supported.");
+        }
+        else {
+            throw new InvalidParameterException("The content transformation service " + transformer
+                + " is not supported.");
         }
 
         final EscidocServiceRedirectInterface response = new EscidocServiceRedirect();
@@ -291,9 +303,10 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         final EscidocConfiguration conf = EscidocConfiguration.getInstance();
         // -----------------------------------
         final String serviceUrl;
-        if(service.equals(TRANSFORM_DIGILIB_CLIENT)) {
+        if (service.equals(TRANSFORM_DIGILIB_CLIENT)) {
             serviceUrl = conf.get(EscidocConfiguration.DIGILIB_CLIENT);
-        } else {
+        }
+        else {
             throw new SystemException("Service not supported.");
         }
 
@@ -325,10 +338,11 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
         String templ = templates.get(templateFileName);
 
-        if(templ == null) {
+        if (templ == null) {
             try {
                 templ = initFileContent(templateFileName);
-            } catch(final IOException e) {
+            }
+            catch (final IOException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -350,17 +364,18 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         InputStream inputStream = null;
         try {
             inputStream = this.getClass().getResourceAsStream(templateFileName);
-            if(inputStream == null) {
+            if (inputStream == null) {
                 throw new IOException(StringUtility.format("Template not found", templateFileName));
             }
             final byte[] buffer = new byte[BUFFER_SIZE];
             int length = inputStream.read(buffer);
-            while(length != - 1) {
+            while (length != -1) {
                 result.write(buffer, 0, length);
                 length = inputStream.read(buffer);
             }
             templates.put(templateFileName, result.toString());
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(inputStream);
         }
         return result.toString(XmlUtility.CHARACTER_ENCODING);
@@ -383,8 +398,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     }
 
     @Deprecated
-    public void deleteContentStream(final String id, final String name)
-            throws ItemNotFoundException, SystemException, ContentStreamNotFoundException {
+    public void deleteContentStream(final String id, final String name) throws ItemNotFoundException, SystemException,
+        ContentStreamNotFoundException {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
@@ -395,13 +410,13 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
     @Deprecated
     public String updateContentStream(final String id, final String name, final String xml)
-            throws ItemNotFoundException, SystemException, ContentStreamNotFoundException {
+        throws ItemNotFoundException, SystemException, ContentStreamNotFoundException {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     @Deprecated
-    public String updateContentStreams(final String id, final String xmlData)
-            throws ItemNotFoundException, SystemException {
+    public String updateContentStreams(final String id, final String xmlData) throws ItemNotFoundException,
+        SystemException {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
@@ -412,29 +427,29 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * retrieveContentStream(java.lang.String, java.lang.String)
      */
     @Deprecated
-    public String retrieveContentStream(final String itemId, final String name)
-            throws ItemNotFoundException, ContentStreamNotFoundException, AuthorizationException,
-            TripleStoreSystemException, IntegritySystemException, WebserverSystemException, FedoraSystemException,
-            XmlParserSystemException {
+    public String retrieveContentStream(final String itemId, final String name) throws ItemNotFoundException,
+        ContentStreamNotFoundException, AuthorizationException, TripleStoreSystemException, IntegritySystemException,
+        WebserverSystemException, FedoraSystemException, XmlParserSystemException {
 
         setItem(itemId);
         final String contentStream = renderContentStream(name, true);
-        if(contentStream.length() == 0) {
-            throw new ContentStreamNotFoundException(
-                    "The item with id " + itemId + " does not contain a content stream" + " with name " + name);
+        if (contentStream.length() == 0) {
+            throw new ContentStreamNotFoundException("The item with id " + itemId
+                + " does not contain a content stream" + " with name " + name);
         }
         return contentStream;
     }
 
     @Deprecated
     public EscidocBinaryContent retrieveContentStreamContent(final String itemId, final String name)
-            throws ItemNotFoundException, ContentStreamNotFoundException, AuthorizationException, FedoraSystemException,
-            TripleStoreSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException {
+        throws ItemNotFoundException, ContentStreamNotFoundException, AuthorizationException, FedoraSystemException,
+        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         setItem(itemId);
         try {
             checkWithdrawn("Content not retrievable.");
-        } catch(final InvalidStatusException e1) {
+        }
+        catch (final InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
         return getContentStream(name);
@@ -447,9 +462,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * retrieveContentStreams(java.lang.String)
      */
     @Deprecated
-    public String retrieveContentStreams(final String itemId)
-            throws ItemNotFoundException, AuthorizationException, EncodingSystemException, IntegritySystemException,
-            FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+    public String retrieveContentStreams(final String itemId) throws ItemNotFoundException, AuthorizationException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, XmlParserSystemException {
         setItem(itemId);
         return renderContentStreams(true);
     }
@@ -466,14 +481,16 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         final String mimeType = cs.getMimeType();
         bin.setMimeType(mimeType);
 
-        if("R".equals(cs.getControlGroup())) {
+        if ("R".equals(cs.getControlGroup())) {
             bin.setRedirectUrl(cs.getLocation());
-        } else {
+        }
+        else {
             final Stream stream =
-                    this.getFedoraServiceClient().getBinaryContent(getItem().getId(), name, getItem().getVersionDate());
+                this.getFedoraServiceClient().getBinaryContent(getItem().getId(), name, getItem().getVersionDate());
             try {
                 bin.setContent(stream.getInputStream());
-            } catch(IOException e) {
+            }
+            catch (IOException e) {
                 throw new WebserverSystemException("Error on loading binary content.", e);
             }
         }

@@ -84,24 +84,23 @@ public class OptimisticLockingHandler extends DefaultHandler {
      * (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
-            throws OptimisticLockingException, MissingAttributeValueException, WebserverSystemException,
-            InvalidContentException, XmlCorruptedException {
-        if(! this.done) {
+    public StartElement startElement(final StartElement element) throws OptimisticLockingException,
+        MissingAttributeValueException, WebserverSystemException, InvalidContentException, XmlCorruptedException {
+        if (!this.done) {
             final Attribute requestedDate;
             try {
                 requestedDate = element.getAttribute(null, MODIFIED_DATE_ATT_NAME);
 
-            } catch(final NoSuchAttributeException e) {
-                throw new MissingAttributeValueException(
-                        "Attribute \"last-modification-date\" of the element " + element.getLocalName() +
-                                " is missing.", e);
+            }
+            catch (final NoSuchAttributeException e) {
+                throw new MissingAttributeValueException("Attribute \"last-modification-date\" of the element "
+                    + element.getLocalName() + " is missing.", e);
             }
 
             final DateTime requestedModificationDate = new DateTime(requestedDate.getValue(), DateTimeZone.UTC);
-            if(this.lastModifiedDate != null) {
+            if (this.lastModifiedDate != null) {
                 Utility.checkOptimisticLockingCriteria(this.lastModifiedDate, requestedModificationDate,
-                        this.objectType + " with id " + this.objid);
+                    this.objectType + " with id " + this.objid);
             }
             this.done = true;
 

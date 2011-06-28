@@ -49,10 +49,10 @@ public class XacmlPolicy extends Policy {
     public static final String URN_RULE_COMBINING_ALGORITHM = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:";
 
     public static final String URN_RULE_COMBINING_ALGORITHM_ORDERED_DENY_OVERRIDES =
-            URN_RULE_COMBINING_ALGORITHM + "ordered-deny-overrides";
+        URN_RULE_COMBINING_ALGORITHM + "ordered-deny-overrides";
 
     public static final String URN_RULE_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES =
-            URN_RULE_COMBINING_ALGORITHM + "ordered-permit-overrides";
+        URN_RULE_COMBINING_ALGORITHM + "ordered-permit-overrides";
 
     /**
      * Constructor.
@@ -68,11 +68,11 @@ public class XacmlPolicy extends Policy {
      * @throws URISyntaxException Thrown if creation fails due to URI syntax error.
      */
     public XacmlPolicy(final URI policyId, final RuleCombiningAlgorithm ruleCombiningAlgorithm,
-                       final String description, final List targetSubjects, final List targetResources,
-                       final List rules, final String roleId, final List actions) {
+        final String description, final List targetSubjects, final List targetResources, final List rules,
+        final String roleId, final List actions) {
 
         super(policyId, ruleCombiningAlgorithm, description, new XacmlTarget(targetSubjects, targetResources, actions),
-                rules);
+            rules);
         this.roleId = roleId;
     }
 
@@ -94,7 +94,8 @@ public class XacmlPolicy extends Policy {
 
         try {
             return CustomPolicyBuilder.encode(this);
-        } catch(final WebserverSystemException e) {
+        }
+        catch (final WebserverSystemException e) {
             return super.toString();
         }
     }

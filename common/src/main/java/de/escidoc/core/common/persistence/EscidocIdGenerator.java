@@ -44,10 +44,12 @@ public class EscidocIdGenerator implements IdentifierGenerator {
     @Override
     public Serializable generate(final SessionImplementor sessionImplementor, final Object arg1) {
         try {
-            final EscidocIdProvider idProvider = (EscidocIdProvider) SpringApplicationContextHolder.getContext()
-                    .getBean("escidoc.core.business.EscidocIdProvider");
+            final EscidocIdProvider idProvider =
+                (EscidocIdProvider) SpringApplicationContextHolder.getContext().getBean(
+                    "escidoc.core.business.EscidocIdProvider");
             return idProvider.getNextPid();
-        } catch(final SystemException e) {
+        }
+        catch (final SystemException e) {
             throw new HibernateException("Failed to generate an id. ", e);
         }
     }

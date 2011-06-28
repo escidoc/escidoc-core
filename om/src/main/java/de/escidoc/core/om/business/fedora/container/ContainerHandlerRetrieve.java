@@ -68,15 +68,16 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @throws StreamNotFoundException If content-model-specific datastream does not exist.
      * @throws EncodingSystemException if "UTF-8" encoding is not supported
      */
-    public String getCts()
-            throws FedoraSystemException, StreamNotFoundException, EncodingSystemException, WebserverSystemException {
+    public String getCts() throws FedoraSystemException, StreamNotFoundException, EncodingSystemException,
+        WebserverSystemException {
 
         final Container container = getContainer();
         final Datastream cts = container.getCts();
         final String xml;
         try {
             xml = new String(cts.getStream(), XmlUtility.CHARACTER_ENCODING);
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
         return xml.trim();
@@ -99,24 +100,23 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @param mdRecordId The name of the mdrecord element.
      * @return String with md-record xml
      */
-    protected String getMetadataRecordXml(final String mdRecordId)
-            throws EncodingSystemException, FedoraSystemException, WebserverSystemException, MdRecordNotFoundException {
+    protected String getMetadataRecordXml(final String mdRecordId) throws EncodingSystemException,
+        FedoraSystemException, WebserverSystemException, MdRecordNotFoundException {
 
         try {
             final Datastream mdRecord = getContainer().getMdRecord(mdRecordId);
             final String metadataRecord =
-                    this.getContainerRenderer().renderMetadataRecord(getContainer(), mdRecord, true);
-            if(metadataRecord.length() == 0) {
-                throw new MdRecordNotFoundException(
-                        "Md-record with a name  " + mdRecordId + " does not exist in the Container with Id " +
-                                getContainer().getId());
+                this.getContainerRenderer().renderMetadataRecord(getContainer(), mdRecord, true);
+            if (metadataRecord.length() == 0) {
+                throw new MdRecordNotFoundException("Md-record with a name  " + mdRecordId
+                    + " does not exist in the Container with Id " + getContainer().getId());
             }
             return metadataRecord;
 
-        } catch(final StreamNotFoundException e) {
-            throw new MdRecordNotFoundException(
-                    "Md-record with a name  " + mdRecordId + " does not exist in the Container with Id " +
-                            getContainer().getId(), e);
+        }
+        catch (final StreamNotFoundException e) {
+            throw new MdRecordNotFoundException("Md-record with a name  " + mdRecordId
+                + " does not exist in the Container with Id " + getContainer().getId(), e);
         }
 
     }
@@ -126,8 +126,8 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      *
      * @return String with md-records xml
      */
-    protected String getMetadataRecordsXml()
-            throws EncodingSystemException, FedoraSystemException, WebserverSystemException, IntegritySystemException {
+    protected String getMetadataRecordsXml() throws EncodingSystemException, FedoraSystemException,
+        WebserverSystemException, IntegritySystemException {
         final Container container = getContainer();
         return this.getContainerRenderer().renderMetadataRecords(container);
 
@@ -136,7 +136,8 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
     public String retrieveMdRecord(final String name) throws FedoraSystemException, WebserverSystemException {
         try {
             return getContainer().getMdRecord(name).toString();
-        } catch(final StreamNotFoundException e) {
+        }
+        catch (final StreamNotFoundException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -144,7 +145,8 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
     public String retrieveDc(final String name) throws FedoraSystemException, WebserverSystemException {
         try {
             return getContainer().getDc().toString();
-        } catch(final StreamNotFoundException e) {
+        }
+        catch (final StreamNotFoundException e) {
             throw new WebserverSystemException(e);
         }
     }

@@ -114,7 +114,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      *
      */
     public void setPublicStatusChange() {
-        this.publicStatusChange = ! this.publicStatusChange;
+        this.publicStatusChange = !this.publicStatusChange;
     }
 
     /**
@@ -130,7 +130,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * Indicate that version status has changed.
      */
     public void setVersionStatusChange() {
-        this.versionStatusChange = ! this.versionStatusChange;
+        this.versionStatusChange = !this.versionStatusChange;
     }
 
     /**
@@ -152,56 +152,61 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws TripleStoreSystemException Thrown in case of TripleStore error.
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    public GenericVersionableResource(final String id)
-            throws TripleStoreSystemException, WebserverSystemException, ResourceNotFoundException {
+    public GenericVersionableResource(final String id) throws TripleStoreSystemException, WebserverSystemException,
+        ResourceNotFoundException {
 
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
-                expandPropertiesNamesMapping(getPropertiesNamesMapping()));
+            expandPropertiesNamesMapping(getPropertiesNamesMapping()));
         setId(id);
         this.initLastModificationDate();
     }
 
-    private void initVersionNumber(final String id)
-            throws TripleStoreSystemException, WebserverSystemException, ResourceNotFoundException {
+    private void initVersionNumber(final String id) throws TripleStoreSystemException, WebserverSystemException,
+        ResourceNotFoundException {
         // determine version Number (suffix). Depending on latest-version and
         // status is the versionNumber the suffix or null.
         this.versionNumber = id.replaceFirst(getId(), "");
 
-        if(this.versionNumber != null && this.versionNumber.length() > 0) {
+        if (this.versionNumber != null && this.versionNumber.length() > 0) {
 
             this.versionNumber = this.versionNumber.substring(1);
-            final String latestVersionNumber = getTripleStoreUtility()
-                    .getPropertiesElements(getId(), TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
-            if(latestVersionNumber == null || Integer.valueOf(this.versionId) > Integer.valueOf(latestVersionNumber)) {
-                throw new ResourceNotFoundException(
-                        "The version " + this.versionNumber + " of the requested resource " + "does not exist.");
+            final String latestVersionNumber =
+                getTripleStoreUtility().getPropertiesElements(getId(), TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
+            if (latestVersionNumber == null || Integer.valueOf(this.versionId) > Integer.valueOf(latestVersionNumber)) {
+                throw new ResourceNotFoundException("The version " + this.versionNumber + " of the requested resource "
+                    + "does not exist.");
             }
-            if(this.versionNumber.equals(latestVersionNumber)) {
+            if (this.versionNumber.equals(latestVersionNumber)) {
                 this.versionNumber = null;
             }
-        } else {
-            if(UserContext.isRetrieveRestrictedToReleased()) {
-                this.versionNumber = getTripleStoreUtility()
-                        .getPropertiesElements(getId(), TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
-                if(this.versionNumber == null) {
+        }
+        else {
+            if (UserContext.isRetrieveRestrictedToReleased()) {
+                this.versionNumber =
+                    getTripleStoreUtility().getPropertiesElements(getId(),
+                        TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
+                if (this.versionNumber == null) {
                     throw new ResourceNotFoundException("Latest release not found.");
                 }
-            } else {
+            }
+            else {
                 this.versionNumber = null;
             }
         }
     }
 
-    private void initLastModificationDate()
-            throws TripleStoreSystemException, WebserverSystemException, ResourceNotFoundException {
+    private void initLastModificationDate() throws TripleStoreSystemException, WebserverSystemException,
+        ResourceNotFoundException {
         try {
             setLastVersionData();
-        } catch(final WebserverSystemException e) {
-            if(getTripleStoreUtility().exists(this.getId())) {
+        }
+        catch (final WebserverSystemException e) {
+            if (getTripleStoreUtility().exists(this.getId())) {
                 throw new WebserverSystemException("Unexpected exception during RELS-EXT parsing.", e);
-            } else {
-                throw new ResourceNotFoundException(
-                        "Resource with the provided objid '" + this.getId() + "' does not exist.", e);
+            }
+            else {
+                throw new ResourceNotFoundException("Resource with the provided objid '" + this.getId()
+                    + "' does not exist.", e);
             }
 
         }
@@ -216,8 +221,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
     @Override
-    public final void setId(final String id)
-            throws TripleStoreSystemException, WebserverSystemException, ResourceNotFoundException {
+    public final void setId(final String id) throws TripleStoreSystemException, WebserverSystemException,
+        ResourceNotFoundException {
         super.setId(id);
         this.versionId = XmlUtility.getVersionNumberFromObjid(id);
         this.initVersionNumber(id);
@@ -229,7 +234,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return Id inclusive version number
      */
     public String getFullId() {
-        if(this.versionId == null || this.versionId.length() <= 0) {
+        if (this.versionId == null || this.versionId.length() <= 0) {
             return getId() + VERSION_NUMBER_SEPARATOR + getLatestVersionNumber();
         }
         return getId() + VERSION_NUMBER_SEPARATOR + this.versionId;
@@ -241,7 +246,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return number of version
      */
     public String getVersionNumber() {
-        if(this.versionNumber == null || versionNumber.length() <= 0) {
+        if (this.versionNumber == null || versionNumber.length() <= 0) {
             return null;
         }
         return this.versionNumber;
@@ -274,9 +279,9 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return number of version
      */
     public String getVersionId() {
-        if(this.versionId == null) {
+        if (this.versionId == null) {
             final String curVersionId = getVersionNumber();
-            if(curVersionId != null) {
+            if (curVersionId != null) {
                 return curVersionId;
             }
 
@@ -297,7 +302,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     @Override
     public String getCreationDate() throws TripleStoreSystemException, WebserverSystemException {
 
-        if(this.creationDate == null) {
+        if (this.creationDate == null) {
             /*
              * The creation version date is the date of the first version. This
              * is not the creation date of the Fedora object! With Fedora
@@ -312,11 +317,11 @@ public class GenericVersionableResource extends GenericResourcePid {
              * 'created Date' of the RELS-EXT datastream.
              */
             final GetDatastreamHistoryPathParam path =
-                    new GetDatastreamHistoryPathParam(getId(), Datastream.RELS_EXT_DATASTREAM);
+                new GetDatastreamHistoryPathParam(getId(), Datastream.RELS_EXT_DATASTREAM);
             final GetDatastreamHistoryQueryParam query = new GetDatastreamHistoryQueryParam();
             final DatastreamHistoryTO history = getFedoraServiceClient().getDatastreamHistory(path, query);
             final DatastreamProfileTO lastProfile =
-                    history.getDatastreamProfile().get(history.getDatastreamProfile().size() - 1);
+                history.getDatastreamProfile().get(history.getDatastreamProfile().size() - 1);
 
             this.creationDate = lastProfile.getDsCreateDate().toString();
         }
@@ -334,8 +339,9 @@ public class GenericVersionableResource extends GenericResourcePid {
         final DateTime versionDate;
         try {
             versionDate =
-                    new DateTime(getVersionElementData(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE), DateTimeZone.UTC);
-        } catch(final IntegritySystemException e) {
+                new DateTime(getVersionElementData(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE), DateTimeZone.UTC);
+        }
+        catch (final IntegritySystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -351,7 +357,8 @@ public class GenericVersionableResource extends GenericResourcePid {
     public void setVersionDate(final String timestamp) throws WebserverSystemException {
         try {
             setVersionElementData(TripleStoreUtility.PROP_LATEST_VERSION_DATE, timestamp);
-        } catch(final IntegritySystemException e) {
+        }
+        catch (final IntegritySystemException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -404,7 +411,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     @Override
     public String getHref() {
 
-        if(getVersionNumber() == null) {
+        if (getVersionNumber() == null) {
             return super.getHref();
         }
         return super.getHref() + VERSION_NUMBER_SEPARATOR + getVersionNumber();
@@ -448,11 +455,13 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     public String getLatestReleaseVersionNumber() throws WebserverSystemException {
 
-        if(this.latestReleaseVersionNumber == null) {
+        if (this.latestReleaseVersionNumber == null) {
             try {
-                this.latestReleaseVersionNumber = getTripleStoreUtility()
-                        .getPropertiesElements(getId(), TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
-            } catch(final TripleStoreSystemException tse) {
+                this.latestReleaseVersionNumber =
+                    getTripleStoreUtility().getPropertiesElements(getId(),
+                        TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
+            }
+            catch (final TripleStoreSystemException tse) {
                 throw new WebserverSystemException(tse);
             }
         }
@@ -483,23 +492,25 @@ public class GenericVersionableResource extends GenericResourcePid {
     @Override
     public DateTime getLastModificationDate() throws WebserverSystemException, FedoraSystemException {
 
-        if(this.initLastModifiedDate) {
-            if(isLatestVersion()) {
+        if (this.initLastModifiedDate) {
+            if (isLatestVersion()) {
                 // we can take this information from TripleStore (should be
                 // faster)
                 try {
-                    setLastModificationDate(new DateTime(getTripleStoreUtility()
-                            .getPropertiesElements(getId(), TripleStoreUtility.PROP_LATEST_VERSION_DATE),
-                            DateTimeZone.UTC));
-                } catch(final TripleStoreSystemException e) {
+                    setLastModificationDate(new DateTime(getTripleStoreUtility().getPropertiesElements(getId(),
+                        TripleStoreUtility.PROP_LATEST_VERSION_DATE), DateTimeZone.UTC));
+                }
+                catch (final TripleStoreSystemException e) {
                     throw new WebserverSystemException(e);
                 }
-            } else {
+            }
+            else {
                 // use a parser to get the information for older versions
                 try {
                     setLastModificationDate(new DateTime(getVersionElementData(Elements.ELEMENT_WOV_VERSION_TIMESTAMP),
-                            DateTimeZone.UTC));
-                } catch(final IntegritySystemException e) {
+                        DateTimeZone.UTC));
+                }
+                catch (final IntegritySystemException e) {
                     throw new WebserverSystemException(e);
                 }
             }
@@ -545,13 +556,14 @@ public class GenericVersionableResource extends GenericResourcePid {
         sp.addHandler(eve);
         try {
             sp.parse(getRelsExt(null).getStream());
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
 
         this.lastVersionData = new HashMap<String, String>();
         final List<Triple> triples = eve.getElementValues().getTriples();
-        for(final Triple triple : triples) {
+        for (final Triple triple : triples) {
             this.lastVersionData.put(triple.getPredicate(), triple.getObject());
         }
         return this.lastVersionData;
@@ -566,10 +578,11 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     public Map<String, String> getVersionData() throws IntegritySystemException {
 
-        if(this.currentVersionData == null) {
+        if (this.currentVersionData == null) {
             try {
                 this.currentVersionData = getVersionData(getVersionNumber());
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 throw new IntegritySystemException("No version data for resource " + getId() + '.' + e);
             }
         }
@@ -586,17 +599,18 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException Thrown if the integrity of WOV data is violated.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    public Map<String, String> getVersionData(final String versionNo)
-            throws IntegritySystemException, WebserverSystemException {
+    public Map<String, String> getVersionData(final String versionNo) throws IntegritySystemException,
+        WebserverSystemException {
 
         final Map<String, String> versionData;
 
         try {
             versionData = super.getResourceProperties(); // TODO: Refactor this!
-        } catch(final TripleStoreSystemException e) {
+        }
+        catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
-        if(versionNo != null) {
+        if (versionNo != null) {
             try {
                 final StaxParser sp = new StaxParser();
                 final WovReadHandler wrh = new WovReadHandler(sp, versionNo);
@@ -604,7 +618,8 @@ public class GenericVersionableResource extends GenericResourcePid {
                 sp.parse(getWov().getStream());
                 final Map<String, String> prop = wrh.getVersionData();
                 versionData.putAll(prop);
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 throw new IntegritySystemException("No version data for resource " + getId() + '.' + e);
             }
         }
@@ -632,8 +647,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException Thrown in case of internal failure.
      * @throws IntegritySystemException Thrown if data integrity is violated.
      */
-    private void setVersionElementData(final String elementName, final String value)
-            throws WebserverSystemException, IntegritySystemException {
+    private void setVersionElementData(final String elementName, final String value) throws WebserverSystemException,
+        IntegritySystemException {
 
         getVersionData().put(elementName, value);
     }
@@ -649,7 +664,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     public Datastream getWov() throws StreamNotFoundException, FedoraSystemException {
 
-        if(this.wov == null) {
+        if (this.wov == null) {
             this.wov = new Datastream(DATASTREAM_WOV, getId(), null);
         }
         return this.wov;
@@ -664,7 +679,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     public void setWov(final Datastream ds) throws FedoraSystemException, StreamNotFoundException {
 
-        if(! getWov().equals(ds)) {
+        if (!getWov().equals(ds)) {
             this.wov = ds;
             this.setNeedSync(true);
         }
@@ -680,9 +695,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException   Thrown if data integrity is violated.
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    public void setWov(final byte[] ds)
-            throws StreamNotFoundException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
-            WebserverSystemException {
+    public void setWov(final byte[] ds) throws StreamNotFoundException, FedoraSystemException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
         setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), ds, MimeTypes.TEXT_XML));
 
@@ -702,22 +716,22 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         // last operation is to update the timestamp in RELS-EXT
         final Map<String, StartElementWithChildElements> updateElementsRelsExt =
-                new TreeMap<String, StartElementWithChildElements>();
+            new TreeMap<String, StartElementWithChildElements>();
 
-        updateElementsRelsExt.put(Constants.VERSION_NS_URI + Elements.ELEMENT_DATE,
-                new StartElementWithChildElements(Constants.VERSION_NS_URI + Elements.ELEMENT_DATE,
-                        Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX, null, newVersionTimestamp.toString(),
-                        null));
+        updateElementsRelsExt.put(Constants.VERSION_NS_URI + Elements.ELEMENT_DATE, new StartElementWithChildElements(
+            Constants.VERSION_NS_URI + Elements.ELEMENT_DATE, Constants.VERSION_NS_URI, Constants.VERSION_NS_PREFIX,
+            null, newVersionTimestamp.toString(), null));
 
         // if status has changed to release than update latest-release/date
         try {
-            if(hasVersionStatusChanged() && getVersionStatus().equals(Constants.STATUS_RELEASED)) {
+            if (hasVersionStatusChanged() && getVersionStatus().equals(Constants.STATUS_RELEASED)) {
                 updateElementsRelsExt.put(Constants.RELEASE_NS_URI + Elements.ELEMENT_DATE,
-                        new StartElementWithChildElements(Constants.RELEASE_NS_URI + Elements.ELEMENT_DATE,
-                                Constants.RELEASE_NS_URI, Constants.RELEASE_NS_PREFIX, null,
-                                newVersionTimestamp.toString(), null));
+                    new StartElementWithChildElements(Constants.RELEASE_NS_URI + Elements.ELEMENT_DATE,
+                        Constants.RELEASE_NS_URI, Constants.RELEASE_NS_PREFIX, null, newVersionTimestamp.toString(),
+                        null));
             }
-        } catch(final IntegritySystemException e) {
+        }
+        catch (final IntegritySystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -732,8 +746,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
      * @throws FedoraSystemException      Thrown if update of RELS-EXT data stream failed.
      */
-    public void updateRelsExtVersionTimestamp()
-            throws WebserverSystemException, TripleStoreSystemException, FedoraSystemException {
+    public void updateRelsExtVersionTimestamp() throws WebserverSystemException, TripleStoreSystemException,
+        FedoraSystemException {
 
         // TODO this method should be better called setLastModificationDate()
         // (and override the inherited method)
@@ -752,9 +766,10 @@ public class GenericVersionableResource extends GenericResourcePid {
     protected void getSomeValuesFromFedora() throws TripleStoreSystemException, WebserverSystemException {
 
         setLastVersionData();
-        if(getVersionNumber() == null) {
-            this.description = getTripleStoreUtility()
-                    .getPropertiesElements(getId(), Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION);
+        if (getVersionNumber() == null) {
+            this.description =
+                getTripleStoreUtility().getPropertiesElements(getId(),
+                    Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION);
         }
     }
 
@@ -769,15 +784,17 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     @Override
     public Datastream getRelsExt() throws StreamNotFoundException, FedoraSystemException {
-        if(this.relsExt == null) {
+        if (this.relsExt == null) {
             try {
                 // Workaround until framework uses only one RELS-EXT per update
-                if(isLatestVersion()) {
+                if (isLatestVersion()) {
                     setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), null));
-                } else {
+                }
+                else {
                     setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), getVersionDate()));
                 }
-            } catch(final WebserverSystemException e) {
+            }
+            catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
             }
         }
@@ -806,8 +823,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws XmlParserSystemException  Thrown in case of parser errors.
      * @throws WebserverSystemException  Thrown in case of internal errors.
      */
-    protected void setVersionData()
-            throws ResourceNotFoundException, XmlParserSystemException, WebserverSystemException {
+    protected void setVersionData() throws ResourceNotFoundException, XmlParserSystemException,
+        WebserverSystemException {
 
         // parse version-history
         final StaxParser sp = new StaxParser();
@@ -815,15 +832,17 @@ public class GenericVersionableResource extends GenericResourcePid {
         sp.addHandler(wrh);
         try {
             sp.parse(this.getWov().getStream());
-        } catch(final IntegritySystemException e) {
+        }
+        catch (final IntegritySystemException e) {
             throw new XmlParserSystemException(e);
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new XmlParserSystemException("Unexpected exception.", e);
         }
         this.currentVersionData = wrh.getVersionData();
-        if(this.currentVersionData == null || currentVersionData.size() <= 1) {
-            throw new ResourceNotFoundException(
-                    "Can not retrieve version '" + this.versionNumber + "' for Resource '" + getId() + "'.");
+        if (this.currentVersionData == null || currentVersionData.size() <= 1) {
+            throw new ResourceNotFoundException("Can not retrieve version '" + this.versionNumber + "' for Resource '"
+                + getId() + "'.");
         }
     }
 
@@ -878,7 +897,7 @@ public class GenericVersionableResource extends GenericResourcePid {
          * information (timestamp)
          */
         DateTime timestamp = null;
-        if(this.isNeedSync()) {
+        if (this.isNeedSync()) {
             // ----------------------------------------------
             // writing RELS-EXT once (problem: /version/date is to old)
             // timestamp = getLastFedoraModificationDate();
@@ -891,7 +910,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             // ----------------------------------------------
             // writing RELS-EXT twice.
             timestamp = persistRelsExt();
-            if(timestamp == null) {
+            if (timestamp == null) {
                 timestamp = getLastFedoraModificationDate();
             }
             updateWovTimestamp(getVersionNumber(), timestamp);
@@ -901,11 +920,12 @@ public class GenericVersionableResource extends GenericResourcePid {
             setResourceProperties(PropertyMapKeys.LAST_MODIFICATION_DATE, timestamp.toString());
         }
 
-        if(sync) {
+        if (sync) {
             this.getFedoraServiceClient().sync();
             try {
                 this.getTripleStoreUtility().reinitialize();
-            } catch(final TripleStoreSystemException e) {
+            }
+            catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -923,7 +943,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     protected DateTime persistWov() throws FedoraSystemException, WebserverSystemException {
 
         DateTime timestamp = null;
-        if(this.wov != null) {
+        if (this.wov != null) {
             timestamp = this.wov.merge();
         }
         return timestamp;
@@ -938,16 +958,17 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws FedoraSystemException    If Fedora reports an error.
      * @throws WebserverSystemException In case of an internal error.
      */
-    protected void updateWovTimestamp(final String versionNo, final DateTime timestamp)
-            throws FedoraSystemException, WebserverSystemException {
+    protected void updateWovTimestamp(final String versionNo, final DateTime timestamp) throws FedoraSystemException,
+        WebserverSystemException {
 
         try {
             final byte[] b = getWov().getStream();
             String tmpWov = new String(b, XmlUtility.CHARACTER_ENCODING);
             tmpWov = tmpWov.replaceAll(XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, timestamp.toString());
-            setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(),
-                    tmpWov.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
-        } catch(final Exception e1) {
+            setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), tmpWov
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
+        }
+        catch (final Exception e1) {
             throw new WebserverSystemException(e1);
         }
     }
@@ -960,18 +981,18 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @param comment                     The event comment.
      * @return The new event entry
      */
-    protected String createEventXml(final DateTime latestModificationTimestamp, final String newStatus,
-                                    final String comment) throws WebserverSystemException, IntegritySystemException {
+    protected String createEventXml(
+        final DateTime latestModificationTimestamp, final String newStatus, final String comment)
+        throws WebserverSystemException, IntegritySystemException {
 
         final HashMap<String, String> eventValues = new HashMap<String, String>();
 
         eventValues.put(XmlTemplateProvider.VAR_EVENT_TYPE, newStatus);
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_XMLID,
-                'v' + getVersionElementData(PropertyMapKeys.LATEST_VERSION_NUMBER) + 'e' + System.currentTimeMillis());
+        eventValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, 'v'
+            + getVersionElementData(PropertyMapKeys.LATEST_VERSION_NUMBER) + 'e' + System.currentTimeMillis());
         eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE,
-                getHrefWithoutVersionNumber() + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' +
-                        eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
+        eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, getHrefWithoutVersionNumber() + "/resources/"
+            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         eventValues.put(XmlTemplateProvider.TIMESTAMP, latestModificationTimestamp.toString());
         eventValues.put(XmlTemplateProvider.VAR_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(comment));
         eventValues.put(XmlTemplateProvider.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
@@ -995,7 +1016,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException In case of an internal error.
      */
     protected void writeEventToWov(final String versionNo, final DateTime timestamp, final String newEventEntry)
-            throws FedoraSystemException, WebserverSystemException {
+        throws FedoraSystemException, WebserverSystemException {
 
         /*
          * The event entry is written with the version timestamp. But this value
@@ -1009,11 +1030,11 @@ public class GenericVersionableResource extends GenericResourcePid {
         final StaxParser sp = new StaxParser();
 
         final Map<String, StartElementWithChildElements> updateElementsWOV =
-                new HashMap<String, StartElementWithChildElements>();
+            new HashMap<String, StartElementWithChildElements>();
         // FIXME change first occurence of timestamp in version-history
-        updateElementsWOV.put(TripleStoreUtility.PROP_VERSION_TIMESTAMP,
-                new StartElementWithChildElements(TripleStoreUtility.PROP_VERSION_TIMESTAMP,
-                        Constants.WOV_NAMESPACE_URI, Constants.WOV_NAMESPACE_PREFIX, null, timestamp.toString(), null));
+        updateElementsWOV.put(TripleStoreUtility.PROP_VERSION_TIMESTAMP, new StartElementWithChildElements(
+            TripleStoreUtility.PROP_VERSION_TIMESTAMP, Constants.WOV_NAMESPACE_URI, Constants.WOV_NAMESPACE_PREFIX,
+            null, timestamp.toString(), null));
 
         final ItemRelsExtUpdateHandler ireuh = new ItemRelsExtUpdateHandler(updateElementsWOV, sp);
         ireuh.setPath("/version-history/version/");
@@ -1030,12 +1051,14 @@ public class GenericVersionableResource extends GenericResourcePid {
             sp.parse(getWov().getStream());
             final ByteArrayOutputStream newWovStream = addNewSubtreesHandler.getOutputStreams();
 
-            final String newWovString = newWovStream.toString(XmlUtility.CHARACTER_ENCODING)
-                    .replaceFirst("(<" + Constants.WOV_NAMESPACE_PREFIX + ":events[^>]*>)", "$1" + newEventEntry);
+            final String newWovString =
+                newWovStream.toString(XmlUtility.CHARACTER_ENCODING).replaceFirst(
+                    "(<" + Constants.WOV_NAMESPACE_PREFIX + ":events[^>]*>)", "$1" + newEventEntry);
 
-            setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(),
-                    newWovString.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
-        } catch(final Exception e) {
+            setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), newWovString
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -1051,7 +1074,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames =
-                propertiesNames != null ? propertiesNames : new ArrayList<String>();
+            propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         // latest version ------------------------------------------------------
         newPropertiesNames.add(TripleStoreUtility.PROP_LATEST_VERSION_DATE);
@@ -1077,34 +1100,34 @@ public class GenericVersionableResource extends GenericResourcePid {
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
 
         final Map<String, String> newPropertiesNamesMap =
-                propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
+            propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_DATE, PropertyMapKeys.LATEST_VERSION_DATE);
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_NUMBER, PropertyMapKeys.LATEST_VERSION_NUMBER);
-        newPropertiesNamesMap
-                .put(TripleStoreUtility.PROP_LATEST_VERSION_STATUS, PropertyMapKeys.LATEST_VERSION_VERSION_STATUS);
-        newPropertiesNamesMap
-                .put(TripleStoreUtility.PROP_LATEST_VERSION_COMMENT, PropertyMapKeys.LATEST_VERSION_VERSION_COMMENT);
-        newPropertiesNamesMap
-                .put(TripleStoreUtility.PROP_LATEST_VERSION_VALID_STATUS, PropertyMapKeys.LATEST_VERSION_VALID_STATUS);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_STATUS,
+            PropertyMapKeys.LATEST_VERSION_VERSION_STATUS);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_COMMENT,
+            PropertyMapKeys.LATEST_VERSION_VERSION_COMMENT);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_VALID_STATUS,
+            PropertyMapKeys.LATEST_VERSION_VALID_STATUS);
 
         // TODO this seem a wrong mapping
-        newPropertiesNamesMap
-                .put(TripleStoreUtility.PROP_LATEST_VERSION_USER_ID, PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_USER_ID,
+            PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_USER_TITLE,
-                PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE);
+            PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE);
 
         // map modifier
-        newPropertiesNamesMap
-                .put(TripleStoreUtility.PROP_MODIFIED_BY_ID, PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID);
-        newPropertiesNamesMap
-                .put(TripleStoreUtility.PROP_MODIFIED_BY_TITLE, PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
+            PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_MODIFIED_BY_TITLE,
+            PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE);
 
         // latest release -------------------
-        newPropertiesNamesMap
-                .put(TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER, PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER);
-        newPropertiesNamesMap
-                .put(TripleStoreUtility.PROP_LATEST_RELEASE_DATE, PropertyMapKeys.LATEST_RELEASE_VERSION_DATE);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER,
+            PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_RELEASE_DATE,
+            PropertyMapKeys.LATEST_RELEASE_VERSION_DATE);
 
         return newPropertiesNamesMap;
     }
@@ -1121,41 +1144,41 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         final Map<String, String> properties = new HashMap<String, String>();
 
-        for(final Entry<String, String> stringStringEntry : tripleStoreMap.entrySet()) {
+        for (final Entry<String, String> stringStringEntry : tripleStoreMap.entrySet()) {
             final String value = stringStringEntry.getValue();
 
-            if(value != null) {
+            if (value != null) {
                 final String targetKey = getPropertiesNamesMapping().get(stringStringEntry.getKey());
 
-                if(targetKey != null) {
+                if (targetKey != null) {
                     properties.put(targetKey, value);
 
                     // dublicate values for current version if current version
                     // == latest version
-                    if(getVersionNumber() == null) {
+                    if (getVersionNumber() == null) {
                         // current version == latest version
-                        if(targetKey.startsWith("LATEST_")) {
+                        if (targetKey.startsWith("LATEST_")) {
                             // FIXME:schauen, ob alle andere properties fuer
                             // current und latest haben
                             // consistente namen
                             final String currentVersionKey =
-                                    targetKey.equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS) ?
-                                            PropertyMapKeys.CURRENT_VERSION_STATUS :
-                                            targetKey.equals(PropertyMapKeys.LATEST_VERSION_DATE) ?
-                                                    PropertyMapKeys.CURRENT_VERSION_VERSION_DATE :
-                                                    targetKey.replace("LATEST_", "CURRENT_");
+                                targetKey.equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS) ? PropertyMapKeys.CURRENT_VERSION_STATUS : targetKey
+                                    .equals(PropertyMapKeys.LATEST_VERSION_DATE) ? PropertyMapKeys.CURRENT_VERSION_VERSION_DATE : targetKey
+                                    .replace("LATEST_", "CURRENT_");
                             properties.put(currentVersionKey, value);
                         }
-                    } else {
-                        if(targetKey.equals(PropertyMapKeys.LATEST_VERSION_CONTEXT_ID) ||
-                                targetKey.equals(PropertyMapKeys.LATEST_VERSION_CONTEXT_TITLE) ||
-                                targetKey.equals(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID) ||
-                                targetKey.equals(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_TITLE)) {
+                    }
+                    else {
+                        if (targetKey.equals(PropertyMapKeys.LATEST_VERSION_CONTEXT_ID)
+                            || targetKey.equals(PropertyMapKeys.LATEST_VERSION_CONTEXT_TITLE)
+                            || targetKey.equals(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID)
+                            || targetKey.equals(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_TITLE)) {
                             final String currentVersionKey = targetKey.replace("LATEST_", "CURRENT_");
                             properties.put(currentVersionKey, value);
                         }
                     }
-                } else {
+                }
+                else {
                     properties.put(stringStringEntry.getKey(), value);
 
                 }
@@ -1172,30 +1195,31 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     @Override
-    protected void initDatastream(final DatastreamProfileTO profile)
-            throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException,
-            IntegritySystemException, StreamNotFoundException {
+    protected void initDatastream(final DatastreamProfileTO profile) throws WebserverSystemException,
+        FedoraSystemException, TripleStoreSystemException, IntegritySystemException, StreamNotFoundException {
 
         final DateTime versionDate = getVersionDate();
         // RELS-EXT
-        if(Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID())) {
+        if (Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID())) {
             // The RELS-EXT in the Fedora repository is newer than the
             // version specified by versionDate. The difference between both
             // versions are timestamps (version/date, release/date).
-            this.relsExt = isLatestVersion() ? new Datastream(profile, getId(), null) :
-                    new Datastream(profile, getId(), versionDate);
+            this.relsExt =
+                isLatestVersion() ? new Datastream(profile, getId(), null) : new Datastream(profile, getId(),
+                    versionDate);
         }
         // DC
-        else if("DC".equals(profile.getDsID()) && this.dc == null) {
+        else if ("DC".equals(profile.getDsID()) && this.dc == null) {
             this.dc = new Datastream(profile, getId(), versionDate);
         }
         // version-history
-        if(DATASTREAM_WOV.equals(profile.getDsID())) {
+        if (DATASTREAM_WOV.equals(profile.getDsID())) {
             setWov(new Datastream(profile, getId(), null));
-        } else {
-            if(LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Stream " + getId() + '/' + profile.getDsID() +
-                        " not instanziated in GenericVersionableResource.<init>.");
+        }
+        else {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Stream " + getId() + '/' + profile.getDsID()
+                    + " not instanziated in GenericVersionableResource.<init>.");
             }
         }
 

@@ -45,11 +45,12 @@ public abstract class PIDSystemFactory {
     static {
         try {
             createNewInstanceFromConfig();
-        } catch(final PidSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final PidSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on creating new instance of PIDSystemFactory.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on creating new instance of PIDSystemFactory.", e);
             }
         }
@@ -80,22 +81,27 @@ public abstract class PIDSystemFactory {
      */
     private static void createNewInstanceFromConfig() throws PidSystemException {
         String factoryClassName =
-                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PID_SYSTEM_FACTORY);
-        if(factoryClassName == null) {
+            EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PID_SYSTEM_FACTORY);
+        if (factoryClassName == null) {
             factoryClassName = DEFAULT_FACTORY;
         }
         try {
             final Class<?> factoryClass = Class.forName(factoryClassName);
             pidSystemFactory = (PIDSystemFactory) factoryClass.getConstructor().newInstance();
-        } catch(final ClassNotFoundException e) {
+        }
+        catch (final ClassNotFoundException e) {
             throw new PidSystemException(e);
-        } catch(final InstantiationException e) {
+        }
+        catch (final InstantiationException e) {
             throw new PidSystemException(e);
-        } catch(final IllegalAccessException e) {
+        }
+        catch (final IllegalAccessException e) {
             throw new PidSystemException(e);
-        } catch(NoSuchMethodException e) {
+        }
+        catch (NoSuchMethodException e) {
             throw new PidSystemException(e);
-        } catch(InvocationTargetException e) {
+        }
+        catch (InvocationTargetException e) {
             throw new PidSystemException(e);
         }
     }

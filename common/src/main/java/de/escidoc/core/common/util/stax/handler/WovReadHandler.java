@@ -106,34 +106,39 @@ public class WovReadHandler extends DefaultHandler {
 
     @Override
     public StartElement startElement(final StartElement element) throws IntegritySystemException {
-        if(! this.isParsed) {
-            if(ELEMENT_PATH.equals(parser.getCurPath())) {
+        if (!this.isParsed) {
+            if (ELEMENT_PATH.equals(parser.getCurPath())) {
                 this.inside = true;
                 this.insideLevel++;
-                if(this.versionId != null) {
+                if (this.versionId != null) {
 
                     final String objectId = getObjId(element);
-                    if(objectId.endsWith(':' + this.versionId)) {
+                    if (objectId.endsWith(':' + this.versionId)) {
                         this.inCertainVersion = true;
                         try {
                             final String versionCreatedDate = element.getAttribute(null, "timestamp").getValue();
                             versionData.put(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE, versionCreatedDate);
-                        } catch(final NoSuchAttributeException e) {
+                        }
+                        catch (final NoSuchAttributeException e) {
                             throw new IntegritySystemException("Version entry has no timestamp.", e);
                         }
-                    } else {
+                    }
+                    else {
                         this.certainVersionIsLatestVersion = false;
                     }
-                } else {
+                }
+                else {
                     this.inLatestVersion = true;
                 }
-            } else if(this.inside) {
+            }
+            else if (this.inside) {
                 final String theName = element.getLocalName();
-                if(theName.equals(Elements.ELEMENT_WOV_EVENT_USER)) {
-                    if(this.certainVersionIsLatestVersion || this.inLatestVersion) {
+                if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER)) {
+                    if (this.certainVersionIsLatestVersion || this.inLatestVersion) {
                         setLatestVersionValues(theName, null, element);
                         setCurrentVersionValues(theName, null, element);
-                    } else if(this.inCertainVersion) {
+                    }
+                    else if (this.inCertainVersion) {
                         setCurrentVersionValues(theName, null, element);
                     }
                 }
@@ -145,17 +150,17 @@ public class WovReadHandler extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) {
-        if(! this.isParsed && this.inside) {
+        if (!this.isParsed && this.inside) {
             this.insideLevel--;
 
-            if(this.insideLevel == 0) {
+            if (this.insideLevel == 0) {
                 this.inside = false;
-                if(this.inLatestVersion) {
+                if (this.inLatestVersion) {
                     this.inLatestVersion = false;
                     this.isParsed = true;
                     return null;
                 }
-                if(this.inCertainVersion) {
+                if (this.inCertainVersion) {
                     this.inCertainVersion = false;
                     this.isParsed = true;
                     return null;
@@ -167,15 +172,16 @@ public class WovReadHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String s, final StartElement element)
-            throws IntegritySystemException, XmlParserSystemException {
+    public String characters(final String s, final StartElement element) throws IntegritySystemException,
+        XmlParserSystemException {
 
-        if(! this.isParsed) {
+        if (!this.isParsed) {
             final String theName = element.getLocalName();
-            if(this.certainVersionIsLatestVersion || this.inLatestVersion) {
+            if (this.certainVersionIsLatestVersion || this.inLatestVersion) {
                 setLatestVersionValues(theName, s, element);
                 setCurrentVersionValues(theName, s, element);
-            } else if(this.inCertainVersion) {
+            }
+            else if (this.inCertainVersion) {
                 setCurrentVersionValues(theName, s, element);
             }
 
@@ -190,34 +196,42 @@ public class WovReadHandler extends DefaultHandler {
      * @throws IntegritySystemException Thrown if required values are missed.
      */
     private void setLatestVersionValues(final String theName, final String s, final StartElement element)
-            throws IntegritySystemException {
+        throws IntegritySystemException {
 
-        if(theName.equals(Elements.ELEMENT_WOV_EVENT_DATE)) {
+        if (theName.equals(Elements.ELEMENT_WOV_EVENT_DATE)) {
             this.curEventDate = s;
-        } else if(theName.equals(Elements.ELEMENT_WOV_VERSION_TIMESTAMP)) {
+        }
+        else if (theName.equals(Elements.ELEMENT_WOV_VERSION_TIMESTAMP)) {
             versionData.put(PropertyMapKeys.LATEST_VERSION_DATE, s);
-        } else if(theName.equals(Elements.ELEMENT_WOV_VERSION_NUMBER)) {
+        }
+        else if (theName.equals(Elements.ELEMENT_WOV_VERSION_NUMBER)) {
             versionData.put(PropertyMapKeys.LATEST_VERSION_NUMBER, s);
-        } else if(theName.equals(Elements.ELEMENT_WOV_VERSION_STATUS)) {
+        }
+        else if (theName.equals(Elements.ELEMENT_WOV_VERSION_STATUS)) {
             versionData.put(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS, s);
-        } else if(theName.equals(Elements.ELEMENT_WOV_VERSION_COMMENT)) {
+        }
+        else if (theName.equals(Elements.ELEMENT_WOV_VERSION_COMMENT)) {
             versionData.put(PropertyMapKeys.LATEST_VERSION_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(s));
-        } else if(theName.equals(Elements.ELEMENT_WOV_VERSION_PID)) {
+        }
+        else if (theName.equals(Elements.ELEMENT_WOV_VERSION_PID)) {
             versionData.put(PropertyMapKeys.LATEST_VERSION_PID, s);
-        } else if(this.curEventDate != null &&
-                this.curEventDate.equals(versionData.get(PropertyMapKeys.LATEST_VERSION_DATE))) {
+        }
+        else if (this.curEventDate != null
+            && this.curEventDate.equals(versionData.get(PropertyMapKeys.LATEST_VERSION_DATE))) {
             // found user in event related to version by timestamp
             // retrievable are
             // TODO
-            if(theName.equals(Elements.ELEMENT_WOV_EVENT_USER_ID)) {
+            if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER_ID)) {
                 versionData.put(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID, s);
-            } else if(theName.equals(Elements.ELEMENT_WOV_EVENT_USER)) {
+            }
+            else if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER)) {
                 try {
-                    versionData.put(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE,
-                            element.getAttribute(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_TITLE).getValue());
-                    versionData.put(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_HREF,
-                            element.getAttribute(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF).getValue());
-                } catch(final NoSuchAttributeException e) {
+                    versionData.put(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE, element.getAttribute(
+                        Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_TITLE).getValue());
+                    versionData.put(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_HREF, element.getAttribute(
+                        Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF).getValue());
+                }
+                catch (final NoSuchAttributeException e) {
                     throw new IntegritySystemException("Missing xlink attribute in version history event user.", e);
                 }
             }
@@ -234,35 +248,43 @@ public class WovReadHandler extends DefaultHandler {
      * @throws IntegritySystemException Thrown if required values are missed.
      */
     private void setCurrentVersionValues(final String theName, final String s, final StartElement element)
-            throws IntegritySystemException {
+        throws IntegritySystemException {
 
-        if(theName.equals(Elements.ELEMENT_WOV_EVENT_DATE)) {
+        if (theName.equals(Elements.ELEMENT_WOV_EVENT_DATE)) {
             this.curEventDate = s;
-        } else if(theName.equals(Elements.ELEMENT_WOV_VERSION_TIMESTAMP)) {
+        }
+        else if (theName.equals(Elements.ELEMENT_WOV_VERSION_TIMESTAMP)) {
             versionData.put(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE, s);
-        } else if(theName.equals(Elements.ELEMENT_WOV_VERSION_NUMBER)) {
+        }
+        else if (theName.equals(Elements.ELEMENT_WOV_VERSION_NUMBER)) {
             versionData.put(PropertyMapKeys.CURRENT_VERSION_VERSION_NUMBER, s);
-        } else if(theName.equals(Elements.ELEMENT_WOV_VERSION_STATUS)) {
+        }
+        else if (theName.equals(Elements.ELEMENT_WOV_VERSION_STATUS)) {
             versionData.put(PropertyMapKeys.CURRENT_VERSION_STATUS, s);
-        } else if(theName.equals(Elements.ELEMENT_WOV_VERSION_COMMENT)) {
+        }
+        else if (theName.equals(Elements.ELEMENT_WOV_VERSION_COMMENT)) {
             versionData
-                    .put(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(s));
-        } else if(theName.equals(Elements.ELEMENT_WOV_VERSION_PID)) {
+                .put(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(s));
+        }
+        else if (theName.equals(Elements.ELEMENT_WOV_VERSION_PID)) {
             versionData.put(PropertyMapKeys.CURRENT_VERSION_PID, s);
-        } else if(this.curEventDate != null &&
-                this.curEventDate.equals(versionData.get(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE))) {
+        }
+        else if (this.curEventDate != null
+            && this.curEventDate.equals(versionData.get(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE))) {
             // found user in event related to version by timestamp
             // retrievable are
             // TODO
-            if(theName.equals(Elements.ELEMENT_WOV_EVENT_USER_ID)) {
+            if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER_ID)) {
                 versionData.put(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID, s);
-            } else if(theName.equals(Elements.ELEMENT_WOV_EVENT_USER)) {
+            }
+            else if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER)) {
                 try {
-                    versionData.put(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE,
-                            element.getAttribute(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_TITLE).getValue());
-                    versionData.put(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_HREF,
-                            element.getAttribute(Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF).getValue());
-                } catch(final NoSuchAttributeException e) {
+                    versionData.put(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE, element.getAttribute(
+                        Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_TITLE).getValue());
+                    versionData.put(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_HREF, element.getAttribute(
+                        Constants.XLINK_NS_URI, Elements.ATTRIBUTE_XLINK_HREF).getValue());
+                }
+                catch (final NoSuchAttributeException e) {
                     throw new IntegritySystemException("Missing xlink attribute in version history event user.", e);
                 }
             }
@@ -280,7 +302,8 @@ public class WovReadHandler extends DefaultHandler {
         final Attribute objectId;
         try {
             objectId = element.getAttribute(Constants.XLINK_URI, "href");
-        } catch(final NoSuchAttributeException e) {
+        }
+        catch (final NoSuchAttributeException e) {
             throw new IntegritySystemException("Version entry has no objid.", e);
         }
         return objectId.getValue();

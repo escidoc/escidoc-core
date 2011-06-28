@@ -45,7 +45,7 @@ public class LinkStaxHandler extends DefaultHandler {
      * Error message in case of base uri mismatch of href provided in REST request.
      */
     private static final String MSG_WRONG_BASE_URI =
-            "Reference does not point to a resource of the expected type," + " base uri mismatch";
+        "Reference does not point to a resource of the expected type," + " base uri mismatch";
 
     private String href;
 
@@ -99,25 +99,28 @@ public class LinkStaxHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws EscidocException {
         final String currentPath = element.getPath();
-        if(isNotReady() && currentPath.equals(this.elementPath)) {
+        if (isNotReady() && currentPath.equals(this.elementPath)) {
             this.href = null;
             this.objid = null;
             final int index = element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
-            if(index != - 1) {
+            if (index != -1) {
                 this.href = element.getAttribute(index).getValue();
                 this.objid = XmlUtility.getIdFromURI(this.href);
                 // check if href refers to the correct object type, if this has been specified
-                if(this.hrefBaseUri != null) {
+                if (this.hrefBaseUri != null) {
                     final String expectedHref = this.hrefBaseUri + this.objid;
-                    if(! expectedHref.equals(this.href)) {
-                        final String errorMsg = StringUtility
-                                .format(MSG_WRONG_BASE_URI, this.hrefBaseUri, this.href, element.getLocationString());
+                    if (!expectedHref.equals(this.href)) {
+                        final String errorMsg =
+                            StringUtility.format(MSG_WRONG_BASE_URI, this.hrefBaseUri, this.href, element
+                                .getLocationString());
                         try {
-                            final Constructor constructor = exceptionClass.getConstructor(new Class[]{String.class});
+                            final Constructor constructor = exceptionClass.getConstructor(new Class[] { String.class });
                             throw (EscidocException) constructor.newInstance(errorMsg);
-                        } catch(final EscidocException e) {
+                        }
+                        catch (final EscidocException e) {
                             throw e;
-                        } catch(final Exception e) {
+                        }
+                        catch (final Exception e) {
                             throw new SystemException("Initializing exception failed.", e);
                         }
                     }
@@ -140,12 +143,13 @@ public class LinkStaxHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) throws EscidocException {
 
-        if(isNotReady()) {
-            if(element.getPath().equals(this.parentPath)) {
+        if (isNotReady()) {
+            if (element.getPath().equals(this.parentPath)) {
                 endParentElement(element);
                 checkReady(element);
                 return element;
-            } else if(element.getPath().equals(this.elementPath)) {
+            }
+            else if (element.getPath().equals(this.elementPath)) {
                 endLinkElement(element);
             }
         }

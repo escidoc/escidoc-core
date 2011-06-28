@@ -80,17 +80,16 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @param cr ContentRelation
      * @return XML representation
      */
-    public String getContentRelationXml(final ContentRelationCreate cr)
-            throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
-            WebserverSystemException {
+    public String getContentRelationXml(final ContentRelationCreate cr) throws TripleStoreSystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         // put all relevant values from object into value Map
         final Map<String, String> commonValues = getCommonValues();
 
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.FALSE);
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF,
-                "/ir" + CONTENT_RELATION_PATH + '/' + cr.getObjid() + "/properties");
+        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, "/ir" + CONTENT_RELATION_PATH + '/' + cr.getObjid()
+            + "/properties");
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Content Relation Properties");
 
         values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, renderMdRecords(cr, commonValues, false));
@@ -108,9 +107,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @param cr ContentRelation
      * @return XML representation of md-records.
      */
-    public String getContentRelationMdRecords(final ContentRelationCreate cr)
-            throws EncodingSystemException, FedoraSystemException, IntegritySystemException, TripleStoreSystemException,
-            WebserverSystemException {
+    public String getContentRelationMdRecords(final ContentRelationCreate cr) throws EncodingSystemException,
+        FedoraSystemException, IntegritySystemException, TripleStoreSystemException, WebserverSystemException {
 
         final Map<String, String> commonValues = getCommonValues();
         return renderMdRecords(cr, commonValues, true);
@@ -124,15 +122,14 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @return XML representation of md-record.
      */
     public String getContentRelationMdRecord(final ContentRelationCreate cr, final MdRecordCreate mr)
-            throws MdRecordNotFoundException, TripleStoreSystemException, EncodingSystemException,
-            IntegritySystemException, WebserverSystemException {
+        throws MdRecordNotFoundException, TripleStoreSystemException, EncodingSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         final Map<String, String> commonValues = getCommonValues();
         final String mdRecord = renderMdRecord(cr, mr, commonValues, true);
-        if(mdRecord.length() == 0) {
-            throw new MdRecordNotFoundException(
-                    "A content relation with id " + cr.getObjid() + "does not contain a md-record with a name " +
-                            mr.getName() + " .");
+        if (mdRecord.length() == 0) {
+            throw new MdRecordNotFoundException("A content relation with id " + cr.getObjid()
+                + "does not contain a md-record with a name " + mr.getName() + " .");
 
         }
         return mdRecord;
@@ -154,8 +151,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         values.putAll(getLockValues(cr));
         values.putAll(commonValues);
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF,
-                "/ir" + CONTENT_RELATION_PATH + '/' + cr.getObjid() + "/properties");
+        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, "/ir" + CONTENT_RELATION_PATH + '/' + cr.getObjid()
+            + "/properties");
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Content Relation Properties");
 
         return getPropertiesXml(values);
@@ -258,28 +255,27 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         values.put("resourcesHref", XmlUtility.getContentRelationHref(cr.getObjid()) + "/resources");
 
         values.put(XmlTemplateProvider.CREATED_BY_ID, cr.getProperties().getCreatedById());
-        values.put(XmlTemplateProvider.CREATED_BY_HREF,
-                Constants.USER_ACCOUNT_URL_BASE + cr.getProperties().getCreatedById());
+        values.put(XmlTemplateProvider.CREATED_BY_HREF, Constants.USER_ACCOUNT_URL_BASE
+            + cr.getProperties().getCreatedById());
         values.put(XmlTemplateProvider.CREATED_BY_TITLE, cr.getProperties().getCreatedByName());
 
         values.put(XmlTemplateProvider.MODIFIED_BY_ID, cr.getProperties().getModifiedById());
-        values.put(XmlTemplateProvider.MODIFIED_BY_HREF,
-                Constants.USER_ACCOUNT_URL_BASE + cr.getProperties().getModifiedById());
+        values.put(XmlTemplateProvider.MODIFIED_BY_HREF, Constants.USER_ACCOUNT_URL_BASE
+            + cr.getProperties().getModifiedById());
         values.put(XmlTemplateProvider.MODIFIED_BY_TITLE, cr.getProperties().getModifiedByName());
 
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
-                cr.getProperties().getLastModificationDate().withZone(DateTimeZone.UTC)
-                        .toString(Constants.TIMESTAMP_FORMAT));
-        values.put(XmlTemplateProvider.VAR_CREATION_DATE,
-                cr.getProperties().getCreationDate().withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, cr
+            .getProperties().getLastModificationDate().withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
+        values.put(XmlTemplateProvider.VAR_CREATION_DATE, cr.getProperties().getCreationDate().withZone(
+            DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
 
-        if(cr.getProperties().getDescription() != null) {
+        if (cr.getProperties().getDescription() != null) {
             values.put(XmlTemplateProvider.CONTENT_RELATION_DESCRIPTION, cr.getProperties().getDescription());
         }
 
         values.put(XmlTemplateProvider.PUBLIC_STATUS, cr.getProperties().getStatus().toString());
-        values.put(XmlTemplateProvider.PUBLIC_STATUS_COMMENT,
-                XmlUtility.escapeForbiddenXmlCharacters(cr.getProperties().getStatusComment()));
+        values.put(XmlTemplateProvider.PUBLIC_STATUS_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(cr
+            .getProperties().getStatusComment()));
         values.put(XmlTemplateProvider.OBJECT_PID, cr.getProperties().getPid());
 
         return values;
@@ -296,13 +292,13 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         final Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.LOCK_STATUS, cr.getProperties().getLockStatus().toString());
 
-        if(cr.getProperties().isLocked()) {
+        if (cr.getProperties().isLocked()) {
             values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_ID, cr.getProperties().getLockOwnerId());
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_HREF,
-                    Constants.USER_ACCOUNT_URL_BASE + cr.getProperties().getLockOwnerId());
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_HREF, Constants.USER_ACCOUNT_URL_BASE
+                + cr.getProperties().getLockOwnerId());
             values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_TITLE, cr.getProperties().getLockOwnerName());
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_DATE,
-                    cr.getProperties().getLockDate().withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
+            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_DATE, cr.getProperties().getLockDate().withZone(
+                DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
         }
 
         return values;
@@ -317,8 +313,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws WebserverSystemException   Thrown if values extracting failed.
      * @throws TripleStoreSystemException Thrown if obtaining resource type failed.
      */
-    private Map<String, String> getRelationValues(final ContentRelationCreate cr)
-            throws WebserverSystemException, TripleStoreSystemException {
+    private Map<String, String> getRelationValues(final ContentRelationCreate cr) throws WebserverSystemException,
+        TripleStoreSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -329,7 +325,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         String objid = cr.getSubject();
         String version = cr.getSubjectVersion();
         String subjectId = objid;
-        if(version != null) {
+        if (version != null) {
             subjectId = subjectId + ':' + version;
         }
         values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_ID, subjectId);
@@ -345,7 +341,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         objid = cr.getObject();
         version = cr.getObjectVersion();
         String objectId = objid;
-        if(version != null) {
+        if (version != null) {
             objectId = objectId + ':' + version;
         }
         values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_ID, objectId);
@@ -369,38 +365,36 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @param isRoot       Set true is md-record is to render with XML root element
      * @return XMl representation of md-record.
      */
-    public String renderMdRecord(final ContentRelationCreate cr, final MdRecordCreate mdRecord,
-                                 final Map<String, String> commonValues, final boolean isRoot)
-            throws WebserverSystemException, IntegritySystemException, EncodingSystemException,
-            MdRecordNotFoundException, TripleStoreSystemException {
+    public String renderMdRecord(
+        final ContentRelationCreate cr, final MdRecordCreate mdRecord, final Map<String, String> commonValues,
+        final boolean isRoot) throws WebserverSystemException, IntegritySystemException, EncodingSystemException,
+        MdRecordNotFoundException, TripleStoreSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF,
-                Constants.CONTENT_RELATION_URL_BASE + cr.getObjid() + Constants.MD_RECORD_URL_PART + '/' +
-                        mdRecord.getName());
-        if(! mdRecord.getType().equals(Constants.UNKNOWN)) {
+        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
+            + Constants.MD_RECORD_URL_PART + '/' + mdRecord.getName());
+        if (!mdRecord.getType().equals(Constants.UNKNOWN)) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, mdRecord.getType());
         }
-        if(! mdRecord.getSchema().equals(Constants.UNKNOWN)) {
+        if (!mdRecord.getSchema().equals(Constants.UNKNOWN)) {
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, mdRecord.getSchema());
         }
 
         // get md-record content
         final String content = mdRecord.getContent();
-        if(content != null) {
+        if (content != null) {
             values.put(XmlTemplateProvider.MD_RECORD_CONTENT, content);
         }
 
-        if(isRoot) {
+        if (isRoot) {
             values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, XmlTemplateProvider.TRUE);
         }
         values.putAll(commonValues);
         values.put(XmlTemplateProvider.MD_RECORD_NAME, mdRecord.getName());
         values.put(XmlTemplateProvider.VAR_MD_RECORD_TITLE, mdRecord.getName());
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF,
-                Constants.CONTENT_RELATION_URL_BASE + cr.getObjid() + Constants.MD_RECORD_URL_PART + '/' +
-                        mdRecord.getName());
+        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
+            + Constants.MD_RECORD_URL_PART + '/' + mdRecord.getName());
 
         return ItemXmlProvider.getInstance().getMdRecordXml(values);
     }
@@ -408,37 +402,38 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     /**
      * @return XML representation off //md-records
      */
-    public String renderMdRecords(final ContentRelationCreate cr, final Map<String, String> commonValues,
-                                  final boolean isRoot)
-            throws WebserverSystemException, EncodingSystemException, FedoraSystemException, IntegritySystemException,
-            TripleStoreSystemException {
+    public String renderMdRecords(
+        final ContentRelationCreate cr, final Map<String, String> commonValues, final boolean isRoot)
+        throws WebserverSystemException, EncodingSystemException, FedoraSystemException, IntegritySystemException,
+        TripleStoreSystemException {
 
         final StringBuilder content = new StringBuilder();
 
         final List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
-        if(mdRecords != null) {
-            for(final MdRecordCreate mdRecord : mdRecords) {
+        if (mdRecords != null) {
+            for (final MdRecordCreate mdRecord : mdRecords) {
                 try {
                     final String mdRecordContent = renderMdRecord(cr, mdRecord, commonValues, false);
                     content.append(mdRecordContent);
-                } catch(final MdRecordNotFoundException e) {
+                }
+                catch (final MdRecordNotFoundException e) {
                     throw new WebserverSystemException("Metadata record previously found in list not found.", e);
                 }
             }
         }
-        if(content.length() == 0) {
+        if (content.length() == 0) {
             return "";
         }
 
         // prepare value map for Velocity
         final Map<String, String> values = new HashMap<String, String>();
 
-        if(isRoot) {
+        if (isRoot) {
             values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
         }
         values.putAll(commonValues);
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_HREF,
-                Constants.CONTENT_RELATION_URL_BASE + cr.getObjid() + Constants.MD_RECORDS_URL_PART);
+        values.put(XmlTemplateProvider.VAR_MD_RECORDS_HREF, Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
+            + Constants.MD_RECORDS_URL_PART);
         values.put(XmlTemplateProvider.VAR_MD_RECORDS_TITLE, "Metadata Records of Content Relation " + cr.getObjid());
         values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, content.toString());
 

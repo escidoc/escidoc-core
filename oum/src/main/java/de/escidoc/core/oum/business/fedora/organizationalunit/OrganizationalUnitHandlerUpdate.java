@@ -73,27 +73,25 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param escidocMdRecordnsUri The ns uri of escidoc md record.
      * @throws StreamNotFoundException If any stream was noch found in fedora.
      */
-    protected void setMdRecords(final Map<String, ByteArrayOutputStream> xml,
-                                final Map<String, Map<String, String>> mdAttributesMap,
-                                final String escidocMdRecordnsUri)
-            throws StreamNotFoundException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
-            EncodingSystemException, TripleStoreSystemException {
+    protected void setMdRecords(
+        final Map<String, ByteArrayOutputStream> xml, final Map<String, Map<String, String>> mdAttributesMap,
+        final String escidocMdRecordnsUri) throws StreamNotFoundException, IntegritySystemException,
+        FedoraSystemException, WebserverSystemException, EncodingSystemException, TripleStoreSystemException {
         final Map<String, Datastream> updated = new HashMap<String, Datastream>();
 
         // iterate over md-record names (keys) with
-        for(final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : xml.entrySet()) {
+        for (final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : xml.entrySet()) {
             // for every retrieved md-record XML create a Stream
             Map<String, String> mdProperties = null;
-            if(stringByteArrayOutputStreamEntry.getKey().equals(OrganizationalUnit.ESCIDOC)) {
+            if (stringByteArrayOutputStreamEntry.getKey().equals(OrganizationalUnit.ESCIDOC)) {
                 mdProperties = new HashMap<String, String>();
                 mdProperties.put(OrganizationalUnit.NS_URI, escidocMdRecordnsUri);
             }
             final Datastream ds =
-                    new Datastream(stringByteArrayOutputStreamEntry.getKey(), getOrganizationalUnit().getId(),
-                            stringByteArrayOutputStreamEntry.getValue().toByteArray(), MimeTypes.TEXT_XML,
-                            mdProperties);
+                new Datastream(stringByteArrayOutputStreamEntry.getKey(), getOrganizationalUnit().getId(),
+                    stringByteArrayOutputStreamEntry.getValue().toByteArray(), MimeTypes.TEXT_XML, mdProperties);
             final Map<String, String> mdRecordAttributes =
-                    mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
+                mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId(mdRecordAttributes.get("type"));
             ds.addAlternateId(mdRecordAttributes.get("schema"));
@@ -110,12 +108,12 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws StreamNotFoundException      If the dc datastream was not found.
      * @throws UnsupportedEncodingException If dc datastream has wrong encoding.
      */
-    protected void setDc(final String dc)
-            throws StreamNotFoundException, UnsupportedEncodingException, TripleStoreSystemException,
-            FedoraSystemException, WebserverSystemException {
+    protected void setDc(final String dc) throws StreamNotFoundException, UnsupportedEncodingException,
+        TripleStoreSystemException, FedoraSystemException, WebserverSystemException {
 
-        getOrganizationalUnit().setDc(new Datastream(Datastream.DC_DATASTREAM, getOrganizationalUnit().getId(),
-                dc.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
+        getOrganizationalUnit().setDc(
+            new Datastream(Datastream.DC_DATASTREAM, getOrganizationalUnit().getId(), dc
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
     }
 
     /**
@@ -124,8 +122,8 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param state The new state.
      * @throws SystemException Thrown in case of an internal error.
      */
-    protected void updateState(final String state)
-            throws SystemException, EncodingSystemException, FedoraSystemException, WebserverSystemException {
+    protected void updateState(final String state) throws SystemException, EncodingSystemException,
+        FedoraSystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final String buildNumber = Utility.getBuildNumber();
@@ -136,8 +134,10 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
         values.put(XmlTemplateProvider.MODIFIED_BY_ID, getOrganizationalUnit().getModifiedBy());
         values.put(XmlTemplateProvider.MODIFIED_BY_TITLE, getOrganizationalUnit().getModifiedByTitle());
 
-        getOrganizationalUnit().setRelsExt(getOrganizationalUnitRelsExt(getOrganizationalUnit().getId(), values,
-                getOrganizationalUnit().getParents()));
+        getOrganizationalUnit()
+            .setRelsExt(
+                getOrganizationalUnitRelsExt(getOrganizationalUnit().getId(), values, getOrganizationalUnit()
+                    .getParents()));
     }
 
     /**
@@ -150,12 +150,11 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
      * @throws XmlCorruptedException      Thrown if the last-modification-date is null
      */
-    protected void checkUpToDate(final DateTime timestamp)
-            throws OptimisticLockingException, WebserverSystemException, TripleStoreSystemException,
-            FedoraSystemException, XmlCorruptedException {
+    protected void checkUpToDate(final DateTime timestamp) throws OptimisticLockingException, WebserverSystemException,
+        TripleStoreSystemException, FedoraSystemException, XmlCorruptedException {
 
         Utility.checkOptimisticLockingCriteria(getOrganizationalUnit().getLastModificationDate(), timestamp,
-                "Organizational unit " + getOrganizationalUnit().getId());
+            "Organizational unit " + getOrganizationalUnit().getId());
 
     }
 
@@ -168,10 +167,10 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      */
     protected void checkInState(final String methodText, final String state) throws InvalidStatusException {
 
-        if(! getOrganizationalUnit().getPublicStatus().equals(state)) {
-            throw new InvalidStatusException(
-                    "Organizational unit with id='" + getOrganizationalUnit().getId() + "' cannot be " + methodText +
-                            " because it is in status '" + getOrganizationalUnit().getPublicStatus() + "'!");
+        if (!getOrganizationalUnit().getPublicStatus().equals(state)) {
+            throw new InvalidStatusException("Organizational unit with id='" + getOrganizationalUnit().getId()
+                + "' cannot be " + methodText + " because it is in status '"
+                + getOrganizationalUnit().getPublicStatus() + "'!");
         }
     }
 
@@ -182,18 +181,17 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param state      The expected state.
      * @throws InvalidStatusException If the organizational unit is in another state.
      */
-    protected void checkParentsInState(final String methodText, final String state)
-            throws InvalidStatusException, TripleStoreSystemException {
+    protected void checkParentsInState(final String methodText, final String state) throws InvalidStatusException,
+        TripleStoreSystemException {
 
         final List<String> parents = getOrganizationalUnit().getParents();
-        for(final String parent : parents) {
+        for (final String parent : parents) {
             final String parentState =
-                    getTripleStoreUtility().getPropertiesElements(parent, TripleStoreUtility.PROP_PUBLIC_STATUS);
-            if(! state.equals(parentState)) {
-                throw new InvalidStatusException(
-                        "Organizational unit with id='" + getOrganizationalUnit().getId() + "' cannot be " +
-                                methodText + " because parent with id='" + parent + "' is in status '" + parentState +
-                                "'!");
+                getTripleStoreUtility().getPropertiesElements(parent, TripleStoreUtility.PROP_PUBLIC_STATUS);
+            if (!state.equals(parentState)) {
+                throw new InvalidStatusException("Organizational unit with id='" + getOrganizationalUnit().getId()
+                    + "' cannot be " + methodText + " because parent with id='" + parent + "' is in status '"
+                    + parentState + "'!");
             }
         }
     }
@@ -204,17 +202,16 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param parents The updated list of parents.
      * @throws InvalidStatusException If any update rule is not met.
      */
-    protected void checkCreateParentsConditions(final Iterable<String> parents)
-            throws InvalidStatusException, TripleStoreSystemException {
+    protected void checkCreateParentsConditions(final Iterable<String> parents) throws InvalidStatusException,
+        TripleStoreSystemException {
 
         // all parents must be in state created or opened
-        for(final String parent : parents) {
+        for (final String parent : parents) {
             final String parentState =
-                    getTripleStoreUtility().getPropertiesElements(parent, TripleStoreUtility.PROP_PUBLIC_STATUS);
-            if(! (Constants.STATUS_OU_CREATED.equals(parentState) || Constants.STATUS_OU_OPENED.equals(parentState))) {
-                throw new InvalidStatusException(
-                        "Organizational unit cannot be created  because parent with id='" + parent +
-                                "' is in status '" + parentState + "'!");
+                getTripleStoreUtility().getPropertiesElements(parent, TripleStoreUtility.PROP_PUBLIC_STATUS);
+            if (!(Constants.STATUS_OU_CREATED.equals(parentState) || Constants.STATUS_OU_OPENED.equals(parentState))) {
+                throw new InvalidStatusException("Organizational unit cannot be created  because parent with id='"
+                    + parent + "' is in status '" + parentState + "'!");
             }
         }
 
@@ -226,37 +223,34 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param parents The updated list of parents.
      * @throws InvalidStatusException If any update rule is not met.
      */
-    protected void checkUpdateParentsConditions(final Collection<String> parents)
-            throws InvalidStatusException, TripleStoreSystemException {
+    protected void checkUpdateParentsConditions(final Collection<String> parents) throws InvalidStatusException,
+        TripleStoreSystemException {
 
         final String status = getOrganizationalUnit().getPublicStatus();
-        if(Constants.STATUS_OU_CREATED.equals(status)) {
+        if (Constants.STATUS_OU_CREATED.equals(status)) {
             // all parents must be in state created or opened
-            for(final String parent : parents) {
+            for (final String parent : parents) {
                 final String parentState =
-                        getTripleStoreUtility().getPropertiesElements(parent, TripleStoreUtility.PROP_PUBLIC_STATUS);
-                if(! (Constants.STATUS_OU_CREATED.equals(parentState) ||
-                        Constants.STATUS_OU_OPENED.equals(parentState))) {
-                    throw new InvalidStatusException(
-                            "Organizational unit with objid='" + getOrganizationalUnit().getId() +
-                                    "' cannot be updated because parent with objid='" + parent + "' is in status '" +
-                                    parentState + "'!");
+                    getTripleStoreUtility().getPropertiesElements(parent, TripleStoreUtility.PROP_PUBLIC_STATUS);
+                if (!(Constants.STATUS_OU_CREATED.equals(parentState) || Constants.STATUS_OU_OPENED.equals(parentState))) {
+                    throw new InvalidStatusException("Organizational unit with objid='"
+                        + getOrganizationalUnit().getId() + "' cannot be updated because parent with objid='" + parent
+                        + "' is in status '" + parentState + "'!");
                 }
             }
-        } else {
+        }
+        else {
             // check if parent list is changed, if so throw
             // InvalidStatusException
             final List<String> currentParents = getOrganizationalUnit().getParents();
-            if(currentParents.size() != parents.size()) {
-                throw new InvalidStatusException(
-                        "Parent list of organizational unit with id='" + getOrganizationalUnit().getId() +
-                                "' in status '" + status + "' must not be updated!");
+            if (currentParents.size() != parents.size()) {
+                throw new InvalidStatusException("Parent list of organizational unit with id='"
+                    + getOrganizationalUnit().getId() + "' in status '" + status + "' must not be updated!");
             }
-            for(final String parent : parents) {
-                if(! currentParents.contains(parent)) {
-                    throw new InvalidStatusException(
-                            "Parent list of organizational unit with id='" + getOrganizationalUnit().getId() +
-                                    "' in status '" + status + "' must not be updated!");
+            for (final String parent : parents) {
+                if (!currentParents.contains(parent)) {
+                    throw new InvalidStatusException("Parent list of organizational unit with id='"
+                        + getOrganizationalUnit().getId() + "' in status '" + status + "' must not be updated!");
                 }
             }
         }
@@ -269,13 +263,13 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws OrganizationalUnitHasChildrenException
      *          If the organizational unit has children
      */
-    protected void checkWithoutChildren(final String methodText)
-            throws OrganizationalUnitHasChildrenException, TripleStoreSystemException, WebserverSystemException {
+    protected void checkWithoutChildren(final String methodText) throws OrganizationalUnitHasChildrenException,
+        TripleStoreSystemException, WebserverSystemException {
 
-        if(! getOrganizationalUnit().getChildrenIds().isEmpty()) {
-            throw new OrganizationalUnitHasChildrenException(
-                    "Organizational unit with id='" + getOrganizationalUnit().getId() + "' cannot be " + methodText +
-                            " because it has children:  '" + getOrganizationalUnit().getChildrenIds() + "'!");
+        if (!getOrganizationalUnit().getChildrenIds().isEmpty()) {
+            throw new OrganizationalUnitHasChildrenException("Organizational unit with id='"
+                + getOrganizationalUnit().getId() + "' cannot be " + methodText + " because it has children:  '"
+                + getOrganizationalUnit().getChildrenIds() + "'!");
         }
     }
 
@@ -285,19 +279,19 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param methodText A text for exception.
      * @throws InvalidStatusException Thrown if one of the children is not closed.
      */
-    protected void checkWithoutChildrenOrChildrenClosed(final String methodText)
-            throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
+    protected void checkWithoutChildrenOrChildrenClosed(final String methodText) throws InvalidStatusException,
+        TripleStoreSystemException, WebserverSystemException {
 
         final List<String> children = getOrganizationalUnit().getChildrenIds();
-        if(! children.isEmpty()) {
-            for(final String child : children) {
+        if (!children.isEmpty()) {
+            for (final String child : children) {
                 final String childState =
-                        getTripleStoreUtility().getPropertiesElements(child, TripleStoreUtility.PROP_PUBLIC_STATUS);
+                    getTripleStoreUtility().getPropertiesElements(child, TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-                if(! Constants.STATUS_OU_CLOSED.equals(childState)) {
-                    throw new InvalidStatusException(
-                            "Organizational unit with id='" + getOrganizationalUnit().getId() + "' cannot be " +
-                                    methodText + " because it has a child '" + child + "' not in state 'closed'!");
+                if (!Constants.STATUS_OU_CLOSED.equals(childState)) {
+                    throw new InvalidStatusException("Organizational unit with id='" + getOrganizationalUnit().getId()
+                        + "' cannot be " + methodText + " because it has a child '" + child
+                        + "' not in state 'closed'!");
                 }
             }
         }

@@ -56,21 +56,22 @@ public class OntologyHandler extends DefaultHandler {
 
         this.parser = parser;
         String p = predicate;
-        if(p.startsWith("<")) {
+        if (p.startsWith("<")) {
             p = p.substring(1);
         }
-        if(p.endsWith(">")) {
+        if (p.endsWith(">")) {
             p = p.substring(0, p.length() - 1);
         }
 
         // TODO: If a predicate contains character #, this character will be
         // thrown away
         final String[] predicateArray = SPLIT_PATTERN.split(p);
-        if(predicateArray.length == 2) {
+        if (predicateArray.length == 2) {
             this.predicateBase = predicateArray[0];
             this.predicateWithoutBase = predicateArray[1];
             this.predicate = p;
-        } else {
+        }
+        else {
             this.exist = false;
             this.predicateBase = null;
             this.predicateWithoutBase = null;
@@ -83,21 +84,21 @@ public class OntologyHandler extends DefaultHandler {
 
         final String basePath = "/RDF";
         final String currentPath = parser.getCurPath();
-        if(basePath.equals(currentPath)) {
+        if (basePath.equals(currentPath)) {
             final int indexOfBase = element.indexOfAttribute(XMLConstants.XML_NS_URI, "base");
-            if(indexOfBase != - 1) {
+            if (indexOfBase != -1) {
                 this.base = element.getAttribute(indexOfBase).getValue();
             }
         }
         final String elementPath = "/RDF/Property";
-        if(elementPath.equals(currentPath)) {
+        if (elementPath.equals(currentPath)) {
 
             final int indexOfId = element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, "ID");
 
-            if(indexOfId != - 1) {
+            if (indexOfId != -1) {
                 final String id = element.getAttribute(indexOfId).getValue();
-                if(id.equals(this.predicateWithoutBase) && base.equals(this.predicateBase) ||
-                        id.equals(this.predicate)) {
+                if (id.equals(this.predicateWithoutBase) && base.equals(this.predicateBase)
+                    || id.equals(this.predicate)) {
                     this.exist = true;
                 }
             }

@@ -34,21 +34,22 @@ public class PurgeServiceImpl implements PurgeService {
             try {
                 final boolean isInternalUser = UserContext.isInternalUser();
 
-                if(! isInternalUser) {
+                if (!isInternalUser) {
                     UserContext.setUserContext("");
                     UserContext.runAsInternalUser();
                 }
-            } catch(final Exception e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final Exception e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on setting user context.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on setting user context.", e);
                 }
                 UserContext.setUserContext("");
                 UserContext.runAsInternalUser();
             }
-            for(final String componentId : this.tripleStoreUtility.getComponents(purgeRequest.getResourceId())) {
+            for (final String componentId : this.tripleStoreUtility.getComponents(purgeRequest.getResourceId())) {
                 this.fedoraServiceClient.deleteObject(componentId);
             }
             this.fedoraServiceClient.deleteObject(purgeRequest.getResourceId());
@@ -56,12 +57,15 @@ public class PurgeServiceImpl implements PurgeService {
             this.fedoraServiceClient.sync();
             try {
                 this.tripleStoreUtility.reinitialize();
-            } catch(TripleStoreSystemException e) {
+            }
+            catch (TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             LOGGER.error("could not dequeue message", e);
-        } finally {
+        }
+        finally {
             PurgeStatus.getInstance().dec();
         }
     }

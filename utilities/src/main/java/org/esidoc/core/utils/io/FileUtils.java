@@ -12,7 +12,7 @@ import java.util.Random;
 public final class FileUtils {
 
     private static final Random RANDOM = new Random();
-    private static final int RETRY_SLEEP_MILLIS = 10;
+    private static final long RETRY_SLEEP_MILLIS = 10;
 
     private static File defaultTempDirectory;
 

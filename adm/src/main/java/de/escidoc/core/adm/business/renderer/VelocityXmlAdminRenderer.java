@@ -58,7 +58,7 @@ public class VelocityXmlAdminRenderer implements AdminRendererInterface {
      */
     @Override
     public String renderIndexConfiguration(final Map<String, Map<String, Map<String, Object>>> indexConfiguration)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(values);
         addIndexConfigurationValues(indexConfiguration, values);
@@ -83,39 +83,40 @@ public class VelocityXmlAdminRenderer implements AdminRendererInterface {
      */
     @SuppressWarnings("unchecked")
     private static void addIndexConfigurationValues(
-            final Map<String, Map<String, Map<String, Object>>> indexConfiguration, final Map<String, Object> values) {
+        final Map<String, Map<String, Map<String, Object>>> indexConfiguration, final Map<String, Object> values) {
         final Collection<HashMap<String, Object>> resourcesVm = new ArrayList<HashMap<String, Object>>();
-        if(indexConfiguration != null && ! indexConfiguration.isEmpty()) {
+        if (indexConfiguration != null && !indexConfiguration.isEmpty()) {
             final Set<Entry<String, Map<String, Map<String, Object>>>> indexConfigurationEntrySet =
-                    indexConfiguration.entrySet();
-            for(final Entry<String, Map<String, Map<String, Object>>> entry : indexConfigurationEntrySet) {
+                indexConfiguration.entrySet();
+            for (final Entry<String, Map<String, Map<String, Object>>> entry : indexConfigurationEntrySet) {
                 final HashMap<String, Object> resourceVm = new HashMap<String, Object>();
                 resourceVm.put("resourceName", entry.getKey());
                 final Map<String, Map<String, Object>> indexMap = entry.getValue();
-                if(indexMap != null && ! indexMap.isEmpty()) {
+                if (indexMap != null && !indexMap.isEmpty()) {
                     final Collection<HashMap<String, Object>> indexesVm = new ArrayList<HashMap<String, Object>>();
                     final Set<Entry<String, Map<String, Object>>> indexMapEntrySet = indexMap.entrySet();
-                    for(final Entry<String, Map<String, Object>> indexMapEntry : indexMapEntrySet) {
+                    for (final Entry<String, Map<String, Object>> indexMapEntry : indexMapEntrySet) {
                         final HashMap<String, Object> indexVm = new HashMap<String, Object>();
                         indexVm.put("indexName", indexMapEntry.getKey());
                         final Map<String, Object> indexParamsMap = indexMapEntry.getValue();
-                        if(indexParamsMap != null && ! indexParamsMap.isEmpty()) {
-                            for(final Entry<String, Object> mapEntry : indexParamsMap.entrySet()) {
+                        if (indexParamsMap != null && !indexParamsMap.isEmpty()) {
+                            for (final Entry<String, Object> mapEntry : indexParamsMap.entrySet()) {
                                 final String indexParamName = mapEntry.getKey();
-                                if("prerequisites".equals(indexParamName)) {
+                                if ("prerequisites".equals(indexParamName)) {
                                     final HashMap<String, String> prerequisitesMap =
-                                            (HashMap<String, String>) mapEntry.getValue();
-                                    if(prerequisitesMap != null && ! prerequisitesMap.isEmpty()) {
+                                        (HashMap<String, String>) mapEntry.getValue();
+                                    if (prerequisitesMap != null && !prerequisitesMap.isEmpty()) {
                                         final Map<String, String> prerequisitesVm = new HashMap<String, String>();
                                         final Set<Entry<String, String>> prerequisitesMapEntrySet =
-                                                prerequisitesMap.entrySet();
-                                        for(final Entry<String, String> prerequisitesMapEntry : prerequisitesMapEntrySet) {
-                                            prerequisitesVm.put(prerequisitesMapEntry.getKey(),
-                                                    prerequisitesMapEntry.getValue());
+                                            prerequisitesMap.entrySet();
+                                        for (final Entry<String, String> prerequisitesMapEntry : prerequisitesMapEntrySet) {
+                                            prerequisitesVm.put(prerequisitesMapEntry.getKey(), prerequisitesMapEntry
+                                                .getValue());
                                         }
                                         indexVm.put("prerequisites", prerequisitesVm);
                                     }
-                                } else {
+                                }
+                                else {
                                     indexVm.put(indexParamName, indexParamsMap.get(indexParamName));
                                 }
                             }

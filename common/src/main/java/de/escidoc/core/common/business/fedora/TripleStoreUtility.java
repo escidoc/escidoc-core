@@ -108,19 +108,19 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     public static final String PROP_OBJECT_TYPE = Constants.RDF_NAMESPACE_URI + "type";
 
     public static final String PROP_COMPONENT_CONTENT_CATEGORY =
-            Constants.PROPERTIES_NS_URI + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY;
+        Constants.PROPERTIES_NS_URI + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY;
 
     public static final String PROP_CONTENT_CATEGORY =
-            Constants.PROPERTIES_NS_URI + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY;
+        Constants.PROPERTIES_NS_URI + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY;
 
     public static final String PROP_CONTENT_MODEL_ID =
-            Constants.STRUCTURAL_RELATIONS_NS_URI + Elements.ELEMENT_CONTENT_MODEL;
+        Constants.STRUCTURAL_RELATIONS_NS_URI + Elements.ELEMENT_CONTENT_MODEL;
 
     public static final String PROP_CONTENT_MODEL_TITLE =
-            Constants.PROPERTIES_NS_URI + Elements.ELEMENT_CONTENT_MODEL + "-title";
+        Constants.PROPERTIES_NS_URI + Elements.ELEMENT_CONTENT_MODEL + "-title";
 
     public static final String PROP_CONTENT_TYPE_TITLE =
-            Constants.PROPERTIES_NS_URI + Elements.ELEMENT_CONTENT_MODEL + "-title";
+        Constants.PROPERTIES_NS_URI + Elements.ELEMENT_CONTENT_MODEL + "-title";
 
     public static final String PROP_CONTEXT_ID = Constants.STRUCTURAL_RELATIONS_NS_URI + "context";
 
@@ -153,15 +153,15 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     public static final String PROP_PUBLIC_STATUS = Constants.PROPERTIES_NS_URI + Elements.ELEMENT_PUBLIC_STATUS;
 
     public static final String PROP_PUBLIC_STATUS_COMMENT =
-            Constants.PROPERTIES_NS_URI + Elements.ELEMENT_PUBLIC_STATUS_COMMENT;
+        Constants.PROPERTIES_NS_URI + Elements.ELEMENT_PUBLIC_STATUS_COMMENT;
 
     public static final String PROP_MODIFIED_BY_ID =
-            Constants.STRUCTURAL_RELATIONS_NS_URI + Elements.ELEMENT_MODIFIED_BY;
+        Constants.STRUCTURAL_RELATIONS_NS_URI + Elements.ELEMENT_MODIFIED_BY;
 
     public static final String PROP_STATUS = PROP_PUBLIC_STATUS; // "status";
 
     public static final String PROP_MODIFIED_BY_TITLE =
-            Constants.PROPERTIES_NS_URI + Elements.ELEMENT_MODIFIED_BY_TITLE;
+        Constants.PROPERTIES_NS_URI + Elements.ELEMENT_MODIFIED_BY_TITLE;
 
     public static final String PROP_OBJECT_PID = Constants.PROPERTIES_NS_URI + Elements.ELEMENT_PID;
 
@@ -214,7 +214,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     public static final String PROP_CONTEXT_CREATION_DATE = Constants.PROPERTIES_NS_URI + Elements.ELEMENT_CONTEXT;
 
     public static final String PROP_ORGANIZATIONAL_UNIT =
-            Constants.STRUCTURAL_RELATIONS_NS_URI + Elements.ELEMENT_ORGANIZATIONAL_UNIT;
+        Constants.STRUCTURAL_RELATIONS_NS_URI + Elements.ELEMENT_ORGANIZATIONAL_UNIT;
 
     /*
      * Content Relation
@@ -222,12 +222,12 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     public static final String PROP_CONTENT_RELATION_SUBJECT = Constants.RDF_NAMESPACE_URI + "subject";
 
     public static final String PROP_CONTENT_RELATION_SUBJECT_VERSION =
-            Constants.CONTENT_RELATION_NAMESPACE_URI + "/subject-version-number";
+        Constants.CONTENT_RELATION_NAMESPACE_URI + "/subject-version-number";
 
     public static final String PROP_CONTENT_RELATION_OBJECT = Constants.RDF_NAMESPACE_URI + "object";
 
     public static final String PROP_CONTENT_RELATION_OBJECT_VERSION =
-            Constants.CONTENT_RELATION_NAMESPACE_URI + "/object-version-number";
+        Constants.CONTENT_RELATION_NAMESPACE_URI + "/object-version-number";
 
     public static final String PROP_CONTENT_RELATION_DESCRIPTION = Constants.PROPERTIES_NS_URI + "description";
 
@@ -263,10 +263,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
     public abstract List<String> executeQueryId(final String id, final boolean targetIsSubject, final String predicate)
-            throws TripleStoreSystemException;
+        throws TripleStoreSystemException;
 
-    public abstract List<String> executeQueryForList(final Collection<String> ids, final boolean targetIsSubject,
-                                                     final String predicate) throws TripleStoreSystemException;
+    public abstract List<String> executeQueryForList(
+        final Collection<String> ids, final boolean targetIsSubject, final String predicate)
+        throws TripleStoreSystemException;
 
     protected abstract String executeQueryEarliestCreationDate() throws TripleStoreSystemException;
 
@@ -284,9 +285,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @throws TripleStoreSystemException If access to the triple store fails.
      * @throws QueryException             Thrown in case of a failed query execution.
      */
-    protected abstract List<String> executeQueryLiteral(final String literal, final boolean targetIsSubject,
-                                                        final String predicate)
-            throws TripleStoreSystemException, QueryException;
+    protected abstract List<String> executeQueryLiteral(
+        final String literal, final boolean targetIsSubject, final String predicate) throws TripleStoreSystemException,
+        QueryException;
 
     /**
      * @param id object id
@@ -298,7 +299,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         final List<String> result = new ArrayList<String>();
 
         final List<String> results = executeQueryId(id, true, PROP_PARENT);
-        for(final String result1 : results) {
+        for (final String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
             String entry = result1;
@@ -319,7 +320,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         final List<String> result = new ArrayList<String>();
 
         final List<String> results = executeQueryForList(ids, true, PROP_PARENT);
-        for(final String result1 : results) {
+        for (final String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
             String entry = result1;
@@ -337,14 +338,14 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
     public List<String> getChildrenPath(final Collection<String> ids, final List<String> totalList)
-            throws TripleStoreSystemException {
+        throws TripleStoreSystemException {
 
         List<String> result = totalList;
         final Collection<String> parentsList = new ArrayList<String>();
 
         final List<String> results = executeQueryForList(ids, true, PROP_PARENT);
-        if(results != null && ! results.isEmpty()) {
-            for(final String result1 : results) {
+        if (results != null && !results.isEmpty()) {
+            for (final String result1 : results) {
                 String entry = result1;
                 entry = XmlUtility.getIdFromURI(entry);
                 result.add(entry);
@@ -368,7 +369,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         queryIDs.add(id);
 
         final List<String> results = executeQueryForList(queryIDs, true, PROP_MEMBER);
-        for(final String result1 : results) {
+        for (final String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
             String entry = result1;
@@ -443,11 +444,13 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
 
         final String result;
         final List<String> results = executeQueryId(pid, false, PROP_CREATION_DATE);
-        if(results.size() == 1) {
+        if (results.size() == 1) {
             result = results.get(0);
-        } else if(results.isEmpty()) {
+        }
+        else if (results.isEmpty()) {
             throw new TripleStoreSystemException("Creation date not found for resource '" + pid + "'.");
-        } else {
+        }
+        else {
             throw new TripleStoreSystemException("More than one creation date found for resource '" + pid + "'.");
         }
         return result;
@@ -471,7 +474,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         final List<String> results = executeQueryId(id, true, PROP_COMPONENT);
         final Iterator<String> it = results.iterator();
         String item = null;
-        if(it.hasNext()) {
+        if (it.hasNext()) {
             // TODO throw exception if more than one result
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
@@ -496,10 +499,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         final List<String> result = new ArrayList<String>();
         try {
             final List<String> results = executeQueryLiteral(name, true, PROP_DC_TITLE);
-            for(final String entry : results) {
+            for (final String entry : results) {
                 result.add(XmlUtility.getIdFromURI(entry));
             }
-        } catch(final QueryException e) {
+        }
+        catch (final QueryException e) {
             throw new TripleStoreSystemException(e.getMessage(), e);
         }
 
@@ -554,9 +558,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
 
         boolean isMember = false;
         final List<String> entries =
-                getPropertiesElementsVector(parentId, Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
-        for(final String entry : entries) {
-            if(entry.equals(memberId)) {
+            getPropertiesElementsVector(parentId, Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
+        for (final String entry : entries) {
+            if (entry.equals(memberId)) {
                 isMember = true;
                 break;
             }
@@ -572,8 +576,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
 
         boolean isParent = false;
         final List<String> entries = getPropertiesElementsVector(ouId, PROP_PARENT);
-        for(final String entry : entries) {
-            if(entry.equals(parentId)) {
+        for (final String entry : entries) {
+            if (entry.equals(parentId)) {
                 isParent = true;
                 break;
             }
@@ -587,7 +591,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
     public abstract Map<String, String> getProperties(String pid, Collection<String> fullqualifiedNamedProperties)
-            throws TripleStoreSystemException;
+        throws TripleStoreSystemException;
 
     /**
      * Returns the value of a property entry in RELS-EXT by adding a slash ('/') to the namespace. In order to retrieve
@@ -597,7 +601,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
     public String getProperty(final String pid, final String fullQualifiedNameProperty)
-            throws TripleStoreSystemException {
+        throws TripleStoreSystemException {
 
         return this.getRelation(pid, fullQualifiedNameProperty);
 
@@ -622,10 +626,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
     public abstract String getRelation(final String pid, final String fullQualifiedPropertyName)
-            throws TripleStoreSystemException;
+        throws TripleStoreSystemException;
 
     public abstract String getObjectList(final String objectType, final Map filterMap, final String whereClause)
-            throws InvalidContentException, TripleStoreSystemException, MissingMethodParameterException;
+        throws InvalidContentException, TripleStoreSystemException, MissingMethodParameterException;
 
     /**
      * Retrieves values from the triple store using the provided query.
@@ -645,13 +649,13 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @throws TripleStoreSystemException If access to the triple store fails. TODO refactor to getPropertiesElement
      */
     public String getPropertiesElements(final String pid, final String fullqualifiedPropertyName)
-            throws TripleStoreSystemException {
+        throws TripleStoreSystemException {
 
         String value = null;
         final List<String> results = executeQueryId(pid, false, fullqualifiedPropertyName);
 
         // work around for more than one dc:identifier
-        for(final String result : results) {
+        for (final String result : results) {
             value = result;
         }
 
@@ -663,7 +667,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      */
     // Result is used as a vector in Context.getOrganizationalUnitHrefs()
     public List<String> getPropertiesElementsVector(final String pid, final String fullPropertyElementName)
-            throws TripleStoreSystemException {
+        throws TripleStoreSystemException {
 
         return new ArrayList<String>(executeQueryId(pid, false, fullPropertyElementName));
     }
@@ -676,10 +680,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @return
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    public List<String> getPropertiesElementsVector(final String pid, final String fullPropertyElementName,
-                                                    final boolean targetIsSubject) throws TripleStoreSystemException {
-        return targetIsSubject ? new ArrayList<String>(executeQueryId(pid, targetIsSubject, fullPropertyElementName)) :
-                getPropertiesElementsVector(pid, fullPropertyElementName);
+    public List<String> getPropertiesElementsVector(
+        final String pid, final String fullPropertyElementName, final boolean targetIsSubject)
+        throws TripleStoreSystemException {
+        return targetIsSubject ? new ArrayList<String>(executeQueryId(pid, targetIsSubject, fullPropertyElementName)) : getPropertiesElementsVector(
+            pid, fullPropertyElementName);
     }
 
     /**
@@ -704,9 +709,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         final List<String> results = getPropertiesElementsVector(pid, PROP_OBJECT_TYPE);
         // TODO what should we do if more than one object type is found for one
         // id?
-        for(final String result1 : results) {
+        for (final String result1 : results) {
             result = result1;
-            if(PATTERN_RESOURCE_NS.matcher(result).matches()) {
+            if (PATTERN_RESOURCE_NS.matcher(result).matches()) {
                 result = PATTERN_LOWER_THAN_GREATER_THAN.matcher(result).replaceAll("$1");
 
                 break;
@@ -736,7 +741,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @throws TripleStoreSystemException e
      */
     public abstract StringBuffer getRetrieveSelectClause(boolean targetIsSubject, String predicateId)
-            throws TripleStoreSystemException;
+        throws TripleStoreSystemException;
 
     /**
      * Builds the starting clause of a query to the triple store.
@@ -755,11 +760,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      *                            <code>null</code>, if contentModelTitleId is not <code>null</code>.
      * @return Returns the where clause searching for the specified subjects.
      */
-    public abstract StringBuffer getRetrieveWhereClause(boolean targetIsSubject, final String predicateId,
-                                                        final String expectedValue, final String targetResourceType,
-                                                        final String contentModelTitleId,
-                                                        final String contentModelTitle)
-            throws TripleStoreSystemException;
+    public abstract StringBuffer getRetrieveWhereClause(
+        boolean targetIsSubject, final String predicateId, final String expectedValue, final String targetResourceType,
+        final String contentModelTitleId, final String contentModelTitle) throws TripleStoreSystemException;
 
     // FIXME don't use triplestore?
     public List<String> getMethodNames(final String id) throws TripleStoreSystemException {
@@ -767,8 +770,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
 
         final String cmPid = getContentModel(id);
         final List<String> sdefPids =
-                getPropertiesElementsVector(cmPid, "info:fedora/fedora-system:def/model#hasService");
-        for(final String sdefPid : sdefPids) {
+            getPropertiesElementsVector(cmPid, "info:fedora/fedora-system:def/model#hasService");
+        for (final String sdefPid : sdefPids) {
             methodNames.add(getProperty(sdefPid, "info:fedora/fedora-system:def/model#definesMethod"));
         }
 
@@ -786,7 +789,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         final List<String> surrogates = new ArrayList<String>();
         final List<String> surrogateIds = executeQueryId(id, true, PROP_ORIGIN);
         final Iterator<String> it = surrogateIds.iterator();
-        if(it.hasNext()) {
+        if (it.hasNext()) {
             String entry = it.next();
             entry = XmlUtility.getIdFromURI(entry);
             surrogates.add(entry);
@@ -820,33 +823,44 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      */
     public String getHref(final String objectType, final String objectId) {
         String type = null;
-        if(objectType != null) {
-            type = XmlUtility.PATTERN_RESOURCE_OBJECT_TYPE.matcher(objectType).find() ? objectType :
-                    Constants.RESOURCES_NS_URI + StringUtility.convertToUpperCaseLetterFormat(objectType);
+        if (objectType != null) {
+            type =
+                XmlUtility.PATTERN_RESOURCE_OBJECT_TYPE.matcher(objectType).find() ? objectType : Constants.RESOURCES_NS_URI
+                    + StringUtility.convertToUpperCaseLetterFormat(objectType);
         }
 
         String objectHref = null;
-        if(Constants.CONTAINER_OBJECT_TYPE.equals(type)) {
+        if (Constants.CONTAINER_OBJECT_TYPE.equals(type)) {
             objectHref = XmlUtility.getContainerHref(objectId);
-        } else if(Constants.CONTENT_MODEL_OBJECT_TYPE.equals(type)) {
+        }
+        else if (Constants.CONTENT_MODEL_OBJECT_TYPE.equals(type)) {
             objectHref = XmlUtility.getContentModelHref(objectId);
-        } else if(Constants.CONTEXT_OBJECT_TYPE.equals(type)) {
+        }
+        else if (Constants.CONTEXT_OBJECT_TYPE.equals(type)) {
             objectHref = XmlUtility.getContextHref(objectId);
-        } else if(Constants.ITEM_OBJECT_TYPE.equals(type)) {
+        }
+        else if (Constants.ITEM_OBJECT_TYPE.equals(type)) {
             objectHref = XmlUtility.getItemHref(objectId);
-        } else if(Constants.COMPONENT_OBJECT_TYPE.equals(type)) {
+        }
+        else if (Constants.COMPONENT_OBJECT_TYPE.equals(type)) {
             objectHref = getComponentHref(objectId);
-        } else if(Constants.CONTENT_RELATION2_OBJECT_TYPE.equals(type)) {
+        }
+        else if (Constants.CONTENT_RELATION2_OBJECT_TYPE.equals(type)) {
             objectHref = XmlUtility.getContentRelationHref(objectId);
-        } else if(Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE.equals(type)) {
+        }
+        else if (Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE.equals(type)) {
             objectHref = XmlUtility.getOrganizationalUnitHref(objectId);
-        } else if(Constants.ROLE_OBJECT_TYPE.equals(type)) {
+        }
+        else if (Constants.ROLE_OBJECT_TYPE.equals(type)) {
             objectHref = XmlUtility.getRoleHref(objectId);
-        } else if(Constants.SCOPE_OBJECT_TYPE.equals(type)) {
+        }
+        else if (Constants.SCOPE_OBJECT_TYPE.equals(type)) {
             objectHref = XmlUtility.getScopeHref(objectId);
-        } else if(Constants.USER_ACCOUNT_OBJECT_TYPE.equals(type)) {
+        }
+        else if (Constants.USER_ACCOUNT_OBJECT_TYPE.equals(type)) {
             objectHref = XmlUtility.getUserAccountHref(objectId);
-        } else if(Constants.USER_GROUP_OBJECT_TYPE.equals(type)) {
+        }
+        else if (Constants.USER_GROUP_OBJECT_TYPE.equals(type)) {
             objectHref = XmlUtility.getUserGroupHref(objectId);
         }
         return objectHref;
@@ -862,11 +876,12 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         final String itemId;
         try {
             itemId = getItemForComponent(componentId);
-        } catch(final TripleStoreSystemException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final TripleStoreSystemException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on accessing triple store.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on accessing triple store.", e);
             }
             return null;

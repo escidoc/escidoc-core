@@ -73,9 +73,8 @@ public class ContextHandlerBase extends HandlerBase {
      * @param id The ID of the context which should be bound to this Handler.
      * @throws ContextNotFoundException If there is no context with <code>id</code> in the repository.
      */
-    public void setContext(final String id)
-            throws ContextNotFoundException, TripleStoreSystemException, IntegritySystemException,
-            WebserverSystemException {
+    public void setContext(final String id) throws ContextNotFoundException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         this.context = new Context(id);
     }
@@ -95,13 +94,12 @@ public class ContextHandlerBase extends HandlerBase {
      * @throws InvalidStatusException Thrown if status compares of Context not to the status parameter.
      */
     protected void checkStatus(final String status) throws InvalidStatusException, TripleStoreSystemException {
-        final String objectStatus = getTripleStoreUtility()
-                .getPropertiesElements(this.context.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
+        final String objectStatus =
+            getTripleStoreUtility().getPropertiesElements(this.context.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-        if(! objectStatus.equals(status)) {
-            throw new InvalidStatusException(
-                    "Context " + context.getId() + " is in " + TripleStoreUtility.PROP_PUBLIC_STATUS + " '" +
-                            objectStatus + "'.");
+        if (!objectStatus.equals(status)) {
+            throw new InvalidStatusException("Context " + context.getId() + " is in "
+                + TripleStoreUtility.PROP_PUBLIC_STATUS + " '" + objectStatus + "'.");
         }
     }
 

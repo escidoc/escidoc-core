@@ -156,18 +156,19 @@ public class ContentModelCreate extends GenericResourceCreate {
         // an unsuccessful requests an objid (and time). This is redundant
         // if rollback is implemented and gives an unused objid back to
         // the objid pool.
-        if(getObjid() == null) {
+        if (getObjid() == null) {
             try {
                 setObjid(this.idProvider.getNextPid());
-            } catch(final SystemException e) {
+            }
+            catch (final SystemException e) {
                 // FIXME should be catched earlier (FRS)
                 throw new WebserverSystemException(e);
             }
         }
 
         // create service definitions and deployments
-        if(this.resourceDefinitions != null) {
-            for(final ResourceDefinitionCreate resourceDefinitionCreate : this.resourceDefinitions.values()) {
+        if (this.resourceDefinitions != null) {
+            for (final ResourceDefinitionCreate resourceDefinitionCreate : this.resourceDefinitions.values()) {
                 final String sdefFoxml = getSDefFoXML(resourceDefinitionCreate);
                 final IngestPathParam path = new IngestPathParam();
                 final IngestQueryParam query = new IngestQueryParam();
@@ -216,12 +217,12 @@ public class ContentModelCreate extends GenericResourceCreate {
 
         this.properties.getCurrentVersion().setDate(lmd);
         this.properties.getLatestVersion().setDate(lmd);
-        if(this.properties.getLatestReleasedVersion() != null) {
+        if (this.properties.getLatestReleasedVersion() != null) {
             this.properties.getLatestReleasedVersion().setDate(lmd);
         }
 
         final AddDatastreamPathParam addPath =
-                new AddDatastreamPathParam(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY);
+            new AddDatastreamPathParam(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY);
         final AddDatastreamQueryParam addQuery = new AddDatastreamQueryParam();
         addQuery.setDsLabel("whole object versioning datastream");
         addQuery.setVersionable(Boolean.FALSE);
@@ -229,7 +230,8 @@ public class ContentModelCreate extends GenericResourceCreate {
         try {
             addStream.write(getWov().getBytes(XmlUtility.CHARACTER_ENCODING));
             addStream.lock();
-        } catch(final IOException e) {
+        }
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         this.fedoraServiceClient.addDatastream(addPath, addQuery, addStream);
@@ -237,24 +239,27 @@ public class ContentModelCreate extends GenericResourceCreate {
         // update RELS-EXT with timestamp
         final String relsExt = renderRelsExt();
         final ModifiyDatastreamPathParam path =
-                new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
+            new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);
         final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
         query.setDsLabel(Datastream.RELS_EXT_DATASTREAM_LABEL);
         final Stream stream = new Stream();
         try {
             stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
-        } catch(final IOException e) {
+        }
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         this.fedoraServiceClient.modifyDatastream(path, query, stream);
 
-        if(forceSync) {
+        if (forceSync) {
             this.fedoraServiceClient.sync();
             try {
                 this.getTripleStoreUtility().reinitialize();
-            } catch(final TripleStoreSystemException e) {
+            }
+            catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -294,17 +299,18 @@ public class ContentModelCreate extends GenericResourceCreate {
         // templateValues.put(XmlTemplateProvider.TIMESTAMP,
         // this.properties.getCurrentVersion().getDate().toString());
         final DateTime date = this.properties.getCurrentVersion().getDate();
-        if(date == null) {
+        if (date == null) {
             templateValues.put(XmlTemplateProvider.VERSION_DATE, null);
             templateValues.put(XmlTemplateProvider.TIMESTAMP, null);
-        } else {
+        }
+        else {
             templateValues.put(XmlTemplateProvider.VERSION_DATE, date.toString());
             templateValues.put(XmlTemplateProvider.TIMESTAMP, date.toString());
         }
 
         templateValues.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
-        templateValues
-                .put(XmlTemplateProvider.VERSION_STATUS, this.properties.getCurrentVersion().getStatus().toString());
+        templateValues.put(XmlTemplateProvider.VERSION_STATUS, this.properties
+            .getCurrentVersion().getStatus().toString());
         templateValues.put(XmlTemplateProvider.VERSION_COMMENT, this.properties.getCurrentVersion().getComment());
 
         templateValues.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX, Constants.WOV_NAMESPACE_PREFIX);
@@ -321,9 +327,8 @@ public class ContentModelCreate extends GenericResourceCreate {
 
         // EVENT_XMLID EVENT_ID_TYPE EVENT_ID_VALUE
         templateValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, "v1e" + System.currentTimeMillis());
-        templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE,
-                templateValues.get(XmlTemplateProvider.HREF) + '/' + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' +
-                        templateValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
+        templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, templateValues.get(XmlTemplateProvider.HREF) + '/'
+            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' + templateValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
         templateValues.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
         templateValues.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, getObjid());
@@ -396,8 +401,8 @@ public class ContentModelCreate extends GenericResourceCreate {
     private Map<String, Object> getBehaviorValues(final ResourceDefinitionCreate resourceDefinition) {
         final Map<String, Object> valueMap = new HashMap<String, Object>();
         valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID, getObjid());
-        valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID_UNDERSCORE,
-                getObjid().replaceAll(":", Constants.COLON_REPLACEMENT_PID));
+        valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID_UNDERSCORE, getObjid().replaceAll(":",
+            Constants.COLON_REPLACEMENT_PID));
 
         valueMap.put(XmlTemplateProvider.BEHAVIOR_OPERATION_NAME, resourceDefinition.getName());
         valueMap.put(XmlTemplateProvider.BEHAVIOR_TRANSFORM_MD, resourceDefinition.getMdRecordName());
@@ -446,8 +451,8 @@ public class ContentModelCreate extends GenericResourceCreate {
         valueMap.put(XmlTemplateProvider.MODIFIED_BY_TITLE, this.properties.getCurrentVersion().getCreatedByName());
 
         valueMap.put(XmlTemplateProvider.PUBLIC_STATUS, this.properties.getObjectProperties().getStatus().toString());
-        valueMap.put(XmlTemplateProvider.PUBLIC_STATUS_COMMENT,
-                this.properties.getObjectProperties().getStatusComment());
+        valueMap.put(XmlTemplateProvider.PUBLIC_STATUS_COMMENT, this.properties
+            .getObjectProperties().getStatusComment());
 
         valueMap.put(XmlTemplateProvider.OBJECT_PID, this.properties.getObjectProperties().getPid());
 
@@ -455,8 +460,8 @@ public class ContentModelCreate extends GenericResourceCreate {
         valueMap.put(XmlTemplateProvider.CONTEXT_TITLE, this.properties.getObjectProperties().getContextTitle());
 
         valueMap.put(XmlTemplateProvider.CONTENT_MODEL_ID, this.properties.getObjectProperties().getContentModelId());
-        valueMap.put(XmlTemplateProvider.CONTENT_MODEL_TITLE,
-                this.properties.getObjectProperties().getContentModelTitle());
+        valueMap.put(XmlTemplateProvider.CONTENT_MODEL_TITLE, this.properties
+            .getObjectProperties().getContentModelTitle());
 
         // add RELS-EXT current version values
         // version pid currently not supported for create
@@ -466,7 +471,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         valueMap.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
 
         String date = "---";
-        if(this.properties.getCurrentVersion().getDate() != null) {
+        if (this.properties.getCurrentVersion().getDate() != null) {
             date = this.properties.getCurrentVersion().getDate().toString();
         }
         valueMap.put(XmlTemplateProvider.VERSION_DATE, date);
@@ -480,44 +485,46 @@ public class ContentModelCreate extends GenericResourceCreate {
         // valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE,
         // this.properties.getLatestVersion().getDate().toString());
         final DateTime lateVersionDate = this.properties.getLatestVersion().getDate();
-        if(lateVersionDate == null) {
+        if (lateVersionDate == null) {
             valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, null);
-        } else {
+        }
+        else {
             valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, lateVersionDate.toString());
         }
 
-        valueMap.put(XmlTemplateProvider.LATEST_VERSION_STATUS,
-                this.properties.getLatestVersion().getStatus().toString());
+        valueMap.put(XmlTemplateProvider.LATEST_VERSION_STATUS, this.properties
+            .getLatestVersion().getStatus().toString());
         valueMap.put(XmlTemplateProvider.LATEST_VERSION_COMMENT, this.properties.getLatestVersion().getComment());
 
         // in the case of a surrogate
         final String origin = getProperties().getObjectProperties().getOrigin();
         final String originObjectId = getProperties().getObjectProperties().getOriginObjectId();
         final String originVersionId = getProperties().getObjectProperties().getOriginVersionId();
-        if(origin != null) {
+        if (origin != null) {
             valueMap.put("originObjectId", originObjectId);
-            if(originVersionId != null) {
+            if (originVersionId != null) {
                 valueMap.put(XmlTemplateProvider.VAR_ORIGIN_VERSION_ID, originVersionId);
             }
         }
 
         // add RELS-EXT latest-released-version properties
-        if(this.properties.getLatestReleasedVersion() != null) {
-            valueMap.put(XmlTemplateProvider.LATEST_RELEASE_NUMBER,
-                    this.properties.getLatestReleasedVersion().getNumber());
+        if (this.properties.getLatestReleasedVersion() != null) {
+            valueMap.put(XmlTemplateProvider.LATEST_RELEASE_NUMBER, this.properties
+                .getLatestReleasedVersion().getNumber());
 
             // latest release date
-            if(this.properties.getLatestReleasedVersion().getDate() != null) {
-                valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE,
-                        this.properties.getLatestReleasedVersion().getDate().toString());
-            } else {
+            if (this.properties.getLatestReleasedVersion().getDate() != null) {
+                valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE, this.properties
+                    .getLatestReleasedVersion().getDate().toString());
+            }
+            else {
                 valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE, "---");
             }
 
             // latest release pid
-            if(this.properties.getLatestReleasedVersion().getPid() != null) {
-                valueMap.put(XmlTemplateProvider.LATEST_RELEASE_PID,
-                        this.properties.getLatestReleasedVersion().getPid());
+            if (this.properties.getLatestReleasedVersion().getPid() != null) {
+                valueMap.put(XmlTemplateProvider.LATEST_RELEASE_PID, this.properties
+                    .getLatestReleasedVersion().getPid());
             }
         }
 
@@ -570,10 +577,11 @@ public class ContentModelCreate extends GenericResourceCreate {
 
         DateTime lmd = null;
         final List<DatastreamProfileTO> dsProfiles = this.fedoraServiceClient.getDatastreamProfiles(objid, null);
-        for(final DatastreamProfileTO datastreamProfileTO : dsProfiles) {
-            if(lmd == null) {
+        for (final DatastreamProfileTO datastreamProfileTO : dsProfiles) {
+            if (lmd == null) {
                 lmd = datastreamProfileTO.getDsCreateDate();
-            } else if(lmd.isBefore(datastreamProfileTO.getDsCreateDate())) {
+            }
+            else if (lmd.isBefore(datastreamProfileTO.getDsCreateDate())) {
                 lmd = datastreamProfileTO.getDsCreateDate();
             }
         }
@@ -616,22 +624,22 @@ public class ContentModelCreate extends GenericResourceCreate {
          * create class infrastructure.).
          */
 
-        if(this.contentStreams == null) {
+        if (this.contentStreams == null) {
             return null;
         }
 
         final List<HashMap<String, String>> contStreams = new ArrayList<HashMap<String, String>>();
 
-        for(final ContentStreamCreate contentStream : this.contentStreams) {
+        for (final ContentStreamCreate contentStream : this.contentStreams) {
             final HashMap<String, String> valueMap = new HashMap<String, String>();
-            valueMap.put(XmlTemplateProvider.CONTROL_GROUP,
-                    contentStream.getContent().getStorageType().getAbbreviation());
+            valueMap.put(XmlTemplateProvider.CONTROL_GROUP, contentStream
+                .getContent().getStorageType().getAbbreviation());
             valueMap.put(XmlTemplateProvider.VAR_ID, contentStream.getName());
             valueMap.put(XmlTemplateProvider.VAR_VERSIONABLE, XmlTemplateProvider.TRUE);
             valueMap.put(XmlTemplateProvider.VAR_ALT_IDS, "content-stream");
             valueMap.put(XmlTemplateProvider.MIME_TYPE, contentStream.getMimeType());
             valueMap.put(XmlTemplateProvider.VAR_LABEL, contentStream.getTitle());
-            if(contentStream.getContent().getDataLocation() != null) {
+            if (contentStream.getContent().getDataLocation() != null) {
                 valueMap.put(XmlTemplateProvider.VAR_URL, contentStream.getContent().getDataLocation().toString());
             }
             valueMap.put(XmlTemplateProvider.VAR_CONTENT, contentStream.getContent().getContent());

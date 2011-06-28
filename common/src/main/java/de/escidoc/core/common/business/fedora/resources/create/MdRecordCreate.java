@@ -84,7 +84,7 @@ public class MdRecordCreate implements Serializable {
      */
     public void setName(final String name) throws InvalidContentException {
 
-        if(name == null || name.length() == 0) {
+        if (name == null || name.length() == 0) {
             throw new InvalidContentException("Empty name of meta data record");
         }
 
@@ -350,93 +350,101 @@ public class MdRecordCreate implements Serializable {
         changes += mergeContent(mdrecord);
 
         // namespace
-        if(this.nameSpace == null) {
-            if(mdrecord.getNameSpace() != null) {
+        if (this.nameSpace == null) {
+            if (mdrecord.getNameSpace() != null) {
                 setNameSpace(mdrecord.getNameSpace());
                 changes++;
             }
-        } else if(! this.nameSpace.equals(mdrecord.getNameSpace())) {
+        }
+        else if (!this.nameSpace.equals(mdrecord.getNameSpace())) {
             this.nameSpace = mdrecord.getNameSpace();
             changes++;
         }
 
         // name
-        if(this.mdRecordName == null) {
-            if(mdrecord.getName() != null) {
+        if (this.mdRecordName == null) {
+            if (mdrecord.getName() != null) {
                 setName(mdrecord.getName());
                 changes++;
             }
-        } else if(! this.mdRecordName.equals(mdrecord.getName())) {
+        }
+        else if (!this.mdRecordName.equals(mdrecord.getName())) {
             this.mdRecordName = mdrecord.getName();
             changes++;
         }
 
         // type
-        if(this.type == null) {
-            if(mdrecord.getType() != null) {
+        if (this.type == null) {
+            if (mdrecord.getType() != null) {
                 setType(mdrecord.getType());
                 changes++;
             }
-        } else if(! this.type.equals(mdrecord.getType())) {
+        }
+        else if (!this.type.equals(mdrecord.getType())) {
             this.type = mdrecord.getType();
             changes++;
         }
 
         // schema
-        if(this.schema == null) {
-            if(mdrecord.getSchema() != null) {
+        if (this.schema == null) {
+            if (mdrecord.getSchema() != null) {
                 setSchema(mdrecord.getSchema());
                 changes++;
             }
-        } else if(! this.schema.equals(mdrecord.getSchema())) {
+        }
+        else if (!this.schema.equals(mdrecord.getSchema())) {
             this.schema = mdrecord.getSchema();
             changes++;
         }
         // mime type
-        if(this.mimeType == null) {
-            if(mdrecord.getMimeType() != null) {
+        if (this.mimeType == null) {
+            if (mdrecord.getMimeType() != null) {
                 setMimeType(mdrecord.getMimeType());
                 changes++;
             }
-        } else if(! this.mimeType.equals(mdrecord.getMimeType())) {
+        }
+        else if (!this.mimeType.equals(mdrecord.getMimeType())) {
             this.mimeType = mdrecord.getMimeType();
             changes++;
         }
         // label
-        if(this.label == null) {
-            if(mdrecord.getLabel() != null) {
+        if (this.label == null) {
+            if (mdrecord.getLabel() != null) {
                 setLabel(mdrecord.getLabel());
                 changes++;
             }
-        } else if(mdrecord.getLabel() != null && ! this.label.equals(mdrecord.getLabel())) {
+        }
+        else if (mdrecord.getLabel() != null && !this.label.equals(mdrecord.getLabel())) {
             this.label = mdrecord.getLabel();
             changes++;
         }
 
         // checksum
-        if(this.checksum == null) {
-            if(mdrecord.getChecksum() != null) {
+        if (this.checksum == null) {
+            if (mdrecord.getChecksum() != null) {
                 setChecksum(mdrecord.getChecksum());
                 changes++;
             }
-        } else if(mdrecord.getChecksum() != null && ! this.checksum.equals(mdrecord.getChecksum())) {
+        }
+        else if (mdrecord.getChecksum() != null && !this.checksum.equals(mdrecord.getChecksum())) {
             this.checksum = mdrecord.getChecksum();
             changes++;
         }
 
         // checksum enabled
-        if(this.checksumEnabled != mdrecord.isChecksumEnabled()) {
+        if (this.checksumEnabled != mdrecord.isChecksumEnabled()) {
             this.checksumEnabled = mdrecord.isChecksumEnabled();
             changes++;
         }
 
         // control Group
-        if(this.controlGroup == null) {
-            if(mdrecord.getControlGroup() != null) {
+        if (this.controlGroup == null) {
+            if (mdrecord.getControlGroup() != null) {
                 setControlGroup(mdrecord.getControlGroup());
                 changes++;
             }
-        } else if(mdrecord.getControlGroup() != null && ! this.controlGroup.equals(mdrecord.getControlGroup())) {
+        }
+        else if (mdrecord.getControlGroup() != null && !this.controlGroup.equals(mdrecord.getControlGroup())) {
             this.controlGroup = mdrecord.getControlGroup();
             changes++;
         }
@@ -454,7 +462,7 @@ public class MdRecordCreate implements Serializable {
             changes++;
         }*/
 
-        if(changes > 0) {
+        if (changes > 0) {
             this.ri.setResourceChanged(true);
         }
 
@@ -480,13 +488,14 @@ public class MdRecordCreate implements Serializable {
     private int mergeContent(final MdRecordCreate mdrecord) {
 
         int changes = 0;
-        if(this.content == null) {
-            if(mdrecord.getContent() != null) {
+        if (this.content == null) {
+            if (mdrecord.getContent() != null) {
                 setContent(mdrecord.getContent());
                 changes++;
             }
-        } else {
-            if(! XmlUtility.isIdentical(this.content, mdrecord.getContent())) {
+        }
+        else {
+            if (!XmlUtility.isIdentical(this.content, mdrecord.getContent())) {
                 this.content = mdrecord.getContent();
                 changes++;
             }

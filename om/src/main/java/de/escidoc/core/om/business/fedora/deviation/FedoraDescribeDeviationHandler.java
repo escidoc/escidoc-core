@@ -61,14 +61,14 @@ public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHa
      * @see de.escidoc.core.om.business.interfaces .FedoraDescribeDeviationHandlerInterface#getDatastreamDissemination(Map)
      */
     @Override
-    public String getFedoraDescription(final Map<String, String[]> parameters)
-            throws IOException, WebserverSystemException {
+    public String getFedoraDescription(final Map<String, String[]> parameters) throws IOException,
+        WebserverSystemException {
 
         final String urlParams = buildUrlParameters(parameters);
         String baseURL = EscidocConfiguration.getInstance().get(EscidocConfiguration.FEDORA_URL);
         final String user = EscidocConfiguration.getInstance().get(EscidocConfiguration.FEDORA_USER);
         final String pass = EscidocConfiguration.getInstance().get(EscidocConfiguration.FEDORA_PASSWORD);
-        if(! baseURL.endsWith("/")) {
+        if (!baseURL.endsWith("/")) {
             baseURL += "/";
         }
 
@@ -76,15 +76,17 @@ public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHa
         try {
             describeUrl = baseURL + "describe" + urlParams;
             return connectionUtility.getRequestURLAsString(new URL(describeUrl), user, pass);
-        } finally {
-            if(describeUrl != null) {
+        }
+        finally {
+            if (describeUrl != null) {
                 try {
                     connectionUtility.resetAuthentication(new URL(describeUrl));
-                } catch(final Exception e) {
-                    if(LOGGER.isWarnEnabled()) {
+                }
+                catch (final Exception e) {
+                    if (LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on reseting authentication.");
                     }
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on reseting authentication.", e);
                     }
                 }
@@ -100,14 +102,14 @@ public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHa
      */
     private static String buildUrlParameters(final Map<String, String[]> parameters) {
         final StringBuilder urlParams = new StringBuilder("");
-        if(parameters != null && ! parameters.isEmpty()) {
+        if (parameters != null && !parameters.isEmpty()) {
             urlParams.append('?');
-            for(final Entry<String, String[]> e : parameters.entrySet()) {
-                if(urlParams.length() > 1) {
+            for (final Entry<String, String[]> e : parameters.entrySet()) {
+                if (urlParams.length() > 1) {
                     urlParams.append('&');
                 }
                 final String[] values = e.getValue();
-                if(values != null && values.length > 0) {
+                if (values != null && values.length > 0) {
                     urlParams.append(e.getKey()).append('=').append(values[0]);
                 }
             }

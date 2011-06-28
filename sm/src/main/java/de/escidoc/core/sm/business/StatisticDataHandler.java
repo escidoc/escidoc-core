@@ -76,12 +76,12 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      */
     @Override
     public void create(final String xmlData) throws MissingMethodParameterException, SystemException {
-        if(xmlData == null || xmlData.length() == 0) {
+        if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
         final ProducerTemplate producerTemplate = this.camelContext.createProducerTemplate();
-        producerTemplate.asyncSendBody("jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true",
-                xmlData);
+        producerTemplate.asyncSendBody(
+            "jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true", xmlData);
     }
 
     /**
@@ -96,27 +96,29 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      * @see de.escidoc.core.sm.business.interfaces .StatisticDataHandlerInterface #insertStatisticData(java.lang.String)
      */
     @Override
-    public void insertStatisticData(final String xmlData)
-            throws ScopeNotFoundException, MissingMethodParameterException, XmlSchemaValidationException,
-            XmlCorruptedException, XmlParserSystemException, SqlDatabaseSystemException, WebserverSystemException {
-        if(xmlData == null || xmlData.length() == 0) {
+    public void insertStatisticData(final String xmlData) throws ScopeNotFoundException,
+        MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException, XmlParserSystemException,
+        SqlDatabaseSystemException, WebserverSystemException {
+        if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
         xmlUtility.validate(xmlData, XmlUtility.getStatisticDataSchemaLocation());
 
         final String scopeId = SmXmlUtility.getScopeId(xmlData);
 
-        if(scopeId == null || scopeId.length() == 0) {
+        if (scopeId == null || scopeId.length() == 0) {
             throw new ScopeNotFoundException("scopeId is null");
         }
         try {
             dao.saveStatisticData(xmlData, scopeId);
-        } catch(final SqlDatabaseSystemException e) {
-            if(e.getCause() != null && e.getCause().getClass() != null &&
-                    "ConstraintViolationException".equals(e.getCause().getClass().getSimpleName())) {
+        }
+        catch (final SqlDatabaseSystemException e) {
+            if (e.getCause() != null && e.getCause().getClass() != null
+                && "ConstraintViolationException".equals(e.getCause().getClass().getSimpleName())) {
                 // Ignore FindBugs
                 throw new ScopeNotFoundException("scope with id " + scopeId + " not found in database");
-            } else {
+            }
+            else {
                 throw e;
             }
         }

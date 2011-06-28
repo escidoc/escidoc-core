@@ -107,17 +107,18 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws OrganizationalUnitNotFoundException
      *          If no organizational unit with the given id exists.
      */
-    protected void setOrganizationalUnit(final String id)
-            throws OrganizationalUnitNotFoundException, TripleStoreSystemException, IntegritySystemException,
-            WebserverSystemException {
+    protected void setOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException,
+        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
 
-        if(id != null) {
+        if (id != null) {
             try {
                 this.organizationalUnit = new OrganizationalUnit(id);
-            } catch(final ResourceNotFoundException e) {
+            }
+            catch (final ResourceNotFoundException e) {
                 throw new OrganizationalUnitNotFoundException(e);
             }
-        } else {
+        }
+        else {
             this.organizationalUnit = null;
         }
     }
@@ -148,9 +149,9 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException              Thrown in case of an internal error.
      */
     protected void checkName(final String id, final String name, final List<String> parents)
-            throws MissingElementValueException, SystemException {
+        throws MissingElementValueException, SystemException {
 
-        if("".equals(name) || name == null) {
+        if ("".equals(name) || name == null) {
             throw new MissingElementValueException("Name of organizational unit must be set!");
         }
     }
@@ -177,11 +178,12 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     protected void expandPaths(final List<String> path) throws TripleStoreSystemException {
 
         final List<String> organizationalUnitIds = getTripleStoreUtility().getParents(path.get(path.size() - 1));
-        if(organizationalUnitIds != null) {
-            if(organizationalUnitIds.isEmpty()) {
+        if (organizationalUnitIds != null) {
+            if (organizationalUnitIds.isEmpty()) {
                 getPathes().push(new ArrayList<String>(path));
-            } else {
-                for(final String parent : organizationalUnitIds) {
+            }
+            else {
+                for (final String parent : organizationalUnitIds) {
                     final List<String> newPath = new ArrayList<String>(path);
                     newPath.add(parent);
                     getPathes().push(newPath);
@@ -204,46 +206,63 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws MissingMdRecordException       If the required md-record is missing
      */
     protected void parseIncomingXmlForCreate(final String xml, final StaxParser parser)
-            throws MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
-            XmlCorruptedException, MissingMdRecordException, EncodingSystemException, IntegritySystemException,
-            TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        throws MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
+        XmlCorruptedException, MissingMdRecordException, EncodingSystemException, IntegritySystemException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         try {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
             parser.clearHandlerChain();
-        } catch(LastModificationDateMissingException e) {
+        }
+        catch (LastModificationDateMissingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final LockingException e) {
+        }
+        catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final XMLStreamException e) {
+        }
+        catch (final XMLStreamException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final OptimisticLockingException e) {
+        }
+        catch (final OptimisticLockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final AlreadyExistsException e) {
+        }
+        catch (final AlreadyExistsException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ContentModelNotFoundException e) {
+        }
+        catch (final ContentModelNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ContextNotFoundException e) {
+        }
+        catch (final ContextNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final MissingContentException e) {
+        }
+        catch (final MissingContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ReferencedResourceNotFoundException e) {
+        }
+        catch (final ReferencedResourceNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final RelationPredicateNotFoundException e) {
+        }
+        catch (final RelationPredicateNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ContentRelationNotFoundException e) {
+        }
+        catch (final ContentRelationNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ReadonlyElementViolationException e) {
+        }
+        catch (final ReadonlyElementViolationException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ReadonlyAttributeViolationException e) {
+        }
+        catch (final ReadonlyAttributeViolationException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final InvalidContentException e) {
+        }
+        catch (final InvalidContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final InvalidStatusException e) {
+        }
+        catch (final InvalidStatusException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final PidAlreadyAssignedException e) {
+        }
+        catch (final PidAlreadyAssignedException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final TmeException e) {
+        }
+        catch (final TmeException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
     }
@@ -258,50 +277,69 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *                                    If the organizational unit does not exist.
      */
     protected void parseIncomingXmlForUpdate(final String xml, final StaxParser parser)
-            throws OptimisticLockingException, OrganizationalUnitNotFoundException, EncodingSystemException,
-            IntegritySystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException,
-            XmlCorruptedException {
+        throws OptimisticLockingException, OrganizationalUnitNotFoundException, EncodingSystemException,
+        IntegritySystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException,
+        XmlCorruptedException {
 
         try {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
             parser.clearHandlerChain();
-        } catch(LastModificationDateMissingException e) {
+        }
+        catch (LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
-        } catch(final XMLStreamException e) {
+        }
+        catch (final XMLStreamException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final MissingAttributeValueException e) {
+        }
+        catch (final MissingAttributeValueException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final MissingElementValueException e) {
+        }
+        catch (final MissingElementValueException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final MissingContentException e) {
+        }
+        catch (final MissingContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final MissingMdRecordException e) {
+        }
+        catch (final MissingMdRecordException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ContextNotFoundException e) {
+        }
+        catch (final ContextNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ContentModelNotFoundException e) {
+        }
+        catch (final ContentModelNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final LockingException e) {
+        }
+        catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final AlreadyExistsException e) {
+        }
+        catch (final AlreadyExistsException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ReferencedResourceNotFoundException e) {
+        }
+        catch (final ReferencedResourceNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final RelationPredicateNotFoundException e) {
+        }
+        catch (final RelationPredicateNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ContentRelationNotFoundException e) {
+        }
+        catch (final ContentRelationNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ReadonlyAttributeViolationException e) {
+        }
+        catch (final ReadonlyAttributeViolationException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final InvalidContentException e) {
+        }
+        catch (final InvalidContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final InvalidStatusException e) {
+        }
+        catch (final InvalidStatusException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ReadonlyElementViolationException e) {
+        }
+        catch (final ReadonlyElementViolationException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final PidAlreadyAssignedException e) {
+        }
+        catch (final PidAlreadyAssignedException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final TmeException e) {
+        }
+        catch (final TmeException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
     }
@@ -330,7 +368,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      */
     public OrganizationalUnitFoXmlRendererInterface getFoxmlRenderer() {
 
-        if(this.foxmlRenderer == null) {
+        if (this.foxmlRenderer == null) {
             this.foxmlRenderer = new VelocityXmlOrganizationalUnitFoXmlRenderer();
         }
         return this.foxmlRenderer;

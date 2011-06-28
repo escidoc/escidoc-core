@@ -83,8 +83,8 @@ public class BeanMethod implements ApplicationContextAware {
      * @throws MethodNotFoundException   If the invoked method does not exist.
      * @throws WebserverSystemException  If the invocation of the method causes an error.
      */
-    public Object invoke(final String username, final String password)
-            throws InvocationTargetException, MethodNotFoundException, WebserverSystemException {
+    public Object invoke(final String username, final String password) throws InvocationTargetException,
+        MethodNotFoundException, WebserverSystemException {
         return invokeWithProtocol(password);
     }
 
@@ -97,31 +97,35 @@ public class BeanMethod implements ApplicationContextAware {
      * @throws MethodNotFoundException   If the invoked method does not exist.
      * @throws WebserverSystemException  If the invocation of the method causes an error.
      */
-    public Object invokeWithProtocol(final String eSciDocUserHandle)
-            throws InvocationTargetException, MethodNotFoundException, WebserverSystemException {
+    public Object invokeWithProtocol(final String eSciDocUserHandle) throws InvocationTargetException,
+        MethodNotFoundException, WebserverSystemException {
 
         final Object result;
         try {
-            if(eSciDocUserHandle != null) {
+            if (eSciDocUserHandle != null) {
                 UserContext.setUserContext(eSciDocUserHandle);
             }
             Class[] parameterTypes = null;
-            if(this.parameters != null) {
+            if (this.parameters != null) {
                 final int noOfArguments = parameters.length;
                 parameterTypes = new Class[noOfArguments];
-                for(int i = 0; i < noOfArguments; ++ i) {
-                    if(this.parameters[i] != null) {
-                        if(this.parameters[i] instanceof String) {
+                for (int i = 0; i < noOfArguments; ++i) {
+                    if (this.parameters[i] != null) {
+                        if (this.parameters[i] instanceof String) {
                             parameterTypes[i] = String.class;
-                        } else if(this.parameters[i] instanceof EscidocBinaryContent) {
-                            parameterTypes[i] = EscidocBinaryContent.class;
-                        } else if(this.parameters[i] instanceof Map) {
-                            parameterTypes[i] = Map.class;
-                        } else {
-                            throw new InvocationTargetException(new SystemException(
-                                    "Unsupported parameter type [" + this.parameters[i].getClass().getName() + ']'));
                         }
-                    } else {
+                        else if (this.parameters[i] instanceof EscidocBinaryContent) {
+                            parameterTypes[i] = EscidocBinaryContent.class;
+                        }
+                        else if (this.parameters[i] instanceof Map) {
+                            parameterTypes[i] = Map.class;
+                        }
+                        else {
+                            throw new InvocationTargetException(new SystemException("Unsupported parameter type ["
+                                + this.parameters[i].getClass().getName() + ']'));
+                        }
+                    }
+                    else {
                         parameterTypes[i] = String.class;
                     }
                 }
@@ -129,21 +133,26 @@ public class BeanMethod implements ApplicationContextAware {
             final Object bean = this.applicationContext.getBean(this.beanId);
             final Method execute = bean.getClass().getMethod(getMethod(), parameterTypes);
             result = execute.invoke(bean, getParameters());
-        } catch(final SecurityException e) {
-            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource " + getBeanId(),
-                    e);
-        } catch(final IllegalArgumentException e) {
-            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource " + getBeanId(),
-                    e);
-        } catch(final NoSuchMethodException e) {
+        }
+        catch (final SecurityException e) {
+            throw new WebserverSystemException(
+                "Cannot execute method '" + this.method + "' on resource " + getBeanId(), e);
+        }
+        catch (final IllegalArgumentException e) {
+            throw new WebserverSystemException(
+                "Cannot execute method '" + this.method + "' on resource " + getBeanId(), e);
+        }
+        catch (final NoSuchMethodException e) {
             throw new MethodNotFoundException("Cannot execute method '" + this.method + "' on resource " + getBeanId(),
-                    e);
-        } catch(final IllegalAccessException e) {
-            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource " + getBeanId(),
-                    e);
-        } catch(final MissingMethodParameterException e) {
-            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource " + getBeanId(),
-                    e);
+                e);
+        }
+        catch (final IllegalAccessException e) {
+            throw new WebserverSystemException(
+                "Cannot execute method '" + this.method + "' on resource " + getBeanId(), e);
+        }
+        catch (final MissingMethodParameterException e) {
+            throw new WebserverSystemException(
+                "Cannot execute method '" + this.method + "' on resource " + getBeanId(), e);
         }
         return result;
     }

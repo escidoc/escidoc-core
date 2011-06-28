@@ -52,14 +52,14 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
      * @throws InvalidStatusException   If context is in invalid status.
      * @throws SystemException          If anything else fails.
      */
-    public void remove(final FedoraContextHandler contextHandler)
-            throws ContextNotEmptyException, ContextNotFoundException, InvalidStatusException, SystemException,
-            FedoraSystemException, WebserverSystemException {
+    public void remove(final FedoraContextHandler contextHandler) throws ContextNotEmptyException,
+        ContextNotFoundException, InvalidStatusException, SystemException, FedoraSystemException,
+        WebserverSystemException {
 
         final Context context = contextHandler.getContext();
         final String objectType = getTripleStoreUtility().getObjectType(context.getId());
 
-        if(! getTripleStoreUtility().exists(context.getId()) || ! Constants.CONTEXT_OBJECT_TYPE.equals(objectType)) {
+        if (!getTripleStoreUtility().exists(context.getId()) || !Constants.CONTEXT_OBJECT_TYPE.equals(objectType)) {
             throw new ContextNotFoundException(StringUtility.format("Context not found", context.getId()));
         }
 
@@ -68,7 +68,8 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
         this.getFedoraServiceClient().sync();
         try {
             this.getTripleStoreUtility().reinitialize();
-        } catch(TripleStoreSystemException e) {
+        }
+        catch (TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
         }
     }

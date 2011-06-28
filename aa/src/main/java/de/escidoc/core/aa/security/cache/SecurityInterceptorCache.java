@@ -68,20 +68,20 @@ public class SecurityInterceptorCache {
      * @return Returns the method mappings.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    @Cacheable(cacheName = "mappingsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
-            properties = {@Property(name = "includeMethod", value = "false")}))
+    @Cacheable(cacheName = "mappingsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public MethodMappingList getMethodMappings(final String className, final String methodName)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
         final MethodMappingList methodMappings;
         try {
             methodMappings = retrieveMethodMappings(className, methodName);
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException("Exception during method mappings retrieval. ", e);
         }
 
-        if(methodMappings == null || methodMappings.sizeBefore() == 0 && methodMappings.sizeAfter() == 0) {
+        if (methodMappings == null || methodMappings.sizeBefore() == 0 && methodMappings.sizeAfter() == 0) {
             final String errorMsg =
-                    StringUtility.format("No mapping found for class ", className, " and method ", methodName);
+                StringUtility.format("No mapping found for class ", className, " and method ", methodName);
             throw new WebserverSystemException(errorMsg);
         }
         return methodMappings;
@@ -98,7 +98,7 @@ public class SecurityInterceptorCache {
      * @throws SystemException Thrown in case of an internal error.
      */
     public MethodMappingList retrieveMethodMappings(final String className, final String methodName)
-            throws MissingMethodParameterException, SystemException {
+        throws MissingMethodParameterException, SystemException {
 
         return new MethodMappingList(this.requestMappingDao.retrieveMethodMappings(className, methodName));
     }

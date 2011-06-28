@@ -58,12 +58,12 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(PoolableTransformerFactory.class);
 
     private static final String ERR_MSG_UNSUPPORTED_ARG_TYPE =
-            "Only keys of type " + String.class.getName() + " are supported in makeObject.";
+        "Only keys of type " + String.class.getName() + " are supported in makeObject.";
 
     private final TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
     private static final String NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE =
-            "http://escidoc.mpg.de/metadataprofile/schema/0.";
+        "http://escidoc.mpg.de/metadataprofile/schema/0.";
 
     private static final String XSL_MAPPING_MPDL_TO_DC = "/xsl/mapping-mpdl2dc-onlyMD.xsl";
 
@@ -107,7 +107,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      */
     @Override
     public Object makeObject(final Object key) throws WebserverSystemException, FedoraSystemException {
-        if(! (key instanceof String)) {
+        if (!(key instanceof String)) {
             throw new UnsupportedOperationException(ERR_MSG_UNSUPPORTED_ARG_TYPE);
         }
         Transformer result = null;
@@ -116,11 +116,14 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
             xslt = mapKeyToXslt((String) key);
             final StreamSource streamSrc = new StreamSource(xslt);
             result = transformerFactory.newTransformer(streamSrc);
-        } catch(final IOException e) {
+        }
+        catch (final IOException e) {
             throw new WebserverSystemException("XSLT for DC-mapping not retrievable.", e);
-        } catch(final TransformerConfigurationException e) {
+        }
+        catch (final TransformerConfigurationException e) {
             throw new WebserverSystemException("Transformer for DC-mapping can not be created.", e);
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(xslt);
         }
         return result;
@@ -141,33 +144,36 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         InputStream xslt = null;
         // xslt is the mpdl-xslt- or default-xslt-stream
         final String internalXsltUrl =
-                nsUri != null && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ?
-                        EscidocConfiguration.getInstance().appendToSelfURL(XSL_MAPPING_MPDL_TO_DC) :
-                        this.defaultXsltUrl;
+            nsUri != null && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? EscidocConfiguration
+                .getInstance().appendToSelfURL(XSL_MAPPING_MPDL_TO_DC) : this.defaultXsltUrl;
         String xsltUrl = null;
 
         try {
-            if(contentModelId.length() > 0 && ! "null".equalsIgnoreCase(contentModelId)) {
+            if (contentModelId.length() > 0 && !"null".equalsIgnoreCase(contentModelId)) {
                 try {
                     // create link to content of DC-MAPPING in content model object
-                    final Stream xmltStream = this.fedoraServiceClient
-                            .getBinaryContent(contentModelId, CONTENT_MODEL_XSLT_DC_DATASTREAM, null);
+                    final Stream xmltStream =
+                        this.fedoraServiceClient.getBinaryContent(contentModelId, CONTENT_MODEL_XSLT_DC_DATASTREAM,
+                            null);
                     xslt = xmltStream.getInputStream();
-                } catch(final Throwable e) {
+                }
+                catch (final Throwable e) {
                     // fall back to internal XSLT
                     xsltUrl = internalXsltUrl;
                     xslt = this.connectionUtility.getRequestURL(new URL(xsltUrl)).getEntity().getContent();
                 }
-            } else {
+            }
+            else {
                 xsltUrl = internalXsltUrl;
                 xslt = this.connectionUtility.getRequestURL(new URL(xsltUrl)).getEntity().getContent();
             }
-        } catch(final WebserverSystemException e) {
+        }
+        catch (final WebserverSystemException e) {
             // xslt is still the stream set above
-            if(LOGGER.isWarnEnabled()) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on requesting URL '" + xsltUrl + '\'');
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on requesting URL '" + xsltUrl + '\'', e);
             }
         }

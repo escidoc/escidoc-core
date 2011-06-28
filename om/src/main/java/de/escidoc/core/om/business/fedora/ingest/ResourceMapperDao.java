@@ -68,12 +68,13 @@ public class ResourceMapperDao {
      */
     public ResourceMapperBean getIngestableForResource(final String xmlData) throws EscidocException {
         final StringBuilder exceptions = new StringBuilder();
-        for(final ResourceMapperBean bean : getResourceMappers()) {
+        for (final ResourceMapperBean bean : getResourceMappers()) {
             try {
-                if(bean.getValidator().isResourceValid(xmlData, bean.getResourceType())) {
+                if (bean.getValidator().isResourceValid(xmlData, bean.getResourceType())) {
                     return bean;
                 }
-            } catch(final InvalidResourceException e) {
+            }
+            catch (final InvalidResourceException e) {
                 // possible smell here. how to better communicate exceptions in
                 // this case ?
                 exceptions.append("Not a valid ").append(bean.getResourceType()).append(" : ").append(e).append('\n');
@@ -81,8 +82,8 @@ public class ResourceMapperDao {
 
         }
         // for valid resources this code should never be reached
-        throw new InvalidResourceException(
-                "The given resource is invalid. It cannot be validated against any schema: " + exceptions);
+        throw new InvalidResourceException("The given resource is invalid. It cannot be validated against any schema: "
+            + exceptions);
     }
 
 }

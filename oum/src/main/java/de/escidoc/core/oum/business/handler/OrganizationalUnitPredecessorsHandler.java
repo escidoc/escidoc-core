@@ -56,8 +56,8 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
     private final List<Predecessor> predecessors = new ArrayList<Predecessor>();
 
     private static final String XPATH_PREDECESSOR =
-            '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT + '/' + XmlUtility.NAME_PREDECESSORS + '/' +
-                    XmlUtility.NAME_PREDECESSOR;
+        '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT + '/' + XmlUtility.NAME_PREDECESSORS + '/'
+            + XmlUtility.NAME_PREDECESSOR;
 
     /**
      * @param parser The StAX parser.
@@ -80,35 +80,38 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
      * @throws InvalidContentException        Thrown if value of Attribute is invalid (e.g. type).
      */
     @Override
-    public StartElement startElement(final StartElement element)
-            throws MissingAttributeValueException, OrganizationalUnitNotFoundException, InvalidContentException,
-            TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
+        OrganizationalUnitNotFoundException, InvalidContentException, TripleStoreSystemException,
+        IntegritySystemException, WebserverSystemException {
 
         final String curPath = getParser().getCurPath();
 
-        if(curPath.equals(XPATH_PREDECESSOR)) {
+        if (curPath.equals(XPATH_PREDECESSOR)) {
 
             String objid;
             try {
-                objid = XmlUtility.getIdFromURI(
-                        element.getAttribute(Constants.XLINK_URI, Elements.ATTRIBUTE_XLINK_HREF).getValue());
-            } catch(final NoSuchAttributeException e) {
+                objid =
+                    XmlUtility.getIdFromURI(element
+                        .getAttribute(Constants.XLINK_URI, Elements.ATTRIBUTE_XLINK_HREF).getValue());
+            }
+            catch (final NoSuchAttributeException e) {
                 try {
                     objid = element.getAttribute(null, Elements.ATTRIBUTE_XLINK_OBJID).getValue();
-                } catch(final NoSuchAttributeException e1) {
-                    throw new MissingAttributeValueException(
-                            "Predecessor attribute '" + Elements.ATTRIBUTE_XLINK_HREF + "' or '" +
-                                    Elements.ATTRIBUTE_XLINK_OBJID + "' has to be set! ", e1);
+                }
+                catch (final NoSuchAttributeException e1) {
+                    throw new MissingAttributeValueException("Predecessor attribute '" + Elements.ATTRIBUTE_XLINK_HREF
+                        + "' or '" + Elements.ATTRIBUTE_XLINK_OBJID + "' has to be set! ", e1);
                 }
             }
 
             final String type;
             try {
-                type = XmlUtility
-                        .getIdFromURI(element.getAttribute(null, Elements.PREDECESSOR_ATTRIBUTE_FORM).getValue());
-            } catch(final NoSuchAttributeException e) {
-                throw new MissingAttributeValueException(
-                        "Predecessor attribute '" + Elements.PREDECESSOR_ATTRIBUTE_FORM + "' has to be set! ", e);
+                type =
+                    XmlUtility.getIdFromURI(element.getAttribute(null, Elements.PREDECESSOR_ATTRIBUTE_FORM).getValue());
+            }
+            catch (final NoSuchAttributeException e) {
+                throw new MissingAttributeValueException("Predecessor attribute '"
+                    + Elements.PREDECESSOR_ATTRIBUTE_FORM + "' has to be set! ", e);
             }
 
             this.getUtility().checkIsOrganizationalUnit(objid);
@@ -138,15 +141,19 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
      */
     private static PredecessorForm getPredecessorForm(final String predecessorForm) throws InvalidContentException {
 
-        if(predecessorForm.equals(PredecessorForm.SPLITTING.getLabel())) {
+        if (predecessorForm.equals(PredecessorForm.SPLITTING.getLabel())) {
             return PredecessorForm.SPLITTING;
-        } else if(predecessorForm.equals(PredecessorForm.FUSION.getLabel())) {
+        }
+        else if (predecessorForm.equals(PredecessorForm.FUSION.getLabel())) {
             return PredecessorForm.FUSION;
-        } else if(predecessorForm.equals(PredecessorForm.SPIN_OFF.getLabel())) {
+        }
+        else if (predecessorForm.equals(PredecessorForm.SPIN_OFF.getLabel())) {
             return PredecessorForm.SPIN_OFF;
-        } else if(predecessorForm.equals(PredecessorForm.AFFILIATION.getLabel())) {
+        }
+        else if (predecessorForm.equals(PredecessorForm.AFFILIATION.getLabel())) {
             return PredecessorForm.AFFILIATION;
-        } else if(predecessorForm.equals(PredecessorForm.REPLACEMENT.getLabel())) {
+        }
+        else if (predecessorForm.equals(PredecessorForm.REPLACEMENT.getLabel())) {
             return PredecessorForm.REPLACEMENT;
         }
         throw new InvalidContentException("Unsupported type '" + predecessorForm + "' for predecessors.");

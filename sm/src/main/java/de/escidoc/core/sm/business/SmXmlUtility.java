@@ -50,21 +50,21 @@ public class SmXmlUtility {
      */
     public static Collection<String> extractAggregationPrimKeysFromSql(final String sql) {
         final Collection<String> primKeys = new ArrayList<String>();
-        if(sql != null) {
+        if (sql != null) {
             String workSql = sql.replaceAll("\\s+", " ");
             workSql = workSql.replaceAll("\\s+", " ");
             boolean condition = false;
-            if(workSql.matches("(?i).* (where|order by|group by) .*")) {
+            if (workSql.matches("(?i).* (where|order by|group by) .*")) {
                 condition = true;
             }
             final String fromClause =
-                    condition ? workSql.replaceFirst("(?i).*?from(.*?)(where|order by|group by).*", "$1") :
-                            workSql.replaceFirst("(?i).*?from(.*)", "$1");
+                condition ? workSql.replaceFirst("(?i).*?from(.*?)(where|order by|group by).*", "$1") : workSql
+                    .replaceFirst("(?i).*?from(.*)", "$1");
             final String[] tables = fromClause.split(",");
-            for(String table : tables) {
-                if(table.matches(".*?_.*")) {
+            for (String table : tables) {
+                if (table.matches(".*?_.*")) {
                     table = table.replaceFirst(".*?\\.", "").trim();
-                    if(table.startsWith("_")) {
+                    if (table.startsWith("_")) {
                         table = table.replaceFirst("_", "");
                     }
                     primKeys.add(table.replaceFirst("(.*?)_.*", "$1"));
@@ -92,7 +92,7 @@ public class SmXmlUtility {
      * @return String primKeyWithoutSpecialSigns
      */
     public static String convertPrimKeyToTableName(final String primKey) {
-        if(primKey != null) {
+        if (primKey != null) {
             return primKey.replaceAll("\\:", "");
         }
         return null;

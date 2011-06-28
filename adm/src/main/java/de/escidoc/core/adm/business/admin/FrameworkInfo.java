@@ -88,8 +88,8 @@ public class FrameworkInfo extends JdbcDaoSupport {
      * Database query to get the latest version.
      */
     private static final String QUERY_LATEST_VERSION =
-            "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + "=(SELECT MAX(" + COLUMN_DATE + ") FROM " +
-                    TABLE_NAME + ')';
+        "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + "=(SELECT MAX(" + COLUMN_DATE + ") FROM "
+            + TABLE_NAME + ')';
 
     /**
      * path to XML file with the finger print of the "escidoc-core" database.
@@ -104,9 +104,9 @@ public class FrameworkInfo extends JdbcDaoSupport {
     public void checkDbVersion() throws SystemException {
         final Version currentDbVersion = getVersion();
 
-        if(! DB_VERSION.equals(currentDbVersion)) {
-            throw new SystemException(
-                    "database version differs (needed: " + DB_VERSION + ", installed: " + currentDbVersion + ')');
+        if (!DB_VERSION.equals(currentDbVersion)) {
+            throw new SystemException("database version differs (needed: " + DB_VERSION + ", installed: "
+                + currentDbVersion + ')');
         }
     }
 
@@ -124,22 +124,24 @@ public class FrameworkInfo extends JdbcDaoSupport {
                 public Object extractData(final ResultSet rs) throws SQLException {
                     Version result = null;
 
-                    if(rs.next()) {
-                        result = new Version(rs.getInt(COLUMN_MAJOR_NUMBER), rs.getInt(COLUMN_MINOR_NUMBER),
-                                rs.getInt(COLUMN_REVISION_NUMBER));
+                    if (rs.next()) {
+                        result =
+                            new Version(rs.getInt(COLUMN_MAJOR_NUMBER), rs.getInt(COLUMN_MINOR_NUMBER), rs
+                                .getInt(COLUMN_REVISION_NUMBER));
                     }
                     return result;
                 }
             });
-            if(result == null) {
+            if (result == null) {
                 // version table is empty
                 result = new Version(1, 0, 0);
             }
-        } catch(final DataAccessException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final DataAccessException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.debug("Error on getting database version.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on getting database version.", e);
             }
             // version table doesn't exist
@@ -161,11 +163,13 @@ public class FrameworkInfo extends JdbcDaoSupport {
         try {
             connection = getConnection();
             final Fingerprint currentFingerprint = new Fingerprint(connection);
-            final Fingerprint storedFingerprint = Fingerprint.readObject(getClass().getResourceAsStream(
-                    FINGERPRINT_PATH + DatabaseType.valueOf(connection).getProductName() + '/' + DB_VERSION.toString() +
-                            ".xml"));
+            final Fingerprint storedFingerprint =
+                Fingerprint.readObject(getClass().getResourceAsStream(
+                    FINGERPRINT_PATH + DatabaseType.valueOf(connection).getProductName() + '/' + DB_VERSION.toString()
+                        + ".xml"));
             result = storedFingerprint.equals(currentFingerprint);
-        } finally {
+        }
+        finally {
             IOUtils.closeConnection(connection);
         }
         return result;

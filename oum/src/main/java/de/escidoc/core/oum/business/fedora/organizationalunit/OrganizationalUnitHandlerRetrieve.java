@@ -148,20 +148,22 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
         final List<String> children = new ArrayList<String>();
         final List<String> chidrenIds = getOrganizationalUnit().getChildrenIds();
         final String parentId = getOrganizationalUnit().getId();
-        for(final String chidrenId : chidrenIds) {
+        for (final String chidrenId : chidrenIds) {
             String childId = null;
             try {
                 childId = chidrenId;
                 setOrganizationalUnit(childId);
                 children.add(getOrganizationalUnitXml());
-            } catch(final OrganizationalUnitNotFoundException e) {
-                throw new IntegritySystemException(
-                        "Referenced child organizational unit '" + childId + "' could not be retrieved! ", e);
+            }
+            catch (final OrganizationalUnitNotFoundException e) {
+                throw new IntegritySystemException("Referenced child organizational unit '" + childId
+                    + "' could not be retrieved! ", e);
             }
         }
         try {
             setOrganizationalUnit(parentId);
-        } catch(final OrganizationalUnitNotFoundException e) {
+        }
+        catch (final OrganizationalUnitNotFoundException e) {
             throw new IntegritySystemException("Parent organizational unit '" + parentId + "' is not available! ", e);
         }
         return getRenderer().renderChildObjects(getOrganizationalUnit(), children);
@@ -173,26 +175,27 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation of the children of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
      */
-    protected String getParentObjectsXml()
-            throws SystemException, TripleStoreSystemException, WebserverSystemException {
+    protected String getParentObjectsXml() throws SystemException, TripleStoreSystemException, WebserverSystemException {
 
         final List<String> parents = new ArrayList<String>();
         final List<String> parentsIds = getOrganizationalUnit().getParents();
         final String childId = getOrganizationalUnit().getId();
-        for(final String parentsId : parentsIds) {
+        for (final String parentsId : parentsIds) {
             String parentId = null;
             try {
                 parentId = parentsId;
                 setOrganizationalUnit(parentId);
                 parents.add(getOrganizationalUnitXml());
-            } catch(final OrganizationalUnitNotFoundException e) {
-                throw new IntegritySystemException(
-                        "Referenced parent organizational unit '" + parentId + "' could not be retrieved! ", e);
+            }
+            catch (final OrganizationalUnitNotFoundException e) {
+                throw new IntegritySystemException("Referenced parent organizational unit '" + parentId
+                    + "' could not be retrieved! ", e);
             }
         }
         try {
             setOrganizationalUnit(childId);
-        } catch(final OrganizationalUnitNotFoundException e) {
+        }
+        catch (final OrganizationalUnitNotFoundException e) {
             throw new IntegritySystemException("Child organizational unit '" + childId + "' is not available! ", e);
         }
         return getRenderer().renderParentObjects(getOrganizationalUnit(), parents);
@@ -223,13 +226,14 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
         initialPath.add(getOrganizationalUnit().getId());
         expandPaths(initialPath);
 
-        while(! getPathes().empty()) {
+        while (!getPathes().empty()) {
             final List<String> path = getPathes().pop();
             final String topParentOu = path.get(path.size() - 1);
 
-            if(getTripleStoreUtility().getParents(topParentOu).isEmpty()) {
+            if (getTripleStoreUtility().getParents(topParentOu).isEmpty()) {
                 result.add(path);
-            } else {
+            }
+            else {
                 expandPaths(path);
             }
         }

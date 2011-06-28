@@ -112,14 +112,14 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws XmlCorruptedException        If xml data is corrupt.
      * @throws SystemException              Thrown in case of internal error.
      */
-    protected void setComponents(final Map<String, Object> components,
-                                 final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
-                                 final Map<String, String> nsUris)
-            throws ComponentNotFoundException, LockingException, InvalidStatusException, SystemException,
-            InvalidContentException, MissingContentException, FileNotFoundException, XmlCorruptedException,
-            XmlSchemaValidationException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
-            MissingElementValueException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
-            TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    protected void setComponents(
+        final Map<String, Object> components, final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
+        final Map<String, String> nsUris) throws ComponentNotFoundException, LockingException, InvalidStatusException,
+        SystemException, InvalidContentException, MissingContentException, FileNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, ReadonlyElementViolationException,
+        ReadonlyAttributeViolationException, MissingElementValueException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         // FIXME don't set but use getComponents()? (FRS)
         // What do you want to have fixed? I want to have setComponent() but I
@@ -129,23 +129,23 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         // delete all components which are not in xmlData
         Iterator<String> componentIter = getItem().getComponentIds().iterator();
         final List<String> delete = new ArrayList<String>();
-        while(componentIter.hasNext()) {
+        while (componentIter.hasNext()) {
             final String componentId = componentIter.next();
-            if(! components.containsKey(componentId)) {
+            if (!components.containsKey(componentId)) {
                 delete.add(componentId);
             }
         }
         componentIter = delete.iterator();
-        while(componentIter.hasNext()) {
+        while (componentIter.hasNext()) {
             final String componentId = componentIter.next();
             getItem().deleteComponent(componentId);
         }
 
         // update
         final Collection<ByteArrayOutputStream> newComponents =
-                (Collection<ByteArrayOutputStream>) components.remove("new");
+            (Collection<ByteArrayOutputStream>) components.remove("new");
 
-        for(final Entry<String, Object> e : components.entrySet()) {
+        for (final Entry<String, Object> e : components.entrySet()) {
             final String componentId = e.getKey();
             final Component c = getItem().getComponent(componentId);
 
@@ -153,19 +153,21 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
 
         // new
-        if(! newComponents.isEmpty()) {
-            for(final ByteArrayOutputStream newComponent : newComponents) {
+        if (!newComponents.isEmpty()) {
+            for (final ByteArrayOutputStream newComponent : newComponents) {
                 try {
                     final String componentId = createComponent(newComponent.toString(XmlUtility.CHARACTER_ENCODING));
                     getItem().addComponent(componentId);
-                } catch(final UnsupportedEncodingException e) {
+                }
+                catch (final UnsupportedEncodingException e) {
                     throw new EncodingSystemException(e.getMessage(), e);
                 }
             }
             this.getFedoraServiceClient().sync();
             try {
                 this.getTripleStoreUtility().reinitialize();
-            } catch(TripleStoreSystemException e) {
+            }
+            catch (TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -184,38 +186,39 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws MissingContentException    If some required content is missing.
      * @throws ComponentNotFoundException Thrown if Component with provided id was not found.
      */
-    protected void setComponent(final Component c, final Map streams,
-                                final Map<String, Map<String, String>> mdRecordsMetadataAttribures, final String nsUri)
-            throws InvalidContentException, MissingContentException, FileNotFoundException, ComponentNotFoundException,
-            EncodingSystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-            WebserverSystemException, IntegritySystemException {
+    protected void setComponent(
+        final Component c, final Map streams, final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
+        final String nsUri) throws InvalidContentException, MissingContentException, FileNotFoundException,
+        ComponentNotFoundException, EncodingSystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException, IntegritySystemException {
 
         final Map<String, String> properties;
         try {
-            properties = c.setProperties(
-                    ((ByteArrayOutputStream) streams.get("properties")).toString(XmlUtility.CHARACTER_ENCODING),
-                    getItem().getId());
-        } catch(final UnsupportedEncodingException e) {
+            properties =
+                c.setProperties(((ByteArrayOutputStream) streams.get("properties"))
+                    .toString(XmlUtility.CHARACTER_ENCODING), getItem().getId());
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
         String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
-        if(mimeType == null || mimeType.length() == 0) {
+        if (mimeType == null || mimeType.length() == 0) {
             mimeType = FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
         }
         String fileName = properties.get(Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
-        if(fileName == null || fileName.length() == 0) {
+        if (fileName == null || fileName.length() == 0) {
             fileName = "content of component " + c.getId();
         }
         try {
-            setComponentContent(c,
-                    ((ByteArrayOutputStream) streams.get("content")).toString(XmlUtility.CHARACTER_ENCODING), mimeType,
-                    fileName);
-        } catch(final UnsupportedEncodingException e) {
+            setComponentContent(c, ((ByteArrayOutputStream) streams.get("content"))
+                .toString(XmlUtility.CHARACTER_ENCODING), mimeType, fileName);
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
         final Map<String, ByteArrayOutputStream> mdRecords =
-                streams.get(XmlUtility.NAME_MDRECORDS) == null ? new HashMap<String, ByteArrayOutputStream>() :
-                        (Map<String, ByteArrayOutputStream>) streams.get(XmlUtility.NAME_MDRECORDS);
+            streams.get(XmlUtility.NAME_MDRECORDS) == null ? new HashMap<String, ByteArrayOutputStream>() : (Map<String, ByteArrayOutputStream>) streams
+                .get(XmlUtility.NAME_MDRECORDS);
 
         setComponentMetadataRecords(c, mdRecords, mdRecordsMetadataAttribures, nsUri);
 
@@ -230,26 +233,26 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @param escidocMdRecordnsUri Name space URI
      * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
      */
-    private static void setComponentMetadataRecords(final Component c, final Map<String, ByteArrayOutputStream> mdMap,
-                                                    final Map<String, Map<String, String>> mdAttributesMap,
-                                                    final String escidocMdRecordnsUri)
-            throws EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
-            TripleStoreSystemException, XmlParserSystemException {
+    private static void setComponentMetadataRecords(
+        final Component c, final Map<String, ByteArrayOutputStream> mdMap,
+        final Map<String, Map<String, String>> mdAttributesMap, final String escidocMdRecordnsUri)
+        throws EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
+        TripleStoreSystemException, XmlParserSystemException {
 
         final Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
-        for(final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : mdMap.entrySet()) {
+        for (final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : mdMap.entrySet()) {
             final ByteArrayOutputStream stream = stringByteArrayOutputStreamEntry.getValue();
             final byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
-            if("escidoc".equals(stringByteArrayOutputStreamEntry.getKey())) {
+            if ("escidoc".equals(stringByteArrayOutputStreamEntry.getKey())) {
                 mdProperties = new HashMap<String, String>();
                 mdProperties.put("nsUri", escidocMdRecordnsUri);
             }
             final Datastream ds =
-                    new Datastream(stringByteArrayOutputStreamEntry.getKey(), c.getId(), xmlBytes, MimeTypes.TEXT_XML,
-                            mdProperties);
+                new Datastream(stringByteArrayOutputStreamEntry.getKey(), c.getId(), xmlBytes, MimeTypes.TEXT_XML,
+                    mdProperties);
             final Map<String, String> mdRecordAttributes =
-                    mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
+                mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId(mdRecordAttributes.get("type"));
             ds.addAlternateId(mdRecordAttributes.get("schema"));
@@ -268,19 +271,21 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
      */
     protected Map<String, String> setComponentProperties(final String id, final String xml)
-            throws InvalidContentException, ComponentNotFoundException, FedoraSystemException,
-            TripleStoreSystemException, XmlParserSystemException, WebserverSystemException, IntegritySystemException {
+        throws InvalidContentException, ComponentNotFoundException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException, IntegritySystemException {
 
         final Component component = getComponent(id);
         final StaxParser sp = new StaxParser();
         final ComponentPropertiesUpdateHandler cpuh =
-                new ComponentPropertiesUpdateHandler(component, "/properties", sp);
+            new ComponentPropertiesUpdateHandler(component, "/properties", sp);
         sp.addHandler(cpuh);
         try {
             sp.parse(xml);
-        } catch(final InvalidContentException e) {
+        }
+        catch (final InvalidContentException e) {
             throw e;
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -288,12 +293,13 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         properties.put(XmlTemplateProvider.CREATED_BY_ID, UserContext.getId());
         properties.put(XmlTemplateProvider.CREATED_BY_TITLE, UserContext.getRealName());
         try {
-            final Datastream newRelsExt = new Datastream(Datastream.RELS_EXT_DATASTREAM, id,
-                    getComponentRelsExtWithVelocity(id, properties, false).getBytes(XmlUtility.CHARACTER_ENCODING),
-                    MimeTypes.TEXT_XML);
+            final Datastream newRelsExt =
+                new Datastream(Datastream.RELS_EXT_DATASTREAM, id, getComponentRelsExtWithVelocity(id, properties,
+                    false).getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
             component.setRelsExt(newRelsExt);
             component.persist();
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new XmlParserSystemException("While building component RELS-EXT.", e);
         }
         return properties;
@@ -311,19 +317,20 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws IntegritySystemException   If the integrity of the repository is violated.
      */
     @Deprecated
-    protected void setContentTypeSpecificProperties(final String xml)
-            throws FedoraSystemException, LockingException, WebserverSystemException, TripleStoreSystemException,
-            EncodingSystemException, IntegritySystemException {
+    protected void setContentTypeSpecificProperties(final String xml) throws FedoraSystemException, LockingException,
+        WebserverSystemException, TripleStoreSystemException, EncodingSystemException, IntegritySystemException {
         try {
             final Datastream oldDs = getItem().getCts();
-            final Datastream newDs = new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getItem().getId(),
-                    xml.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+            final Datastream newDs =
+                new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getItem().getId(), xml
+                    .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
 
-            if(oldDs == null || ! oldDs.equals(newDs)) {
+            if (oldDs == null || !oldDs.equals(newDs)) {
                 getItem().setCts(newDs);
             }
 
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
     }
@@ -340,10 +347,10 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws FileNotFoundException      If binary content can not be retrieved.
      * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
      */
-    protected void setComponentContent(final Component component, final String xml, final String fileName,
-                                       final String mimeType)
-            throws MissingContentException, InvalidContentException, FileNotFoundException, ComponentNotFoundException,
-            TripleStoreSystemException, FedoraSystemException, WebserverSystemException {
+    protected void setComponentContent(
+        final Component component, final String xml, final String fileName, final String mimeType)
+        throws MissingContentException, InvalidContentException, FileNotFoundException, ComponentNotFoundException,
+        TripleStoreSystemException, FedoraSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
 
@@ -351,15 +358,17 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         sp.addHandler(occh);
         try {
             sp.parse(xml);
-        } catch(final MissingContentException e) {
+        }
+        catch (final MissingContentException e) {
             throw e;
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
 
         final Map<String, String> componentBinary = occh.getComponentBinary();
         // load url or binary to fedora
-        if(componentBinary.get("content") == null) {
+        if (componentBinary.get("content") == null) {
             // ingest by URL
             String url = componentBinary.get("uploadUrl");
             // process URL
@@ -369,13 +378,14 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             // - full qualified URL to this
             url = Utility.processUrl(url, getItem().getId(), component.getId());
 
-            if(url == null) {
+            if (url == null) {
                 // it's the local url we send
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Do not update content of " + component.getId() + ". URL is null.");
                 }
                 return;
-            } else {
+            }
+            else {
                 // update content and check by checksum if it is really changed
                 // and in case remove content PID if exists
                 final String contentChecksum = component.getChecksum();
@@ -387,27 +397,29 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                     this.getFedoraServiceClient().sync();
                     try {
                         this.getTripleStoreUtility().reinitialize();
-                    } catch(TripleStoreSystemException e) {
+                    }
+                    catch (TripleStoreSystemException e) {
                         throw new FedoraSystemException("Error on reinitializing triple store.", e);
                     }
-                    if(! contentChecksum.equals(dsProfile.getDsChecksum())) {
-                        if(component.hasObjectPid()) {
+                    if (!contentChecksum.equals(dsProfile.getDsChecksum())) {
+                        if (component.hasObjectPid()) {
                             // remove Content PID
                             component.removeObjectPid();
                         }
                     }
-                } catch(final Exception e) {
+                }
+                catch (final Exception e) {
                     handleFedoraUploadError(url, e);
                 }
             }
-        } else {
+        }
+        else {
             final Datastream content = component.getContent();
-            if(content.getControlGroup().equals(FoXmlProvider.CONTROL_GROUP_E) ||
-                    content.getControlGroup().equals(FoXmlProvider.CONTROL_GROUP_R)) {
-                throw new InvalidContentException(
-                        "A binary content of the component " + component.getId() + " has to be referenced by a URL, " +
-                                "because the attribute 'storage' of the section" +
-                                " 'content' was set to 'external-url' or " + "'external-managed' while create.");
+            if (content.getControlGroup().equals(FoXmlProvider.CONTROL_GROUP_E)
+                || content.getControlGroup().equals(FoXmlProvider.CONTROL_GROUP_R)) {
+                throw new InvalidContentException("A binary content of the component " + component.getId()
+                    + " has to be referenced by a URL, " + "because the attribute 'storage' of the section"
+                    + " 'content' was set to 'external-url' or " + "'external-managed' while create.");
             }
             final String url = uploadBase64EncodedContent(componentBinary.get("content"), fileName, mimeType);
             final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(component.getId(), "content");
@@ -417,7 +429,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 this.fedoraServiceClient.modifyDatastream(path, query, null);
                 this.getFedoraServiceClient().sync();
                 this.getTripleStoreUtility().reinitialize();
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 handleFedoraUploadError(url, e);
             }
         }

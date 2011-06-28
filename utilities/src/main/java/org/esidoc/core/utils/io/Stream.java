@@ -58,7 +58,7 @@ public final class Stream extends OutputStream {
     private long threshold = DEFAULT_THRESHOLD;
 
     @XmlTransient
-    private int totalLength;
+    private long totalLength;
 
     @XmlTransient
     private boolean inMemory;

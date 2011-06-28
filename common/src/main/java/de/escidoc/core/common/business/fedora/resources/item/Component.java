@@ -99,8 +99,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @throws ResourceNotFoundException Thrown if the Component resource was not found.
      */
     public Component(final String id, final String parentId, final DateTime timestamp)
-            throws ResourceNotFoundException, IntegritySystemException, FedoraSystemException,
-            TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        throws ResourceNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
         super(id);
         this.parent = parentId;
         this.parentVersionDate = timestamp;
@@ -109,7 +109,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     }
 
     protected void init() throws ResourceNotFoundException, IntegritySystemException, FedoraSystemException,
-            TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         /*
          * There was no StreamNotFoundException thrown before from this method
@@ -118,31 +118,35 @@ public class Component extends GenericResourcePid implements ComponentInterface 
          */
         try {
             initDatastreams(getDatastreamProfiles());
-        } catch(final StreamNotFoundException e) {
+        }
+        catch (final StreamNotFoundException e) {
             throw new ComponentNotFoundException(e);
         }
         getSomeValuesFromFedora();
-        if(! checkResourceType(ResourceType.COMPONENT)) {
+        if (!checkResourceType(ResourceType.COMPONENT)) {
             throw new ItemNotFoundException("Component with the provided objid '" + this.getId() + "' does not exit.");
         }
     }
 
     @Override
-    protected void initDatastream(final DatastreamProfileTO profile)
-            throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException,
-            IntegritySystemException, StreamNotFoundException {
+    protected void initDatastream(final DatastreamProfileTO profile) throws WebserverSystemException,
+        FedoraSystemException, TripleStoreSystemException, IntegritySystemException, StreamNotFoundException {
 
         super.initDatastream(profile);
 
-        if(profile.getDsAltID().contains(Datastream.METADATA_ALTERNATE_ID)) {
+        if (profile.getDsAltID().contains(Datastream.METADATA_ALTERNATE_ID)) {
             this.mdRecords.put(profile.getDsID(), new Datastream(profile, getId(), this.parentVersionDate));
-        } else if(Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID())) {
+        }
+        else if (Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID())) {
             this.relsExt = new Datastream(profile, getId(), this.parentVersionDate);
-        } else if("DC".equals(profile.getDsID())) {
+        }
+        else if ("DC".equals(profile.getDsID())) {
             this.dc = new Datastream(profile, getId(), this.parentVersionDate);
-        } else if("content".equals(profile.getDsID())) {
+        }
+        else if ("content".equals(profile.getDsID())) {
             this.content = new Datastream(profile, getId(), this.parentVersionDate);
-        } else {
+        }
+        else {
             LOGGER.warn("Stream " + getId() + '/' + profile.getDsID() + " not instanziated in Component<init>.");
         }
     }
@@ -164,26 +168,28 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         sp.addHandler(dch);
         try {
             sp.parse(new ByteArrayInputStream(this.getDc().getStream()));
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new XmlParserSystemException("Unexpected exception during DC datastream parsing.", e);
         }
 
-        properties.put(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE,
-                dch.getPropertiesMap().get(Elements.ELEMENT_DC_TITLE));
+        properties.put(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE, dch
+            .getPropertiesMap().get(Elements.ELEMENT_DC_TITLE));
 
         final String description = dch.getPropertiesMap().get(Elements.ELEMENT_DESCRIPTION);
-        if(description != null && ! (description.length() == 0)) {
+        if (description != null && !(description.length() == 0)) {
             properties.put(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION,
-                    description);
+                description);
         }
 
         // }
 
         final String title =
-                properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
-        if(title == null || title.length() == 0) {
+            properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
+        if (title == null || title.length() == 0) {
             setTitle("Component " + getId());
-        } else {
+        }
+        else {
             setTitle(title);
         }
 
@@ -216,7 +222,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     public void setRelsExt(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
 
         super.setRelsExt(ds);
-        if(this.isNeedSync()) {
+        if (this.isNeedSync()) {
             final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
             final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
             query.setLogMessage("touched");
@@ -224,7 +230,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             this.getFedoraServiceClient().sync();
             try {
                 this.getTripleStoreUtility().reinitialize();
-            } catch(final TripleStoreSystemException e) {
+            }
+            catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -242,7 +249,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         this.getFedoraServiceClient().sync();
         try {
             this.getTripleStoreUtility().reinitialize();
-        } catch(final TripleStoreSystemException e) {
+        }
+        catch (final TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
         }
         this.content = null;
@@ -272,9 +280,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * #setMdRecords(java.util.HashMap)
      */
     @Override
-    public void setMdRecords(final Map<String, Datastream> ds)
-            throws FedoraSystemException, WebserverSystemException, EncodingSystemException, IntegritySystemException,
-            TripleStoreSystemException, XmlParserSystemException {
+    public void setMdRecords(final Map<String, Datastream> ds) throws FedoraSystemException, WebserverSystemException,
+        EncodingSystemException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException {
         // compare
         // with
         // Item.setMdRecords
@@ -285,19 +292,21 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         // get list of names of data streams with alternateId = "metadata"
         final Set<String> namesInFedora = getMdRecords().keySet();
         // delete data streams which are in fedora but not in mdRecords
-        for(final String nameInFedora : namesInFedora) {
-            if(! ds.containsKey(nameInFedora)) {
+        for (final String nameInFedora : namesInFedora) {
+            if (!ds.containsKey(nameInFedora)) {
                 final Datastream fedoraDs = getMdRecord(nameInFedora);
                 fedoraDs.delete();
-                if("escidoc".equals(fedoraDs.getName())) {
+                if ("escidoc".equals(fedoraDs.getName())) {
                     // Stream dcDs = getDc();
                     final ItemFoXmlRendererInterface iri = new VelocityXmlItemFoXmlRenderer();
                     final String dcContent = iri.renderDefaultDc(getId());
                     final Datastream newDc;
                     try {
-                        newDc = new Datastream("DC", getId(), dcContent.getBytes(XmlUtility.CHARACTER_ENCODING),
+                        newDc =
+                            new Datastream("DC", getId(), dcContent.getBytes(XmlUtility.CHARACTER_ENCODING),
                                 MimeTypes.TEXT_XML);
-                    } catch(final UnsupportedEncodingException e) {
+                    }
+                    catch (final UnsupportedEncodingException e) {
                         throw new EncodingSystemException(e);
                     }
                     setDc(newDc);
@@ -307,16 +316,16 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         }
         final Iterator<Entry<String, Datastream>> nameIt = ds.entrySet().iterator();
         // create/activate data streams which are in mdRecords but not in fedora
-        while(nameIt.hasNext()) {
+        while (nameIt.hasNext()) {
             final Entry<String, Datastream> mapEntry = nameIt.next();
             final String name = mapEntry.getKey();
             final Datastream currentMdRecord = mapEntry.getValue();
             setMdRecord(name, currentMdRecord);
-            if(! namesInFedora.contains(name)) {
+            if (!namesInFedora.contains(name)) {
                 nameIt.remove();
             }
         }
-        if(modified) {
+        if (modified) {
             final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
             final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
             query.setLogMessage("touched");
@@ -324,7 +333,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             this.getFedoraServiceClient().sync();
             try {
                 this.getTripleStoreUtility().reinitialize();
-            } catch(final TripleStoreSystemException e) {
+            }
+            catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -351,9 +361,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     @Override
-    public void setMdRecord(final String name, final Datastream ds)
-            throws WebserverSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
-            TripleStoreSystemException, XmlParserSystemException {
+    public void setMdRecord(final String name, final Datastream ds) throws WebserverSystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException {
         // check if the metadata datastream is set, is equal to ds and save to
         // fedora
 
@@ -367,32 +377,33 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             boolean isNew = false;
 
             final Datastream curDs = getMdRecord(name);
-            if(curDs == null) {
+            if (curDs == null) {
                 isNew = true;
-            } else {
+            }
+            else {
                 final String curMimeType = curDs.getMimeType();
                 String curType = "";
                 String curSchema = "";
                 final List<String> altIds = curDs.getAlternateIDs();
-                if(altIds.size() > 1) {
+                if (altIds.size() > 1) {
                     curType = altIds.get(1);
-                    if(altIds.size() > 2) {
+                    if (altIds.size() > 2) {
                         curSchema = altIds.get(2);
                     }
                 }
-                if(! ds.equals(curDs) || ! type.equals(curType) || ! schema.equals(curSchema) ||
-                        ! mimeType.equals(curMimeType)) {
+                if (!ds.equals(curDs) || !type.equals(curType) || !schema.equals(curSchema)
+                    || !mimeType.equals(curMimeType)) {
                     contentChanged = true;
                 }
             }
 
-            if(contentChanged || isNew) {
-                if("escidoc".equals(name)) {
+            if (contentChanged || isNew) {
+                if ("escidoc".equals(name)) {
 
                     final Map<String, String> mdProperties = ds.getProperties();
-                    if(mdProperties != null) {
+                    if (mdProperties != null) {
                         // if (mdProperties.get("nsUri") != null) {
-                        if(mdProperties.containsKey("nsUri")) {
+                        if (mdProperties.containsKey("nsUri")) {
                             final String nsUri = mdProperties.get("nsUri");
                             // FIXME get content model ID from Item Object (see
                             // Item. and Container.setMdRecord)
@@ -401,23 +412,27 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                             // default mapping
                             // should be applied
                             final String dcNewContent = XmlUtility.createDC(nsUri, ds.toStringUTF8(), getId(), null);
-                            if(dcNewContent != null && dcNewContent.trim().length() > 0) {
+                            if (dcNewContent != null && dcNewContent.trim().length() > 0) {
                                 final Datastream dcNew;
                                 try {
-                                    dcNew = new Datastream("DC", getId(),
-                                            dcNewContent.getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
-                                } catch(final UnsupportedEncodingException e) {
+                                    dcNew =
+                                        new Datastream("DC", getId(), dcNewContent
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                                }
+                                catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
                                 }
                                 setDc(dcNew);
                             }
-                        } else {
-                            throw new IntegritySystemException(
-                                    "namespace uri of 'escidoc' metadata" + " does not set in datastream.");
                         }
-                    } else {
-                        throw new IntegritySystemException(
-                                "Properties of 'md-record' datastream" + " with then name 'escidoc' does not exist");
+                        else {
+                            throw new IntegritySystemException("namespace uri of 'escidoc' metadata"
+                                + " does not set in datastream.");
+                        }
+                    }
+                    else {
+                        throw new IntegritySystemException("Properties of 'md-record' datastream"
+                            + " with then name 'escidoc' does not exist");
                     }
                 }
 
@@ -432,11 +447,13 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 this.getFedoraServiceClient().sync();
                 try {
                     this.getTripleStoreUtility().reinitialize();
-                } catch(final TripleStoreSystemException e) {
+                }
+                catch (final TripleStoreSystemException e) {
                     throw new FedoraSystemException("Error on reinitializing triple store.", e);
                 }
             }
-        } catch(final FedoraSystemException e) {
+        }
+        catch (final FedoraSystemException e) {
             // this is not an update; its a create
             ds.addAlternateId(type);
             ds.addAlternateId(schema);
@@ -449,7 +466,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             this.getFedoraServiceClient().sync();
             try {
                 this.getTripleStoreUtility().reinitialize();
-            } catch(final TripleStoreSystemException e2) {
+            }
+            catch (final TripleStoreSystemException e2) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e2);
             }
         }
@@ -462,11 +480,10 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
-    public void setDc(final Datastream ds)
-            throws FedoraSystemException, WebserverSystemException, TripleStoreSystemException,
-            XmlParserSystemException {
+    public void setDc(final Datastream ds) throws FedoraSystemException, WebserverSystemException,
+        TripleStoreSystemException, XmlParserSystemException {
         final Datastream curDs = getDc();
-        if(! ds.equals(curDs)) {
+        if (!ds.equals(curDs)) {
             this.dc = ds;
             ds.merge();
             getSomeValuesFromFedora();
@@ -477,7 +494,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             this.getFedoraServiceClient().sync();
             try {
                 this.getTripleStoreUtility().reinitialize();
-            } catch(final TripleStoreSystemException e) {
+            }
+            catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
             }
         }
@@ -523,19 +541,21 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @param itemId The id of the Item.
      * @return Map of Component properties.
      */
-    public Map<String, String> setProperties(final String xml, final String itemId)
-            throws InvalidContentException, ComponentNotFoundException, TripleStoreSystemException,
-            EncodingSystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
+    public Map<String, String> setProperties(final String xml, final String itemId) throws InvalidContentException,
+        ComponentNotFoundException, TripleStoreSystemException, EncodingSystemException, FedoraSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
         final ComponentPropertiesUpdateHandler cpuh =
-                new ComponentPropertiesUpdateHandler(getResourceProperties(), '/' + Elements.ELEMENT_PROPERTIES, sp);
+            new ComponentPropertiesUpdateHandler(getResourceProperties(), '/' + Elements.ELEMENT_PROPERTIES, sp);
         sp.addHandler(cpuh);
         try {
             sp.parse(xml);
-        } catch(final InvalidContentException e) {
+        }
+        catch (final InvalidContentException e) {
             throw e;
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -550,7 +570,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      */
     public ItemFoXmlRendererInterface getFoxmlRenderer() {
 
-        if(this.foxmlRenderer == null) {
+        if (this.foxmlRenderer == null) {
             this.foxmlRenderer = new VelocityXmlItemFoXmlRenderer();
         }
         return this.foxmlRenderer;
@@ -571,14 +591,16 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         sp.addHandler(eve);
         try {
             sp.parse(getRelsExt().getStream());
-        } catch(final IntegritySystemException e) {
+        }
+        catch (final IntegritySystemException e) {
             throw new XmlParserSystemException("Unexpected exception during RELS-EXT parsing.", e);
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new XmlParserSystemException("Unexpected exception during RELS-EXT parsing.", e);
         }
         final Map<String, String> properties = new HashMap<String, String>();
         final List<Triple> triples = eve.getElementValues().getTriples();
-        for(final Triple triple : triples) {
+        for (final Triple triple : triples) {
             properties.put(triple.getPredicate(), triple.getObject());
         }
         return properties;

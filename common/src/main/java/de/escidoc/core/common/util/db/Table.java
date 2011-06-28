@@ -56,7 +56,7 @@ public class Table implements Comparable<Object> {
      * @param foreignKeys foreign keys defined for the table
      */
     public Table(final String name, final String[] columns, final String[] indexes, final String[] primaryKeys,
-                 final String[] foreignKeys) {
+        final String[] foreignKeys) {
         setName(name);
         setColumns(columns);
         setForeignKeys(foreignKeys);
@@ -148,9 +148,9 @@ public class Table implements Comparable<Object> {
      * @param columns column names
      */
     public void setColumns(final String[] columns) {
-        if(columns != null) {
+        if (columns != null) {
             this.columns = new TreeSet<String>();
-            for(final String column : columns) {
+            for (final String column : columns) {
                 this.columns.add(column.toLowerCase());
             }
         }
@@ -171,9 +171,9 @@ public class Table implements Comparable<Object> {
      * @param foreignKeys foreign keys
      */
     public void setForeignKeys(final String[] foreignKeys) {
-        if(foreignKeys != null) {
+        if (foreignKeys != null) {
             this.foreignKeys = new TreeSet<String>();
-            for(final String foreignKey : foreignKeys) {
+            for (final String foreignKey : foreignKeys) {
                 this.foreignKeys.add(foreignKey.toLowerCase());
             }
         }
@@ -228,9 +228,9 @@ public class Table implements Comparable<Object> {
      * @param primaryKeys primary keys
      */
     public void setPrimaryKeys(final String[] primaryKeys) {
-        if(primaryKeys != null) {
+        if (primaryKeys != null) {
             this.primaryKeys = new TreeSet<String>();
-            for(final String primaryKey : primaryKeys) {
+            for (final String primaryKey : primaryKeys) {
                 this.primaryKeys.add(primaryKey.toLowerCase());
             }
         }

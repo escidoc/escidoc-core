@@ -93,10 +93,9 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
      *          Thrown if triple store output format is wrong defined.
      */
     @Override
-    public String spo(final String taskParam)
-            throws InvalidTripleStoreQueryException, InvalidTripleStoreOutputFormatException, InvalidXmlException,
-            MissingElementValueException, EncodingSystemException, TripleStoreSystemException, XmlParserSystemException,
-            WebserverSystemException {
+    public String spo(final String taskParam) throws InvalidTripleStoreQueryException,
+        InvalidTripleStoreOutputFormatException, InvalidXmlException, MissingElementValueException,
+        EncodingSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
         final SemanticQueryHandler qh = new SemanticQueryHandler();
@@ -104,56 +103,61 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
         try {
             sp.parse(taskParam);
             sp.clearHandlerChain();
-        } catch(final MissingElementValueException e) {
+        }
+        catch (final MissingElementValueException e) {
             throw e;
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         sp.clearHandlerChain();
         final String query = qh.getQuery();
         // check predicate
         final String predicate = qh.getPredicate();
-        if(! "*".equals(predicate) && ! OntologyUtility.checkPredicate(predicate)) {
-            throw new InvalidTripleStoreQueryException(
-                    "Predicate '" + XmlUtility.escapeForbiddenXmlCharacters(predicate) + "' not allowed.");
+        if (!"*".equals(predicate) && !OntologyUtility.checkPredicate(predicate)) {
+            throw new InvalidTripleStoreQueryException("Predicate '"
+                + XmlUtility.escapeForbiddenXmlCharacters(predicate) + "' not allowed.");
         }
         final String format = qh.getFormat();
         String result = tripleStoreConnector.requestMPT(query, format);
-        if(! "".equals(result) && "*".equals(predicate)) {
+        if (!"".equals(result) && "*".equals(predicate)) {
             // TODO check result for unallowed predicates
-            if("N-Triples".equals(format)) {
+            if ("N-Triples".equals(format)) {
                 final String[] triples = result.split("\\s\\.");
                 final StringBuilder stringBuffer = new StringBuilder();
-                for(final String triple : triples) {
+                for (final String triple : triples) {
                     final String[] tripleParts = triple.trim().split("\\ +", 3);
-                    if(tripleParts.length >= 2 && OntologyUtility.checkPredicate(tripleParts[1])) {
+                    if (tripleParts.length >= 2 && OntologyUtility.checkPredicate(tripleParts[1])) {
                         stringBuffer.append(triple);
                         stringBuffer.append(".\n");
                     }
                 }
                 result = stringBuffer.toString();
-            } else if("RDF/XML".equals(format)) {
+            }
+            else if ("RDF/XML".equals(format)) {
                 // TODO revise, move
                 try {
                     final XMLInputFactory inf = XMLInputFactory.newInstance();
                     final XMLEventReader reader =
-                            inf.createFilteredReader(inf.createXMLEventReader(new StringReader(result)),
-                                    new RDFRegisteredOntologyFilter());
+                        inf.createFilteredReader(inf.createXMLEventReader(new StringReader(result)),
+                            new RDFRegisteredOntologyFilter());
 
                     final StringWriter sw = new StringWriter();
                     final XMLEventWriter writer = XmlUtility.createXmlEventWriter(sw);
 
                     // writer.add(reader);
-                    while(reader.hasNext()) {
+                    while (reader.hasNext()) {
                         final XMLEvent event = reader.nextEvent();
                         writer.add(event);
                     }
 
                     result = sw.toString();
-                } catch(final XMLStreamException e) {
+                }
+                catch (final XMLStreamException e) {
                     throw new WebserverSystemException(e);
                 }
-            } else {
+            }
+            else {
                 LOGGER.warn("No filter defined for result format '" + format + "'.");
             }
         }

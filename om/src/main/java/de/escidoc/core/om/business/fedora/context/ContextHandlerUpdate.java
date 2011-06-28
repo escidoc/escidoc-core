@@ -132,21 +132,22 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws SystemException               Thrown if anything else fails.
      */
     public boolean update(final FedoraContextHandler contextHandler, final String xmlData)
-            throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException,
-            ReadonlyAttributeViolationException, ReadonlyElementViolationException, ContextNameNotUniqueException,
-            MissingElementValueException, SystemException, InvalidContentException, IntegritySystemException,
-            FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException,
+        ReadonlyAttributeViolationException, ReadonlyElementViolationException, ContextNameNotUniqueException,
+        MissingElementValueException, SystemException, InvalidContentException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         final DateTime startTimeStamp = getContext().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
-        sp.addHandler(
-                new OptimisticLockingHandler(getContext().getId(), Constants.CONTEXT_OBJECT_TYPE, startTimeStamp));
+        sp
+            .addHandler(new OptimisticLockingHandler(getContext().getId(), Constants.CONTEXT_OBJECT_TYPE,
+                startTimeStamp));
         final ContextPropertiesUpdateHandler cpuh = new ContextPropertiesUpdateHandler(getContext().getId(), sp);
         sp.addHandler(cpuh);
 
         final String status = getContext().getStatus();
 
-        if(status.equals(Constants.STATUS_CONTEXT_CLOSED)) {
+        if (status.equals(Constants.STATUS_CONTEXT_CLOSED)) {
             throw new InvalidStatusException("Status is closed");
         }
 
@@ -160,39 +161,56 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
         try {
             sp.parse(xmlData);
-        } catch(final TripleStoreSystemException e) {
+        }
+        catch (final TripleStoreSystemException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final LockingException e) {
+        }
+        catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ContentModelNotFoundException e) {
+        }
+        catch (final ContentModelNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(LastModificationDateMissingException e) {
+        }
+        catch (LastModificationDateMissingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final MissingContentException e) {
+        }
+        catch (final MissingContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final MissingAttributeValueException e) {
+        }
+        catch (final MissingAttributeValueException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final InvalidContentException e) {
+        }
+        catch (final InvalidContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final AlreadyExistsException e) {
+        }
+        catch (final AlreadyExistsException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ReferencedResourceNotFoundException e) {
+        }
+        catch (final ReferencedResourceNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final RelationPredicateNotFoundException e) {
+        }
+        catch (final RelationPredicateNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final OrganizationalUnitNotFoundException e) {
+        }
+        catch (final OrganizationalUnitNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final ContentRelationNotFoundException e) {
+        }
+        catch (final ContentRelationNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final XMLStreamException e) {
+        }
+        catch (final XMLStreamException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final PidAlreadyAssignedException e) {
+        }
+        catch (final PidAlreadyAssignedException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final InvalidXmlException e) {
+        }
+        catch (final InvalidXmlException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final MissingMdRecordException e) {
+        }
+        catch (final MissingMdRecordException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
-        } catch(final TmeException e) {
+        }
+        catch (final TmeException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -206,13 +224,14 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         // RELS-EXT ----------------------------------------
 
         final boolean dcUpdated =
-                updateDc(cpuh.getChangedValuesInDc(), cpuh.getPropertiesToRemove(), cpuh.getPropertiesToAdd());
+            updateDc(cpuh.getChangedValuesInDc(), cpuh.getPropertiesToRemove(), cpuh.getPropertiesToAdd());
         final Map<String, String> changedValues = cpuh.getChangedValuesInRelsExt();
-        if(! changedValues.isEmpty() || dcUpdated || adminDescriptorsUpdated || getContext().isOuUpdated()) {
-            final String oldModifiedBy = getTripleStoreUtility()
-                    .getProperty(getContext().getId(), Constants.STRUCTURAL_RELATIONS_NS_URI + "modified-by");
+        if (!changedValues.isEmpty() || dcUpdated || adminDescriptorsUpdated || getContext().isOuUpdated()) {
+            final String oldModifiedBy =
+                getTripleStoreUtility().getProperty(getContext().getId(),
+                    Constants.STRUCTURAL_RELATIONS_NS_URI + "modified-by");
             final String[] currentUser = Utility.getCurrentUser();
-            if(! oldModifiedBy.equals(currentUser[0])) {
+            if (!oldModifiedBy.equals(currentUser[0])) {
                 changedValues.put("modifiedBy", currentUser[0]);
                 changedValues.put("modifiedByTitle", currentUser[1]);
             }
@@ -221,7 +240,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             updateRelsExt(changedValues);
             getContext().persist();
             return true;
-        } else {
+        }
+        else {
             return false;
         }
 
@@ -240,57 +260,57 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException           Thrown if Context is locked.
      */
     public void open(final FedoraContextHandler contextHandler, final String taskParam)
-            throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException, SystemException,
-            LockingException, StreamNotFoundException, EncodingSystemException, FedoraSystemException,
-            WebserverSystemException, XmlCorruptedException, TripleStoreSystemException {
+        throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException, SystemException,
+        LockingException, StreamNotFoundException, EncodingSystemException, FedoraSystemException,
+        WebserverSystemException, XmlCorruptedException, TripleStoreSystemException {
 
         checkStatus(Constants.STATUS_CONTEXT_CREATED);
         final TaskParamHandler taskParamHandler;
         try {
             taskParamHandler = XmlUtility.parseTaskParam(taskParam);
-        } catch(final SystemException e) {
+        }
+        catch (final SystemException e) {
             throw new XmlCorruptedException(e.getMessage(), e);
         }
 
-        Utility.checkOptimisticLockingCriteria(getContext().getLastModificationDate(),
-                taskParamHandler.getLastModificationDate(), "Context " + getContext().getId());
+        Utility.checkOptimisticLockingCriteria(getContext().getLastModificationDate(), taskParamHandler
+            .getLastModificationDate(), "Context " + getContext().getId());
 
         final Map<String, StartElementWithChildElements> updateElementsRelsExt =
-                new TreeMap<String, StartElementWithChildElements>();
+            new TreeMap<String, StartElementWithChildElements>();
 
         final StartElementWithChildElements modifiedBy =
-                new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY, Constants.STRUCTURAL_RELATIONS_NS_URI,
-                        Constants.STRUCTURAL_RELATIONS_NS_PREFIX, null, getUtility().getCurrentUserId(), null);
+            new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY, Constants.STRUCTURAL_RELATIONS_NS_URI,
+                Constants.STRUCTURAL_RELATIONS_NS_PREFIX, null, getUtility().getCurrentUserId(), null);
         final Attribute resourceAttribute =
-                new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
-                        "info:fedora/" + getUtility().getCurrentUserId());
+            new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
+                + getUtility().getCurrentUserId());
         modifiedBy.addAttribute(resourceAttribute);
         updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY, modifiedBy);
 
-        updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY_TITLE,
-                new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY_TITLE, Constants.PROPERTIES_NS_URI,
-                        Constants.PROPERTIES_NS_PREFIX, null, getUtility().getCurrentUserRealName(), null));
+        updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY_TITLE, new StartElementWithChildElements(
+            Elements.ELEMENT_MODIFIED_BY_TITLE, Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, null,
+            getUtility().getCurrentUserRealName(), null));
 
         final String buildNumber = Utility.getBuildNumber();
-        updateElementsRelsExt.put(XmlTemplateProvider.BUILD_NUMBER,
-                new StartElementWithChildElements(XmlTemplateProvider.BUILD_NUMBER, "http://escidoc.de/core/01/system/",
-                        "system", null, buildNumber, null));
+        updateElementsRelsExt.put(XmlTemplateProvider.BUILD_NUMBER, new StartElementWithChildElements(
+            XmlTemplateProvider.BUILD_NUMBER, "http://escidoc.de/core/01/system/", "system", null, buildNumber, null));
 
-        updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS,
-                new StartElementWithChildElements(Elements.ELEMENT_PUBLIC_STATUS, Constants.PROPERTIES_NS_URI,
-                        Constants.PROPERTIES_NS_PREFIX, null, Constants.STATUS_CONTEXT_OPENED, null));
+        updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS, new StartElementWithChildElements(
+            Elements.ELEMENT_PUBLIC_STATUS, Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, null,
+            Constants.STATUS_CONTEXT_OPENED, null));
 
         String comment = taskParamHandler.getComment();
-        if(comment == null || comment.length() == 0) {
+        if (comment == null || comment.length() == 0) {
             comment = "Context " + getContext().getId() + " opened.";
         }
-        updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS_COMMENT,
-                new StartElementWithChildElements(Elements.ELEMENT_PUBLIC_STATUS_COMMENT, Constants.PROPERTIES_NS_URI,
-                        Constants.PROPERTIES_NS_PREFIX, null, comment, null));
+        updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS_COMMENT, new StartElementWithChildElements(
+            Elements.ELEMENT_PUBLIC_STATUS_COMMENT, Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, null,
+            comment, null));
 
         final StaxParser sp = new StaxParser();
         final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
-                new ItemRelsExtUpdateHandler(updateElementsRelsExt, sp);
+            new ItemRelsExtUpdateHandler(updateElementsRelsExt, sp);
         sp.addHandler(itemRelsExtUpdateHandler);
         final HashMap<String, String> pathes = new HashMap<String, String>();
         pathes.put("/RDF", null);
@@ -299,7 +319,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
         try {
             sp.parse(getContext().getRelsExt().getStream());
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException(e);
         }
 
@@ -307,7 +328,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         try {
             getContext().setRelsExt(relsExt.toString(XmlUtility.CHARACTER_ENCODING));
             getContext().persist();
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new SystemException(e);
         }
     }
@@ -325,58 +347,58 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException           Thrown if Context is locked.
      */
     public void close(final FedoraContextHandler contextHandler, final String taskParam)
-            throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException, SystemException,
-            LockingException, StreamNotFoundException, EncodingSystemException, FedoraSystemException,
-            WebserverSystemException, XmlCorruptedException, TripleStoreSystemException {
+        throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException, SystemException,
+        LockingException, StreamNotFoundException, EncodingSystemException, FedoraSystemException,
+        WebserverSystemException, XmlCorruptedException, TripleStoreSystemException {
 
         checkStatus(Constants.STATUS_CONTEXT_OPENED);
         final TaskParamHandler taskParamHandler;
         try {
             taskParamHandler = XmlUtility.parseTaskParam(taskParam);
-        } catch(final SystemException e) {
+        }
+        catch (final SystemException e) {
             throw new XmlCorruptedException(e.getMessage(), e);
         }
 
-        Utility.checkOptimisticLockingCriteria(getContext().getLastModificationDate(),
-                taskParamHandler.getLastModificationDate(), "Context " + getContext().getId());
+        Utility.checkOptimisticLockingCriteria(getContext().getLastModificationDate(), taskParamHandler
+            .getLastModificationDate(), "Context " + getContext().getId());
 
         // update RELS-EXT
         final Map<String, StartElementWithChildElements> updateElementsRelsExt =
-                new TreeMap<String, StartElementWithChildElements>();
+            new TreeMap<String, StartElementWithChildElements>();
 
         final StartElementWithChildElements modifiedBy =
-                new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY, Constants.STRUCTURAL_RELATIONS_NS_URI,
-                        Constants.STRUCTURAL_RELATIONS_NS_PREFIX, null, getUtility().getCurrentUserId(), null);
+            new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY, Constants.STRUCTURAL_RELATIONS_NS_URI,
+                Constants.STRUCTURAL_RELATIONS_NS_PREFIX, null, getUtility().getCurrentUserId(), null);
         final Attribute resourceAttribute =
-                new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
-                        "info:fedora/" + getUtility().getCurrentUserId());
+            new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
+                + getUtility().getCurrentUserId());
         modifiedBy.addAttribute(resourceAttribute);
         updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY, modifiedBy);
 
-        updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY_TITLE,
-                new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY_TITLE, Constants.PROPERTIES_NS_URI,
-                        Constants.PROPERTIES_NS_PREFIX, null, getUtility().getCurrentUserRealName(), null));
+        updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY_TITLE, new StartElementWithChildElements(
+            Elements.ELEMENT_MODIFIED_BY_TITLE, Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, null,
+            getUtility().getCurrentUserRealName(), null));
 
         final String buildNumber = Utility.getBuildNumber();
-        updateElementsRelsExt.put(XmlTemplateProvider.BUILD_NUMBER,
-                new StartElementWithChildElements(XmlTemplateProvider.BUILD_NUMBER, "http://escidoc.de/core/01/system/",
-                        "system", null, buildNumber, null));
+        updateElementsRelsExt.put(XmlTemplateProvider.BUILD_NUMBER, new StartElementWithChildElements(
+            XmlTemplateProvider.BUILD_NUMBER, "http://escidoc.de/core/01/system/", "system", null, buildNumber, null));
 
-        updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS,
-                new StartElementWithChildElements(Elements.ELEMENT_PUBLIC_STATUS, Constants.PROPERTIES_NS_URI,
-                        Constants.PROPERTIES_NS_PREFIX, null, Constants.STATUS_CONTEXT_CLOSED, null));
+        updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS, new StartElementWithChildElements(
+            Elements.ELEMENT_PUBLIC_STATUS, Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, null,
+            Constants.STATUS_CONTEXT_CLOSED, null));
 
         String comment = taskParamHandler.getComment();
-        if(comment == null || comment.length() == 0) {
+        if (comment == null || comment.length() == 0) {
             comment = "Context " + getContext().getId() + " closed.";
         }
-        updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS_COMMENT,
-                new StartElementWithChildElements(Elements.ELEMENT_PUBLIC_STATUS_COMMENT, Constants.PROPERTIES_NS_URI,
-                        Constants.PROPERTIES_NS_PREFIX, null, comment, null));
+        updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS_COMMENT, new StartElementWithChildElements(
+            Elements.ELEMENT_PUBLIC_STATUS_COMMENT, Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, null,
+            comment, null));
 
         final StaxParser sp = new StaxParser();
         final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
-                new ItemRelsExtUpdateHandler(updateElementsRelsExt, sp);
+            new ItemRelsExtUpdateHandler(updateElementsRelsExt, sp);
         sp.addHandler(itemRelsExtUpdateHandler);
         final HashMap<String, String> pathes = new HashMap<String, String>();
         pathes.put("/RDF", null);
@@ -385,7 +407,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
         try {
             sp.parse(getContext().getRelsExt().getStream());
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException(e);
         }
 
@@ -393,7 +416,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         try {
             getContext().setRelsExt(relsExt.toString(XmlUtility.CHARACTER_ENCODING));
             getContext().persist();
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new SystemException(e);
         }
     }
@@ -432,36 +456,35 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      */
     private void updateRelsExt(final Map<String, String> changedValues) throws XmlParserSystemException {
 
-        if(changedValues.size() < 1) {
+        if (changedValues.size() < 1) {
             return;
         }
 
         final TreeMap<String, StartElementWithText> updateElementsRelsExt = new TreeMap<String, StartElementWithText>();
         final Set<Entry<String, String>> changedValuesEntrySet = changedValues.entrySet();
-        for(final Entry<String, String> entry : changedValuesEntrySet) {
-            if(XmlTemplateProvider.BUILD_NUMBER.equals(entry.getKey())) {
-                updateElementsRelsExt.put(XmlTemplateProvider.BUILD_NUMBER,
-                        new StartElementWithChildElements(entry.getKey(), "http://escidoc.de/core/01/system/", "system",
-                                null, entry.getValue(), null));
-            } else if("modifiedBy".equals(entry.getKey())) {
+        for (final Entry<String, String> entry : changedValuesEntrySet) {
+            if (XmlTemplateProvider.BUILD_NUMBER.equals(entry.getKey())) {
+                updateElementsRelsExt.put(XmlTemplateProvider.BUILD_NUMBER, new StartElementWithChildElements(entry
+                    .getKey(), "http://escidoc.de/core/01/system/", "system", null, entry.getValue(), null));
+            }
+            else if ("modifiedBy".equals(entry.getKey())) {
                 final StartElementWithChildElements modifiedBy =
-                        new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY,
-                                Constants.STRUCTURAL_RELATIONS_NS_URI, Constants.STRUCTURAL_RELATIONS_NS_PREFIX, null,
-                                "", null);
+                    new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY,
+                        Constants.STRUCTURAL_RELATIONS_NS_URI, Constants.STRUCTURAL_RELATIONS_NS_PREFIX, null, "", null);
                 final Attribute resourceAttribute =
-                        new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
-                                "info:fedora/" + entry.getValue());
+                    new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
+                        "info:fedora/" + entry.getValue());
                 modifiedBy.addAttribute(resourceAttribute);
                 updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY, modifiedBy);
-            } else if("modifiedByTitle".equals(entry.getKey())) {
-                updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY_TITLE,
-                        new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY_TITLE,
-                                Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, null, entry.getValue(),
-                                null));
-            } else {
-                updateElementsRelsExt.put(entry.getKey(),
-                        new StartElementWithText(entry.getKey(), Constants.PROPERTIES_NS_URI,
-                                Constants.PROPERTIES_NS_PREFIX, entry.getValue(), null));
+            }
+            else if ("modifiedByTitle".equals(entry.getKey())) {
+                updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY_TITLE, new StartElementWithChildElements(
+                    Elements.ELEMENT_MODIFIED_BY_TITLE, Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX,
+                    null, entry.getValue(), null));
+            }
+            else {
+                updateElementsRelsExt.put(entry.getKey(), new StartElementWithText(entry.getKey(),
+                    Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, entry.getValue(), null));
             }
         }
 
@@ -469,7 +492,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         sp.clearHandlerChain();
 
         final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
-                new ItemRelsExtUpdateHandler(updateElementsRelsExt, sp);
+            new ItemRelsExtUpdateHandler(updateElementsRelsExt, sp);
         sp.addHandler(itemRelsExtUpdateHandler);
 
         final HashMap<String, String> pathes = new HashMap<String, String>();
@@ -481,7 +504,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             sp.parse(getContext().getRelsExtAsString());
             final ByteArrayOutputStream relsExt = (ByteArrayOutputStream) me.getOutputStreams().get("RDF");
             getContext().setRelsExt(relsExt);
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new XmlParserSystemException(e);
         }
     }
@@ -496,19 +520,21 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws ContextNameNotUniqueException In case of context name is already in use.
      * @throws SystemException               In case of an internal error in the webserver.
      */
-    private boolean updateDc(final Map<String, String> changedValues, final List<String> propertiesToRemove,
-                             final Map<String, String> propertiesToAdd)
-            throws ContextNameNotUniqueException, SystemException, IntegritySystemException, FedoraSystemException,
-            TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
-        if((changedValues == null || changedValues.isEmpty()) &&
-                (propertiesToRemove == null || propertiesToRemove.isEmpty()) &&
-                (propertiesToAdd == null || propertiesToAdd.isEmpty())) {
+    private boolean updateDc(
+        final Map<String, String> changedValues, final List<String> propertiesToRemove,
+        final Map<String, String> propertiesToAdd) throws ContextNameNotUniqueException, SystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
+        if ((changedValues == null || changedValues.isEmpty())
+            && (propertiesToRemove == null || propertiesToRemove.isEmpty())
+            && (propertiesToAdd == null || propertiesToAdd.isEmpty())) {
             return false;
         }
         final Datastream dc;
         try {
             dc = getContext().getDc();
-        } catch(final StreamNotFoundException e1) {
+        }
+        catch (final StreamNotFoundException e1) {
             throw new IntegritySystemException("Stream dc not found.", e1);
         }
         final ByteArrayInputStream dcIs = new ByteArrayInputStream(dc.getStream());
@@ -516,9 +542,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         final StaxParser sp = new StaxParser();
 
         boolean updatedDcProperties = false;
-        if(! propertiesToRemove.isEmpty()) {
+        if (!propertiesToRemove.isEmpty()) {
 
-            if(! changedValues.isEmpty()) {
+            if (!changedValues.isEmpty()) {
                 updatedDcProperties = true;
                 final Map<String, StartElementWithText> updateElementsDc = updateDcProperties(changedValues);
 
@@ -532,11 +558,11 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             sp.addHandler(me);
 
             final Map<String, List<StartElementWithChildElements>> toRemove =
-                    new TreeMap<String, List<StartElementWithChildElements>>();
+                new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<String> iterator = propertiesToRemove.iterator();
             final HashMap<String, List<StartElementWithChildElements>> propertiesVectorAssignment =
-                    new HashMap<String, List<StartElementWithChildElements>>();
-            while(iterator.hasNext()) {
+                new HashMap<String, List<StartElementWithChildElements>>();
+            while (iterator.hasNext()) {
                 final String property = iterator.next();
 
                 final StartElementWithChildElements propertyToDelete = new StartElementWithChildElements();
@@ -545,18 +571,19 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 propertyToDelete.setNamespace(Constants.DC_NS_URI);
                 propertyToDelete.setChildrenElements(null);
 
-                if(propertiesVectorAssignment.containsKey(property)) {
+                if (propertiesVectorAssignment.containsKey(property)) {
                     final List<StartElementWithChildElements> vector = propertiesVectorAssignment.get(property);
                     vector.add(propertyToDelete);
-                } else {
+                }
+                else {
                     final List<StartElementWithChildElements> vector = new ArrayList<StartElementWithChildElements>();
                     vector.add(propertyToDelete);
                     propertiesVectorAssignment.put(property, vector);
                 }
             }
             final Set<Entry<String, List<StartElementWithChildElements>>> propertiesVectorAssignmentEntrySet =
-                    propertiesVectorAssignment.entrySet();
-            for(final Entry<String, List<StartElementWithChildElements>> entry : propertiesVectorAssignmentEntrySet) {
+                propertiesVectorAssignment.entrySet();
+            for (final Entry<String, List<StartElementWithChildElements>> entry : propertiesVectorAssignmentEntrySet) {
                 final List<StartElementWithChildElements> elements = entry.getValue();
                 toRemove.put("/dc/" + entry.getKey(), elements);
             }
@@ -568,13 +595,14 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 final ByteArrayOutputStream dcUpdated = (ByteArrayOutputStream) me.getOutputStreams().get("dc");
                 dcNewBytes = dcUpdated.toByteArray();
 
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 throw new XmlParserSystemException(e);
             }
         }
-        if(! propertiesToAdd.isEmpty()) {
+        if (!propertiesToAdd.isEmpty()) {
 
-            if(! updatedDcProperties && ! changedValues.isEmpty()) {
+            if (!updatedDcProperties && !changedValues.isEmpty()) {
                 updatedDcProperties = true;
 
                 final Map<String, StartElementWithText> updateElementsDc = updateDcProperties(changedValues);
@@ -587,7 +615,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
             final AddNewSubTreesToDatastream addNewEntriesHandler = new AddNewSubTreesToDatastream("/dc", sp);
             final List<StartElementWithChildElements> elementsToAdd = new ArrayList<StartElementWithChildElements>();
-            for(final Entry<String, String> stringStringEntry : propertiesToAdd.entrySet()) {
+            for (final Entry<String, String> stringStringEntry : propertiesToAdd.entrySet()) {
                 final StartElementWithChildElements newPropertyElement = new StartElementWithChildElements();
                 newPropertyElement.setLocalName(stringStringEntry.getKey());
                 newPropertyElement.setPrefix(Constants.DC_NS_PREFIX);
@@ -607,20 +635,22 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             sp.addHandler(addNewEntriesHandler);
 
             try {
-                if(dcNewBytes != null) {
+                if (dcNewBytes != null) {
                     sp.parse(new ByteArrayInputStream(dcNewBytes));
-                } else {
+                }
+                else {
                     sp.parse(dcIs);
                 }
                 sp.clearHandlerChain();
                 final ByteArrayOutputStream dcUpdated = addNewEntriesHandler.getOutputStreams();
                 dcNewBytes = dcUpdated.toByteArray();
                 // setDc(dc.toString(XmlUtility.CHARACTER_ENCODING));
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 throw new XmlParserSystemException(e);
             }
         }
-        if(! updatedDcProperties && ! changedValues.isEmpty()) {
+        if (!updatedDcProperties && !changedValues.isEmpty()) {
 
             final Map<String, StartElementWithText> updateElementsDc = updateDcProperties(changedValues);
 
@@ -632,22 +662,25 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             extractPathes.put("/dc", null);
             sp.addHandler(me);
             try {
-                if(dcNewBytes != null) {
+                if (dcNewBytes != null) {
                     sp.parse(new ByteArrayInputStream(dcNewBytes));
-                } else {
+                }
+                else {
                     sp.parse(dcIs);
                 }
                 sp.clearHandlerChain();
                 final ByteArrayOutputStream dcUpdated = (ByteArrayOutputStream) me.getOutputStreams().get("dc");
                 dcNewBytes = dcUpdated.toByteArray();
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 throw new XmlParserSystemException(e);
             }
         }
         final String dcNew;
         try {
             dcNew = new String(dcNewBytes, XmlUtility.CHARACTER_ENCODING);
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
 
@@ -662,29 +695,27 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @return a Map with elements to update
      */
     private Map<String, StartElementWithText> updateDcProperties(final Map<String, String> changedValues)
-            throws TripleStoreSystemException, ContextNameNotUniqueException, WebserverSystemException {
+        throws TripleStoreSystemException, ContextNameNotUniqueException, WebserverSystemException {
 
         final Map<String, StartElementWithText> updateElementsDc = new TreeMap<String, StartElementWithText>();
 
         final Set<Entry<String, String>> changedValuesEntrySet = changedValues.entrySet();
-        for(final Entry<String, String> entry : changedValuesEntrySet) {
+        for (final Entry<String, String> entry : changedValuesEntrySet) {
             // if name was altered alter the title too. (title is used
             // only internally)
-            if(entry.getKey().equals(Elements.ELEMENT_NAME)) {
+            if (entry.getKey().equals(Elements.ELEMENT_NAME)) {
                 // check if new name of Context is unique !
                 // name must be unique
-                if(getTripleStoreUtility().getContextForName(entry.getValue()) != null) {
+                if (getTripleStoreUtility().getContextForName(entry.getValue()) != null) {
                     throw new ContextNameNotUniqueException();
                 }
 
-                updateElementsDc.put(Elements.ELEMENT_DC_TITLE,
-                        new StartElementWithText(Elements.ELEMENT_DC_TITLE, Constants.DC_NS_URI, Constants.DC_NS_PREFIX,
-                                entry.getValue(), null));
+                updateElementsDc.put(Elements.ELEMENT_DC_TITLE, new StartElementWithText(Elements.ELEMENT_DC_TITLE,
+                    Constants.DC_NS_URI, Constants.DC_NS_PREFIX, entry.getValue(), null));
             }
 
-            updateElementsDc.put(entry.getKey(),
-                    new StartElementWithText(entry.getKey(), Constants.DC_NS_URI, Constants.DC_NS_PREFIX,
-                            entry.getValue(), null));
+            updateElementsDc.put(entry.getKey(), new StartElementWithText(entry.getKey(), Constants.DC_NS_URI,
+                Constants.DC_NS_PREFIX, entry.getValue(), null));
 
         }
 
@@ -697,23 +728,24 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      *
      * @param xml New DC representation.
      */
-    private void setDc(final String xml)
-            throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
-            WebserverSystemException {
+    private void setDc(final String xml) throws TripleStoreSystemException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, WebserverSystemException {
         try {
             final Datastream oldDs = getContext().getDc();
             final Datastream newDs =
-                    new Datastream("DC", getContext().getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING),
-                            MimeTypes.TEXT_XML);
-            if(! oldDs.equals(newDs)) {
+                new Datastream("DC", getContext().getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING),
+                    MimeTypes.TEXT_XML);
+            if (!oldDs.equals(newDs)) {
                 // TODO check if update is allowed
                 getContext().setDc(newDs);
             }
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
-        } catch(final StreamNotFoundException e) {
-            throw new IntegritySystemException(
-                    "Error accessing dc datastream of context '" + getContext().getId() + "'!", e);
+        }
+        catch (final StreamNotFoundException e) {
+            throw new IntegritySystemException("Error accessing dc datastream of context '" + getContext().getId()
+                + "'!", e);
         }
     }
 
@@ -723,30 +755,32 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @param streams Map of Datastreams with name of admin-descriptor as key.
      * @return true if admindescriptors where updated.
      */
-    boolean handleAdminDescriptors(final Map<String, Object> streams)
-            throws FedoraSystemException, WebserverSystemException {
+    boolean handleAdminDescriptors(final Map<String, Object> streams) throws FedoraSystemException,
+        WebserverSystemException {
         boolean updated = false;
         final Set<Entry<String, Object>> streamsEntrySet = streams.entrySet();
 
         final Map<String, Datastream> adminDescriptors = getContext().getAdminDescriptorsMap();
 
-        for(final Entry<String, Object> entry : streamsEntrySet) {
+        for (final Entry<String, Object> entry : streamsEntrySet) {
             final String name = entry.getKey();
             Boolean newDS = true;
-            if(adminDescriptors.containsKey(name)) {
+            if (adminDescriptors.containsKey(name)) {
                 final Datastream oldDs = adminDescriptors.get(name);
-                final Datastream newDs = new Datastream(name, getContext().getId(),
+                final Datastream newDs =
+                    new Datastream(name, getContext().getId(),
                         ((ByteArrayOutputStream) entry.getValue()).toByteArray(), MimeTypes.TEXT_XML);
                 newDs.addAlternateId(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID);
 
-                if(oldDs.equals(newDs) && MimeTypes.TEXT_XML.equals(oldDs.getMimeType())) {
-                    if(LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Datastreams identical; updated of Context " + getContext().getId() +
-                                " with admin-descriptor " + name + " skipped.");
+                if (oldDs.equals(newDs) && MimeTypes.TEXT_XML.equals(oldDs.getMimeType())) {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Datastreams identical; updated of Context " + getContext().getId()
+                            + " with admin-descriptor " + name + " skipped.");
                     }
-                } else {
+                }
+                else {
                     getContext().setAdminDescriptor(newDs);
-                    if(LOGGER.isDebugEnabled()) {
+                    if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("updated Context " + getContext().getId() + " with admin-descriptor " + name);
                     }
                     updated = true;
@@ -755,23 +789,24 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 adminDescriptors.remove(name);
             }
 
-            if(newDS) {
+            if (newDS) {
                 final AddDatastreamPathParam path = new AddDatastreamPathParam(getContext().getId(), name);
                 final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
-                query.setAltIDs(
-                        Arrays.asList(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID));
+                query
+                    .setAltIDs(Arrays.asList(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID));
                 query.setDsLabel(name);
                 query.setVersionable(Boolean.TRUE);
                 final Stream stream = new Stream();
                 try {
                     stream.write(((ByteArrayOutputStream) streams.get(name)).toByteArray());
                     stream.lock();
-                } catch(IOException e) {
+                }
+                catch (IOException e) {
                     throw new WebserverSystemException(e);
                 }
                 getFedoraServiceClient().addDatastream(path, query, stream);
 
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("add to Context " + getContext().getId() + " new admin-descriptor " + name);
                 }
                 updated = true;
@@ -780,12 +815,12 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
         // remove datastreams
         final Set<Entry<String, Datastream>> adminDescriptorsEntrySet = adminDescriptors.entrySet();
-        for(final Entry<String, Datastream> entry : adminDescriptorsEntrySet) {
+        for (final Entry<String, Datastream> entry : adminDescriptorsEntrySet) {
             final Datastream nextDatastream = entry.getValue();
             nextDatastream.delete();
-            if(LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Admin-descriptor datastream '" + entry.getKey() + "' of Context " + getContext().getId() +
-                        " deleted.");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Admin-descriptor datastream '" + entry.getKey() + "' of Context " + getContext().getId()
+                    + " deleted.");
             }
             updated = true;
         }

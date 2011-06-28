@@ -35,9 +35,9 @@ public class ExceptionLoggingProcessor implements Processor {
 
     @Override
     public void process(final Exchange exchange) throws Exception {
-        @SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
+        @SuppressWarnings( { "ThrowableResultOfMethodCallIgnored" })
         final Throwable caused = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Throwable.class);
-        if(caused != null) {
+        if (caused != null) {
             final Logger logger = LoggerFactory.getLogger(this.logCategory);
             logger.error(caused.getMessage());
         }

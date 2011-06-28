@@ -50,8 +50,8 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      */
     protected VelocityXmlProvider() {
         // velocity logging configuration
-        Velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
-                "org.apache.velocity.tools.generic." + "log.CommonsLogLogSystem");
+        Velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.tools.generic."
+            + "log.CommonsLogLogSystem");
         Velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM, new VelocityOutputLogger());
         // use class loader
         Velocity.setProperty("resource.loader", "class");
@@ -73,7 +73,8 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
         Velocity.setProperty("velocimacro.library", "common/macros.vm");
         try {
             Velocity.init();
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             LOGGER.error("Error on initializing Velocity!", e);
         }
     }
@@ -88,7 +89,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      */
     public String getXml(final String resource, final String path, final Map values) throws WebserverSystemException {
         // add escaper if none is set
-        if(values.get(ESCAPER) == null) {
+        if (values.get(ESCAPER) == null) {
             values.put(XmlTemplateProvider.ESCAPER, new XmlEscaper());
         }
 
@@ -99,7 +100,8 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
             final Context context = new VelocityContext(values);
             template.merge(context, out);
             return out.toString();
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException(e.getMessage(), e);
         }
     }
@@ -117,7 +119,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      * @throws WebserverSystemException
      */
     private String getTemplateFilename(final String path, final String resource) throws WebserverSystemException {
-        return path.startsWith("/") ? path.substring(1) + '/' + completePath() + '/' + resource + ".vm" :
-                path + '/' + completePath() + '/' + resource + ".vm";
+        return path.startsWith("/") ? path.substring(1) + '/' + completePath() + '/' + resource + ".vm" : path + '/'
+            + completePath() + '/' + resource + ".vm";
     }
 }

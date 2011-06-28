@@ -65,24 +65,26 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws TmeException {
 
-        if("file".equals(element.getLocalName())) {
+        if ("file".equals(element.getLocalName())) {
             try {
                 final String uriString = element.getAttribute(Constants.XLINK_URI, "href").getValue();
-                if("".equals(uriString)) {
+                if ("".equals(uriString)) {
                     throw new TmeException("Link '" + uriString + "' to file is no Uri!");
                 }
                 try {
                     new URI(uriString);
-                } catch(final URISyntaxException e) {
+                }
+                catch (final URISyntaxException e) {
                     throw new TmeException("Link '" + uriString + "' to file is no Uri!", e);
                 }
                 files.add(uriString);
-            } catch(final NoSuchAttributeException e) {
+            }
+            catch (final NoSuchAttributeException e) {
                 // TODO what happens here?
-                if(LOGGER.isWarnEnabled()) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on parsing last modification attribute.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on parsing last modification attribute.", e);
                 }
             }
@@ -105,9 +107,9 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
 
         StringBuffer result = new StringBuffer();
         final Iterator<String> iter = files.iterator();
-        if(iter.hasNext()) {
+        if (iter.hasNext()) {
             result = result.append(iter.next());
-            while(iter.hasNext()) {
+            while (iter.hasNext()) {
                 result.append(',');
                 result.append(iter.next());
             }

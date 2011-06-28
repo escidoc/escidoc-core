@@ -112,10 +112,9 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      * @see de.escidoc.core.sm.business.interfaces .ReportDefinitionHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData)
-            throws InvalidSqlException, MissingMethodParameterException, ScopeNotFoundException,
-            ScopeContextViolationException, SystemException, WebserverSystemException {
-        if(xmlData == null || xmlData.length() == 0) {
+    public String create(final String xmlData) throws InvalidSqlException, MissingMethodParameterException,
+        ScopeNotFoundException, ScopeContextViolationException, SystemException, WebserverSystemException {
+        if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
         // parse
@@ -124,7 +123,8 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException("Error on parsing XML.", e);
         }
 
@@ -159,9 +159,9 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      * @see de.escidoc.core.sm.business.interfaces.ReportDefinitionHandlerInterface#delete(java.lang.String)
      */
     @Override
-    public void delete(final String id)
-            throws ReportDefinitionNotFoundException, MissingMethodParameterException, SqlDatabaseSystemException {
-        if(id == null) {
+    public void delete(final String id) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
+        SqlDatabaseSystemException {
+        if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
 
@@ -182,10 +182,9 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      * @see de.escidoc.core.sm.business.interfaces .ReportDefinitionHandlerInterface #retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id)
-            throws ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException,
-            SqlDatabaseSystemException {
-        if(id == null) {
+    public String retrieve(final String id) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
+        SystemException, SqlDatabaseSystemException {
+        if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
         return renderer.render(dao.retrieve(id));
@@ -201,33 +200,35 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      * @see de.escidoc.core.sm.business.interfaces .ReportDefinitionHandlerInterface #retrieveReportDefinitions()
      */
     @Override
-    public String retrieveReportDefinitions(final Map<String, String[]> parameters)
-            throws InvalidSearchQueryException, SystemException, SqlDatabaseSystemException, WebserverSystemException {
+    public String retrieveReportDefinitions(final Map<String, String[]> parameters) throws InvalidSearchQueryException,
+        SystemException, SqlDatabaseSystemException, WebserverSystemException {
         final String result;
         final SRURequestParameters params = new DbRequestParameters(parameters);
         final String query = params.getQuery();
         final int limit = params.getMaximumRecords();
         final int offset = params.getStartRecord();
 
-        if(params.isExplain()) {
+        if (params.isExplain()) {
             final Map<String, Object> values = new HashMap<String, Object>();
 
             values.put("PROPERTY_NAMES", new ReportDefinitionFilter(null).getPropertyNames());
             result = ExplainXmlProvider.getInstance().getExplainReportDefinitionXml(values);
-        } else if(limit == 0) {
+        }
+        else if (limit == 0) {
             result = renderer.renderReportDefinitions(new ArrayList<ReportDefinition>(0), params.getRecordPacking());
-        } else {
+        }
+        else {
             // get all scope-ids from database
             final Collection<String> scopeIds = scopesDao.retrieveScopeIds();
 
             Collection<String> filteredScopeIds = null;
 
-            if(scopeIds != null && ! scopeIds.isEmpty()) {
+            if (scopeIds != null && !scopeIds.isEmpty()) {
                 // get scope-ids filtered by user-privileges
                 filteredScopeIds = filterUtility.filterRetrievePrivilege(Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
             Collection<ReportDefinition> reportDefinitions = null;
-            if(filteredScopeIds != null && ! filteredScopeIds.isEmpty()) {
+            if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get report-definitions as xml
                 reportDefinitions = dao.retrieveReportDefinitions(filteredScopeIds, query, offset, limit);
             }
@@ -254,13 +255,13 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      * @see de.escidoc.core.sm.business.interfaces .ReportDefinitionHandlerInterface #update(java.lang.String,java.lang.String)
      */
     @Override
-    public String update(final String id, final String xmlData)
-            throws ReportDefinitionNotFoundException, MissingMethodParameterException, ScopeNotFoundException,
-            InvalidSqlException, ScopeContextViolationException, SystemException, WebserverSystemException {
-        if(id == null || id.length() == 0) {
+    public String update(final String id, final String xmlData) throws ReportDefinitionNotFoundException,
+        MissingMethodParameterException, ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException,
+        SystemException, WebserverSystemException {
+        if (id == null || id.length() == 0) {
             throw new MissingMethodParameterException("id may not be null");
         }
-        if(xmlData == null) {
+        if (xmlData == null) {
             throw new MissingMethodParameterException("xmlData may not be null");
         }
 
@@ -271,7 +272,8 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException("Error on parsing XML.", e);
         }
 
@@ -304,40 +306,40 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      * @throws InvalidSqlException            ex
      * @throws ScopeNotFoundException         ex
      */
-    private void checkSql(final String sql, final String scopeId)
-            throws ScopeContextViolationException, InvalidSqlException, ScopeNotFoundException,
-            SqlDatabaseSystemException {
+    private void checkSql(final String sql, final String scopeId) throws ScopeContextViolationException,
+        InvalidSqlException, ScopeNotFoundException, SqlDatabaseSystemException {
         // getScope
         final Scope scope = scopesDao.retrieve(scopeId);
 
-        if(scope == null) {
+        if (scope == null) {
             throw new ScopeNotFoundException("Scope not found");
         }
 
-        if(sql == null) {
+        if (sql == null) {
             throw new InvalidSqlException("sql is null");
         }
 
         // check if sql is executable
         try {
             dbAccessor.executeReadOnlySql(generateFakeSql(sql));
-        } catch(final SqlDatabaseSystemException e) {
+        }
+        catch (final SqlDatabaseSystemException e) {
             throw new InvalidSqlException(e);
         }
 
         // check scope-type. If type=admin, sql may access all
         // aggregation-tables
         // if scopeType != admin: check requested tables
-        if(! scope.getScopeType().equals(Constants.SCOPE_TYPE_ADMIN)) {
+        if (!scope.getScopeType().equals(Constants.SCOPE_TYPE_ADMIN)) {
             // get Aggregation-definitions
             final Collection<String> scopeIds = new ArrayList<String>();
             scopeIds.add(scopeId);
             final Collection<AggregationDefinition> aggregationDefinitions =
-                    aggregationDefinitionsDao.retrieveAggregationDefinitions(scopeIds);
+                aggregationDefinitionsDao.retrieveAggregationDefinitions(scopeIds);
 
             // Collect aggregation-definition primary-keys
             final Collection<String> allowedPrimKeys = new HashSet<String>();
-            for(final AggregationDefinition aggregationDefinition : aggregationDefinitions) {
+            for (final AggregationDefinition aggregationDefinition : aggregationDefinitions) {
                 String primKey = aggregationDefinition.getId();
                 primKey = SmXmlUtility.convertPrimKeyToTableName(primKey);
                 allowedPrimKeys.add(primKey);
@@ -347,11 +349,10 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
             final Collection<String> primKeys = SmXmlUtility.extractAggregationPrimKeysFromSql(sql);
 
             // check primKeys against allowed primKeys
-            for(final String primKey : primKeys) {
-                if(! allowedPrimKeys.contains(primKey)) {
-                    throw new ScopeContextViolationException(
-                            "AggregationTable with prefix=" + primKey + "_ does not belong to the scope " +
-                                    "of the reportDefinition");
+            for (final String primKey : primKeys) {
+                if (!allowedPrimKeys.contains(primKey)) {
+                    throw new ScopeContextViolationException("AggregationTable with prefix=" + primKey
+                        + "_ does not belong to the scope " + "of the reportDefinition");
                 }
 
             }

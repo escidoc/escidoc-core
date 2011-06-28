@@ -92,31 +92,33 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
     private static void addDataValues(final Collection dbResult, final Map<String, Object> values) {
 
         final Collection<List<HashMap<String, Object>>> recordsList = new ArrayList<List<HashMap<String, Object>>>();
-        if(dbResult != null && ! dbResult.isEmpty()) {
+        if (dbResult != null && !dbResult.isEmpty()) {
             // Iterate records from database
-            for(final Object aDbResult : dbResult) {
+            for (final Object aDbResult : dbResult) {
                 final List<HashMap<String, Object>> recordFieldList = new ArrayList<HashMap<String, Object>>();
                 final Map map = (Map) aDbResult;
 
                 // iterate all fields of one record
-                for(final Object o : map.keySet()) {
+                for (final Object o : map.keySet()) {
 
                     final String fieldname = (String) o;
 
                     // depending on the fieldtype,
                     // write stringvalue, datevalue or decimalvalue-element
-                    if(map.get(fieldname) != null) {
+                    if (map.get(fieldname) != null) {
                         final HashMap<String, Object> recordFieldMap = new HashMap<String, Object>();
                         recordFieldMap.put("fieldname", fieldname);
                         final String classname = map.get(fieldname).getClass().getSimpleName();
-                        if("BigDecimal".equals(classname)) {
+                        if ("BigDecimal".equals(classname)) {
                             recordFieldMap.put("decimalvalue", map.get(fieldname).toString());
-                        } else if("Timestamp".equals(classname)) {
+                        }
+                        else if ("Timestamp".equals(classname)) {
                             DateTime dateTime = new DateTime(map.get(fieldname));
                             dateTime = dateTime.withZone(DateTimeZone.UTC);
                             final String dateString = dateTime.toString(Constants.TIMESTAMP_FORMAT);
                             recordFieldMap.put("datevalue", dateString);
-                        } else {
+                        }
+                        else {
                             recordFieldMap.put("stringvalue", map.get(fieldname));
                         }
 
@@ -126,7 +128,7 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
                 }
 
                 // add record to recordsVm
-                if(! recordFieldList.isEmpty()) {
+                if (!recordFieldList.isEmpty()) {
                     recordsList.add(recordFieldList);
                 }
             }

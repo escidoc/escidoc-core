@@ -66,8 +66,8 @@ public class EscidocIdProvider {
     public synchronized String[] getNextPids(final int noOfPids) throws SystemException {
 
         final String[] ret = new String[noOfPids];
-        for(int index = 0; index < noOfPids; index++) {
-            if(! storedIds.hasNext()) {
+        for (int index = 0; index < noOfPids; index++) {
+            if (!storedIds.hasNext()) {
                 fetchIds(noOfPids - index);
             }
             ret[index] = storedIds.next();
@@ -93,9 +93,9 @@ public class EscidocIdProvider {
         // I assume that its enough to check the first retrieved pid
         final String id = idArryList.get(0);
 
-        if(! id.equals(id.toLowerCase())) {
-            throw new SystemException("Invalid identifier prefix configured in Fedora. " +
-                    "Capital letters are forbidden in eSciDoc as prefix.");
+        if (!id.equals(id.toLowerCase())) {
+            throw new SystemException("Invalid identifier prefix configured in Fedora. "
+                + "Capital letters are forbidden in eSciDoc as prefix.");
         }
         this.storedIds = idArryList.iterator();
     }

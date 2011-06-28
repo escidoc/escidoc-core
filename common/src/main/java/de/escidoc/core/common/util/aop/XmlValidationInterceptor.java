@@ -62,15 +62,14 @@ public class XmlValidationInterceptor implements Ordered {
      * @param joinPoint The current {@link JoinPoint}.
      */
     @Before("execution(public * de.escidoc.core.*.service.*.*(..))" + " && !within(de.escidoc.core.common.util.aop..*)")
-    public void validate(final JoinPoint joinPoint)
-            throws XmlParserSystemException, WebserverSystemException, XmlSchemaValidationException,
-            XmlCorruptedException {
+    public void validate(final JoinPoint joinPoint) throws XmlParserSystemException, WebserverSystemException,
+        XmlSchemaValidationException, XmlCorruptedException {
         final Method targetMethod = getTargetInterfaceMethod(joinPoint);
         final Annotation annotation = targetMethod.getAnnotation(Validate.class);
-        if(annotation != null) {
+        if (annotation != null) {
             final Object[] arguments = joinPoint.getArgs();
             validate((String) arguments[((Validate) annotation).param()], ((Validate) annotation).resolver(),
-                    ((Validate) annotation).root());
+                ((Validate) annotation).root());
         }
     }
 
@@ -78,11 +77,11 @@ public class XmlValidationInterceptor implements Ordered {
         Method targetMethod = null;
         final Method calledMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
         final Class[] interfaces = joinPoint.getTarget().getClass().getInterfaces();
-        for(final Class interfaze : interfaces) {
+        for (final Class interfaze : interfaces) {
             final Method[] methods = interfaze.getMethods();
-            for(final Method method : methods) {
-                if(method.getName().equals(calledMethod.getName()) &&
-                        method.getReturnType().equals(calledMethod.getReturnType())) {
+            for (final Method method : methods) {
+                if (method.getName().equals(calledMethod.getName())
+                    && method.getReturnType().equals(calledMethod.getReturnType())) {
                     targetMethod = method;
                 }
             }
@@ -98,8 +97,7 @@ public class XmlValidationInterceptor implements Ordered {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private void validate(final String xml, final String resolvingMethod, final String root)
-            throws WebserverSystemException, XmlParserSystemException, XmlSchemaValidationException,
-            XmlCorruptedException {
+        throws WebserverSystemException, XmlParserSystemException, XmlSchemaValidationException, XmlCorruptedException {
 
         xmlUtility.validate(xml, getSchemaLocation(resolvingMethod), root);
     }
@@ -116,7 +114,8 @@ public class XmlValidationInterceptor implements Ordered {
         try {
             final Method getSchemaLocationM = XmlUtility.class.getMethod(resolvingMethod, paramTypes);
             return (String) getSchemaLocationM.invoke(null);
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException("Could not find schema location for schema " + resolvingMethod + '!', e);
         }
     }

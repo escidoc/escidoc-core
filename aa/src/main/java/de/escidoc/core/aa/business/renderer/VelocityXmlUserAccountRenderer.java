@@ -126,7 +126,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      */
     @Override
     public String renderCurrentGrants(final UserAccount userAccount, final List<RoleGrant> currentGrants)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootCurrentGrants", XmlTemplateProvider.TRUE);
@@ -138,7 +138,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("currentGrantsTitle", "Grants of " + userAccount.getLoginname());
         values.put("currentGrantsHref", XmlUtility.getCurrentGrantsHref(userAccount.getId()));
-        if(currentGrants != null && ! currentGrants.isEmpty()) {
+        if (currentGrants != null && !currentGrants.isEmpty()) {
             values.put("currentGrants", currentGrants);
         }
         DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
@@ -157,8 +157,9 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      * @see UserAccountRendererInterface#renderCurrentGrants (de.escidoc.core.aa.business.UserAccount, java.util.List)
      */
     @Override
-    public String renderGrants(final List<RoleGrant> grants, final String numberOfHits, final String offset,
-                               final String limit, final RecordPacking recordPacking) throws WebserverSystemException {
+    public String renderGrants(
+        final List<RoleGrant> grants, final String numberOfHits, final String offset, final String limit,
+        final RecordPacking recordPacking) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootGrants", XmlTemplateProvider.TRUE);
@@ -173,7 +174,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         values.put("numberOfHits", numberOfHits);
         values.put("offset", offset);
         values.put("limit", limit);
-        if(grants != null && ! grants.isEmpty()) {
+        if (grants != null && !grants.isEmpty()) {
             values.put("grants", grants);
         }
 
@@ -199,12 +200,12 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         values.put("grantTitle", grant.getTitle());
         values.put("grantHref", grant.getHref());
         values.put("grantId", grant.getId());
-        if(grant.getUserAccountByUserId() != null) {
+        if (grant.getUserAccountByUserId() != null) {
             values.put("grantUserTitle", grant.getUserAccountByUserId().getName());
             values.put("grantUserHref", grant.getUserAccountByUserId().getHref());
             values.put("grantUserId", grant.getUserAccountByUserId().getId());
         }
-        if(grant.getUserGroupByGroupId() != null) {
+        if (grant.getUserGroupByGroupId() != null) {
             values.put("grantGroupTitle", grant.getUserGroupByGroupId().getName());
             values.put("grantGroupHref", grant.getUserGroupByGroupId().getHref());
             values.put("grantGroupId", grant.getUserGroupByGroupId().getId());
@@ -227,7 +228,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         values.put("grantRemark", grant.getGrantRemark());
 
         final Date revocationDate = grant.getRevocationDate();
-        if(revocationDate != null) {
+        if (revocationDate != null) {
             DateTime revokationDateTime = new DateTime(revocationDate);
             revokationDateTime = revokationDateTime.withZone(DateTimeZone.UTC);
             final String revokationDate = revokationDateTime.toString(Constants.TIMESTAMP_FORMAT);
@@ -275,7 +276,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      */
     @Override
     public String renderUserAccounts(final List<UserAccount> userAccounts, final RecordPacking recordPacking)
-            throws SystemException {
+        throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootUserAccount", XmlTemplateProvider.TRUE);
@@ -284,8 +285,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         addUserAccountListValues(values);
 
         final Collection<Map<String, Object>> userAccountsValues =
-                new ArrayList<Map<String, Object>>(userAccounts.size());
-        for(final UserAccount userAccount : userAccounts) {
+            new ArrayList<Map<String, Object>>(userAccounts.size());
+        for (final UserAccount userAccount : userAccounts) {
             final Map<String, Object> userAccountValues = new HashMap<String, Object>();
             addUserAccountValues(userAccount, userAccountValues);
             userAccountsValues.add(userAccountValues);
@@ -379,17 +380,18 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
 
     @Override
     public String renderPreference(final UserAccount userAccount, final UserPreference preference)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
         return renderPreference(userAccount, preference, true);
     }
 
-    private static String renderPreference(final UserAccount userAccount, final UserPreference preference,
-                                           final boolean isRootPreference) throws WebserverSystemException {
+    private static String renderPreference(
+        final UserAccount userAccount, final UserPreference preference, final boolean isRootPreference)
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
         addPreferencesCommonValues(values);
-        if(isRootPreference) {
+        if (isRootPreference) {
             values.put("isRootPreference", XmlTemplateProvider.TRUE);
             DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
             lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
@@ -406,7 +408,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
 
     @Override
     public String renderPreferences(final UserAccount userAccount, final Set<UserPreference> preferences)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -420,7 +422,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         addEscidocBaseUrl(values);
 
         final Collection<Map<String, String>> userAccountPreferencesValues = new ArrayList<Map<String, String>>();
-        for(final UserPreference preference : preferences) {
+        for (final UserPreference preference : preferences) {
             final Map<String, String> m = new HashMap<String, String>();
             m.put("userAccountPreferenceName", preference.getName());
             m.put("userAccountPreferenceValue", preference.getValue());
@@ -455,13 +457,13 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      * @throws WebserverSystemException e
      */
     private String renderAttribute(final UserAttribute attribute, final String isRootAttribute)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootAttribute", isRootAttribute);
         addAttributesCommonValues(values);
-        if(XmlTemplateProvider.TRUE.equals(isRootAttribute)) {
+        if (XmlTemplateProvider.TRUE.equals(isRootAttribute)) {
             DateTime lmdDateTime = new DateTime(attribute.getUserAccountByUserId().getLastModificationDate());
             lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
             final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
@@ -484,7 +486,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      */
     @Override
     public String renderAttributes(final UserAccount userAccount, final Set<UserAttribute> attributes)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -497,7 +499,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         addEscidocBaseUrl(values);
 
         final Collection<Map<String, Object>> userAccountAttributesValues = new ArrayList<Map<String, Object>>();
-        for(final UserAttribute attribute : attributes) {
+        for (final UserAttribute attribute : attributes) {
             final Map<String, Object> m = new HashMap<String, Object>();
             m.put(USER_ACCOUNT_ID, userAccount.getId());
             m.put("userAccountAttributeId", attribute.getId());

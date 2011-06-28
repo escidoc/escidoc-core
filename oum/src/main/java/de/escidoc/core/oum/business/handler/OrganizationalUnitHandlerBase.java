@@ -63,25 +63,28 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws OrganizationalUnitNotFoundException
      *                                        If the id does not point to an organizational unit.
      */
-    protected String checkParentRef(final StartElement element)
-            throws MissingAttributeValueException, OrganizationalUnitNotFoundException, TripleStoreSystemException,
-            IntegritySystemException, WebserverSystemException {
+    protected String checkParentRef(final StartElement element) throws MissingAttributeValueException,
+        OrganizationalUnitNotFoundException, TripleStoreSystemException, IntegritySystemException,
+        WebserverSystemException {
 
         String result;
         try {
             result = XmlUtility.getIdFromURI(element.getAttribute(Constants.XLINK_URI, "href").getValue());
-        } catch(final NoSuchAttributeException e) {
+        }
+        catch (final NoSuchAttributeException e) {
             try {
                 result = element.getAttribute(null, "objid").getValue();
-            } catch(final NoSuchAttributeException e1) {
+            }
+            catch (final NoSuchAttributeException e1) {
                 throw new MissingAttributeValueException("Parent attribute 'href' or 'objid' has to be set! ", e1);
             }
         }
         try {
             this.getUtility().checkIsOrganizationalUnit(result);
-        } catch(final OrganizationalUnitNotFoundException e) {
-            throw new OrganizationalUnitNotFoundException(
-                    "Reference to parent organizational-unit is not valid! " + e.getMessage(), e);
+        }
+        catch (final OrganizationalUnitNotFoundException e) {
+            throw new OrganizationalUnitNotFoundException("Reference to parent organizational-unit is not valid! "
+                + e.getMessage(), e);
         }
         return result;
     }

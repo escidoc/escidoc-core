@@ -66,10 +66,8 @@ public class SchemasCache {
      * @throws IOException              Thrown in case of an I/O error.
      * @throws WebserverSystemException Thrown if schema can not be parsed.
      */
-    @Cacheable(cacheName = "schemasCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator",
-            properties = {@Property(name = "includeMethod", value = "false")}))
-    public Schema getSchema(final String schemaUri)
-            throws IOException, WebserverSystemException, MalformedURLException {
+    @Cacheable(cacheName = "schemasCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException, MalformedURLException {
 
         final URLConnection conn = new URL(schemaUri).openConnection();
         final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -80,7 +78,8 @@ public class SchemasCache {
         final Schema schema;
         try {
             schema = sf.newSchema(new SAXSource(new InputSource(conn.getInputStream())));
-        } catch(final SAXException e) {
+        }
+        catch (final SAXException e) {
             throw new WebserverSystemException("Problem with schema " + schemaUri + ". ", e);
         }
         return schema;

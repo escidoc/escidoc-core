@@ -96,16 +96,16 @@ public class StructMapCreateHandler extends DefaultHandler {
      * @throws MissingAttributeValueException Thrown if objid was not given as parameter.
      */
     @Override
-    public StartElement startElement(final StartElement element)
-            throws InvalidContentException, TripleStoreSystemException, WebserverSystemException,
-            MissingAttributeValueException {
+    public StartElement startElement(final StartElement element) throws InvalidContentException,
+        TripleStoreSystemException, WebserverSystemException, MissingAttributeValueException {
         final String curPath = parser.getCurPath();
 
-        if(curPath.startsWith(this.structMapPath)) {
-            if(curPath.equals(this.structMapPath + "/item")) {
+        if (curPath.startsWith(this.structMapPath)) {
+            if (curPath.equals(this.structMapPath + "/item")) {
                 final String itemId = checkRefElement(element, Constants.ITEM_OBJECT_TYPE, "item");
                 entries.add(itemId);
-            } else if(curPath.equals(this.structMapPath + "/container")) {
+            }
+            else if (curPath.equals(this.structMapPath + "/container")) {
                 final String containerId = checkRefElement(element, Constants.CONTAINER_OBJECT_TYPE, "container");
                 entries.add(containerId);
             }
@@ -128,35 +128,35 @@ public class StructMapCreateHandler extends DefaultHandler {
      * @throws MissingAttributeValueException Thrown if objid was not given as parameter.
      */
     private String checkRefElement(final StartElement element, final String objectType, final String elementName)
-            throws InvalidContentException, TripleStoreSystemException, MissingAttributeValueException {
+        throws InvalidContentException, TripleStoreSystemException, MissingAttributeValueException {
         String entryId = null;
         final int indexOfObjId = element.indexOfAttribute(null, "objid");
         final int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI, "href");
-        if(indexOfObjId != - 1) {
+        if (indexOfObjId != -1) {
             entryId = element.getAttribute(indexOfObjId).getValue();
-            if(entryId.length() == 0) {
-                throw new MissingAttributeValueException(
-                        "Value of attribute 'objid' of the element '" + parser.getCurPath() + "' is missing.");
+            if (entryId.length() == 0) {
+                throw new MissingAttributeValueException("Value of attribute 'objid' of the element '"
+                    + parser.getCurPath() + "' is missing.");
             }
-        } else if(indexOfHref != - 1) {
+        }
+        else if (indexOfHref != -1) {
             final Attribute xlinkHref = element.getAttribute(indexOfHref);
             final String xlinkHrefValue = xlinkHref.getValue();
-            if(xlinkHrefValue.length() == 0) {
-                throw new MissingAttributeValueException(
-                        "Value of attribute 'objid' of the element '" + parser.getCurPath() + "' is missing.");
+            if (xlinkHrefValue.length() == 0) {
+                throw new MissingAttributeValueException("Value of attribute 'objid' of the element '"
+                    + parser.getCurPath() + "' is missing.");
             }
             final String xlinkPrefix = xlinkHref.getPrefix();
             entryId = Utility.getId(xlinkHrefValue);
-            if(! xlinkHrefValue.equals("/ir/" + elementName + '/' + entryId)) {
-                throw new InvalidContentException(
-                        "The value of attribute " + element.getLocalName() + '.' + xlinkPrefix +
-                                ":href has to look like: ir/" + elementName + '/' + entryId);
+            if (!xlinkHrefValue.equals("/ir/" + elementName + '/' + entryId)) {
+                throw new InvalidContentException("The value of attribute " + element.getLocalName() + '.'
+                    + xlinkPrefix + ":href has to look like: ir/" + elementName + '/' + entryId);
             }
         }
-        if(! this.tripleStoreUtility.exists(entryId)) {
+        if (!this.tripleStoreUtility.exists(entryId)) {
             throw new InvalidContentException("Referenced object in struct-map does not exist.");
         }
-        if(! objectType.equals(this.tripleStoreUtility.getObjectType(entryId))) {
+        if (!objectType.equals(this.tripleStoreUtility.getObjectType(entryId))) {
             throw new InvalidContentException("Referenced object in struct-map is no " + elementName + '.');
         }
         return entryId;

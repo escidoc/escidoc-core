@@ -81,7 +81,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException One of the listeners threw an exception.
      */
     protected void fireItemCreated(final String id, final String xmlData) throws SystemException {
-        for(final ResourceListener itemListener : this.itemListeners) {
+        for (final ResourceListener itemListener : this.itemListeners) {
             itemListener.resourceCreated(id, xmlData);
         }
     }
@@ -94,7 +94,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException One of the listeners threw an exception.
      */
     public void fireItemModified(final String id, final String xmlData) throws SystemException {
-        for(final ResourceListener itemListener : this.itemListeners) {
+        for (final ResourceListener itemListener : this.itemListeners) {
             itemListener.resourceModified(id, xmlData);
         }
     }
@@ -106,7 +106,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException One of the listeners threw an exception.
      */
     protected void fireItemDeleted(final String id) throws SystemException {
-        for(final ResourceListener itemListener : this.itemListeners) {
+        for (final ResourceListener itemListener : this.itemListeners) {
             itemListener.resourceDeleted(id);
         }
     }
@@ -120,12 +120,11 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws ItemNotFoundException      Thrown if an item with the provided id does not exist in the framework.
      * @throws SystemException            One of the listeners threw an exception.
      */
-    protected void queueItemsModified(final Iterable<String> ids)
-            throws ComponentNotFoundException, ItemNotFoundException, SystemException, WebserverSystemException,
-            EncodingSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException,
-            ApplicationServerSystemException {
-        if(this.indexingHandler != null) {
-            for(final String id : ids) {
+    protected void queueItemsModified(final Iterable<String> ids) throws ComponentNotFoundException,
+        ItemNotFoundException, SystemException, WebserverSystemException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException, ApplicationServerSystemException {
+        if (this.indexingHandler != null) {
+            for (final String id : ids) {
                 setItem(id);
                 final String xml = render();
                 indexingHandler.resourceModified(id, xml);

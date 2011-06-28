@@ -141,7 +141,7 @@ public class GenericResource implements FedoraResource {
      */
     public GenericResource() {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
-                expandPropertiesNamesMapping(getPropertiesNamesMapping()));
+            expandPropertiesNamesMapping(getPropertiesNamesMapping()));
     }
 
     protected TripleStoreUtility getTripleStoreUtility() {
@@ -164,7 +164,7 @@ public class GenericResource implements FedoraResource {
     public GenericResource(final String objid) {
         this.id = objid;
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
-                expandPropertiesNamesMapping(getPropertiesNamesMapping()));
+            expandPropertiesNamesMapping(getPropertiesNamesMapping()));
     }
 
     /**
@@ -208,8 +208,8 @@ public class GenericResource implements FedoraResource {
      * @throws WebserverSystemException   Thrown in case of internal error.
      * @throws ResourceNotFoundException  Thrown if the resource with the provided id does not exist.
      */
-    public void setId(final String id)
-            throws TripleStoreSystemException, WebserverSystemException, ResourceNotFoundException {
+    public void setId(final String id) throws TripleStoreSystemException, WebserverSystemException,
+        ResourceNotFoundException {
 
         this.id = XmlUtility.getObjidWithoutVersion(id);
     }
@@ -223,7 +223,7 @@ public class GenericResource implements FedoraResource {
      */
     public String getCreationDate() throws TripleStoreSystemException, WebserverSystemException {
 
-        if(this.creationDate == null) {
+        if (this.creationDate == null) {
             this.creationDate = getTripleStoreUtility().getCreationDate(this.id);
         }
         return this.creationDate;
@@ -262,16 +262,17 @@ public class GenericResource implements FedoraResource {
 
             final String propLMD = getResourceProperties().get(PropertyMapKeys.LAST_MODIFICATION_DATE);
 
-            if(propLMD != null) {
+            if (propLMD != null) {
                 lastModificationDate = new DateTime(propLMD, DateTimeZone.UTC);
             }
 
-            if(lastModificationDate == null) {
+            if (lastModificationDate == null) {
                 final ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(this.id);
                 lastModificationDate = objectProfile.getObjLastModDate();
                 setLastModificationDate(lastModificationDate);
             }
-        } catch(final TripleStoreSystemException e) {
+        }
+        catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -288,7 +289,8 @@ public class GenericResource implements FedoraResource {
         // this.lastModifiedDate = timestamp;
         try {
             getResourceProperties().put(PropertyMapKeys.LAST_MODIFICATION_DATE, timestamp.toString());
-        } catch(final TripleStoreSystemException e) {
+        }
+        catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -313,10 +315,11 @@ public class GenericResource implements FedoraResource {
      * @throws WebserverSystemException Thrown in case of internal error.
      */
     public String getTitle() throws WebserverSystemException {
-        if(this.title == null) {
+        if (this.title == null) {
             try {
                 this.title = getTripleStoreUtility().getTitle(this.id);
-            } catch(final TripleStoreSystemException e) {
+            }
+            catch (final TripleStoreSystemException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -343,7 +346,8 @@ public class GenericResource implements FedoraResource {
         final String status;
         try {
             status = getResourceProperties().get(PropertyMapKeys.PUBLIC_STATUS);
-        } catch(final TripleStoreSystemException e) {
+        }
+        catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -359,9 +363,9 @@ public class GenericResource implements FedoraResource {
      */
     public String getCreatedBy() throws TripleStoreSystemException, WebserverSystemException {
 
-        if(this.createdBy == null) {
+        if (this.createdBy == null) {
             this.createdBy =
-                    getTripleStoreUtility().getPropertiesElements(this.id, TripleStoreUtility.PROP_CREATED_BY_ID);
+                getTripleStoreUtility().getPropertiesElements(this.id, TripleStoreUtility.PROP_CREATED_BY_ID);
         }
 
         return this.createdBy;
@@ -385,10 +389,10 @@ public class GenericResource implements FedoraResource {
      * @throws TripleStoreSystemException Thrown if TripleStore request failed.
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    public void checkResourceExist()
-            throws ResourceNotFoundException, TripleStoreSystemException, WebserverSystemException {
+    public void checkResourceExist() throws ResourceNotFoundException, TripleStoreSystemException,
+        WebserverSystemException {
 
-        if(this.id == null || ! getTripleStoreUtility().exists(this.id)) {
+        if (this.id == null || !getTripleStoreUtility().exists(this.id)) {
             throw new ResourceNotFoundException("Resource with id " + this.id + " does not exist.");
         }
     }
@@ -405,7 +409,7 @@ public class GenericResource implements FedoraResource {
     @Override
     public Datastream getRelsExt() throws FedoraSystemException, StreamNotFoundException {
 
-        if(this.relsExt == null) {
+        if (this.relsExt == null) {
             this.relsExt = new Datastream(Datastream.RELS_EXT_DATASTREAM, this.id, null);
         }
         return this.relsExt;
@@ -420,13 +424,14 @@ public class GenericResource implements FedoraResource {
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown in case of internal failure.
      */
-    public String getRelsExtAsString()
-            throws EncodingSystemException, WebserverSystemException, FedoraSystemException, StreamNotFoundException {
+    public String getRelsExtAsString() throws EncodingSystemException, WebserverSystemException, FedoraSystemException,
+        StreamNotFoundException {
 
         final String xml;
         try {
             xml = new String(getRelsExt().getStream(), XmlUtility.CHARACTER_ENCODING);
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
         return xml;
@@ -442,7 +447,7 @@ public class GenericResource implements FedoraResource {
     @Override
     public void setRelsExt(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
 
-        if(this.relsExt == null || ! this.relsExt.equals(ds)) {
+        if (this.relsExt == null || !this.relsExt.equals(ds)) {
             this.relsExt = ds;
             this.needSync = true;
         }
@@ -472,12 +477,13 @@ public class GenericResource implements FedoraResource {
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown in case of internal failure.
      */
-    public void setRelsExt(final ByteArrayOutputStream relsExt)
-            throws FedoraSystemException, WebserverSystemException, StreamNotFoundException, EncodingSystemException {
+    public void setRelsExt(final ByteArrayOutputStream relsExt) throws FedoraSystemException, WebserverSystemException,
+        StreamNotFoundException, EncodingSystemException {
 
         try {
             setRelsExt(relsExt.toString(XmlUtility.CHARACTER_ENCODING));
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
     }
@@ -491,12 +497,13 @@ public class GenericResource implements FedoraResource {
      * @throws WebserverSystemException Thrown in case of internal failure.
      */
     @Override
-    public void setRelsExt(final String relsExt)
-            throws EncodingSystemException, FedoraSystemException, WebserverSystemException {
+    public void setRelsExt(final String relsExt) throws EncodingSystemException, FedoraSystemException,
+        WebserverSystemException {
 
         try {
             setRelsExt(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
-        } catch(final UnsupportedEncodingException e) {
+        }
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
     }
@@ -515,15 +522,15 @@ public class GenericResource implements FedoraResource {
      * @param elementsToRemove Map of elements which are to remove.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    protected void updateRelsExt(final Map<String, StartElementWithChildElements> elementsToUpdate,
-                                 final Map<String, List<StartElementWithChildElements>> elementsToRemove)
-            throws WebserverSystemException {
+    protected void updateRelsExt(
+        final Map<String, StartElementWithChildElements> elementsToUpdate,
+        final Map<String, List<StartElementWithChildElements>> elementsToRemove) throws WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
 
-        if(elementsToUpdate != null) {
+        if (elementsToUpdate != null) {
             final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
-                    new ItemRelsExtUpdateHandler(elementsToUpdate, sp);
+                new ItemRelsExtUpdateHandler(elementsToUpdate, sp);
             sp.addHandler(itemRelsExtUpdateHandler);
         }
 
@@ -538,7 +545,8 @@ public class GenericResource implements FedoraResource {
             // new ByteArrayInputStream(getRelsExt().getStream());
             sp.parse(getRelsExt().getStream());
             setRelsExt((ByteArrayOutputStream) me.getOutputStreams().get("RDF"));
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException("Unexpected Exception.", e);
         }
     }
@@ -556,7 +564,7 @@ public class GenericResource implements FedoraResource {
      */
     public Map<String, String> getResourceProperties() throws TripleStoreSystemException, WebserverSystemException {
 
-        if(this.propertiesMap == null) {
+        if (this.propertiesMap == null) {
             final Map<String, String> lastVersionData = mapTripleList2TupleList(parseTriplesFromRelsExt());
             this.propertiesMap = mapTripleStoreKeys(lastVersionData);
         }
@@ -583,13 +591,13 @@ public class GenericResource implements FedoraResource {
      * @throws WebserverSystemException   Thrown in case of internal failure.
      */
     public Map<String, String> getResourceProperties(final Collection<String> propertiesNamesCol)
-            throws TripleStoreSystemException, WebserverSystemException {
+        throws TripleStoreSystemException, WebserverSystemException {
 
         // return getTripleStoreUtility().getProperties(getId(),
         // propertiesNamesCol);
 
         final Map<String, String> tripleStoreValues =
-                getTripleStoreUtility().getProperties(getId(), propertiesNamesCol);
+            getTripleStoreUtility().getProperties(getId(), propertiesNamesCol);
 
         return mapTripleStoreKeys(tripleStoreValues);
     }
@@ -602,8 +610,8 @@ public class GenericResource implements FedoraResource {
      * @throws TripleStoreSystemException Thrown if a TripleStore request failed.
      * @throws WebserverSystemException   Thrown if parsing of WOV failed or an internal failure occurs.
      */
-    public String getResourcePropertiesValue(final String key)
-            throws TripleStoreSystemException, WebserverSystemException {
+    public String getResourcePropertiesValue(final String key) throws TripleStoreSystemException,
+        WebserverSystemException {
 
         return getResourceProperties().get(key);
     }
@@ -621,7 +629,8 @@ public class GenericResource implements FedoraResource {
 
         try {
             getResourceProperties().put(key, value);
-        } catch(final TripleStoreSystemException e) {
+        }
+        catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -637,13 +646,14 @@ public class GenericResource implements FedoraResource {
 
         final Map<String, String> properties = new HashMap<String, String>();
 
-        for(final Entry<String, String> stringStringEntry : tripleStoreMap.entrySet()) {
+        for (final Entry<String, String> stringStringEntry : tripleStoreMap.entrySet()) {
             final String value = stringStringEntry.getValue();
-            if(value != null) {
+            if (value != null) {
                 final String targetKey = this.propertiesNamesMapping.get(stringStringEntry.getKey());
-                if(targetKey != null) {
+                if (targetKey != null) {
                     properties.put(targetKey, value);
-                } else {
+                }
+                else {
                     properties.put(stringStringEntry.getKey(), value);
                 }
             }
@@ -659,9 +669,10 @@ public class GenericResource implements FedoraResource {
      */
     public void addResourceProperties(final Map<String, String> valueMap) {
 
-        if(this.propertiesMap == null) {
+        if (this.propertiesMap == null) {
             this.propertiesMap = valueMap;
-        } else {
+        }
+        else {
             this.propertiesMap.putAll(valueMap);
         }
     }
@@ -691,8 +702,8 @@ public class GenericResource implements FedoraResource {
      * @param propertiesNames        The Collection of parameter names for this resource.
      * @param propertiesNamesMapping The Map of key names how they to map to the internal key names.
      */
-    protected final void setPropertiesNames(final Collection<String> propertiesNames,
-                                            final Map<String, String> propertiesNamesMapping) {
+    protected final void setPropertiesNames(
+        final Collection<String> propertiesNames, final Map<String, String> propertiesNamesMapping) {
         this.propertiesNames = propertiesNames;
         this.propertiesNamesMapping = propertiesNamesMapping;
         this.propertiesMap = null;
@@ -747,16 +758,17 @@ public class GenericResource implements FedoraResource {
      * @param lockOwner Ids who is lock the object.
      * @throws LockingException Thrown if locking fails.
      */
-    public final void setLocked(final boolean lock, final String[] lockOwner)
-            throws SqlDatabaseSystemException, WebserverSystemException {
+    public final void setLocked(final boolean lock, final String[] lockOwner) throws SqlDatabaseSystemException,
+        WebserverSystemException {
         // Should lock only be checked in handler? No, it is part of the
         // resource representation.
-        if(lock && lockOwner == null) {
+        if (lock && lockOwner == null) {
             throw new NullPointerException("Need lockOwner.");
         }
-        if(lock && ! isLocked()) {
+        if (lock && !isLocked()) {
             this.lockHandler.lock(this.id, lockOwner);
-        } else if(isLocked()) {
+        }
+        else if (isLocked()) {
             this.lockHandler.unlock(this.id);
         }
     }
@@ -772,7 +784,7 @@ public class GenericResource implements FedoraResource {
      */
     public Datastream getDatastream() throws StreamNotFoundException, FedoraSystemException {
 
-        if(this.datastream == null) {
+        if (this.datastream == null) {
             this.datastream = new Datastream(DATASTREAM_DEFAULT, this.id, null);
         }
         return this.datastream;
@@ -785,10 +797,10 @@ public class GenericResource implements FedoraResource {
      * @throws StreamNotFoundException Thrown if the datastream was not found.
      * @throws LockingException        Thrown if resource is locked.
      */
-    public void setDatastream(final Datastream ds)
-            throws StreamNotFoundException, LockingException, FedoraSystemException, WebserverSystemException {
+    public void setDatastream(final Datastream ds) throws StreamNotFoundException, LockingException,
+        FedoraSystemException, WebserverSystemException {
 
-        if(isLocked()) {
+        if (isLocked()) {
             final String msg = "Resource " + this.id + " is locked.";
             throw new LockingException(msg);
         }
@@ -799,14 +811,15 @@ public class GenericResource implements FedoraResource {
             // unused data streams.)?
             final Datastream curDs = getDatastream();
 
-            if(! ds.equals(curDs)) {
+            if (!ds.equals(curDs)) {
 
                 this.datastream = ds;
                 final DateTime lmd = ds.merge();
                 setLastModificationDate(lmd);
                 this.needSync = true;
             }
-        } catch(final StreamNotFoundException e) {
+        }
+        catch (final StreamNotFoundException e) {
             // An item have to have a RELS-EXT datastream
             throw new StreamNotFoundException("No " + Datastream.RELS_EXT_DATASTREAM + " for item " + this.id + '.', e);
         }
@@ -857,16 +870,17 @@ public class GenericResource implements FedoraResource {
          * changes, is expensive. If RELS-EXT was not updated (through the
          * methods of this class), then should a persist be redundant.
          */
-        if(this.needSync) {
+        if (this.needSync) {
             final DateTime lastModificationDate = persistRelsExt();
             setLastModificationDate(lastModificationDate);
         }
-        if(sync) {
+        if (sync) {
             this.fedoraServiceClient.sync();
         }
         try {
             this.getTripleStoreUtility().reinitialize();
-        } catch(final TripleStoreSystemException e) {
+        }
+        catch (final TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
         }
         return getLastFedoraModificationDate();
@@ -883,7 +897,7 @@ public class GenericResource implements FedoraResource {
 
         DateTime timestamp = null; // Maybe would it be better, if we use the
         // old timestamp instead of null.
-        if(this.relsExt != null) {
+        if (this.relsExt != null) {
             timestamp = new DateTime(this.relsExt.merge(), DateTimeZone.UTC);
         }
 
@@ -905,7 +919,7 @@ public class GenericResource implements FedoraResource {
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames =
-                propertiesNames != null ? propertiesNames : new ArrayList<String>();
+            propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_DC_TITLE);
         // FIXME only container has description
@@ -941,7 +955,7 @@ public class GenericResource implements FedoraResource {
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
 
         final Map<String, String> newPropertiesNamesMap =
-                propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
+            propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_DC_TITLE, PropertyMapKeys.LATEST_VERSION_TITLE);
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_DC_DESCRIPTION, PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
@@ -949,17 +963,17 @@ public class GenericResource implements FedoraResource {
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_CREATED_BY_ID, PropertyMapKeys.CREATED_BY_ID);
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_PUBLIC_STATUS, PropertyMapKeys.PUBLIC_STATUS);
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_PUBLIC_STATUS_COMMENT, PropertyMapKeys.PUBLIC_STATUS_COMMENT);
-        newPropertiesNamesMap
-                .put(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE, PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_TITLE);
-        newPropertiesNamesMap
-                .put(TripleStoreUtility.PROP_CONTENT_MODEL_ID, PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE,
+            PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_TITLE);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_CONTENT_MODEL_ID,
+            PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID);
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_CONTEXT_TITLE, PropertyMapKeys.LATEST_VERSION_CONTEXT_TITLE);
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_CONTEXT_ID, PropertyMapKeys.LATEST_VERSION_CONTEXT_ID);
 
-        newPropertiesNamesMap
-                .put(TripleStoreUtility.PROP_LATEST_VERSION_USER_ID, PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
+        newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_USER_ID,
+            PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_USER_TITLE,
-                PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE);
+            PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE);
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_ORIGIN, PropertyMapKeys.ORIGIN);
 
@@ -976,11 +990,12 @@ public class GenericResource implements FedoraResource {
      * @param sourceKey The key in the source Map.
      * @param targetKey The key in the target Map where the value is to store.
      */
-    public static void map(final Map<String, String> sourceMap, final Map<String, String> targetMap,
-                           final String sourceKey, final String targetKey) {
+    public static void map(
+        final Map<String, String> sourceMap, final Map<String, String> targetMap, final String sourceKey,
+        final String targetKey) {
 
         final String value = sourceMap.get(sourceKey);
-        if(value != null) {
+        if (value != null) {
             targetMap.put(targetKey, value);
         }
     }
@@ -994,29 +1009,32 @@ public class GenericResource implements FedoraResource {
      * @return true if resource is from provided type.
      * @throws IntegritySystemException Thrown if object type could not retrieved
      */
-    public boolean checkResourceType(final ResourceType resourceType)
-            throws IntegritySystemException, TripleStoreSystemException, WebserverSystemException {
+    public boolean checkResourceType(final ResourceType resourceType) throws IntegritySystemException,
+        TripleStoreSystemException, WebserverSystemException {
 
         final String type = getResourceProperties().get(TripleStoreUtility.PROP_OBJECT_TYPE);
 
-        if(resourceType == ResourceType.ITEM) {
-            if(type.equals(Constants.ITEM_OBJECT_TYPE)) {
+        if (resourceType == ResourceType.ITEM) {
+            if (type.equals(Constants.ITEM_OBJECT_TYPE)) {
                 return true;
             }
-        } else if(resourceType == ResourceType.COMPONENT) {
-            if(type.equals(Constants.COMPONENT_OBJECT_TYPE)) {
+        }
+        else if (resourceType == ResourceType.COMPONENT) {
+            if (type.equals(Constants.COMPONENT_OBJECT_TYPE)) {
                 return true;
             }
-        } else if(resourceType == ResourceType.CONTAINER) {
-            if(type.equals(Constants.CONTAINER_OBJECT_TYPE)) {
+        }
+        else if (resourceType == ResourceType.CONTAINER) {
+            if (type.equals(Constants.CONTAINER_OBJECT_TYPE)) {
                 return true;
             }
-        } else if(resourceType == ResourceType.CONTEXT) {
-            if(type.equals(Constants.CONTEXT_OBJECT_TYPE)) {
+        }
+        else if (resourceType == ResourceType.CONTEXT) {
+            if (type.equals(Constants.CONTEXT_OBJECT_TYPE)) {
                 return true;
             }
-        } else if(resourceType == ResourceType.CONTENT_RELATION &&
-                type.equals(Constants.CONTENT_RELATION2_OBJECT_TYPE)) {
+        }
+        else if (resourceType == ResourceType.CONTENT_RELATION && type.equals(Constants.CONTENT_RELATION2_OBJECT_TYPE)) {
             return true;
         }
 
@@ -1031,9 +1049,9 @@ public class GenericResource implements FedoraResource {
      */
     private Map<String, String> mapTripleList2TupleList(final Iterable<Triple> triples) {
         final Map<String, String> lastVersionData = new HashMap<String, String>();
-        for(final Triple triple : triples) {
+        for (final Triple triple : triples) {
             lastVersionData.put(triple.getPredicate(), triple.getObject());
-            if(triple.getPredicate().equals(TripleStoreUtility.PROP_DC_TITLE)) {
+            if (triple.getPredicate().equals(TripleStoreUtility.PROP_DC_TITLE)) {
                 this.title = triple.getObject();
             }
         }
@@ -1051,9 +1069,11 @@ public class GenericResource implements FedoraResource {
         final Datastream tmpRelsExt;
         try {
             tmpRelsExt = new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), null);
-        } catch(final FedoraSystemException e1) {
+        }
+        catch (final FedoraSystemException e1) {
             throw new WebserverSystemException(e1);
-        } catch(final StreamNotFoundException e1) {
+        }
+        catch (final StreamNotFoundException e1) {
             throw new WebserverSystemException(e1);
         }
 
@@ -1064,7 +1084,8 @@ public class GenericResource implements FedoraResource {
         sp.addHandler(eve);
         try {
             sp.parse(new ByteArrayInputStream(tmpRelsExt.getStream()));
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException("Unexpected exception during RELS-EXT parsing.", e);
         }
 
@@ -1079,10 +1100,10 @@ public class GenericResource implements FedoraResource {
      * TODO: There are no Exceptions thrown here.
      */
     protected final void initDatastreams(final List<DatastreamProfileTO> datastreamProfiles)
-            throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException,
-            IntegritySystemException, StreamNotFoundException {
+        throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
+        StreamNotFoundException {
 
-        for(final DatastreamProfileTO profile : datastreamProfiles) {
+        for (final DatastreamProfileTO profile : datastreamProfiles) {
             initDatastream(profile);
         }
     }
@@ -1090,24 +1111,23 @@ public class GenericResource implements FedoraResource {
     /**
      * Override this method to support more than the usual datastream types.
      */
-    protected void initDatastream(final DatastreamProfileTO profile)
-            throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException,
-            IntegritySystemException, StreamNotFoundException {
+    protected void initDatastream(final DatastreamProfileTO profile) throws WebserverSystemException,
+        FedoraSystemException, TripleStoreSystemException, IntegritySystemException, StreamNotFoundException {
         // RELS-EXT
-        if(Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID())) {
+        if (Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID())) {
             // The RELS-EXT in the Fedora repository is newer than the
             // version specified by versionDate. The difference between both
             // versions are timestamps (version/date, release/date).
             this.relsExt = new Datastream(profile, getId());
         }
         // DC
-        else if("DC".equals(profile.getDsID()) && this.dc == null) {
+        else if ("DC".equals(profile.getDsID()) && this.dc == null) {
             this.dc = new Datastream(profile, getId());
-        } else {
-            if(LOGGER.isDebugEnabled()) {
-                LOGGER.debug(
-                        "Stream " + getId() + '/' + profile.getDsID() + " not instanziated in GenericResource.<init>" +
-                                '.');
+        }
+        else {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Stream " + getId() + '/' + profile.getDsID()
+                    + " not instanziated in GenericResource.<init>" + '.');
             }
         }
     }

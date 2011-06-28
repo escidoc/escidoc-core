@@ -58,7 +58,7 @@ public interface SmPreprocessingLogsDaoInterface {
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     Collection<PreprocessingLog> retrievePreprocessingLogs(final String aggregationDefinitionId)
-            throws SqlDatabaseSystemException;
+        throws SqlDatabaseSystemException;
 
     /**
      * retrieves all PreprocessingLogs from the database with given processingDate.
@@ -77,8 +77,8 @@ public interface SmPreprocessingLogsDaoInterface {
      * @return Collection of PreprocessingLogs as Hibernate-Objects
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    Collection<PreprocessingLog> retrievePreprocessingLogs(final String aggregationDefinitionId,
-                                                           final Date processingDate) throws SqlDatabaseSystemException;
+    Collection<PreprocessingLog> retrievePreprocessingLogs(
+        final String aggregationDefinitionId, final Date processingDate) throws SqlDatabaseSystemException;
 
     /**
      * retrieves all PreprocessingLogs from the database with given aggregationDefinitionId and error or not.
@@ -89,7 +89,7 @@ public interface SmPreprocessingLogsDaoInterface {
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     Collection<PreprocessingLog> retrievePreprocessingLogs(final String aggregationDefinitionId, final boolean hasError)
-            throws SqlDatabaseSystemException;
+        throws SqlDatabaseSystemException;
 
     /**
      * retrieves all PreprocessingLogs from the database with given processingDate and error or not.
@@ -100,7 +100,7 @@ public interface SmPreprocessingLogsDaoInterface {
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     Collection<PreprocessingLog> retrievePreprocessingLogs(final Date processingDate, final boolean hasError)
-            throws SqlDatabaseSystemException;
+        throws SqlDatabaseSystemException;
 
     /**
      * retrieves all PreprocessingLogs from the database with given processingDate and aggregationDefinitionId and error
@@ -112,8 +112,8 @@ public interface SmPreprocessingLogsDaoInterface {
      * @return Collection of PreprocessingLogs as Hibernate-Objects
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    Collection<PreprocessingLog> retrievePreprocessingLogs(final String aggregationDefinitionId,
-                                                           final Date processingDate, final boolean hasError)
-            throws SqlDatabaseSystemException;
+    Collection<PreprocessingLog> retrievePreprocessingLogs(
+        final String aggregationDefinitionId, final Date processingDate, final boolean hasError)
+        throws SqlDatabaseSystemException;
 
 }

@@ -85,22 +85,25 @@ public class RelsExtReadHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws WebserverSystemException {
 
-        if(this.inTripleSection) {
+        if (this.inTripleSection) {
             this.predicate = element.getNamespace() + element.getLocalName();
             getObjectValue(element);
-        } else if(parser.getCurPath().startsWith(RDF_DESCRIPTION_PATH)) {
-            if(parser.getCurPath().equals(RDF_DESCRIPTION_PATH)) {
+        }
+        else if (parser.getCurPath().startsWith(RDF_DESCRIPTION_PATH)) {
+            if (parser.getCurPath().equals(RDF_DESCRIPTION_PATH)) {
                 try {
                     // select subject
                     this.subject = element.getAttributeValue(Constants.RDF_NAMESPACE_URI, RDF_ABOUT);
-                    if(this.cleanIdentifier) {
+                    if (this.cleanIdentifier) {
                         this.subject = cleanIdentifier(this.subject);
                     }
                     getObjectValue(element);
-                } catch(final NoSuchAttributeException e) {
+                }
+                catch (final NoSuchAttributeException e) {
                     throw new WebserverSystemException(e);
                 }
-            } else {
+            }
+            else {
                 this.inTripleSection = true;
                 // handle the first element
                 this.predicate = element.getNamespace() + element.getLocalName();
@@ -121,7 +124,7 @@ public class RelsExtReadHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element) throws IntegritySystemException {
 
-        if(this.inTripleSection && this.readCharacter) {
+        if (this.inTripleSection && this.readCharacter) {
             this.object += data;
         }
         return data;
@@ -137,10 +140,11 @@ public class RelsExtReadHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) {
 
-        if(this.inTripleSection) {
-            if(RDF_DESCRIPTION_PATH.equals(parser.getCurPath())) {
+        if (this.inTripleSection) {
+            if (RDF_DESCRIPTION_PATH.equals(parser.getCurPath())) {
                 this.inTripleSection = false;
-            } else {
+            }
+            else {
                 this.triples.add(new Triple(this.subject, this.predicate, this.object));
             }
         }
@@ -174,20 +178,22 @@ public class RelsExtReadHandler extends DefaultHandler {
     private void getObjectValue(final StartElement element) {
 
         final int index = element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, RDF_RESOURCE);
-        if(index == - 1) {
+        if (index == -1) {
             this.readCharacter = true;
             this.object = "";
-        } else {
+        }
+        else {
             try {
                 this.object = element.getAttribute(index).getValue();
-                if(this.cleanIdentifier) {
+                if (this.cleanIdentifier) {
                     this.object = cleanIdentifier(this.object);
                 }
-            } catch(final IndexOutOfBoundsException e) {
-                if(LOGGER.isWarnEnabled()) {
+            }
+            catch (final IndexOutOfBoundsException e) {
+                if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on getting attribute.");
                 }
-                if(LOGGER.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on getting attribute.", e);
                 }
             }
@@ -202,7 +208,7 @@ public class RelsExtReadHandler extends DefaultHandler {
      */
     private static String cleanIdentifier(final String identifier) {
 
-        if(identifier.startsWith(Constants.IDENTIFIER_PREFIX)) {
+        if (identifier.startsWith(Constants.IDENTIFIER_PREFIX)) {
             return identifier.substring(Constants.IDENTIFIER_PREFIX.length());
         }
 

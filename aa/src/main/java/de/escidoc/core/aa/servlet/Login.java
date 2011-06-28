@@ -100,7 +100,7 @@ public class Login extends HttpServlet {
      */
     public static String getUniqueID() {
         final char[] buf = new char[NUM_CHARS];
-        for(int i = 0; i < buf.length; i++) {
+        for (int i = 0; i < buf.length; i++) {
             buf[i] = CHARS.charAt(RANDOM.nextInt(CHARS.length()));
         }
         return new String(buf);
@@ -114,8 +114,8 @@ public class Login extends HttpServlet {
     private static final String COOKIE_SPRING_SECURITY = "JSESSIONID";
 
     private static final String ERR_MSG_MISSING_AUTHENTICATION =
-            "No authentication object found.\n" + " Please check if the login mechanism is properly set up in the" +
-                    " login configuration file escidoc-login.xml.";
+        "No authentication object found.\n" + " Please check if the login mechanism is properly set up in the"
+            + " login configuration file escidoc-login.xml.";
 
     /**
      * Pattern used to detect splitting blanks in DNs.
@@ -154,7 +154,7 @@ public class Login extends HttpServlet {
     private static final String AUTHENTICATED_REDIRECT_FILENAME = BASE_PATH_LOGIN + "authenticated-redirect.html";
 
     private static final String DEACTIVATED_USER_ACCOUNT_PAGE_FILENAME =
-            BASE_PATH_LOGIN + "deactivated-user-account.html";
+        BASE_PATH_LOGIN + "deactivated-user-account.html";
 
     private static final String LOGOUT_FILENAME = BASE_PATH_LOGIN + "logout.html";
 
@@ -194,7 +194,8 @@ public class Login extends HttpServlet {
             initFileContent(LOGOUT_FILENAME);
             initFileContent(LOGOUT_REDIRECT_FILENAME);
             initFileContent(DEACTIVATED_USER_ACCOUNT_PAGE_FILENAME);
-        } catch(final IOException e) {
+        }
+        catch (final IOException e) {
             throw new ServletException(e.getMessage(), e);
         }
     }
@@ -211,12 +212,13 @@ public class Login extends HttpServlet {
      * @throws IOException      e.
      */
     @Override
-    public void doGet(final HttpServletRequest request, final HttpServletResponse response)
-            throws ServletException, IOException {
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException,
+        IOException {
 
-        if(request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
+        if (request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
             doLogout(request, response);
-        } else {
+        }
+        else {
             doLogin(request, response);
         }
     }
@@ -225,12 +227,13 @@ public class Login extends HttpServlet {
      * See Interface for functional description.
      */
     @Override
-    public void doPost(final HttpServletRequest request, final HttpServletResponse response)
-            throws ServletException, IOException {
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException,
+        IOException {
 
-        if(request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
+        if (request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
             doLogout(request, response);
-        } else {
+        }
+        else {
             doLogin(request, response);
         }
     }
@@ -246,27 +249,29 @@ public class Login extends HttpServlet {
      * @throws IOException      Thrown in case of an IO error.
      * @throws ServletException Thrown in case of any other error.
      */
-    private void doLogout(final HttpServletRequest request, final HttpServletResponse response)
-            throws IOException, ServletException {
+    private void doLogout(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
+        ServletException {
 
         response.setContentType("text/html");
         // Try to identify the user by the cookie containing the
         // handle that identifies him/her.
         final Cookie escidocHandleCookie = EscidocServlet.getCookie(EscidocServlet.COOKIE_LOGIN, request);
         try {
-            if(escidocHandleCookie != null) {
+            if (escidocHandleCookie != null) {
                 final String handle = escidocHandleCookie.getValue();
                 try {
-                    if(StringUtils.isNotEmpty(handle)) {
+                    if (StringUtils.isNotEmpty(handle)) {
                         dao.deleteUserLoginData(handle);
                     }
-                } catch(final SystemException e) {
+                }
+                catch (final SystemException e) {
                     throw new ServletException(e);
                 }
             }
 
             sendLoggedOut(request, response);
-        } catch(final WebserverSystemException e) {
+        }
+        catch (final WebserverSystemException e) {
             throw new ServletException(e.getMessage(), e);
         }
     }
@@ -280,8 +285,8 @@ public class Login extends HttpServlet {
      * @throws ServletException e.
      * @throws IOException      e.
      */
-    private void doLogin(final HttpServletRequest request, final HttpServletResponse response)
-            throws IOException, ServletException {
+    private void doLogin(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
+        ServletException {
 
         try {
             response.setContentType("text/html");
@@ -289,7 +294,7 @@ public class Login extends HttpServlet {
             // check security context
             final SecurityContext securityContext = UserContext.getSecurityContext();
             final Authentication authentication = securityContext.getAuthentication();
-            if(authentication == null) {
+            if (authentication == null) {
                 throw new WebserverSystemException(ERR_MSG_MISSING_AUTHENTICATION);
             }
 
@@ -300,34 +305,40 @@ public class Login extends HttpServlet {
             final String username;
             final Map<String, List<String>> attributes;
 
-            if(principal instanceof EscidocLdapUserDetails) {
+            if (principal instanceof EscidocLdapUserDetails) {
                 final EscidocLdapUserDetails escidocLdapUserDetails = (EscidocLdapUserDetails) principal;
                 // FIXME: the following replacement is done to use this via REST
                 // interface. Maybe the interface itself should be changed for
                 // using white spaces in login names?
-                loginname = escidocLdapUserDetails.getUsername() + ',' + PATTERN_WHITESPACE
-                        .matcher(PATTERN_DN_SPLIT.matcher(escidocLdapUserDetails.getDn()).replaceAll(",$1"))
-                        .replaceAll("_");
+                loginname =
+                    escidocLdapUserDetails.getUsername()
+                        + ','
+                        + PATTERN_WHITESPACE.matcher(
+                            PATTERN_DN_SPLIT.matcher(escidocLdapUserDetails.getDn()).replaceAll(",$1")).replaceAll("_");
                 // FIXME: cn should be used for user name
                 final int index = escidocLdapUserDetails.getDn().indexOf(',');
-                if(index == - 1) {
+                if (index == -1) {
                     username = escidocLdapUserDetails.getUsername();
-                } else {
+                }
+                else {
                     final int index2 = escidocLdapUserDetails.getDn().indexOf('=');
 
                     username = escidocLdapUserDetails.getDn().substring(index2 + 1, index);
                 }
                 attributes = escidocLdapUserDetails.getStringAttributes();
-            } else if(principal instanceof ShibbolethUser) {
+            }
+            else if (principal instanceof ShibbolethUser) {
                 final ShibbolethUser shibUser = (ShibbolethUser) principal;
                 loginname = shibUser.getLoginName();
                 username = shibUser.getName();
                 attributes = shibUser.getStringAttributes();
-            } else if(principal instanceof EscidocOpenidUserDetails) {
+            }
+            else if (principal instanceof EscidocOpenidUserDetails) {
                 loginname = ((EscidocUserDetails) principal).getId();
                 username = loginname;
                 attributes = null;
-            } else {
+            }
+            else {
                 loginname = authentication.getName();
                 username = loginname;
                 attributes = null;
@@ -335,10 +346,11 @@ public class Login extends HttpServlet {
 
             UserAccount userAccount = dao.retrieveUserAccountByLoginName(loginname);
 
-            if(userAccount != null) {
+            if (userAccount != null) {
                 // clear cached userGroups
                 securityHelper.clearUserGroups(userAccount.getId());
-            } else {
+            }
+            else {
                 userAccount = new UserAccount();
                 userAccount.setLoginname(loginname);
                 userAccount.setName(username);
@@ -356,20 +368,23 @@ public class Login extends HttpServlet {
             // delete old external user attributes
             try {
                 deleteExternalAttributes(userAccount);
-            } catch(final Exception e) {
+            }
+            catch (final Exception e) {
                 throw new ServletException(e);
             }
 
             // store new external user attributes
-            if(attributes != null) {
+            if (attributes != null) {
                 try {
                     createExternalAttributes(userAccount, attributes);
-                } catch(final Exception e) {
+                }
+                catch (final Exception e) {
                     throw new ServletException(e);
                 }
             }
             doLoginOfExistingUser(request, response, userAccount);
-        } catch(final SystemException e) {
+        }
+        catch (final SystemException e) {
             throw new ServletException(e.getMessage(), e);
         }
     }
@@ -383,11 +398,11 @@ public class Login extends HttpServlet {
      * @param userAccount The {@link UserAccount} of the user.
      * @throws IOException Thrown in case of an I/O error.
      */
-    private void doLoginOfExistingUser(final HttpServletRequest request, final HttpServletResponse response,
-                                       final UserAccount userAccount)
-            throws IOException, SqlDatabaseSystemException, WebserverSystemException {
+    private void doLoginOfExistingUser(
+        final HttpServletRequest request, final HttpServletResponse response, final UserAccount userAccount)
+        throws IOException, SqlDatabaseSystemException, WebserverSystemException {
 
-        if(Boolean.TRUE.equals(userAccount.getActive())) {
+        if (Boolean.TRUE.equals(userAccount.getActive())) {
 
             final long timestamp = System.currentTimeMillis();
             final UserLoginData loginData = new UserLoginData();
@@ -397,14 +412,17 @@ public class Login extends HttpServlet {
             dao.saveOrUpdate(loginData);
             try {
                 sendAuthenticated(request, response, loginData.getHandle());
-            } catch(final WebserverSystemException e) {
-                dao.delete(loginData);
-                throw e;
-            } catch(final IOException e) {
+            }
+            catch (final WebserverSystemException e) {
                 dao.delete(loginData);
                 throw e;
             }
-        } else {
+            catch (final IOException e) {
+                dao.delete(loginData);
+                throw e;
+            }
+        }
+        else {
             sendDeactivatedUserAccount(request, response);
         }
     }
@@ -420,16 +438,18 @@ public class Login extends HttpServlet {
 
         try {
             final String targetParameter = request.getParameter(EscidocServlet.PARAM_TARGET);
-            if(targetParameter != null) {
+            if (targetParameter != null) {
                 return URLDecoder.decode(targetParameter, EscidocServlet.ENCODING);
-            } else {
+            }
+            else {
                 throw new MissingParameterException("No target parameter provided in URL");
             }
-        } catch(final UnsupportedEncodingException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final UnsupportedEncodingException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on retriving decoded target.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on retriving decoded target.", e);
             }
             return "";
@@ -448,8 +468,9 @@ public class Login extends HttpServlet {
      * @throws IOException              Thrown in case of an error.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void sendAuthenticated(final HttpServletRequest request, final HttpServletResponse response,
-                                   final String handle) throws IOException, WebserverSystemException {
+    private void sendAuthenticated(
+        final HttpServletRequest request, final HttpServletResponse response, final String handle) throws IOException,
+        WebserverSystemException {
 
         response.reset();
 
@@ -460,19 +481,21 @@ public class Login extends HttpServlet {
         String redirectUrlWithHandle;
         try {
             redirectUrlWithHandle = createRedirectUrl(request, handle);
-        } catch(final MissingParameterException e) {
-            if(LOGGER.isWarnEnabled()) {
+        }
+        catch (final MissingParameterException e) {
+            if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on creating redirect URL.");
             }
-            if(LOGGER.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on creating redirect URL.", e);
             }
             redirectUrlWithHandle = null;
         }
 
-        if(redirectUrlWithHandle == null) {
+        if (redirectUrlWithHandle == null) {
             sendResponse(response, getAuthenticatedPage(null));
-        } else {
+        }
+        else {
             sendRedirectingResponse(response, getAuthenticatedPage(redirectUrlWithHandle), redirectUrlWithHandle);
         }
     }
@@ -486,7 +509,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException Thrown if cookie creation fails due to an internal error.
      */
     private void sendDeactivatedUserAccount(final HttpServletRequest request, final HttpServletResponse response)
-            throws IOException, WebserverSystemException {
+        throws IOException, WebserverSystemException {
 
         response.reset();
         response.setContentType("text/html");
@@ -509,7 +532,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException Thrown if cookie creation fails due to an internal error.
      */
     private void sendLoggedOut(final HttpServletRequest request, final HttpServletResponse response)
-            throws IOException, WebserverSystemException {
+        throws IOException, WebserverSystemException {
 
         response.reset();
         response.setContentType("text/html");
@@ -521,16 +544,18 @@ public class Login extends HttpServlet {
         String redirectUrl;
         try {
             redirectUrl = retrieveDecodedTarget(request);
-        } catch(final MissingParameterException e) {
-            if(LOGGER.isDebugEnabled()) {
+        }
+        catch (final MissingParameterException e) {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on retriving decoded target.", e);
             }
             redirectUrl = null;
         }
 
-        if(redirectUrl == null) {
+        if (redirectUrl == null) {
             sendResponse(response, getLoggedOutPage(null));
-        } else {
+        }
+        else {
             sendRedirectingResponse(response, getLoggedOutPage(redirectUrl), redirectUrl);
         }
     }
@@ -544,7 +569,7 @@ public class Login extends HttpServlet {
      * @throws MissingParameterException Thrown if the target parameter is not found.
      */
     private String createRedirectUrl(final HttpServletRequest request, final String userHandle)
-            throws MissingParameterException, WebserverSystemException {
+        throws MissingParameterException, WebserverSystemException {
 
         return createRedirectUrl(retrieveDecodedTarget(request), userHandle);
     }
@@ -558,14 +583,15 @@ public class Login extends HttpServlet {
      *         no redirect Url has been provided.
      */
     private static String createRedirectUrl(final String redirectUrl, final String userHandle)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
 
-        if(StringUtils.isEmpty(redirectUrl)) {
+        if (StringUtils.isEmpty(redirectUrl)) {
             return null;
-        } else {
-            final char delimiter = redirectUrl.indexOf('?') == - 1 ? '?' : '&';
-            return redirectUrl + delimiter + AUTHENTICATION + '=' +
-                    UserHandleCookieUtil.createEncodedUserHandle(userHandle);
+        }
+        else {
+            final char delimiter = redirectUrl.indexOf('?') == -1 ? '?' : '&';
+            return redirectUrl + delimiter + AUTHENTICATION + '='
+                + UserHandleCookieUtil.createEncodedUserHandle(userHandle);
         }
     }
 
@@ -577,10 +603,11 @@ public class Login extends HttpServlet {
      */
     private String getAuthenticatedPage(final String redirectUrl) {
 
-        if(redirectUrl == null) {
+        if (redirectUrl == null) {
             final String pageContent = getFileContent(AUTHENTICATED_FILENAME);
             return PATTERN_REDIRECT_URL.matcher(pageContent).replaceAll(BASE_PATH_LOGOUT);
-        } else {
+        }
+        else {
             final String pageContent = getFileContent(AUTHENTICATED_REDIRECT_FILENAME);
             return PATTERN_REDIRECT_URL.matcher(pageContent).replaceAll(redirectUrl);
         }
@@ -595,9 +622,10 @@ public class Login extends HttpServlet {
      */
     private String getLoggedOutPage(final String redirectUrl) {
 
-        if(redirectUrl == null) {
+        if (redirectUrl == null) {
             return getFileContent(LOGOUT_FILENAME);
-        } else {
+        }
+        else {
             final String pageContent = getFileContent(LOGOUT_REDIRECT_FILENAME);
             return PATTERN_REDIRECT_URL.matcher(pageContent).replaceAll(redirectUrl);
         }
@@ -625,17 +653,18 @@ public class Login extends HttpServlet {
 
         final StringBuilder result = new StringBuilder();
         final InputStream inputStream = this.getClass().getResourceAsStream(templateFileName);
-        if(inputStream == null) {
+        if (inputStream == null) {
             throw new IOException(StringUtility.format("Template not found", templateFileName));
         }
         try {
             final byte[] buffer = new byte[BUFFER_SIZE];
             int length = inputStream.read(buffer);
-            while(length != - 1) {
+            while (length != -1) {
                 result.append(new String(buffer, 0, length));
                 length = inputStream.read(buffer);
             }
-        } finally {
+        }
+        finally {
             IOUtils.closeStream(inputStream);
         }
         templates.put(templateFileName, result.toString());
@@ -675,7 +704,7 @@ public class Login extends HttpServlet {
      * @throws IOException Thrown in case of a failed i/o operation.
      */
     private static void sendResponse(final HttpServletResponse response, final String page, final int statusCode)
-            throws IOException {
+        throws IOException {
         final PrintWriter writer = response.getWriter();
         writer.print(page);
         response.setStatus(statusCode);
@@ -690,8 +719,8 @@ public class Login extends HttpServlet {
      * @param redirectUrl The URL to that the user shall be redirected.
      * @throws IOException Thrown in case of a failed i/o operation.
      */
-    private static void sendRedirectingResponse(final HttpServletResponse response, final String page,
-                                                final String redirectUrl) throws IOException {
+    private static void sendRedirectingResponse(
+        final HttpServletResponse response, final String page, final String redirectUrl) throws IOException {
 
         final PrintWriter writer = response.getWriter();
         writer.print(page);
@@ -727,8 +756,8 @@ public class Login extends HttpServlet {
     private void deleteExternalAttributes(final UserAccount userAccount) throws SqlDatabaseSystemException {
         final List<UserAttribute> attributes = dao.retrieveAttributes(userAccount);
 
-        for(final UserAttribute attribute : attributes) {
-            if(! attribute.getInternal()) {
+        for (final UserAttribute attribute : attributes) {
+            if (!attribute.getInternal()) {
                 dao.delete(attribute);
             }
         }
@@ -756,7 +785,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException Thrown if cookie creation fails due to an internal error.
      */
     private Cookie createCookie(final String name, final String value, final int maxAge)
-            throws WebserverSystemException {
+        throws WebserverSystemException {
 
         final Cookie cookie = new Cookie(name, value);
         cookie.setVersion((int) getEscidocCookieVersion());
@@ -774,11 +803,11 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException   Thrown in case of an internal error.
      */
     private void createExternalAttributes(final UserAccount userAccount, final Map<String, List<String>> attributes)
-            throws SqlDatabaseSystemException {
-        for(final Entry<String, List<String>> entry : attributes.entrySet()) {
+        throws SqlDatabaseSystemException {
+        for (final Entry<String, List<String>> entry : attributes.entrySet()) {
             final List<String> attributeValues = entry.getValue();
-            if(attributeValues != null) {
-                for(final String attributeValue : attributeValues) {
+            if (attributeValues != null) {
+                for (final String attributeValue : attributeValues) {
                     final UserAttribute attribute = new UserAttribute();
                     attribute.setInternal(false);
                     attribute.setName(entry.getKey());
@@ -800,12 +829,12 @@ public class Login extends HttpServlet {
     public long getESciDocUserHandleLifetime() throws WebserverSystemException {
 
         try {
-            return Long.parseLong(
-                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME));
-        } catch(final Exception e) {
-            throw new WebserverSystemException(StringUtility
-                    .format("Can't get configuration parameter", EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME,
-                            e.getMessage()), e);
+            return Long.parseLong(EscidocConfiguration.getInstance().get(
+                EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME));
+        }
+        catch (final Exception e) {
+            throw new WebserverSystemException(StringUtility.format("Can't get configuration parameter",
+                EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME, e.getMessage()), e);
         }
     }
 
@@ -820,20 +849,24 @@ public class Login extends HttpServlet {
         final byte escidocCookieVersion;
         try {
             final String configProperty =
-                    EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION)
-                            .toLowerCase().trim();
-            if("netscape".equals(configProperty) || "0".equals(configProperty)) {
+                EscidocConfiguration
+                    .getInstance().get(EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION).toLowerCase()
+                    .trim();
+            if ("netscape".equals(configProperty) || "0".equals(configProperty)) {
                 escidocCookieVersion = (byte) 0;
-            } else if("rfc2109".equals(configProperty) || "rfc 2109".equals(configProperty) ||
-                    "1".equals(configProperty)) {
-                escidocCookieVersion = (byte) 1;
-            } else {
-                throw new WebserverSystemException(StringUtility.format("Invalid configuration property value.",
-                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION, configProperty));
             }
-        } catch(final Exception e) {
+            else if ("rfc2109".equals(configProperty) || "rfc 2109".equals(configProperty)
+                || "1".equals(configProperty)) {
+                escidocCookieVersion = (byte) 1;
+            }
+            else {
+                throw new WebserverSystemException(StringUtility.format("Invalid configuration property value.",
+                    EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION, configProperty));
+            }
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException(StringUtility.format("Can't get configuration parameter",
-                    EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION, e.getMessage()), e);
+                EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION, e.getMessage()), e);
         }
         return escidocCookieVersion;
     }

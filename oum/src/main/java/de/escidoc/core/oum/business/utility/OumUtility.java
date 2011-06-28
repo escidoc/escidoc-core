@@ -71,24 +71,24 @@ public class OumUtility {
      *          If there are cycles in the parent ou hierarchy.
      */
     public void detectCycles(final String organizationalUnitId, final Collection<String> parentIds)
-            throws OrganizationalUnitHierarchyViolationException, TripleStoreSystemException, WebserverSystemException {
-        if(! parentIds.isEmpty()) {
-            for(final String id : parentIds) {
-                if(id.equals(organizationalUnitId)) {
-                    throw new OrganizationalUnitHierarchyViolationException(
-                            "Ou with id " + id + " cannot be referenced as a parent of ou with id " +
-                                    organizationalUnitId + " because it is one of its subnodes");
+        throws OrganizationalUnitHierarchyViolationException, TripleStoreSystemException, WebserverSystemException {
+        if (!parentIds.isEmpty()) {
+            for (final String id : parentIds) {
+                if (id.equals(organizationalUnitId)) {
+                    throw new OrganizationalUnitHierarchyViolationException("Ou with id " + id
+                        + " cannot be referenced as a parent of ou with id " + organizationalUnitId
+                        + " because it is one of its subnodes");
                 }
             }
             this.closed.add(organizationalUnitId);
             expand(organizationalUnitId);
-            while(! this.open.empty()) {
+            while (!this.open.empty()) {
                 final String toClosedId = this.open.pop();
-                for(final String id : parentIds) {
-                    if(id.equals(toClosedId)) {
-                        throw new OrganizationalUnitHierarchyViolationException(
-                                "Ou with id " + id + " cannot be referenced as a parent of " + "ou with id " +
-                                        organizationalUnitId + " because it is one of its subnodes");
+                for (final String id : parentIds) {
+                    if (id.equals(toClosedId)) {
+                        throw new OrganizationalUnitHierarchyViolationException("Ou with id " + id
+                            + " cannot be referenced as a parent of " + "ou with id " + organizationalUnitId
+                            + " because it is one of its subnodes");
                     }
                 }
                 this.closed.add(toClosedId);
@@ -106,9 +106,9 @@ public class OumUtility {
     private void expand(final String currentOuId) throws TripleStoreSystemException {
 
         final Collection<String> children = this.tripleStoreUtility.getChildren(currentOuId);
-        if(children != null) {
-            for(final String childId : children) {
-                if(! this.closed.contains(childId)) {
+        if (children != null) {
+            for (final String childId : children) {
+                if (!this.closed.contains(childId)) {
                     this.open.push(childId);
                 }
             }

@@ -280,7 +280,8 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
             values.put("HOST", baseUrl.getHost());
             values.put("PORT", baseUrl.getPort());
-        } catch(final Exception e) {
+        }
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
         return getXml(RESOURCE_NAME, RESOURCES_PATH, values);

@@ -74,15 +74,15 @@ public final class UserContext {
      *                                  Thrown if a mandatory parameter is not provided.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public static void setUserContext(final String handle)
-            throws MissingMethodParameterException, WebserverSystemException {
+    public static void setUserContext(final String handle) throws MissingMethodParameterException,
+        WebserverSystemException {
         String hd = handle;
-        if(hd == null) {
+        if (hd == null) {
             hd = ANONYMOUS_IDENTIFIER;
         }
         SecurityContextHolder.clearContext();
         final UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(new EscidocUserDetails(), hd);
+            new UsernamePasswordAuthenticationToken(new EscidocUserDetails(), hd);
         authentication.setAuthenticated(false);
         authentication.setDetails(new EscidocRequestDetail());
         final SecurityContext securityContext = new SecurityContextImpl();
@@ -102,14 +102,14 @@ public final class UserContext {
      *                                  Thrown if a mandatorz parameter is not provided.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public static void setUserContext(final SecurityContext context)
-            throws MissingMethodParameterException, WebserverSystemException {
-        if(context == null) {
+    public static void setUserContext(final SecurityContext context) throws MissingMethodParameterException,
+        WebserverSystemException {
+        if (context == null) {
             throw new MissingMethodParameterException("No security context provided");
         }
         SecurityContextHolder.clearContext();
         SecurityContextHolder.setContext(context);
-        if(LOGGER.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(StringUtility.format("Stored provided security context", getSecurityContext()));
         }
     }
@@ -124,7 +124,7 @@ public final class UserContext {
      */
     public static boolean runAsInternalUser() throws WebserverSystemException {
         final Authentication authentication = getSecurityContext().getAuthentication();
-        if(! (authentication instanceof EscidocRunAsInternalUserToken)) {
+        if (!(authentication instanceof EscidocRunAsInternalUserToken)) {
             getSecurityContext().setAuthentication(new EscidocRunAsInternalUserToken(authentication));
             return true;
         }
@@ -140,11 +140,12 @@ public final class UserContext {
      */
     public static boolean runAsExternalUser() throws WebserverSystemException {
         final Authentication authentication = getSecurityContext().getAuthentication();
-        if(authentication instanceof EscidocRunAsInternalUserToken) {
-            getSecurityContext()
-                    .setAuthentication(((EscidocRunAsInternalUserToken) authentication).getOrginalAuthentication());
+        if (authentication instanceof EscidocRunAsInternalUserToken) {
+            getSecurityContext().setAuthentication(
+                ((EscidocRunAsInternalUserToken) authentication).getOrginalAuthentication());
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -175,7 +176,7 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static void setRealName(final String realName) throws WebserverSystemException {
-        if(realName == null) {
+        if (realName == null) {
             return;
         }
         getPrincipal().setRealName(realName);
@@ -190,7 +191,7 @@ public final class UserContext {
      */
     public static SecurityContext getSecurityContext() throws WebserverSystemException {
         final SecurityContext securityContext = SecurityContextHolder.getContext();
-        if(securityContext == null) {
+        if (securityContext == null) {
             throw new WebserverSystemException(USER_CONTEXT_IS_NOT_INITIALIZED);
         }
         return securityContext;
@@ -205,7 +206,7 @@ public final class UserContext {
      */
     private static Authentication getAuthentication() throws WebserverSystemException {
         final Authentication authenticationToken = getSecurityContext().getAuthentication();
-        if(authenticationToken == null) {
+        if (authenticationToken == null) {
             throw new WebserverSystemException(USER_CONTEXT_IS_NOT_INITIALIZED);
         }
         return authenticationToken;
@@ -234,11 +235,11 @@ public final class UserContext {
         final Authentication oldAuthentication = getAuthentication();
         final boolean isInternaluser = isInternalUser();
         final UsernamePasswordAuthenticationToken newAuthentication =
-                new UsernamePasswordAuthenticationToken(principal, oldAuthentication.getCredentials());
+            new UsernamePasswordAuthenticationToken(principal, oldAuthentication.getCredentials());
         newAuthentication.setDetails(oldAuthentication.getDetails());
         getSecurityContext().setAuthentication(newAuthentication);
         // restore run as internal user context if the original authentication was one.
-        if(isInternaluser) {
+        if (isInternaluser) {
             runAsInternalUser();
         }
     }
@@ -290,7 +291,7 @@ public final class UserContext {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static boolean isExternalUser() throws WebserverSystemException {
-        return ! (getAuthentication() instanceof EscidocRunAsInternalUserToken);
+        return !(getAuthentication() instanceof EscidocRunAsInternalUserToken);
     }
 
     /**
@@ -368,9 +369,9 @@ public final class UserContext {
     private static EscidocRequestDetail getRequestDetails() throws WebserverSystemException {
 
         final Object details = getAuthentication().getDetails();
-        if(details == null) {
-            throw new WebserverSystemException(
-                    StringUtility.format(USER_CONTEXT_IS_NOT_INITIALIZED, MISSING_REQUEST_DETAIL));
+        if (details == null) {
+            throw new WebserverSystemException(StringUtility.format(USER_CONTEXT_IS_NOT_INITIALIZED,
+                MISSING_REQUEST_DETAIL));
         }
         return (EscidocRequestDetail) details;
     }
