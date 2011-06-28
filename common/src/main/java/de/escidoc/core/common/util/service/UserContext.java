@@ -74,8 +74,7 @@ public final class UserContext {
      *                                  Thrown if a mandatory parameter is not provided.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public static void setUserContext(final String handle) throws MissingMethodParameterException,
-        WebserverSystemException {
+    public static void setUserContext(final String handle) {
         String hd = handle;
         if (hd == null) {
             hd = ANONYMOUS_IDENTIFIER;

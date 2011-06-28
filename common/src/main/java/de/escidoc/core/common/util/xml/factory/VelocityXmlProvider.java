@@ -110,7 +110,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      * @return
      * @throws WebserverSystemException
      */
-    protected abstract String completePath() throws WebserverSystemException;
+    protected abstract String completePath();
 
     /**
      * @param path

@@ -574,19 +574,11 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         // add predecessors to RELS-EXT
         relsExtValues.put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(getOrganizationalUnit().getPredecessors(),
             null));
-
-        try {
-
-            setMdRecords((Map<String, ByteArrayOutputStream>) me.getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
-                metadataHandler.getMetadataAttributes(), metadataHandler.getEscidocMetadataRecordNameSpace());
-            getOrganizationalUnit().setRelsExt(
-                getOrganizationalUnitRelsExt(id, relsExtValues, getOrganizationalUnit().getParents()));
-        }
-        catch (final StreamNotFoundException e) {
-            throw new IntegritySystemException(e.getMessage(), e);
-        }
+        setMdRecords((Map<String, ByteArrayOutputStream>) me.getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
+            metadataHandler.getMetadataAttributes(), metadataHandler.getEscidocMetadataRecordNameSpace());
+        getOrganizationalUnit().setRelsExt(
+            getOrganizationalUnitRelsExt(id, relsExtValues, getOrganizationalUnit().getParents()));
         getOrganizationalUnit().persist();
-
         final String result;
         try {
             result = retrieveMdRecords(getOrganizationalUnit().getId());

@@ -102,8 +102,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws SystemException           Thrown in case of an internal error.
      * @throws ResourceNotFoundException Thrown if no container could be found under the provided id.
      */
-    public Container(final String id) throws StreamNotFoundException, SystemException, ResourceNotFoundException,
-        XmlParserSystemException, WebserverSystemException {
+    public Container(final String id) throws SystemException, ResourceNotFoundException, XmlParserSystemException,
+        WebserverSystemException {
         super(id);
         init();
     }
@@ -134,7 +134,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
     @Override
-    public String getCreationDate() throws TripleStoreSystemException, WebserverSystemException {
+    public String getCreationDate() throws TripleStoreSystemException {
 
         if (this.creationDate == null) {
             /*
@@ -214,8 +214,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws TripleStoreSystemException
      * @throws WebserverSystemException
      */
-    public void setCts(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException {
+    public void setCts(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
         try {
             final Datastream curDs = getCts();
             if (!ds.equals(curDs)) {
@@ -481,8 +480,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown in case of internal failure.
      */
-    public void setEscidocRelsExt(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
-        WebserverSystemException {
+    public void setEscidocRelsExt(final Datastream ds) {
 
         if (this.escidocRelsExt == null || !this.escidocRelsExt.equals(ds)) {
             this.escidocRelsExt = ds;

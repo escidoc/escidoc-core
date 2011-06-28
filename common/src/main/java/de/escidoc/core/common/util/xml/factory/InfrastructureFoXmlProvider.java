@@ -55,7 +55,7 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
      * @throws WebserverSystemException Never.
      */
     @Override
-    protected String completePath() throws WebserverSystemException {
+    protected String completePath() {
         return FOXML_PATH;
     }
 

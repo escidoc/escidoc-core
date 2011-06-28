@@ -202,7 +202,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      * @return Returns the <code>SetDefinitionXmlProvider</code> object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static SetDefinitionXmlProvider getSetDefinitionXmlProvider() throws WebserverSystemException {
+    private static SetDefinitionXmlProvider getSetDefinitionXmlProvider() {
 
         return SetDefinitionXmlProvider.getInstance();
     }

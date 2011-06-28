@@ -52,8 +52,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
     // TODO ContentHandlerRetrieve ?
     protected String render() throws WebserverSystemException, ContentModelNotFoundException,
-        TripleStoreSystemException, IntegritySystemException, XmlParserSystemException, EncodingSystemException,
-        FedoraSystemException {
+        TripleStoreSystemException, IntegritySystemException, EncodingSystemException, FedoraSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -69,8 +68,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
     // TODO ContentHandlerRetrieve ?
     protected String renderProperties() throws ContentModelNotFoundException, WebserverSystemException,
-        TripleStoreSystemException, IntegritySystemException, XmlParserSystemException, EncodingSystemException,
-        FedoraSystemException {
+        TripleStoreSystemException, IntegritySystemException {
 
         final Map<String, String> values = getCommonValues(getContentModel());
         values.putAll(getPropertiesValues(getContentModel()));
@@ -79,9 +77,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected String renderResources() throws ContentModelNotFoundException, WebserverSystemException,
-        TripleStoreSystemException, IntegritySystemException, XmlParserSystemException, EncodingSystemException,
-        FedoraSystemException {
+    protected String renderResources() throws WebserverSystemException {
 
         final Map<String, String> values = getCommonValues(getContentModel());
         values.putAll(getResourcesValues(getContentModel()));
@@ -101,7 +97,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
     // TODO ContentModelHandlerRetrieve ?
     protected String renderContentStreams(final boolean isRoot) throws WebserverSystemException,
-        EncodingSystemException, FedoraSystemException, IntegritySystemException, TripleStoreSystemException {
+        IntegritySystemException, TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -130,8 +126,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    protected String renderContentStream(final String name, final boolean isRoot) throws WebserverSystemException,
-        IntegritySystemException, TripleStoreSystemException {
+    protected String renderContentStream(final String name, final boolean isRoot) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 

@@ -157,7 +157,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @throws SystemException Thrown if getting new objid from ID-Provider failed.
      * @throws IOException     Thrown if preparing of properties, meta data record failed.
      */
-    public String getFOXML() throws SystemException, IOException {
+    public String getFOXML() throws SystemException {
 
         // objid
         if (getObjid() == null) {
@@ -188,7 +188,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @throws WebserverSystemException Thrown if an error occurs during DC creation.
      * @throws EncodingSystemException  Thrown if the conversion to default encoding failed.
      */
-    public String getDC() throws WebserverSystemException, EncodingSystemException {
+    public String getDC() {
 
         if (this.dcXml == null) {
             final MdRecordCreate mdRecord = getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);

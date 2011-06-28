@@ -187,7 +187,7 @@ public class AggregationPreprocessor {
      */
     public AggregationPreprocessorVo processAggregation(
         final AggregationDefinition aggregationDefinitionIn, final Iterable statisticDatas)
-        throws StatisticPreprocessingSystemException, SqlDatabaseSystemException {
+        throws StatisticPreprocessingSystemException {
         this.xpathFactory = XPathFactory.newInstance();
         if (statisticDatas != null) {
             // initialize DataHash depending on AggregationDefinition

@@ -120,7 +120,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws IntegritySystemException   If the integrity of the repository is violated.
      */
     protected void setItem(final String id) throws ItemNotFoundException, WebserverSystemException,
-        XmlParserSystemException, TripleStoreSystemException, IntegritySystemException {
+        TripleStoreSystemException, IntegritySystemException {
 
         try {
 
@@ -152,17 +152,12 @@ public class ContainerHandlerBase extends HandlerBase {
      */
     public void setContainer(final String id) throws ContainerNotFoundException, SystemException,
         XmlParserSystemException, WebserverSystemException {
-
         try {
             this.container = new Container(id);
-        }
-        catch (final StreamNotFoundException e) {
-            throw new IntegritySystemException(e);
         }
         catch (final ResourceNotFoundException e) {
             throw new ContainerNotFoundException(e);
         }
-
     }
 
     /**
@@ -225,8 +220,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException If the triple store reports an error.
      * @throws WebserverSystemException   In case of an internal error.
      */
-    protected void checkNotStatus(final String status) throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException {
+    protected void checkNotStatus(final String status) throws InvalidStatusException, TripleStoreSystemException {
 
         final String curStatus =
             getTripleStoreUtility()
@@ -244,7 +238,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws InvalidStatusException     Thrown if object is not in status released.
      * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    protected void checkReleased() throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
+    protected void checkReleased() throws InvalidStatusException, TripleStoreSystemException {
 
         final String status =
             getTripleStoreUtility()
@@ -328,8 +322,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException If the triple store reports an error.
      * @throws WebserverSystemException   Thrown in case of an internal error.
      */
-    protected void checkNoObjectPidAssigned() throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException {
+    protected void checkNoObjectPidAssigned() throws InvalidStatusException, TripleStoreSystemException {
 
         final String pid =
             getTripleStoreUtility().getPropertiesElements(getContainer().getId(), TripleStoreUtility.PROP_OBJECT_PID);
@@ -347,8 +340,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws InvalidStatusException     If object version hasPID assigned already.
      * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    protected void checkNoVersionPidAssigned(final String versionId) throws InvalidStatusException,
-        TripleStoreSystemException {
+    protected void checkNoVersionPidAssigned(final String versionId) throws InvalidStatusException {
 
         // expand this method to support more than one pid system
 
@@ -383,7 +375,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException If the triple store reports an error.
      */
     protected void checkWithdrawn(final String additionalMessage) throws InvalidStatusException,
-        TripleStoreSystemException, WebserverSystemException {
+        TripleStoreSystemException {
 
         final String status =
             getTripleStoreUtility()
@@ -440,7 +432,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException If the triple store reports an error.
      */
     protected void checkContextStatus(final String contextId, final String status) throws InvalidStatusException,
-        TripleStoreSystemException, WebserverSystemException {
+        TripleStoreSystemException {
 
         final String curStatus =
             getTripleStoreUtility().getPropertiesElements(contextId, TripleStoreUtility.PROP_PUBLIC_STATUS);

@@ -265,7 +265,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * @param element StAX StartElement
      */
     private void handleContentModel(final StartElement element) throws MissingAttributeValueException,
-        WebserverSystemException, ContentModelNotFoundException {
+        ContentModelNotFoundException {
         expectedElements.remove(Elements.ELEMENT_CONTENT_MODEL);
         // FIXME check this method: it seams that here is a mixture
         // between variable names (contentModelId and contextId)

@@ -313,8 +313,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws WebserverSystemException   Thrown if values extracting failed.
      * @throws TripleStoreSystemException Thrown if obtaining resource type failed.
      */
-    private Map<String, String> getRelationValues(final ContentRelationCreate cr) throws WebserverSystemException,
-        TripleStoreSystemException {
+    private Map<String, String> getRelationValues(final ContentRelationCreate cr) throws TripleStoreSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -367,8 +366,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      */
     public String renderMdRecord(
         final ContentRelationCreate cr, final MdRecordCreate mdRecord, final Map<String, String> commonValues,
-        final boolean isRoot) throws WebserverSystemException, IntegritySystemException, EncodingSystemException,
-        MdRecordNotFoundException, TripleStoreSystemException {
+        final boolean isRoot) throws WebserverSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -404,21 +402,15 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      */
     public String renderMdRecords(
         final ContentRelationCreate cr, final Map<String, String> commonValues, final boolean isRoot)
-        throws WebserverSystemException, EncodingSystemException, FedoraSystemException, IntegritySystemException,
-        TripleStoreSystemException {
+        throws WebserverSystemException, EncodingSystemException, IntegritySystemException, TripleStoreSystemException {
 
         final StringBuilder content = new StringBuilder();
 
         final List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
         if (mdRecords != null) {
             for (final MdRecordCreate mdRecord : mdRecords) {
-                try {
-                    final String mdRecordContent = renderMdRecord(cr, mdRecord, commonValues, false);
-                    content.append(mdRecordContent);
-                }
-                catch (final MdRecordNotFoundException e) {
-                    throw new WebserverSystemException("Metadata record previously found in list not found.", e);
-                }
+                final String mdRecordContent = renderMdRecord(cr, mdRecord, commonValues, false);
+                content.append(mdRecordContent);
             }
         }
         if (content.length() == 0) {

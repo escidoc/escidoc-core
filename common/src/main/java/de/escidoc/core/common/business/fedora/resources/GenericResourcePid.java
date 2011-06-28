@@ -234,13 +234,7 @@ public class GenericResourcePid extends GenericResource {
         catch (final Exception e) {
             throw new XmlParserSystemException("Unexpected Exception " + e);
         }
-
-        try {
-            setRelsExt(addNewSubtreesHandler.getOutputStreams());
-        }
-        catch (final StreamNotFoundException e) {
-            throw new WebserverSystemException(e);
-        }
+        setRelsExt(addNewSubtreesHandler.getOutputStreams());
     }
 
     /**

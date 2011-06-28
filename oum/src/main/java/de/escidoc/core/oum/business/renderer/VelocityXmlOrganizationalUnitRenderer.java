@@ -358,7 +358,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @param values The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addListNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addListNamespaceValues(final Map<String, Object> values) {
 
         values.put("organizationalUnitsNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_LIST_PREFIX);
         values.put("organizationalUnitsNamespace", Constants.ORGANIZATIONAL_UNIT_LIST_NAMESPACE_URI);
@@ -370,7 +370,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @param values The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addPathListNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addPathListNamespaceValues(final Map<String, Object> values) {
 
         values.put("organizationalUnitPathListNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_PATH_LIST_PREFIX);
         values.put("organizationalUnitPathListNamespace", Constants.ORGANIZATIONAL_UNIT_PATH_LIST_NAMESPACE_URI);
@@ -427,15 +427,6 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
 
         }
         catch (final TripleStoreSystemException e) {
-            // actually shouldn't this happen
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on syncing with TripleStore.");
-            }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on syncing with TripleStore.", e);
-            }
-        }
-        catch (final WebserverSystemException e) {
             // actually shouldn't this happen
             if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on syncing with TripleStore.");
@@ -567,7 +558,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @param values             The map to add values to.
      */
     private void addParentsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
-        throws TripleStoreSystemException, WebserverSystemException {
+        throws TripleStoreSystemException {
         values.put("parentsHref", XmlUtility.getOrganizationalUnitParentsHref(organizationalUnit.getId()));
         values.put("parentsTitle", "Parents");
         final List<String> ids = organizationalUnit.getParents();
@@ -594,7 +585,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @param values             The map to add values to.
      */
     private void addPredecessorsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
-        throws TripleStoreSystemException, WebserverSystemException {
+        throws TripleStoreSystemException {
 
         values.put(XmlTemplateProvider.PREDECESSORS_HREF, XmlUtility
             .getOrganizationalUnitPredecessorsHref(organizationalUnit.getId()));

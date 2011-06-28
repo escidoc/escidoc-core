@@ -90,7 +90,7 @@ public class ResourceDefinitionCreate {
      * @return HashMap with all values of MdRecord
      * @throws SystemException Thrown if character encoding failed.
      */
-    public Map<String, String> getValueMap() throws SystemException {
+    public Map<String, String> getValueMap() {
         return new HashMap<String, String>();
     }
 

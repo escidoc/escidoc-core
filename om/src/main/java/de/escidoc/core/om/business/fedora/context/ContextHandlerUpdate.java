@@ -259,9 +259,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws StreamNotFoundException    Thrown if RELS-EXT datastream could not be retrieved.
      * @throws LockingException           Thrown if Context is locked.
      */
-    public void open(final FedoraContextHandler contextHandler, final String taskParam)
-        throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException, SystemException,
-        LockingException, StreamNotFoundException, FedoraSystemException, WebserverSystemException,
+    public void open(final FedoraContextHandler contextHandler, final String taskParam) throws InvalidStatusException,
+        OptimisticLockingException, SystemException, FedoraSystemException, WebserverSystemException,
         XmlCorruptedException, TripleStoreSystemException {
 
         checkStatus(Constants.STATUS_CONTEXT_CREATED);
@@ -346,9 +345,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws StreamNotFoundException    Thrown if RELS-EXT datastream could not be retrieved.
      * @throws LockingException           Thrown if Context is locked.
      */
-    public void close(final FedoraContextHandler contextHandler, final String taskParam)
-        throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException, SystemException,
-        LockingException, StreamNotFoundException, EncodingSystemException, FedoraSystemException,
+    public void close(final FedoraContextHandler contextHandler, final String taskParam) throws InvalidStatusException,
+        OptimisticLockingException, SystemException, EncodingSystemException, FedoraSystemException,
         WebserverSystemException, XmlCorruptedException, TripleStoreSystemException {
 
         checkStatus(Constants.STATUS_CONTEXT_OPENED);
@@ -695,7 +693,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @return a Map with elements to update
      */
     private Map<String, StartElementWithText> updateDcProperties(final Map<String, String> changedValues)
-        throws TripleStoreSystemException, ContextNameNotUniqueException, WebserverSystemException {
+        throws TripleStoreSystemException, ContextNameNotUniqueException {
 
         final Map<String, StartElementWithText> updateElementsDc = new TreeMap<String, StartElementWithText>();
 

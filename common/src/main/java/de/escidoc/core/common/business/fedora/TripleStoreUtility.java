@@ -286,8 +286,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @throws QueryException             Thrown in case of a failed query execution.
      */
     protected abstract List<String> executeQueryLiteral(
-        final String literal, final boolean targetIsSubject, final String predicate) throws TripleStoreSystemException,
-        QueryException;
+        final String literal, final boolean targetIsSubject, final String predicate) throws TripleStoreSystemException;
 
     /**
      * @param id object id
@@ -495,18 +494,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
     public List<String> getOusForName(final String name) throws TripleStoreSystemException {
-
         final List<String> result = new ArrayList<String>();
-        try {
-            final List<String> results = executeQueryLiteral(name, true, PROP_DC_TITLE);
-            for (final String entry : results) {
-                result.add(XmlUtility.getIdFromURI(entry));
-            }
+        final List<String> results = executeQueryLiteral(name, true, PROP_DC_TITLE);
+        for (final String entry : results) {
+            result.add(XmlUtility.getIdFromURI(entry));
         }
-        catch (final QueryException e) {
-            throw new TripleStoreSystemException(e.getMessage(), e);
-        }
-
         return result;
     }
 
@@ -628,8 +620,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     public abstract String getRelation(final String pid, final String fullQualifiedPropertyName)
         throws TripleStoreSystemException;
 
-    public abstract String getObjectList(final String objectType, final Map filterMap, final String whereClause)
-        throws InvalidContentException, TripleStoreSystemException, MissingMethodParameterException;
+    public abstract String getObjectList(final String objectType, final Map filterMap, final String whereClause);
 
     /**
      * Retrieves values from the triple store using the provided query.

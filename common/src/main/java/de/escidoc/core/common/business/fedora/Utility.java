@@ -205,7 +205,7 @@ public class Utility {
      */
     public static boolean checkOptimisticLockingCriteria(
         final DateTime fedoraLatestVersionDate, final DateTime updateLatestVersionDate, final String label)
-        throws OptimisticLockingException, WebserverSystemException, XmlCorruptedException {
+        throws OptimisticLockingException, XmlCorruptedException {
 
         if (fedoraLatestVersionDate == null || updateLatestVersionDate == null) {
             throw new XmlCorruptedException("last-modification-date must not be null");
@@ -240,7 +240,7 @@ public class Utility {
      */
     public static void checkOptimisticLockingCriteria(
         final String fedoraLatestVersionDate, final String updateLatestVersionDate, final String label)
-        throws OptimisticLockingException, WebserverSystemException, XmlCorruptedException {
+        throws XmlCorruptedException {
 
         if (fedoraLatestVersionDate == null || updateLatestVersionDate == null) {
             throw new XmlCorruptedException("last-modification-date must not be null");
@@ -453,7 +453,7 @@ public class Utility {
      * @throws IntegritySystemException   Thrown if no object type is found for an existing object.
      */
     public void checkIsOfObjectType(final String id, final String type) throws ResourceNotFoundException,
-        TripleStoreSystemException, WebserverSystemException, IntegritySystemException {
+        TripleStoreSystemException, IntegritySystemException {
 
         final String idWithoutVersionNumber = XmlUtility.getObjidWithoutVersion(id);
         final String objectType = tripleStoreUtility.getObjectType(idWithoutVersionNumber);
@@ -835,7 +835,7 @@ public class Utility {
     private String createVersionXml(
         final FedoraResource resource, final Map<String, String> resBaseData,
         final Map<String, String> currentVersionProperties, final int newVersionNumberInt, final String comment)
-        throws WebserverSystemException, TripleStoreSystemException {
+        throws WebserverSystemException {
 
         // Map for version entry values
         final Map<String, String> newVersionEntry = new HashMap<String, String>();
@@ -986,7 +986,7 @@ public class Utility {
     }
 
     private static void prependVersion(final VersionableResource resource, final String versionEntry)
-        throws EncodingSystemException, FedoraSystemException, IntegritySystemException {
+        throws EncodingSystemException, IntegritySystemException {
 
         // TODO insert new version in version-history
         try {
@@ -1290,7 +1290,7 @@ public class Utility {
      * @return The result XML structure.
      * @throws SystemException Thrown if parsing last modification or retrieving xml:base failed.
      */
-    public static String prepareReturnXml(DateTime lastModificationDate, final String content) throws SystemException {
+    public static String prepareReturnXml(DateTime lastModificationDate, final String content) {
 
         if (lastModificationDate == null) {
             lastModificationDate = new DateTime(DateTimeZone.UTC);

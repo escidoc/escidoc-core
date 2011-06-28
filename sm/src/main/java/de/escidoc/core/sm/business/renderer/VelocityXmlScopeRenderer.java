@@ -185,7 +185,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * @return Returns the <code>ScopeXmlProvider</code> object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static ScopeXmlProvider getScopeXmlProvider() throws WebserverSystemException {
+    private static ScopeXmlProvider getScopeXmlProvider() {
 
         return ScopeXmlProvider.getInstance();
     }

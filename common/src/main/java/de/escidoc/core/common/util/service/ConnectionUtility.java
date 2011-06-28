@@ -292,7 +292,7 @@ public class ConnectionUtility {
      * @return HttpHost
      * @throws WebserverSystemException e
      */
-    private HttpHost getProxyHost() throws WebserverSystemException {
+    private HttpHost getProxyHost() {
         if (!this.proxyConfigured) {
             final String proxyHostName =
                 EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
@@ -314,7 +314,7 @@ public class ConnectionUtility {
      * @param url url
      * @throws WebserverSystemException e
      */
-    private void setProxy(final CharSequence url) throws WebserverSystemException {
+    private void setProxy(final CharSequence url) {
         if (this.proxyHost != null) {
             String nonProxyHosts =
                 EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_NON_PROXY_HOSTS);

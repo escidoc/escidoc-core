@@ -137,7 +137,7 @@ public class VelocityXmlAdminRenderer implements AdminRendererInterface {
      * @return Returns the {@link AdminXmlProvider} object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static AdminXmlProvider getAdminXmlProvider() throws WebserverSystemException {
+    private static AdminXmlProvider getAdminXmlProvider() {
 
         return AdminXmlProvider.getInstance();
     }

@@ -312,7 +312,7 @@ public class Context extends GenericResource implements ContextInterface {
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     public void setDc(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
-        WebserverSystemException, TripleStoreSystemException {
+        WebserverSystemException {
         // check if dc is set, is equal to ds and save to fedora
         try {
             final Datastream curDs = getDc();
@@ -473,7 +473,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws WebserverSystemException
      *             If anything fails.
      */
-    public List<String> getOrganizationalUnitObjids() throws TripleStoreSystemException, WebserverSystemException {
+    public List<String> getOrganizationalUnitObjids() throws TripleStoreSystemException {
         return getTripleStoreUtility()
             .getPropertiesElementsVector(getId(), TripleStoreUtility.PROP_ORGANIZATIONAL_UNIT);
     }

@@ -71,7 +71,7 @@ public class OumUtility {
      *          If there are cycles in the parent ou hierarchy.
      */
     public void detectCycles(final String organizationalUnitId, final Collection<String> parentIds)
-        throws OrganizationalUnitHierarchyViolationException, TripleStoreSystemException, WebserverSystemException {
+        throws OrganizationalUnitHierarchyViolationException, TripleStoreSystemException {
         if (!parentIds.isEmpty()) {
             for (final String id : parentIds) {
                 if (id.equals(organizationalUnitId)) {

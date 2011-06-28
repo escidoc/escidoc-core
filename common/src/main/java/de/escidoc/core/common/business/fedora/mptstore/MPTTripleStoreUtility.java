@@ -1723,8 +1723,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     @Override
-    public String getObjectList(final String objectType, final Map filter, final String whereClause)
-        throws InvalidContentException, TripleStoreSystemException, MissingMethodParameterException {
+    public String getObjectList(final String objectType, final Map filter, final String whereClause) {
 
         throw new UnsupportedOperationException("Not implemented for MPTTripleStore");
     }

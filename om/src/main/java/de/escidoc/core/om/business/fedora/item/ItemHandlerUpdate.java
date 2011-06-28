@@ -316,8 +316,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws IntegritySystemException   If the integrity of the repository is violated.
      */
     @Deprecated
-    protected void setContentTypeSpecificProperties(final String xml) throws FedoraSystemException, LockingException,
-        WebserverSystemException, TripleStoreSystemException, EncodingSystemException, IntegritySystemException {
+    protected void setContentTypeSpecificProperties(final String xml) throws FedoraSystemException,
+        WebserverSystemException, EncodingSystemException {
         try {
             final Datastream oldDs = getItem().getCts();
             final Datastream newDs =
@@ -348,8 +348,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      */
     protected void setComponentContent(
         final Component component, final String xml, final String fileName, final String mimeType)
-        throws MissingContentException, InvalidContentException, FileNotFoundException, ComponentNotFoundException,
-        TripleStoreSystemException, FedoraSystemException, WebserverSystemException {
+        throws MissingContentException, InvalidContentException, FileNotFoundException, TripleStoreSystemException,
+        FedoraSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
 

@@ -114,5 +114,5 @@ public abstract class PIDSystemFactory {
      * @throws MissingMethodParameterException
      *                            If necessary parameter are missing.
      */
-    public abstract PIDSystem getPIDGenerator() throws PidSystemException, MissingMethodParameterException;
+    public abstract PIDSystem getPIDGenerator() throws PidSystemException;
 }

@@ -76,7 +76,7 @@ public class StartElement extends AbstractElement {
         this.attributes = new ArrayList<Attribute>();
     }
 
-    public StartElement(final XMLStreamReader parser, final String path) throws XmlParserSystemException {
+    public StartElement(final XMLStreamReader parser, final String path) {
 
         super(parser, path);
         this.localName = parser.getLocalName();

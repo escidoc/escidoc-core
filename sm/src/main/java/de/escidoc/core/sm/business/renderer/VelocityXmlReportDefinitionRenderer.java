@@ -221,7 +221,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      * @return Returns the <code>ReportDefinitionXmlProvider</code> object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static ReportDefinitionXmlProvider getReportDefinitionXmlProvider() throws WebserverSystemException {
+    private static ReportDefinitionXmlProvider getReportDefinitionXmlProvider() {
 
         return ReportDefinitionXmlProvider.getInstance();
     }

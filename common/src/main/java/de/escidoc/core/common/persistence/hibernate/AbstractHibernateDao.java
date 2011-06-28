@@ -75,7 +75,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *
      * @throws SqlDatabaseSystemException Thrown in case of Hibernate errors
      */
-    public void flush() throws SqlDatabaseSystemException {
+    public void flush() {
         getHibernateTemplate().flush();
     }
 

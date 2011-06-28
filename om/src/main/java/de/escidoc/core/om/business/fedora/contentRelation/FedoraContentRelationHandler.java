@@ -755,13 +755,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
 
         // set further values (obtained from other sources)
         if (lockHandler.isLocked(id)) {
-            try {
-                cr.getProperties().setLockStatus(LockStatus.LOCKED);
-            }
-            catch (final InvalidStatusException e) {
-                // shouldn't happen
-                throw new SystemException(e);
-            }
+            cr.getProperties().setLockStatus(LockStatus.LOCKED);
             cr.getProperties().setLockDate(lockHandler.getLockDate(id));
             cr.getProperties().setLockOwnerId(lockHandler.getLockOwner(id));
             cr.getProperties().setLockOwnerName(lockHandler.getLockOwnerTitle(id));
@@ -1004,8 +998,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws RelationPredicateNotFoundException
      *                                  Thrown if the predicate is not registered.
      */
-    private static void checkRelationType(final URI predicate) throws InvalidContentException,
-        WebserverSystemException, RelationPredicateNotFoundException {
+    private static void checkRelationType(final URI predicate) throws RelationPredicateNotFoundException {
         if (!ContentRelationsUtility.validPredicate(predicate)) {
             throw new RelationPredicateNotFoundException("Predicate " + predicate
                 + " is not on the registered predicate list. ");
@@ -1065,7 +1058,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @param cr ContentRelation
      * @throws WebserverSystemException Thrown if access to repository (Feodra) failed.
      */
-    private static void enrichWithMetadataContent(final ContentRelationCreate cr) throws WebserverSystemException {
+    private static void enrichWithMetadataContent(final ContentRelationCreate cr) {
         final List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
         if (mdRecords != null) {
             for (final MdRecordCreate mdRecord : mdRecords) {
@@ -1110,7 +1103,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws ReferencedResourceNotFoundException
      *                                    Thrown if referenced resource does not exist.
      */
-    private void validateReference(final String reference) throws TripleStoreSystemException, WebserverSystemException,
+    private void validateReference(final String reference) throws TripleStoreSystemException,
         ReferencedResourceNotFoundException {
 
         if (!getTripleStoreUtility().exists(reference)) {
@@ -1191,17 +1184,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws WebserverSystemException   Thrown in case of internal error.
      * @throws TripleStoreSystemException Thrown in case of TripleStore error.
      */
-    private String prepareResponse(final ContentRelationCreate cr, final String pid) throws TripleStoreSystemException,
-        WebserverSystemException {
-
-        final String result;
-        try {
-            result = Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), "<pid>" + pid + "</pid>\n");
-        }
-        catch (final SystemException e) {
-            throw new WebserverSystemException(e);
-        }
-        return result;
+    private String prepareResponse(final ContentRelationCreate cr, final String pid) throws WebserverSystemException {
+        return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), "<pid>" + pid + "</pid>\n");
     }
 
 }

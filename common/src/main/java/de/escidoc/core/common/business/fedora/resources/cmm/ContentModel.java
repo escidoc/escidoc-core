@@ -524,7 +524,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
                 ds.merge();
             }
         }
-        catch (final FedoraSystemException e) {
+        catch (final Exception e) {
             if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on setting stream.");
             }

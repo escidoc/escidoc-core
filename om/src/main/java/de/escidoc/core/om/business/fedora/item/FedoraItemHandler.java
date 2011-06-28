@@ -852,11 +852,10 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     public String updateComponents(final String id, final String xmlData) throws ItemNotFoundException,
         ComponentNotFoundException, FileNotFoundException, XmlSchemaValidationException, LockingException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException, MissingAttributeValueException,
-        AlreadyPublishedException, UserNotFoundException, InvalidStatusException, SystemException,
-        MissingMethodParameterException, OptimisticLockingException, MissingContentException,
-        MissingElementValueException, InvalidContentException, XmlCorruptedException, ReadonlyVersionException,
-        XmlParserSystemException, WebserverSystemException, EncodingSystemException, IntegritySystemException {
+        ReadonlyElementViolationException, ReadonlyAttributeViolationException, InvalidStatusException,
+        SystemException, MissingMethodParameterException, MissingContentException, MissingElementValueException,
+        InvalidContentException, XmlCorruptedException, ReadonlyVersionException, XmlParserSystemException,
+        WebserverSystemException, EncodingSystemException, IntegritySystemException {
 
         setItem(id);
         checkLatestVersion();
@@ -1729,7 +1728,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @return TODO
      * @throws ItemNotFoundException TODO
      */
-    public String retrieveRevisions(final String id) throws ItemNotFoundException {
+    public String retrieveRevisions(final String id) {
         // FIXME
         throw new UnsupportedOperationException();
     }
@@ -2062,9 +2061,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws XmlCorruptedException          e
      */
     private void validate(final ItemCreate item) throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException, MissingMdRecordException, InvalidContentException, XmlCorruptedException,
-        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, EncodingSystemException,
-        XmlParserSystemException, MissingAttributeValueException {
+        WebserverSystemException, MissingMdRecordException, InvalidContentException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException {
 
         checkContextStatus(item.getProperties().getObjectProperties().getContextId(), Constants.STATUS_CONTEXT_OPENED);
 
@@ -2208,7 +2206,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws WebserverSystemException   Thrown if creating instance of TripleStoreUtility failed.
      */
     private void checkRefElement(final String targetId) throws InvalidContentException, TripleStoreSystemException,
-        ReferencedResourceNotFoundException, WebserverSystemException {
+        ReferencedResourceNotFoundException {
 
         final String targetObjectType = getTripleStoreUtility().getObjectType(targetId);
         if (targetObjectType == null) {

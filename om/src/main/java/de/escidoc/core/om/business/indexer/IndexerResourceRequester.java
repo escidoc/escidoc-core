@@ -202,7 +202,7 @@ public class IndexerResourceRequester {
      * @param identifier identifier
      * @throws SystemException e
      */
-    private Object getExternalResource(final String identifier) throws SystemException {
+    private Object getExternalResource(final String identifier) {
         ByteArrayOutputStream out = null;
         InputStream in = null;
         try {

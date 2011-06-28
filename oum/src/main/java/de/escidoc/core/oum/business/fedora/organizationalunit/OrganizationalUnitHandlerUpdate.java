@@ -75,8 +75,8 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      */
     protected void setMdRecords(
         final Map<String, ByteArrayOutputStream> xml, final Map<String, Map<String, String>> mdAttributesMap,
-        final String escidocMdRecordnsUri) throws StreamNotFoundException, IntegritySystemException,
-        FedoraSystemException, WebserverSystemException, EncodingSystemException, TripleStoreSystemException {
+        final String escidocMdRecordnsUri) throws IntegritySystemException, FedoraSystemException,
+        WebserverSystemException, EncodingSystemException, TripleStoreSystemException {
         final Map<String, Datastream> updated = new HashMap<String, Datastream>();
 
         // iterate over md-record names (keys) with
@@ -151,7 +151,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws XmlCorruptedException      Thrown if the last-modification-date is null
      */
     protected void checkUpToDate(final DateTime timestamp) throws OptimisticLockingException, WebserverSystemException,
-        TripleStoreSystemException, FedoraSystemException, XmlCorruptedException {
+        FedoraSystemException, XmlCorruptedException {
 
         Utility.checkOptimisticLockingCriteria(getOrganizationalUnit().getLastModificationDate(), timestamp,
             "Organizational unit " + getOrganizationalUnit().getId());

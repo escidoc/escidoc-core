@@ -150,10 +150,6 @@ public class BeanMethod implements ApplicationContextAware {
             throw new WebserverSystemException(
                 "Cannot execute method '" + this.method + "' on resource " + getBeanId(), e);
         }
-        catch (final MissingMethodParameterException e) {
-            throw new WebserverSystemException(
-                "Cannot execute method '" + this.method + "' on resource " + getBeanId(), e);
-        }
         return result;
     }
 

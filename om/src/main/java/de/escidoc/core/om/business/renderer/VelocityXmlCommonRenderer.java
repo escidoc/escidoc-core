@@ -67,8 +67,7 @@ public class VelocityXmlCommonRenderer {
      */
     public void addRelationsValues(
         final List<Map<String, String>> relations, final String href, final Map<String, Object> values)
-        throws FedoraSystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException,
-        TripleStoreSystemException {
+        throws TripleStoreSystemException {
 
         values.put("contentRelationsHref", href + de.escidoc.core.common.business.fedora.Constants.RELATIONS_URL_PART);
 
@@ -113,7 +112,7 @@ public class VelocityXmlCommonRenderer {
 
     }
 
-    protected static void addStructuralRelationsValues(final Map values) throws WebserverSystemException {
+    protected static void addStructuralRelationsValues(final Map values) {
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }

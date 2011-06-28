@@ -68,8 +68,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @throws StreamNotFoundException If content-model-specific datastream does not exist.
      * @throws EncodingSystemException if "UTF-8" encoding is not supported
      */
-    public String getCts() throws FedoraSystemException, StreamNotFoundException, EncodingSystemException,
-        WebserverSystemException {
+    public String getCts() throws FedoraSystemException, StreamNotFoundException, EncodingSystemException {
 
         final Container container = getContainer();
         final Datastream cts = container.getCts();

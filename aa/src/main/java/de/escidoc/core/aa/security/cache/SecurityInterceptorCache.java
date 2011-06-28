@@ -97,8 +97,7 @@ public class SecurityInterceptorCache {
      *                         Thrown in case of a missing method parameter
      * @throws SystemException Thrown in case of an internal error.
      */
-    public MethodMappingList retrieveMethodMappings(final String className, final String methodName)
-        throws MissingMethodParameterException, SystemException {
+    public MethodMappingList retrieveMethodMappings(final String className, final String methodName) {
 
         return new MethodMappingList(this.requestMappingDao.retrieveMethodMappings(className, methodName));
     }

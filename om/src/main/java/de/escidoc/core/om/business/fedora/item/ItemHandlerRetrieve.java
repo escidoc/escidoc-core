@@ -135,8 +135,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * #renderComponents(boolean)
      */
     public String renderComponents(final Map<String, String> commonValues, final boolean isRoot)
-        throws ComponentNotFoundException, SystemException, IntegritySystemException, XmlParserSystemException,
-        WebserverSystemException, FedoraSystemException, EncodingSystemException {
+        throws SystemException, IntegritySystemException, XmlParserSystemException, WebserverSystemException,
+        FedoraSystemException, EncodingSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -301,8 +301,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
     }
 
     public String renderMdRecords(final Map<String, String> commonValues, final boolean isRoot)
-        throws WebserverSystemException, EncodingSystemException, FedoraSystemException, IntegritySystemException,
-        TripleStoreSystemException {
+        throws WebserverSystemException, EncodingSystemException, IntegritySystemException, TripleStoreSystemException {
 
         final Map<String, Datastream> mdRecords = getItem().getMdRecords();
 
@@ -367,8 +366,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      */
     public String renderMdRecord(
         final String name, final Map<String, String> commonValues, final boolean isOrigin, final boolean isRoot)
-        throws WebserverSystemException, IntegritySystemException, EncodingSystemException, MdRecordNotFoundException,
-        TripleStoreSystemException {
+        throws WebserverSystemException, EncodingSystemException, MdRecordNotFoundException {
 
         final Map<String, String> values = new HashMap<String, String>();
         final Datastream ds;
@@ -451,8 +449,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
     }
 
     public String renderContentStreams(final Map<String, String> commonValues, final boolean isRoot)
-        throws WebserverSystemException, EncodingSystemException, FedoraSystemException, IntegritySystemException,
-        TripleStoreSystemException {
+        throws WebserverSystemException, IntegritySystemException, TripleStoreSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
         final StringBuilder content = new StringBuilder();
@@ -494,7 +491,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
     }
 
     public String renderContentStream(final String name, final Map<String, String> commonValues, final boolean isRoot)
-        throws WebserverSystemException, IntegritySystemException, TripleStoreSystemException {
+        throws WebserverSystemException, TripleStoreSystemException {
         final Map<String, String> values = new HashMap<String, String>();
 
         if (isRoot) {
@@ -575,12 +572,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         final Map<String, Datastream> mdRecords = component.getMdRecords();
         final StringBuilder content = new StringBuilder();
         for (final String mdRecordName : mdRecords.keySet()) {
-            try {
-                content.append(renderComponentMdRecord(componentId, mdRecordName, commonValues, false));
-            }
-            catch (final MdRecordNotFoundException e) {
-                throw new IntegritySystemException(e.getMessage(), e);
-            }
+            content.append(renderComponentMdRecord(componentId, mdRecordName, commonValues, false));
         }
         if (!isRoot && content.length() == 0) {
             return "";
@@ -606,9 +598,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
 
     public String renderComponentMdRecord(
         final String componentId, final String name, final Map<String, String> commonValues, final boolean isRoot)
-        throws MdRecordNotFoundException, ComponentNotFoundException, FedoraSystemException,
-        TripleStoreSystemException, EncodingSystemException, WebserverSystemException, IntegritySystemException,
-        XmlParserSystemException {
+        throws ComponentNotFoundException, FedoraSystemException, TripleStoreSystemException, EncodingSystemException,
+        WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         final Component component;
         final Map<String, String> values = new HashMap<String, String>();
@@ -824,8 +815,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * @return Map with properties values (for velocity template)
      */
     public Map<String, String> getPropertiesValues(final Item item) throws TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException, XmlParserSystemException, EncodingSystemException,
-        FedoraSystemException, ItemNotFoundException {
+        WebserverSystemException, IntegritySystemException, EncodingSystemException, ItemNotFoundException {
 
         // retrieve properties from resource (the resource decided where are the
         // data to load, TripleStore or Wov)
@@ -1109,7 +1099,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         return values;
     }
 
-    protected void addParentsNamespaceValues(final Map values) throws WebserverSystemException {
+    protected void addParentsNamespaceValues(final Map values) {
         values.put("parentsNamespacePrefix", de.escidoc.core.common.business.Constants.PARENTS_NAMESPACE_PREFIX);
         values.put("parentsNamespace", de.escidoc.core.common.business.Constants.PARENTS_NAMESPACE_URI);
 
@@ -1123,7 +1113,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, de.escidoc.core.common.business.Constants.XLINK_NS_URI);
     }
 
-    protected void addStructuralRelationsValues(final Map values) throws WebserverSystemException {
+    protected void addStructuralRelationsValues(final Map values) {
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
             de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,

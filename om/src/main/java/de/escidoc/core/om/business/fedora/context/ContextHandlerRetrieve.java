@@ -88,8 +88,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      * @throws ContextNotFoundException If context is not found.
      * @throws SystemException          If anything fails.
      */
-    protected String getAdminDescriptorsXml(final FedoraContextHandler contextHandler) throws ContextNotFoundException,
-        SystemException {
+    protected String getAdminDescriptorsXml(final FedoraContextHandler contextHandler) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put(IS_ROOT_RESOURCES, true);

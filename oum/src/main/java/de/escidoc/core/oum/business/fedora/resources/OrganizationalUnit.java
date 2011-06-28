@@ -142,7 +142,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @throws TripleStoreSystemException Thrown if access to TripleStore failed.
      * @throws WebserverSystemException   If access to the backend (fedora or triplestore) fails.
      */
-    protected final void getSomeValuesFromFedora() throws TripleStoreSystemException, WebserverSystemException {
+    protected final void getSomeValuesFromFedora() throws TripleStoreSystemException {
 
         // this.creationDate = getTripleStoreUtility().getCreationDate(getId());
         // this.createdBy =
@@ -283,7 +283,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      *
      * @return The list of children ids for this organizational unit.
      */
-    public List<String> getChildrenIds() throws TripleStoreSystemException, WebserverSystemException {
+    public List<String> getChildrenIds() throws TripleStoreSystemException {
         return getTripleStoreUtility().getChildren(getId());
     }
 
@@ -584,7 +584,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @throws WebserverSystemException   Thrown if creating instance of TripleStoreUtility failed.
      * @throws TripleStoreSystemException Thrown if TripleStore request failed.
      */
-    public List<Predecessor> getSuccessors() throws TripleStoreSystemException, WebserverSystemException {
+    public List<Predecessor> getSuccessors() throws TripleStoreSystemException {
         if (this.successors == null) {
             this.successors = getSuccessors(getId());
         }

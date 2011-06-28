@@ -300,7 +300,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
     @Override
-    public String getCreationDate() throws TripleStoreSystemException, WebserverSystemException {
+    public String getCreationDate() throws TripleStoreSystemException {
 
         if (this.creationDate == null) {
             /*
@@ -547,7 +547,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
      * @throws WebserverSystemException   Thrown in case of internal failure.
      */
-    public final Map<String, String> setLastVersionData() throws TripleStoreSystemException, WebserverSystemException {
+    public final Map<String, String> setLastVersionData() throws WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
 
@@ -647,8 +647,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException Thrown in case of internal failure.
      * @throws IntegritySystemException Thrown if data integrity is violated.
      */
-    private void setVersionElementData(final String elementName, final String value) throws WebserverSystemException,
-        IntegritySystemException {
+    private void setVersionElementData(final String elementName, final String value) throws IntegritySystemException {
 
         getVersionData().put(elementName, value);
     }
@@ -695,8 +694,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException   Thrown if data integrity is violated.
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    public void setWov(final byte[] ds) throws StreamNotFoundException, FedoraSystemException,
-        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
+    public void setWov(final byte[] ds) throws StreamNotFoundException, FedoraSystemException {
 
         setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), ds, MimeTypes.TEXT_XML));
 
@@ -746,8 +744,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
      * @throws FedoraSystemException      Thrown if update of RELS-EXT data stream failed.
      */
-    public void updateRelsExtVersionTimestamp() throws WebserverSystemException, TripleStoreSystemException,
-        FedoraSystemException {
+    public void updateRelsExtVersionTimestamp() throws WebserverSystemException, FedoraSystemException {
 
         // TODO this method should be better called setLastModificationDate()
         // (and override the inherited method)
@@ -823,8 +820,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws XmlParserSystemException  Thrown in case of parser errors.
      * @throws WebserverSystemException  Thrown in case of internal errors.
      */
-    protected void setVersionData() throws ResourceNotFoundException, XmlParserSystemException,
-        WebserverSystemException {
+    protected void setVersionData() throws ResourceNotFoundException, XmlParserSystemException {
 
         // parse version-history
         final StaxParser sp = new StaxParser();
@@ -958,8 +954,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws FedoraSystemException    If Fedora reports an error.
      * @throws WebserverSystemException In case of an internal error.
      */
-    protected void updateWovTimestamp(final String versionNo, final DateTime timestamp) throws FedoraSystemException,
-        WebserverSystemException {
+    protected void updateWovTimestamp(final String versionNo, final DateTime timestamp) throws WebserverSystemException {
 
         try {
             final byte[] b = getWov().getStream();
@@ -1016,7 +1011,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException In case of an internal error.
      */
     protected void writeEventToWov(final String versionNo, final DateTime timestamp, final String newEventEntry)
-        throws FedoraSystemException, WebserverSystemException {
+        throws WebserverSystemException {
 
         /*
          * The event entry is written with the version timestamp. But this value
@@ -1189,7 +1184,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     @Override
-    protected List<DatastreamProfileTO> getDatastreamProfiles() throws WebserverSystemException, FedoraSystemException {
+    protected List<DatastreamProfileTO> getDatastreamProfiles() throws WebserverSystemException {
 
         return getFedoraServiceClient().getDatastreamProfiles(getId(), getVersionDate());
     }

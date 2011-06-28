@@ -373,8 +373,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws FedoraSystemException      If Fedora reports an error.
      * @throws TripleStoreSystemException If the triple store request failed.
      */
-    public void updatePidToWov(final String pid, final DateTime timestamp) throws FedoraSystemException,
-        WebserverSystemException, TripleStoreSystemException {
+    public void updatePidToWov(final String pid, final DateTime timestamp) throws WebserverSystemException {
 
         // TODO add comment "objectPid added" to the version
         final StartElementWithChildElements pidElement =

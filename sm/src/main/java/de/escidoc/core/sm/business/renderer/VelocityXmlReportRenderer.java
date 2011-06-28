@@ -182,7 +182,7 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * @return Returns the <code>ReportXmlProvider</code> object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static ReportXmlProvider getReportXmlProvider() throws WebserverSystemException {
+    private static ReportXmlProvider getReportXmlProvider() {
 
         return ReportXmlProvider.getInstance();
     }

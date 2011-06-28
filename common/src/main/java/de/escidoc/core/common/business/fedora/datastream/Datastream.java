@@ -347,7 +347,7 @@ public class Datastream {
      * @throws FedoraSystemException    Thrown if writing to Fedora failed.
      * @throws WebserverSystemException Thrown in case of internal failure (get configuration)
      */
-    public DateTime merge() throws FedoraSystemException, WebserverSystemException {
+    public DateTime merge() throws WebserverSystemException {
         final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(this.parentId, this.name);
         final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
         query.setDsLabel(this.label);
@@ -443,7 +443,7 @@ public class Datastream {
      * @throws FedoraSystemException    Thrown if writing of datastream into Fedora fails.
      * @throws WebserverSystemException Thrown if getting Fedora instance fails.
      */
-    public String persist(final boolean sync) throws FedoraSystemException, WebserverSystemException {
+    public String persist(final boolean sync) throws FedoraSystemException {
         final AddDatastreamPathParam path = new AddDatastreamPathParam(this.parentId, this.name);
         final AddDatastreamQueryParam query = new AddDatastreamQueryParam();
         query.setAltIDs(this.alternateIDs);
@@ -487,7 +487,7 @@ public class Datastream {
      * @throws FedoraSystemException    If an error ocurres in Fedora.
      * @throws WebserverSystemException If an error ocurres.
      */
-    public void delete() throws FedoraSystemException, WebserverSystemException {
+    public void delete() {
         final DatastreamProfileTO datastreamProfileTO =
             this.fedoraServiceClient.setDatastreamState(this.parentId, this.name, DatastreamState.D);
         this.updateDatastream(datastreamProfileTO);
@@ -657,7 +657,7 @@ public class Datastream {
      * @throws EncodingSystemException  If the charset is not supported.
      * @throws WebserverSystemException If an error ocurres.
      */
-    public String toString(final String charset) throws EncodingSystemException, WebserverSystemException {
+    public String toString(final String charset) throws EncodingSystemException {
         try {
             return new String(getStream(), charset);
         }

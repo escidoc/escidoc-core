@@ -247,8 +247,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws InvalidContentException      If there is invalid content in xml data.
      * @throws MissingContentException      If some required content is missing in xml data.
      */
-    public String addComponent(final String xmlData) throws SystemException, XmlCorruptedException,
-        XmlSchemaValidationException, LockingException, InvalidStatusException, FileNotFoundException,
+    public String addComponent(final String xmlData) throws SystemException, FileNotFoundException,
         MissingElementValueException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
         InvalidContentException, MissingContentException, FedoraSystemException, TripleStoreSystemException,
         XmlParserSystemException, WebserverSystemException {
@@ -380,13 +379,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         }
         sp.clearHandlerChain();
         final ByteArrayOutputStream relsExtNew = addNewEntriesHandler.getOutputStreams();
-
-        try {
-            getItem().setRelsExt(relsExtNew);
-        }
-        catch (final StreamNotFoundException e1) {
-            throw new IntegritySystemException(e1);
-        }
+        getItem().setRelsExt(relsExtNew);
         this.getFedoraServiceClient().sync();
         try {
             this.getTripleStoreUtility().reinitialize();
@@ -416,8 +409,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @param xmlData eSciDoc XML representation of Component.
      * @return objid of the new Component
      */
-    public String createComponent(final String xmlData) throws SystemException, XmlCorruptedException,
-        XmlSchemaValidationException, LockingException, InvalidStatusException, FileNotFoundException,
+    public String createComponent(final String xmlData) throws SystemException, FileNotFoundException,
         MissingElementValueException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
         InvalidContentException, MissingContentException, FedoraSystemException, TripleStoreSystemException,
         XmlParserSystemException, WebserverSystemException {
@@ -531,8 +523,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
     protected void handleComponent(
         final String componentId, final Map<String, String> properties, final Map<String, String> binaryContent,
         final Map datastreams, final Map<String, Map<String, String>> mdRecordAttributes, final String nsUri)
-        throws FileNotFoundException, WebserverSystemException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, InvalidContentException, TripleStoreSystemException {
+        throws FileNotFoundException, WebserverSystemException, IntegritySystemException, FedoraSystemException {
 
         if (datastreams.containsKey(DATASTREAM_CONTENT)) {
             datastreams.remove(DATASTREAM_CONTENT);

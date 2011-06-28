@@ -241,7 +241,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         throw new UnsupportedOperationException("Component.setContent.");
     }
 
-    public void notifySetContent() throws FedoraSystemException, WebserverSystemException, TripleStoreSystemException {
+    public void notifySetContent() throws FedoraSystemException {
         final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
         final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
         query.setLogMessage("touched");
@@ -481,7 +481,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     public void setDc(final Datastream ds) throws FedoraSystemException, WebserverSystemException,
-        TripleStoreSystemException, XmlParserSystemException {
+        XmlParserSystemException {
         final Datastream curDs = getDc();
         if (!ds.equals(curDs)) {
             this.dc = ds;
@@ -542,8 +542,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @return Map of Component properties.
      */
     public Map<String, String> setProperties(final String xml, final String itemId) throws InvalidContentException,
-        ComponentNotFoundException, TripleStoreSystemException, EncodingSystemException, FedoraSystemException,
-        XmlParserSystemException, WebserverSystemException {
+        TripleStoreSystemException, EncodingSystemException, FedoraSystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
         final ComponentPropertiesUpdateHandler cpuh =

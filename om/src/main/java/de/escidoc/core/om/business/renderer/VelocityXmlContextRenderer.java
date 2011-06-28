@@ -422,8 +422,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param id The Id of the Organizational Unit.
      * @return HashMap with (id, title, href)
      */
-    public Map<String, String> getOrganizationalUnitContext(final String id) throws TripleStoreSystemException,
-        WebserverSystemException {
+    public Map<String, String> getOrganizationalUnitContext(final String id) throws TripleStoreSystemException {
         final Map<String, String> ouContext = new HashMap<String, String>();
 
         ouContext.put("id", id);
@@ -562,8 +561,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param property The name of the property.
      * @return Returns a value of a property of an organizational unit.
      */
-    private String getProperty(final String id, final String property) throws TripleStoreSystemException,
-        WebserverSystemException {
+    private String getProperty(final String id, final String property) throws TripleStoreSystemException {
         return this.tripleStoreUtility.getPropertiesElements(id, property);
     }
 }

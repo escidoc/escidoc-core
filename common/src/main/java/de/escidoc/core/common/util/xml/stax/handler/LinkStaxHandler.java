@@ -166,7 +166,7 @@ public class LinkStaxHandler extends DefaultHandler {
      * @param parentElement The parent element of the link element.
      * @throws EscidocException Thrown exceptions depend on sub class implementation.
      */
-    protected void endParentElement(final EndElement parentElement) throws EscidocException {
+    protected void endParentElement(final EndElement parentElement) {
     }
 
     /**
@@ -176,7 +176,7 @@ public class LinkStaxHandler extends DefaultHandler {
      * @param linkElement The link element.
      * @throws EscidocException Thrown exceptions depend on sub class implementation.
      */
-    protected void startLinkElement(final StartElement linkElement) throws EscidocException {
+    protected void startLinkElement(final StartElement linkElement) {
     }
 
     /**

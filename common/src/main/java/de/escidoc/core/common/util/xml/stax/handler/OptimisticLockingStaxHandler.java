@@ -85,21 +85,8 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
             try {
                 final String lastModificationDateValue =
                     element.getAttributeValue(null, XmlUtility.NAME_LAST_MODIFICATION_DATE);
-
-                try {
-                    Utility.checkOptimisticLockingCriteria(XmlUtility.normalizeDate(expectedLastModificationDate),
-                        lastModificationDateValue, "resource");
-                }
-                catch (final WebserverSystemException e) {
-                    // this should not happen as the date format has been
-                    // validated during schema validation.
-                    if (LOGGER.isWarnEnabled()) {
-                        LOGGER.warn("Error on parsing last modification date.");
-                    }
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Error on parsing last modification date.", e);
-                    }
-                }
+                Utility.checkOptimisticLockingCriteria(XmlUtility.normalizeDate(expectedLastModificationDate),
+                    lastModificationDateValue, "resource");
             }
             catch (final NoSuchAttributeException e) {
                 throw new LastModificationDateMissingException();

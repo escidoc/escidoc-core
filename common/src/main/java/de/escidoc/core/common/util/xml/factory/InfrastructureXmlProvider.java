@@ -40,7 +40,7 @@ public abstract class InfrastructureXmlProvider extends VelocityXmlProvider {
     }
 
     @Override
-    protected String completePath() throws WebserverSystemException {
+    protected String completePath() {
         return REST_PATH;
     }
 

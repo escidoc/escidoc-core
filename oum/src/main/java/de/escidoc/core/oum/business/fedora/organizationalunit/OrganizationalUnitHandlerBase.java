@@ -149,7 +149,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException              Thrown in case of an internal error.
      */
     protected void checkName(final String id, final String name, final List<String> parents)
-        throws MissingElementValueException, SystemException {
+        throws MissingElementValueException {
 
         if ("".equals(name) || name == null) {
             throw new MissingElementValueException("Name of organizational unit must be set!");

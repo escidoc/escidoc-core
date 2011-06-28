@@ -366,8 +366,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, InvalidStatusException,
         OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
         TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
-        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException,
-        LastModificationDateMissingException {
+        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException {
 
         final XMLStreamReader parser = factory.createXMLStreamReader(in, XmlUtility.CHARACTER_ENCODING);
         while (parser.hasNext()) {
@@ -655,10 +654,10 @@ public class StaxParser implements DefaultHandlerStackInterface {
     protected void handle(final StartElement startElement) throws XMLStreamException, ContentModelNotFoundException,
         ContextNotFoundException, LockingException, MissingAttributeValueException,
         ReadonlyAttributeViolationException, ReadonlyElementViolationException, MissingContentException,
-        InvalidContentException, OptimisticLockingException, AlreadyExistsException,
-        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, OrganizationalUnitNotFoundException,
-        TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
-        IntegritySystemException, TmeException, XmlCorruptedException {
+        InvalidContentException, OptimisticLockingException, ReferencedResourceNotFoundException,
+        RelationPredicateNotFoundException, OrganizationalUnitNotFoundException, TripleStoreSystemException,
+        WebserverSystemException, EncodingSystemException, XmlParserSystemException, IntegritySystemException,
+        TmeException, XmlCorruptedException {
 
         StartElement element = startElement;
         if (this.checkRootElementName && !this.rootChecked) {
@@ -855,7 +854,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws InvalidStatusException       Thrown if an organizational unit is in an invalid status.
      * @throws TmeException                 eSciDoc specific; thrown by some Handlers.
      */
-    protected void handle(final String characters) throws XMLStreamException, ReadonlyElementViolationException,
+    protected void handle(final String characters) throws ReadonlyElementViolationException,
         MissingElementValueException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
         ReadonlyAttributeViolationException, InvalidContentException, OrganizationalUnitNotFoundException,
         PidAlreadyAssignedException, XmlParserSystemException, TripleStoreSystemException, IntegritySystemException,

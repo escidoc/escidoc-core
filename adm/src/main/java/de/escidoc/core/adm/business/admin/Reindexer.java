@@ -230,7 +230,7 @@ public class Reindexer {
      * @return total number of objects found, ...
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public String testReindexError() throws InvalidSearchQueryException, ApplicationServerSystemException {
+    public String testReindexError() throws ApplicationServerSystemException {
         sendUpdateIndexMessage("nonexistingPid", ResourceType.ITEM, null);
         return "OK";
     }
@@ -329,7 +329,7 @@ public class Reindexer {
      * @return current status (how many objects are still in the queue)
      * @throws SystemException thrown in case of an internal error
      */
-    public String getStatus() throws SystemException {
+    public String getStatus() {
         return ReindexStatus.getInstance().toString();
     }
 

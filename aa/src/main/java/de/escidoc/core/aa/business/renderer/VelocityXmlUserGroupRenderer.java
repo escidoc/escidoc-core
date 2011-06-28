@@ -346,7 +346,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
      * @return Returns the <code>UserGroupXmlProvider</code> object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static UserGroupXmlProvider getUserGroupXmlProvider() throws WebserverSystemException {
+    private static UserGroupXmlProvider getUserGroupXmlProvider() {
 
         return UserGroupXmlProvider.getInstance();
     }

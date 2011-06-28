@@ -138,8 +138,7 @@ public class InvocationParser {
      */
     private List<Map<String, String>> buildRequestsList(
         final Object arguments, final MethodMapping methodMapping, final boolean isArray)
-        throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
-        WebserverSystemException, XmlCorruptedException {
+        throws MissingMethodParameterException, WebserverSystemException, XmlCorruptedException {
 
         final Set<InvocationMapping> invocationMappings = methodMapping.getInvocationMappings();
 

@@ -38,7 +38,7 @@ public class DummyPIDGeneratorFactory extends PIDSystemFactory {
      * @see de.escidoc.core.common.persistence.PIDSystemFactory#getPIDGenerator()
      */
     @Override
-    public PIDSystem getPIDGenerator() throws PidSystemException, MissingMethodParameterException {
+    public PIDSystem getPIDGenerator() throws PidSystemException {
         if (this.pidGenerator == null) {
             getNewInstance();
         }

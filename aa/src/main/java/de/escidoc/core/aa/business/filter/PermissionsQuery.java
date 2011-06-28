@@ -97,8 +97,7 @@ public class PermissionsQuery {
      * @param userId       user id
      * @throws WebserverSystemException Thrown if a framework internal error occurs.
      */
-    private void addAccessRights(final ResourceType resourceType, final StringBuffer statement, final String userId)
-        throws WebserverSystemException {
+    private void addAccessRights(final ResourceType resourceType, final StringBuffer statement, final String userId) {
         final List<String> statements = new LinkedList<String>();
         final Map<String, Map<String, List<RoleGrant>>> userGrants = getUserGrants(userId);
         final Map<String, Map<String, List<RoleGrant>>> userGroupGrants = getUserGroupGrants(userId);
@@ -147,7 +146,7 @@ public class PermissionsQuery {
      */
     public String getFilterQuery(
         final Iterable<ResourceType> resourceTypes, final String userId, final FilterInterface filter)
-        throws InvalidSearchQueryException, WebserverSystemException {
+        throws WebserverSystemException {
         final StringBuffer result = new StringBuffer();
 
         for (final ResourceType resourceType : resourceTypes) {

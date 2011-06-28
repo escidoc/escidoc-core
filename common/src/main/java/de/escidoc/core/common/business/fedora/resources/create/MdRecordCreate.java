@@ -213,7 +213,7 @@ public class MdRecordCreate implements Serializable {
      * @return HashMap with all values of MdRecord
      * @throws SystemException Thrown if character encoding failed.
      */
-    public Map<String, String> getValueMap() throws SystemException {
+    public Map<String, String> getValueMap() {
 
         final Map<String, String> templateValues = new HashMap<String, String>();
 

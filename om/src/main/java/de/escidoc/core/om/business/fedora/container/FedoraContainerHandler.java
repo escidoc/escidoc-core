@@ -981,8 +981,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws LockingException           e
      * @throws MdRecordNotFoundException  e
      */
-    public void deleteMetadataRecord(final String id, final String mdRecordId) throws ContainerNotFoundException,
-        LockingException, MdRecordNotFoundException {
+    public void deleteMetadataRecord(final String id, final String mdRecordId) {
         // TODO: implement
         throw new UnsupportedOperationException("FedoraContainerHandler.deleteMetadataRecord not yet implemented");
 
@@ -1363,10 +1362,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 catch (final ResourceNotFoundException e1) {
                     throw new WebserverSystemException(e1);
                 }
-                catch (final StreamNotFoundException e1) {
-                    throw new WebserverSystemException(e1);
-                }
-
                 final String param = "<param last-modification-date=\"" + container.getLastModificationDate() + "\"/>";
                 try {
                     release(memberId, param);
@@ -2596,7 +2591,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     }
 
     @PostConstruct
-    private void init() throws Exception {
+    private void init() {
         addContainerListener(indexingHandler);
         addContainerMemberListener(indexingHandler);
     }

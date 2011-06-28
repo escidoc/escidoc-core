@@ -75,8 +75,7 @@ public class AggregationDataSelector {
     private SmScopesDaoInterface scopesDao;
 
     public List getDataForAggregation(final AggregationDefinition aggregationDefinition, final Date date)
-        throws ScopeNotFoundException, SqlDatabaseSystemException, StatisticPreprocessingSystemException,
-        XmlParserSystemException {
+        throws ScopeNotFoundException, SqlDatabaseSystemException, StatisticPreprocessingSystemException {
         if (aggregationDefinition.getAggregationStatisticDataSelectors() != null) {
             AggregationStatisticDataSelector selector = null;
             for (final AggregationStatisticDataSelector aggregationStatisticDataSelector : aggregationDefinition

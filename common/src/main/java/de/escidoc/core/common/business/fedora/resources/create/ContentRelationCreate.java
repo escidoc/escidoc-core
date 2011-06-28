@@ -221,7 +221,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @throws WebserverSystemException Thrown if an error occurs during DC creation.
      * @throws EncodingSystemException  Thrown if the conversion to default encoding failed.
      */
-    public String getDC() throws WebserverSystemException, EncodingSystemException {
+    public String getDC() {
 
         if (this.dcXml == null) {
 

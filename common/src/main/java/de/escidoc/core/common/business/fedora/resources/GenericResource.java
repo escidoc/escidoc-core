@@ -221,7 +221,7 @@ public class GenericResource implements FedoraResource {
      * @throws TripleStoreSystemException Thrown if request to TripleStore failed.
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    public String getCreationDate() throws TripleStoreSystemException, WebserverSystemException {
+    public String getCreationDate() throws TripleStoreSystemException {
 
         if (this.creationDate == null) {
             this.creationDate = getTripleStoreUtility().getCreationDate(this.id);
@@ -361,7 +361,7 @@ public class GenericResource implements FedoraResource {
      * @throws TripleStoreSystemException Thrown if request to TripleStore failed.
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    public String getCreatedBy() throws TripleStoreSystemException, WebserverSystemException {
+    public String getCreatedBy() throws TripleStoreSystemException {
 
         if (this.createdBy == null) {
             this.createdBy =
@@ -389,8 +389,7 @@ public class GenericResource implements FedoraResource {
      * @throws TripleStoreSystemException Thrown if TripleStore request failed.
      * @throws WebserverSystemException   Thrown in case of internal error.
      */
-    public void checkResourceExist() throws ResourceNotFoundException, TripleStoreSystemException,
-        WebserverSystemException {
+    public void checkResourceExist() throws ResourceNotFoundException, TripleStoreSystemException {
 
         if (this.id == null || !getTripleStoreUtility().exists(this.id)) {
             throw new ResourceNotFoundException("Resource with id " + this.id + " does not exist.");
@@ -424,8 +423,7 @@ public class GenericResource implements FedoraResource {
      * @throws FedoraSystemException    Thrown if Fedora request failed.
      * @throws WebserverSystemException Thrown in case of internal failure.
      */
-    public String getRelsExtAsString() throws EncodingSystemException, WebserverSystemException, FedoraSystemException,
-        StreamNotFoundException {
+    public String getRelsExtAsString() throws EncodingSystemException, FedoraSystemException, StreamNotFoundException {
 
         final String xml;
         try {
@@ -478,7 +476,7 @@ public class GenericResource implements FedoraResource {
      * @throws WebserverSystemException Thrown in case of internal failure.
      */
     public void setRelsExt(final ByteArrayOutputStream relsExt) throws FedoraSystemException, WebserverSystemException,
-        StreamNotFoundException, EncodingSystemException {
+        EncodingSystemException {
 
         try {
             setRelsExt(relsExt.toString(XmlUtility.CHARACTER_ENCODING));
@@ -591,7 +589,7 @@ public class GenericResource implements FedoraResource {
      * @throws WebserverSystemException   Thrown in case of internal failure.
      */
     public Map<String, String> getResourceProperties(final Collection<String> propertiesNamesCol)
-        throws TripleStoreSystemException, WebserverSystemException {
+        throws TripleStoreSystemException {
 
         // return getTripleStoreUtility().getProperties(getId(),
         // propertiesNamesCol);
@@ -1009,8 +1007,8 @@ public class GenericResource implements FedoraResource {
      * @return true if resource is from provided type.
      * @throws IntegritySystemException Thrown if object type could not retrieved
      */
-    public boolean checkResourceType(final ResourceType resourceType) throws IntegritySystemException,
-        TripleStoreSystemException, WebserverSystemException {
+    public boolean checkResourceType(final ResourceType resourceType) throws TripleStoreSystemException,
+        WebserverSystemException {
 
         final String type = getResourceProperties().get(TripleStoreUtility.PROP_OBJECT_TYPE);
 
@@ -1092,7 +1090,7 @@ public class GenericResource implements FedoraResource {
         return eve.getElementValues().getTriples();
     }
 
-    protected List<DatastreamProfileTO> getDatastreamProfiles() throws WebserverSystemException, FedoraSystemException {
+    protected List<DatastreamProfileTO> getDatastreamProfiles() throws WebserverSystemException {
         return getFedoraServiceClient().getDatastreamProfiles(getId(), null);
     }
 

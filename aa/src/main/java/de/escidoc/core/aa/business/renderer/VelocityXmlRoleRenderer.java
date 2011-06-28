@@ -135,8 +135,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
     /**
      * Adds the values of the role that shall be rendered to the provided {@link Map}.
      */
-    private static void addRoleValues(final EscidocRole role, final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addRoleValues(final EscidocRole role, final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(role
             .getLastModificationDate()));

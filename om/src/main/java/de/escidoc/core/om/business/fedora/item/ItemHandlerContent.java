@@ -98,9 +98,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @see ItemHandlerInterface#retrieveContent(String, String)
      */
     public EscidocBinaryContent retrieveContent(final String id, final String componentId)
-        throws MissingMethodParameterException, InvalidStatusException, ResourceNotFoundException,
-        AuthorizationException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
-        IntegritySystemException, XmlParserSystemException {
+        throws ResourceNotFoundException, AuthorizationException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         setItem(id);
         Component component = getItem().getComponent(componentId);
@@ -180,9 +179,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     public EscidocBinaryContent retrieveContent(
         final String id, final String componentId, final String transformer, final String param)
-        throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
-        InvalidStatusException, AuthorizationException, IntegritySystemException, FedoraSystemException,
-        XmlParserSystemException {
+        throws ItemNotFoundException, ComponentNotFoundException, SystemException, AuthorizationException,
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         setItem(id);
         final Component component = getComponent(componentId);
@@ -232,9 +230,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     public EscidocServiceRedirectInterface redirectContentService(
         final String id, final String componentId, final String transformer, final String clientService)
-        throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
-        InvalidStatusException, AuthorizationException, IntegritySystemException, FedoraSystemException,
-        XmlParserSystemException {
+        throws ItemNotFoundException, ComponentNotFoundException, SystemException, AuthorizationException,
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
 
         setItem(id);
         final Component component = getComponent(componentId);
@@ -287,7 +284,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @return digilib scaler URL.
      * @throws SystemException Thrown if the URL could not be obtained from configuration.
      */
-    private static String getDigilibScalerUrl() throws SystemException {
+    private static String getDigilibScalerUrl() {
         return EscidocConfiguration.getInstance().get(EscidocConfiguration.DIGILIB_SCALER);
     }
 
@@ -398,25 +395,22 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     }
 
     @Deprecated
-    public void deleteContentStream(final String id, final String name) throws ItemNotFoundException, SystemException,
-        ContentStreamNotFoundException {
+    public void deleteContentStream(final String id, final String name) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     @Deprecated
-    public void deleteContentStreams(final String id) throws ItemNotFoundException, SystemException {
+    public void deleteContentStreams(final String id) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     @Deprecated
-    public String updateContentStream(final String id, final String name, final String xml)
-        throws ItemNotFoundException, SystemException, ContentStreamNotFoundException {
+    public String updateContentStream(final String id, final String name, final String xml) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     @Deprecated
-    public String updateContentStreams(final String id, final String xmlData) throws ItemNotFoundException,
-        SystemException {
+    public String updateContentStreams(final String id, final String xmlData) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
@@ -428,8 +422,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     @Deprecated
     public String retrieveContentStream(final String itemId, final String name) throws ItemNotFoundException,
-        ContentStreamNotFoundException, AuthorizationException, TripleStoreSystemException, IntegritySystemException,
-        WebserverSystemException, FedoraSystemException, XmlParserSystemException {
+        ContentStreamNotFoundException, TripleStoreSystemException, IntegritySystemException, WebserverSystemException,
+        FedoraSystemException, XmlParserSystemException {
 
         setItem(itemId);
         final String contentStream = renderContentStream(name, true);
@@ -442,8 +436,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
     @Deprecated
     public EscidocBinaryContent retrieveContentStreamContent(final String itemId, final String name)
-        throws ItemNotFoundException, ContentStreamNotFoundException, AuthorizationException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException {
+        throws ItemNotFoundException, AuthorizationException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         setItem(itemId);
         try {
@@ -462,9 +456,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * retrieveContentStreams(java.lang.String)
      */
     @Deprecated
-    public String retrieveContentStreams(final String itemId) throws ItemNotFoundException, AuthorizationException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        WebserverSystemException, XmlParserSystemException {
+    public String retrieveContentStreams(final String itemId) throws ItemNotFoundException, EncodingSystemException,
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
+        XmlParserSystemException {
         setItem(itemId);
         return renderContentStreams(true);
     }

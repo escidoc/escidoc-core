@@ -119,7 +119,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     }
 
     private void init() throws WebserverSystemException, FedoraSystemException, IntegritySystemException,
-        StreamNotFoundException, TripleStoreSystemException, ItemNotFoundException, ComponentNotFoundException {
+        StreamNotFoundException, TripleStoreSystemException, ItemNotFoundException {
         initDatastreams(getDatastreamProfiles());
         if (!checkResourceType(ResourceType.ITEM)) {
             throw new ItemNotFoundException("Item with the provided objid '" + this.getId() + "' does not exit.");
@@ -222,8 +222,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @return A map which contains unique 'content-category' entries associated with a component object. May be used
      *         for other identifications which are possibly unique in item scope.
      */
-    public Map<String, Component> getComponentsByLocalName() throws ComponentNotFoundException,
-        WebserverSystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException {
+    public Map<String, Component> getComponentsByLocalName() throws WebserverSystemException,
+        TripleStoreSystemException, XmlParserSystemException {
 
         initComponents();
         return this.componentsByLocalName;
@@ -236,7 +236,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @return Component
      */
     public Component getComponentByLocalName(final String componentName) throws ComponentNotFoundException,
-        WebserverSystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException {
+        WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         initComponents();
         final Component c = this.componentsByLocalName.get(componentName);
@@ -267,8 +267,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @return Component IDs
      */
-    public Collection<String> getComponentIds() throws XmlParserSystemException, TripleStoreSystemException,
-        WebserverSystemException {
+    public Collection<String> getComponentIds() throws XmlParserSystemException, TripleStoreSystemException {
 
         final Collection<String> componentIds;
 
@@ -413,7 +412,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                 ds.merge();
                 this.cts = ds;
             }
-            catch (final FedoraSystemException e) {
+            catch (final Exception e) {
                 if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on merging datastream.");
                 }
@@ -668,7 +667,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                 ds.merge();
             }
         }
-        catch (final FedoraSystemException e) {
+        catch (final Exception e) {
             if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on setting content stream.");
             }
@@ -683,7 +682,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
 
     @Deprecated
     public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams) throws FedoraSystemException,
-        WebserverSystemException, IntegritySystemException {
+        WebserverSystemException {
 
         final Set<String> namesInFedora = getContentStreams().keySet();
 
@@ -904,9 +903,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws IntegritySystemException   If the integrity of the repository is violated.
      * @throws EncodingSystemException    If encoding fails.
      */
-    private void removeComponent(final String componentId) throws LockingException, ComponentNotFoundException,
-        WebserverSystemException, InvalidStatusException, TripleStoreSystemException, FedoraSystemException,
-        XmlParserSystemException, IntegritySystemException, EncodingSystemException {
+    private void removeComponent(final String componentId) throws ComponentNotFoundException, WebserverSystemException,
+        XmlParserSystemException, IntegritySystemException {
 
         // TODO move precondition checks to service method (?FRS)
         // checkLocked();
@@ -985,12 +983,6 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         }
         sp.clearHandlerChain();
         final ByteArrayOutputStream relsExtNew = addNewEntriesHandler.getOutputStreams();
-
-        try {
-            setRelsExt(relsExtNew);
-        }
-        catch (final StreamNotFoundException e1) {
-            throw new IntegritySystemException(e1);
-        }
+        setRelsExt(relsExtNew);
     }
 }

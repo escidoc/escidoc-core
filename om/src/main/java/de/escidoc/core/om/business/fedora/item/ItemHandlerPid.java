@@ -389,8 +389,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws IntegritySystemException   If the integrity of the repository is violated.
      * @throws TripleStoreSystemException Thrown if TripleStore request failed.
      */
-    protected boolean releasableVersionPid() throws WebserverSystemException, IntegritySystemException,
-        TripleStoreSystemException {
+    protected boolean releasableVersionPid() throws WebserverSystemException, TripleStoreSystemException {
         if (Boolean.valueOf(System.getProperty("cmm.Item.versionPid.releaseWithoutPid"))) {
             return true;
         }
@@ -546,8 +545,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws WebserverSystemException   Thrown in case of internal error.
      * @throws TripleStoreSystemException Thrown in case of TripleStore error.
      */
-    private String prepareResponse(final String pid) throws TripleStoreSystemException, WebserverSystemException {
-
+    private String prepareResponse(final String pid) throws WebserverSystemException {
         final DateTime lmd;
         try {
             lmd = getItem().getLastModificationDate();
@@ -555,14 +553,6 @@ public class ItemHandlerPid extends ItemHandlerContent {
         catch (final FedoraSystemException e) {
             throw new WebserverSystemException(e);
         }
-
-        final String result;
-        try {
-            result = Utility.prepareReturnXml(lmd, "<pid>" + pid + "</pid>\n");
-        }
-        catch (final SystemException e) {
-            throw new WebserverSystemException(e);
-        }
-        return result;
+        return Utility.prepareReturnXml(lmd, "<pid>" + pid + "</pid>\n");
     }
 }

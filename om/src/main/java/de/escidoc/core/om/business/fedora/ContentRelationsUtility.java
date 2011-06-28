@@ -121,7 +121,7 @@ public final class ContentRelationsUtility {
      * @return location of file with PREDICATES
      * @throws WebserverSystemException Thrown if loading escidoc configuration failed.
      */
-    private static String getLocation() throws WebserverSystemException {
+    private static String getLocation() {
         String location = EscidocConfiguration.getInstance().get(EscidocConfiguration.CONTENT_RELATIONS_URL);
         if (location == null) {
             location =

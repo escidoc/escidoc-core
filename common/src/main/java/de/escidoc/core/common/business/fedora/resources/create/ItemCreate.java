@@ -200,9 +200,7 @@ public class ItemCreate extends GenericResourceCreate {
     /**
      * Persist whole Item to Repository and force TripleStore sync.
      */
-    public void persist() throws SystemException, InvalidStatusException, MissingMdRecordException,
-        FileNotFoundException, InvalidContentException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, MissingAttributeValueException {
+    public void persist() throws SystemException, FileNotFoundException, InvalidContentException {
 
         persist(true);
     }
@@ -309,7 +307,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws WebserverSystemException Thrown if an error occurs during DC creation.
      * @throws EncodingSystemException  Thrown if the conversion to default encoding failed.
      */
-    public String getDC() throws WebserverSystemException, EncodingSystemException {
+    public String getDC() {
 
         if (this.dcXml == null) {
 

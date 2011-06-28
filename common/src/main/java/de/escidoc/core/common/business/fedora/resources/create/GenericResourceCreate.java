@@ -86,8 +86,7 @@ public abstract class GenericResourceCreate {
      * @throws WebserverSystemException Thrown if an error occurs during DC creation.
      * @throws EncodingSystemException  Thrown if the conversion to default encoding failed.
      */
-    public String getDC(final MdRecordCreate mdRecord, final String contentModelId) throws WebserverSystemException,
-        EncodingSystemException {
+    public String getDC(final MdRecordCreate mdRecord, final String contentModelId) throws WebserverSystemException {
         return XmlUtility.createDC(mdRecord.getNameSpace(), mdRecord.getContent(), this.objid, contentModelId);
     }
 

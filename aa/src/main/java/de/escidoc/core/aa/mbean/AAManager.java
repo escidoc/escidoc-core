@@ -85,7 +85,7 @@ public class AAManager {
      * @throws IOException Thrown if configuration properties are not available.
      */
     @ManagedAttribute(description = "The clean up period in milli seconds.", persistPeriod = 300)
-    public long getCleanUpPeriod() throws IOException {
+    public long getCleanUpPeriod() {
 
         return EscidocConfiguration.getInstance().getAsLong("escidoc-core.aa.cleanup.period");
     }

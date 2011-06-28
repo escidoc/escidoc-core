@@ -246,7 +246,7 @@ public class ContentRelationProperties implements Serializable {
      * @param lockStatus [locked|unlocked]
      * @throws InvalidStatusException Thrown if status in invalid
      */
-    public void setLockStatus(final LockStatus lockStatus) throws InvalidStatusException {
+    public void setLockStatus(final LockStatus lockStatus) {
 
         this.lockStatus = lockStatus;
     }

@@ -723,7 +723,7 @@ public class IndexingHandler implements ResourceListener {
      * @return COllection with indexNames
      * @throws IOException e
      */
-    private Iterable<String> getIndexNames() throws IOException, ApplicationServerSystemException {
+    private Iterable<String> getIndexNames() throws ApplicationServerSystemException {
         if (this.indexNames == null) {
             // Get index names from gsearch-config
             final Map<String, Map<String, String>> indexConfig = gsearchHandler.getIndexConfigurations();

@@ -57,17 +57,12 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
         final String type, final String namespaceURI, final String publicId, final String systemId, final String baseURI) {
         if (systemId != null) {
             final Matcher schemaLocationMatcher = PATTERN_SCHEMA_LOCATION_BASE.matcher(systemId);
-            try {
-                if (schemaLocationMatcher.find()) {
-                    final String systemIdLocal = schemaLocationMatcher.replaceAll(XmlUtility.getSchemaBaseUrl());
-                    return new DOMInputImpl(publicId, systemIdLocal, baseURI);
-                }
-                else {
-                    return null;
-                }
+            if (schemaLocationMatcher.find()) {
+                final String systemIdLocal = schemaLocationMatcher.replaceAll(XmlUtility.getSchemaBaseUrl());
+                return new DOMInputImpl(publicId, systemIdLocal, baseURI);
             }
-            catch (final WebserverSystemException e) {
-                throw new RuntimeException(e);
+            else {
+                return null;
             }
         }
         else {

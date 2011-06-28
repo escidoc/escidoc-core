@@ -1080,7 +1080,7 @@ public final class XmlUtility {
      * @throws IOException        Thrown if the base url cannot be determined.
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
-    public static void addXmlBaseAttribute(final XMLStreamWriter writer) throws XMLStreamException, IOException {
+    public static void addXmlBaseAttribute(final XMLStreamWriter writer) throws XMLStreamException {
 
         writer.writeAttribute(Constants.XML_NS_URI, "base", EscidocConfiguration.getInstance().get(
             EscidocConfiguration.ESCIDOC_CORE_BASEURL));
@@ -1454,7 +1454,7 @@ public final class XmlUtility {
      * @return Returns the base url.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getSchemaBaseUrl() throws WebserverSystemException {
+    public static String getSchemaBaseUrl() {
         return EscidocConfiguration.getInstance().appendToSelfURL(
             EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) + '/');
 
@@ -1987,7 +1987,7 @@ public final class XmlUtility {
      * @return Return the configured escidoc baseurl.
      * @throws WebserverSystemException If an error occurs accessing the escidoc configuration
      */
-    public static String getEscidocBaseUrl() throws WebserverSystemException {
+    public static String getEscidocBaseUrl() {
         return EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
     }
 

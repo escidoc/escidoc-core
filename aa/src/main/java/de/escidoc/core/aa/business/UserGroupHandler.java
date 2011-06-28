@@ -1558,7 +1558,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param groupId The id of the updated user group.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void sendUserGroupUpdateEvent(final String groupId) throws WebserverSystemException {
+    private void sendUserGroupUpdateEvent(final String groupId) {
 
         securityHelper.clearGroupPoliciesCaches(groupId);
     }
@@ -1582,7 +1582,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param userGroup The <code>UserGroup</code> object to modify.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private static void setCreationValues(final UserGroup userGroup) throws SystemException {
+    private static void setCreationValues(final UserGroup userGroup) {
 
         // initialize creation-date value
         userGroup.setCreationDate(userGroup.getLastModificationDate());

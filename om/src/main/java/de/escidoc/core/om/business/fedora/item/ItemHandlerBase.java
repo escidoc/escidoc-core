@@ -174,7 +174,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws ItemNotFoundException If there is no item with <code>id</code> in the repository.
      */
     final void setItem(final String id) throws ItemNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
+        IntegritySystemException, FedoraSystemException, WebserverSystemException {
 
         try {
             this.item = new Item(id);
@@ -273,7 +273,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws ItemNotFoundException If there is no item with <code>id</code> in the repository.
      */
     final void setOriginItem(final String id) throws ItemNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
+        IntegritySystemException, FedoraSystemException, WebserverSystemException {
         try {
             this.originItem = new Item(id);
         }
@@ -425,8 +425,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws WebserverSystemException   In case of an internal error.
      * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    protected void checkNotReleased() throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException {
+    protected void checkNotReleased() throws InvalidStatusException, WebserverSystemException {
         checkNotStatus(Constants.STATUS_RELEASED);
     }
 
@@ -437,8 +436,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException If the triple store reports an error.
      * @throws WebserverSystemException   In case of an internal error.
      */
-    protected void checkNotSubmitted() throws InvalidStatusException, TripleStoreSystemException,
-        WebserverSystemException {
+    protected void checkNotSubmitted() throws InvalidStatusException, WebserverSystemException {
         checkNotStatus(Constants.STATUS_SUBMITTED);
     }
 

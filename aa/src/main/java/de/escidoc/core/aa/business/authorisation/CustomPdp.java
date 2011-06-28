@@ -167,7 +167,7 @@ public class CustomPdp {
      * @see ResourceAttributeFinderModule
      * @see DatabasePolicyFinderModule
      */
-    public CustomPdp() throws Exception {
+    public CustomPdp() {
     }
 
     /**
@@ -241,8 +241,7 @@ public class CustomPdp {
      * @throws ParsingException         if the Request is invalid
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public ResponseCtx evaluate(final String requestFile) throws ParsingException, WebserverSystemException,
-        FileNotFoundException {
+    public ResponseCtx evaluate(final String requestFile) throws ParsingException, FileNotFoundException {
         // setup the request based on the file
         final RequestCtx request = RequestCtx.getInstance(new FileInputStream(requestFile));
 
@@ -259,7 +258,7 @@ public class CustomPdp {
      * @return the result of the evaluation
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public ResponseCtx evaluate(final RequestCtx request) throws WebserverSystemException {
+    public ResponseCtx evaluate(final RequestCtx request) {
         // evaluate the request
         return pdp.evaluate(request);
     }
@@ -378,7 +377,7 @@ public class CustomPdp {
      * @return Returns the <code>PDPConfig</code> of this PDP.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public PDPConfig getPdpConfig() throws WebserverSystemException {
+    public PDPConfig getPdpConfig() {
         return this.pdpConfig;
     }
 

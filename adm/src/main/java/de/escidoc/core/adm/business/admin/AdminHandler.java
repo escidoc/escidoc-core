@@ -209,8 +209,7 @@ public class AdminHandler {
      * @throws TripleStoreSystemException if anything goes wrong.
      * @throws EncodingSystemException    if anything goes wrong.
      */
-    public String getIndexConfiguration() throws WebserverSystemException, TripleStoreSystemException,
-        EncodingSystemException {
+    public String getIndexConfiguration() throws WebserverSystemException {
 
         final Map<String, Map<String, Map<String, Object>>> indexConfiguration =
             indexingHandler.getObjectTypeParameters();
@@ -316,7 +315,7 @@ public class AdminHandler {
      * @throws SystemException             Thrown if a framework internal error occurs.
      * @throws InvalidSearchQueryException thrown if a given search query could not be translated into a SQL query
      */
-    public String loadExamples(final String type) throws InvalidSearchQueryException, SystemException {
+    public String loadExamples(final String type) throws SystemException {
         final StringBuilder result = new StringBuilder();
 
         // select example package

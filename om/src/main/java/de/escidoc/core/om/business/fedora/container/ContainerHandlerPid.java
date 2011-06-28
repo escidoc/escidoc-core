@@ -306,7 +306,6 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @throws TripleStoreSystemException Thrown in case of TripleStore error.
      */
     private String prepareResponse(final String pid) throws WebserverSystemException {
-
         final DateTime lmd;
         try {
             lmd = getContainer().getLastModificationDate();
@@ -314,15 +313,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         catch (final FedoraSystemException e) {
             throw new WebserverSystemException(e);
         }
-
-        final String result;
-        try {
-            result = Utility.prepareReturnXml(lmd, "<pid>" + pid + "</pid>\n");
-        }
-        catch (final SystemException e) {
-            throw new WebserverSystemException(e);
-        }
-        return result;
+        return Utility.prepareReturnXml(lmd, "<pid>" + pid + "</pid>\n");
     }
 
 }
