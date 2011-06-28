@@ -183,8 +183,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
     @Override
     public String retrieve(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        SystemException, ComponentNotFoundException, AuthorizationException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        SystemException, ComponentNotFoundException, AuthorizationException, FedoraSystemException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setItem(id);
         final String message =
@@ -208,8 +208,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         MissingMethodParameterException, InvalidContentException, SystemException, OptimisticLockingException,
         RelationPredicateNotFoundException, ReferencedResourceNotFoundException, ReadonlyVersionException,
         MissingMdRecordException, AuthorizationException, ReadonlyElementViolationException,
-        ReadonlyAttributeViolationException, TripleStoreSystemException, WebserverSystemException,
-        EncodingSystemException, IntegritySystemException, XmlParserSystemException, XmlCorruptedException {
+        ReadonlyAttributeViolationException, WebserverSystemException, EncodingSystemException,
+        IntegritySystemException, XmlParserSystemException {
 
         setItem(id);
         final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
@@ -400,8 +400,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         MissingElementValueException, ReadonlyAttributeViolationException, XmlCorruptedException,
         MissingMethodParameterException, FileNotFoundException, SystemException, ReferencedResourceNotFoundException,
         InvalidContentException, RelationPredicateNotFoundException, MissingMdRecordException, InvalidStatusException,
-        AuthorizationException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException, FedoraSystemException {
+        AuthorizationException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException,
+        FedoraSystemException {
 
         final ItemCreate item = parseItem(xml);
 
@@ -437,8 +437,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         InvalidXmlException, MissingMethodParameterException, FileNotFoundException,
         ReferencedResourceNotFoundException, InvalidContentException, RelationPredicateNotFoundException,
         MissingMdRecordException, InvalidStatusException, SystemException, AuthorizationException,
-        IntegritySystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException,
-        FedoraSystemException {
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException, FedoraSystemException {
 
         final ItemCreate item = parseItem(xml);
         item.setIdProvider(getIdProvider());
@@ -464,8 +463,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     @Override
     public void delete(final String id) throws ItemNotFoundException, AlreadyPublishedException, LockingException,
-        InvalidStatusException, SystemException, AuthorizationException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException, XmlParserSystemException {
+        InvalidStatusException, SystemException, AuthorizationException, WebserverSystemException,
+        IntegritySystemException, XmlParserSystemException {
 
         remove(id);
         fireItemDeleted(id);
@@ -476,8 +475,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     @Override
     public String retrieveProperties(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        SystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+        SystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         setItem(id);
         return renderProperties();
@@ -488,8 +487,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     @Override
     public String retrieveMdRecords(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        SystemException, AuthorizationException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+        SystemException, AuthorizationException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, XmlParserSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
@@ -511,8 +510,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public String retrieveMdRecord(final String id, final String mdRecordId) throws ItemNotFoundException,
         MdRecordNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException,
-        IntegritySystemException, TripleStoreSystemException, WebserverSystemException, FedoraSystemException,
-        XmlParserSystemException {
+        TripleStoreSystemException, WebserverSystemException, FedoraSystemException, XmlParserSystemException {
 
         setItem(id);
 
@@ -553,7 +551,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public String retrieveMdRecordContent(final String id, final String mdRecordId) throws ItemNotFoundException,
         MdRecordNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
         setItem(id);
         String mdRecord;
         try {
@@ -582,7 +580,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public String retrieveDcRecordContent(final String id) throws ItemNotFoundException,
         MissingMethodParameterException, SystemException, MdRecordNotFoundException, AuthorizationException,
-        WebserverSystemException, IntegritySystemException, TripleStoreSystemException, XmlParserSystemException {
+        IntegritySystemException, TripleStoreSystemException, XmlParserSystemException {
         setItem(id);
         String dc;
         try {
@@ -618,8 +616,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         throws ItemNotFoundException, XmlSchemaNotFoundException, LockingException, XmlCorruptedException,
         XmlSchemaValidationException, InvalidContentException, MdRecordNotFoundException, ReadonlyViolationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
-        ReadonlyVersionException, AuthorizationException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        ReadonlyVersionException, AuthorizationException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         setItem(id);
         final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
@@ -692,8 +690,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     public String createMetadataRecord(final String id, final String xmlData) throws ItemNotFoundException,
         XmlSchemaNotFoundException, SystemException, XmlSchemaValidationException, LockingException,
         MissingAttributeValueException, InvalidStatusException, MissingMethodParameterException, XmlCorruptedException,
-        ComponentNotFoundException, AuthorizationException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+        ComponentNotFoundException, AuthorizationException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, XmlParserSystemException {
 
         return createMdRecord(id, xmlData);
     }
@@ -709,8 +707,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public String createMdRecord(final String id, final String xmlData) throws ItemNotFoundException, SystemException,
         XmlSchemaValidationException, LockingException, MissingAttributeValueException, InvalidStatusException,
-        ComponentNotFoundException, AuthorizationException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+        ComponentNotFoundException, AuthorizationException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, XmlParserSystemException {
 
         setItem(id);
         final DateTime startTimestamp = getItem().getLastFedoraModificationDate();
@@ -784,8 +782,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     @Override
     public String retrieveComponents(final String id) throws ItemNotFoundException, ComponentNotFoundException,
-        MissingMethodParameterException, SystemException, AuthorizationException, WebserverSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException, EncodingSystemException {
+        MissingMethodParameterException, SystemException, AuthorizationException, IntegritySystemException,
+        FedoraSystemException, XmlParserSystemException, EncodingSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
@@ -808,7 +806,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws SystemException       If an error occurs.
      */
     private String retrieveContentRelations(final String id) throws ItemNotFoundException, SystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         setItem(id);
@@ -858,8 +856,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         AlreadyPublishedException, UserNotFoundException, InvalidStatusException, SystemException,
         MissingMethodParameterException, OptimisticLockingException, MissingContentException,
         MissingElementValueException, InvalidContentException, XmlCorruptedException, ReadonlyVersionException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException, EncodingSystemException,
-        IntegritySystemException {
+        XmlParserSystemException, WebserverSystemException, EncodingSystemException, IntegritySystemException {
 
         setItem(id);
         checkLatestVersion();
@@ -955,8 +952,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public EscidocBinaryContent retrieveResource(
         final String id, final String resourceName, final Map<String, String[]> parameters) throws SystemException,
-        ItemNotFoundException, OperationNotFoundException, WebserverSystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+        ItemNotFoundException, OperationNotFoundException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, XmlParserSystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType(MimeTypes.TEXT_XML);
@@ -996,8 +993,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
     @Override
     public String retrieveRelations(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        SystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+        SystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
         setItem(id);
         return renderRelations();
     }
@@ -1005,8 +1001,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public String retrieveComponent(final String id, final String componentId) throws ItemNotFoundException,
         ComponentNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException,
-        WebserverSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException,
-        EncodingSystemException {
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException, EncodingSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
@@ -1026,8 +1021,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public String retrieveComponentMdRecords(final String id, final String componentId) throws ItemNotFoundException,
         ComponentNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException,
-        WebserverSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException,
-        EncodingSystemException {
+        IntegritySystemException, FedoraSystemException, XmlParserSystemException, EncodingSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
@@ -1044,8 +1038,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public String retrieveComponentMdRecord(final String id, final String componentId, final String mdRecordId)
         throws ItemNotFoundException, ComponentNotFoundException, MdRecordNotFoundException,
-        MissingMethodParameterException, SystemException, AuthorizationException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException, XmlParserSystemException, EncodingSystemException {
+        MissingMethodParameterException, SystemException, AuthorizationException, WebserverSystemException,
+        IntegritySystemException, XmlParserSystemException, EncodingSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
@@ -1062,8 +1056,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public void deleteComponent(final String itemId, final String componentId) throws LockingException,
         MissingMethodParameterException, SystemException, InvalidStatusException, ComponentNotFoundException,
-        ItemNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+        ItemNotFoundException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         setItem(itemId);
 
@@ -1095,9 +1089,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         MissingContentException, LockingException, MissingElementValueException, XmlCorruptedException,
         InvalidStatusException, MissingMethodParameterException, FileNotFoundException, InvalidContentException,
         SystemException, XmlSchemaValidationException, OptimisticLockingException, MissingAttributeValueException,
-        ComponentNotFoundException, XmlParserSystemException, WebserverSystemException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException, EncodingSystemException,
-        IntegritySystemException, TripleStoreSystemException {
+        ComponentNotFoundException, WebserverSystemException, ReadonlyElementViolationException,
+        ReadonlyAttributeViolationException, EncodingSystemException, IntegritySystemException,
+        TripleStoreSystemException {
 
         setItem(id);
         final StaxParser sp = new StaxParser();
@@ -1143,8 +1137,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         FileNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
         InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         XmlCorruptedException, ReadonlyAttributeViolationException, MissingContentException, InvalidContentException,
-        ReadonlyVersionException, AuthorizationException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        ReadonlyVersionException, AuthorizationException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         setItem(id);
         if (!getItem().getComponentIds().contains(componentId)) {
@@ -1210,8 +1204,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     public String release(final String id, final String param) throws ItemNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         ReadonlyViolationException, ReadonlyVersionException, ComponentNotFoundException, XmlCorruptedException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException, ApplicationServerSystemException {
+        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException,
+        ApplicationServerSystemException {
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -1270,8 +1264,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     public String submit(final String id, final String param) throws ItemNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         ReadonlyViolationException, ReadonlyVersionException, ComponentNotFoundException, XmlCorruptedException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException {
+        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -1311,8 +1304,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     public String revise(final String id, final String param) throws ItemNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         ReadonlyViolationException, ReadonlyVersionException, XmlCorruptedException, ComponentNotFoundException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException {
+        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -1345,8 +1337,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     public String withdraw(final String id, final String param) throws ItemNotFoundException, NotPublishedException,
         LockingException, AlreadyWithdrawnException, InvalidStatusException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException,
-        ComponentNotFoundException, XmlCorruptedException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+        ComponentNotFoundException, XmlCorruptedException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, XmlParserSystemException {
 
         // we want special exceptions if already withdrawn, so check something
         // before setItem()
@@ -1400,9 +1392,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         ItemNotFoundException, OptimisticLockingException, ReferencedResourceNotFoundException,
         RelationPredicateNotFoundException, AlreadyExistsException, InvalidStatusException, InvalidContentException,
         InvalidXmlException, ReadonlyAttributeViolationException, MissingElementValueException, LockingException,
-        ReadonlyElementViolationException, ReadonlyVersionException, ComponentNotFoundException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+        ReadonlyElementViolationException, ReadonlyVersionException, ComponentNotFoundException, FedoraSystemException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setItem(id);
         checkLatestVersion();
@@ -1490,8 +1481,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     public String removeContentRelations(final String id, final String param) throws SystemException,
         ItemNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
         ContentRelationNotFoundException, LockingException, ReadonlyViolationException, ReadonlyVersionException,
-        ComponentNotFoundException, XmlCorruptedException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        ComponentNotFoundException, XmlCorruptedException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         setItem(id);
         checkLatestVersion();
@@ -1601,9 +1592,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public String lock(final String id, final String param) throws ItemNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        ComponentNotFoundException, InvalidStatusException, XmlCorruptedException, FedoraSystemException,
-        TripleStoreSystemException, SqlDatabaseSystemException, WebserverSystemException, IntegritySystemException,
-        XmlParserSystemException {
+        ComponentNotFoundException, InvalidStatusException, XmlCorruptedException, TripleStoreSystemException,
+        SqlDatabaseSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         setItem(id);
         checkWithdrawn("No modification allowed.");
@@ -1631,8 +1621,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public String unlock(final String id, final String param) throws ItemNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, ComponentNotFoundException,
-        XmlCorruptedException, FedoraSystemException, SqlDatabaseSystemException, WebserverSystemException,
-        IntegritySystemException, TripleStoreSystemException, XmlParserSystemException {
+        XmlCorruptedException, SqlDatabaseSystemException, WebserverSystemException, IntegritySystemException,
+        TripleStoreSystemException, XmlParserSystemException {
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -1695,7 +1685,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     @Override
     public String retrieveParents(final String id) throws ItemNotFoundException, SystemException,
-        IntegritySystemException, WebserverSystemException {
+        WebserverSystemException {
         this.utility.checkIsItem(id);
         return renderParents(id);
     }
@@ -1720,7 +1710,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Override
     public String retrieveComponentProperties(final String id, final String componentId) throws ItemNotFoundException,
         ComponentNotFoundException, MissingMethodParameterException, SystemException, AuthorizationException,
-        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException {
+        WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         setItem(id);
         String originId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
@@ -1762,8 +1752,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @param comment Optional comment to associate with the created version or event.
      * @throws SystemException If an error occures.
      */
-    private void makeVersion(final String comment) throws SystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, WebserverSystemException, XmlParserSystemException {
+    private void makeVersion(final String comment) throws SystemException, IntegritySystemException,
+        FedoraSystemException, WebserverSystemException, XmlParserSystemException {
         makeVersion(comment, null);
     }
 
@@ -1825,8 +1815,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws SystemException If an error occures.
      */
     private void makeVersion(final String comment, final String newStatus) throws SystemException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
-        XmlParserSystemException {
+        IntegritySystemException, FedoraSystemException, WebserverSystemException, XmlParserSystemException {
         getUtility().makeVersion(comment, newStatus, getItem());
     }
 

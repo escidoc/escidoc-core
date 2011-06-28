@@ -144,8 +144,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
     private String doCreate(final String xmlData, final boolean isCreate) throws ContextNameNotUniqueException,
         SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
         MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
-        InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException, FedoraSystemException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         final String id = createContext(xmlData);
         try {
@@ -351,8 +351,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
     public String update(final String id, final String xmlData) throws ContextNotFoundException,
         InvalidStatusException, OptimisticLockingException, ReadonlyAttributeViolationException,
         ReadonlyElementViolationException, SystemException, ContextNameNotUniqueException,
-        MissingElementValueException, InvalidContentException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        MissingElementValueException, InvalidContentException, IntegritySystemException, FedoraSystemException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setContext(id);
         final String context;
@@ -418,8 +418,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      */
     @Override
     public void delete(final String id) throws ContextNotEmptyException, ContextNotFoundException,
-        InvalidStatusException, SystemException, FedoraSystemException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException {
+        InvalidStatusException, SystemException, TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException {
 
         setContext(id);
         remove(this);

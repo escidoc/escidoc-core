@@ -157,7 +157,7 @@ public class ItemHandler implements ItemHandlerInterface {
         AuthorizationException, InvalidXmlException, MissingMethodParameterException, InvalidContentException,
         SystemException, OptimisticLockingException, AlreadyExistsException, ReadonlyViolationException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, ReadonlyVersionException,
-        MissingAttributeValueException, MissingMdRecordException, ReadonlyAttributeViolationException {
+        MissingAttributeValueException, MissingMdRecordException {
 
         return handler.update(id, xmlData);
     }
@@ -172,8 +172,7 @@ public class ItemHandler implements ItemHandlerInterface {
         ItemNotFoundException, ComponentNotFoundException, LockingException, MissingElementValueException,
         AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
         FileNotFoundException, InvalidXmlException, InvalidContentException, SystemException,
-        ReadonlyViolationException, OptimisticLockingException, MissingAttributeValueException,
-        ReadonlyAttributeViolationException, XmlSchemaValidationException {
+        ReadonlyViolationException, OptimisticLockingException, MissingAttributeValueException {
 
         return handler.createComponent(id, xmlData);
     }
@@ -225,8 +224,7 @@ public class ItemHandler implements ItemHandlerInterface {
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, FileNotFoundException,
         MissingAttributeValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
-        ReadonlyViolationException, MissingContentException, InvalidContentException, ReadonlyVersionException,
-        ReadonlyElementViolationException, XmlSchemaValidationException {
+        ReadonlyViolationException, MissingContentException, InvalidContentException, ReadonlyVersionException {
 
         return handler.updateComponent(id, componentId, xmlData);
     }
@@ -287,9 +285,9 @@ public class ItemHandler implements ItemHandlerInterface {
     }
 
     @Override
-    public EscidocBinaryContent retrieveContent(final String id, final String contentId) throws ItemNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-        InvalidStatusException, ResourceNotFoundException, ComponentNotFoundException {
+    public EscidocBinaryContent retrieveContent(final String id, final String contentId)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        InvalidStatusException, ResourceNotFoundException {
 
         return handler.retrieveContent(id, contentId);
     }

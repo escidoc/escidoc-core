@@ -88,8 +88,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface #create(java.lang.String)
      */
     @Override
-    public String create(final String xmlData) throws MissingMethodParameterException, SystemException,
-        WebserverSystemException {
+    public String create(final String xmlData) throws MissingMethodParameterException, SystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }

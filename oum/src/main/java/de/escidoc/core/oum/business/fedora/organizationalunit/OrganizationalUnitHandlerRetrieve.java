@@ -144,7 +144,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation of the parents of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
      */
-    protected String getChildObjectsXml() throws SystemException, TripleStoreSystemException, WebserverSystemException {
+    protected String getChildObjectsXml() throws SystemException, WebserverSystemException {
         final List<String> children = new ArrayList<String>();
         final List<String> chidrenIds = getOrganizationalUnit().getChildrenIds();
         final String parentId = getOrganizationalUnit().getId();
@@ -218,7 +218,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The pathes.
      * @throws SystemException If anything fails while computing the pathes.
      */
-    private List<List<String>> computePathes() throws SystemException, TripleStoreSystemException {
+    private List<List<String>> computePathes() throws SystemException {
 
         initPathes();
         final List<List<String>> result = new ArrayList<List<String>>();

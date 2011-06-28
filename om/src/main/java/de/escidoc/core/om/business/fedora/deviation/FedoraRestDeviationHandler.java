@@ -142,7 +142,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * @param pid uri to the resource.
      */
     @Override
-    public void removeFromCache(final String pid) throws SystemException, TripleStoreSystemException {
+    public void removeFromCache(final String pid) throws SystemException {
         this.indexerResourceRequester.deleteResource(pid);
     }
 
@@ -152,7 +152,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * @param pid uri to the resource.
      */
     @Override
-    public String retrieveUncached(final String pid) throws SystemException, TripleStoreSystemException {
+    public String retrieveUncached(final String pid) throws SystemException {
         return (String) this.indexerResourceRequester.getResourceUncached(pid);
     }
 

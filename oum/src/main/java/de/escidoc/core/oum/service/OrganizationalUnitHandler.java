@@ -83,7 +83,7 @@ public class OrganizationalUnitHandler
     }
 
     @Override
-    public String ingest(final String xmlData) throws InvalidXmlException, EscidocException {
+    public String ingest(final String xmlData) throws EscidocException {
 
         return business.ingest(xmlData);
     }

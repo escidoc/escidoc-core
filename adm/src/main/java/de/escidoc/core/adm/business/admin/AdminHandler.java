@@ -111,8 +111,7 @@ public class AdminHandler {
      * @return total number of objects deleted, ...
      * @throws SystemException thrown in case of an internal error
      */
-    public String deleteObjects(final String taskParam) throws SystemException, ApplicationServerSystemException,
-        XmlCorruptedException {
+    public String deleteObjects(final String taskParam) throws SystemException, XmlCorruptedException {
         final StringBuilder result = new StringBuilder();
         final PurgeStatus purgeStatus = PurgeStatus.getInstance();
 

@@ -103,7 +103,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws ResourceNotFoundException Thrown if no container could be found under the provided id.
      */
     public Container(final String id) throws StreamNotFoundException, SystemException, ResourceNotFoundException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        XmlParserSystemException, WebserverSystemException {
         super(id);
         init();
     }

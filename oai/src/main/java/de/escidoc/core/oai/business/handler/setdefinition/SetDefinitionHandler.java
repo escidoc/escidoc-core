@@ -78,7 +78,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      */
     @Override
     public String create(final String xmlData) throws UniqueConstraintViolationException, InvalidXmlException,
-        MissingMethodParameterException, SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        MissingMethodParameterException, SystemException, WebserverSystemException {
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
         final StaxParser sp = new StaxParser();
         final SetDefinitionCreateHandler sdch = new SetDefinitionCreateHandler(sp);

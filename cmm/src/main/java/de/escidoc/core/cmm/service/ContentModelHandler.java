@@ -78,7 +78,7 @@ public class ContentModelHandler implements de.escidoc.core.cmm.service.interfac
     }
 
     @Override
-    public String ingest(final String xmlData) throws InvalidXmlException, EscidocException {
+    public String ingest(final String xmlData) throws EscidocException {
 
         return business.ingest(xmlData);
     }
@@ -208,7 +208,7 @@ public class ContentModelHandler implements de.escidoc.core.cmm.service.interfac
     @Override
     public EscidocBinaryContent retrieveResourceDefinitionXsltContent(final String id, final String name)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        ContentModelNotFoundException, ResourceNotFoundException, SystemException {
+        ResourceNotFoundException, SystemException {
         return business.retrieveResourceDefinitionXsltContent(id, name);
     }
 

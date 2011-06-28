@@ -104,7 +104,7 @@ public class Reindexer {
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     public String reindex(final boolean clearIndex, final String indexName) throws SystemException,
-        InvalidSearchQueryException, FedoraSystemException, WebserverSystemException {
+        InvalidSearchQueryException, WebserverSystemException {
         if ("errorTest".equals(indexName)) {
             return testReindexError();
         }
@@ -303,7 +303,7 @@ public class Reindexer {
      * @throws SystemException Thrown if eSciDoc failed to receive a resource.
      */
     private Collection<String> getIds(final String indexName, final ResourceType type, final boolean clearIndex)
-        throws SystemException, WebserverSystemException {
+        throws SystemException {
         final Collection<String> result = new ArrayList<String>();
         if (contains(indexName, type)) {
             final Collection<String> queryResult = this.fedoraServiceClient.queryResourceIdsByType(type.getUri());

@@ -566,7 +566,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      *
      * @throws SystemException Thrown if internal error occurs.
      */
-    private void createFedoraResource() throws SystemException, WebserverSystemException, EncodingSystemException {
+    private void createFedoraResource() throws SystemException, EncodingSystemException {
         setObjid(this.idProvider.getNextPid());
 
         if (this.properties.getTitle() == null) {

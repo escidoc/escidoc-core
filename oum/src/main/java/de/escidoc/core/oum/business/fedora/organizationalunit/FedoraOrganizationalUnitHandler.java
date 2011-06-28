@@ -172,7 +172,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @param xmlData complete item XML
      * @throws SystemException One of the listeners threw an exception.
      */
-    private void fireOuModified(final String id, final String xmlData) throws SystemException, WebserverSystemException {
+    private void fireOuModified(final String id, final String xmlData) throws SystemException {
         for (final ResourceListener ouListener : this.ouListeners) {
             ouListener.resourceModified(id, xmlData);
         }
@@ -515,8 +515,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     private void updateModifiedPredecessors(
         final Collection<Predecessor> predecessorBeforeUpdate, final Collection<Predecessor> updatedPredecessors)
-        throws OrganizationalUnitNotFoundException, SystemException, WebserverSystemException,
-        TripleStoreSystemException, IntegritySystemException {
+        throws OrganizationalUnitNotFoundException, SystemException, TripleStoreSystemException,
+        IntegritySystemException {
 
         for (final Predecessor predecessor : predecessorBeforeUpdate) {
             if (!updatedPredecessors.contains(predecessor)) {
@@ -616,9 +616,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
     @Override
     public String updateParents(final String id, final String xml) throws MissingElementValueException,
         OptimisticLockingException, OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
-        SystemException, InvalidStatusException, EncodingSystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException,
-        XmlCorruptedException {
+        SystemException, InvalidStatusException, IntegritySystemException, FedoraSystemException,
+        TripleStoreSystemException, WebserverSystemException, XmlParserSystemException, XmlCorruptedException {
 
         setOrganizationalUnit(id);
         final List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
@@ -831,7 +830,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     @Override
     public String retrieveParentObjects(final String id) throws OrganizationalUnitNotFoundException, SystemException,
-        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
+        IntegritySystemException, WebserverSystemException {
         final StringWriter result = new StringWriter();
 
         this.utility.checkIsOrganizationalUnit(id);

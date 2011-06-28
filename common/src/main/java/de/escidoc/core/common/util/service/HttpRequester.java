@@ -107,7 +107,7 @@ public class HttpRequester {
      * @return String response
      */
     public String doGet(final String resource) throws IOException, NoSuchAlgorithmException, KeyManagementException,
-        WebserverSystemException, UnsupportedEncodingException {
+        WebserverSystemException {
         return request(resource, "GET", null);
     }
 
@@ -119,9 +119,8 @@ public class HttpRequester {
      * @return String response
      * @throws Exception e
      */
-    public String doPut(final String resource, final String body) throws Exception, MalformedURLException, IOException,
-        ProtocolException, NoSuchAlgorithmException, KeyManagementException, UnsupportedEncodingException,
-        WebserverSystemException {
+    public String doPut(final String resource, final String body) throws Exception, IOException,
+        NoSuchAlgorithmException, KeyManagementException, UnsupportedEncodingException, WebserverSystemException {
         if (body == null || body.length() == 0) {
             throw new Exception("body may not be null");
         }
@@ -162,9 +161,8 @@ public class HttpRequester {
      * @param method   String method
      * @param body     String body
      */
-    private String request(final String resource, final String method, final String body) throws MalformedURLException,
-        IOException, ProtocolException, NoSuchAlgorithmException, KeyManagementException, WebserverSystemException,
-        UnsupportedEncodingException {
+    private String request(final String resource, final String method, final String body) throws IOException,
+        NoSuchAlgorithmException, KeyManagementException, WebserverSystemException, UnsupportedEncodingException {
         return SSL ? requestSsl(resource, method, body) : requestNoSsl(resource, method, body);
     }
 

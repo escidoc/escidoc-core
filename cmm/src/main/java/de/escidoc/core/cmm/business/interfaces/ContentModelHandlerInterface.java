@@ -166,5 +166,5 @@ public interface ContentModelHandlerInterface extends IngestableResource {
         throws ContentModelNotFoundException, SystemException;
 
     EscidocBinaryContent retrieveResourceDefinitionXsltContent(final String id, final String name)
-        throws ContentModelNotFoundException, SystemException, ResourceNotFoundException;
+        throws SystemException, ResourceNotFoundException;
 }

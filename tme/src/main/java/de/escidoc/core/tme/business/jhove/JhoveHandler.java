@@ -113,7 +113,7 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
      * @throws TmeException    Thrown if JHove produced an error during meta data extraction.
      */
     @Override
-    public String extract(final String requests) throws SystemException, TmeException, XmlParserSystemException {
+    public String extract(final String requests) throws SystemException, TmeException {
 
         final String[] files = parseRequests(requests);
         return callJhove(files);

@@ -157,7 +157,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @throws SystemException Thrown if getting new objid from ID-Provider failed.
      * @throws IOException     Thrown if preparing of properties, meta data record failed.
      */
-    public String getFOXML() throws SystemException, IOException, WebserverSystemException {
+    public String getFOXML() throws SystemException, IOException {
 
         // objid
         if (getObjid() == null) {

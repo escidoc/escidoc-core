@@ -117,9 +117,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         final Map<String, String> nsUris) throws ComponentNotFoundException, LockingException, InvalidStatusException,
         SystemException, InvalidContentException, MissingContentException, FileNotFoundException,
         XmlCorruptedException, XmlSchemaValidationException, ReadonlyElementViolationException,
-        ReadonlyAttributeViolationException, MissingElementValueException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+        ReadonlyAttributeViolationException, MissingElementValueException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         // FIXME don't set but use getComponents()? (FRS)
         // What do you want to have fixed? I want to have setComponent() but I

@@ -108,7 +108,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws ReadonlyAttributeViolationException,
         InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
-        SystemException, XmlParserSystemException, WebserverSystemException, TripleStoreSystemException {
+        SystemException, WebserverSystemException, TripleStoreSystemException {
 
         final String currentPath = parser.getCurPath();
         String contentRelationsPath = "/item/relations";
@@ -236,8 +236,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void checkRefElement(final StartElement element) throws InvalidContentException,
-        ReadonlyAttributeViolationException, ReferencedResourceNotFoundException, SystemException,
-        WebserverSystemException {
+        ReadonlyAttributeViolationException, ReferencedResourceNotFoundException, SystemException {
         try {
             final String objectId = element.getAttribute(null, "objid").getValue();
             final String xlinkHref = element.getAttribute(Constants.XLINK_URI, "href").getValue();

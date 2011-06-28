@@ -258,8 +258,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         InvalidContentException, MissingMethodParameterException, XmlCorruptedException,
         MissingAttributeValueException, MissingElementValueException, SystemException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, InvalidStatusException,
-        MissingMdRecordException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+        MissingMdRecordException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
         return doCreate(xmlData, true);
     }
 
@@ -275,8 +275,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         MissingAttributeValueException, MissingElementValueException, XmlCorruptedException, InvalidContentException,
         ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
         MissingMdRecordException, MissingMethodParameterException, SystemException, XmlSchemaValidationException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         return doCreate(xmlData, false);
     }
@@ -295,8 +294,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         ContentModelNotFoundException, ContextNotFoundException, MissingAttributeValueException,
         MissingElementValueException, XmlCorruptedException, InvalidContentException,
         ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
-        MissingMdRecordException, MissingMethodParameterException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        MissingMdRecordException, MissingMethodParameterException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         final String[] creator = Utility.getCurrentUser();
         final String containerId = getIdProvider().getNextPid();
@@ -518,8 +517,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public void delete(final String id) throws ContainerNotFoundException, LockingException, InvalidStatusException,
-        SystemException, AuthorizationException, TripleStoreSystemException, WebserverSystemException,
-        IntegritySystemException, XmlParserSystemException {
+        SystemException, AuthorizationException, WebserverSystemException, IntegritySystemException,
+        XmlParserSystemException {
 
         setContainer(id);
 
@@ -592,7 +591,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieve(final String id) throws ContainerNotFoundException, SystemException,
-        MissingMethodParameterException, IntegritySystemException, XmlParserSystemException, WebserverSystemException {
+        MissingMethodParameterException, XmlParserSystemException, WebserverSystemException {
 
         setContainer(id);
         return getContainerXml(this.getContainer());
@@ -655,9 +654,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     public String update(final String id, final String xmlData) throws ContainerNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, InvalidXmlException, OptimisticLockingException,
         InvalidStatusException, MissingAttributeValueException, SystemException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, ReadonlyVersionException, MissingMdRecordException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+        RelationPredicateNotFoundException, ReadonlyVersionException, MissingMdRecordException, FedoraSystemException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setContainer(id);
 
@@ -856,7 +854,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveTocs(final String id, final SRURequestParameters parameters)
-        throws ContainerNotFoundException, SystemException, IntegritySystemException, WebserverSystemException {
+        throws ContainerNotFoundException, SystemException, WebserverSystemException {
         final StringWriter result = new StringWriter();
 
         this.utility.checkIsContainer(id);
@@ -1001,8 +999,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveMdRecord(final String id, final String mdRecordId) throws ContainerNotFoundException,
-        SystemException, MdRecordNotFoundException, FedoraSystemException, WebserverSystemException,
-        IntegritySystemException, TripleStoreSystemException, XmlParserSystemException {
+        SystemException, MdRecordNotFoundException, WebserverSystemException, IntegritySystemException,
+        TripleStoreSystemException, XmlParserSystemException {
 
         setContainer(id);
         return getMetadataRecordXml(mdRecordId);
@@ -1020,8 +1018,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveMdRecordContent(final String id, final String mdRecordId) throws ContainerNotFoundException,
-        MdRecordNotFoundException, MissingMethodParameterException, SystemException, WebserverSystemException,
-        IntegritySystemException, TripleStoreSystemException, XmlParserSystemException {
+        MdRecordNotFoundException, MissingMethodParameterException, SystemException, IntegritySystemException,
+        TripleStoreSystemException, XmlParserSystemException {
         setContainer(id);
         return retrieveMdRecord(mdRecordId);
     }
@@ -1036,8 +1034,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveDcRecordContent(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, SystemException, WebserverSystemException, IntegritySystemException,
-        TripleStoreSystemException, XmlParserSystemException {
+        MissingMethodParameterException, SystemException, IntegritySystemException, TripleStoreSystemException,
+        XmlParserSystemException {
         setContainer(id);
         return retrieveDc(id);
     }
@@ -1051,8 +1049,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveMdRecords(final String containerId) throws ContainerNotFoundException, SystemException,
-        IntegritySystemException, FedoraSystemException, WebserverSystemException, TripleStoreSystemException,
-        XmlParserSystemException {
+        FedoraSystemException, WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         setContainer(containerId);
         return getMetadataRecordsXml();
@@ -1075,8 +1072,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Override
     public String updateMetadataRecord(final String id, final String mdRecordId, final String xmlData)
         throws ContainerNotFoundException, LockingException, MdRecordNotFoundException, SystemException,
-        InvalidXmlException, InvalidStatusException, ReadonlyVersionException, IntegritySystemException,
-        TripleStoreSystemException, XmlParserSystemException {
+        InvalidXmlException, InvalidStatusException, ReadonlyVersionException, TripleStoreSystemException,
+        XmlParserSystemException {
 
         setContainer(id);
 
@@ -1139,8 +1136,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveRelations(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, SystemException, TripleStoreSystemException, IntegritySystemException,
-        XmlParserSystemException {
+        MissingMethodParameterException, SystemException, IntegritySystemException, XmlParserSystemException {
 
         setContainer(id);
         return getRelationsXml(this.getContainer());
@@ -1157,8 +1153,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveResources(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, SystemException, TripleStoreSystemException, IntegritySystemException,
-        XmlParserSystemException {
+        MissingMethodParameterException, SystemException, IntegritySystemException, XmlParserSystemException {
 
         setContainer(id);
         return getResourcesXml();
@@ -1179,16 +1174,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public EscidocBinaryContent retrieveResource(final String id, final String resourceName) throws SystemException,
-        ContainerNotFoundException, OperationNotFoundException, WebserverSystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+        ContainerNotFoundException, OperationNotFoundException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, XmlParserSystemException {
         return retrieveResource(id, resourceName, null);
     }
 
     @Override
     public EscidocBinaryContent retrieveResource(
         final String id, final String resourceName, final Map<String, String[]> parameters) throws SystemException,
-        ContainerNotFoundException, OperationNotFoundException, WebserverSystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+        ContainerNotFoundException, OperationNotFoundException, EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, XmlParserSystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType(MimeTypes.TEXT_XML);
@@ -1256,8 +1251,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveProperties(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, SystemException, TripleStoreSystemException, IntegritySystemException,
-        XmlParserSystemException {
+        MissingMethodParameterException, SystemException, IntegritySystemException, XmlParserSystemException {
 
         setContainer(id);
         return getPropertiesXml(this.getContainer());
@@ -1276,8 +1270,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveStructMap(final String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, SystemException, TripleStoreSystemException, IntegritySystemException,
-        XmlParserSystemException {
+        MissingMethodParameterException, SystemException, IntegritySystemException, XmlParserSystemException {
 
         setContainer(id);
         return getStructMapXml(this.getContainer());
@@ -1300,8 +1293,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Override
     public String release(final String id, final String param) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
-        ReadonlyVersionException, XmlCorruptedException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+        ReadonlyVersionException, XmlCorruptedException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, XmlParserSystemException {
 
         setContainer(id);
         checkLatestVersion();
@@ -1351,7 +1344,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Deprecated
     private void releaseMembers(final String id) throws OptimisticLockingException, SystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         // Find all members of container
         final List<String> memberIds = getTripleStoreUtility().getMemberList(id, null);
@@ -1463,8 +1456,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Override
     public String submit(final String id, final String param) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
-        ReadonlyVersionException, XmlCorruptedException, FedoraSystemException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException, XmlParserSystemException {
+        ReadonlyVersionException, XmlCorruptedException, TripleStoreSystemException, WebserverSystemException,
+        IntegritySystemException, XmlParserSystemException {
 
         setContainer(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -1516,8 +1509,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Override
     public String revise(final String id, final String param) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
-        ReadonlyVersionException, XmlCorruptedException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+        ReadonlyVersionException, XmlCorruptedException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException, XmlParserSystemException {
 
         setContainer(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -1576,8 +1569,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Override
     public String withdraw(final String id, final String param) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
-        AlreadyWithdrawnException, ReadonlyVersionException, XmlCorruptedException, FedoraSystemException,
-        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, XmlParserSystemException {
+        AlreadyWithdrawnException, ReadonlyVersionException, XmlCorruptedException, TripleStoreSystemException,
+        WebserverSystemException, IntegritySystemException, XmlParserSystemException {
 
         if (id == null || !getTripleStoreUtility().exists(id)) {
             throw new ContainerNotFoundException("Container with id " + id + " does not exist.");
@@ -1731,8 +1724,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Override
     public String lock(final String id, final String param) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
-        XmlCorruptedException, FedoraSystemException, SqlDatabaseSystemException, WebserverSystemException,
-        IntegritySystemException, TripleStoreSystemException, XmlParserSystemException {
+        XmlCorruptedException, SqlDatabaseSystemException, WebserverSystemException, IntegritySystemException,
+        TripleStoreSystemException, XmlParserSystemException {
 
         setContainer(id);
         try {
@@ -1774,8 +1767,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Override
     public String unlock(final String id, final String param) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
-        XmlCorruptedException, FedoraSystemException, SqlDatabaseSystemException, WebserverSystemException,
-        IntegritySystemException, TripleStoreSystemException, XmlParserSystemException {
+        XmlCorruptedException, SqlDatabaseSystemException, WebserverSystemException, IntegritySystemException,
+        TripleStoreSystemException, XmlParserSystemException {
 
         setContainer(id);
         try {
@@ -1806,8 +1799,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveVersionHistory(final String id) throws ContainerNotFoundException, SystemException,
-        IntegritySystemException, FedoraSystemException, WebserverSystemException, TripleStoreSystemException,
-        XmlParserSystemException {
+        FedoraSystemException, WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         setContainer(id);
         final String versionsXml;
@@ -1841,7 +1833,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveParents(final String id) throws ContainerNotFoundException, SystemException,
-        IntegritySystemException, WebserverSystemException {
+        WebserverSystemException {
         this.utility.checkIsContainer(id);
         return getContainerRenderer().renderParents(id);
     }
@@ -1883,8 +1875,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         ReadonlyAttributeViolationException, MissingMethodParameterException, FileNotFoundException, LockingException,
         InvalidContentException, InvalidContextException, RelationPredicateNotFoundException,
         ReferencedResourceNotFoundException, SystemException, MissingMdRecordException, InvalidStatusException,
-        AuthorizationException, TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
-        XmlParserSystemException, XmlCorruptedException, EncodingSystemException {
+        AuthorizationException, WebserverSystemException, IntegritySystemException, XmlParserSystemException,
+        XmlCorruptedException, EncodingSystemException {
 
         this.utility.checkSameContext(containerId, xmlData);
         // checkContextStatus(contextId, Constants.STATUS_CONTEXT_OPENED);
@@ -1952,9 +1944,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         ContentModelNotFoundException, InvalidContentException, MissingAttributeValueException,
         MissingElementValueException, AuthenticationException, AuthorizationException, InvalidContextException,
         RelationPredicateNotFoundException, InvalidStatusException, ReferencedResourceNotFoundException,
-        SystemException, MissingMdRecordException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException, XmlSchemaValidationException, XmlCorruptedException,
-        EncodingSystemException {
+        SystemException, MissingMdRecordException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException, XmlSchemaValidationException, XmlCorruptedException, EncodingSystemException {
 
         this.utility.checkSameContext(containerId, xmlData);
         // checkContextStatus(contextId, Constants.STATUS_CONTEXT_OPENED);
@@ -2017,8 +2008,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Override
     public String addMembers(final String id, final String taskParam) throws ContainerNotFoundException,
         LockingException, InvalidContentException, OptimisticLockingException, SystemException,
-        InvalidContextException, MissingAttributeValueException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException, IntegritySystemException {
+        InvalidContextException, MissingAttributeValueException, XmlParserSystemException, WebserverSystemException,
+        IntegritySystemException {
 
         setContainer(id);
 
@@ -2134,8 +2125,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Override
     public String addTocs(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         InvalidContentException, OptimisticLockingException, SystemException, InvalidContextException,
-        MissingAttributeValueException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException,
-        IntegritySystemException {
+        MissingAttributeValueException, XmlParserSystemException, WebserverSystemException, IntegritySystemException {
 
         final StaxParser sp = new StaxParser();
 
@@ -2201,8 +2191,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Override
     public String removeMembers(final String id, final String taskParam) throws LockingException,
         ItemNotFoundException, InvalidContextStatusException, InvalidItemStatusException, SystemException,
-        ContainerNotFoundException, InvalidContentException, XmlParserSystemException, IntegritySystemException,
-        WebserverSystemException {
+        ContainerNotFoundException, InvalidContentException, IntegritySystemException, WebserverSystemException {
         // TODO: implement
         setContainer(id);
 
@@ -2298,8 +2287,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @param comment comment
      * @throws SystemException e
      */
-    private void makeVersion(final String comment) throws SystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, WebserverSystemException, XmlParserSystemException {
+    private void makeVersion(final String comment) throws SystemException, IntegritySystemException,
+        FedoraSystemException, WebserverSystemException, XmlParserSystemException {
         makeVersion(comment, null);
     }
 
@@ -2309,8 +2298,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws SystemException e
      */
     private void makeVersion(final String comment, final String newStatus) throws SystemException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
-        XmlParserSystemException {
+        IntegritySystemException, FedoraSystemException, WebserverSystemException, XmlParserSystemException {
         getUtility().makeVersion(comment, newStatus, getContainer());
     }
 
@@ -2338,8 +2326,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         ContainerNotFoundException, OptimisticLockingException, ReferencedResourceNotFoundException,
         RelationPredicateNotFoundException, AlreadyExistsException, InvalidStatusException,
         MissingElementValueException, LockingException, ReadonlyVersionException, InvalidContentException,
-        XmlCorruptedException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+        XmlCorruptedException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         setContainer(id);
         checkLatestVersion();
@@ -2461,8 +2449,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     public String removeContentRelations(final String id, final String param) throws SystemException,
         ContainerNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
         ContentRelationNotFoundException, LockingException, ReadonlyVersionException, XmlCorruptedException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         setContainer(id);
         checkLatestVersion();
@@ -2576,7 +2563,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws SystemException            If an error occurs.
      */
     private String retrieveContentRelations(final String id) throws ContainerNotFoundException, SystemException,
-        IntegritySystemException, XmlParserSystemException, WebserverSystemException {
+        XmlParserSystemException, WebserverSystemException {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         setContainer(id);

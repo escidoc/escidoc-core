@@ -294,8 +294,7 @@ public class XMLBase {
      * @param contents The contents to save.
      * @throws IOException If the save operation fails.
      */
-    public static void saveToFile(final String filename, final String contents) throws IOException,
-        FileNotFoundException {
+    public static void saveToFile(final String filename, final String contents) throws IOException {
 
         final File outFile = new File(filename);
         outFile.createNewFile();

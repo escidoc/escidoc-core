@@ -126,7 +126,7 @@ public class StatisticInterceptor implements Ordered {
         + " && !execution(* de.escidoc.core..*.StatisticService*.*(..))"
         + " && !execution(* de.escidoc.core.common..*.*(..))" + " && if(" + "false" + ')')
     // enable this aspect only if you need
-    public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable, Exception {
+    public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable {
         final long invocationStartTime = System.currentTimeMillis();
         boolean successful = true;
         boolean internal = false;

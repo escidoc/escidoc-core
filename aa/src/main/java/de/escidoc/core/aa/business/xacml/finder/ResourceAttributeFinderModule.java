@@ -146,8 +146,7 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws OptimisticLockingException, MissingAttributeValueException,
-        SystemException, ResourceNotFoundException, UniqueConstraintViolationException, InvalidXmlException,
-        ContainerNotFoundException {
+        SystemException, ResourceNotFoundException, UniqueConstraintViolationException, InvalidXmlException {
 
         final EvaluationResult result;
         final String resolvedAttributeIdValue;

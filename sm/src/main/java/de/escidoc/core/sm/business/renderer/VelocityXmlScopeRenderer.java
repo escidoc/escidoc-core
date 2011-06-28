@@ -114,7 +114,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      */
     @Override
     public String renderScopes(final Collection<Scope> scopes, final RecordPacking recordPacking)
-        throws SystemException, WebserverSystemException {
+        throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 

@@ -118,7 +118,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws SystemException Thrown in case of internal error.
      */
     @Override
-    public void setObjectPid(final String pid) throws SystemException, FedoraSystemException, WebserverSystemException,
+    public void setObjectPid(final String pid) throws SystemException, WebserverSystemException,
         EncodingSystemException, TripleStoreSystemException, XmlParserSystemException {
 
         super.setObjectPid(pid);

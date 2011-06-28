@@ -110,7 +110,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @throws IntegritySystemException Thrown if there is an integrity error with the addressed object.
      */
     public Item(final String id) throws StreamNotFoundException, TripleStoreSystemException, WebserverSystemException,
-        IntegritySystemException, ResourceNotFoundException, FedoraSystemException, ItemNotFoundException {
+        IntegritySystemException, ResourceNotFoundException, FedoraSystemException {
         super(id);
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
@@ -165,8 +165,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @param componentId The id of the Component which is to delete from the Item.
      */
     public void deleteComponent(final String componentId) throws LockingException, ComponentNotFoundException,
-        InvalidStatusException, SystemException, IntegritySystemException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        InvalidStatusException, SystemException, FedoraSystemException, TripleStoreSystemException,
+        XmlParserSystemException, WebserverSystemException {
 
         deleteComponent(getComponent(componentId));
     }

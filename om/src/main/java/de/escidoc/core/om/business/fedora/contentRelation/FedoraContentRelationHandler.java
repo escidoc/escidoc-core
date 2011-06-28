@@ -159,8 +159,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     @Override
     public String create(final String xmlData) throws MissingAttributeValueException, MissingMethodParameterException,
         InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
-        SystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        WebserverSystemException, XmlParserSystemException, XmlCorruptedException {
+        SystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
+        XmlParserSystemException, XmlCorruptedException {
 
         final ContentRelationCreate cr = parseContentRelation(xmlData);
 
@@ -228,7 +228,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      */
     @Override
     public String retrieveProperties(final String id) throws ContentRelationNotFoundException, SystemException,
-        TripleStoreSystemException, IntegritySystemException, FedoraSystemException {
+        IntegritySystemException, FedoraSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         return this.contentRelationXmlProvider.getContentRelationPropertiesXml(cr);
@@ -245,7 +245,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      */
     @Override
     public String retrieveMdRecords(final String id) throws ContentRelationNotFoundException, SystemException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException {
+        FedoraSystemException, TripleStoreSystemException, WebserverSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
@@ -353,7 +353,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      */
     @Override
     public void delete(final String id) throws ContentRelationNotFoundException, SystemException, LockingException,
-        WebserverSystemException, IntegritySystemException, TripleStoreSystemException {
+        IntegritySystemException, TripleStoreSystemException {
         final ContentRelationCreate cr = setContentRelation(id);
         checkLocked(cr);
         this.fedoraServiceClient.deleteObject(cr.getObjid());
@@ -742,7 +742,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws SystemException Thrown in case of an internal system error.
      */
     protected ContentRelationCreate setContentRelation(final String id) throws ContentRelationNotFoundException,
-        SystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException {
+        SystemException, FedoraSystemException, WebserverSystemException {
 
         final ContentRelationCreate cr = new ContentRelationCreate();
         cr.setObjid(id);

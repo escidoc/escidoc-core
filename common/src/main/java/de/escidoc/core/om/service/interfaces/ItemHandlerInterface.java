@@ -529,9 +529,9 @@ public interface ItemHandlerInterface {
      * @throws SystemException            If an error occurs.
      * @throws InvalidStatusException     Thrown in case of an invalid status.
      */
-    EscidocBinaryContent retrieveContent(final String id, final String contentId) throws ItemNotFoundException,
-        ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException, InvalidStatusException, ResourceNotFoundException;
+    EscidocBinaryContent retrieveContent(final String id, final String contentId) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, InvalidStatusException,
+        ResourceNotFoundException;
 
     /**
      * Retrieve the binary content of a ContentStream.<br/>

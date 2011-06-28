@@ -65,8 +65,7 @@ public interface ItemRendererInterface {
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    String renderProperties() throws ItemNotFoundException, WebserverSystemException, TripleStoreSystemException,
-        SystemException;
+    String renderProperties() throws ItemNotFoundException, SystemException;
 
     String renderMdRecords(boolean isRoot) throws WebserverSystemException, EncodingSystemException,
         FedoraSystemException, IntegritySystemException, TripleStoreSystemException;
@@ -93,13 +92,12 @@ public interface ItemRendererInterface {
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
-    String renderComponents(final boolean isRoot) throws WebserverSystemException, TripleStoreSystemException,
-        SystemException, ComponentNotFoundException;
+    String renderComponents(final boolean isRoot) throws SystemException, ComponentNotFoundException;
 
-    String renderComponent(final String componentId, final boolean isRoot) throws WebserverSystemException,
-        TripleStoreSystemException, SystemException, ComponentNotFoundException;
+    String renderComponent(final String componentId, final boolean isRoot) throws SystemException,
+        ComponentNotFoundException;
 
-    String renderRelations() throws WebserverSystemException, SystemException;
+    String renderRelations() throws SystemException;
 
     /**
      * Gets the representation of the sub resource <code>resources</code> of an item.

@@ -135,7 +135,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws SystemException, WebserverSystemException, ResourceNotFoundException {
+        final String resourceVersionNumber) throws SystemException, ResourceNotFoundException {
 
         final EvaluationResult result;
         final String resolvedAttributeIdValue;

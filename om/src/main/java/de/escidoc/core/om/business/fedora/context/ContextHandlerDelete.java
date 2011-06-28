@@ -53,8 +53,7 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
      * @throws SystemException          If anything else fails.
      */
     public void remove(final FedoraContextHandler contextHandler) throws ContextNotEmptyException,
-        ContextNotFoundException, InvalidStatusException, SystemException, FedoraSystemException,
-        WebserverSystemException {
+        ContextNotFoundException, InvalidStatusException, SystemException, WebserverSystemException {
 
         final Context context = contextHandler.getContext();
         final String objectType = getTripleStoreUtility().getObjectType(context.getId());

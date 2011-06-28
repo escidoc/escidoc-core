@@ -340,6 +340,5 @@ public interface ContentModelHandlerInterface extends IngestableResource {
      *                                       If the id or the XML data is not provided.
      */
     EscidocBinaryContent retrieveResourceDefinitionXsltContent(String id, String name) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, ContentModelNotFoundException, SystemException,
-        ResourceNotFoundException;
+        AuthorizationException, MissingMethodParameterException, SystemException, ResourceNotFoundException;
 }

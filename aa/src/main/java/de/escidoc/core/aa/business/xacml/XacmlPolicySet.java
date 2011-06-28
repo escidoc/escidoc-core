@@ -64,7 +64,8 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
 
     public static final String URN_POLICY_COMBINING_ALGORITHM_ORDERED_DENY_OVERRIDES =
         URN_POLICY_COMBINING_ALGORITHM + "ordered-deny-overrides";
-    private static final long serialVersionUID = - 6321273571116516551L;
+
+    private static final long serialVersionUID = -6321273571116516551L;
 
     /**
      * Creates an <code>XacmlPolicySet</code> object.

@@ -33,13 +33,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.io.Serializable;
 
 /**
  * Object that holds Shibboleth-Userdata.
  *
  * @author Michael Hoppe
  */
-public class ShibbolethUser implements Seriablizable {
+public class ShibbolethUser implements Serializable {
 
     private final Map<String, List<String>> stringAttributes = new HashMap<String, List<String>>();
 

@@ -122,8 +122,8 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param state The new state.
      * @throws SystemException Thrown in case of an internal error.
      */
-    protected void updateState(final String state) throws SystemException, EncodingSystemException,
-        FedoraSystemException, WebserverSystemException {
+    protected void updateState(final String state) throws SystemException, FedoraSystemException,
+        WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final String buildNumber = Utility.getBuildNumber();

@@ -69,7 +69,7 @@ public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvi
      * @return FoXML representation of the ContentRelation
      * @throws SystemException Thrown if character encoding failed of mdrecord failed.
      */
-    public String getFoXml(final ContentRelationCreate cr) throws SystemException, WebserverSystemException {
+    public String getFoXml(final ContentRelationCreate cr) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 

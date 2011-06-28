@@ -181,8 +181,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     public EscidocBinaryContent retrieveContent(
         final String id, final String componentId, final String transformer, final String param)
         throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
-        InvalidStatusException, AuthorizationException, WebserverSystemException, IntegritySystemException,
-        FedoraSystemException, XmlParserSystemException {
+        InvalidStatusException, AuthorizationException, IntegritySystemException, FedoraSystemException,
+        XmlParserSystemException {
 
         setItem(id);
         final Component component = getComponent(componentId);
@@ -233,8 +233,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     public EscidocServiceRedirectInterface redirectContentService(
         final String id, final String componentId, final String transformer, final String clientService)
         throws ItemNotFoundException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
-        InvalidStatusException, AuthorizationException, WebserverSystemException, IntegritySystemException,
-        FedoraSystemException, XmlParserSystemException {
+        InvalidStatusException, AuthorizationException, IntegritySystemException, FedoraSystemException,
+        XmlParserSystemException {
 
         setItem(id);
         final Component component = getComponent(componentId);

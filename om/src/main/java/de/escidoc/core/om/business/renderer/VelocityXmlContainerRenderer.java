@@ -92,8 +92,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @see ContainerRendererInterface#render(Container)
      */
     @Override
-    public String render(final Container container) throws SystemException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    public String render(final Container container) throws SystemException, FedoraSystemException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         // Container container = containerHandler.getContainer();
         final Map<String, Object> values = new HashMap<String, Object>();

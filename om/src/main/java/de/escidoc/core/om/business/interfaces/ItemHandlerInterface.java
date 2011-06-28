@@ -202,9 +202,8 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
      */
     String update(String id, String xmlData) throws ItemNotFoundException, FileNotFoundException,
-        InvalidContextException, InvalidStatusException, LockingException, XmlSchemaValidationException,
-        NotPublishedException, MissingLicenceException, ComponentNotFoundException, MissingContentException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException, InvalidXmlException,
+        InvalidContextException, InvalidStatusException, LockingException, NotPublishedException,
+        MissingLicenceException, ComponentNotFoundException, MissingContentException, InvalidXmlException,
         MissingMethodParameterException, InvalidContentException, SystemException, OptimisticLockingException,
         AlreadyExistsException, ReadonlyViolationException, ReferencedResourceNotFoundException,
         RelationPredicateNotFoundException, ReadonlyVersionException, MissingAttributeValueException,
@@ -244,8 +243,8 @@ public interface ItemHandlerInterface extends IngestableResource {
     String createComponent(final String id, final String xmlData) throws ItemNotFoundException,
         ComponentNotFoundException, MissingContentException, LockingException, MissingElementValueException,
         InvalidXmlException, InvalidStatusException, MissingMethodParameterException, FileNotFoundException,
-        InvalidContentException, ReadonlyAttributeViolationException, SystemException, XmlSchemaValidationException,
-        ReadonlyViolationException, OptimisticLockingException, MissingAttributeValueException;
+        InvalidContentException, SystemException, ReadonlyViolationException, OptimisticLockingException,
+        MissingAttributeValueException;
 
     /**
      * Delete a Component of an Item.
@@ -341,11 +340,10 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
     String updateComponent(final String id, final String componentId, final String xmlData)
-        throws ItemNotFoundException, ComponentNotFoundException, LockingException, XmlSchemaValidationException,
-        FileNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
-        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        InvalidXmlException, ReadonlyViolationException, MissingContentException, InvalidContentException,
-        ReadonlyVersionException, AuthorizationException;
+        throws ItemNotFoundException, ComponentNotFoundException, LockingException, FileNotFoundException,
+        MissingAttributeValueException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, InvalidXmlException, ReadonlyViolationException, MissingContentException,
+        InvalidContentException, ReadonlyVersionException, AuthorizationException;
 
     //
     // Subresource - components
@@ -398,9 +396,9 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws InvalidStatusException     Thrown in case of an invalid status.
      * @throws AuthorizationException     Thrown if the authorization fails.
      */
-    EscidocBinaryContent retrieveContent(final String id, final String contentId) throws ItemNotFoundException,
-        ComponentNotFoundException, MissingMethodParameterException, SystemException, InvalidStatusException,
-        ResourceNotFoundException, AuthorizationException;
+    EscidocBinaryContent retrieveContent(final String id, final String contentId)
+        throws MissingMethodParameterException, SystemException, InvalidStatusException, ResourceNotFoundException,
+        AuthorizationException;
 
     /**
      * @param itemId
@@ -479,9 +477,9 @@ public interface ItemHandlerInterface extends IngestableResource {
      */
     @Deprecated
     String createMetadataRecord(final String id, final String xmlData) throws ItemNotFoundException,
-        ComponentNotFoundException, XmlSchemaNotFoundException, XmlSchemaValidationException, LockingException,
-        MissingAttributeValueException, InvalidStatusException, MissingMethodParameterException, SystemException,
-        InvalidXmlException, AuthorizationException;
+        ComponentNotFoundException, XmlSchemaNotFoundException, LockingException, MissingAttributeValueException,
+        InvalidStatusException, MissingMethodParameterException, SystemException, InvalidXmlException,
+        AuthorizationException;
 
     /**
      * Creates the subresource metadata record.
@@ -568,10 +566,10 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException
      */
     String updateMetadataRecord(final String id, final String mdRecordId, final String xmlData)
-        throws ItemNotFoundException, XmlSchemaNotFoundException, XmlSchemaValidationException, LockingException,
-        InvalidContentException, MdRecordNotFoundException, InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, InvalidXmlException, ReadonlyViolationException,
-        ReadonlyVersionException, AuthorizationException;
+        throws ItemNotFoundException, XmlSchemaNotFoundException, LockingException, InvalidContentException,
+        MdRecordNotFoundException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, InvalidXmlException, ReadonlyViolationException, ReadonlyVersionException,
+        AuthorizationException;
 
     //
     // Subresource - metadata records
@@ -925,7 +923,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      */
     String assignObjectPid(final String id, final String taskParam) throws ItemNotFoundException,
         ComponentNotFoundException, LockingException, MissingMethodParameterException, SystemException,
-        OptimisticLockingException, PidSystemException, InvalidStatusException, XmlCorruptedException;
+        OptimisticLockingException, InvalidStatusException, XmlCorruptedException;
 
     /**
      * Assigns a Persistent Identifier to the Content.
@@ -948,8 +946,8 @@ public interface ItemHandlerInterface extends IngestableResource {
      */
     String assignContentPid(final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException, MissingMethodParameterException, SystemException,
-        OptimisticLockingException, PidSystemException, InvalidStatusException, XmlCorruptedException,
-        ComponentNotFoundException, ReadonlyVersionException;
+        OptimisticLockingException, InvalidStatusException, XmlCorruptedException, ComponentNotFoundException,
+        ReadonlyVersionException;
 
     /**
      * Retrieves the subresource relations.
@@ -987,8 +985,8 @@ public interface ItemHandlerInterface extends IngestableResource {
     String addContentRelations(final String id, final String taskParameter) throws SystemException,
         ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
-        InvalidStatusException, InvalidXmlException, ReadonlyAttributeViolationException, MissingElementValueException,
-        LockingException, ReadonlyViolationException, InvalidContentException, ReadonlyVersionException;
+        InvalidStatusException, InvalidXmlException, MissingElementValueException, LockingException,
+        ReadonlyViolationException, InvalidContentException, ReadonlyVersionException;
 
     /**
      * @param id

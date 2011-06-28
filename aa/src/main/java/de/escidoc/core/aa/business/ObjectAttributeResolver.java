@@ -74,8 +74,7 @@ public class ObjectAttributeResolver {
      * @throws AuthenticationException e
      */
     public Map<String, String> resolveObjectAttributes(final String objectId) throws MissingMethodParameterException,
-        SystemException, AuthorizationException, AuthenticationException, TripleStoreSystemException,
-        SqlDatabaseSystemException {
+        SystemException, AuthorizationException, AuthenticationException, SqlDatabaseSystemException {
         return resolveObjectAttributes(objectId, false);
     }
 

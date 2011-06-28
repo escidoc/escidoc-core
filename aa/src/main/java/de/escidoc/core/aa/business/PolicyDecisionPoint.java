@@ -343,7 +343,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      */
     @Override
     public String evaluate(final String requestsXml) throws ResourceNotFoundException, XmlSchemaValidationException,
-        XmlCorruptedException, SystemException, WebserverSystemException {
+        XmlCorruptedException, SystemException {
 
         xmlUtility.validate(requestsXml, XmlUtility.getPdpRequestsSchemaLocation());
 
@@ -384,7 +384,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     @Override
     public List<Object[]> evaluateMethodForList(
         final String resourceName, final String methodName, final List<Object[]> argumentList)
-        throws ResourceNotFoundException, SystemException, WebserverSystemException {
+        throws ResourceNotFoundException, SystemException {
 
         // convert the resourceName if provided in triple store format
         final String convertedResourceName = FinderModuleHelper.convertObjectType(resourceName, false);

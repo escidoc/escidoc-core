@@ -482,8 +482,7 @@ public class Utility {
      *                                 object.
      * @throws SystemException         Thrown in case of internal failure.
      */
-    public void checkSameContext(final String id, final String xmlData) throws InvalidContextException,
-        SystemException, WebserverSystemException {
+    public void checkSameContext(final String id, final String xmlData) throws InvalidContextException, SystemException {
 
         // TODO This is a quick fix hack. Change to StAX parser. And, may be,
         // move the check to another level in create to avoid a double XML
@@ -554,8 +553,8 @@ public class Utility {
      * @throws SystemException Thrown in case of an internal system error.
      */
     public void makeVersion(final String versionComment, final String newStatus, final VersionableResource resource)
-        throws SystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
-        WebserverSystemException, XmlParserSystemException {
+        throws SystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
+        XmlParserSystemException {
 
         final String comment = createComment(resource, newStatus, versionComment);
 
@@ -772,8 +771,7 @@ public class Utility {
     private static void updateElementsInRelsExt(
         final Map<String, StartElementWithChildElements> updateElementsRelsExt,
         final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt, final FedoraResource resource,
-        final String currentPublicStatus, final boolean release) throws SystemException, IntegritySystemException,
-        XmlParserSystemException {
+        final String currentPublicStatus, final boolean release) throws SystemException, XmlParserSystemException {
 
         final StaxParser sp = new StaxParser();
         final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =

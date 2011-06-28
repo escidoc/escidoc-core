@@ -106,8 +106,7 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws SystemException, AuthorizationException, AuthenticationException,
-        ResourceNotFoundException, MissingMethodParameterException, TripleStoreSystemException,
-        SqlDatabaseSystemException {
+        ResourceNotFoundException, MissingMethodParameterException, SqlDatabaseSystemException {
 
         return FinderModuleHelper.isNewResourceId(resourceId) ? resolveObjectTypeNew(attributeIdValue, ctx) : resolveObjectType(
             attributeIdValue, resourceId, resourceObjid);

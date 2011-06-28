@@ -118,7 +118,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
     @Override
     @Transactional(rollbackFor = { SystemException.class, RuntimeException.class })
     public String create(final String xmlData) throws MissingMethodParameterException, ScopeNotFoundException,
-        SystemException, WebserverSystemException {
+        SystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }

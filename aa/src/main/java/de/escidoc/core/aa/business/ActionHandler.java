@@ -122,7 +122,7 @@ public class ActionHandler implements ActionHandlerInterface {
      */
     @Override
     public void deleteUnsecuredActions(final String contextId) throws ContextNotFoundException, SystemException,
-        IntegritySystemException, SqlDatabaseSystemException, WebserverSystemException {
+        SqlDatabaseSystemException, WebserverSystemException {
         this.utility.checkIsContext(contextId);
         final UnsecuredActionList unsecuredActionList = actionDao.retrieveUnsecuredActionList(contextId);
 

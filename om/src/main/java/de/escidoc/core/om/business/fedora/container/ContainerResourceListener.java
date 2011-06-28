@@ -118,7 +118,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @throws SystemException            One of the listeners threw an exception.
      */
     protected void fireContainerModified(final String id) throws ContainerNotFoundException, SystemException,
-        TripleStoreSystemException, IntegritySystemException, XmlParserSystemException {
+        IntegritySystemException, XmlParserSystemException {
         setContainer(id);
         final String xml = getContainerXml(getContainer());
         for (final ResourceListener containerListener : this.containerListeners) {

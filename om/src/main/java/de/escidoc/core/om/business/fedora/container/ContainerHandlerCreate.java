@@ -66,7 +66,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         final String containerId, final String contentModel, final Map<String, String> properties,
         final List<String> members, final String lastModificationDate,
         final List<Map<String, String>> contentRelations, final String comment,
-        final Map<String, String> propertiesAsReferences) throws SystemException, WebserverSystemException {
+        final Map<String, String> propertiesAsReferences) throws SystemException {
 
         final Map<String, Map<String, String>> metadataAttributes = metadataHandler.getMetadataAttributes();
         final Map<String, Object> values = new HashMap<String, Object>();

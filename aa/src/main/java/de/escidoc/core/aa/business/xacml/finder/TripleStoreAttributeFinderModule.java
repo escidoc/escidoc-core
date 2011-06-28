@@ -222,7 +222,7 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
     @Override
     protected boolean assertAttribute(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber, final int designatorType) throws EscidocException, WebserverSystemException {
+        final String resourceVersionNumber, final int designatorType) throws EscidocException {
 
         // make sure it is an eSciDoc resource attribute and an id of the
         // resource for that the attribute shall be found

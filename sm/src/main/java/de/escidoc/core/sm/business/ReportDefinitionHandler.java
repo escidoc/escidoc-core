@@ -113,7 +113,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      */
     @Override
     public String create(final String xmlData) throws InvalidSqlException, MissingMethodParameterException,
-        ScopeNotFoundException, ScopeContextViolationException, SystemException, WebserverSystemException {
+        ScopeNotFoundException, ScopeContextViolationException, SystemException {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -183,7 +183,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      */
     @Override
     public String retrieve(final String id) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
-        SystemException, SqlDatabaseSystemException {
+        SystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }

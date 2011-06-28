@@ -239,17 +239,15 @@ public class Examples {
      * @param directory URL to the directory which contains the eSciDoc XML files (including the trailing slash).
      * @return some useful information to the user which objects were loaded
      */
-    public String load(final String directory) throws MalformedURLException, WebserverSystemException,
-        RelationPredicateNotFoundException, OptimisticLockingException, XmlSchemaValidationException,
-        AuthorizationException, IOException, SAXException, InvalidContentException, XmlCorruptedException,
-        StreamNotFoundException, AuthenticationException, MissingContentException, ReadonlyViolationException,
-        InvalidXmlException, ContextNotFoundException, ContainerNotFoundException, MissingAttributeValueException,
-        SystemException, InvalidStatusException, InvalidContextException, XPathExpressionException,
-        MissingElementValueException, ReadonlyElementViolationException, LockingException,
-        ParserConfigurationException, ContentModelNotFoundException, ComponentNotFoundException,
+    public String load(final String directory) throws RelationPredicateNotFoundException, OptimisticLockingException,
+        AuthorizationException, IOException, SAXException, InvalidContentException, StreamNotFoundException,
+        AuthenticationException, MissingContentException, ReadonlyViolationException, InvalidXmlException,
+        ContextNotFoundException, ContainerNotFoundException, MissingAttributeValueException, SystemException,
+        InvalidStatusException, InvalidContextException, XPathExpressionException, MissingElementValueException,
+        LockingException, ParserConfigurationException, ContentModelNotFoundException, ComponentNotFoundException,
         ContextNameNotUniqueException, OrganizationalUnitNotFoundException, FileNotFoundException,
         ReadonlyVersionException, ItemNotFoundException, ReadonlyAttributeViolationException, MissingMdRecordException,
-        ReferencedResourceNotFoundException, MissingMethodParameterException, UnsupportedEncodingException {
+        ReferencedResourceNotFoundException, MissingMethodParameterException {
         final StringBuilder result = new StringBuilder();
         final String ouId = loadOrganizationalUnit(loadFile(directory + EXAMPLE_OU));
 
@@ -285,10 +283,9 @@ public class Examples {
     private String loadContainer(final String xml, final String contextId, final String contentModelId)
         throws XmlSchemaValidationException, MissingAttributeValueException, SystemException,
         RelationPredicateNotFoundException, IOException, AuthorizationException, InvalidStatusException, SAXException,
-        XPathExpressionException, MissingElementValueException, ParserConfigurationException, WebserverSystemException,
-        InvalidContentException, ContentModelNotFoundException, XmlCorruptedException, AuthenticationException,
-        MissingMdRecordException, ReferencedResourceNotFoundException, ContextNotFoundException,
-        MissingMethodParameterException, UnsupportedEncodingException {
+        XPathExpressionException, MissingElementValueException, ParserConfigurationException, InvalidContentException,
+        ContentModelNotFoundException, XmlCorruptedException, AuthenticationException, MissingMdRecordException,
+        ReferencedResourceNotFoundException, ContextNotFoundException, MissingMethodParameterException {
         final String createXml = this.containerHandler.create(MessageFormat.format(xml, contextId, contentModelId));
         return getObjectId(createXml, ResourceType.CONTAINER);
     }

@@ -202,7 +202,7 @@ public class ItemCreate extends GenericResourceCreate {
      */
     public void persist() throws SystemException, InvalidStatusException, MissingMdRecordException,
         FileNotFoundException, InvalidContentException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, MissingAttributeValueException, FedoraSystemException {
+        RelationPredicateNotFoundException, MissingAttributeValueException {
 
         persist(true);
     }
@@ -524,7 +524,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws SystemException              Thrown if rendering of Item or sub-elements failed.
      * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      */
-    private String getMinimalFoXML() throws SystemException, EncodingSystemException, WebserverSystemException {
+    private String getMinimalFoXML() throws SystemException, WebserverSystemException {
 
         final Map<String, Object> valueMap = new HashMap<String, Object>();
 

@@ -42,7 +42,7 @@ import java.util.Comparator;
 public class AggregationStatisticDataSelectorComparator
     implements Comparator<AggregationStatisticDataSelector>, Serializable {
 
-    private static final long serialVersionUID = - 925431972744778710L;
+    private static final long serialVersionUID = -925431972744778710L;
 
     /**
      * compares listIndex.

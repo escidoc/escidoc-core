@@ -68,8 +68,7 @@ public class OrganizationalUnitHandlerCreate extends OrganizationalUnitHandlerRe
     protected String getOrganizationalUnitFoxml(
         final String id, final Map<String, Object> relsExtValues, final List<String> parents,
         final Map<String, Map<String, String>> metadataProperties,
-        final Map<String, ByteArrayOutputStream> metadataStreams, final String dcStream) throws SystemException,
-        WebserverSystemException {
+        final Map<String, ByteArrayOutputStream> metadataStreams, final String dcStream) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);

@@ -49,7 +49,7 @@ public interface AdminDescriptorHandlerInterface {
      * @throws AdminDescriptorNotFoundException
      *                         TODO
      */
-    String create(String xmlData) throws Exception, SystemException;
+    String create(String xmlData) throws Exception;
 
     /**
      * Deletes the specified resource.

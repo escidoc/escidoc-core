@@ -62,7 +62,7 @@ public class UserFilter {
      * @return List of Container member (if <code>filter != null</code> filtered)
      */
     public List<String> getMemberRefList(final Container container) throws MissingMethodParameterException,
-        SystemException, WebserverSystemException {
+        SystemException {
 
         final List<String> memberRefs;
 

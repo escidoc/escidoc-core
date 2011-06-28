@@ -203,7 +203,7 @@ public class EscidocServlet extends HttpServlet {
      */
     @Override
     public void service(final ServletRequest request, final ServletResponse response) throws ServletException,
-        IOException, UnsupportedEncodingException {
+        IOException {
 
         try {
             final String protocol = request.getProtocol();

@@ -67,7 +67,7 @@ public class SchemasCache {
      * @throws WebserverSystemException Thrown if schema can not be parsed.
      */
     @Cacheable(cacheName = "schemasCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
-    public Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException, MalformedURLException {
+    public Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException {
 
         final URLConnection conn = new URL(schemaUri).openConnection();
         final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);

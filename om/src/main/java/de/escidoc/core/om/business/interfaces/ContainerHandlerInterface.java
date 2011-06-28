@@ -334,9 +334,9 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      */
     String updateMetadataRecord(final String id, final String mdRecordId, final String xmlData)
-        throws ContainerNotFoundException, LockingException, XmlSchemaValidationException, XmlSchemaNotFoundException,
-        MdRecordNotFoundException, MissingMethodParameterException, SystemException, InvalidXmlException,
-        InvalidStatusException, ReadonlyVersionException;
+        throws ContainerNotFoundException, LockingException, XmlSchemaNotFoundException, MdRecordNotFoundException,
+        MissingMethodParameterException, SystemException, InvalidXmlException, InvalidStatusException,
+        ReadonlyVersionException;
 
     //
     // Subresource - metadata records

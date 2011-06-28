@@ -251,7 +251,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface #retrieveCurrentUser(java.lang.String)
      */
     @Override
-    public String retrieveCurrentUser() throws UserAccountNotFoundException, SystemException, WebserverSystemException {
+    public String retrieveCurrentUser() throws UserAccountNotFoundException, SystemException {
         if (StringUtils.isEmpty(UserContext.getId())) {
             throw new UserAccountNotFoundException("No user logged in");
         }
@@ -362,8 +362,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public String update(final String userId, final String xmlData) throws UserAccountNotFoundException,
         UniqueConstraintViolationException, XmlCorruptedException, MissingAttributeValueException,
-        OptimisticLockingException, OrganizationalUnitNotFoundException, SystemException, InvalidStatusException,
-        WebserverSystemException {
+        OptimisticLockingException, OrganizationalUnitNotFoundException, SystemException, InvalidStatusException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -1829,8 +1828,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String createPreference(final String userId, final String preferenceXML) throws AlreadyExistsException,
-        UserAccountNotFoundException, PreferenceNotFoundException, XmlCorruptedException, SystemException,
-        WebserverSystemException {
+        UserAccountNotFoundException, PreferenceNotFoundException, XmlCorruptedException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 

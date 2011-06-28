@@ -174,7 +174,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     @Override
     public String create(final String xmlData) throws UniqueConstraintViolationException, XmlCorruptedException,
-        SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        SystemException, WebserverSystemException {
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
         final StaxParser sp = new StaxParser();
         final GroupCreateUpdateHandler groupHandler = new GroupCreateUpdateHandler(sp);
@@ -240,7 +240,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     @Override
     public String update(final String groupId, final String xmlData) throws UniqueConstraintViolationException,
         XmlCorruptedException, MissingAttributeValueException, OptimisticLockingException, SystemException,
-        XmlParserSystemException, SqlDatabaseSystemException, UserGroupNotFoundException, WebserverSystemException {
+        SqlDatabaseSystemException, UserGroupNotFoundException, WebserverSystemException {
 
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
@@ -288,7 +288,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     @Override
     public void activate(final String groupId, final String taskParam) throws AlreadyActiveException,
         XmlCorruptedException, MissingAttributeValueException, OptimisticLockingException, SystemException,
-        SqlDatabaseSystemException, WebserverSystemException, UserGroupNotFoundException {
+        WebserverSystemException, UserGroupNotFoundException {
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
@@ -565,7 +565,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         throws OrganizationalUnitNotFoundException, UserAccountNotFoundException, UserGroupNotFoundException,
         InvalidContentException, MissingMethodParameterException, SystemException, AuthenticationException,
         AuthorizationException, OptimisticLockingException, XmlCorruptedException,
-        UserGroupHierarchyViolationException, SqlDatabaseSystemException, WebserverSystemException {
+        UserGroupHierarchyViolationException, WebserverSystemException {
 
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {

@@ -151,7 +151,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws SystemException            Thrown in case of an internal system error.
      */
     public void setContainer(final String id) throws ContainerNotFoundException, SystemException,
-        IntegritySystemException, XmlParserSystemException, WebserverSystemException {
+        XmlParserSystemException, WebserverSystemException {
 
         try {
             this.container = new Container(id);

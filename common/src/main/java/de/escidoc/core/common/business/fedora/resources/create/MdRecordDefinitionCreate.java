@@ -138,7 +138,7 @@ public class MdRecordDefinitionCreate {
      * @return FoXML representation of metadata record.
      * @throws SystemException Thrown if rendering failed.
      */
-    public String getFOXML() throws SystemException, WebserverSystemException {
+    public String getFOXML() throws SystemException {
 
         final Map<String, String> templateValues = getValueMap();
         return ItemFoXmlProvider.getInstance().getMetadataFoXml(templateValues);

@@ -13,7 +13,7 @@ import java.util.Map;
 public interface FedoraRestDeviationHandlerService extends Remote {
 
     EscidocBinaryContent getDatastreamDissemination(
-        String pid, String dsID, Map parameters, SecurityContext securityContext) throws Exception, RemoteException;
+        String pid, String dsID, Map parameters, SecurityContext securityContext) throws Exception;
 
     EscidocBinaryContent getDatastreamDissemination(
         String pid, String dsID, Map parameters, String authHandle, Boolean restAccess) throws Exception,
@@ -25,7 +25,7 @@ public interface FedoraRestDeviationHandlerService extends Remote {
 
     void cache(String pid, String xml, SecurityContext securityContext) throws Exception, RemoteException;
 
-    void cache(String pid, String xml, String authHandle, Boolean restAccess) throws Exception, RemoteException;
+    void cache(String pid, String xml, String authHandle, Boolean restAccess) throws Exception;
 
     void removeFromCache(String pid, SecurityContext securityContext) throws Exception, RemoteException;
 
@@ -33,6 +33,6 @@ public interface FedoraRestDeviationHandlerService extends Remote {
 
     String retrieveUncached(String pid, SecurityContext securityContext) throws Exception, RemoteException;
 
-    String retrieveUncached(String pid, String authHandle, Boolean restAccess) throws Exception, RemoteException;
+    String retrieveUncached(String pid, String authHandle, Boolean restAccess) throws Exception;
 
 }

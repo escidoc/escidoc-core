@@ -112,7 +112,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
      */
-    public void parse(final InputStream in) throws Exception, XmlParserSystemException, XmlCorruptedException {
+    public void parse(final InputStream in) throws Exception, XmlCorruptedException {
         if (this.handlerChain == null || handlerChain.isEmpty()) {
             throw new XMLStreamException("Parser has no handlers. Try StaxParser sp.addHandler"
                 + "(new DefaultHandler());");

@@ -46,6 +46,7 @@ public class InvocationMapping extends InvocationMappingBase {
     public static final String INDEXED_PATTERN = "\\[i\\]";
 
     public static final String SUBRESOURCE_PATTERN = ".*-id";
+
     private static final long serialVersionUID = 4912823084983730315L;
 
     /**

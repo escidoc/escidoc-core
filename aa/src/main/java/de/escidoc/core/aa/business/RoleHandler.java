@@ -136,7 +136,7 @@ public class RoleHandler implements RoleHandlerInterface {
      */
     @Override
     public String create(final String xmlData) throws XmlCorruptedException, UniqueConstraintViolationException,
-        SystemException, WebserverSystemException {
+        SystemException {
 
         final EscidocRole role = new EscidocRole();
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
@@ -194,8 +194,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface #delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws RoleNotFoundException, RoleInUseViolationException, SystemException,
-        SqlDatabaseSystemException {
+    public void delete(final String id) throws RoleNotFoundException, RoleInUseViolationException, SystemException {
 
         final EscidocRole role = fetchRole(id);
         if (FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
