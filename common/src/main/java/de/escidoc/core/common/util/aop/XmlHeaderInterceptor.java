@@ -79,7 +79,7 @@ public class XmlHeaderInterceptor implements Ordered {
      * @throws WebserverSystemException Thrown in case of an internal system error.
      */
     private static Object post(final Object result) throws WebserverSystemException {
-        if(result == null) {
+        if (result == null) {
             return null;
         }
         final CharSequence res = (CharSequence) result;

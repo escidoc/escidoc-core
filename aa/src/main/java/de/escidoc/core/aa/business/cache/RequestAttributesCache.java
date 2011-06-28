@@ -54,10 +54,10 @@ public class RequestAttributesCache {
      * @return Object cached Object.
      */
     @Cacheable(cacheName = "attributesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
-    public void putAttribute(@PartialCacheKey
+    public Object putAttribute(@PartialCacheKey
     final EvaluationCtx ctx, @PartialCacheKey
     final String cacheKey, final Object result) {
-
+        return result;
     }
 
     /**
