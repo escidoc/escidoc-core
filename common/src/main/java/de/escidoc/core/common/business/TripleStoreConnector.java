@@ -101,7 +101,7 @@ public class TripleStoreConnector {
         query.setLang(LANG_MPT);
         query.setFlush(FLUSH);
         try {
-            query.setQuery(URLEncoder.encode(spoQuery, Encodings.ISO_8859_1));
+            query.setQuery(URLEncoder.encode(spoQuery, Encodings.ISO_8859_1).replace("+", "%20"));
             final Stream stream = this.fedoraServiceClient.risearch(path, query);
             final String responseContent = new String(stream.getBytes(), Encodings.UTF8);
             if (responseContent == null || responseContent.length() == 0) {
