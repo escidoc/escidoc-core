@@ -17,6 +17,7 @@ import java.io.Serializable;
         assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class DatastreamCacheKey implements Serializable {
 
+    private static final long serialVersionUID = 4334788048803076431L;
     @NotNull
     @NotEmpty
     private final String pid;

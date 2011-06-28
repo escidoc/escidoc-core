@@ -4,6 +4,8 @@ import java.util.List;
 
 public class DatastreamTypeTOExtension extends DatastreamTypeTO {
 
+    private static final long serialVersionUID = - 6022506140785157451L;
+
     public void addDatastreamVersionTypeTOListener(final DatastreamVersionTypeTOListener listener) {
         final DatastreamVersionTypeListTO datastreamVersionTypeListTO =
                 (DatastreamVersionTypeListTO) this.getDatastreamVersion();

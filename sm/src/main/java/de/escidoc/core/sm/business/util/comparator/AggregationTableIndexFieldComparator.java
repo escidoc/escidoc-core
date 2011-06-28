@@ -41,6 +41,8 @@ import java.util.Comparator;
  */
 public class AggregationTableIndexFieldComparator implements Comparator<AggregationTableIndexField>, Serializable {
 
+    private static final long serialVersionUID = 811973896034842587L;
+
     /**
      * compares listIndex.
      *

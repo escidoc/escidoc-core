@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public final class XmlContentTypeDatastreamHolderTO extends XmlContentTypeTO implements DatastreamHolder {
 
+    private static final long serialVersionUID = - 5723767632577531513L;
     @XmlElement(namespace = NAMESPACE, name = ELEMENT_NAME)
     private Stream stream;
 

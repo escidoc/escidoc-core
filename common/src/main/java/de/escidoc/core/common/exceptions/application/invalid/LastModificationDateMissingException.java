@@ -27,6 +27,9 @@ package de.escidoc.core.common.exceptions.application.invalid;
  * @author André Schenk
  */
 public class LastModificationDateMissingException extends ValidationException {
+
+    private static final long serialVersionUID = 24640466755582509L;
+
     /**
      * Default constructor.
      */

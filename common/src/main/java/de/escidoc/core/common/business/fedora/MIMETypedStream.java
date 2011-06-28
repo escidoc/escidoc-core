@@ -137,7 +137,7 @@ public class MIMETypedStream implements Serializable {
 
     private Property[] header;
 
-    private Object equalsCalc;
+    private transient Object equalsCalc;
 
-    private boolean hashCodeCalc;
+    private transient boolean hashCodeCalc;
 }

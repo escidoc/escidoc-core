@@ -41,6 +41,8 @@ import java.util.Comparator;
  */
 public class ReportDefinitionRoleComparator implements Comparator<ReportDefinitionRole>, Serializable {
 
+    private static final long serialVersionUID = 1448039857233083670L;
+
     /**
      * compares listIndex.
      *

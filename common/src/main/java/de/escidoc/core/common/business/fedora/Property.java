@@ -109,8 +109,8 @@ public class Property implements Serializable {
 
     private String value;
 
-    private Object __equalsCalc;
+    private transient Object __equalsCalc;
 
-    private boolean __hashCodeCalc;
+    private transient boolean __hashCodeCalc;
 }
 //CHECKSTYLE:ON

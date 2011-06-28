@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
  *
  * @author Michael Hoppe
  */
-public class ShibbolethUser {
+public class ShibbolethUser implements Seriablizable {
 
     private final Map<String, List<String>> stringAttributes = new HashMap<String, List<String>>();
 

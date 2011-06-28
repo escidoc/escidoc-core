@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class DigitalObjectTypeTOExtension extends DigitalObjectTypeTO {
 
+    private static final long serialVersionUID = - 1077863468910481543L;
+
     public void addDatastreamTypeTOListener(final DatastreamTypeTOListener listener) {
         final DatastreamTypeListTO datastreamTypeListTO = (DatastreamTypeListTO) this.getDatastream();
         datastreamTypeListTO.addDatastreamTypeTOListener(listener);

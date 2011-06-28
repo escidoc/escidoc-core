@@ -78,7 +78,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationCreate.class);
 
     @Autowired
-    private FedoraServiceClient fedoraServiceClient;
+    private transient FedoraServiceClient fedoraServiceClient;
 
     private final RepositoryIndicator ri = new RepositoryIndicator();
 
