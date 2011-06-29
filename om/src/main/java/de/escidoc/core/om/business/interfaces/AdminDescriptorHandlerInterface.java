@@ -71,7 +71,7 @@ public interface AdminDescriptorHandlerInterface {
      * @throws AdminDescriptorNotFoundException
      *                                   TODO
      */
-    String retrieve(String id) throws Exception, SystemException;
+    String retrieve(String id) throws Exception;
 
     /**
      * Updates the specified resource with the provided data.
@@ -84,6 +84,6 @@ public interface AdminDescriptorHandlerInterface {
      * @throws AdminDescriptorNotFoundException
      *                                   TODO
      */
-    String update(String id, String xmlData) throws Exception, SystemException;
+    String update(String id, String xmlData) throws Exception;
 
 }

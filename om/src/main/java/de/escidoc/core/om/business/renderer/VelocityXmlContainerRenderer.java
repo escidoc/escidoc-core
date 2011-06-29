@@ -92,8 +92,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @see ContainerRendererInterface#render(Container)
      */
     @Override
-    public String render(final Container container) throws SystemException, XmlParserSystemException,
-        WebserverSystemException {
+    public String render(final Container container) throws SystemException {
 
         // Container container = containerHandler.getContainer();
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -437,8 +436,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @param values    The map to add values to.
      * @throws SystemException Thrown in case of an internal error.
      */
-    private void addStructMapValus(final Container container, final Map<String, Object> values) throws SystemException,
-        TripleStoreSystemException, XmlParserSystemException {
+    private void addStructMapValus(final Container container, final Map<String, Object> values) throws SystemException {
 
         values.put("structMapTitle", "StructMap of Container");
         values.put("structMapHref", container.getHref() + "/struct-map");
@@ -462,7 +460,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void addMemberRefs(final Container container, final Map<String, Object> values) throws SystemException,
-        MissingMethodParameterException, WebserverSystemException, XmlParserSystemException {
+        MissingMethodParameterException {
 
         final UserFilter ufilter = new UserFilter();
 
@@ -639,8 +637,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException Thrown in case of an internal error.
      */
     @Override
-    public String renderStructMap(final Container container) throws SystemException, WebserverSystemException,
-        TripleStoreSystemException, XmlParserSystemException {
+    public String renderStructMap(final Container container) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);

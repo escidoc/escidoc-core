@@ -90,7 +90,7 @@ public class ObjectAttributeResolver {
      * @throws AuthenticationException e
      */
     public String resolveObjectType(final String objectId) throws MissingMethodParameterException, SystemException,
-        AuthorizationException, AuthenticationException, SqlDatabaseSystemException {
+        AuthorizationException, AuthenticationException {
         final Map<String, String> objectAttributes = resolveObjectAttributes(objectId, true);
         return objectAttributes != null ? objectAttributes.get(ATTR_OBJECT_TYPE) : null;
     }
@@ -108,8 +108,7 @@ public class ObjectAttributeResolver {
      * @throws AuthenticationException e
      */
     private Map<String, String> resolveObjectAttributes(final String objectId, final boolean typeOnly)
-        throws MissingMethodParameterException, SystemException, AuthorizationException, AuthenticationException,
-        IntegritySystemException, TripleStoreSystemException, SqlDatabaseSystemException {
+        throws MissingMethodParameterException, SystemException, AuthorizationException, AuthenticationException {
 
         // try getting attributes from Triple-Store
         Map<String, String> objectAttributes = getObjectFromTripleStore(objectId, typeOnly);

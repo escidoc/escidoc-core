@@ -349,14 +349,13 @@ public class Examples {
     private String loadItem(
         final String xml, final String contextId, final String contentModelId, final String containerId)
         throws OptimisticLockingException, RelationPredicateNotFoundException, AuthorizationException, IOException,
-        SAXException, WebserverSystemException, InvalidContentException, XmlCorruptedException,
-        AuthenticationException, ReadonlyViolationException, MissingContentException, InvalidXmlException,
-        ContextNotFoundException, ContainerNotFoundException, MissingAttributeValueException, SystemException,
-        InvalidStatusException, InvalidContextException, MissingElementValueException, XPathExpressionException,
-        LockingException, ReadonlyElementViolationException, ParserConfigurationException,
+        SAXException, InvalidContentException, AuthenticationException, ReadonlyViolationException,
+        MissingContentException, InvalidXmlException, ContextNotFoundException, ContainerNotFoundException,
+        MissingAttributeValueException, SystemException, InvalidStatusException, InvalidContextException,
+        MissingElementValueException, XPathExpressionException, LockingException, ParserConfigurationException,
         ContentModelNotFoundException, ComponentNotFoundException, ReadonlyVersionException, FileNotFoundException,
-        ItemNotFoundException, ReadonlyAttributeViolationException, MissingMdRecordException,
-        ReferencedResourceNotFoundException, MissingMethodParameterException, UnsupportedEncodingException {
+        ItemNotFoundException, MissingMdRecordException, ReferencedResourceNotFoundException,
+        MissingMethodParameterException {
         final String createXml =
             this.containerHandler.createItem(containerId, MessageFormat.format(xml, contextId, contentModelId));
         final String result = getObjectId(createXml, ResourceType.ITEM);

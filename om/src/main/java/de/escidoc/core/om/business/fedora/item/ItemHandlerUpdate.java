@@ -116,8 +116,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         final Map<String, Object> components, final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
         final Map<String, String> nsUris) throws ComponentNotFoundException, LockingException, InvalidStatusException,
         SystemException, InvalidContentException, MissingContentException, FileNotFoundException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException, MissingElementValueException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        ReadonlyElementViolationException, ReadonlyAttributeViolationException, MissingElementValueException {
 
         // FIXME don't set but use getComponents()? (FRS)
         // What do you want to have fixed? I want to have setComponent() but I

@@ -428,7 +428,7 @@ public class EscidocServlet extends HttpServlet {
      * @throws java.io.FileNotFoundException
      */
     private static MapperInterface getMethodMapper(final String filename) throws IOException, TransformerException,
-        ParserConfigurationException, SAXException, FileNotFoundException {
+        ParserConfigurationException, SAXException {
         MapperInterface result = MAPPINGS.get(filename);
         if (result == null) {
             result = new MethodMapper(filename);
@@ -694,8 +694,7 @@ public class EscidocServlet extends HttpServlet {
      */
     private static void doRedirect(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse,
-        final SecurityException exception, boolean compressionIsAccepted) throws IOException,
-        UnsupportedEncodingException {
+        final SecurityException exception, boolean compressionIsAccepted) throws IOException {
 
         final String message = exception.toXmlString();
         final String redirectLocation =

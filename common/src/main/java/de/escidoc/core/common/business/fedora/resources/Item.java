@@ -165,7 +165,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @param componentId The id of the Component which is to delete from the Item.
      */
     public void deleteComponent(final String componentId) throws LockingException, ComponentNotFoundException,
-        InvalidStatusException, SystemException, XmlParserSystemException, WebserverSystemException {
+        InvalidStatusException, SystemException {
 
         deleteComponent(getComponent(componentId));
     }

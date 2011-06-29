@@ -243,8 +243,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @return objid of Component
      */
     @Override
-    public String call() throws IOException, InvalidContentException, SystemException, FedoraSystemException,
-        WebserverSystemException, EncodingSystemException {
+    public String call() throws IOException, InvalidContentException, SystemException {
 
         persist(false);
         return getObjid();

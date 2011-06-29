@@ -599,7 +599,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @throws SystemException              Thrown in case of an internal error.
      */
     private List<ResponseCtx> doEvaluate(final CharSequence requestsXml) throws XmlSchemaValidationException,
-        SystemException, WebserverSystemException {
+        SystemException {
 
         // trim white spaces and newlines around < and >
         Matcher matcher = TRIM_PATTERN.matcher(requestsXml);

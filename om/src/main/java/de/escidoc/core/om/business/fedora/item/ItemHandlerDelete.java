@@ -81,7 +81,7 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
      * @throws AuthorizationException If further needed access rights are not given.
      */
     protected void remove(final String id) throws ItemNotFoundException, LockingException, InvalidStatusException,
-        SystemException, AuthorizationException, XmlParserSystemException {
+        SystemException, AuthorizationException {
 
         // TODO move precondition checks to service method (? FRS)
         setItem(id);

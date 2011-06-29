@@ -285,7 +285,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     @Override
     public void activate(final String groupId, final String taskParam) throws AlreadyActiveException,
         XmlCorruptedException, MissingAttributeValueException, OptimisticLockingException, SystemException,
-        WebserverSystemException, UserGroupNotFoundException {
+        UserGroupNotFoundException {
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
@@ -352,7 +352,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     @Override
     public void deactivate(final String groupId, final String taskParam) throws AlreadyDeactiveException,
         XmlCorruptedException, MissingAttributeValueException, OptimisticLockingException, SystemException,
-        SqlDatabaseSystemException, WebserverSystemException, UserGroupNotFoundException {
+        UserGroupNotFoundException {
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
@@ -419,8 +419,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     @Override
     public String createGrant(final String groupId, final String grantXML) throws AlreadyExistsException,
         AuthenticationException, AuthorizationException, RoleNotFoundException, InvalidScopeException,
-        UserGroupNotFoundException, XmlCorruptedException, SystemException, SqlDatabaseSystemException,
-        WebserverSystemException {
+        UserGroupNotFoundException, XmlCorruptedException, SystemException {
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
@@ -657,7 +656,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     public String removeSelectors(final String groupId, final String taskParam) throws XmlCorruptedException,
         AuthenticationException, AuthorizationException, SystemException, UserGroupNotFoundException,
         OptimisticLockingException, MissingMethodParameterException, UserAccountNotFoundException,
-        OrganizationalUnitNotFoundException, WebserverSystemException {
+        OrganizationalUnitNotFoundException {
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
             final String message = "User group with id " + groupId + " does not exist.";
@@ -710,7 +709,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     @Override
     public String retrieveUserGroups(final Map<String, String[]> filter) throws InvalidSearchQueryException,
-        SystemException, WebserverSystemException, TripleStoreSystemException {
+        SystemException {
 
         Map<String, String[]> castedFilter = filter;
 
@@ -811,7 +810,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException             e
      */
     private Map<String, String[]> fixCqlUserFilter(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, SystemException, SqlDatabaseSystemException, TripleStoreSystemException {
+        throws InvalidSearchQueryException, SystemException {
         Map<String, String[]> returnFilter = filter;
         final Object[] queryPartsObject = filter.get(Constants.SRU_PARAMETER_QUERY);
         if (queryPartsObject != null) {
@@ -951,8 +950,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface #retrieveGroupsForUser(java.lang.String)
      */
     @Override
-    public Set<String> retrieveGroupsForUser(final String userId) throws UserAccountNotFoundException, SystemException,
-        SqlDatabaseSystemException, TripleStoreSystemException {
+    public Set<String> retrieveGroupsForUser(final String userId) throws UserAccountNotFoundException, SystemException {
 
         return retrieveGroupsForUser(userId, false);
 
@@ -967,7 +965,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     @Override
     public Set<String> retrieveGroupsForUser(final String userId, final boolean activeOnly)
-        throws UserAccountNotFoundException, SystemException, TripleStoreSystemException {
+        throws UserAccountNotFoundException, SystemException {
         // may not return null, so return empty list!!
         Set<String> userGroups = new HashSet<String>();
         // Try getting the userAccount
@@ -1266,8 +1264,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface #retrieveCurrentGrants(java.lang.String)
      */
     @Override
-    public String retrieveCurrentGrants(final String groupId) throws UserGroupNotFoundException, SystemException,
-        SqlDatabaseSystemException {
+    public String retrieveCurrentGrants(final String groupId) throws UserGroupNotFoundException, SystemException {
 
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
@@ -1308,7 +1305,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     @Override
     public String retrieveGrant(final String groupId, final String grantId) throws UserGroupNotFoundException,
         GrantNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        SystemException, SqlDatabaseSystemException {
+        SystemException {
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
@@ -1341,8 +1338,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws UserGroupNotFoundException Thrown if a user group with the provided id does not exist in the framework.
      */
     @Override
-    public String retrieveResources(final String groupId) throws UserGroupNotFoundException, SystemException,
-        SqlDatabaseSystemException {
+    public String retrieveResources(final String groupId) throws UserGroupNotFoundException, SystemException {
         return renderer.renderResources(userGroupDao.retrieveUserGroup(groupId));
     }
 
@@ -1358,7 +1354,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     public void revokeGrant(final String groupId, final String grantId, final String taskParam)
         throws UserGroupNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
         MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        AuthorizationException, SystemException {
 
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
@@ -1422,8 +1418,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR")
     public void revokeGrants(final String groupId, final String filterXML) throws UserGroupNotFoundException,
         GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
-        SystemException, AuthorizationException, XmlParserSystemException, SqlDatabaseSystemException,
-        WebserverSystemException {
+        SystemException, AuthorizationException {
         // check if user group exists
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {

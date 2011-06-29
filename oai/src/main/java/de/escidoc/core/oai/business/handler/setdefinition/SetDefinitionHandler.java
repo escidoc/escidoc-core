@@ -200,7 +200,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      */
     @Override
     public String update(final String setDefinitionId, final String xmlData) throws ResourceNotFoundException,
-        OptimisticLockingException, MissingMethodParameterException, SystemException, WebserverSystemException {
+        OptimisticLockingException, MissingMethodParameterException, SystemException {
         final SetDefinition setDefinition = setDefinitionDao.retrieveSetDefinition(setDefinitionId);
         if (setDefinition == null) {
             throw new ResourceNotFoundException(StringUtility.format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
@@ -262,7 +262,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      */
     @Override
     public String retrieveSetDefinitions(final Map<String, String[]> filter) throws AuthenticationException,
-        AuthorizationException, InvalidSearchQueryException, SystemException, WebserverSystemException {
+        AuthorizationException, InvalidSearchQueryException, SystemException {
 
         final SRURequestParameters parameters = new DbRequestParameters(filter);
 

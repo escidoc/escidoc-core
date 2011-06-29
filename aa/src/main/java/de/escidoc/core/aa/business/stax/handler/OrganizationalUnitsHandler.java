@@ -78,7 +78,7 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
      * @see LinkCollectionStaxHandler #endLinkElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endLinkElement(final EndElement element) throws EscidocException, WebserverSystemException {
+    public EndElement endLinkElement(final EndElement element) throws EscidocException {
         this.utility.checkIsOrganizationalUnit(getObjid());
         if (!Constants.STATUS_OU_OPENED.equals(tripleStoreUtility.getPublicStatus(getObjid()))) {
             throw new InvalidStatusException(StringUtility.format(ERR_MSG_OU_NOT_OPENED, getObjid()));

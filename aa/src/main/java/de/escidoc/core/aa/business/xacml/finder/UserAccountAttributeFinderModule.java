@@ -460,7 +460,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
      */
     private EvaluationResult fetchRoleScopes(final String userAccountId, final CharSequence attributeId)
-        throws SqlDatabaseSystemException, SystemException {
+        throws SystemException {
 
         // get role to fetch
         final Matcher roleMatcher = PATTERN_PARSE_ROLE_GRANT_ROLE.matcher(attributeId);

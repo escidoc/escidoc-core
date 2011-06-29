@@ -134,8 +134,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
     public boolean update(final FedoraContextHandler contextHandler, final String xmlData)
         throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException,
         ReadonlyAttributeViolationException, ReadonlyElementViolationException, ContextNameNotUniqueException,
-        MissingElementValueException, SystemException, InvalidContentException, XmlParserSystemException,
-        WebserverSystemException {
+        MissingElementValueException, SystemException, InvalidContentException {
 
         final DateTime startTimeStamp = getContext().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
@@ -260,8 +259,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException           Thrown if Context is locked.
      */
     public void open(final FedoraContextHandler contextHandler, final String taskParam) throws InvalidStatusException,
-        OptimisticLockingException, SystemException, WebserverSystemException, XmlCorruptedException,
-        TripleStoreSystemException {
+        OptimisticLockingException, SystemException, XmlCorruptedException {
 
         checkStatus(Constants.STATUS_CONTEXT_CREATED);
         final TaskParamHandler taskParamHandler;
@@ -346,8 +344,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException           Thrown if Context is locked.
      */
     public void close(final FedoraContextHandler contextHandler, final String taskParam) throws InvalidStatusException,
-        OptimisticLockingException, SystemException, EncodingSystemException, FedoraSystemException,
-        WebserverSystemException, XmlCorruptedException, TripleStoreSystemException {
+        OptimisticLockingException, SystemException, XmlCorruptedException {
 
         checkStatus(Constants.STATUS_CONTEXT_OPENED);
         final TaskParamHandler taskParamHandler;
@@ -520,9 +517,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      */
     private boolean updateDc(
         final Map<String, String> changedValues, final List<String> propertiesToRemove,
-        final Map<String, String> propertiesToAdd) throws ContextNameNotUniqueException, SystemException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
-        WebserverSystemException {
+        final Map<String, String> propertiesToAdd) throws ContextNameNotUniqueException, SystemException {
         if ((changedValues == null || changedValues.isEmpty())
             && (propertiesToRemove == null || propertiesToRemove.isEmpty())
             && (propertiesToAdd == null || propertiesToAdd.isEmpty())) {

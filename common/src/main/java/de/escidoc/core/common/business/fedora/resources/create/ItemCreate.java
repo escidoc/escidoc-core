@@ -585,8 +585,7 @@ public class ItemCreate extends GenericResourceCreate {
     /**
      * Persist all Components of the Item.
      */
-    private void persistComponents() throws SystemException, FileNotFoundException, InvalidContentException,
-        FedoraSystemException {
+    private void persistComponents() throws SystemException, FileNotFoundException, InvalidContentException {
 
         int i = 0;
         List<String> componentIds = null;

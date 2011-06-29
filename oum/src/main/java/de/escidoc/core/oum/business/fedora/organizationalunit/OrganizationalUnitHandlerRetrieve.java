@@ -175,7 +175,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation of the children of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
      */
-    protected String getParentObjectsXml() throws SystemException, WebserverSystemException {
+    protected String getParentObjectsXml() throws SystemException {
 
         final List<String> parents = new ArrayList<String>();
         final List<String> parentsIds = getOrganizationalUnit().getParents();

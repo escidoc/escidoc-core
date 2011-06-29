@@ -121,8 +121,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException            One of the listeners threw an exception.
      */
     protected void queueItemsModified(final Iterable<String> ids) throws ComponentNotFoundException,
-        ItemNotFoundException, SystemException, FedoraSystemException, XmlParserSystemException,
-        ApplicationServerSystemException {
+        ItemNotFoundException, SystemException {
         if (this.indexingHandler != null) {
             for (final String id : ids) {
                 setItem(id);

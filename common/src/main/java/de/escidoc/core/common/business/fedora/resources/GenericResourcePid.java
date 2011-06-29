@@ -110,7 +110,7 @@ public class GenericResourcePid extends GenericResource {
      * @param pid The PID which is to assign as object PID.
      * @throws SystemException Thrown in case of internal error.
      */
-    public void setObjectPid(final String pid) throws SystemException, WebserverSystemException {
+    public void setObjectPid(final String pid) throws SystemException {
 
         if (!validPidStructure(pid)) {
             throw new SystemException("Invalid structure for Persistent Identifier");

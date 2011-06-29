@@ -74,7 +74,7 @@ public class AdminHandler implements AdminHandlerInterface {
      */
     @Override
     public String deleteObjects(final String taskParam) throws SystemException, AuthenticationException,
-        AuthorizationException, XmlCorruptedException, ApplicationServerSystemException {
+        AuthorizationException, XmlCorruptedException {
         return business.deleteObjects(taskParam);
     }
 
@@ -137,8 +137,7 @@ public class AdminHandler implements AdminHandlerInterface {
      */
     @Override
     public String reindex(final String clearIndex, final String indexNamePrefix) throws SystemException,
-        InvalidSearchQueryException, AuthenticationException, AuthorizationException, ApplicationServerSystemException,
-        FedoraSystemException, WebserverSystemException {
+        InvalidSearchQueryException, AuthenticationException, AuthorizationException {
         return business.reindex(Boolean.valueOf(clearIndex), indexNamePrefix);
     }
 

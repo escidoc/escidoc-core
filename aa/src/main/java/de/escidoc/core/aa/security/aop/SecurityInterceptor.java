@@ -145,8 +145,7 @@ public class SecurityInterceptor implements Ordered {
     @Around("execution(public * de.escidoc.core.*.service.*.*(..))"
         + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
         + " && !within(de.escidoc.core.common.util.aop..*)")
-    public Object authorize(final ProceedingJoinPoint joinPoint) throws Throwable, MissingElementValueException,
-        InvalidXmlException, MissingMethodParameterException, WebserverSystemException {
+    public Object authorize(final ProceedingJoinPoint joinPoint) throws Throwable {
         final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         final Method calledMethod = methodSignature.getMethod();
         final String target = getTargetInterface(joinPoint);

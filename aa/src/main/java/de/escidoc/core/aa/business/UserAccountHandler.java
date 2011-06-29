@@ -433,8 +433,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public void updatePassword(final String userId, final String taskParam) throws UserAccountNotFoundException,
         InvalidStatusException, XmlCorruptedException, MissingMethodParameterException, OptimisticLockingException,
-        AuthenticationException, AuthorizationException, SystemException, SqlDatabaseSystemException,
-        WebserverSystemException {
+        AuthenticationException, AuthorizationException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         if (!userAccount.getActive()) {
@@ -774,7 +773,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public void deactivate(final String userId, final String taskParam) throws AlreadyDeactiveException,
         UserAccountNotFoundException, XmlCorruptedException, MissingAttributeValueException,
-        OptimisticLockingException, SystemException, WebserverSystemException {
+        OptimisticLockingException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
 
@@ -841,7 +840,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public String createGrant(final String userId, final String grantXML) throws AlreadyExistsException,
         UserAccountNotFoundException, InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
-        SystemException, WebserverSystemException {
+        SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final RoleGrant grant = new RoleGrant();
@@ -1048,7 +1047,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR")
     public void revokeGrants(final String userId, final String taskParam) throws UserAccountNotFoundException,
         GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
-        SystemException, AuthorizationException, SqlDatabaseSystemException, WebserverSystemException {
+        SystemException, AuthorizationException {
 
         // check if user exists
         retrieveUserAccountById(userId);
@@ -1178,7 +1177,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String retrieveUserAccounts(final Map<String, String[]> filter) throws InvalidSearchQueryException,
-        SystemException, TripleStoreSystemException {
+        SystemException {
 
         Map<String, String[]> castedFilter = filter;
 
@@ -1899,8 +1898,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public String updatePreference(final String userId, final String preferenceName, final String preferenceXML)
         throws AlreadyExistsException, UserAccountNotFoundException, PreferenceNotFoundException,
-        XmlCorruptedException, SystemException, OptimisticLockingException, MissingAttributeValueException,
-        WebserverSystemException {
+        XmlCorruptedException, SystemException, OptimisticLockingException, MissingAttributeValueException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final Set<UserPreference> userPreferences = userAccount.getUserPreferencesByUserId();
@@ -2102,7 +2100,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      */
     @Override
     public String createAttribute(final String userId, final String attributeXML) throws AlreadyExistsException,
-        UserAccountNotFoundException, XmlCorruptedException, SystemException, WebserverSystemException {
+        UserAccountNotFoundException, XmlCorruptedException, SystemException {
 
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(attributeXML);
         final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_ATTRIBUTE);
@@ -2243,7 +2241,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public String updateAttribute(final String userId, final String attributeId, final String attributeXML)
         throws UserAccountNotFoundException, OptimisticLockingException, ReadonlyElementViolationException,
-        UserAttributeNotFoundException, XmlCorruptedException, SystemException, WebserverSystemException {
+        UserAttributeNotFoundException, XmlCorruptedException, SystemException {
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final UserAttribute userAttribute = retrieveAttributeById(userId, attributeId, false);

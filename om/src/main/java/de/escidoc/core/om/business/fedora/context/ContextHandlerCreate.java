@@ -116,8 +116,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
     public String createContext(final String xmlData) throws ContextNameNotUniqueException,
         ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
         MissingElementValueException, ReadonlyAttributeViolationException, InvalidContentException,
-        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException, XmlParserSystemException,
-        WebserverSystemException {
+        OrganizationalUnitNotFoundException, SystemException, InvalidStatusException {
 
         final String contextId = getIdProvider().getNextPid();
         final String createComment = "Object " + contextId + " created.";

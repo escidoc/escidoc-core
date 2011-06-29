@@ -179,8 +179,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     public EscidocBinaryContent retrieveContent(
         final String id, final String componentId, final String transformer, final String param)
-        throws ItemNotFoundException, ComponentNotFoundException, SystemException, AuthorizationException,
-        XmlParserSystemException {
+        throws ItemNotFoundException, ComponentNotFoundException, SystemException, AuthorizationException {
 
         setItem(id);
         final Component component = getComponent(componentId);
@@ -230,8 +229,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     public EscidocServiceRedirectInterface redirectContentService(
         final String id, final String componentId, final String transformer, final String clientService)
-        throws ItemNotFoundException, ComponentNotFoundException, SystemException, AuthorizationException,
-        XmlParserSystemException {
+        throws ItemNotFoundException, ComponentNotFoundException, SystemException, AuthorizationException {
 
         setItem(id);
         final Component component = getComponent(componentId);

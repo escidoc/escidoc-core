@@ -109,7 +109,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @param id The id of an organizational unit managed in Fedora.
      */
     public OrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+        IntegritySystemException {
         super(id);
         init();
     }

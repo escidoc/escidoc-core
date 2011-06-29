@@ -225,7 +225,7 @@ public class XacmlParser {
      * @param file file to be parsed
      * @throws Exception Thrown in case of an internal error.
      */
-    public void parse(final File file) throws Exception, XmlCorruptedException {
+    public void parse(final File file) throws Exception {
         this.role = new EscidocRole();
         initFactory();
 

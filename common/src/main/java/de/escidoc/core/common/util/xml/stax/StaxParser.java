@@ -127,7 +127,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
      */
-    protected void parseStream(final InputStream in) throws Exception, XmlCorruptedException {
+    protected void parseStream(final InputStream in) throws Exception {
 
         final XMLStreamReader parser = factory.createXMLStreamReader(in, XmlUtility.CHARACTER_ENCODING);
 
@@ -193,7 +193,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
      */
-    protected void parseEvents(final InputStream in) throws Exception, XmlCorruptedException {
+    protected void parseEvents(final InputStream in) throws Exception {
 
         final XMLEventReader parser = factory.createXMLEventReader(in);
 

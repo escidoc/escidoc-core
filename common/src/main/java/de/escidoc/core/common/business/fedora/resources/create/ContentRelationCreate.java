@@ -629,7 +629,7 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @param sync Set true if TripleStore sync is to call. False otherwise.
      * @throws SystemException Thrown if updating Fedora repository or syncing TripleStore failed.
      */
-    public void persistProperties(final boolean sync) throws SystemException, WebserverSystemException {
+    public void persistProperties(final boolean sync) throws SystemException {
         final String relsExt = ContentRelationFoXmlProvider.getInstance().getRelsExt(this);
         final ModifiyDatastreamPathParam path =
             new ModifiyDatastreamPathParam(getObjid(), Datastream.RELS_EXT_DATASTREAM);

@@ -92,8 +92,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * #render()
      */
     @Override
-    public String render() throws SystemException, ComponentNotFoundException, ItemNotFoundException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    public String render() throws SystemException, ComponentNotFoundException, ItemNotFoundException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -119,8 +118,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * @throws SystemException            Thrown if an unexpected error occurs
      */
     @Override
-    public String renderComponents(final boolean isRoot) throws ComponentNotFoundException, SystemException,
-        XmlParserSystemException, FedoraSystemException, EncodingSystemException {
+    public String renderComponents(final boolean isRoot) throws ComponentNotFoundException, SystemException {
 
         return renderComponents(getCommonValues(getItem()), isRoot);
     }
@@ -132,8 +130,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface
      * #renderComponents(boolean)
      */
-    public String renderComponents(final Map<String, String> commonValues, final boolean isRoot)
-        throws SystemException, WebserverSystemException, FedoraSystemException, EncodingSystemException {
+    public String renderComponents(final Map<String, String> commonValues, final boolean isRoot) throws SystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -186,7 +183,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      */
     @Override
     public String renderComponent(final String id, final boolean isRoot) throws ComponentNotFoundException,
-        SystemException, FedoraSystemException, EncodingSystemException, XmlParserSystemException {
+        SystemException {
 
         return renderComponent(id, getCommonValues(getItem()), isRoot);
     }
@@ -199,8 +196,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * #renderComponent(java.lang.String, boolean)
      */
     public String renderComponent(final String id, final Map<String, String> commonValues, final boolean isRoot)
-        throws ComponentNotFoundException, SystemException, FedoraSystemException, EncodingSystemException,
-        XmlParserSystemException {
+        throws ComponentNotFoundException, SystemException {
 
         final Component component = getComponent(id);
 
@@ -537,16 +533,14 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
     }
 
     public String renderComponentMdRecords(final String componentId, final boolean isRoot)
-        throws ComponentNotFoundException, SystemException, FedoraSystemException, EncodingSystemException,
-        XmlParserSystemException {
+        throws ComponentNotFoundException, SystemException {
 
         return renderComponentMdRecords(componentId, getCommonValues(getItem()), isRoot);
     }
 
     public String renderComponentMdRecords(
         final String componentId, final Map<String, String> commonValues, final boolean isRoot)
-        throws ComponentNotFoundException, SystemException, WebserverSystemException, EncodingSystemException,
-        XmlParserSystemException {
+        throws ComponentNotFoundException, SystemException {
 
         final Component component;
         final Map<String, String> values = new HashMap<String, String>();
@@ -776,8 +770,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      * #renderItems(java.util.List)
      */
     @Override
-    public String renderItems(final List<String> items) throws SystemException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException {
+    public String renderItems(final List<String> items) throws SystemException {
 
         final Collection<String> renderedEntries = new ArrayList<String>();
         final Map<String, Object> values = new HashMap<String, Object>();

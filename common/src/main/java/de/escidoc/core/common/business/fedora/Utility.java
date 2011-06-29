@@ -555,7 +555,7 @@ public class Utility {
      * @throws SystemException Thrown in case of an internal system error.
      */
     public void makeVersion(final String versionComment, final String newStatus, final VersionableResource resource)
-        throws SystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+        throws SystemException {
 
         final String comment = createComment(resource, newStatus, versionComment);
 

@@ -257,7 +257,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
     @Override
     public String update(final String id, final String xmlData) throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException,
-        SystemException, WebserverSystemException {
+        SystemException {
         if (id == null || id.length() == 0) {
             throw new MissingMethodParameterException("id may not be null");
         }

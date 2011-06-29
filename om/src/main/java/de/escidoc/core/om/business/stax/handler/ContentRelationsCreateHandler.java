@@ -108,7 +108,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws ReadonlyAttributeViolationException,
         InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
-        SystemException, TripleStoreSystemException {
+        SystemException {
 
         final String currentPath = parser.getCurPath();
         String contentRelationsPath = "/item/relations";

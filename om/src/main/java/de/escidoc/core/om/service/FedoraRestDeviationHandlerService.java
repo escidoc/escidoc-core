@@ -26,11 +26,11 @@ public interface FedoraRestDeviationHandlerService extends Remote {
 
     void cache(String pid, String xml, String authHandle, Boolean restAccess) throws Exception;
 
-    void removeFromCache(String pid, SecurityContext securityContext) throws Exception, RemoteException;
+    void removeFromCache(String pid, SecurityContext securityContext) throws Exception;
 
-    void removeFromCache(String pid, String authHandle, Boolean restAccess) throws Exception, RemoteException;
+    void removeFromCache(String pid, String authHandle, Boolean restAccess) throws Exception;
 
-    String retrieveUncached(String pid, SecurityContext securityContext) throws Exception, RemoteException;
+    String retrieveUncached(String pid, SecurityContext securityContext) throws Exception;
 
     String retrieveUncached(String pid, String authHandle, Boolean restAccess) throws Exception;
 

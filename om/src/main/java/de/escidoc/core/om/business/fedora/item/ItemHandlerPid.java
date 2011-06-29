@@ -94,8 +94,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
     public String assignContentPid(final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
         InvalidStatusException, ComponentNotFoundException, SystemException, XmlCorruptedException,
-        ReadonlyVersionException, XmlParserSystemException, PidSystemException, WebserverSystemException,
-        IntegritySystemException {
+        ReadonlyVersionException {
 
         setItem(id);
 
@@ -149,8 +148,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      */
     public String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
         ItemNotFoundException, ComponentNotFoundException, LockingException, MissingMethodParameterException,
-        OptimisticLockingException, XmlCorruptedException, SystemException, TripleStoreSystemException,
-        PidSystemException, WebserverSystemException, XmlParserSystemException {
+        OptimisticLockingException, XmlCorruptedException, SystemException {
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
@@ -212,8 +210,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      */
     public String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
         LockingException, MissingMethodParameterException, OptimisticLockingException, InvalidStatusException,
-        XmlCorruptedException, SystemException, ComponentNotFoundException, ReadonlyVersionException,
-        TripleStoreSystemException, PidSystemException, WebserverSystemException, XmlParserSystemException {
+        XmlCorruptedException, SystemException, ComponentNotFoundException, ReadonlyVersionException {
 
         setItem(id);
 
@@ -411,7 +408,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws ComponentNotFoundException Thrown if the component with the given componentId could not be found
      */
     private void checkContentPidAssignable(final String componentId) throws InvalidStatusException, SystemException,
-        ComponentNotFoundException, WebserverSystemException, XmlParserSystemException {
+        ComponentNotFoundException {
 
         checkStatus(Constants.STATUS_WITHDRAWN);
         checkVersionStatusNot(Constants.STATUS_WITHDRAWN);

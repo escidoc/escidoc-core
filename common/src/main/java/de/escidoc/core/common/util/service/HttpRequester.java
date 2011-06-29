@@ -119,8 +119,7 @@ public class HttpRequester {
      * @return String response
      * @throws Exception e
      */
-    public String doPut(final String resource, final String body) throws Exception, KeyManagementException,
-        WebserverSystemException {
+    public String doPut(final String resource, final String body) throws Exception {
         if (body == null || body.length() == 0) {
             throw new Exception("body may not be null");
         }
@@ -135,8 +134,7 @@ public class HttpRequester {
      * @return String response
      * @throws Exception e
      */
-    public String doPost(final String resource, final String body) throws Exception, NoSuchAlgorithmException,
-        KeyManagementException, WebserverSystemException {
+    public String doPost(final String resource, final String body) throws Exception {
         if (body == null || body.length() == 0) {
             throw new Exception("body may not be null");
         }
@@ -150,7 +148,7 @@ public class HttpRequester {
      * @return String response
      */
     public String doDelete(final String resource) throws IOException, NoSuchAlgorithmException, KeyManagementException,
-        WebserverSystemException, UnsupportedEncodingException {
+        WebserverSystemException {
         return request(resource, "DELETE", null);
     }
 
@@ -162,7 +160,7 @@ public class HttpRequester {
      * @param body     String body
      */
     private String request(final String resource, final String method, final String body) throws IOException,
-        NoSuchAlgorithmException, KeyManagementException, WebserverSystemException, UnsupportedEncodingException {
+        NoSuchAlgorithmException, KeyManagementException, WebserverSystemException {
         return SSL ? requestSsl(resource, method, body) : requestNoSsl(resource, method, body);
     }
 
@@ -177,9 +175,8 @@ public class HttpRequester {
     // False positive: Private method is never called
     @edu.umd.cs.findbugs.annotations.SuppressWarnings
     private String requestSsl( // Ignore FindBugs
-        final String resource, final String method, final String body) throws MalformedURLException, IOException,
-        ProtocolException, NoSuchAlgorithmException, KeyManagementException, WebserverSystemException,
-        UnsupportedEncodingException {
+        final String resource, final String method, final String body) throws IOException, NoSuchAlgorithmException,
+        KeyManagementException, WebserverSystemException {
 
         // Open Connection to given resource
         final URL url = new URL(this.domain + resource);
@@ -241,9 +238,8 @@ public class HttpRequester {
      * @param body     String body
      * @return String response
      */
-    private String requestNoSsl(final String resource, final String method, final String body)
-        throws MalformedURLException, IOException, ProtocolException, WebserverSystemException,
-        UnsupportedEncodingException {
+    private String requestNoSsl(final String resource, final String method, final String body) throws IOException,
+        WebserverSystemException {
         HttpURLConnection connection = null;
         InputStream is = null;
         OutputStream out = null;

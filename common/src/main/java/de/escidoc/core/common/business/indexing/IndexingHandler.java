@@ -203,8 +203,7 @@ public class IndexingHandler implements ResourceListener {
      * @param xml        xml of the resource to index.
      * @throws SystemException e
      */
-    private void addResource(final String resource, final String objectType, final String xml) throws SystemException,
-        ApplicationServerSystemException, TripleStoreSystemException {
+    private void addResource(final String resource, final String objectType, final String xml) throws SystemException {
         indexResource(resource, objectType,
             de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE, xml);
     }
@@ -215,8 +214,7 @@ public class IndexingHandler implements ResourceListener {
      * @param resource href of the resource to index.
      * @throws SystemException e
      */
-    private void deleteResource(final String resource) throws SystemException, ApplicationServerSystemException,
-        TripleStoreSystemException {
+    private void deleteResource(final String resource) throws SystemException {
         doIndexing(resource, null,
             de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE, false, null);
     }
@@ -232,7 +230,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException e
      */
     private void indexResource(final String resource, final String objectType, final String action, final String xml)
-        throws SystemException, WebserverSystemException, ApplicationServerSystemException, TripleStoreSystemException {
+        throws SystemException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Do indexing for resource " + resource + ", objectType: " + objectType);
@@ -288,7 +286,7 @@ public class IndexingHandler implements ResourceListener {
      */
     public void doIndexing(
         final String resource, final String objectType, final String action, final boolean isAsynch, final String xml)
-        throws SystemException, WebserverSystemException, TripleStoreSystemException {
+        throws SystemException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("calling do Indexing with resource: " + resource + ", objectType: " + objectType
                 + ", action: " + action + ", isAsynch: " + isAsynch + ", xml: " + xml);
@@ -334,8 +332,7 @@ public class IndexingHandler implements ResourceListener {
      */
     public void doIndexing(
         final String resource, final String objectType, final String indexName, final String action,
-        final boolean isAsynch, final String xml) throws SystemException, WebserverSystemException,
-        ApplicationServerSystemException {
+        final boolean isAsynch, final String xml) throws SystemException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("indexing " + resource + ", objectType: " + objectType + ", indexName: " + indexName
@@ -625,8 +622,7 @@ public class IndexingHandler implements ResourceListener {
      * @return List of PIDs
      * @throws SystemException Thrown if a framework internal error occurs.
      */
-    public Set<String> getPids(final String objectType, final String indexName) throws SystemException,
-        WebserverSystemException {
+    public Set<String> getPids(final String objectType, final String indexName) throws SystemException {
         final Map<String, Map<String, Object>> resourceParameters = getObjectTypeParameters().get(objectType);
         Set<String> result = new HashSet<String>();
 
