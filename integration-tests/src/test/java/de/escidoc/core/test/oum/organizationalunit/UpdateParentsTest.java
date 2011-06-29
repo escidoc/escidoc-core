@@ -43,14 +43,15 @@ import org.w3c.dom.Node;
 
 /**
  * Test the implementation of the organizational-unit resource.
- *
+ * 
  * @author Michael Schneider
  */
 @RunWith(value = Parameterized.class)
 public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
     /**
-     * @param transport The transport identifier.
+     * @param transport
+     *            The transport identifier.
      */
     public UpdateParentsTest(final int transport) {
         super(transport);
@@ -58,8 +59,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
     /**
      * Test successfully updating parent relation of an Organizational Unit by using the general update method.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testUpdateParentRelation01() throws Exception {
@@ -104,8 +106,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
     /**
      * Test successfully updating parent relation of an Organizational Unit by using the general update method.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testUpdateParentRelation02() throws Exception {
@@ -151,8 +154,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
     /**
      * Test declining updating the parents sub resource of an organizational unit with non existing id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void test_OUM_UPOU_2_1() throws Exception {
@@ -180,10 +184,12 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         final String createdNewParentXml = createSuccessfully("escidoc_ou_create.xml");
         final String id = getObjidValue(createdNewParentXml);
         createOuHierarchie();
-        open(this.ouTop1Id, getTheLastModificationParam(true, this.ouTop1Id, "Opened organizational unit '"
-            + this.ouTop1Id + "'."));
-        open(this.ouChild1ParentId, getTheLastModificationParam(true, this.ouChild1ParentId,
-            "Opened organizational unit '" + this.ouChild1ParentId + "'."));
+        open(this.ouTop1Id,
+            getTheLastModificationParam(true, this.ouTop1Id, "Opened organizational unit '" + this.ouTop1Id + "'."));
+        open(
+            this.ouChild1ParentId,
+            getTheLastModificationParam(true, this.ouChild1ParentId, "Opened organizational unit '"
+                + this.ouChild1ParentId + "'."));
 
         final String createdXml = retrieve(this.ouChild1ParentId);
         Document createdDocument = getDocument(createdXml);
@@ -206,8 +212,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
     /**
      * Test declining updating the parents sub resource of an organizational with id of a resource of another type.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void test_OUM_UPOU_2_2() throws Exception {
@@ -228,8 +235,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     /**
      * Test declining updating the parents sub resource of an organizational with wrong last modification date (too
      * old).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void test_OUM_UPOU_3_1() throws Exception {
@@ -254,8 +262,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     /**
      * Test declining updating the parents sub resource of an organizational with wrong last modification date (more
      * recent).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void test_OUM_UPOU_3_2() throws Exception {
@@ -280,8 +289,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
     /**
      * Test declining updating the parents sub resource of an organizational with missing id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void test_OUM_UPOU_4_1() throws Exception {
@@ -303,8 +313,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
     /**
      * Test declining updating the parents sub resource of an organizational with missing parents xml.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void test_OUM_UPOU_4_2() throws Exception {
@@ -326,8 +337,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
     /**
      * Test declining updating the parents sub resource of an organizational with corrupt xml.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void test_OUM_UPOU_5_1() throws Exception {
@@ -349,8 +361,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     /**
      * Test declining updating the parents sub resource of an organizational with wrong root element
      * (organizational-unit) in xml.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void test_OUM_UPOU_5_2() throws Exception {
@@ -372,8 +385,9 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     /**
      * Test declining updating the parents sub resource of an organizational with wrong root element (<unknown/>) in
      * xml.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void test_OUM_UPOU_5_3() throws Exception {
@@ -390,6 +404,63 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         catch (final Exception e) {
             assertExceptionType(ec, e);
         }
+    }
+
+    /**
+     * Test for https://www.escidoc.org/jira/browse/INFR-1184. Create A parentOf B parentOf C and change this into A
+     * parentOf B and C.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testINFR1184() throws Exception {
+        // create OU A
+        Document ouAdoc = getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        String ouAid = getObjidValue(ouAdoc);
+
+        // create OU B
+        Document ouBdoc = getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        String ouBid = getObjidValue(ouBdoc);
+
+        // create OU C
+        Document ouCdoc = getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        String ouCid = getObjidValue(ouCdoc);
+        
+        // A parentOf B
+        Node parents = selectSingleNode(ouBdoc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
+        Element parent = ouBdoc.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
+        if (getTransport() == Constants.TRANSPORT_SOAP) {
+            parent.setAttribute("objid", ouAid);
+        }
+        else {
+            parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ouAid);
+        }
+        parents.appendChild(parent);
+        ouBdoc = getDocument(update(ouBid, toString(ouBdoc, true)));
+
+        // B parentOf C
+        parents = selectSingleNode(ouCdoc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
+        parent = ouCdoc.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
+        if (getTransport() == Constants.TRANSPORT_SOAP) {
+            parent.setAttribute("objid", ouBid);
+        }
+        else {
+            parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ouBid);
+        }
+        parents.appendChild(parent);
+        ouCdoc = getDocument(update(ouCid, toString(ouCdoc, true)));
+
+        // A parentOf C
+        parents = selectSingleNode(ouCdoc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
+        parent = (Element) selectSingleNode(parents, XPATH_ORGANIZATIONAL_UNIT_PARENT);
+        if (getTransport() == Constants.TRANSPORT_SOAP) {
+            parent.setAttribute("objid", ouAid);
+        }
+        else {
+            parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ouAid);
+        }
+        ouCdoc = getDocument(update(ouCid, toString(ouCdoc, true)));
     }
 
     // ========================================================================
