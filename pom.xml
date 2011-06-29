@@ -124,7 +124,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>2.8.1</version>
+          <version>2.9</version>
         </plugin>
 
         <!-- maven-config-processor-plugin [default config] -->
@@ -1018,7 +1018,7 @@
     <slf4j.version>1.6.1</slf4j.version>
     <log4j.version>1.2.16</log4j.version>
     <jaxb2-basics.version>0.5.3</jaxb2-basics.version>
-    <aspectj.version>1.6.10</aspectj.version>
+    <aspectj.version>1.6.11</aspectj.version>
     <spring.version>3.0.5.RELEASE</spring.version>
     <cxf.version>2.5.0-SNAPSHOT</cxf.version>
     <camel.version>2.4.0</camel.version>
@@ -1346,7 +1346,7 @@
       <dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>
-        <version>2.5</version>
+        <version>2.6</version>
       </dependency>
       <dependency>
         <groupId>commons-collections</groupId>
@@ -1377,12 +1377,6 @@
         </exclusions>
         <scope>compile</scope>
       </dependency>
-      <!-- TODO: Remove as soon as all external libraries (Fedora) migration to new http client. -->
-      <dependency>
-        <groupId>commons-httpclient</groupId>
-        <artifactId>commons-httpclient</artifactId>
-        <version>3.1</version>
-      </dependency>
       <dependency>
         <groupId>commons-pool</groupId>
         <artifactId>commons-pool</artifactId>
@@ -1391,7 +1385,7 @@
       <dependency>
         <groupId>commons-discovery</groupId>
         <artifactId>commons-discovery</artifactId>
-        <version>0.4</version>
+        <version>0.5</version>
         <exclusions>
           <exclusion>
             <artifactId>commons-logging</artifactId>
