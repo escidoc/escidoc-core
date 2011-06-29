@@ -52,8 +52,6 @@
 	<classpathentry kind="src" output="jms-server/target/classes" path="jms-server/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="jms-server/target/classes" path="jms-server/src/main/resources"/>
 	<classpathentry kind="src" output="jms-server/target/test-classes" path="jms-server/src/test/java"/>
-	<classpathentry kind="src" output="http-client/target/classes" path="http-client/src/main/java"/>
-	<classpathentry kind="src" output="http-client/target/test-classes" path="http-client/src/test/java"/>
 	<classpathentry kind="src" output="index-service-spec/target/classes" path="index-service-spec/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="index-service-spec/target/classes" path="index-service-spec/src/main/resources"/>
 	<classpathentry kind="src" output="index-service-spec/target/test-classes" path="index-service-spec/src/test/java"/>
