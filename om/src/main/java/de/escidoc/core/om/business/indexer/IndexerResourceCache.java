@@ -53,7 +53,6 @@ import org.apache.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -76,8 +75,6 @@ public final class IndexerResourceCache {
     private int indexerCacheSize;
 
     private static final int BUFFER_SIZE = 0xFFFF;
-
-    private static final int MAX_ARRAY_SIZE = 20000000;
 
     /**
      * Holds identifier and object.
@@ -162,24 +159,7 @@ public final class IndexerResourceCache {
                 cacheInternalResource(href);
             }
         }
-        Object resource = getResourceWithInternalKey(href);
-        if (resource instanceof MIMETypedStream) {
-            EscidocBinaryContent escidocBinaryContent = new EscidocBinaryContent();
-            escidocBinaryContent.setMimeType(((MIMETypedStream) resource).getMIMEType());
-            escidocBinaryContent.setContent(new ByteArrayInputStream(((MIMETypedStream) resource).getStream()));
-            return escidocBinaryContent;
-        }
-        else if (resource instanceof InstantiationException) {
-            if (identifier.startsWith("http")) {
-                return getExternalResource(href);
-            }
-            else {
-                return getInternalResource(href);
-            }
-        }
-        else {
-            return resource;
-        }
+        return getResourceWithInternalKey(href);
     }
 
     /**
@@ -263,7 +243,11 @@ public final class IndexerResourceCache {
      */
     private void cacheInternalResource(final String identifier) throws SystemException {
         try {
-            final Object content = getInternalResource(identifier);
+            if (UserContext.getHandle() != null) {
+                UserContext.setRestAccess(Constants.USE_REST_REQUEST_PROTOCOL);
+            }
+            final BeanMethod method = methodMapper.getMethod(identifier, null, null, "GET", "");
+            final Object content = method.invokeWithProtocol(null, Constants.USE_REST_REQUEST_PROTOCOL);
             if (content != null && "EscidocBinaryContent".equals(content.getClass().getSimpleName())) {
                 final EscidocBinaryContent escidocBinaryContent = (EscidocBinaryContent) content;
                 final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -271,13 +255,7 @@ public final class IndexerResourceCache {
                 try {
                     final byte[] bytes = new byte[BUFFER_SIZE];
                     int i;
-                    int counter = 0;
                     while ((i = in.read(bytes)) > -1) {
-                        counter += BUFFER_SIZE;
-                        if (counter > MAX_ARRAY_SIZE) {
-                            setResource(identifier, new InstantiationException());
-                            return;
-                        }
                         out.write(bytes, 0, i);
                     }
                     out.flush();
@@ -298,31 +276,6 @@ public final class IndexerResourceCache {
                 setResource(identifier, xml);
             }
         }
-        catch (final Exception e) {
-            throw new SystemException(e);
-        }
-    }
-
-    /**
-     * get resource with given identifier from framework.
-     *
-     * @param identifier identifier
-     * @throws SystemException e
-     */
-    private Object getInternalResource(final String identifier) throws SystemException {
-        try {
-            if (UserContext.getHandle() != null) {
-                UserContext.setRestAccess(Constants.USE_REST_REQUEST_PROTOCOL);
-            }
-            final BeanMethod method = methodMapper.getMethod(identifier, null, null, "GET", "");
-            final Object content = method.invokeWithProtocol(null, Constants.USE_REST_REQUEST_PROTOCOL);
-            if (content != null && "EscidocBinaryContent".equals(content.getClass().getSimpleName())) {
-                return (EscidocBinaryContent) content;
-            }
-            else if (content != null) {
-                return (String) content;
-            }
-        }
         catch (final InvocationTargetException e) {
             if (!"AuthorizationException".equals(e.getTargetException().getClass().getSimpleName())
                 && !"InvalidStatusException".equals(e.getTargetException().getClass().getSimpleName())) {
@@ -340,7 +293,6 @@ public final class IndexerResourceCache {
         catch (final Exception e) {
             throw new SystemException(e);
         }
-        return null;
     }
 
     /**
@@ -353,22 +305,19 @@ public final class IndexerResourceCache {
         ByteArrayOutputStream out = null;
         InputStream in = null;
         try {
-            final EscidocBinaryContent escidocBinaryContent = getExternalResource(identifier);
+            final HttpResponse httpResponse = connectionUtility.getRequestURL(new URL(identifier));
 
-            if (escidocBinaryContent != null) {
+            if (httpResponse != null) {
 
-                final String mimeType = escidocBinaryContent.getMimeType();
+                // TODO testen ob header mitgeschickt wird
+                final Header ctype = httpResponse.getFirstHeader("Content-Type");
+                final String mimeType =
+                    ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
 
                 out = new ByteArrayOutputStream();
-                in = escidocBinaryContent.getContent();
+                in = httpResponse.getEntity().getContent();
                 int byteval;
-                int counter = 0;
                 while ((byteval = in.read()) > -1) {
-                    counter++;
-                    if (counter > MAX_ARRAY_SIZE) {
-                        setResource(identifier, new InstantiationException());
-                        return;
-                    }
                     out.write(byteval);
                 }
                 final MIMETypedStream stream = new MIMETypedStream(mimeType, out.toByteArray(), null);
@@ -387,42 +336,6 @@ public final class IndexerResourceCache {
             IOUtils.closeStream(in);
             IOUtils.closeStream(out);
         }
-    }
-
-    /**
-     * get resource with given URL.
-     *
-     * @param identifier identifier
-     * @throws SystemException e
-     */
-    private EscidocBinaryContent getExternalResource(final String identifier) throws SystemException {
-        try {
-            final HttpResponse httpResponse = connectionUtility.getRequestURL(new URL(identifier));
-
-            if (httpResponse != null) {
-
-                // TODO testen ob header mitgeschickt wird
-                final Header ctype = httpResponse.getFirstHeader("Content-Type");
-                final String mimeType =
-                    ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
-                EscidocBinaryContent escidocBinaryContent = new EscidocBinaryContent();
-                escidocBinaryContent.setMimeType(mimeType);
-                escidocBinaryContent.setContent(httpResponse.getEntity().getContent());
-                return escidocBinaryContent;
-            }
-            else {
-                return null;
-            }
-        }
-        catch (final Exception e) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on caching external resource.");
-            }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on caching external resource.", e);
-            }
-        }
-        return null;
     }
 
     /**
