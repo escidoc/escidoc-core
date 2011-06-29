@@ -28,18 +28,17 @@
  */
 package de.escidoc.core.om.business.fedora.deviation;
 
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.business.fedora.MIMETypedStream;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.om.business.indexer.IndexerResourceCache;
 import de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.ByteArrayInputStream;
-import java.util.Map;
 
 /**
  * @author Michael Hoppe
@@ -67,13 +66,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
         // Try to get EscidocBinaryContent from IndexerResourceCache/////////////////
         EscidocBinaryContent escidocBinaryContent = null;
         try {
-            final MIMETypedStream mimeTypedStream =
-                (MIMETypedStream) IndexerResourceCache.getInstance().getResource(dsID);
-            if (mimeTypedStream != null && mimeTypedStream.getStream() != null) {
-                escidocBinaryContent = new EscidocBinaryContent();
-                escidocBinaryContent.setMimeType(mimeTypedStream.getMIMEType());
-                escidocBinaryContent.setContent(new ByteArrayInputStream(mimeTypedStream.getStream()));
-            }
+            escidocBinaryContent = (EscidocBinaryContent) IndexerResourceCache.getInstance().getResource(dsID);
         }
         catch (final Exception e) {
             if (LOGGER.isWarnEnabled()) {
