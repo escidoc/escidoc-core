@@ -134,8 +134,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
     public boolean update(final FedoraContextHandler contextHandler, final String xmlData)
         throws ContextNotFoundException, InvalidStatusException, OptimisticLockingException,
         ReadonlyAttributeViolationException, ReadonlyElementViolationException, ContextNameNotUniqueException,
-        MissingElementValueException, SystemException, InvalidContentException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        MissingElementValueException, SystemException, InvalidContentException, XmlParserSystemException,
+        WebserverSystemException {
 
         final DateTime startTimeStamp = getContext().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
@@ -260,8 +260,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException           Thrown if Context is locked.
      */
     public void open(final FedoraContextHandler contextHandler, final String taskParam) throws InvalidStatusException,
-        OptimisticLockingException, SystemException, FedoraSystemException, WebserverSystemException,
-        XmlCorruptedException, TripleStoreSystemException {
+        OptimisticLockingException, SystemException, WebserverSystemException, XmlCorruptedException,
+        TripleStoreSystemException {
 
         checkStatus(Constants.STATUS_CONTEXT_CREATED);
         final TaskParamHandler taskParamHandler;

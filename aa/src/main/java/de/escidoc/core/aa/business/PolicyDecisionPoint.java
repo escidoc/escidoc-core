@@ -436,7 +436,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      */
     @Override
     public List<String> evaluateRetrieve(final String resourceName, final List<String> ids)
-        throws ResourceNotFoundException, SystemException, IntegritySystemException, WebserverSystemException {
+        throws ResourceNotFoundException, SystemException {
 
         // convert the resourceName if provided in triple store format
         final String convertedResourceName = FinderModuleHelper.convertObjectType(resourceName, false);

@@ -306,7 +306,7 @@ public class Utility {
      * @throws ComponentNotFoundException If the component does not exist or if the object is no component.
      */
     public void checkIsComponent(final String id) throws ComponentNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+        IntegritySystemException {
 
         try {
             checkIsOfObjectType(id, Constants.COMPONENT_OBJECT_TYPE);
@@ -323,7 +323,7 @@ public class Utility {
      * @throws ContainerNotFoundException If the container does not exist or if the object is no container.
      */
     public void checkIsContainer(final String id) throws ContainerNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+        IntegritySystemException {
 
         try {
             checkIsOfObjectType(id, Constants.CONTAINER_OBJECT_TYPE);
@@ -340,7 +340,7 @@ public class Utility {
      * @throws ContextNotFoundException If the context does not exist or if the object is no context.
      */
     public void checkIsContext(final String id) throws ContextNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+        IntegritySystemException {
 
         try {
             checkIsOfObjectType(id, Constants.CONTEXT_OBJECT_TYPE);
@@ -358,7 +358,7 @@ public class Utility {
      *          Thrown if Content Relation the does not exist.
      */
     public void checkIsContentRelation(final String id) throws ContentRelationNotFoundException,
-        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
+        TripleStoreSystemException, IntegritySystemException {
 
         try {
             checkIsOfObjectType(id, Constants.CONTENT_RELATION2_OBJECT_TYPE);
@@ -375,7 +375,7 @@ public class Utility {
      * @throws ContentModelNotFoundException If the content model does not exist or if the object is no content model.
      */
     public void checkIsContentModel(final String id) throws ContentModelNotFoundException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException {
+        IntegritySystemException {
 
         try {
             checkIsOfObjectType(id, Constants.CONTENT_MODEL_OBJECT_TYPE);
@@ -395,7 +395,7 @@ public class Utility {
      * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
      */
     public void checkIsItem(final String id) throws ItemNotFoundException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException {
+        IntegritySystemException {
 
         try {
             checkIsOfObjectType(id, Constants.ITEM_OBJECT_TYPE);
@@ -416,7 +416,7 @@ public class Utility {
      * @throws IntegritySystemException   Thrown if there is an integrity error with the addressed object.
      */
     public void checkIsRelation(final String id) throws ContentRelationNotFoundException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException {
+        IntegritySystemException {
 
         try {
             checkIsOfObjectType(id, Constants.RELATION_OBJECT_TYPE);
@@ -434,7 +434,7 @@ public class Utility {
      *          If the organizational-unit does not exist or if the object is no organizational-unit.
      */
     public void checkIsOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException,
-        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
+        TripleStoreSystemException, IntegritySystemException {
 
         try {
             checkIsOfObjectType(id, Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE);
@@ -555,8 +555,7 @@ public class Utility {
      * @throws SystemException Thrown in case of an internal system error.
      */
     public void makeVersion(final String versionComment, final String newStatus, final VersionableResource resource)
-        throws SystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException {
+        throws SystemException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
 
         final String comment = createComment(resource, newStatus, versionComment);
 
@@ -773,7 +772,7 @@ public class Utility {
     private static void updateElementsInRelsExt(
         final Map<String, StartElementWithChildElements> updateElementsRelsExt,
         final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt, final FedoraResource resource,
-        final String currentPublicStatus, final boolean release) throws SystemException, XmlParserSystemException {
+        final String currentPublicStatus, final boolean release) throws SystemException {
 
         final StaxParser sp = new StaxParser();
         final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
@@ -1274,11 +1273,11 @@ public class Utility {
      * @return The result XML structure.
      * @throws SystemException Thrown if parsing last modification or retrieving xml:base failed.
      */
-    public String prepareReturnXmlFromLastModificationDate(final DateTime lastModificationDate) throws SystemException {
+    public String prepareReturnXmlFromLastModificationDate(final DateTime lastModificationDate) {
         return prepareReturnXml(lastModificationDate, null);
     }
 
-    public String prepareReturnXml(final String content) throws SystemException {
+    public String prepareReturnXml(final String content) {
         return prepareReturnXml(null, content);
     }
 
@@ -1321,7 +1320,7 @@ public class Utility {
      * @throws WebserverSystemException If an error occurs.
      */
     public static String processUrl(final String url, final String itemId, final String componentId)
-        throws InvalidContentException, WebserverSystemException {
+        throws InvalidContentException {
         final String escidocBaseUrl = XmlUtility.getEscidocBaseUrl();
 
         try {

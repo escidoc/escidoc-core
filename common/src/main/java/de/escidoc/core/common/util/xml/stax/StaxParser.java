@@ -112,7 +112,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
      */
-    public void parse(final InputStream in) throws Exception, XmlCorruptedException {
+    public void parse(final InputStream in) throws Exception {
         if (this.handlerChain == null || handlerChain.isEmpty()) {
             throw new XMLStreamException("Parser has no handlers. Try StaxParser sp.addHandler"
                 + "(new DefaultHandler());");
@@ -127,8 +127,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
      */
-    protected void parseStream(final InputStream in) throws Exception, XmlParserSystemException, XMLStreamException,
-        XmlCorruptedException {
+    protected void parseStream(final InputStream in) throws Exception, XmlCorruptedException {
 
         final XMLStreamReader parser = factory.createXMLStreamReader(in, XmlUtility.CHARACTER_ENCODING);
 
@@ -194,7 +193,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain
      */
-    protected void parseEvents(final InputStream in) throws Exception, XMLStreamException, XmlCorruptedException {
+    protected void parseEvents(final InputStream in) throws Exception, XmlCorruptedException {
 
         final XMLEventReader parser = factory.createXMLEventReader(in);
 
@@ -308,7 +307,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws Exception If anything fails. This depends on the implementation of the handlers in the used handler
      *                   chain.
      */
-    protected void handle(final StartElement e) throws Exception, XmlCorruptedException {
+    protected void handle(final StartElement e) throws Exception {
 
         StartElement element = e;
         if (!this.rootChecked) {

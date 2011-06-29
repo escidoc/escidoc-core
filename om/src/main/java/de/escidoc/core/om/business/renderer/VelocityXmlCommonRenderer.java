@@ -99,7 +99,7 @@ public class VelocityXmlCommonRenderer {
         }
     }
 
-    protected static void addXlinkValues(final Map values) throws WebserverSystemException {
+    protected static void addXlinkValues(final Map values) {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);

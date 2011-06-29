@@ -122,8 +122,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @param state The new state.
      * @throws SystemException Thrown in case of an internal error.
      */
-    protected void updateState(final String state) throws SystemException, FedoraSystemException,
-        WebserverSystemException {
+    protected void updateState(final String state) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final String buildNumber = Utility.getBuildNumber();
@@ -264,7 +263,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      *          If the organizational unit has children
      */
     protected void checkWithoutChildren(final String methodText) throws OrganizationalUnitHasChildrenException,
-        TripleStoreSystemException, WebserverSystemException {
+        TripleStoreSystemException {
 
         if (!getOrganizationalUnit().getChildrenIds().isEmpty()) {
             throw new OrganizationalUnitHasChildrenException("Organizational unit with id='"
@@ -280,7 +279,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * @throws InvalidStatusException Thrown if one of the children is not closed.
      */
     protected void checkWithoutChildrenOrChildrenClosed(final String methodText) throws InvalidStatusException,
-        TripleStoreSystemException, WebserverSystemException {
+        TripleStoreSystemException {
 
         final List<String> children = getOrganizationalUnit().getChildrenIds();
         if (!children.isEmpty()) {

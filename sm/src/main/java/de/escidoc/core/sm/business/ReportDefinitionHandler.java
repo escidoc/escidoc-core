@@ -201,7 +201,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      */
     @Override
     public String retrieveReportDefinitions(final Map<String, String[]> parameters) throws InvalidSearchQueryException,
-        SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        SystemException {
         final String result;
         final SRURequestParameters params = new DbRequestParameters(parameters);
         final String query = params.getQuery();

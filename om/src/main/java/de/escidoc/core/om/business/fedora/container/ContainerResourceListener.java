@@ -117,8 +117,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @throws ContainerNotFoundException Thrown if a container with the provided id does not exist in the framework.
      * @throws SystemException            One of the listeners threw an exception.
      */
-    protected void fireContainerModified(final String id) throws ContainerNotFoundException, SystemException,
-        IntegritySystemException, XmlParserSystemException {
+    protected void fireContainerModified(final String id) throws ContainerNotFoundException, SystemException {
         setContainer(id);
         final String xml = getContainerXml(getContainer());
         for (final ResourceListener containerListener : this.containerListeners) {

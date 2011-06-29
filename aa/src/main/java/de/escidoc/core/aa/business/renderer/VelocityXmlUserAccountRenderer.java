@@ -348,7 +348,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      * @param values The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addEscidocBaseUrl(final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }

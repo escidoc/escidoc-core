@@ -136,8 +136,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be stored.
      */
     @Override
-    public void resourceCreated(final String id, final String xml) throws SystemException,
-        ApplicationServerSystemException {
+    public void resourceCreated(final String id, final String xml) throws SystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }
@@ -167,8 +166,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be deleted.
      */
     @Override
-    public void resourceDeleted(final String id) throws SystemException, WebserverSystemException,
-        TripleStoreSystemException {
+    public void resourceDeleted(final String id) throws SystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }
@@ -188,8 +186,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException The resource could not be deleted and newly created.
      */
     @Override
-    public void resourceModified(final String id, final String xml) throws SystemException, WebserverSystemException,
-        ApplicationServerSystemException {
+    public void resourceModified(final String id, final String xml) throws SystemException {
         if (!this.notifyIndexerEnabled) {
             return;
         }
@@ -218,7 +215,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException e
      */
     private void addResource(final String resource, final String objectType, final String xml) throws SystemException,
-        WebserverSystemException, ApplicationServerSystemException, TripleStoreSystemException {
+        ApplicationServerSystemException, TripleStoreSystemException {
         indexResource(resource, objectType,
             de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE, xml);
     }
@@ -742,7 +739,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws IOException     e
      * @throws SystemException e
      */
-    private void getIndexConfigs() throws IOException, SystemException, ApplicationServerSystemException {
+    private void getIndexConfigs() throws IOException, SystemException {
         // Build IndexInfo HashMap
         this.objectTypeParameters = new HashMap<String, Map<String, Map<String, Object>>>();
         final String searchPropertiesDirectory =

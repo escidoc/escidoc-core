@@ -891,7 +891,7 @@ public class GenericResource implements FedoraResource {
      * @throws FedoraSystemException    Thrown if connection to Fedora failed.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    protected DateTime persistRelsExt() throws FedoraSystemException, WebserverSystemException {
+    protected DateTime persistRelsExt() throws WebserverSystemException {
 
         DateTime timestamp = null; // Maybe would it be better, if we use the
         // old timestamp instead of null.

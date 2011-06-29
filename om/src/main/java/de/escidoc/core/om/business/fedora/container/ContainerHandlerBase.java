@@ -150,8 +150,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws ContainerNotFoundException If there is no container with <code>id</code> in the repository.
      * @throws SystemException            Thrown in case of an internal system error.
      */
-    public void setContainer(final String id) throws ContainerNotFoundException, SystemException,
-        XmlParserSystemException, WebserverSystemException {
+    public void setContainer(final String id) throws ContainerNotFoundException, SystemException {
         try {
             this.container = new Container(id);
         }
@@ -195,8 +194,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws WebserverSystemException   In case of an internal error.
      * @throws TripleStoreSystemException If the triple store reports an error.
      */
-    protected void checkNotReleased() throws InvalidStatusException, WebserverSystemException,
-        TripleStoreSystemException {
+    protected void checkNotReleased() throws InvalidStatusException, TripleStoreSystemException {
         checkNotStatus(Constants.STATUS_RELEASED);
     }
 
@@ -207,8 +205,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException If the triple store reports an error.
      * @throws WebserverSystemException   In case of an internal error.
      */
-    protected void checkNotSubmitted() throws InvalidStatusException, WebserverSystemException,
-        TripleStoreSystemException {
+    protected void checkNotSubmitted() throws InvalidStatusException, TripleStoreSystemException {
         checkNotStatus(Constants.STATUS_SUBMITTED);
     }
 

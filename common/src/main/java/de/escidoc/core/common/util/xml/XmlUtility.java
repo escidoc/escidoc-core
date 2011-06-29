@@ -1467,7 +1467,7 @@ public final class XmlUtility {
      *         eSciDoc configuration property escidoc.xslt.std.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getStylesheetDefinition() throws WebserverSystemException {
+    public static String getStylesheetDefinition() {
         if (stylesheetDefinition == null) {
             final String xslt = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSLT_STD);
             stylesheetDefinition =
@@ -1481,7 +1481,7 @@ public final class XmlUtility {
      * @return Returns the adminDescriptorSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getAdminDescriptorSchemaLocation() throws WebserverSystemException {
+    public static String getAdminDescriptorSchemaLocation() {
         if (contextRestSchemaLocation == null) {
             final String subPath = "context/0.4/context.xsd";
             contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + subPath;
@@ -1493,7 +1493,7 @@ public final class XmlUtility {
      * @return Returns the containerSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getContainerSchemaLocation() throws WebserverSystemException {
+    public static String getContainerSchemaLocation() {
         if (containerRestSchemaLocation == null) {
             containerRestSchemaLocation =
                 getSchemaBaseUrl() + "rest/container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION + "/container.xsd";
@@ -1505,7 +1505,7 @@ public final class XmlUtility {
      * @return Returns the spoTaskParamSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getSpoTaskParamSchemaLocation() throws WebserverSystemException {
+    public static String getSpoTaskParamSchemaLocation() {
         if (spoTaskParamSchemaLocation == null) {
             spoTaskParamSchemaLocation = getSchemaBaseUrl() + "common/0.3/query.xsd";
         }
@@ -1516,7 +1516,7 @@ public final class XmlUtility {
      * @return Returns the containerMembersFilterSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getContainerMembersFilterSchemaLocation() throws WebserverSystemException {
+    public static String getContainerMembersFilterSchemaLocation() {
         if (containerMembersFilterRestSchemaLocation == null) {
             containerMembersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/container/0.3/filter-members.xsd";
         }
@@ -1527,7 +1527,7 @@ public final class XmlUtility {
      * @return Returns the containersFilterSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getContainersFilterSchemaLocation() throws WebserverSystemException {
+    public static String getContainersFilterSchemaLocation() {
         if (containersFilterRestSchemaLocation == null) {
             containersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/container/0.3/filter-containers.xsd";
         }
@@ -1538,7 +1538,7 @@ public final class XmlUtility {
      * @return Returns the content relation schema location.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getContentModelSchemaLocation() throws WebserverSystemException {
+    public static String getContentModelSchemaLocation() {
         if (contentModelRestSchemaLocation == null) {
             final String contentModelXsd =
                 "content-model" + Constants.CONTENT_MODEL_NS_URI_SCHEMA_VERSION + "/content-model.xsd";
@@ -1551,7 +1551,7 @@ public final class XmlUtility {
      * @return Returns the contextSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getContextSchemaLocation() throws WebserverSystemException {
+    public static String getContextSchemaLocation() {
         if (contextRestSchemaLocation == null) {
             final String contextXsd = "context" + Constants.CONTEXT_NS_URI_SCHEMA_VERSION + "/context.xsd";
             contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contextXsd;
@@ -1563,7 +1563,7 @@ public final class XmlUtility {
      * @return Returns the content relation schema location.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getContentRelationSchemaLocation() throws WebserverSystemException {
+    public static String getContentRelationSchemaLocation() {
         if (contentRelationRestSchemaLocation == null) {
             final String contentRelationXsd =
                 "content-relation" + Constants.CONTENT_RELATION_NS_URI_SCHEMA_VERSION + "/content-relation.xsd";
@@ -1576,7 +1576,7 @@ public final class XmlUtility {
      * @return Returns the contextSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getSetDefinitionSchemaLocation() throws WebserverSystemException {
+    public static String getSetDefinitionSchemaLocation() {
         if (setDefinitionRestSchemaLocation == null) {
             final String setDefinitionXsd = "set-definition/0.1/set-definition.xsd";
             setDefinitionRestSchemaLocation = getSchemaBaseUrl() + "rest/" + setDefinitionXsd;
@@ -1588,7 +1588,7 @@ public final class XmlUtility {
      * @return Returns the contextsFilterSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getContextsFilterSchemaLocation() throws WebserverSystemException {
+    public static String getContextsFilterSchemaLocation() {
         if (contextsFilterSchemaLocationRest == null) {
             contextsFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/context/0.3/filter-contexts.xsd";
         }
@@ -1599,7 +1599,7 @@ public final class XmlUtility {
      * @return Returns the contextMembersFilterSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getContextMembersFilterSchemaLocation() throws WebserverSystemException {
+    public static String getContextMembersFilterSchemaLocation() {
         if (contextMembersFilterSchemaLocationRest == null) {
             contextMembersFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/" + "context/0.3/filter-contexts.xsd";
         }
@@ -1637,7 +1637,7 @@ public final class XmlUtility {
      * @return Returns the itemSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getItemSchemaLocation() throws WebserverSystemException {
+    public static String getItemSchemaLocation() {
         if (itemRestSchemaLocation == null) {
             itemRestSchemaLocation =
                 getSchemaBaseUrl() + "rest/item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
@@ -1649,7 +1649,7 @@ public final class XmlUtility {
      * @return Returns the itemsFilterSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getUpdateRelationsSchemaLocation() throws WebserverSystemException {
+    public static String getUpdateRelationsSchemaLocation() {
         if (updateRelationsSchemaLocation == null) {
             updateRelationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/update-relations.xsd";
         }
@@ -1660,7 +1660,7 @@ public final class XmlUtility {
      * @return Returns the relationsSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getRelationsSchemaLocation() throws WebserverSystemException {
+    public static String getRelationsSchemaLocation() {
         if (relationsSchemaLocation == null) {
             relationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/relations.xsd";
         }
@@ -1671,7 +1671,7 @@ public final class XmlUtility {
      * @return Returns the organizationalUnitSchemaLocation dependent on UserContext flag isRestAccess.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getOrganizationalUnitSchemaLocation() throws WebserverSystemException {
+    public static String getOrganizationalUnitSchemaLocation() {
         if (organizationalUnitRestSchemaLocation == null) {
             organizationalUnitRestSchemaLocation =
                 getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
@@ -1684,7 +1684,7 @@ public final class XmlUtility {
      * @return Returns the organizationalUnitListSchemaLocation dependent on UserContext flag isRestAccess.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getOrganizationalUnitListSchemaLocation() throws WebserverSystemException {
+    public static String getOrganizationalUnitListSchemaLocation() {
         if (organizationalUnitListRestSchemaLocation == null) {
             organizationalUnitListRestSchemaLocation =
                 getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
@@ -1697,7 +1697,7 @@ public final class XmlUtility {
      * @return Returns the organizationalUnitPathListSchemaLocation dependent on UserContext flag isRestAccess.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getOrganizationalUnitPathListSchemaLocation() throws WebserverSystemException {
+    public static String getOrganizationalUnitPathListSchemaLocation() {
         if (organizationalUnitPathListRestSchemaLocation == null) {
             organizationalUnitPathListRestSchemaLocation =
                 getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-path-list.xsd";
@@ -1709,7 +1709,7 @@ public final class XmlUtility {
      * @return Returns the organizationalUnitRefListSchemaLocation dependent on UserContext flag isRestAccess.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getOrganizationalUnitRefListSchemaLocation() throws WebserverSystemException {
+    public static String getOrganizationalUnitRefListSchemaLocation() {
         if (organizationalUnitRefListRestSchemaLocation == null) {
             organizationalUnitRefListRestSchemaLocation =
                 getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-ref-list.xsd";
@@ -1721,7 +1721,7 @@ public final class XmlUtility {
      * @return Returns the filterSchemaLocation dependent on UserContext flag isRestAccess.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getFilterSchemaLocation() throws WebserverSystemException {
+    public static String getFilterSchemaLocation() {
         if (filterSchemaLocationRest == null) {
             filterSchemaLocationRest = getSchemaBaseUrl() + "rest/common/0.4/filter.xsd";
         }
@@ -1732,7 +1732,7 @@ public final class XmlUtility {
      * @return Returns the pdpRequestsSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getPdpRequestsSchemaLocation() throws WebserverSystemException {
+    public static String getPdpRequestsSchemaLocation() {
         if (pdpRequestsSchemaLocation == null) {
             pdpRequestsSchemaLocation = getSchemaBaseUrl() + "rest/pdp/0.3/requests.xsd";
         }
@@ -1751,7 +1751,7 @@ public final class XmlUtility {
      * @return Returns the stagingFileSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getStagingFileSchemaLocation() throws WebserverSystemException {
+    public static String getStagingFileSchemaLocation() {
 
         if (stagingFileSchemaLocation == null) {
             stagingFileSchemaLocation = getSchemaBaseUrl() + "rest/staging-file/0.3/staging-file.xsd";
@@ -1763,7 +1763,7 @@ public final class XmlUtility {
      * @return Returns the tmeRequestsSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getTmeRequestsSchemaLocation() throws WebserverSystemException {
+    public static String getTmeRequestsSchemaLocation() {
         if (tmeRequestsSchemaLocation == null) {
             tmeRequestsSchemaLocation = getSchemaBaseUrl() + "tme/0.1/request.xsd";
         }
@@ -1819,7 +1819,7 @@ public final class XmlUtility {
      * @return Returns the statisticDataSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getStatisticDataSchemaLocation() throws WebserverSystemException {
+    public static String getStatisticDataSchemaLocation() {
 
         if (statisticDataSchemaLocation == null) {
             statisticDataSchemaLocation = getSchemaBaseUrl() + "statistic-data/0.3/statistic-data.xsd";
@@ -1831,7 +1831,7 @@ public final class XmlUtility {
      * @return Returns the aggregationDefinitionSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getAggregationDefinitionSchemaLocation() throws WebserverSystemException {
+    public static String getAggregationDefinitionSchemaLocation() {
         if (aggregationDefinitionRestSchemaLocation == null) {
             aggregationDefinitionRestSchemaLocation =
                 getSchemaBaseUrl() + "rest/aggregation-definition"
@@ -1844,7 +1844,7 @@ public final class XmlUtility {
      * @return Returns the reportDefinitionSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getReportDefinitionSchemaLocation() throws WebserverSystemException {
+    public static String getReportDefinitionSchemaLocation() {
         if (reportDefinitionRestSchemaLocation == null) {
             reportDefinitionRestSchemaLocation =
                 getSchemaBaseUrl() + "rest/report-definition" + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION
@@ -1857,7 +1857,7 @@ public final class XmlUtility {
      * @return Returns the scopeSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getScopeSchemaLocation() throws WebserverSystemException {
+    public static String getScopeSchemaLocation() {
         if (scopeRestSchemaLocation == null) {
             scopeRestSchemaLocation =
                 getSchemaBaseUrl() + "rest/scope" + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
@@ -1869,7 +1869,7 @@ public final class XmlUtility {
      * @return Returns the reportSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getReportSchemaLocation() throws WebserverSystemException {
+    public static String getReportSchemaLocation() {
         if (reportRestSchemaLocation == null) {
             reportRestSchemaLocation =
                 getSchemaBaseUrl() + "rest/report" + Constants.REPORT_NS_URI_SCHEMA_VERSION + "/report.xsd";
@@ -1881,7 +1881,7 @@ public final class XmlUtility {
      * @return Returns the ReportParametersSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getReportParametersSchemaLocation() throws WebserverSystemException {
+    public static String getReportParametersSchemaLocation() {
         if (reportParametersRestSchemaLocation == null) {
             reportParametersRestSchemaLocation =
                 getSchemaBaseUrl() + "rest/report" + Constants.REPORT_PARAMETERS_NS_URI_SCHEMA_VERSION
@@ -1894,7 +1894,7 @@ public final class XmlUtility {
      * @return Returns the PreprocessingInformationSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getPreprocessingInformationSchemaLocation() throws WebserverSystemException {
+    public static String getPreprocessingInformationSchemaLocation() {
 
         if (preprocessingInformationSchemaLocation == null) {
             preprocessingInformationSchemaLocation =
@@ -1908,7 +1908,7 @@ public final class XmlUtility {
      * @return Returns the xmlSchemaSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getXmlSchemaSchemaLocation() throws WebserverSystemException {
+    public static String getXmlSchemaSchemaLocation() {
         if (xmlSchemaSchemaLocation == null) {
             xmlSchemaSchemaLocation = getSchemaBaseUrl() + "common/0.2/xml-schema.xsd";
         }
@@ -1920,7 +1920,7 @@ public final class XmlUtility {
      * @return Returns the complete schema location for the provided value dependent on UserContext flag isRestAccess.
      * @throws WebserverSystemException In case of an error.
      */
-    private static String getSchemaLocation(final String commonPart) throws WebserverSystemException {
+    private static String getSchemaLocation(final String commonPart) {
         String result = REST_SCHEMA_LOCATIONS.get(commonPart);
         if (result == null) {
             result = getSchemaBaseUrl() + "rest/" + commonPart;

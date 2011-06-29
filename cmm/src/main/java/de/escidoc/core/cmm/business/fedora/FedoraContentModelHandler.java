@@ -149,7 +149,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      */
     @Override
     public String retrieve(final String id) throws ContentModelNotFoundException, SystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        XmlParserSystemException, WebserverSystemException {
 
         setContentModel(id);
         return render();
@@ -157,14 +157,14 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     @Override
     public String retrieveProperties(final String id) throws ContentModelNotFoundException, SystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        XmlParserSystemException, WebserverSystemException {
         setContentModel(id);
         return renderProperties();
     }
 
     @Override
     public String retrieveContentStreams(final String id) throws ContentModelNotFoundException, SystemException,
-        FedoraSystemException, TripleStoreSystemException, WebserverSystemException {
+        WebserverSystemException {
         setContentModel(id);
         return renderContentStreams(true);
     }
@@ -254,7 +254,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     @Override
     public String retrieveResources(final String id) throws ContentModelNotFoundException, SystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        XmlParserSystemException, WebserverSystemException {
         setContentModel(id);
         return renderResources();
     }
@@ -352,8 +352,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      */
     @Override
     public String create(final String xmlData) throws InvalidContentException, MissingAttributeValueException,
-        SystemException, XmlCorruptedException, XmlParserSystemException, WebserverSystemException,
-        EncodingSystemException, TripleStoreSystemException {
+        SystemException, XmlCorruptedException, EncodingSystemException, TripleStoreSystemException {
 
         final ContentModelCreate contentModel = parseContentModel(xmlData);
 
@@ -383,7 +382,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      */
     @Override
     public void delete(final String id) throws ContentModelNotFoundException, SystemException, LockingException,
-        InvalidStatusException, ResourceInUseException, WebserverSystemException, IntegritySystemException {
+        InvalidStatusException, ResourceInUseException {
 
         setContentModel(id);
         checkLocked();
@@ -411,8 +410,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     @Override
     public String update(final String id, final String xmlData) throws ContentModelNotFoundException,
         OptimisticLockingException, SystemException, ReadonlyVersionException, MissingAttributeValueException,
-        InvalidXmlException, InvalidContentException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+        InvalidXmlException, InvalidContentException, XmlParserSystemException, WebserverSystemException {
 
         setContentModel(id);
         final DateTime startTimestamp = getContentModel().getLastFedoraModificationDate();
@@ -845,8 +843,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     @Override
     public String ingest(final String xmlData) throws InvalidContentException, MissingAttributeValueException,
-        SystemException, XmlCorruptedException, XmlParserSystemException, WebserverSystemException,
-        EncodingSystemException, TripleStoreSystemException {
+        SystemException, XmlCorruptedException, EncodingSystemException, TripleStoreSystemException {
 
         final ContentModelCreate cm = parseContentModel(xmlData);
         cm.setIdProvider(getIdProvider());

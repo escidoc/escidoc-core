@@ -78,8 +78,7 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
      * @return MetadataReocrd FoXML.
      * @throws SystemException Thrown if converting of characters to default character set failed.
      */
-    public List<Map<String, String>> getMetadataRecordsMap(final Iterable<MdRecordCreate> mdRecords)
-        throws SystemException {
+    public List<Map<String, String>> getMetadataRecordsMap(final Iterable<MdRecordCreate> mdRecords) {
 
         final List<Map<String, String>> values = new ArrayList<Map<String, String>>();
 

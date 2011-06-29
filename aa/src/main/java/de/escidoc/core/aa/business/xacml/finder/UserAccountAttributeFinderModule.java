@@ -257,7 +257,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     @Override
     protected Object[] resolveLocalPart(
         final String attributeIdValue, final EvaluationCtx ctx, final String resourceId, final String resourceObjid,
-        final String resourceVersionNumber) throws EscidocException, SystemException {
+        final String resourceVersionNumber) throws EscidocException {
 
         // determine the id of the user account and to simplify the further
         // work, replace INTERNAL_SUBJECT_ATTRIBUTE_PREFIX by

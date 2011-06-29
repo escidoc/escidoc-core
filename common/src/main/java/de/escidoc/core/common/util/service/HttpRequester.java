@@ -119,8 +119,8 @@ public class HttpRequester {
      * @return String response
      * @throws Exception e
      */
-    public String doPut(final String resource, final String body) throws Exception, IOException,
-        NoSuchAlgorithmException, KeyManagementException, UnsupportedEncodingException, WebserverSystemException {
+    public String doPut(final String resource, final String body) throws Exception, KeyManagementException,
+        WebserverSystemException {
         if (body == null || body.length() == 0) {
             throw new Exception("body may not be null");
         }
@@ -135,8 +135,8 @@ public class HttpRequester {
      * @return String response
      * @throws Exception e
      */
-    public String doPost(final String resource, final String body) throws Exception, IOException,
-        NoSuchAlgorithmException, KeyManagementException, UnsupportedEncodingException, WebserverSystemException {
+    public String doPost(final String resource, final String body) throws Exception, NoSuchAlgorithmException,
+        KeyManagementException, WebserverSystemException {
         if (body == null || body.length() == 0) {
             throw new Exception("body may not be null");
         }

@@ -94,8 +94,7 @@ public class InvocationParser {
      *                                        authorization.
      */
     public List<Map<String, String>> buildRequestsList(final Object[] arguments, final MethodMapping methodMapping)
-        throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
-        WebserverSystemException, XmlCorruptedException {
+        throws MissingMethodParameterException, WebserverSystemException, XmlCorruptedException {
 
         return buildRequestsList(arguments, methodMapping, true);
     }
@@ -115,8 +114,7 @@ public class InvocationParser {
      *                                        authorization.
      */
     public List<Map<String, String>> buildRequestsList(final Object argument, final MethodMapping methodMapping)
-        throws MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException,
-        WebserverSystemException, XmlCorruptedException {
+        throws MissingMethodParameterException, WebserverSystemException, XmlCorruptedException {
 
         return buildRequestsList(argument, methodMapping, false);
     }

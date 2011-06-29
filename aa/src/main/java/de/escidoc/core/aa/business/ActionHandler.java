@@ -121,8 +121,7 @@ public class ActionHandler implements ActionHandlerInterface {
      * @see RoleHandlerInterface #deleteUnsecuredActions(java.lang.String)
      */
     @Override
-    public void deleteUnsecuredActions(final String contextId) throws ContextNotFoundException, SystemException,
-        SqlDatabaseSystemException, WebserverSystemException {
+    public void deleteUnsecuredActions(final String contextId) throws ContextNotFoundException, SystemException {
         this.utility.checkIsContext(contextId);
         final UnsecuredActionList unsecuredActionList = actionDao.retrieveUnsecuredActionList(contextId);
 

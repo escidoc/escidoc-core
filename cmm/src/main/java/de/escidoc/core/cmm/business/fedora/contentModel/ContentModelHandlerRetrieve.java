@@ -52,7 +52,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
     // TODO ContentHandlerRetrieve ?
     protected String render() throws WebserverSystemException, ContentModelNotFoundException,
-        TripleStoreSystemException, IntegritySystemException, EncodingSystemException, FedoraSystemException {
+        TripleStoreSystemException, IntegritySystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -96,8 +96,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    protected String renderContentStreams(final boolean isRoot) throws WebserverSystemException,
-        IntegritySystemException, TripleStoreSystemException {
+    protected String renderContentStreams(final boolean isRoot) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 

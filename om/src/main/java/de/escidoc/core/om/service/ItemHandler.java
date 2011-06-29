@@ -355,7 +355,7 @@ public class ItemHandler implements ItemHandlerInterface {
         throws ItemNotFoundException, XmlSchemaNotFoundException, LockingException, InvalidContentException,
         MdRecordNotFoundException, AuthenticationException, AuthorizationException, InvalidStatusException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
-        ReadonlyViolationException, ReadonlyVersionException, XmlSchemaValidationException {
+        ReadonlyViolationException, ReadonlyVersionException {
 
         return handler.updateMetadataRecord(id, mdRecordId, xmlData);
     }
@@ -565,7 +565,7 @@ public class ItemHandler implements ItemHandlerInterface {
     public String assignObjectPid(final String id, final String taskParam) throws ItemNotFoundException,
         ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
-        XmlCorruptedException, PidSystemException {
+        XmlCorruptedException {
 
         return handler.assignObjectPid(id, taskParam);
     }
@@ -579,7 +579,7 @@ public class ItemHandler implements ItemHandlerInterface {
     public String assignContentPid(final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
-        ComponentNotFoundException, XmlCorruptedException, ReadonlyVersionException, PidSystemException {
+        ComponentNotFoundException, XmlCorruptedException, ReadonlyVersionException {
         return handler.assignContentPid(id, componentId, taskParam);
     }
 
@@ -594,7 +594,7 @@ public class ItemHandler implements ItemHandlerInterface {
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
         InvalidStatusException, InvalidXmlException, MissingElementValueException, LockingException,
         ReadonlyViolationException, InvalidContentException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, ReadonlyVersionException, ReadonlyAttributeViolationException {
+        MissingMethodParameterException, ReadonlyVersionException {
 
         return handler.addContentRelations(id, param);
     }

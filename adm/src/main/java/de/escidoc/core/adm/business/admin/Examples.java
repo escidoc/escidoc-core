@@ -246,8 +246,8 @@ public class Examples {
         InvalidStatusException, InvalidContextException, XPathExpressionException, MissingElementValueException,
         LockingException, ParserConfigurationException, ContentModelNotFoundException, ComponentNotFoundException,
         ContextNameNotUniqueException, OrganizationalUnitNotFoundException, FileNotFoundException,
-        ReadonlyVersionException, ItemNotFoundException, ReadonlyAttributeViolationException, MissingMdRecordException,
-        ReferencedResourceNotFoundException, MissingMethodParameterException {
+        ReadonlyVersionException, ItemNotFoundException, MissingMdRecordException, ReferencedResourceNotFoundException,
+        MissingMethodParameterException {
         final StringBuilder result = new StringBuilder();
         final String ouId = loadOrganizationalUnit(loadFile(directory + EXAMPLE_OU));
 
@@ -298,8 +298,8 @@ public class Examples {
      */
     private String loadContentModel(final String xml) throws MissingAttributeValueException, SystemException,
         XmlSchemaValidationException, AuthorizationException, IOException, SAXException, XPathExpressionException,
-        WebserverSystemException, ParserConfigurationException, InvalidContentException, XmlCorruptedException,
-        AuthenticationException, MissingMethodParameterException, UnsupportedEncodingException {
+        ParserConfigurationException, InvalidContentException, XmlCorruptedException, AuthenticationException,
+        MissingMethodParameterException {
         final String result = null;
         final String createXml = this.contentModelHandler.create(xml);
         return getObjectId(createXml, ResourceType.CONTENT_MODEL);
@@ -312,14 +312,13 @@ public class Examples {
      * @param ouId organizational unit id
      * @return object id of the newly created context
      */
-    private String loadContext(final String xml, final String ouId) throws XmlSchemaValidationException,
-        OptimisticLockingException, AuthorizationException, IOException, SAXException, WebserverSystemException,
-        InvalidContentException, XmlCorruptedException, StreamNotFoundException, AuthenticationException,
-        InvalidXmlException, ContextNotFoundException, SystemException, MissingAttributeValueException,
-        InvalidStatusException, MissingElementValueException, XPathExpressionException,
+    private String loadContext(final String xml, final String ouId) throws OptimisticLockingException,
+        AuthorizationException, IOException, SAXException, InvalidContentException, StreamNotFoundException,
+        AuthenticationException, InvalidXmlException, ContextNotFoundException, SystemException,
+        MissingAttributeValueException, InvalidStatusException, MissingElementValueException, XPathExpressionException,
         ReadonlyElementViolationException, LockingException, ParserConfigurationException,
         ContentModelNotFoundException, OrganizationalUnitNotFoundException, ContextNameNotUniqueException,
-        ReadonlyAttributeViolationException, MissingMethodParameterException, UnsupportedEncodingException {
+        ReadonlyAttributeViolationException, MissingMethodParameterException {
         final String createXml = this.contextHandler.create(MessageFormat.format(xml, new Date().getTime(), ouId));
         final String result = getObjectId(createXml, ResourceType.CONTEXT);
         this.contextHandler.open(result, createTaskParam(getLastModificationDate(createXml, ResourceType.CONTEXT)));
@@ -378,11 +377,10 @@ public class Examples {
      * @return object id of the newly created organizational unit
      */
     private String loadOrganizationalUnit(final String xml) throws OptimisticLockingException,
-        MissingAttributeValueException, SystemException, XmlSchemaValidationException, IOException,
-        AuthorizationException, InvalidStatusException, SAXException, MissingElementValueException,
-        XPathExpressionException, ParserConfigurationException, WebserverSystemException, XmlCorruptedException,
+        MissingAttributeValueException, SystemException, IOException, AuthorizationException, InvalidStatusException,
+        SAXException, MissingElementValueException, XPathExpressionException, ParserConfigurationException,
         OrganizationalUnitNotFoundException, AuthenticationException, MissingMdRecordException, InvalidXmlException,
-        MissingMethodParameterException, UnsupportedEncodingException {
+        MissingMethodParameterException {
         final String createXml = this.organizationalUnitHandler.create(xml);
         final String result = getObjectId(createXml, ResourceType.OU);
         this.organizationalUnitHandler.open(result,

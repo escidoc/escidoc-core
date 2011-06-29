@@ -448,7 +448,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws WebserverSystemException
      *             Thrown if an internal error occurs.
      */
-    public void deleteAdminDescriptor(final String admDescName) throws FedoraSystemException, WebserverSystemException {
+    public void deleteAdminDescriptor(final String admDescName) {
 
         this.adminDescriptors.get(admDescName).delete();
     }
@@ -485,7 +485,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    public Collection<String> getOrganizationalUnitHrefs() throws TripleStoreSystemException, WebserverSystemException {
+    public Collection<String> getOrganizationalUnitHrefs() throws TripleStoreSystemException {
         final String path = "/oum/organizational-unit/";
         final List<String> propVals = getOrganizationalUnitObjids();
         final Collection<String> ouHrefs = new ArrayList<String>(propVals.size());

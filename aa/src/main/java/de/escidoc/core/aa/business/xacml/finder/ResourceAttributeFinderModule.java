@@ -274,9 +274,8 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      */
     private EvaluationResult fetchComponentAttribute(
         final String attributeIdValue, final EvaluationCtx ctx, final String itemId) throws SystemException,
-        MissingAttributeValueException, OptimisticLockingException, ComponentNotFoundException,
-        ResourceNotFoundException, UniqueConstraintViolationException, ItemNotFoundException, InvalidXmlException,
-        WebserverSystemException {
+        MissingAttributeValueException, OptimisticLockingException, ResourceNotFoundException,
+        UniqueConstraintViolationException, InvalidXmlException {
 
         // to resolve a component attribute, the id of the component
         // must be known

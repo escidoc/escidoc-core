@@ -211,8 +211,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @param forceSync Set true to force synchronous sync of TripleStore.
      * @throws SystemException Thrown if an unexpected error occurs
      */
-    public void persist(final boolean forceSync) throws SystemException, FileNotFoundException,
-        InvalidContentException, FedoraSystemException {
+    public void persist(final boolean forceSync) throws SystemException, FileNotFoundException, InvalidContentException {
 
         if (getProperties().getObjectProperties().getOrigin() == null) {
             persistComponents();
@@ -522,7 +521,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws SystemException              Thrown if rendering of Item or sub-elements failed.
      * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      */
-    private String getMinimalFoXML() throws SystemException, WebserverSystemException {
+    private String getMinimalFoXML() throws SystemException {
 
         final Map<String, Object> valueMap = new HashMap<String, Object>();
 
@@ -565,7 +564,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @return RELS-EXT XML snippet
      * @throws SystemException Thrown if renderer failed.
      */
-    private String renderRelsExt() throws SystemException, WebserverSystemException {
+    private String renderRelsExt() throws SystemException {
 
         final Map<String, Object> valueMap = new HashMap<String, Object>();
 
@@ -587,7 +586,7 @@ public class ItemCreate extends GenericResourceCreate {
      * Persist all Components of the Item.
      */
     private void persistComponents() throws SystemException, FileNotFoundException, InvalidContentException,
-        IntegritySystemException, FedoraSystemException {
+        FedoraSystemException {
 
         int i = 0;
         List<String> componentIds = null;

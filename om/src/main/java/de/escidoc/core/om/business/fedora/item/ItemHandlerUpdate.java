@@ -116,9 +116,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         final Map<String, Object> components, final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
         final Map<String, String> nsUris) throws ComponentNotFoundException, LockingException, InvalidStatusException,
         SystemException, InvalidContentException, MissingContentException, FileNotFoundException,
-        XmlCorruptedException, XmlSchemaValidationException, ReadonlyElementViolationException,
-        ReadonlyAttributeViolationException, MissingElementValueException, IntegritySystemException,
-        FedoraSystemException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        ReadonlyElementViolationException, ReadonlyAttributeViolationException, MissingElementValueException,
+        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         // FIXME don't set but use getComponents()? (FRS)
         // What do you want to have fixed? I want to have setComponent() but I
@@ -188,8 +187,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
     protected void setComponent(
         final Component c, final Map streams, final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
         final String nsUri) throws InvalidContentException, MissingContentException, FileNotFoundException,
-        ComponentNotFoundException, EncodingSystemException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException, IntegritySystemException {
+        EncodingSystemException, FedoraSystemException, TripleStoreSystemException, XmlParserSystemException,
+        WebserverSystemException, IntegritySystemException {
 
         final Map<String, String> properties;
         try {

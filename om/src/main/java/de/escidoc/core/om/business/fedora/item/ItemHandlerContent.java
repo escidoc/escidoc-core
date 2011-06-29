@@ -180,7 +180,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     public EscidocBinaryContent retrieveContent(
         final String id, final String componentId, final String transformer, final String param)
         throws ItemNotFoundException, ComponentNotFoundException, SystemException, AuthorizationException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+        XmlParserSystemException {
 
         setItem(id);
         final Component component = getComponent(componentId);
@@ -231,7 +231,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     public EscidocServiceRedirectInterface redirectContentService(
         final String id, final String componentId, final String transformer, final String clientService)
         throws ItemNotFoundException, ComponentNotFoundException, SystemException, AuthorizationException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+        XmlParserSystemException {
 
         setItem(id);
         final Component component = getComponent(componentId);
@@ -423,7 +423,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     @Deprecated
     public String retrieveContentStream(final String itemId, final String name) throws ItemNotFoundException,
         ContentStreamNotFoundException, TripleStoreSystemException, IntegritySystemException, WebserverSystemException,
-        FedoraSystemException, XmlParserSystemException {
+        FedoraSystemException {
 
         setItem(itemId);
         final String contentStream = renderContentStream(name, true);
@@ -437,7 +437,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     @Deprecated
     public EscidocBinaryContent retrieveContentStreamContent(final String itemId, final String name)
         throws ItemNotFoundException, AuthorizationException, FedoraSystemException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException, XmlParserSystemException {
+        WebserverSystemException, IntegritySystemException {
 
         setItem(itemId);
         try {
@@ -457,8 +457,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     @Deprecated
     public String retrieveContentStreams(final String itemId) throws ItemNotFoundException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException {
+        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException {
         setItem(itemId);
         return renderContentStreams(true);
     }

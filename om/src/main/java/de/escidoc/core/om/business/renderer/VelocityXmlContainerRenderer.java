@@ -92,8 +92,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @see ContainerRendererInterface#render(Container)
      */
     @Override
-    public String render(final Container container) throws SystemException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+    public String render(final Container container) throws SystemException, XmlParserSystemException,
+        WebserverSystemException {
 
         // Container container = containerHandler.getContainer();
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -438,7 +438,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException Thrown in case of an internal error.
      */
     private void addStructMapValus(final Container container, final Map<String, Object> values) throws SystemException,
-        WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
+        TripleStoreSystemException, XmlParserSystemException {
 
         values.put("structMapTitle", "StructMap of Container");
         values.put("structMapHref", container.getHref() + "/struct-map");
@@ -462,7 +462,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void addMemberRefs(final Container container, final Map<String, Object> values) throws SystemException,
-        MissingMethodParameterException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException {
+        MissingMethodParameterException, WebserverSystemException, XmlParserSystemException {
 
         final UserFilter ufilter = new UserFilter();
 

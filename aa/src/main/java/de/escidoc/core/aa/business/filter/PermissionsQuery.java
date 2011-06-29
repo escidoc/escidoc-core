@@ -145,8 +145,7 @@ public class PermissionsQuery {
      * @throws WebserverSystemException    Thrown if a framework internal error occurs.
      */
     public String getFilterQuery(
-        final Iterable<ResourceType> resourceTypes, final String userId, final FilterInterface filter)
-        throws WebserverSystemException {
+        final Iterable<ResourceType> resourceTypes, final String userId, final FilterInterface filter) {
         final StringBuffer result = new StringBuffer();
 
         for (final ResourceType resourceType : resourceTypes) {

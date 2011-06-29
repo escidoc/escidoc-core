@@ -165,7 +165,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     @Override
     public String retrieveScopes(final Map<String, String[]> parameters) throws InvalidSearchQueryException,
-        SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        SystemException {
         final String result;
         final SRURequestParameters params = new DbRequestParameters(parameters);
         final String query = params.getQuery();
@@ -216,7 +216,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     @Override
     public String update(final String id, final String xmlData) throws ScopeNotFoundException,
-        MissingMethodParameterException, SystemException, WebserverSystemException {
+        MissingMethodParameterException, SystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }

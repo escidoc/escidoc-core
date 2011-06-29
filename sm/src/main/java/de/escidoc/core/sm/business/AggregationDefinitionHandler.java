@@ -228,7 +228,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
      */
     @Override
     public String retrieve(final String id) throws AggregationDefinitionNotFoundException,
-        MissingMethodParameterException, SystemException, SqlDatabaseSystemException {
+        MissingMethodParameterException, SystemException {
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -253,7 +253,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
      */
     @Override
     public String retrieveAggregationDefinitions(final Map<String, String[]> parameters)
-        throws InvalidSearchQueryException, SystemException, WebserverSystemException {
+        throws InvalidSearchQueryException, SystemException {
         final String result;
         final SRURequestParameters params = new DbRequestParameters(parameters);
         final String query = params.getQuery();

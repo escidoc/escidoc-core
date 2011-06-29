@@ -936,7 +936,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws FedoraSystemException    Thrown if connection to Fedora failed.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    protected DateTime persistWov() throws FedoraSystemException, WebserverSystemException {
+    protected DateTime persistWov() throws WebserverSystemException {
 
         DateTime timestamp = null;
         if (this.wov != null) {

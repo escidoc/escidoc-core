@@ -345,7 +345,7 @@ public class ConnectionUtility {
      * @return HttpClient
      * @throws WebserverSystemException e
      */
-    public DefaultHttpClient getHttpClient(final String url) throws WebserverSystemException {
+    public DefaultHttpClient getHttpClient(final String url) {
         if (this.httpClient == null) {
 
             final HttpParams params = new BasicHttpParams();

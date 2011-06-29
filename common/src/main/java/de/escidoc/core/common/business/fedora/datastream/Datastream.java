@@ -624,7 +624,7 @@ public class Datastream {
      * @throws EncodingSystemException  If the charset UTF-8 is not supported.
      * @throws WebserverSystemException If an error ocurres.
      */
-    public String toStringUTF8() throws EncodingSystemException, WebserverSystemException {
+    public String toStringUTF8() throws EncodingSystemException {
 
         return toString(XmlUtility.CHARACTER_ENCODING).trim();
     }
@@ -640,10 +640,6 @@ public class Datastream {
             return toStringUTF8();
         }
         catch (final EncodingSystemException e) {
-            LOGGER.debug("Can not convert Stream to string.", e);
-            return super.toString();
-        }
-        catch (final WebserverSystemException e) {
             LOGGER.debug("Can not convert Stream to string.", e);
             return super.toString();
         }

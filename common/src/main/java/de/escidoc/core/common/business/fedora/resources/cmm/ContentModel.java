@@ -489,8 +489,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         this.otherStreams.put(name, ds);
     }
 
-    private void setStream(final String name, final Datastream ds, final Datastream curDs)
-        throws WebserverSystemException, FedoraSystemException {
+    private void setStream(final String name, final Datastream ds, final Datastream curDs) throws FedoraSystemException {
         try {
 
             boolean contentChanged = false;
@@ -555,7 +554,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         return persist(true);
     }
 
-    private DateTime persistDsCompositeModel() throws FedoraSystemException, WebserverSystemException {
+    private DateTime persistDsCompositeModel() throws WebserverSystemException {
         DateTime timestamp = null;
         if (this.dsCompositeModel != null) {
             timestamp = this.dsCompositeModel.merge();

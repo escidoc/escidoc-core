@@ -246,8 +246,7 @@ public class RoleHandler implements RoleHandlerInterface {
      */
     @Override
     public String update(final String id, final String xmlData) throws RoleNotFoundException, XmlCorruptedException,
-        MissingAttributeValueException, UniqueConstraintViolationException, OptimisticLockingException,
-        SystemException, SqlDatabaseSystemException, WebserverSystemException {
+        MissingAttributeValueException, UniqueConstraintViolationException, OptimisticLockingException, SystemException {
 
         // Check XACML Policy
         EscidocRole role = new EscidocRole();
@@ -342,8 +341,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface #retrieveRoles(java.util.Map)
      */
     @Override
-    public String retrieveRoles(final Map<String, String[]> filter) throws InvalidSearchQueryException,
-        SystemException, SqlDatabaseSystemException, WebserverSystemException {
+    public String retrieveRoles(final Map<String, String[]> filter) throws InvalidSearchQueryException, SystemException {
         final SRURequestParameters parameters = new DbRequestParameters(filter);
         final String query = parameters.getQuery();
         final int limit = parameters.getMaximumRecords();

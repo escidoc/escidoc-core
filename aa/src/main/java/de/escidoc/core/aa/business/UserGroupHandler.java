@@ -174,7 +174,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     @Override
     public String create(final String xmlData) throws UniqueConstraintViolationException, XmlCorruptedException,
-        SystemException, WebserverSystemException {
+        SystemException {
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
         final StaxParser sp = new StaxParser();
         final GroupCreateUpdateHandler groupHandler = new GroupCreateUpdateHandler(sp);
@@ -240,7 +240,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     @Override
     public String update(final String groupId, final String xmlData) throws UniqueConstraintViolationException,
         XmlCorruptedException, MissingAttributeValueException, OptimisticLockingException, SystemException,
-        SqlDatabaseSystemException, UserGroupNotFoundException, WebserverSystemException {
+        UserGroupNotFoundException {
 
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
@@ -262,9 +262,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             sp.parse(in);
             sp.clearHandlerChain();
-        }
-        catch (LastModificationDateMissingException e) {
-            throw new XmlCorruptedException(e);
         }
         catch (final OptimisticLockingException e) {
             throw e;
@@ -564,8 +561,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     public String addSelectors(final String groupId, final String taskParam)
         throws OrganizationalUnitNotFoundException, UserAccountNotFoundException, UserGroupNotFoundException,
         InvalidContentException, MissingMethodParameterException, SystemException, AuthenticationException,
-        AuthorizationException, OptimisticLockingException, XmlCorruptedException,
-        UserGroupHierarchyViolationException, WebserverSystemException {
+        AuthorizationException, OptimisticLockingException, XmlCorruptedException, UserGroupHierarchyViolationException {
 
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
@@ -586,9 +582,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             sp.clearHandlerChain();
         }
         catch (final InvalidXmlException e) {
-            throw new XmlCorruptedException(e);
-        }
-        catch (LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
         }
         catch (final Exception e) {
@@ -664,8 +657,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     public String removeSelectors(final String groupId, final String taskParam) throws XmlCorruptedException,
         AuthenticationException, AuthorizationException, SystemException, UserGroupNotFoundException,
         OptimisticLockingException, MissingMethodParameterException, UserAccountNotFoundException,
-        OrganizationalUnitNotFoundException, XmlParserSystemException, SqlDatabaseSystemException,
-        WebserverSystemException {
+        OrganizationalUnitNotFoundException, WebserverSystemException {
         final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
             final String message = "User group with id " + groupId + " does not exist.";
@@ -685,9 +677,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             sp.clearHandlerChain();
         }
         catch (final InvalidXmlException e) {
-            throw new XmlCorruptedException(e);
-        }
-        catch (LastModificationDateMissingException e) {
             throw new XmlCorruptedException(e);
         }
         catch (final Exception e) {
@@ -721,7 +710,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     @Override
     public String retrieveUserGroups(final Map<String, String[]> filter) throws InvalidSearchQueryException,
-        SystemException, SqlDatabaseSystemException, WebserverSystemException, TripleStoreSystemException {
+        SystemException, WebserverSystemException, TripleStoreSystemException {
 
         Map<String, String[]> castedFilter = filter;
 
@@ -978,7 +967,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     @Override
     public Set<String> retrieveGroupsForUser(final String userId, final boolean activeOnly)
-        throws UserAccountNotFoundException, SystemException, SqlDatabaseSystemException, TripleStoreSystemException {
+        throws UserAccountNotFoundException, SystemException, TripleStoreSystemException {
         // may not return null, so return empty list!!
         Set<String> userGroups = new HashSet<String>();
         // Try getting the userAccount
@@ -1167,7 +1156,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException If anything fails while computing the pathes.
      */
     private List<String> getOrgUnitPathList(final String orgUnitId, final List<String> totalList)
-        throws SystemException, TripleStoreSystemException {
+        throws SystemException {
 
         List<String> addableList = totalList;
         final List<String> orgUnitIds = this.tripleStoreUtility.getParents(orgUnitId);

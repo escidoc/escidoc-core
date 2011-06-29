@@ -118,8 +118,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws SystemException Thrown in case of internal error.
      */
     @Override
-    public void setObjectPid(final String pid) throws SystemException, WebserverSystemException,
-        EncodingSystemException, TripleStoreSystemException, XmlParserSystemException {
+    public void setObjectPid(final String pid) throws SystemException, TripleStoreSystemException,
+        XmlParserSystemException {
 
         super.setObjectPid(pid);
 
@@ -628,7 +628,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      */
     @Deprecated
     private byte[] deleteLatestReleasePid() throws IntegritySystemException, EncodingSystemException,
-        FedoraSystemException, WebserverSystemException {
+        FedoraSystemException {
 
         // FIXME use a real XML parser to delete entries !
         String relsExt;

@@ -214,9 +214,6 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
             parser.clearHandlerChain();
         }
-        catch (LastModificationDateMissingException e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
         catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
@@ -284,9 +281,6 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
         try {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
             parser.clearHandlerChain();
-        }
-        catch (LastModificationDateMissingException e) {
-            throw new XmlCorruptedException(e);
         }
         catch (final XMLStreamException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);

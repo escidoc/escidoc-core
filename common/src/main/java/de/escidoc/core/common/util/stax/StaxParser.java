@@ -200,8 +200,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
         OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
         TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
-        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException,
-        LastModificationDateMissingException {
+        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException {
 
         parseStream(new ByteArrayInputStream(in));
     }
@@ -251,8 +250,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
         OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
         TripleStoreSystemException, WebserverSystemException, EncodingSystemException, XmlParserSystemException,
-        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException,
-        LastModificationDateMissingException {
+        IntegritySystemException, MissingMdRecordException, TmeException, XmlCorruptedException {
 
         if (this.handlerChain == null || handlerChain.isEmpty()) {
             throw new XMLStreamException("Parser has no handlers. Try StaxParser sp.addHandler"

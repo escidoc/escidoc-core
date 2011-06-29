@@ -99,8 +99,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * #render(de.escidoc.core.om.business.fedora.resources.Context)
      */
     @Override
-    public String render(final FedoraContextHandler contextHandler) throws SystemException, WebserverSystemException,
-        TripleStoreSystemException {
+    public String render(final FedoraContextHandler contextHandler) throws SystemException {
 
         final Context context = contextHandler.getContext();
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -252,8 +251,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     @Override
     public String renderMemberList(final FedoraContextHandler contextHandler, final List<String> memberList)
-        throws SystemException, AuthorizationException, IntegritySystemException, FedoraSystemException,
-        XmlParserSystemException {
+        throws SystemException, AuthorizationException, FedoraSystemException, XmlParserSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final Context context = contextHandler.getContext();
@@ -274,8 +272,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     @Override
     public String renderMemberRefList(final FedoraContextHandler contextHandler, final List<String> memberList)
-        throws SystemException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+        throws SystemException, AuthorizationException, TripleStoreSystemException, IntegritySystemException,
+        FedoraSystemException, XmlParserSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final Context context = contextHandler.getContext();
@@ -462,8 +460,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws AuthorizationException Thrown if access to origin Item is restricted.
      */
     private void addMemberListValues(final Map<String, Object> values, final Iterable<String> memberList)
-        throws SystemException, AuthorizationException, TripleStoreSystemException, WebserverSystemException,
-        IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+        throws SystemException, AuthorizationException, WebserverSystemException, IntegritySystemException,
+        FedoraSystemException, XmlParserSystemException {
 
         values.put("memberListNamespacePrefix", Constants.MEMBER_LIST_PREFIX);
         values.put("memberListNamespace", Constants.MEMBER_LIST_NAMESPACE_URI);

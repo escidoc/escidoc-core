@@ -71,7 +71,7 @@ public class VelocityXmlAdminRenderer implements AdminRendererInterface {
      * @param values The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addCommonValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addCommonValues(final Map<String, Object> values) {
 
         values.put("indexConfigurationNamespacePrefix", Constants.INDEX_CONFIGURATION_NS_PREFIX);
         values.put("indexConfigurationNamespace", Constants.INDEX_CONFIGURATION_NS_URI);

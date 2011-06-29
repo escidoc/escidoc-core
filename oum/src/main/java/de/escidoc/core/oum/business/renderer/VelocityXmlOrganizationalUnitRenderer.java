@@ -329,7 +329,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @param values The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static void addXlinkValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addXlinkValues(final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
@@ -619,7 +619,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @param values             The map to add values to.
      */
     private void addSuccessorsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
-        throws TripleStoreSystemException, WebserverSystemException {
+        throws TripleStoreSystemException {
 
         values.put(XmlTemplateProvider.SUCCESSORS_HREF, XmlUtility
             .getOrganizationalUnitSuccessorsHref(organizationalUnit.getId()));

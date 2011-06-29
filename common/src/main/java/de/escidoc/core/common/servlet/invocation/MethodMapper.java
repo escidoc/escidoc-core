@@ -137,8 +137,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @throws IOException                  If anything fails.
      * @throws TransformerException         Thrown if an xml transformation fails.
      */
-    private void init() throws ParserConfigurationException, SAXException, IOException, TransformerException,
-        FileNotFoundException {
+    private void init() throws ParserConfigurationException, SAXException, IOException, TransformerException {
 
         final Iterator<String> iter = this.descriptorFilenames.iterator();
         this.methodMappings = new ArrayList<Document>();

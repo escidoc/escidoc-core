@@ -165,8 +165,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @param componentId The id of the Component which is to delete from the Item.
      */
     public void deleteComponent(final String componentId) throws LockingException, ComponentNotFoundException,
-        InvalidStatusException, SystemException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+        InvalidStatusException, SystemException, XmlParserSystemException, WebserverSystemException {
 
         deleteComponent(getComponent(componentId));
     }
@@ -176,9 +175,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @param c The Component which is to delete from the Item.
      */
-    public void deleteComponent(final FedoraResource c) throws LockingException, ComponentNotFoundException,
-        InvalidStatusException, WebserverSystemException, TripleStoreSystemException, FedoraSystemException,
-        XmlParserSystemException, IntegritySystemException, EncodingSystemException {
+    public void deleteComponent(final FedoraResource c) throws ComponentNotFoundException, WebserverSystemException,
+        XmlParserSystemException, IntegritySystemException {
 
         final String componentId = c.getId();
         removeComponent(componentId);
@@ -398,7 +396,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     }
 
     @Deprecated
-    public void setCts(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
+    public void setCts(final Datastream ds) throws FedoraSystemException {
         // TODO should lock only be checked in handler?
         // if (this.isLocked) {
         // throw new LockingException("Item " + getId() + " is locked.");
@@ -632,8 +630,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     }
 
     @Deprecated
-    public void setContentStream(final String name, final Datastream ds) throws FedoraSystemException,
-        WebserverSystemException {
+    public void setContentStream(final String name, final Datastream ds) throws FedoraSystemException {
         // don't trust the handler
         final List<String> alternateIDs = new ArrayList<String>();
         alternateIDs.add("content-stream");
@@ -947,7 +944,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     }
 
     private void addComponentToRelsExt(final String componentId) throws FedoraSystemException,
-        WebserverSystemException, IntegritySystemException, EncodingSystemException {
+        WebserverSystemException, EncodingSystemException {
 
         final StaxParser sp = new StaxParser();
 

@@ -78,7 +78,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      */
     @Override
     public String create(final String xmlData) throws UniqueConstraintViolationException, InvalidXmlException,
-        MissingMethodParameterException, SystemException, WebserverSystemException {
+        MissingMethodParameterException, SystemException {
         final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(xmlData);
         final StaxParser sp = new StaxParser();
         final SetDefinitionCreateHandler sdch = new SetDefinitionCreateHandler(sp);
@@ -180,8 +180,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * @see de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String setDefinitionId) throws ResourceNotFoundException, SystemException,
-        SqlDatabaseSystemException {
+    public String retrieve(final String setDefinitionId) throws ResourceNotFoundException, SystemException {
         final SetDefinition setDefinition = setDefinitionDao.retrieveSetDefinition(setDefinitionId);
 
         if (setDefinition == null) {
@@ -201,8 +200,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      */
     @Override
     public String update(final String setDefinitionId, final String xmlData) throws ResourceNotFoundException,
-        OptimisticLockingException, MissingMethodParameterException, SystemException, XmlParserSystemException,
-        SqlDatabaseSystemException, WebserverSystemException {
+        OptimisticLockingException, MissingMethodParameterException, SystemException, WebserverSystemException {
         final SetDefinition setDefinition = setDefinitionDao.retrieveSetDefinition(setDefinitionId);
         if (setDefinition == null) {
             throw new ResourceNotFoundException(StringUtility.format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,

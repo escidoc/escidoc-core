@@ -249,8 +249,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      */
     public String addComponent(final String xmlData) throws SystemException, FileNotFoundException,
         MissingElementValueException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
-        InvalidContentException, MissingContentException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+        InvalidContentException, MissingContentException, XmlParserSystemException, WebserverSystemException {
 
         // TODO move all precondition checks to service method
         // checkLocked();
@@ -411,8 +410,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      */
     public String createComponent(final String xmlData) throws SystemException, FileNotFoundException,
         MissingElementValueException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
-        InvalidContentException, MissingContentException, FedoraSystemException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+        InvalidContentException, MissingContentException, XmlParserSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
         // find out the creator of the component

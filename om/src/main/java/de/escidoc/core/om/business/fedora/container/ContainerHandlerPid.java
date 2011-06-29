@@ -78,8 +78,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      */
     public String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
         ContainerNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
-        SystemException, XmlCorruptedException, FedoraSystemException, TripleStoreSystemException, PidSystemException,
-        WebserverSystemException, XmlParserSystemException {
+        SystemException, XmlCorruptedException, PidSystemException, WebserverSystemException, XmlParserSystemException {
 
         setContainer(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
@@ -126,8 +125,8 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      */
     public String assignVersionPid(final String id, final String taskParam) throws ContainerNotFoundException,
         LockingException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        InvalidStatusException, XmlCorruptedException, ReadonlyVersionException, FedoraSystemException,
-        TripleStoreSystemException, PidSystemException, WebserverSystemException, XmlParserSystemException {
+        InvalidStatusException, XmlCorruptedException, ReadonlyVersionException, PidSystemException,
+        WebserverSystemException, XmlParserSystemException {
 
         setContainer(id);
         if (!getContainer().isLatestVersion()) {

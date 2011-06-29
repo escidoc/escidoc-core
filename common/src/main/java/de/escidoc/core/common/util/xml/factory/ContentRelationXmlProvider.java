@@ -81,7 +81,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @return XML representation
      */
     public String getContentRelationXml(final ContentRelationCreate cr) throws TripleStoreSystemException,
-        EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException {
+        EncodingSystemException, IntegritySystemException, WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         // put all relevant values from object into value Map
@@ -108,7 +108,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @return XML representation of md-records.
      */
     public String getContentRelationMdRecords(final ContentRelationCreate cr) throws EncodingSystemException,
-        FedoraSystemException, IntegritySystemException, TripleStoreSystemException, WebserverSystemException {
+        IntegritySystemException, TripleStoreSystemException, WebserverSystemException {
 
         final Map<String, String> commonValues = getCommonValues();
         return renderMdRecords(cr, commonValues, true);
@@ -122,8 +122,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @return XML representation of md-record.
      */
     public String getContentRelationMdRecord(final ContentRelationCreate cr, final MdRecordCreate mr)
-        throws MdRecordNotFoundException, TripleStoreSystemException, EncodingSystemException,
-        IntegritySystemException, WebserverSystemException {
+        throws MdRecordNotFoundException, WebserverSystemException {
 
         final Map<String, String> commonValues = getCommonValues();
         final String mdRecord = renderMdRecord(cr, mr, commonValues, true);
@@ -213,7 +212,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @return Map with common ContentRelation values.
      * @throws WebserverSystemException Thrown if values extracting failed.
      */
-    private static Map<String, String> getCommonValues() throws WebserverSystemException {
+    private static Map<String, String> getCommonValues() {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -402,7 +401,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      */
     public String renderMdRecords(
         final ContentRelationCreate cr, final Map<String, String> commonValues, final boolean isRoot)
-        throws WebserverSystemException, EncodingSystemException, IntegritySystemException, TripleStoreSystemException {
+        throws WebserverSystemException {
 
         final StringBuilder content = new StringBuilder();
 

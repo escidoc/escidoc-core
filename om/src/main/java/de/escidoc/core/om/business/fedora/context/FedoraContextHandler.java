@@ -144,8 +144,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
     private String doCreate(final String xmlData, final boolean isCreate) throws ContextNameNotUniqueException,
         SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
         MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
-        InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException, FedoraSystemException,
-        TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
+        InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException, XmlParserSystemException,
+        WebserverSystemException {
 
         final String id = createContext(xmlData);
         try {
@@ -196,8 +196,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
      * (java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws ContextNotFoundException, SystemException, IntegritySystemException,
-        WebserverSystemException {
+    public String retrieve(final String id) throws ContextNotFoundException, SystemException, WebserverSystemException {
         setContext(id);
         return getContextXml(this);
     }

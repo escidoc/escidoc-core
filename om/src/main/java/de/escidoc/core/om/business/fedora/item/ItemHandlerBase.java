@@ -222,7 +222,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws ItemNotFoundException Thrown if no Item with this objid exits.
      */
     final void prepareAndSetOriginItem() throws ItemNotFoundException, TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException, FedoraSystemException, XmlParserSystemException {
+        WebserverSystemException, IntegritySystemException, FedoraSystemException {
 
         final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         final String originId;

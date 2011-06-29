@@ -16,14 +16,13 @@ public interface FedoraRestDeviationHandlerService extends Remote {
         String pid, String dsID, Map parameters, SecurityContext securityContext) throws Exception;
 
     EscidocBinaryContent getDatastreamDissemination(
-        String pid, String dsID, Map parameters, String authHandle, Boolean restAccess) throws Exception,
-        RemoteException;
+        String pid, String dsID, Map parameters, String authHandle, Boolean restAccess) throws Exception;
 
-    String export(String pid, Map parameters, SecurityContext securityContext) throws Exception, RemoteException;
+    String export(String pid, Map parameters, SecurityContext securityContext) throws Exception;
 
-    String export(String pid, Map parameters, String authHandle, Boolean restAccess) throws Exception, RemoteException;
+    String export(String pid, Map parameters, String authHandle, Boolean restAccess) throws Exception;
 
-    void cache(String pid, String xml, SecurityContext securityContext) throws Exception, RemoteException;
+    void cache(String pid, String xml, SecurityContext securityContext) throws Exception;
 
     void cache(String pid, String xml, String authHandle, Boolean restAccess) throws Exception;
 

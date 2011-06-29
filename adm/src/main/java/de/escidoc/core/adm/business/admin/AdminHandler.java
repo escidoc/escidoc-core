@@ -197,7 +197,7 @@ public class AdminHandler {
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException,
-        InvalidSearchQueryException, FedoraSystemException, WebserverSystemException {
+        InvalidSearchQueryException {
         return this.utility.prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
     }
 

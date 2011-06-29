@@ -347,7 +347,7 @@ public class EscidocServlet extends HttpServlet {
      */
     private static boolean handleException(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse, final BeanMethod method,
-        final Throwable e, boolean compressionIsAccepted) throws IOException, UnsupportedEncodingException {
+        final Throwable e, boolean compressionIsAccepted) throws IOException {
 
         boolean ret = false;
 
@@ -649,7 +649,6 @@ public class EscidocServlet extends HttpServlet {
     private static void doDeclineHttpRequest(
         final HttpServletResponse httpResponse, final EscidocException exception, boolean compressionIsAccepted)
         throws IOException {
-
         httpResponse.reset();
         initHttpResponse(httpResponse);
         httpResponse.setHeader(HEADER_ESCIDOC_EXCEPTION, exception.getClass().getName());
@@ -659,15 +658,7 @@ public class EscidocServlet extends HttpServlet {
                 httpResponse.setHeader("Location", ((SecurityException) exception).getRedirectLocation());
             }
         }
-        String body;
-        try {
-            body = XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition() + exception.toXmlString();
-        }
-        catch (final WebserverSystemException e) {
-            LOGGER.error("Error on serialising exception to XML string.", e);
-            body = XmlUtility.DOCUMENT_START + exception.toXmlString();
-        }
-
+        String body = XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition() + exception.toXmlString();
         if (compressionIsAccepted) {
             httpResponse.setHeader(HTTP_HEADER_CONTENT_ENCODING, HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP);
             byte txt[] = (body.getBytes());

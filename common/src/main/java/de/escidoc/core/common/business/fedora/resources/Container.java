@@ -102,14 +102,12 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * @throws SystemException           Thrown in case of an internal error.
      * @throws ResourceNotFoundException Thrown if no container could be found under the provided id.
      */
-    public Container(final String id) throws SystemException, ResourceNotFoundException, XmlParserSystemException,
-        WebserverSystemException {
+    public Container(final String id) throws SystemException, ResourceNotFoundException {
         super(id);
         init();
     }
 
-    private void init() throws SystemException, ResourceNotFoundException, TripleStoreSystemException,
-        XmlParserSystemException, WebserverSystemException {
+    private void init() throws SystemException, ResourceNotFoundException, WebserverSystemException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
 

@@ -92,7 +92,7 @@ public class AbstractRenderer {
      * @param values The map to add the value to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    protected void addEscidocBaseUrlValue(final Map<String, Object> values) throws WebserverSystemException {
+    protected void addEscidocBaseUrlValue(final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }

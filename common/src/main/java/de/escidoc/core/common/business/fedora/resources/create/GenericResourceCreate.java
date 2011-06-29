@@ -63,8 +63,7 @@ public abstract class GenericResourceCreate {
      * @return MetadataReocrd FoXML.
      * @throws SystemException Thrown if converting of characters to default character set failed.
      */
-    protected List<Map<String, String>> getMetadataRecordsMap(final Iterable<MdRecordCreate> mdRecords)
-        throws SystemException {
+    protected List<Map<String, String>> getMetadataRecordsMap(final Iterable<MdRecordCreate> mdRecords) {
 
         final List<Map<String, String>> values = new ArrayList<Map<String, String>>();
 

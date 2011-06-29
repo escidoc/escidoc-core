@@ -103,8 +103,7 @@ public class Reindexer {
      * @throws SystemException             Thrown if a framework internal error occurs.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public String reindex(final boolean clearIndex, final String indexName) throws SystemException,
-        InvalidSearchQueryException, WebserverSystemException {
+    public String reindex(final boolean clearIndex, final String indexName) throws SystemException {
         if ("errorTest".equals(indexName)) {
             return testReindexError();
         }
