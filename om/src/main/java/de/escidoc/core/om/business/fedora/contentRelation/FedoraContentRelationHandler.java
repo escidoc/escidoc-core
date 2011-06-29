@@ -159,8 +159,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     @Override
     public String create(final String xmlData) throws MissingAttributeValueException, MissingMethodParameterException,
         InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
-        SystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException,
-        XmlParserSystemException, XmlCorruptedException {
+        SystemException, WebserverSystemException, XmlParserSystemException, XmlCorruptedException {
 
         final ContentRelationCreate cr = parseContentRelation(xmlData);
 
@@ -245,7 +244,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      */
     @Override
     public String retrieveMdRecords(final String id) throws ContentRelationNotFoundException, SystemException,
-        FedoraSystemException, TripleStoreSystemException, WebserverSystemException {
+        TripleStoreSystemException, WebserverSystemException {
 
         final ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
@@ -967,11 +966,12 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
                 mdRecord.setDatastreamLocation(datastreamProfileTO.getDsLocation());
                 mdRecord.getRepositoryIndicator().setResourceIsNew(false);
 
-                if (ChecksumType.DISABLED.toString().equals(datastreamProfileTO.getDsChecksumType())) {
-                    mdRecord.setChecksumEnabled(true);
+                if (ChecksumType.DISABLED.toString().equals(datastreamProfileTO.getDsChecksumType())
+                    || "none".equals(datastreamProfileTO.getDsChecksumType())) {
+                    mdRecord.setChecksumEnabled(false);
                 }
                 else {
-                    mdRecord.setChecksumEnabled(false);
+                    mdRecord.setChecksumEnabled(true);
                 }
 
                 // alternate ids
