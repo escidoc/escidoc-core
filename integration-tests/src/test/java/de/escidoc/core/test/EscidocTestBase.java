@@ -2537,6 +2537,22 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Validates Component XML against the XML Schema, checks if the xml:base exists and if all placeholders are replaced.
+     * 
+     * @param xmlData
+     *            The xml document as string.
+     * @throws Exception
+     *             If an error occures.
+     */
+    public void assertXmlValidComponent(final String xmlData) throws Exception {
+
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/item/0.10/item.xsd");
+        assertXmlValid(xmlData, url);
+        assertXlinkXmlBaseExists(xmlData);
+        assertAllPlaceholderResolved(xmlData);
+    }
+
+    /**
      * Validates ContentRelation XML against the XML Schema, checks if the xml:base exists and if all placeholders are
      * replaced.
      *

@@ -162,7 +162,7 @@ public class ItemCreateTest extends ItemTestBase {
          * The infrastructure has thrown an unexpected parser exception during
          * creation if a non XML datastructur is send (e.g. String).
          */
-         create("laber-rababer");
+        create("laber-rababer");
     }
 
     /**
@@ -206,6 +206,7 @@ public class ItemCreateTest extends ItemTestBase {
         String xml2 = createComponent(itemId, toString(componentDoc, false));
 
         // TODO intensivate checks
+        assertXmlValidComponent(xml2);
         assertXmlExists("Missing created Component", xml2, "/component/properties/valid-status[text() = 'valid']");
     }
 
