@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.om.business.indexer;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 
@@ -41,20 +39,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.googlecode.ehcache.annotations.Cacheable;
-import com.googlecode.ehcache.annotations.KeyGenerator;
-import com.googlecode.ehcache.annotations.PartialCacheKey;
-import com.googlecode.ehcache.annotations.Property;
-import com.googlecode.ehcache.annotations.TriggersRemove;
-
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.business.fedora.MIMETypedStream;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.servlet.invocation.BeanMethod;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
@@ -69,8 +59,6 @@ import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 public class IndexerResourceRequester {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexerResourceRequester.class);
-
-    private static final int BUFFER_SIZE = 0xFFFF;
 
     @Autowired
     @Qualifier("common.CommonMethodMapper")
@@ -91,7 +79,6 @@ public class IndexerResourceRequester {
      * @return Object resource-object
      * @throws SystemException e
      */
-    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Object getResource(final String identifier) throws SystemException {
         final String href = getHref(identifier);
         if (identifier.startsWith("http")) {
@@ -100,45 +87,6 @@ public class IndexerResourceRequester {
         else {
             return getInternalResource(href);
         }
-    }
-
-    /**
-     * Get resource with given identifier.
-     *
-     * @param identifier identifier
-     * @return Object resource-object
-     * @throws SystemException e
-     */
-    public Object getResourceUncached(final String identifier) throws SystemException {
-        final String href = getHref(identifier);
-        if (identifier.startsWith("http")) {
-            return getExternalResource(href);
-        }
-        else {
-            return getInternalResource(href);
-        }
-    }
-
-    /**
-     * Set resource with given identifier in cache.
-     *
-     * @param identifier identifier
-     * @param resource   resource-object
-     * @return Object resource-object
-     */
-    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
-    public Object setResource(@PartialCacheKey
-    final String identifier, final Object resource) {
-        return resource;
-    }
-
-    /**
-     * delete resource with given identifier from cache.
-     *
-     * @param identifier identifier
-     */
-    @TriggersRemove(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
-    public void deleteResource(final String identifier) {
     }
 
     /**
@@ -152,25 +100,7 @@ public class IndexerResourceRequester {
             final BeanMethod method = methodMapper.getMethod(identifier, null, null, "GET", "");
             final Object content = method.invokeWithProtocol(null);
             if (content != null && "EscidocBinaryContent".equals(content.getClass().getSimpleName())) {
-                final EscidocBinaryContent escidocBinaryContent = (EscidocBinaryContent) content;
-                final ByteArrayOutputStream out = new ByteArrayOutputStream();
-                final InputStream in = escidocBinaryContent.getContent();
-                try {
-                    final byte[] bytes = new byte[BUFFER_SIZE];
-                    int i;
-                    while ((i = in.read(bytes)) > -1) {
-                        out.write(bytes, 0, i);
-                    }
-                    out.flush();
-                    return new MIMETypedStream(escidocBinaryContent.getMimeType(), out.toByteArray(), null);
-                }
-                catch (final Exception e) {
-                    throw new SystemException(e);
-                }
-                finally {
-                    IOUtils.closeStream(in);
-                    IOUtils.closeStream(out);
-                }
+                return (EscidocBinaryContent) content;
             }
             else if (content != null) {
                 return content;
@@ -203,8 +133,6 @@ public class IndexerResourceRequester {
      * @throws SystemException e
      */
     private Object getExternalResource(final String identifier) {
-        ByteArrayOutputStream out = null;
-        InputStream in = null;
         try {
             final HttpResponse httpResponse = connectionUtility.getRequestURL(new URL(identifier));
 
@@ -215,13 +143,10 @@ public class IndexerResourceRequester {
                 final String mimeType =
                     ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
 
-                out = new ByteArrayOutputStream();
-                in = httpResponse.getEntity().getContent();
-                int byteval;
-                while ((byteval = in.read()) > -1) {
-                    out.write(byteval);
-                }
-                return new MIMETypedStream(mimeType, out.toByteArray(), null);
+                EscidocBinaryContent escidocBinaryContent = new EscidocBinaryContent();
+                escidocBinaryContent.setMimeType(mimeType);
+                escidocBinaryContent.setContent(httpResponse.getEntity().getContent());
+                return escidocBinaryContent;
             }
         }
         catch (final Exception e) {
@@ -231,10 +156,6 @@ public class IndexerResourceRequester {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on caching external resource.", e);
             }
-        }
-        finally {
-            IOUtils.closeStream(in);
-            IOUtils.closeStream(out);
         }
         return null;
     }

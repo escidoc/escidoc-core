@@ -21,6 +21,7 @@
 package de.escidoc.core.om.service.interfaces;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.exceptions.system.SystemException;
 
 import java.util.Map;
 
@@ -38,9 +39,9 @@ public interface FedoraRestDeviationHandlerInterface {
      * @param pid        uri to the resource.
      * @param parameters REST-GET-Parameters
      * @return String with the fedora-object as escidoc-xml
-     * @throws Exception ex
+     * @throws SystemException ex
      */
-    String export(final String pid, final Map<String, String[]> parameters) throws Exception;
+    String export(final String pid, final Map<String, String[]> parameters) throws SystemException;
 
     /**
      * Overwrites the Fedora Method-Call getDatastreamDissemination. Variable dsID contains uri to component-content .
@@ -51,35 +52,9 @@ public interface FedoraRestDeviationHandlerInterface {
      * @param dsID       uri to component-content
      * @param parameters REST-GET-Parameters.
      * @return EscidocBinaryContent escidocBinaryContent
-     * @throws Exception ex
+     * @throws SystemException ex
      */
     EscidocBinaryContent getDatastreamDissemination(String pid, String dsID, final Map<String, String[]> parameters)
-        throws Exception;
-
-    /**
-     * writes the given xml into the cache.
-     *
-     * @param pid uri to the resource.
-     * @param xml xml-representation of the object
-     * @throws Exception ex
-     */
-    void cache(final String pid, final String xml) throws Exception;
-
-    /**
-     * removes the given pid from the cache.
-     *
-     * @param pid uri to the resource.
-     * @throws Exception ex
-     */
-    void removeFromCache(final String pid) throws Exception;
-
-    /**
-     * retrieves given object. Not cached.
-     *
-     * @param pid uri to the resource.
-     * @return String with the fedora-object as escidoc-xml
-     * @throws Exception ex
-     */
-    String retrieveUncached(final String pid) throws Exception;
+        throws SystemException;
 
 }

@@ -29,6 +29,7 @@
 package de.escidoc.core.om.service;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -72,13 +73,13 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * @param dsID       uri to component-content
      * @param parameters REST-GET-Parameters.
      * @return EscidocBinaryContent escidocBinaryContent
-     * @throws Exception ex
+     * @throws SystemException ex
      * @see de.escidoc.core.om.service.interfaces .FedorarestDeviationHandlerInterface #getDatastreamDissemination(
      *      java.lang.String,java.lang.String,java.lang.String)
      */
     @Override
     public EscidocBinaryContent getDatastreamDissemination(
-        final String pid, final String dsID, final Map<String, String[]> parameters) throws Exception {
+        final String pid, final String dsID, final Map<String, String[]> parameters) throws SystemException {
         return handler.getDatastreamDissemination(pid, dsID, parameters);
     }
 
@@ -86,48 +87,13 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * @param pid        uri to the resource.
      * @param parameters REST-GET-Parameters.
      * @return String String with the fedora-object as escidoc-xml
-     * @throws Exception ex
+     * @throws SystemException ex
      * @see de.escidoc.core.om.service.interfaces .FedorarestDeviationHandlerInterface
      *      #export(java.lang.String,java.lang.String,java.lang.String)
      */
     @Override
-    public String export(final String pid, final Map<String, String[]> parameters) throws Exception {
+    public String export(final String pid, final Map<String, String[]> parameters) throws SystemException {
         return handler.export(pid, parameters);
-    }
-
-    /**
-     * writes the given xml into the cache.
-     *
-     * @param pid uri to the resource.
-     * @param xml xml-representation of the object
-     * @throws Exception ex
-     */
-    @Override
-    public void cache(final String pid, final String xml) throws Exception {
-        handler.cache(pid, xml);
-    }
-
-    /**
-     * removes the given pid from the cache.
-     *
-     * @param pid uri to the resource.
-     * @throws Exception ex
-     */
-    @Override
-    public void removeFromCache(final String pid) throws Exception {
-        handler.removeFromCache(pid);
-    }
-
-    /**
-     * retrieves the given pid not from cache.
-     *
-     * @param pid uri to the resource.
-     * @return String String with the fedora-object as escidoc-xml
-     * @throws Exception ex
-     */
-    @Override
-    public String retrieveUncached(final String pid) throws Exception {
-        return handler.retrieveUncached(pid);
     }
 
 }

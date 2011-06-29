@@ -34,6 +34,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexRequestBuilder;
 import de.escidoc.core.index.IndexService;
+import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -91,16 +93,16 @@ public class IndexingHandler implements ResourceListener {
     private GsearchHandler gsearchHandler;
 
     @Autowired
-    @Qualifier("common.business.indexing.IndexingCacheHandler")
-    private IndexingCacheHandler indexingCacheHandler;
-
-    @Autowired
     @Qualifier("de.escidoc.core.index.IndexService")
     private IndexService indexService;
 
     @Autowired
     @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("service.FedoraRestDeviationHandler")
+    private FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler;
 
     private final DocumentBuilder docBuilder;
 
@@ -142,15 +144,6 @@ public class IndexingHandler implements ResourceListener {
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing STARTING, xml is " + xml);
-        }
-        if (xml != null && xml.length() > 0) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("writing xml in cache");
-            }
-            indexingCacheHandler.writeObjectInCache(id, xml);
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("gsearchindexing caching xml via deviation handler " + " finished.");
-            }
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
         addResource(id, objectType, xml);
@@ -194,10 +187,6 @@ public class IndexingHandler implements ResourceListener {
             LOGGER.debug("gsearchindexing STARTING, xml is " + xml);
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
-        indexingCacheHandler.removeObjectFromCache(id, xml);
-        if (xml != null && xml.length() > 0) {
-            indexingCacheHandler.writeObjectInCache(id, xml);
-        }
         addResource(id, objectType, xml);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing whole indexing of resource " + id + " of type " + objectType + " finished");
@@ -513,7 +502,7 @@ public class IndexingHandler implements ResourceListener {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("xml is null, requesting it from cache");
                     }
-                    xml = indexingCacheHandler.retrieveObjectFromCache(resource);
+                    xml = fedoraRestDeviationHandler.export(resource, null);
                 }
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("xml is: " + xml);
@@ -861,15 +850,6 @@ public class IndexingHandler implements ResourceListener {
      */
     public final void setGsearchHandler(final GsearchHandler gsearchHandler) {
         this.gsearchHandler = gsearchHandler;
-    }
-
-    /**
-     * Setting the indexingCacheHandler.
-     *
-     * @param indexingCacheHandler The indexingCacheHandler to set.
-     */
-    public final void setIndexingCacheHandler(final IndexingCacheHandler indexingCacheHandler) {
-        this.indexingCacheHandler = indexingCacheHandler;
     }
 
     public void setIndexService(final IndexService indexService) {

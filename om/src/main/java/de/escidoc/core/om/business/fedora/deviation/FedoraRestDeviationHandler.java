@@ -65,21 +65,16 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      */
     @Override
     public EscidocBinaryContent getDatastreamDissemination(
-        final String pid, final String dsID, final Map<String, String[]> parameters) throws Exception {
+        final String pid, final String dsID, final Map<String, String[]> parameters) throws SystemException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid + ", DSID:" + dsID);
         }
         EscidocBinaryContent escidocBinaryContent = null;
         try {
-            final MIMETypedStream mimeTypedStream = (MIMETypedStream) this.indexerResourceRequester.getResource(dsID);
-            if (mimeTypedStream != null && mimeTypedStream.getStream() != null) {
-                escidocBinaryContent = new EscidocBinaryContent();
-                escidocBinaryContent.setMimeType(mimeTypedStream.getMIMEType());
-                escidocBinaryContent.setContent(new ByteArrayInputStream(mimeTypedStream.getStream()));
-            }
+            escidocBinaryContent = (EscidocBinaryContent) this.indexerResourceRequester.getResource(dsID);
         }
-        catch (final Exception e) {
+        catch (final SystemException e) {
             if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Error on getting datastream dissemination.");
             }
@@ -105,7 +100,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      *      #export(java.lang.String,java.lang.String,java.lang.String)
      */
     @Override
-    public String export(final String pid, final Map<String, String[]> parameters) throws Exception {
+    public String export(final String pid, final Map<String, String[]> parameters) throws SystemException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid);
         }
@@ -114,7 +109,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
         try {
             xml = (String) this.indexerResourceRequester.getResource(pid);
         }
-        catch (final Exception e) {
+        catch (final SystemException e) {
             LOGGER.error(e.toString());
             throw e;
         }
@@ -123,37 +118,6 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
         }
         LOGGER.info("Could not get resource " + pid + " for cache.");
         return null;
-    }
-
-    /**
-     * writes the given xml into the cache.
-     *
-     * @param pid uri to the resource.
-     * @param xml xml-representation of the object
-     */
-    @Override
-    public void cache(final String pid, final String xml) throws SystemException {
-        this.indexerResourceRequester.setResource(pid, xml);
-    }
-
-    /**
-     * removes the given pid from the cache.
-     *
-     * @param pid uri to the resource.
-     */
-    @Override
-    public void removeFromCache(final String pid) throws SystemException {
-        this.indexerResourceRequester.deleteResource(pid);
-    }
-
-    /**
-     * retreives the given pid not from cache.
-     *
-     * @param pid uri to the resource.
-     */
-    @Override
-    public String retrieveUncached(final String pid) throws SystemException {
-        return (String) this.indexerResourceRequester.getResourceUncached(pid);
     }
 
 }
