@@ -70,7 +70,7 @@ public class InvalidResourceException extends ValidationException {
      * @param error   Throwable
      */
     public InvalidResourceException(final String message, final Throwable error) {
-        super(message);
+        super(message, error);
     }
 
 }

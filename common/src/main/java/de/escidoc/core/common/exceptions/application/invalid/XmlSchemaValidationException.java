@@ -70,6 +70,6 @@ public class XmlSchemaValidationException extends InvalidXmlException {
      * @param error   Throwable
      */
     public XmlSchemaValidationException(final String message, final Throwable error) {
-        super(message);
+        super(message, error);
     }
 }
