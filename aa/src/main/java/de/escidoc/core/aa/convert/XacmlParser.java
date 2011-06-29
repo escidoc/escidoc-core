@@ -113,29 +113,28 @@ public class XacmlParser {
         }
 
         @Override
-        public EscidocRole retrieveRole(final String identifier) throws SqlDatabaseSystemException {
+        public EscidocRole retrieveRole(final String identifier) {
             return null;
         }
 
         @Override
         public List<EscidocRole> retrieveRoles(
             final Map<String, Object> criteria, final int offset, final int maxResults, final String orderBy,
-            final ListSorting sorting) throws SqlDatabaseSystemException {
+            final ListSorting sorting) {
             return null;
         }
 
         @Override
-        public List<EscidocRole> retrieveRoles(final String criteria, final int offset, final int maxResults)
-            throws InvalidSearchQueryException, SqlDatabaseSystemException {
+        public List<EscidocRole> retrieveRoles(final String criteria, final int offset, final int maxResults) {
             return null;
         }
 
         @Override
-        public void saveOrUpdate(final EscidocRole r) throws SqlDatabaseSystemException {
+        public void saveOrUpdate(final EscidocRole r) {
         }
 
         @Override
-        public void deleteScopeDef(final ScopeDef scopeDef) throws SqlDatabaseSystemException {
+        public void deleteScopeDef(final ScopeDef scopeDef) {
         }
     };
 

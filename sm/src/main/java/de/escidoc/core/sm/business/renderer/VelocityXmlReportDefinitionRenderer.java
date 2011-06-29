@@ -180,8 +180,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      *
      * @param values The {@link Map} to that the values shall be added.
      */
-    private static void addReportDefinitionNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addReportDefinitionNamespaceValues(final Map<String, Object> values) {
         addEscidocBaseUrl(values);
         values.put("reportDefinitionNamespacePrefix", Constants.REPORT_DEFINITION_NS_PREFIX);
         values.put("reportDefinitionNamespace", Constants.REPORT_DEFINITION_NS_URI);
@@ -196,8 +195,7 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
      *
      * @param values The {@link Map} to that the values shall be added.
      */
-    private static void addReportDefinitionListNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addReportDefinitionListNamespaceValues(final Map<String, Object> values) {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("reportDefinitionListNamespacePrefix", Constants.REPORT_DEFINITION_LIST_NS_PREFIX);

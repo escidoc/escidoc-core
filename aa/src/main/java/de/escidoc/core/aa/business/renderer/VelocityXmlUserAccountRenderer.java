@@ -301,7 +301,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      * @param values The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void addCommonValues(final Map<String, Object> values) throws WebserverSystemException {
+    private void addCommonValues(final Map<String, Object> values) {
 
         addUserAccountNamespaceValues(values);
         addPropertiesNamespaceValues(values);
@@ -518,7 +518,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      * @param values map with values
      * @throws WebserverSystemException e
      */
-    private static void addAttributesCommonValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addAttributesCommonValues(final Map<String, Object> values) {
         values.put("attributesNamespacePrefix", Constants.USER_ATTRIBUTES_NS_PREFIX);
         values.put("attributesNamespace", Constants.USER_ATTRIBUTES_NS_URI);
         addEscidocBaseUrl(values);

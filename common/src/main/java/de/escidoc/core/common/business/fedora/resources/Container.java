@@ -107,7 +107,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
         init();
     }
 
-    private void init() throws SystemException, ResourceNotFoundException, WebserverSystemException {
+    private void init() throws SystemException, ResourceNotFoundException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
 

@@ -1610,7 +1610,7 @@ public final class XmlUtility {
      * @return Returns the grantsSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getGrantsSchemaLocation() throws WebserverSystemException {
+    public static String getGrantsSchemaLocation() {
 
         return getSchemaLocation("user-account/0.5/grants.xsd");
     }
@@ -1619,7 +1619,7 @@ public final class XmlUtility {
      * @return Returns the preferencesSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getPreferencesSchemaLocation() throws WebserverSystemException {
+    public static String getPreferencesSchemaLocation() {
 
         return getSchemaLocation("user-account/0.1/preferences.xsd");
     }
@@ -1628,7 +1628,7 @@ public final class XmlUtility {
      * @return Returns the preferencesSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getAttributesSchemaLocation() throws WebserverSystemException {
+    public static String getAttributesSchemaLocation() {
 
         return getSchemaLocation("user-account/0.1/attributes.xsd");
     }
@@ -1743,7 +1743,7 @@ public final class XmlUtility {
      * @return Returns the roleSchemaLocation dependent on UserContext flag isRestAccess.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getRoleSchemaLocation() throws WebserverSystemException {
+    public static String getRoleSchemaLocation() {
         return getSchemaLocation("role/0.5/role.xsd");
     }
 
@@ -1774,7 +1774,7 @@ public final class XmlUtility {
      * @return Returns the unsecuredActionsSchemaLocation dependent on UserContext flag isRestAccess.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getUnsecuredActionsSchemaLocation() throws WebserverSystemException {
+    public static String getUnsecuredActionsSchemaLocation() {
 
         return getSchemaLocation("role/0.4/unsecured-actions.xsd");
     }
@@ -1783,7 +1783,7 @@ public final class XmlUtility {
      * @return Returns the userAccountSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getUserAccountSchemaLocation() throws WebserverSystemException {
+    public static String getUserAccountSchemaLocation() {
 
         return getSchemaLocation("user-account" + Constants.USER_ACCOUNT_NS_URI_SCHEMA_VERSION + "/user-account.xsd");
     }
@@ -1792,7 +1792,7 @@ public final class XmlUtility {
      * @return Returns the addSelectorsSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getAddSelectorsSchemaLocation() throws WebserverSystemException {
+    public static String getAddSelectorsSchemaLocation() {
 
         return getSchemaLocation("user-group/0.6/add-selectors.xsd");
     }
@@ -1801,7 +1801,7 @@ public final class XmlUtility {
      * @return Returns the removeSelectorsSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getRemoveSelectorsSchemaLocation() throws WebserverSystemException {
+    public static String getRemoveSelectorsSchemaLocation() {
 
         return getSchemaLocation("user-group/0.6/remove-selectors.xsd");
     }
@@ -1810,7 +1810,7 @@ public final class XmlUtility {
      * @return Returns the userGroupSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getUserGroupSchemaLocation() throws WebserverSystemException {
+    public static String getUserGroupSchemaLocation() {
 
         return getSchemaLocation("user-group/0.6/user-group.xsd");
     }

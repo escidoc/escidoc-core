@@ -122,7 +122,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
      * @param values The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void addCommonValues(final Map<String, Object> values) throws WebserverSystemException {
+    private void addCommonValues(final Map<String, Object> values) {
 
         values.put("roleNamespacePrefix", Constants.ROLE_NS_PREFIX);
         values.put("roleNamespace", Constants.ROLE_NS_URI);

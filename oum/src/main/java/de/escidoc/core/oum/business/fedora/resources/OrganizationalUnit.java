@@ -115,7 +115,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     }
 
     private void init() throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+        IntegritySystemException {
         if (this.getId() != null) {
             this.getUtility().checkIsOrganizationalUnit(this.getId());
         }

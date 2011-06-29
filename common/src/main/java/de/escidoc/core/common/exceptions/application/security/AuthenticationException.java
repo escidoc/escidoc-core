@@ -45,7 +45,7 @@ public class AuthenticationException extends SecurityException {
      *
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public AuthenticationException() throws WebserverSystemException {
+    public AuthenticationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -55,7 +55,7 @@ public class AuthenticationException extends SecurityException {
      * @param error Throwable
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public AuthenticationException(final Throwable error) throws WebserverSystemException {
+    public AuthenticationException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -65,7 +65,7 @@ public class AuthenticationException extends SecurityException {
      * @param message - the detail message.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public AuthenticationException(final String message) throws WebserverSystemException {
+    public AuthenticationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -77,7 +77,7 @@ public class AuthenticationException extends SecurityException {
      * @param error   Throwable
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public AuthenticationException(final String message, final Throwable error) throws WebserverSystemException {
+    public AuthenticationException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

@@ -78,7 +78,7 @@ public class XmlHeaderInterceptor implements Ordered {
      *         sheet definition
      * @throws WebserverSystemException Thrown in case of an internal system error.
      */
-    private static Object post(final Object result) throws WebserverSystemException {
+    private static Object post(final Object result) {
         if (result == null) {
             return null;
         }

@@ -276,7 +276,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
      * @param values The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private void addCommonValues(final Map<String, Object> values) throws WebserverSystemException {
+    private void addCommonValues(final Map<String, Object> values) {
 
         addUserGroupNamespaceValues(values);
         addPropertiesNamespaceValues(values);

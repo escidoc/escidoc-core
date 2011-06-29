@@ -196,8 +196,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws AuthorizationException Thrown if user has no permission to use origin Item.
      */
     final boolean loadOrigin(final String errorMessage) throws ItemNotFoundException, AuthorizationException,
-        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException,
-        XmlParserSystemException {
+        TripleStoreSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException {
 
         final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         boolean origin = false;
@@ -336,8 +335,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws EncodingSystemException  In case of an encoding failure.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    final String getVersions() throws StreamNotFoundException, FedoraSystemException, EncodingSystemException,
-        WebserverSystemException {
+    final String getVersions() throws StreamNotFoundException, FedoraSystemException, EncodingSystemException {
 
         return getItem().getWov().toStringUTF8();
     }

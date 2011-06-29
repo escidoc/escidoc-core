@@ -81,7 +81,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @return XML representation
      */
     public String getContentRelationXml(final ContentRelationCreate cr) throws TripleStoreSystemException,
-        EncodingSystemException, IntegritySystemException, WebserverSystemException {
+        WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         // put all relevant values from object into value Map
@@ -107,8 +107,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @param cr ContentRelation
      * @return XML representation of md-records.
      */
-    public String getContentRelationMdRecords(final ContentRelationCreate cr) throws EncodingSystemException,
-        IntegritySystemException, TripleStoreSystemException, WebserverSystemException {
+    public String getContentRelationMdRecords(final ContentRelationCreate cr) throws WebserverSystemException {
 
         final Map<String, String> commonValues = getCommonValues();
         return renderMdRecords(cr, commonValues, true);

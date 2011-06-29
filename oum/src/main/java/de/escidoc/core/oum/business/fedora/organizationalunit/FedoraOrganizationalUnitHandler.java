@@ -1007,7 +1007,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      */
     private List<Map<String, String>> getPredessorsMap(final List<Predecessor> predecessors, final String oUobjid)
         throws OrganizationalUnitNotFoundException, InvalidStatusException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+        IntegritySystemException {
 
         List<Map<String, String>> predecessorsMap = null;
 

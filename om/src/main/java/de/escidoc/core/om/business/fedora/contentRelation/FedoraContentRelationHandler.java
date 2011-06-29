@@ -1086,8 +1086,8 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *                                    Thrown if the predicate is not registered.
      * @throws InvalidContentException    Thrown if predicate is invalid
      */
-    private void validate(final ContentRelationCreate cr) throws TripleStoreSystemException, WebserverSystemException,
-        ReferencedResourceNotFoundException, InvalidContentException, RelationPredicateNotFoundException {
+    private void validate(final ContentRelationCreate cr) throws TripleStoreSystemException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException {
 
         validateReference(cr.getSubject());
         validateReference(cr.getObject());
@@ -1184,7 +1184,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws WebserverSystemException   Thrown in case of internal error.
      * @throws TripleStoreSystemException Thrown in case of TripleStore error.
      */
-    private String prepareResponse(final ContentRelationCreate cr, final String pid) throws WebserverSystemException {
+    private String prepareResponse(final ContentRelationCreate cr, final String pid) {
         return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), "<pid>" + pid + "</pid>\n");
     }
 

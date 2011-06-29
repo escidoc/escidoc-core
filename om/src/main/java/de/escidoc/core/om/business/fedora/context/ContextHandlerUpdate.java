@@ -726,8 +726,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      *
      * @param xml New DC representation.
      */
-    private void setDc(final String xml) throws TripleStoreSystemException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, WebserverSystemException {
+    private void setDc(final String xml) throws EncodingSystemException, IntegritySystemException,
+        FedoraSystemException, WebserverSystemException {
         try {
             final Datastream oldDs = getContext().getDc();
             final Datastream newDs =

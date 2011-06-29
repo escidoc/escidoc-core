@@ -1935,8 +1935,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     private void validateCreate(final ItemCreate item) throws InvalidStatusException, MissingMdRecordException,
         InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
-        AuthorizationException, TripleStoreSystemException, XmlParserSystemException, WebserverSystemException,
-        IntegritySystemException, FedoraSystemException {
+        AuthorizationException, TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
+        FedoraSystemException {
 
         /*
          * Distinguish between create and ingest in the business level and not

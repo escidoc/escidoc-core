@@ -155,7 +155,7 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      *
      * @param values The {@link Map} to that the values shall be added.
      */
-    private static void addReportNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addReportNamespaceValues(final Map<String, Object> values) {
         addEscidocBaseUrl(values);
         values.put("reportNamespacePrefix", Constants.REPORT_NS_PREFIX);
         values.put("reportNamespace", Constants.REPORT_NS_URI);

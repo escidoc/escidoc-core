@@ -250,8 +250,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      *
      * @param values The {@link Map} to that the values shall be added.
      */
-    private static void addAggregationDefinitionNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addAggregationDefinitionNamespaceValues(final Map<String, Object> values) {
         addEscidocBaseUrl(values);
         values.put("aggregationDefinitionNamespacePrefix", Constants.AGGREGATION_DEFINITION_NS_PREFIX);
         values.put("aggregationDefinitionNamespace", Constants.AGGREGATION_DEFINITION_NS_URI);
@@ -266,8 +265,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      *
      * @param values The {@link Map} to that the values shall be added.
      */
-    private static void addAggregationDefinitionListNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
+    private static void addAggregationDefinitionListNamespaceValues(final Map<String, Object> values) {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("aggregationDefinitionListNamespacePrefix", Constants.AGGREGATION_DEFINITION_LIST_NS_PREFIX);

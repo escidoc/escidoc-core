@@ -146,7 +146,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *
      * @param values The {@link Map} to that the values shall be added.
      */
-    private static void addScopeNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addScopeNamespaceValues(final Map<String, Object> values) {
         addEscidocBaseUrl(values);
         values.put("scopeNamespacePrefix", Constants.SCOPE_NS_PREFIX);
         values.put("scopeNamespace", Constants.SCOPE_NS_URI);
@@ -161,7 +161,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *
      * @param values The {@link Map} to that the values shall be added.
      */
-    private static void addScopeListNamespaceValues(final Map<String, Object> values) throws WebserverSystemException {
+    private static void addScopeListNamespaceValues(final Map<String, Object> values) {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("scopeListNamespacePrefix", Constants.SCOPE_LIST_NS_PREFIX);
