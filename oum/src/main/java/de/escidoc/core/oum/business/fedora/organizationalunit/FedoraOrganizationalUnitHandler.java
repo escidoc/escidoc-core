@@ -276,7 +276,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         // parents
         final List<String> parents = parentsHandler.getParentOus();
         checkCreateParentsConditions(parents);
-        checkName(null, metadataHandler.getDcTitle(), parents);
+        checkName(metadataHandler.getDcTitle());
 
         final String id = getIdProvider().getNextPid();
         final String escidocMdRecord;
@@ -445,7 +445,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
         relsExtValues.put(XmlTemplateProvider.TITLE, metadataHandler.getDcTitle());
 
-        checkName(id, metadataHandler.getDcTitle(), parents);
+        checkName(metadataHandler.getDcTitle());
 
         // predecessors
         relsExtValues
@@ -558,7 +558,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         final MultipleExtractor2 me = createMultipleExtractor(sp, metadataHandler.getMdRecordPath());
         sp.addHandler(me);
         parseIncomingXmlForUpdate(xml, sp);
-        checkName(id, metadataHandler.getDcTitle(), getOrganizationalUnit().getParents());
+        checkName(metadataHandler.getDcTitle());
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
         final String[] creator = Utility.getCurrentUser();
@@ -626,7 +626,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         final List<String> parents = parentsHandler.getParentOus();
         final OumUtility oumUtility = new OumUtility();
         oumUtility.detectCycles(id, parents);
-        checkName(id, getOrganizationalUnit().getName(), parents);
+        checkName(getOrganizationalUnit().getName());
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
         final String buildNumber = Utility.getBuildNumber();

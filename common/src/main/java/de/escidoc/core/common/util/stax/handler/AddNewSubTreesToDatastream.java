@@ -148,7 +148,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
             writeElement(nsuri, theName, prefix, this.deepLevel);
             final List<Attribute> attributes = element.getAttributes();
             for (final Attribute curAtt : attributes) {
-                handleAttribute(curAtt, theName, this.deepLevel, this.isRelsExt, this.isNew, false);
+                handleAttribute(curAtt, theName, this.deepLevel);
             }
             this.insideLevel++;
         }
@@ -162,7 +162,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 writeElement(nsuri, theName, prefix, this.deepLevel);
                 final List<Attribute> attributes = element.getAttributes();
                 for (final Attribute curAtt : attributes) {
-                    handleAttribute(curAtt, theName, this.deepLevel, this.isRelsExt, this.isNew, false);
+                    handleAttribute(curAtt, theName, this.deepLevel);
                 }
                 this.insideLevel++;
                 if (this.insideLevel != 1) {
@@ -188,8 +188,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 final int attCount = subtreeToInsert.getAttributeCount();
                 for (int j = 0; j < attCount; j++) {
                     final Attribute curAtt = subtreeToInsert.getAttribute(j);
-                    handleAttribute(curAtt, theName, this.deepLevel + 1, this.isRelsExt, this.isNew,
-                        this.isContentRelation);
+                    handleAttribute(curAtt, theName, this.deepLevel + 1);
                 }
                 final String subtreeText = subtreeToInsert.getElementText();
                 if (subtreeText != null && subtreeText.length() > 0) {
@@ -211,8 +210,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                         final int attCount2 = inserted.getAttributeCount();
                         for (int j = 0; j < attCount2; j++) {
                             final Attribute curAtt = inserted.getAttribute(j);
-                            handleAttribute(curAtt, theName, this.deepLevel + 2, this.isRelsExt, this.isNew,
-                                this.isContentRelation);
+                            handleAttribute(curAtt, theName, this.deepLevel + 2);
                         }
                         final String insertedText = inserted.getElementText();
                         if (insertedText != null && insertedText.length() > 0) {
@@ -357,9 +355,8 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         writer.writeAttribute(prefix, uri, attributeName, attributeValue);
     }
 
-    private void handleAttribute(
-        final Attribute attribute, final String theName, final int deep, final boolean isRelsExt, final boolean isNew,
-        final boolean isContentRelation) throws XMLStreamException {
+    private void handleAttribute(final Attribute attribute, final String theName, final int deep)
+        throws XMLStreamException {
         final String attLocalName = attribute.getLocalName();
         final String attrNameSpace = attribute.getNamespace();
         final String attrPrefix = attribute.getPrefix();

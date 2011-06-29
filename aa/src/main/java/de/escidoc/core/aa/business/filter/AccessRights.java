@@ -234,8 +234,7 @@ public class AccessRights {
                 if (!groupIds.isEmpty() && userGroupGrants != null && userGroupGrants.containsKey(roleId)
                     || userGrants.containsKey(roleId)) {
                     final String roleQuery =
-                        getRoleQuery(type, roleId, userId, groupIds, userGrants, userGroupGrants, containerGrants,
-                            ouGrants);
+                        getRoleQuery(type, roleId, userId, userGrants, userGroupGrants, containerGrants, ouGrants);
 
                     if (roleQuery != null) {
                         accessRights.add(roleQuery);
@@ -248,8 +247,8 @@ public class AccessRights {
                     if (!groupIds.isEmpty() && userGroupGrants != null && userGroupGrants.containsKey(role.getKey())
                         || userGrants.containsKey(role.getKey())) {
                         final String roleQuery =
-                            getRoleQuery(type, role.getKey(), userId, groupIds, userGrants, userGroupGrants,
-                                containerGrants, ouGrants);
+                            getRoleQuery(type, role.getKey(), userId, userGrants, userGroupGrants, containerGrants,
+                                ouGrants);
 
                         if (roleQuery != null) {
                             accessRights.add(roleQuery);
@@ -314,7 +313,7 @@ public class AccessRights {
      * @return sub query for the given user/role combination
      */
     public String getRoleQuery(
-        final ResourceType type, final String roleId, final String userId, final Set<String> groupIds,
+        final ResourceType type, final String roleId, final String userId,
         final Map<String, Map<String, List<RoleGrant>>> userGrants,
         final Map<String, Map<String, List<RoleGrant>>> userGroupGrants, final String containerGrants,
         final String ouGrants) {

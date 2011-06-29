@@ -155,10 +155,10 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
                 returnArr = resolveAssignedOnAttribute(ctx, attributeIdValue, resolvableAttribute, tail);
             }
             else if (ATTR_CREATED_BY.equals(attributeId)) {
-                returnArr = resolveCreatedByAttribute(ctx, attributeIdValue, resolvableAttribute, tail);
+                returnArr = resolveCreatedByAttribute(ctx, resolvableAttribute);
             }
             else if (ATTR_ROLE.equals(attributeId)) {
-                returnArr = resolveRoleAttribute(ctx, attributeIdValue, resolvableAttribute, tail);
+                returnArr = resolveRoleAttribute(ctx, resolvableAttribute);
             }
             else {
                 return null;
@@ -258,8 +258,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param tail                tail after resolvable part
      * @return Object[] result
      */
-    private Object[] resolveCreatedByAttribute(
-        final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
+    private Object[] resolveCreatedByAttribute(final EvaluationCtx ctx, final String resolvableAttribute)
         throws SqlDatabaseSystemException, ResourceNotFoundException, WebserverSystemException {
         final String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_RESOURCE_ID, true);
@@ -287,8 +286,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param tail                tail after resolvable part
      * @return Object[] result
      */
-    private Object[] resolveRoleAttribute(
-        final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
+    private Object[] resolveRoleAttribute(final EvaluationCtx ctx, final String resolvableAttribute)
         throws WebserverSystemException, ResourceNotFoundException {
         final String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx, Constants.URI_RESOURCE_ID, true);

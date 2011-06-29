@@ -58,8 +58,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
         values.putAll(getCommonValues(getContentModel()));
         values.putAll(getPropertiesValues(getContentModel()));
-        values.putAll(getMdRecordDefinitionsValues(getContentModel()));
-        values.putAll(getResourceDefinitionsValues(getContentModel()));
+        values.putAll(getMdRecordDefinitionsValues());
+        values.putAll(getResourceDefinitionsValues());
         values.put(XmlTemplateProvider.CONTENT_STREAMS, renderContentStreams(false));
         values.putAll(getResourcesValues(getContentModel()));
 
@@ -366,8 +366,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    private Map<String, Object> getMdRecordDefinitionsValues(final ContentModel contentModel)
-        throws IntegritySystemException, WebserverSystemException {
+    private Map<String, Object> getMdRecordDefinitionsValues() throws IntegritySystemException,
+        WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         final Collection<Map<String, String>> mdRecordDefinitions = new ArrayList<Map<String, String>>();
 
@@ -396,8 +396,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    private Map<String, Object> getResourceDefinitionsValues(final ContentModel contentModel)
-        throws TripleStoreSystemException {
+    private Map<String, Object> getResourceDefinitionsValues() throws TripleStoreSystemException {
 
         // for every xslt service definition bound to this content model
         // get the operation name and create a URL for the datastream "xslt"

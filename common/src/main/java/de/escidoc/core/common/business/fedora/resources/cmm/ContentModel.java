@@ -478,18 +478,18 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
 
         final Datastream curDs = getContentStream(name);
 
-        setStream(name, ds, curDs);
+        setStream(ds, curDs);
         this.contentStreams.put(name, ds);
     }
 
     public void setOtherStream(final String name, final Datastream ds) throws WebserverSystemException,
         FedoraSystemException {
         final Datastream curDs = getOtherStream(name);
-        setStream(name, ds, curDs);
+        setStream(ds, curDs);
         this.otherStreams.put(name, ds);
     }
 
-    private void setStream(final String name, final Datastream ds, final Datastream curDs) throws FedoraSystemException {
+    private void setStream(final Datastream ds, final Datastream curDs) throws FedoraSystemException {
         try {
 
             boolean contentChanged = false;

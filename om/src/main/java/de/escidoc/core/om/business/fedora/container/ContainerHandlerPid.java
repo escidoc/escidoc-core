@@ -276,25 +276,6 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
     }
 
     /**
-     * Check pre-conditions to assign an ObjectPID.
-     *
-     * @param versionId ID of container object
-     * @throws InvalidStatusException thrown if assignment is forbidden
-     */
-    protected void checkObjectPidAssignable(final String versionId) throws InvalidStatusException,
-        TripleStoreSystemException {
-
-        final String pid =
-            getTripleStoreUtility().getPropertiesElements(getContainer().getId(),
-                TripleStoreUtility.PROP_LATEST_RELEASE_PID);
-
-        if (pid != null && pid.length() > 0) {
-            throw new InvalidStatusException("The object is already assigned with PID '" + pid
-                + "' and can not be reassigned.");
-        }
-    }
-
-    /**
      * Prepare the assignment response message.
      * <p/>
      * Preconditions: The TripleStore must be in sync with the repository.

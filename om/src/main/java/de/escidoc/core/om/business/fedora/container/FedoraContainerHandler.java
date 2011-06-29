@@ -1030,7 +1030,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     public String retrieveDcRecordContent(final String id) throws ContainerNotFoundException,
         MissingMethodParameterException, SystemException, XmlParserSystemException {
         setContainer(id);
-        return retrieveDc(id);
+        return retrieveDc();
     }
 
     /**

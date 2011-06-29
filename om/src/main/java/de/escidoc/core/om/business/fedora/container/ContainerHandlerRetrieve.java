@@ -141,7 +141,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
         }
     }
 
-    public String retrieveDc(final String name) throws FedoraSystemException, WebserverSystemException {
+    public String retrieveDc() throws FedoraSystemException, WebserverSystemException {
         try {
             return getContainer().getDc().toString();
         }

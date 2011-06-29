@@ -198,7 +198,7 @@ public class PermissionsQuery {
 
                     rights =
                         accessRights.getRoleQuery(resourceType, AccessRights.DEFAULT_ROLE, filter.getUserId(),
-                            groupIds, userGrants, userGroupGrants, containerGrants, ouGrants);
+                            userGrants, userGroupGrants, containerGrants, ouGrants);
                     if (rights != null && rights.length() > 0) {
                         foreignUserRights.add(rights);
                     }

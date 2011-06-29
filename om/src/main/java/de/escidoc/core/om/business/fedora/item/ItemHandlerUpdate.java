@@ -194,7 +194,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         try {
             properties =
                 c.setProperties(((ByteArrayOutputStream) streams.get("properties"))
-                    .toString(XmlUtility.CHARACTER_ENCODING), getItem().getId());
+                    .toString(XmlUtility.CHARACTER_ENCODING));
         }
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);

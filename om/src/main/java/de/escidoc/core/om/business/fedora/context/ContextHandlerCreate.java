@@ -293,23 +293,6 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
     }
 
     /**
-     * The method build RELS-EXT datastream for fedora object, which will represent context from provided properties.
-     *
-     * @param properties HashMap with item properties
-     * @param contextId  context id
-     * @return String RELS-EXT
-     */
-    protected String buildContextRelsExt(final String contextId, final Map<String, Object> properties)
-        throws WebserverSystemException {
-
-        final Map<String, Object> values = new HashMap<String, Object>();
-
-        final String buildNumber = Utility.getBuildNumber();
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, buildNumber);
-        return getFoxmlRenderer().renderRelsExt(values);
-    }
-
-    /**
      * @return The foxml renderer.
      */
     public ContextFoXmlRendererInterface getFoxmlRenderer() {

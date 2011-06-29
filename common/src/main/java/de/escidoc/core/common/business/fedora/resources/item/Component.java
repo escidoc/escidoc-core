@@ -541,7 +541,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @param itemId The id of the Item.
      * @return Map of Component properties.
      */
-    public Map<String, String> setProperties(final String xml, final String itemId) throws InvalidContentException,
+    public Map<String, String> setProperties(final String xml) throws InvalidContentException,
         TripleStoreSystemException, EncodingSystemException, FedoraSystemException, XmlParserSystemException,
         WebserverSystemException {
 

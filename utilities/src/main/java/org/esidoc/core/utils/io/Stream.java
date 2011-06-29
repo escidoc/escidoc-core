@@ -162,7 +162,7 @@ public final class Stream extends OutputStream {
         this.currentStream.flush();
         this.setOutputLocked(true);
         this.currentStream.close();
-        maybeDeleteTempFile(this.currentStream);
+        maybeDeleteTempFile();
     }
 
     /**
@@ -396,7 +396,7 @@ public final class Stream extends OutputStream {
                     @Override
                     public void close() throws IOException {
                         super.close();
-                        maybeDeleteTempFile(this);
+                        maybeDeleteTempFile();
                     }
                 };
             } catch(final FileNotFoundException e) {
@@ -405,7 +405,7 @@ public final class Stream extends OutputStream {
         }
     }
 
-    private void maybeDeleteTempFile(final Object stream) {
+    private void maybeDeleteTempFile() {
         if(! isInMemory() && this.tempFile != null && this.allowDeleteOfFile) {
             if(this.currentStream != null) {
                 try {

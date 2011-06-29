@@ -423,7 +423,7 @@ public class Login extends HttpServlet {
             }
         }
         else {
-            sendDeactivatedUserAccount(request, response);
+            sendDeactivatedUserAccount(response);
         }
     }
 
@@ -503,13 +503,13 @@ public class Login extends HttpServlet {
     /**
      * Handles the failure case of a deactivated user account<br> An error page is presented to the user.
      *
-     * @param request  The http request.
+     *
      * @param response The http response.
      * @throws IOException              Thrown in case of an I/O error.
      * @throws WebserverSystemException Thrown if cookie creation fails due to an internal error.
      */
-    private void sendDeactivatedUserAccount(final HttpServletRequest request, final HttpServletResponse response)
-        throws IOException, WebserverSystemException {
+    private void sendDeactivatedUserAccount(final HttpServletResponse response) throws IOException,
+        WebserverSystemException {
 
         response.reset();
         response.setContentType("text/html");
