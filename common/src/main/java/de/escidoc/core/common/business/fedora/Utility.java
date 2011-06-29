@@ -238,7 +238,7 @@ public class Utility {
      * @throws WebserverSystemException   Thrown in case of an internal error.
      * @throws XmlCorruptedException      Thrown if one of the the given parameters is null
      */
-    public static void checkOptimisticLockingCriteria(
+    public static boolean checkOptimisticLockingCriteria(
         final String fedoraLatestVersionDate, final String updateLatestVersionDate, final String label)
         throws XmlCorruptedException {
 
@@ -248,6 +248,8 @@ public class Utility {
 
         final DateTime tFedora = new DateTime(fedoraLatestVersionDate);
         final DateTime tUpdate = new DateTime(updateLatestVersionDate);
+
+        return checkOptimisticLockingCriteria(tFedora, tUpdate, label);
     }
 
     /**
