@@ -78,22 +78,22 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     /**
      * This attribute matches the id of the role.
      */
-    public static final String ATTR_ROLE_ID = AttributeIds.ROLE_ATTR_PREFIX + "id";
+    private static final String ATTR_ROLE_ID = AttributeIds.ROLE_ATTR_PREFIX + "id";
 
     /**
      * This attribute matches the user who created the role.
      */
-    public static final String ATTR_ROLE_CREATED_BY = AttributeIds.ROLE_ATTR_PREFIX + "created-by";
+    private static final String ATTR_ROLE_CREATED_BY = AttributeIds.ROLE_ATTR_PREFIX + "created-by";
 
     /**
      * This attribute matches the user who modified the role.
      */
-    public static final String ATTR_ROLE_MODIFIED_BY = AttributeIds.ROLE_ATTR_PREFIX + "modified-by";
+    private static final String ATTR_ROLE_MODIFIED_BY = AttributeIds.ROLE_ATTR_PREFIX + "modified-by";
 
     /**
      * This attribute matches the name of the role.
      */
-    public static final String ATTR_ROLE_NAME = AttributeIds.ROLE_ATTR_PREFIX + "name";
+    private static final String ATTR_ROLE_NAME = AttributeIds.ROLE_ATTR_PREFIX + "name";
 
     @Autowired
     @Qualifier("persistence.EscidocRoleDao")

@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class EsciDocMarshallerListener extends Marshaller.Listener {
 
-    public final static Logger LOG = LoggerFactory.getLogger(EsciDocUnmarshallerListener.class);
+    private final static Logger LOG = LoggerFactory.getLogger(EsciDocUnmarshallerListener.class);
     private final static String EMPTY_STRING = "";
 
     private final OutputStream outputStream;

@@ -35,9 +35,9 @@ public class InvalidXmlException extends ValidationException {
      */
     private static final long serialVersionUID = -2073958530436426572L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
 
-    public static final String HTTP_STATUS_MESSAGE = "Invalid XML.";
+    private static final String HTTP_STATUS_MESSAGE = "Invalid XML.";
 
     /**
      * Default constructor.

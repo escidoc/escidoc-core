@@ -88,7 +88,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     private Datastream escidocRelsExt;
 
-    public static final String DATASTREAM_ESCIDOC_RELS_EXT = "ESCIDOC_RELS_EXT";
+    private static final String DATASTREAM_ESCIDOC_RELS_EXT = "ESCIDOC_RELS_EXT";
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;

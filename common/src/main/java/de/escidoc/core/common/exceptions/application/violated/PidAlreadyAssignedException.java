@@ -36,9 +36,9 @@ public class PidAlreadyAssignedException extends RuleViolationException {
      */
     private static final long serialVersionUID = -3248281347501269187L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE = "Pid is already assigned.";
+    private static final String HTTP_STATUS_MESSAGE = "Pid is already assigned.";
 
     /**
      * Default constructor.

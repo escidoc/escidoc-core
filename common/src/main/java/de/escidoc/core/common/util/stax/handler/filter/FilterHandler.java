@@ -47,17 +47,17 @@ public class FilterHandler extends DefaultHandler {
     /**
      * The default offset used if no offset is defined in parsed data.
      */
-    public static final int DEFAULT_OFFSET = 0;
+    private static final int DEFAULT_OFFSET = 0;
 
     /**
      * The default limitation of the max. number of results used if no limitation is defined in parsed data.
      */
-    public static final int DEFAULT_LIMIT = 1000;
+    private static final int DEFAULT_LIMIT = 1000;
 
     /**
      * The default sorting if no sorting is defined in the parsed data.
      */
-    public static final ListSorting DEFAULT_SORTING = ListSorting.ASCENDING;
+    private static final ListSorting DEFAULT_SORTING = ListSorting.ASCENDING;
 
     /**
      * Pattern used to parse uris.

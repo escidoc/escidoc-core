@@ -35,9 +35,9 @@ public class TmeException extends ApplicationException {
      */
     private static final long serialVersionUID = -3595527012963121587L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
 
-    public static final String HTTP_STATUS_MESSAGE = "Technical metadata extraction failure.";
+    private static final String HTTP_STATUS_MESSAGE = "Technical metadata extraction failure.";
 
     /**
      * Default constructor.

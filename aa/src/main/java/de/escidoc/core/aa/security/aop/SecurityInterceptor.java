@@ -92,7 +92,7 @@ public class SecurityInterceptor implements Ordered {
     /**
      * Pattern used to check that a resource id does not contain the optional version number.
      */
-    public static final Pattern PATTERN_CHECK_MISSING_VERSION_NUMBER = Pattern.compile("^[^:]*:[^:]*$");
+    private static final Pattern PATTERN_CHECK_MISSING_VERSION_NUMBER = Pattern.compile("^[^:]*:[^:]*$");
 
     private static final String ITEM_HANDLER_CLASS_NAME = ItemHandlerInterface.class.getName();
 
@@ -114,7 +114,7 @@ public class SecurityInterceptor implements Ordered {
      * The error message that is used in the {@link ResourceNotFoundException} to indicate a resource has not been
      * released, yet.
      */
-    public static final String ERR_MSG_LATEST_RELEASE_NOT_FOUND = "Latest release not found.";
+    private static final String ERR_MSG_LATEST_RELEASE_NOT_FOUND = "Latest release not found.";
 
     /**
      * Around advice to perform the authorization of the current request.

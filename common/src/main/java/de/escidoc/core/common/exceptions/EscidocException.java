@@ -37,21 +37,21 @@ public class EscidocException extends Exception {
      */
     private static final long serialVersionUID = -4848570917974401296L;
 
-    public static final int ESCIDOC_HTTP_SC_INVALID = 450;
+    protected static final int ESCIDOC_HTTP_SC_INVALID = 450;
 
-    public static final int ESCIDOC_HTTP_SC_MISSING = 451;
+    protected static final int ESCIDOC_HTTP_SC_MISSING = 451;
 
-    public static final int ESCIDOC_HTTP_SC_NOT_FOUND = HttpServletResponse.SC_NOT_FOUND;
+    protected static final int ESCIDOC_HTTP_SC_NOT_FOUND = HttpServletResponse.SC_NOT_FOUND;
 
-    public static final int ESCIDOC_HTTP_SC_SECURITY = HttpServletResponse.SC_MOVED_TEMPORARILY;
+    protected static final int ESCIDOC_HTTP_SC_SECURITY = HttpServletResponse.SC_MOVED_TEMPORARILY;
 
-    public static final int ESCIDOC_HTTP_SC_VIOLATED = HttpServletResponse.SC_CONFLICT;
+    protected static final int ESCIDOC_HTTP_SC_VIOLATED = HttpServletResponse.SC_CONFLICT;
 
-    public static final int ESCIDOC_HTTP_SC_BAD_REQUEST = HttpServletResponse.SC_BAD_REQUEST;
+    protected static final int ESCIDOC_HTTP_SC_BAD_REQUEST = HttpServletResponse.SC_BAD_REQUEST;
 
-    public static final int ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+    protected static final int ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 
-    public static final String DEFAULT_STATUS_MESSAGE = "Internal eSciDoc Error";
+    private static final String DEFAULT_STATUS_MESSAGE = "Internal eSciDoc Error";
 
     private final int httpStatusCode;
 

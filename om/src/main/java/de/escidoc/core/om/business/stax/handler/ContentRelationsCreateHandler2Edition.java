@@ -58,7 +58,7 @@ import java.util.Map;
 @Configurable
 public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
-    public static final String CONTAINER = "/container";
+    private static final String CONTAINER = "/container";
 
     @Autowired
     @Qualifier("business.TripleStoreUtility")

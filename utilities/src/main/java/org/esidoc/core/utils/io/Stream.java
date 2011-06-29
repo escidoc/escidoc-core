@@ -23,7 +23,7 @@ import java.io.PipedOutputStream;
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Stream extends OutputStream {
 
-    public final static Logger LOG = LoggerFactory.getLogger(Stream.class);
+    private final static Logger LOG = LoggerFactory.getLogger(Stream.class);
 
     private static final File DEFAULT_TEMP_DIR;
     private static final int DEFAULT_THRESHOLD;
@@ -49,10 +49,10 @@ public final class Stream extends OutputStream {
     }
 
     @XmlTransient
-    protected boolean outputLocked;
+    private boolean outputLocked;
 
     @XmlTransient
-    protected OutputStream currentStream;
+    private OutputStream currentStream;
 
     @XmlTransient
     private long threshold = DEFAULT_THRESHOLD;

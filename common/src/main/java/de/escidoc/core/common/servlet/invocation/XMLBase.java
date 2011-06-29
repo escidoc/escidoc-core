@@ -50,7 +50,7 @@ import java.io.StringWriter;
  */
 public class XMLBase {
 
-    public static final String ROOT_ELEMENT = "mapping";
+    protected static final String ROOT_ELEMENT = "mapping";
 
     public static final String DOCUMENTATION_ELEMENT = "documentation";
 
@@ -76,49 +76,49 @@ public class XMLBase {
 
     public static final String DESCRIPTION_ELEMENT = "description";
 
-    public static final String DEFINITION_ELEMENT = "define";
+    protected static final String DEFINITION_ELEMENT = "define";
 
-    public static final String DEFINITION_VAR_ELEMENT = "var";
+    protected static final String DEFINITION_VAR_ELEMENT = "var";
 
-    public static final String DEFINITION_VAR_NAME_ATTR = "name";
+    protected static final String DEFINITION_VAR_NAME_ATTR = "name";
 
-    public static final String DEFINITION_VAR_REGEXP_ATTR = "regexp";
+    protected static final String DEFINITION_VAR_REGEXP_ATTR = "regexp";
 
-    public static final String DESCRIPTOR_ELEMENT = "descriptor";
+    protected static final String DESCRIPTOR_ELEMENT = "descriptor";
 
-    public static final String DESCRIPTOR_URI_ATTR = "uri";
+    protected static final String DESCRIPTOR_URI_ATTR = "uri";
 
-    public static final String RESOURCE_ELEMENT = "resource";
+    protected static final String RESOURCE_ELEMENT = "resource";
 
-    public static final String RESOURCE_URI_ATTR = "base-uri";
+    protected static final String RESOURCE_URI_ATTR = "base-uri";
 
-    public static final String RESOURCE_NAME_ATTR = "name";
+    protected static final String RESOURCE_NAME_ATTR = "name";
 
-    public static final String RESOURCE_SERVICE_NAME_ATTR = "service-name";
+    protected static final String RESOURCE_SERVICE_NAME_ATTR = "service-name";
 
-    public static final String INVOKE_ELEMENT = "invoke";
+    protected static final String INVOKE_ELEMENT = "invoke";
 
-    public static final String INVOKE_HTTP_ATTR = "http";
+    protected static final String INVOKE_HTTP_ATTR = "http";
 
-    public static final String INVOKE_METHOD_ATTR = "method";
+    protected static final String INVOKE_METHOD_ATTR = "method";
 
-    public static final String INVOKE_PARAM_ATTR = "param";
+    protected static final String INVOKE_PARAM_ATTR = "param";
 
-    public static final String XPATH_DELIMITER = "/";
+    protected static final String XPATH_DELIMITER = "/";
 
-    public static final String VAR_PREFIX = "${";
+    protected static final String VAR_PREFIX = "${";
 
-    public static final String VAR_POSTFIX = "}";
+    protected static final String VAR_POSTFIX = "}";
 
-    public static final String VAR_BODY = "BODY";
+    protected static final String VAR_BODY = "BODY";
 
-    public static final String VAR_QUERY_STRING = "QUERY";
+    protected static final String VAR_QUERY_STRING = "QUERY";
 
-    public static final String VAR_PARAMETERS = "PARAMETERS";
+    protected static final String VAR_PARAMETERS = "PARAMETERS";
 
     public static final String VAR_BODY_METHOD = "BODY.METHOD";
 
-    public static final String VAR_BODY_LAST_MODIFICATION_DATE = "BODY.LAST-MODIFICATION-DATE";
+    protected static final String VAR_BODY_LAST_MODIFICATION_DATE = "BODY.LAST-MODIFICATION-DATE";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(XMLBase.class);
 

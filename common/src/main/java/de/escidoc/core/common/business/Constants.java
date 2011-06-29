@@ -148,25 +148,25 @@ public final class Constants {
     /**
      * Namespace-URIs.
      */
-    public static final String NS_URI_PREFIX = "http://www.escidoc.de/schemas/";
+    private static final String NS_URI_PREFIX = "http://www.escidoc.de/schemas/";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_1 = "/0.1";
+    private static final String NS_URI_SCHEMA_VERSION_0_1 = "/0.1";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_3 = "/0.3";
+    private static final String NS_URI_SCHEMA_VERSION_0_3 = "/0.3";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_4 = "/0.4";
+    private static final String NS_URI_SCHEMA_VERSION_0_4 = "/0.4";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_5 = "/0.5";
+    private static final String NS_URI_SCHEMA_VERSION_0_5 = "/0.5";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_6 = "/0.6";
+    private static final String NS_URI_SCHEMA_VERSION_0_6 = "/0.6";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_7 = "/0.7";
+    private static final String NS_URI_SCHEMA_VERSION_0_7 = "/0.7";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_8 = "/0.8";
+    private static final String NS_URI_SCHEMA_VERSION_0_8 = "/0.8";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_9 = "/0.9";
+    private static final String NS_URI_SCHEMA_VERSION_0_9 = "/0.9";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_10 = "/0.10";
+    private static final String NS_URI_SCHEMA_VERSION_0_10 = "/0.10";
 
     /*
      * Current schema versions per resource

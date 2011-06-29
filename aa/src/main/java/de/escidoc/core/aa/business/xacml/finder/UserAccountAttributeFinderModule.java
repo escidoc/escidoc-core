@@ -149,55 +149,55 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     /**
      * This attribute matches the current eSciDoc user handles of the user (identified by the resource-id).
      */
-    public static final String ATTR_USER_HANDLE = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "handle";
+    private static final String ATTR_USER_HANDLE = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "handle";
 
     /**
      * This attribute matches the internal id of the user (identified by the resource-id).
      */
-    public static final String ATTR_USER_ID = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "id";
+    private static final String ATTR_USER_ID = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "id";
 
     /**
      * This attribute matches the login name of the user (identified by the resource-id).
      */
-    public static final String ATTR_USER_LOGIN_NAME = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "login-name";
+    private static final String ATTR_USER_LOGIN_NAME = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "login-name";
 
     /**
      * This attribute matches the name of the user (identified by the resource-id).
      */
-    public static final String ATTR_USER_NAME = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "name";
+    private static final String ATTR_USER_NAME = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "name";
 
     /**
      * This attribute matches the creator of the user (identified by the resource-id).
      */
-    public static final String ATTR_CREATED_BY = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "created-by";
+    private static final String ATTR_CREATED_BY = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "created-by";
 
     /**
      * This attribute matches the last modifier of the user (identified by the resource-id).
      */
-    public static final String ATTR_MODIFIED_BY = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "modified-by";
+    private static final String ATTR_MODIFIED_BY = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "modified-by";
 
     /**
      * This attribute matches the group-membership of the user (identified by the resource-id).
      */
-    public static final String ATTR_USER_GROUP_MEMBERSHIP = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "group-membership";
+    private static final String ATTR_USER_GROUP_MEMBERSHIP = AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "group-membership";
 
     /**
      * This attribute matches the organizational unit of the user (identified by the resource-id).
      */
-    public static final String ATTR_USER_ORGANIZATIONAL_UNIT =
+    private static final String ATTR_USER_ORGANIZATIONAL_UNIT =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
     /**
      * This attribute matches the organizational unit of the user (identified by the resource-id) (also children are
      * resolved).
      */
-    public static final String ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN =
+    private static final String ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "-with-children";
 
     /**
      * This attribute matches the scope of a role of the user.
      */
-    public static final Pattern ATTR_USER_ROLE_SCOPE =
+    private static final Pattern ATTR_USER_ROLE_SCOPE =
         Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "role-grant:(.*?):assigned-on");
 
     @Autowired

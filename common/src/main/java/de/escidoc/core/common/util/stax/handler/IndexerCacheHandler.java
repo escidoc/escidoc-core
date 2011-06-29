@@ -41,7 +41,7 @@ public class IndexerCacheHandler extends DefaultHandler {
 
     private int lastVersion = -1;
 
-    public static final String XLINK_URI = "http://www.w3.org/1999/xlink";
+    private static final String XLINK_URI = "http://www.w3.org/1999/xlink";
 
     private static final String LATEST_VERSION_PATH = "/properties/latest-version/number";
 

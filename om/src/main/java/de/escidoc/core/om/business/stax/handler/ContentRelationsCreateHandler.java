@@ -71,7 +71,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
     private final String id;
 
-    public static final String CONTAINER = "/container";
+    private static final String CONTAINER = "/container";
 
     private boolean inContentRelation;
 

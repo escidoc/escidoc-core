@@ -15,7 +15,7 @@ import java.io.ByteArrayOutputStream;
  */
 final class LoadingByteArrayOutputStream extends ByteArrayOutputStream {
 
-    public final static int DEFAULT_BUFFER_SIZE = 1024;
+    private final static int DEFAULT_BUFFER_SIZE = 1024;
 
     public LoadingByteArrayOutputStream() {
         super(DEFAULT_BUFFER_SIZE);

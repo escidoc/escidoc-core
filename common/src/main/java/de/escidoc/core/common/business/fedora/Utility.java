@@ -240,7 +240,7 @@ public class Utility {
      */
     public static boolean checkOptimisticLockingCriteria(
         final String fedoraLatestVersionDate, final String updateLatestVersionDate, final String label)
-        throws XmlCorruptedException {
+        throws XmlCorruptedException, OptimisticLockingException {
 
         if (fedoraLatestVersionDate == null || updateLatestVersionDate == null) {
             throw new XmlCorruptedException("last-modification-date must not be null");

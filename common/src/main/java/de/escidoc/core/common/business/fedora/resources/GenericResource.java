@@ -76,7 +76,7 @@ public class GenericResource implements FedoraResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericResource.class);
 
-    public static final String DATASTREAM_DEFAULT = "datastream";
+    private static final String DATASTREAM_DEFAULT = "datastream";
 
     @Autowired
     @Qualifier("business.TripleStoreUtility")

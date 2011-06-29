@@ -68,7 +68,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 @Configurable(preConstruction = true)
 public class ContentModel extends GenericVersionableResourcePid implements VersionableResource {
 
-    public static final String DATASTREAM_DS_COMPOSITE_MODEL = "DS-COMPOSITE-MODEL";
+    private static final String DATASTREAM_DS_COMPOSITE_MODEL = "DS-COMPOSITE-MODEL";
 
     private final Map<String, Datastream> contentStreams;
 

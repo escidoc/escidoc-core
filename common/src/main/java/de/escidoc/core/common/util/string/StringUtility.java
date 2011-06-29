@@ -32,7 +32,7 @@ public final class StringUtility {
     /**
      * Pattern used to detect '-'.
      */
-    static final Pattern PATTERN_MINUS = Pattern.compile("-");
+    private static final Pattern PATTERN_MINUS = Pattern.compile("-");
 
     /**
      * Private constructor to prevent initialization.

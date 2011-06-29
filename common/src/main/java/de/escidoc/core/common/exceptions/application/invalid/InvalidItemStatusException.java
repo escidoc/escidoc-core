@@ -34,9 +34,9 @@ public class InvalidItemStatusException extends ValidationException {
      */
     private static final long serialVersionUID = -578793111683800312L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
 
-    public static final String HTTP_STATUS_MESSAGE = "Invalid item status.";
+    private static final String HTTP_STATUS_MESSAGE = "Invalid item status.";
 
     /**
      * Default constructor.

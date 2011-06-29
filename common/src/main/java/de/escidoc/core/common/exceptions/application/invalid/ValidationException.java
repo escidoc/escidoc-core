@@ -36,14 +36,14 @@ public class ValidationException extends ApplicationException {
      */
     private static final long serialVersionUID = 8789917136257212824L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
 
-    public static final String HTTP_STATUS_MESSAGE = "Validation failed.";
+    private static final String HTTP_STATUS_MESSAGE = "Validation failed.";
 
     /**
      * Default constructor.
      */
-    public ValidationException() {
+    protected ValidationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -54,7 +54,7 @@ public class ValidationException extends ApplicationException {
      * @param message - the detail message.
      * @param cause   Throwable
      */
-    public ValidationException(final String message, final Throwable cause) {
+    protected ValidationException(final String message, final Throwable cause) {
         super(message, cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -63,7 +63,7 @@ public class ValidationException extends ApplicationException {
      *
      * @param message - the detail message.
      */
-    public ValidationException(final String message) {
+    protected ValidationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -72,7 +72,7 @@ public class ValidationException extends ApplicationException {
      *
      * @param cause Throwable
      */
-    public ValidationException(final Throwable cause) {
+    protected ValidationException(final Throwable cause) {
         super(cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -82,7 +82,7 @@ public class ValidationException extends ApplicationException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public ValidationException(final int httpStatusCode, final String httpStatusMsg) {
+    protected ValidationException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
     }
 
@@ -95,7 +95,7 @@ public class ValidationException extends ApplicationException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public ValidationException(final String message, final Throwable cause, final int httpStatusCode,
+    protected ValidationException(final String message, final Throwable cause, final int httpStatusCode,
         final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
     }
@@ -107,7 +107,7 @@ public class ValidationException extends ApplicationException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public ValidationException(final String message, final int httpStatusCode, final String httpStatusMsg) {
+    protected ValidationException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
     }
 
@@ -118,7 +118,7 @@ public class ValidationException extends ApplicationException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public ValidationException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
+    protected ValidationException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
     }
 

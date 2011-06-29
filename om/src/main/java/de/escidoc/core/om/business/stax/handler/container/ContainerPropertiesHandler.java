@@ -73,7 +73,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
     @Qualifier("business.Utility")
     private Utility utility;
 
-    public static final String PROPERTIES_PATH = "/container/properties";
+    private static final String PROPERTIES_PATH = "/container/properties";
 
     public static final String PID = "pid";
 

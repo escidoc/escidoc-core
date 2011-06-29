@@ -84,13 +84,13 @@ public class Datastream {
 
     public static final String RELS_EXT_DATASTREAM_LABEL = "RELS_EXT DATASTREAM";
 
-    public static final String CONTROL_GROUP_EXTERNAL_REFERENCE = "E";
+    private static final String CONTROL_GROUP_EXTERNAL_REFERENCE = "E";
 
-    public static final String CONTROL_GROUP_REDIRECT = "R";
+    private static final String CONTROL_GROUP_REDIRECT = "R";
 
-    public static final String CONTROL_GROUP_INTERNAL_XML = "X";
+    private static final String CONTROL_GROUP_INTERNAL_XML = "X";
 
-    public static final String CONTROL_GROUP_MANAGED = "M";
+    private static final String CONTROL_GROUP_MANAGED = "M";
 
     public static final String METADATA_ALTERNATE_ID = "metadata";
 

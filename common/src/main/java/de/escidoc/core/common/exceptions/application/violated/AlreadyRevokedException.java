@@ -34,9 +34,9 @@ public class AlreadyRevokedException extends RuleViolationException {
      */
     private static final long serialVersionUID = 1249021913216621520L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE = "Grant resource already revoked.";
+    private static final String HTTP_STATUS_MESSAGE = "Grant resource already revoked.";
 
     /**
      * Default constructor.

@@ -33,10 +33,10 @@ import java.util.Map;
  */
 public class DbRequestParameters extends SRURequestParameters {
 
-    public static final int DEFAULT_MAXIMUM_RECORDS = 20;
+    private static final int DEFAULT_MAXIMUM_RECORDS = 20;
 
     // SQL starts counting from 0
-    public static final int DEFAULT_START_RECORD = 0;
+    private static final int DEFAULT_START_RECORD = 0;
 
     /**
      * Logging goes there.

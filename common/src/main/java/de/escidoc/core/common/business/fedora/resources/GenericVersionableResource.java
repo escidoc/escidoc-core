@@ -76,12 +76,12 @@ public class GenericVersionableResource extends GenericResourcePid {
     /**
      * Separator of the identifier version suffix (escidoc:123:XY).
      */
-    public static final String VERSION_NUMBER_SEPARATOR = ":";
+    protected static final String VERSION_NUMBER_SEPARATOR = ":";
 
     /**
      * Name of the version history (WOV) data stream.
      */
-    public static final String DATASTREAM_WOV = "version-history";
+    protected static final String DATASTREAM_WOV = "version-history";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericVersionableResource.class);
 

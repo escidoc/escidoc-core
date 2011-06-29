@@ -34,9 +34,9 @@ public class AlreadyDeletedException extends RuleViolationException {
      */
     private static final long serialVersionUID = 2775878336816557499L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE = "Resource already deleted.";
+    private static final String HTTP_STATUS_MESSAGE = "Resource already deleted.";
 
     /**
      * Default constructor.

@@ -86,9 +86,9 @@ import java.util.concurrent.Future;
         assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
-    public static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    private static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
-    public final static Logger LOG = LoggerFactory.getLogger(FedoraServiceClientImpl.class);
+    private final static Logger LOG = LoggerFactory.getLogger(FedoraServiceClientImpl.class);
 
     private FedoraServiceRESTEndpoint fedoraService;
 

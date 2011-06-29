@@ -317,7 +317,7 @@ public class HttpRequester {
      *         <p/>
      *         Overwrite X509TrustManager.
      */
-    static class RelaxedX509TrustManager implements X509TrustManager {
+    private static class RelaxedX509TrustManager implements X509TrustManager {
 
         /**
          * Gets accepted Issuers.

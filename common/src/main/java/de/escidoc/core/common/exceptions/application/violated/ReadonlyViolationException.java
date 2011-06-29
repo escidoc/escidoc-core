@@ -34,14 +34,14 @@ public class ReadonlyViolationException extends RuleViolationException {
      */
     private static final long serialVersionUID = 6800224834127597675L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE = "Readonly.";
+    private static final String HTTP_STATUS_MESSAGE = "Readonly.";
 
     /**
      * Default constructor.
      */
-    public ReadonlyViolationException() {
+    protected ReadonlyViolationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -80,7 +80,7 @@ public class ReadonlyViolationException extends RuleViolationException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public ReadonlyViolationException(final int httpStatusCode, final String httpStatusMsg) {
+    protected ReadonlyViolationException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
     }
 
@@ -93,7 +93,7 @@ public class ReadonlyViolationException extends RuleViolationException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public ReadonlyViolationException(final String message, final Throwable cause, final int httpStatusCode,
+    protected ReadonlyViolationException(final String message, final Throwable cause, final int httpStatusCode,
         final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
     }
@@ -105,7 +105,7 @@ public class ReadonlyViolationException extends RuleViolationException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public ReadonlyViolationException(final String message, final int httpStatusCode, final String httpStatusMsg) {
+    protected ReadonlyViolationException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
     }
 
@@ -116,7 +116,7 @@ public class ReadonlyViolationException extends RuleViolationException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public ReadonlyViolationException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
+    protected ReadonlyViolationException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
     }
 

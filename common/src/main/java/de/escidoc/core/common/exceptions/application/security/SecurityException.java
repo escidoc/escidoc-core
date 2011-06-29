@@ -37,9 +37,9 @@ public class SecurityException extends EscidocException {
      */
     private static final long serialVersionUID = -7290777799078430569L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_SECURITY;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_SECURITY;
 
-    public static final String HTTP_STATUS_MESSAGE = "Security check failed. Redirect to login";
+    private static final String HTTP_STATUS_MESSAGE = "Security check failed. Redirect to login";
 
     private String redirectLocation;
 

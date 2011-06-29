@@ -34,9 +34,9 @@ public class OrganizationalUnitNotFoundException extends ResourceNotFoundExcepti
      */
     private static final long serialVersionUID = -5918881489515428655L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
 
-    public static final String HTTP_STATUS_MESSAGE = "Organizational Unit was not found.";
+    private static final String HTTP_STATUS_MESSAGE = "Organizational Unit was not found.";
 
     /**
      * Default constructor.

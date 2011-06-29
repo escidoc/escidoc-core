@@ -80,7 +80,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * Pattern to check if an object type is an valid eScidoc (virtual) resource and if we can find out the object-type
      * by checking the id (only works for unique fedora-generated ids).
      */
-    public static final Pattern PATTERN_ID_VALIDATABLE_OBJECT_TYPE =
+    protected static final Pattern PATTERN_ID_VALIDATABLE_OBJECT_TYPE =
         Pattern.compile(XmlUtility.NAME_COMPONENT + '|' + XmlUtility.NAME_CONTAINER + '|'
             + XmlUtility.NAME_CONTENT_MODEL + '|' + XmlUtility.NAME_CONTEXT + '|' + XmlUtility.NAME_ITEM + '|'
             + XmlUtility.NAME_ORGANIZATIONAL_UNIT + '|' + XmlUtility.NAME_ROLE + '|' + XmlUtility.NAME_USER_ACCOUNT
@@ -244,7 +244,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param attributeIdValue      The attributeId to retrieve the attribute for.
      * @return Returns the cache key for the provided values.
      */
-    protected static String getCacheKey(
+    private static String getCacheKey(
         final String resourceId, final String resourceObjid, final String resourceVersionNumber,
         final String attributeIdValue) {
 
@@ -388,7 +388,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param newAttributeId The attributeId to retrieve the attribute for.
      * @return Returns the result of <code>ctx.getResourceAttribute</code>.
      */
-    protected static EvaluationResult recursivelyCallCtxGetResourceAttribute(
+    private static EvaluationResult recursivelyCallCtxGetResourceAttribute(
         final EvaluationCtx ctx, final String newResourceId, final String newAttributeId) {
 
         final AttributeValue storedResourceId = ctx.getResourceId();
@@ -645,7 +645,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param attributeIdValue The value of the attribute id.
      * @return Returns the full name of the resource not found exception for the failed attribute fetching.
      */
-    protected static String getResourceNotFoundExceptionName(final CharSequence attributeIdValue) {
+    private static String getResourceNotFoundExceptionName(final CharSequence attributeIdValue) {
 
         final StringBuilder exceptionName = new StringBuilder(RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX);
 

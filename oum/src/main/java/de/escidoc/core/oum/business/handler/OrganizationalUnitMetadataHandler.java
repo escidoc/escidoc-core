@@ -50,11 +50,11 @@ import java.util.Map;
  */
 public class OrganizationalUnitMetadataHandler extends OrganizationalUnitHandlerBase {
 
-    public static final String SCHEMA = "schema";
+    private static final String SCHEMA = "schema";
 
-    public static final String TYPE = "md-type";
+    private static final String TYPE = "md-type";
 
-    public static final String NAME = "name";
+    private static final String NAME = "name";
 
     private boolean insideMdRecord;
 

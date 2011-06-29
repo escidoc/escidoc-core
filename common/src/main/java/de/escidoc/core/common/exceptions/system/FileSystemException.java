@@ -34,9 +34,9 @@ public class FileSystemException extends SystemException {
      */
     private static final long serialVersionUID = -6708356264932678991L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
 
-    public static final String HTTP_STATUS_MESSAGE = "Internal File System Error";
+    private static final String HTTP_STATUS_MESSAGE = "Internal File System Error";
 
     /**
      * Default constructor.

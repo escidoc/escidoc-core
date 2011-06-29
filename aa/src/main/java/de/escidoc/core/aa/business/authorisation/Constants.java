@@ -48,13 +48,13 @@ public final class Constants {
 
     public static final String XMLSCHEMA_STRING = "http://www.w3.org/2001/XMLSchema#string";
 
-    public static final URI URI_ACTION_ID;
+    private static final URI URI_ACTION_ID;
 
-    public static final URI URI_CONTEXT_ID;
+    private static final URI URI_CONTEXT_ID;
 
-    public static final URI URI_CONTENT_ITEM_ID;
+    private static final URI URI_CONTENT_ITEM_ID;
 
-    public static final URI URI_METADATA_SCHEMA_GENRE;
+    private static final URI URI_METADATA_SCHEMA_GENRE;
 
     public static final URI URI_OBJECT_TYPE;
 

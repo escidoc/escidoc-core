@@ -56,7 +56,7 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
 
     public static final String DEFAULT_ROLE = "Default";
 
-    public static final String URN_POLICY_COMBINING_ALGORITHM =
+    private static final String URN_POLICY_COMBINING_ALGORITHM =
         "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:";
 
     public static final String URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES =

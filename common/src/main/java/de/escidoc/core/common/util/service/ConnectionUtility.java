@@ -488,7 +488,7 @@ public class ConnectionUtility {
      * @return String.
      * @throws WebserverSystemException Thrown if connection failed.
      */
-    public static String readResponse(final HttpResponse httpResponse) throws WebserverSystemException {
+    private static String readResponse(final HttpResponse httpResponse) throws WebserverSystemException {
         try {
             return EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
         }

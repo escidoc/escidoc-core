@@ -57,7 +57,7 @@ public class MetadataHandler extends DefaultHandler {
 
     private String nameValue;
 
-    public static final String CONTAINER = "/container";
+    private static final String CONTAINER = "/container";
 
     private String escidocMdRecordNameSpace;
 

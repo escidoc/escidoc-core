@@ -36,7 +36,7 @@ public abstract class XmlTemplateProvider {
 
     public static final String IN_CREATE = "IN_CREATE";
 
-    public static final String ESCAPER = "esc";
+    protected static final String ESCAPER = "esc";
 
     public static final String DEFAULT_METADATA_FOR_DC_MAPPING = "escidoc";
 
@@ -62,7 +62,7 @@ public abstract class XmlTemplateProvider {
     /*
      * Common values
      */
-    public static final String LOCK_STATUS = "LOCK_STATUS";
+    protected static final String LOCK_STATUS = "LOCK_STATUS";
 
     public static final String LOCK_OWNER = "LOCK_OWNER";
 
@@ -86,7 +86,7 @@ public abstract class XmlTemplateProvider {
 
     public static final String CREATED_BY_ID = "CREATED_BY_ID";
 
-    public static final String CREATED_BY_HREF = "CREATED_BY_HREF";
+    protected static final String CREATED_BY_HREF = "CREATED_BY_HREF";
 
     public static final String CREATED_BY_TITLE = "CREATED_BY_TITLE";
 
@@ -111,7 +111,7 @@ public abstract class XmlTemplateProvider {
      */
     public static final String MODIFIED_BY_ID = "MODIFIED_BY_ID";
 
-    public static final String MODIFIED_BY_HREF = "MODIFIED_BY_HREF";
+    protected static final String MODIFIED_BY_HREF = "MODIFIED_BY_HREF";
 
     public static final String MODIFIED_BY_TITLE = "MODIFIED_BY_TITLE";
 
@@ -282,9 +282,9 @@ public abstract class XmlTemplateProvider {
 
     protected static final String BASE_TEMPLATE_PATH = "/de/escidoc/core/common/util/xml/factory/templates";
 
-    public static final String CONTENT_RELATION_NAMESPACE_PREFIX = "contentRelationNamespacePrefix";
+    protected static final String CONTENT_RELATION_NAMESPACE_PREFIX = "contentRelationNamespacePrefix";
 
-    public static final String CONTENT_RELATION_NAMESPACE = "contentRelationNamespace";
+    protected static final String CONTENT_RELATION_NAMESPACE = "contentRelationNamespace";
 
     public static final String MD_RECRORDS_NAMESPACE_PREFIX = "mdRecordsNamespacePrefix";
 
@@ -559,11 +559,11 @@ public abstract class XmlTemplateProvider {
 
     public static final String VAR_CONTENT_MODEL_CREATED_BY_ID = "resourceCreatedById";
 
-    public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS = "resourcePublicStatus";
+    private static final String VAR_CONTENT_MODEL_PUBLIC_STATUS = "resourcePublicStatus";
 
     public static final String VAR_CONTENT_MODEL_STATUS = VAR_CONTENT_MODEL_PUBLIC_STATUS;
 
-    public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT = "resourcePublicStatusComment";
+    private static final String VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT = "resourcePublicStatusComment";
 
     public static final String VAR_CONTENT_MODEL_STATUS_COMMENT = VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT;
 
@@ -642,24 +642,24 @@ public abstract class XmlTemplateProvider {
     /*
      * Content Relation
      */
-    public static final String CONTENT_RELATION_TYPE = "CONTENT_RELATION_TYPE";
+    protected static final String CONTENT_RELATION_TYPE = "CONTENT_RELATION_TYPE";
 
-    public static final String CONTENT_RELATION_DESCRIPTION = "CONTENT_RELATION_DESCRIPTION";
+    protected static final String CONTENT_RELATION_DESCRIPTION = "CONTENT_RELATION_DESCRIPTION";
 
-    public static final String CONTENT_RELATION_SUBJECT_TITLE = "contentRelationSubjectTitle";
+    protected static final String CONTENT_RELATION_SUBJECT_TITLE = "contentRelationSubjectTitle";
 
-    public static final String CONTENT_RELATION_SUBJECT_HREF = "contentRelationSubjectHref";
+    protected static final String CONTENT_RELATION_SUBJECT_HREF = "contentRelationSubjectHref";
 
-    public static final String CONTENT_RELATION_SUBJECT_ID = "contentRelationSubjectId";
+    protected static final String CONTENT_RELATION_SUBJECT_ID = "contentRelationSubjectId";
 
-    public static final String CONTENT_RELATION_OBJECT_TITLE = "contentRelationObjectTitle";
+    protected static final String CONTENT_RELATION_OBJECT_TITLE = "contentRelationObjectTitle";
 
-    public static final String CONTENT_RELATION_OBJECT_HREF = "contentRelationObjectHref";
+    protected static final String CONTENT_RELATION_OBJECT_HREF = "contentRelationObjectHref";
 
-    public static final String CONTENT_RELATION_OBJECT_ID = "contentRelationObjectId";
+    protected static final String CONTENT_RELATION_OBJECT_ID = "contentRelationObjectId";
 
-    public static final String CONTENT_RELATION_SUBJECT_VERSION_NUMBER = "contentRelationSubjectVersion";
+    protected static final String CONTENT_RELATION_SUBJECT_VERSION_NUMBER = "contentRelationSubjectVersion";
 
-    public static final String CONTENT_RELATION_OBJECT_VERSION_NUMBER = "contentRelationObjectVersion";
+    protected static final String CONTENT_RELATION_OBJECT_VERSION_NUMBER = "contentRelationObjectVersion";
 
 }

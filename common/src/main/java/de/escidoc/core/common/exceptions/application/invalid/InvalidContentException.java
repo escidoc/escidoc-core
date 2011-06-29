@@ -34,9 +34,9 @@ public class InvalidContentException extends ValidationException {
      */
     private static final long serialVersionUID = -4256825988486821592L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE = "Invalid content.";
+    private static final String HTTP_STATUS_MESSAGE = "Invalid content.";
 
     /**
      * Default constructor.

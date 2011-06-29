@@ -62,11 +62,11 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
     private static final String RESOURCES_RESOURCE_NAME = "resources";
 
-    public static final String COMMON_PATH = "/common";
+    private static final String COMMON_PATH = "/common";
 
-    public static final String MD_RECORDS_RESOURCE_NAME = "md-records";
+    private static final String MD_RECORDS_RESOURCE_NAME = "md-records";
 
-    public static final String MD_RECORDS_PATH = COMMON_PATH;
+    private static final String MD_RECORDS_PATH = COMMON_PATH;
 
     public static final String MD_RECORD_PATH = COMMON_PATH;
 

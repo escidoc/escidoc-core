@@ -116,7 +116,7 @@ public final class XmlUtility {
     /**
      * The XML version.
      */
-    public static final String XML_VERSION = "1.0";
+    private static final String XML_VERSION = "1.0";
 
     /**
      * Head of document.
@@ -134,25 +134,25 @@ public final class XmlUtility {
      */
     public static final String CDATA_END = "]]>";
 
-    public static final String AMPERSAND = "&";
+    private static final String AMPERSAND = "&";
 
-    public static final String ESC_AMPERSAND = "&amp;";
+    private static final String ESC_AMPERSAND = "&amp;";
 
-    public static final String LESS_THAN = "<";
+    private static final String LESS_THAN = "<";
 
-    public static final String ESC_LESS_THAN = "&lt;";
+    private static final String ESC_LESS_THAN = "&lt;";
 
-    public static final String GREATER_THAN = ">";
+    private static final String GREATER_THAN = ">";
 
-    public static final String ESC_GREATER_THAN = "&gt;";
+    private static final String ESC_GREATER_THAN = "&gt;";
 
-    public static final String APOS = "'";
+    private static final String APOS = "'";
 
-    public static final String ESC_APOS = "&apos;";
+    private static final String ESC_APOS = "&apos;";
 
-    public static final String QUOT = "\"";
+    private static final String QUOT = "\"";
 
-    public static final String ESC_QUOT = "&quot;";
+    private static final String ESC_QUOT = "&quot;";
 
     private static final Pattern PATTERN_ESCAPE_NEEDED =
         Pattern.compile(AMPERSAND + '|' + LESS_THAN + '|' + GREATER_THAN + '|' + QUOT + '|' + APOS);
@@ -354,7 +354,7 @@ public final class XmlUtility {
 
     public static final String NAME_ATTRIBUTE = "attribute";
 
-    public static final String NAME_OBJID = "objid";
+    private static final String NAME_OBJID = "objid";
 
     public static final String NAME_NAME = "name";
 
@@ -370,7 +370,7 @@ public final class XmlUtility {
 
     public static final String NAME_MDRECORD = "md-record";
 
-    public static final String NAME_RESOURCES = "resources";
+    private static final String NAME_RESOURCES = "resources";
 
     public static final String NAME_ID = "id";
 
@@ -384,7 +384,7 @@ public final class XmlUtility {
 
     public static final String NAME_HANDLE = "handle";
 
-    public static final String NAME_HREF = "href";
+    private static final String NAME_HREF = "href";
 
     public static final String NAME_DESCRIPTION = "description";
 
@@ -394,21 +394,21 @@ public final class XmlUtility {
 
     public static final String NAME_ORGANIZATIONAL_UNIT = "organizational-unit";
 
-    public static final String NAME_PARENT_OBJECTS = "parent-objects";
+    private static final String NAME_PARENT_OBJECTS = "parent-objects";
 
     public static final String NAME_PARENTS = "parents";
 
     public static final String NAME_PARENT = "parent";
 
-    public static final String NAME_CHILD_OBJECTS = "child-objects";
+    private static final String NAME_CHILD_OBJECTS = "child-objects";
 
-    public static final String NAME_PATH_LIST = "path-list";
+    private static final String NAME_PATH_LIST = "path-list";
 
     public static final String NAME_PREDECESSORS = "predecessors";
 
     public static final String NAME_PREDECESSOR = "predecessor";
 
-    public static final String NAME_SUCCESSORS = "successors";
+    private static final String NAME_SUCCESSORS = "successors";
 
     public static final String NAME_ORDER_BY = "order-by";
 
@@ -425,31 +425,31 @@ public final class XmlUtility {
     public static final String XPATH_USER_ACCOUNT_ORGANIZATIONAL_UNIT =
         "/user-account/properties/organizational-units/organizational-unit";
 
-    public static final String BASE_AA = "/aa/";
+    private static final String BASE_AA = "/aa/";
 
-    public static final String BASE_SM = "/statistic/";
+    private static final String BASE_SM = "/statistic/";
 
-    public static final String BASE_OUM = "/oum/";
+    private static final String BASE_OUM = "/oum/";
 
     public static final String BASE_OM = "/ir/";
 
     public static final String BASE_ORGANIZATIONAL_UNIT = BASE_OUM + NAME_ORGANIZATIONAL_UNIT + '/';
 
-    public static final String BASE_USER_ACCOUNT = BASE_AA + NAME_USER_ACCOUNT + '/';
+    private static final String BASE_USER_ACCOUNT = BASE_AA + NAME_USER_ACCOUNT + '/';
 
-    public static final String BASE_USER_GROUP = BASE_AA + NAME_USER_GROUP + '/';
+    private static final String BASE_USER_GROUP = BASE_AA + NAME_USER_GROUP + '/';
 
-    public static final String BASE_SET_DEFINITION = "/oai/" + NAME_SET_DEFINITION + '/';
+    private static final String BASE_SET_DEFINITION = "/oai/" + NAME_SET_DEFINITION + '/';
 
     public static final String BASE_ROLE = BASE_AA + NAME_ROLE + '/';
 
     public static final String BASE_LOGIN = BASE_AA + "login" + '/';
 
-    public static final String BASE_SCOPE = BASE_SM + NAME_SCOPE + '/';
+    private static final String BASE_SCOPE = BASE_SM + NAME_SCOPE + '/';
 
-    public static final String BASE_AGGREGATION_DEFINITION = BASE_SM + NAME_AGGREGATION_DEFINITION + '/';
+    private static final String BASE_AGGREGATION_DEFINITION = BASE_SM + NAME_AGGREGATION_DEFINITION + '/';
 
-    public static final String BASE_REPORT_DEFINITION = BASE_SM + NAME_REPORT_DEFINITION + '/';
+    private static final String BASE_REPORT_DEFINITION = BASE_SM + NAME_REPORT_DEFINITION + '/';
 
     private static final Map<String, String> REST_SCHEMA_LOCATIONS = new HashMap<String, String>();
 
@@ -478,7 +478,7 @@ public final class XmlUtility {
 
     private static final Pattern PATTERN_VERSION_NUMBER = Pattern.compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
 
-    public static final String ERR_MSG_MISSING_ATTRIBUTE = "Missing attribute";
+    private static final String ERR_MSG_MISSING_ATTRIBUTE = "Missing attribute";
 
     private static final StackKeyedObjectPool TRANSFORMER_POOL =
         new StackKeyedObjectPool(new PoolableTransformerFactory());

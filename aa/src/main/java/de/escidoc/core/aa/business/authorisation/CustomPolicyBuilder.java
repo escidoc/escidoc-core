@@ -84,7 +84,7 @@ public final class CustomPolicyBuilder {
     /**
      * The property which is used to specify the schema file to validate against (if any).
      */
-    public static final String POLICY_SCHEMA_PROPERTY = "com.sun.xacml.PolicySchema";
+    private static final String POLICY_SCHEMA_PROPERTY = "com.sun.xacml.PolicySchema";
 
     /**
      * The default rule combining algorithm in case of condition is only defined for a role instead of complete policy
@@ -93,11 +93,11 @@ public final class CustomPolicyBuilder {
     public static final String RULE_COMB_ALG =
         "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:" + "ordered-permit-overrides";
 
-    public static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+    private static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
 
-    public static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
+    private static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
 
-    public static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
+    private static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
 
     /**
      * The regexp pattern used to insert xacml-context prefix into xacml parts.

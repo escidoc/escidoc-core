@@ -34,9 +34,9 @@ public class SearchNotFoundException extends ResourceNotFoundException {
      */
     private static final long serialVersionUID = 2609169485295161056L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
 
-    public static final String HTTP_STATUS_MESSAGE = "Search was not found.";
+    private static final String HTTP_STATUS_MESSAGE = "Search was not found.";
 
     /**
      * Default constructor.

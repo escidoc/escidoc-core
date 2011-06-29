@@ -46,7 +46,7 @@ public class XacmlPolicy extends Policy {
 
     private final String roleId;
 
-    public static final String URN_RULE_COMBINING_ALGORITHM = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:";
+    private static final String URN_RULE_COMBINING_ALGORITHM = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:";
 
     public static final String URN_RULE_COMBINING_ALGORITHM_ORDERED_DENY_OVERRIDES =
         URN_RULE_COMBINING_ALGORITHM + "ordered-deny-overrides";

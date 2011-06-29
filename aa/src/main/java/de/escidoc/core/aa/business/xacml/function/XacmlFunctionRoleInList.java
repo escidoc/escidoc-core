@@ -67,7 +67,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
     /**
      * The name of this function.
      */
-    public static final String NAME = AttributeIds.FUNCTION_PREFIX + "role-in-list";
+    private static final String NAME = AttributeIds.FUNCTION_PREFIX + "role-in-list";
 
     @Autowired
     @Qualifier("security.SecurityHelper")

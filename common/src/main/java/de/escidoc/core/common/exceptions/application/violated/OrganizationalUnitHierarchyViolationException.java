@@ -34,9 +34,9 @@ public class OrganizationalUnitHierarchyViolationException extends RuleViolation
      */
     private static final long serialVersionUID = -2759285231281876996L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE = "Hierarchy of organizational units is violated.";
+    private static final String HTTP_STATUS_MESSAGE = "Hierarchy of organizational units is violated.";
 
     /**
      * Default constructor.

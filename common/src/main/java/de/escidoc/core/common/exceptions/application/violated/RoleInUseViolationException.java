@@ -32,9 +32,9 @@ public class RoleInUseViolationException extends RuleViolationException {
      */
     private static final long serialVersionUID = 6258381856006270360L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE = "Role in use, referenced by a role grant.";
+    private static final String HTTP_STATUS_MESSAGE = "Role in use, referenced by a role grant.";
 
     /**
      * Default constructor.

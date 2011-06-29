@@ -54,7 +54,7 @@ public final class StagingUtil {
      * The duration during which a token is valid, i.e. uploading/downloading data is possible.<br> The value is 1000
      * seconds.
      */
-    public static final int TOKEN_VALID_DURATION = 1000000;
+    private static final int TOKEN_VALID_DURATION = 1000000;
 
     /**
      * Private constructor to avoid instantiation.

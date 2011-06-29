@@ -36,9 +36,9 @@ public class SystemException extends EscidocException {
      */
     private static final long serialVersionUID = 1L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
 
-    public static final String HTTP_STATUS_MESSAGE = "Internal eSciDoc System Error";
+    private static final String HTTP_STATUS_MESSAGE = "Internal eSciDoc System Error";
 
     /**
      * Default constructor.
@@ -82,7 +82,7 @@ public class SystemException extends EscidocException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public SystemException(final int httpStatusCode, final String httpStatusMsg) {
+    protected SystemException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
     }
 
@@ -95,7 +95,7 @@ public class SystemException extends EscidocException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public SystemException(final String message, final Throwable cause, final int httpStatusCode,
+    protected SystemException(final String message, final Throwable cause, final int httpStatusCode,
         final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
     }
@@ -107,7 +107,7 @@ public class SystemException extends EscidocException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public SystemException(final String message, final int httpStatusCode, final String httpStatusMsg) {
+    protected SystemException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
     }
 
@@ -118,7 +118,7 @@ public class SystemException extends EscidocException {
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
      */
-    public SystemException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
+    protected SystemException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
     }
 
