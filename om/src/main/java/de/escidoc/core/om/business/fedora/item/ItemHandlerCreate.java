@@ -391,7 +391,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final Component c = new Component(componentId, getItem().getId(), null);
             getItem().addComponent(c);
 
-            component = renderComponent(componentId, false);
+            component = renderComponent(componentId, true);
         }
         catch (final ResourceNotFoundException e) {
             throw new IntegritySystemException("Component not found.", e);
