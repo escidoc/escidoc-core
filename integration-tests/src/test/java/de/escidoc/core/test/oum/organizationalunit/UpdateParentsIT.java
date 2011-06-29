@@ -425,4 +425,45 @@ public class UpdateParentsIT extends OrganizationalUnitTestBase {
         assertEscidocMdRecord(objid, getDocument(updatedXml), createdDocument, startTimestamp);
     }
 
+    /**
+     * Test for https://www.escidoc.org/jira/browse/INFR-1184. Create A parentOf B parentOf C and change this into A
+     * parentOf B and C.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testINFR1184() throws Exception {
+        // create OU A
+        Document ouAdoc = getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        String ouAid = getObjidValue(ouAdoc);
+
+        // create OU B
+        Document ouBdoc = getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        String ouBid = getObjidValue(ouBdoc);
+
+        // create OU C
+        Document ouCdoc = getDocument(createSuccessfully("escidoc_ou_create.xml"));
+        String ouCid = getObjidValue(ouCdoc);
+
+        // A parentOf B
+        Node parents = selectSingleNode(ouBdoc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
+        Element parent = ouBdoc.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
+        parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ouAid);
+        parents.appendChild(parent);
+        ouBdoc = getDocument(update(ouBid, toString(ouBdoc, true)));
+
+        // B parentOf C
+        parents = selectSingleNode(ouCdoc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
+        parent = ouCdoc.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
+        parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ouBid);
+        parents.appendChild(parent);
+        ouCdoc = getDocument(update(ouCid, toString(ouCdoc, true)));
+
+        // A parentOf C
+        parents = selectSingleNode(ouCdoc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
+        parent = (Element) selectSingleNode(parents, XPATH_ORGANIZATIONAL_UNIT_PARENT);
+        parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ouAid);
+        ouCdoc = getDocument(update(ouCid, toString(ouCdoc, true)));
+    }
 }
