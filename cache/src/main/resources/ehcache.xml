@@ -139,7 +139,7 @@
             name="Fedora.DigitalObjectStreams"
             maxElementsInMemory="1000"
             eternal="true"
-            overflowToDisk="true"/>
+            overflowToDisk="false"/>
 
     <!-- caches Fedora datastream lists
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
@@ -163,7 +163,7 @@
             name="Fedora.Datastreams"
             maxElementsInMemory="1000"
             eternal="true"
-            overflowToDisk="true"/>
+            overflowToDisk="false"/>
 
     <!-- caches Fedora datastream history
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
@@ -179,6 +179,6 @@
             name="Fedora.DatastreamBinaryContent"
             maxElementsInMemory="1000"
             eternal="true"
-            overflowToDisk="true"/>
+            overflowToDisk="false"/>
 
 </ehcache>
