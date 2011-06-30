@@ -161,7 +161,7 @@ public class AdminHandler {
      * @return current status (how many objects are still in the queue)
      * @throws SystemException thrown in case of an internal error
      */
-    public String getPurgeStatus() throws SystemException {
+    public String getPurgeStatus() {
         return this.utility.prepareReturnXml(PurgeStatus.getInstance().toString());
     }
 
@@ -171,7 +171,7 @@ public class AdminHandler {
      * @return current status (how many objects are still in the queue)
      * @throws SystemException thrown in case of an internal error
      */
-    public String getReindexStatus() throws SystemException {
+    public String getReindexStatus() {
         return this.utility.prepareReturnXml(reindexer.getStatus());
     }
 
@@ -196,8 +196,7 @@ public class AdminHandler {
      * @throws SystemException             Thrown if a framework internal error occurs.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
-    public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException,
-        InvalidSearchQueryException {
+    public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException {
         return this.utility.prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
     }
 

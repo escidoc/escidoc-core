@@ -436,8 +436,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         }
     }
 
-    public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams) throws FedoraSystemException,
-        WebserverSystemException {
+    public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams) throws FedoraSystemException {
 
         final Set<String> namesInFedora = getContentStreams().keySet();
 
@@ -469,8 +468,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         }
     }
 
-    public void setContentStream(final String name, final Datastream ds) throws WebserverSystemException,
-        FedoraSystemException {
+    public void setContentStream(final String name, final Datastream ds) throws FedoraSystemException {
         // don't trust the handler
         final List<String> alternateIDs = new ArrayList<String>();
         alternateIDs.add("content-stream");
@@ -482,8 +480,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         this.contentStreams.put(name, ds);
     }
 
-    public void setOtherStream(final String name, final Datastream ds) throws WebserverSystemException,
-        FedoraSystemException {
+    public void setOtherStream(final String name, final Datastream ds) throws FedoraSystemException {
         final Datastream curDs = getOtherStream(name);
         setStream(ds, curDs);
         this.otherStreams.put(name, ds);

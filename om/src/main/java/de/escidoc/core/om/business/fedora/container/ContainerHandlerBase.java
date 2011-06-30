@@ -168,8 +168,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws EncodingSystemException  In case of an encoding failure.
      * @throws WebserverSystemException Thrown if converting character encoding failed.
      */
-    protected String getVersions() throws EncodingSystemException, WebserverSystemException, FedoraSystemException,
-        StreamNotFoundException {
+    protected String getVersions() throws EncodingSystemException, FedoraSystemException, StreamNotFoundException {
 
         return getContainer().getWov().toStringUTF8();
     }

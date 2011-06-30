@@ -836,10 +836,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public String updateComponents(final String id, final String xmlData) throws ItemNotFoundException,
-        ComponentNotFoundException, FileNotFoundException, XmlSchemaValidationException, LockingException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException, InvalidStatusException,
-        SystemException, MissingMethodParameterException, MissingContentException, MissingElementValueException,
-        InvalidContentException, XmlCorruptedException, ReadonlyVersionException {
+        ComponentNotFoundException, FileNotFoundException, LockingException, ReadonlyElementViolationException,
+        ReadonlyAttributeViolationException, InvalidStatusException, SystemException, MissingMethodParameterException,
+        MissingContentException, MissingElementValueException, InvalidContentException, ReadonlyVersionException {
 
         setItem(id);
         checkLatestVersion();
@@ -1744,9 +1743,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
-        catch (LastModificationDateMissingException e) {
-            throw new XmlCorruptedException(e);
-        }
         catch (final OptimisticLockingException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
@@ -1861,7 +1857,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      */
     @Deprecated
     private void setContentStreams(final Map<String, Map<String, Object>> contentStreamMap)
-        throws FedoraSystemException, WebserverSystemException, IntegritySystemException {
+        throws FedoraSystemException, IntegritySystemException {
         final Map<String, Datastream> contentStreamDatastreams = new HashMap<String, Datastream>();
 
         for (final Entry<String, Map<String, Object>> stringMapEntry : contentStreamMap.entrySet()) {

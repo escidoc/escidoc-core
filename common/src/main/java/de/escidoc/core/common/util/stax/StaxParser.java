@@ -305,8 +305,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
         OrganizationalUnitNotFoundException, ContentRelationNotFoundException, PidAlreadyAssignedException,
         MissingMdRecordException, TripleStoreSystemException, WebserverSystemException, XmlParserSystemException,
-        IntegritySystemException, TmeException, XMLStreamException, XmlCorruptedException,
-        LastModificationDateMissingException {
+        IntegritySystemException, TmeException, XMLStreamException, XmlCorruptedException {
 
         final ByteArrayInputStream in;
         try {

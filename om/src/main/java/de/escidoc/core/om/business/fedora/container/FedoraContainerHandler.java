@@ -326,9 +326,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         catch (final XMLStreamException e) {
             throw new XmlParserSystemException(e);
         }
-        catch (LastModificationDateMissingException e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
         catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
@@ -2319,9 +2316,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         }
         catch (final XMLStreamException e) {
             throw new XmlParserSystemException(e.getMessage(), e);
-        }
-        catch (LastModificationDateMissingException e) {
-            throw new XmlCorruptedException(e);
         }
         catch (final ContextNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);

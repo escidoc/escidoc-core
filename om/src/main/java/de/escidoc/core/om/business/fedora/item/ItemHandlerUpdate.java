@@ -114,9 +114,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      */
     protected void setComponents(
         final Map<String, Object> components, final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
-        final Map<String, String> nsUris) throws ComponentNotFoundException, LockingException, InvalidStatusException,
-        SystemException, InvalidContentException, MissingContentException, FileNotFoundException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException, MissingElementValueException {
+        final Map<String, String> nsUris) throws ComponentNotFoundException, SystemException, InvalidContentException,
+        MissingContentException, FileNotFoundException, ReadonlyElementViolationException,
+        ReadonlyAttributeViolationException, MissingElementValueException {
 
         // FIXME don't set but use getComponents()? (FRS)
         // What do you want to have fixed? I want to have setComponent() but I
@@ -315,7 +315,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      */
     @Deprecated
     protected void setContentTypeSpecificProperties(final String xml) throws FedoraSystemException,
-        WebserverSystemException, EncodingSystemException {
+        EncodingSystemException {
         try {
             final Datastream oldDs = getItem().getCts();
             final Datastream newDs =

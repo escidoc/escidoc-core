@@ -98,13 +98,12 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public Context(final String id) throws ContextNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+        IntegritySystemException {
         super(id);
         init();
     }
 
-    private void init() throws ContextNotFoundException, TripleStoreSystemException, IntegritySystemException,
-        WebserverSystemException {
+    private void init() throws ContextNotFoundException, TripleStoreSystemException, IntegritySystemException {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
         checkContextExist();
@@ -507,7 +506,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected void checkContextExist() throws ContextNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+        IntegritySystemException {
 
         try {
             this.getUtility().checkIsContext(getId());

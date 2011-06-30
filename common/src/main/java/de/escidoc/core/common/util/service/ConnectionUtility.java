@@ -231,8 +231,7 @@ public class ConnectionUtility {
      * @param password Password for authentication.
      * @throws WebserverSystemException e
      */
-    public void setAuthentication(final URL url, final String username, final String password)
-        throws WebserverSystemException {
+    public void setAuthentication(final URL url, final String username, final String password) {
 
         final CredentialsProvider credsProvider = new BasicCredentialsProvider();
 

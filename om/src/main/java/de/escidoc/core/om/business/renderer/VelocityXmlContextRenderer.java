@@ -402,7 +402,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @return Vector with OU description (id, title, href)
      */
     public Collection<Map<String, String>> getOrganizationalUnitsContext(final Iterable<String> ouids)
-        throws TripleStoreSystemException, WebserverSystemException {
+        throws TripleStoreSystemException {
 
         final Collection<Map<String, String>> ousContext = new ArrayList<Map<String, String>>();
 
@@ -548,7 +548,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param id The id of the context.
      * @return Returns the name of a context.
      */
-    public String getName(final String id) throws TripleStoreSystemException, WebserverSystemException {
+    public String getName(final String id) throws TripleStoreSystemException {
         return getProperty(id, TripleStoreUtility.PROP_NAME);
     }
 

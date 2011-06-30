@@ -454,8 +454,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * retrieveContentStreams(java.lang.String)
      */
     @Deprecated
-    public String retrieveContentStreams(final String itemId) throws ItemNotFoundException, EncodingSystemException,
-        IntegritySystemException, FedoraSystemException, TripleStoreSystemException, WebserverSystemException {
+    public String retrieveContentStreams(final String itemId) throws ItemNotFoundException, IntegritySystemException,
+        FedoraSystemException, TripleStoreSystemException, WebserverSystemException {
         setItem(itemId);
         return renderContentStreams(true);
     }

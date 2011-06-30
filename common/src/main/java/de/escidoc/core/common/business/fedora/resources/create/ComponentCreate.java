@@ -218,7 +218,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @throws SystemException         Thrown if getting new objid from ID-Provider or Fedora synchronization failed.
      * @throws IOException             Thrown if preparing of properties, meta data record failed.
      */
-    public String persist(final boolean forceSync) throws SystemException, InvalidContentException, IOException {
+    public String persist(final boolean forceSync) throws SystemException, InvalidContentException {
 
         validate();
         final String foxml = getFOXML();

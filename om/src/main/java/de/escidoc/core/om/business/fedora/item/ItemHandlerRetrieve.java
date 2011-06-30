@@ -434,14 +434,14 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         return mdRecord.toString();
     }
 
-    public String renderContentStreams(final boolean isRoot) throws WebserverSystemException, IntegritySystemException,
+    public String renderContentStreams(final boolean isRoot) throws WebserverSystemException,
         TripleStoreSystemException {
 
         return renderContentStreams(getCommonValues(getItem()), isRoot);
     }
 
     public String renderContentStreams(final Map<String, String> commonValues, final boolean isRoot)
-        throws WebserverSystemException, IntegritySystemException, TripleStoreSystemException {
+        throws WebserverSystemException, TripleStoreSystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
         final StringBuilder content = new StringBuilder();
@@ -966,7 +966,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
      *
      * @return The content type specific properties.
      */
-    protected String getContentTypeSpecificPropertiesXml() throws EncodingSystemException, WebserverSystemException {
+    protected String getContentTypeSpecificPropertiesXml() throws EncodingSystemException {
 
         return getItem().getCts().toStringUTF8();
     }

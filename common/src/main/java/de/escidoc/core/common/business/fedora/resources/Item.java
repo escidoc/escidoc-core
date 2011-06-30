@@ -139,7 +139,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @param c The new Component. (The Component has not to be (but could) persist, this is done with with the Item.)
      */
     public void addComponent(final Component c) throws FedoraSystemException, WebserverSystemException,
-        IntegritySystemException, EncodingSystemException {
+        EncodingSystemException {
 
         addComponentToRelsExt(c.getId());
         this.components.put(c.getId(), c);
@@ -153,7 +153,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *                    repository!
      */
     public void addComponent(final String componentId) throws FedoraSystemException, WebserverSystemException,
-        IntegritySystemException, EncodingSystemException {
+        EncodingSystemException {
 
         addComponentToRelsExt(componentId);
         this.alteredComponent.add(componentId);
@@ -164,8 +164,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @param componentId The id of the Component which is to delete from the Item.
      */
-    public void deleteComponent(final String componentId) throws LockingException, ComponentNotFoundException,
-        InvalidStatusException, SystemException {
+    public void deleteComponent(final String componentId) throws ComponentNotFoundException, SystemException {
 
         deleteComponent(getComponent(componentId));
     }
@@ -678,8 +677,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     }
 
     @Deprecated
-    public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams) throws FedoraSystemException,
-        WebserverSystemException {
+    public void setContentStreams(final Map<String, Datastream> contentStreamDatastreams) throws FedoraSystemException {
 
         final Set<String> namesInFedora = getContentStreams().keySet();
 

@@ -173,9 +173,6 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         catch (final InvalidXmlException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (final LastModificationDateMissingException e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
         catch (final TmeException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }

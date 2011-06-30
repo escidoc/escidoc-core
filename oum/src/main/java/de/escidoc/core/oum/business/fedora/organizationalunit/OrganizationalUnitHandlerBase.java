@@ -108,7 +108,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *          If no organizational unit with the given id exists.
      */
     protected void setOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException,
-        TripleStoreSystemException, IntegritySystemException, WebserverSystemException {
+        TripleStoreSystemException, IntegritySystemException {
 
         if (id != null) {
             try {

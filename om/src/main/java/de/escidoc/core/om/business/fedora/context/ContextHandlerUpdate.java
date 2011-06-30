@@ -170,9 +170,6 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         catch (final ContentModelNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (LastModificationDateMissingException e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
         catch (final MissingContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }

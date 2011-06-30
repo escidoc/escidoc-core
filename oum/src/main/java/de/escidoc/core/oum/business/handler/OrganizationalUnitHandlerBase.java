@@ -64,8 +64,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *                                        If the id does not point to an organizational unit.
      */
     protected String checkParentRef(final StartElement element) throws MissingAttributeValueException,
-        OrganizationalUnitNotFoundException, TripleStoreSystemException, IntegritySystemException,
-        WebserverSystemException {
+        OrganizationalUnitNotFoundException, TripleStoreSystemException, IntegritySystemException {
 
         String result;
         try {
