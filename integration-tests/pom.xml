@@ -100,6 +100,36 @@
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
 				<version>1.1.0</version>
+        <configuration>
+          <wait>${cargo.wait}</wait>
+          <container>
+            <containerId>jboss42x</containerId>
+            <home>${project.build.directory}/escidoc/jboss</home>
+            <timeout>600000</timeout>
+          </container>
+          <configuration>
+            <type>standalone</type>
+            <properties>
+              <cargo.hostname>localhost</cargo.hostname>
+              <cargo.protocol>http</cargo.protocol>
+
+              <cargo.servlet.port>8080</cargo.servlet.port>
+              <cargo.rmi.port>1099</cargo.rmi.port>
+              <cargo.logging>medium</cargo.logging>
+              <cargo.jvmargs>-Xmx1024m -Xms312m -XX:MaxPermSize=320m ${cargo.jvmdebug}</cargo.jvmargs>
+            </properties>
+            <deployables>
+              <deployable>
+                <groupId>org.escidoc</groupId>
+                <artifactId>testdata</artifactId>
+                <type>war</type>
+                <properties>
+                  <context>testdata</context>
+                </properties>
+              </deployable>
+            </deployables>
+          </configuration>
+        </configuration>
 				<executions>
 					<execution>
 						<id>start-container</id>
@@ -119,37 +149,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<container>
-						<containerId>jboss42x</containerId>
-						<home>${project.build.directory}/escidoc/jboss</home>
-						<timeout>600000</timeout>
-					</container>
-
-					<configuration>
-						<type>standalone</type>
-						<properties>
-							<cargo.hostname>localhost</cargo.hostname>
-							<cargo.protocol>http</cargo.protocol>
-
-							<cargo.servlet.port>8080</cargo.servlet.port>
-							<cargo.rmi.port>1099</cargo.rmi.port>
-							<cargo.logging>medium</cargo.logging>
-							<cargo.jvmargs>-Xmx1024m -Xms312m -XX:MaxPermSize=320m
-									</cargo.jvmargs>
-						</properties>
-								<deployables>
-									<deployable>
-										<groupId>org.escidoc</groupId>
-										<artifactId>testdata</artifactId>
-										<type>war</type>
-										<properties>
-											<context>testdata</context>
-										</properties>
-									</deployable>
-								</deployables>
-					</configuration>
-				</configuration>
 			</plugin>
 
 			<plugin>
@@ -835,10 +834,9 @@
 						<!-- common configuration shared by all executions -->
 						<configuration>
 							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
-							</url>
-                                                        <username>${escidoc.postgres.database.admin.user}</username>
-                                                        <password>${escidoc.postgres.database.admin.password}</password>
+							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
+              <username>${escidoc.postgres.database.admin.user}</username>
+              <password>${escidoc.postgres.database.admin.password}</password>
 						</configuration>
 						<executions>
 							<execution>
@@ -1304,5 +1302,20 @@
 				</plugins>
 			</build>
 		</profile>
+    
+    <profile>
+      <id>inject-variables</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <escidoc.oracle.database.admin.user>oraesci_adm</escidoc.oracle.database.admin.user>
+        <escidoc.oracle.database.admin.password>oraesciadm</escidoc.oracle.database.admin.password>
+        <fedora.oracle.database.admin.user>oraesci_adm</fedora.oracle.database.admin.user>
+        <fedora.oracle.database.admin.password>oraesciadm</fedora.oracle.database.admin.password>
+        <escidoc.postgres.database.admin.user>postgres</escidoc.postgres.database.admin.user>
+        <escidoc.postgres.database.admin.password>postgres</escidoc.postgres.database.admin.password>
+      </properties>
+    </profile>
 	</profiles>
 </project>

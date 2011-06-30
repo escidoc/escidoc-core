@@ -778,8 +778,8 @@
     <jdbc.oracle.version>14</jdbc.oracle.version>
     <fcrepo.version>3.4.2</fcrepo.version>
     <lucene.version>3.1.0</lucene.version>
-	<java.source.version>1.6</java.source.version>
-	<java.target.version>1.6</java.target.version>
+    <java.source.version>1.6</java.source.version>
+    <java.target.version>1.6</java.target.version>
     <!-- <jaxb.xsd.folder>src/main/resources/xsd</jaxb.xsd.folder> <jaxb.xjb.folder>src/main/resources/META-INF/bindings</jaxb.xjb.folder> 
       <jaxb.temporary.folder>target/generated-sources/resources/jaxb</jaxb.temporary.folder> -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -800,33 +800,37 @@
     <escidoc.database.user>escidoc</escidoc.database.user>
     <escidoc.database.password>escidoc</escidoc.database.password>
 
-	<escidoc.oracle.host>escidev5</escidoc.oracle.host>
-	<escidoc.oracle.port>1521</escidoc.oracle.port>
-	<escidoc.oracle.database>oraesci01</escidoc.oracle.database>
-	<escidoc.default.tablespace>escidoc</escidoc.default.tablespace>
-	<escidoc.temp.tablespace>TEMP</escidoc.temp.tablespace>
-	<fedora.oracle.database>oraesci01</fedora.oracle.database>
-	<fedora.default.tablespace>fedora</fedora.default.tablespace>
-	<fedora.temp.tablespace>TEMP</fedora.temp.tablespace>
-	<triplestore.oracle.database>oraesci01</triplestore.oracle.database>
-	<triplestore.database.user>riTriples</triplestore.database.user>
-	<triplestore.database.password>riTriples</triplestore.database.password>
-	<triplestore.default.tablespace>triples</triplestore.default.tablespace>
-	<triplestore.temp.tablespace>TEMP</triplestore.temp.tablespace>
+    <escidoc.oracle.host>escidev5</escidoc.oracle.host>
+    <escidoc.oracle.port>1521</escidoc.oracle.port>
+    <escidoc.oracle.database>oraesci01</escidoc.oracle.database>
+    <escidoc.default.tablespace>escidoc</escidoc.default.tablespace>
+    <escidoc.temp.tablespace>TEMP</escidoc.temp.tablespace>
+    <fedora.oracle.database>oraesci01</fedora.oracle.database>
+    <fedora.default.tablespace>fedora</fedora.default.tablespace>
+    <fedora.temp.tablespace>TEMP</fedora.temp.tablespace>
+    <triplestore.oracle.database>oraesci01</triplestore.oracle.database>
+    <triplestore.database.user>riTriples</triplestore.database.user>
+    <triplestore.database.password>riTriples</triplestore.database.password>
+    <triplestore.default.tablespace>triples</triplestore.default.tablespace>
+    <triplestore.temp.tablespace>TEMP</triplestore.temp.tablespace>
+  
+    <!-- debugging (default: deactivated) -->
+    <cargo.wait>false</cargo.wait>
+    <cargo.jvmdebug></cargo.jvmdebug>
 
-	<!-- escidoc.oracle.host>localhost</escidoc.oracle.host>
-	<escidoc.oracle.port>1521</escidoc.oracle.port>
-	<escidoc.oracle.database>XE</escidoc.oracle.database>
-	<escidoc.default.tablespace>USERS</escidoc.default.tablespace>
-	<escidoc.temp.tablespace>TEMP</escidoc.temp.tablespace>
-	<fedora.oracle.database>XE</fedora.oracle.database>
-	<fedora.default.tablespace>USERS</fedora.default.tablespace>
-	<fedora.temp.tablespace>TEMP</fedora.temp.tablespace>
-	<triplestore.oracle.database>XE</triplestore.oracle.database>
-	<triplestore.database.user>riTriples</triplestore.database.user>
-	<triplestore.database.password>riTriples</triplestore.database.password>
-	<triplestore.default.tablespace>USERS</triplestore.default.tablespace>
-	<triplestore.temp.tablespace>TEMP</triplestore.temp.tablespace -->
+  	<!-- escidoc.oracle.host>localhost</escidoc.oracle.host>
+  	<escidoc.oracle.port>1521</escidoc.oracle.port>
+  	<escidoc.oracle.database>XE</escidoc.oracle.database>
+  	<escidoc.default.tablespace>USERS</escidoc.default.tablespace>
+  	<escidoc.temp.tablespace>TEMP</escidoc.temp.tablespace>
+  	<fedora.oracle.database>XE</fedora.oracle.database>
+  	<fedora.default.tablespace>USERS</fedora.default.tablespace>
+  	<fedora.temp.tablespace>TEMP</fedora.temp.tablespace>
+  	<triplestore.oracle.database>XE</triplestore.oracle.database>
+  	<triplestore.database.user>riTriples</triplestore.database.user>
+  	<triplestore.database.password>riTriples</triplestore.database.password>
+  	<triplestore.default.tablespace>USERS</triplestore.default.tablespace>
+  	<triplestore.temp.tablespace>TEMP</triplestore.temp.tablespace -->
   </properties>
 
   <dependencies>
@@ -1803,6 +1807,20 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>debug</id>
+      <activation>
+        <property>
+          <name>debug</name>
+          <value>true</value>
+        </property>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <cargo.wait>true</cargo.wait>
+        <cargo.jvmdebug>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000 -Xnoagent -Djava.compiler=NONE</cargo.jvmdebug>
+      </properties>
     </profile>
   </profiles>
 </project>
