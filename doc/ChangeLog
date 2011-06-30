@@ -83,6 +83,14 @@ changes since version 1.2
     		-include x509-elements for SSL-auth
     		-execute db-query with 1 instead of "true" for oracle-support
     		-always integrate authentication-provider with jdbc-user-service
+    March 2011:
+    	-change escidoc-core.properties
+    		-remove gsearch indexing properties because indexing-options are externally configurable
+    		-add properties for urls:
+    			-srw.url, admin-tool.url, escidoc-browser.url. jms.url
+    		-add properties for contentPid
+    		-add database properties
+    		-rename escidoc-core.filter.default-limit to escidoc-core.filter.default.maximumRecords
     	
 changes since version 1.1
 --------------------------
