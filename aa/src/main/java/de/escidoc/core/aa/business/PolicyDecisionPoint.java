@@ -216,17 +216,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      */
     @PostConstruct
     public void init() throws SqlDatabaseSystemException, WebserverSystemException {
-        final String proxyHostName =
-            EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
-        final String proxyPort = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
-        if (proxyHostName != null && proxyHostName.trim().length() != 0) {
-            final ProxyProperties proxyProps = new ProxyProperties();
-            proxyProps.setProxyHostName(proxyHostName);
-            if (proxyPort != null && proxyPort.trim().length() != 0) {
-                proxyProps.setProxyPort(Integer.parseInt(proxyPort));
-            }
-            HttpClientFactory.setProxyProperties(proxyProps);
-        }
         accessRights.deleteAccessRights();
 
         final Map<String, Object> filter = new HashMap<String, Object>();

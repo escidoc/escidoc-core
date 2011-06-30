@@ -9,7 +9,7 @@ changes since version 1.3
 	May 2011:
 		-change escidoc-login.xml:
 			-upgrade spring-security schema to version 3.0
-			-always surtround authentication-provider-element with authentication-manager-element
+			-always surround authentication-provider-element with authentication-manager-element
 			-change package-names of LDAP-classes
 			-reorganize authentication-manager elements
 			
