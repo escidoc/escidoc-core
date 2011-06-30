@@ -27,6 +27,7 @@
   <fileSets>
     <fileSet>
       <directory>${project.basedir}/../target/site/technical-documentation/pdf</directory>
+      <outputDirectory>/pdf</outputDirectory>
       <includes>
         <include>*.pdf</include>
       </includes>
