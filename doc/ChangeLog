@@ -12,6 +12,13 @@ changes since version 1.3
 			-always surtround authentication-provider-element with authentication-manager-element
 			-change package-names of LDAP-classes
 			-reorganize authentication-manager elements
+			
+	June 2011:
+		-change escidoc-core.properties:
+			-add property escidoc-core.compressionIsAccepted
+			 defines if content (not binary) will be delivered gzip compressed
+			-remove aa.cache properties as we now use eh-cache
+			-remove property escidoc-core.om.indexer.cache.size as indexer-cache was removed
 
 changes since version 1.2
 --------------------------
