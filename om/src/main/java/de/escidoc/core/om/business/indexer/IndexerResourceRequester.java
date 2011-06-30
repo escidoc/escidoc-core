@@ -143,7 +143,7 @@ public class IndexerResourceRequester {
                 final String mimeType =
                     ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
 
-                EscidocBinaryContent escidocBinaryContent = new EscidocBinaryContent();
+                final EscidocBinaryContent escidocBinaryContent = new EscidocBinaryContent();
                 escidocBinaryContent.setMimeType(mimeType);
                 escidocBinaryContent.setContent(httpResponse.getEntity().getContent());
                 return escidocBinaryContent;

@@ -74,7 +74,7 @@ public class ContextHandlerBase extends HandlerBase {
      * @throws ContextNotFoundException If there is no context with <code>id</code> in the repository.
      */
     public void setContext(final String id) throws ContextNotFoundException, TripleStoreSystemException,
-        IntegritySystemException, WebserverSystemException {
+        IntegritySystemException {
 
         this.context = new Context(id);
     }

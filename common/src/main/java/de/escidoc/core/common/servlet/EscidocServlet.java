@@ -313,7 +313,7 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             In case of an I/O error.
      */
-    private void handleDescriptorRequest(final HttpServletResponse httpResponse, boolean compressionIsAccepted)
+    private void handleDescriptorRequest(final HttpServletResponse httpResponse, final boolean compressionIsAccepted)
         throws IOException {
 
         try {
@@ -347,7 +347,7 @@ public class EscidocServlet extends HttpServlet {
      */
     private static boolean handleException(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse, final BeanMethod method,
-        final Throwable e, boolean compressionIsAccepted) throws IOException {
+        final Throwable e, final boolean compressionIsAccepted) throws IOException {
 
         boolean ret = false;
 
@@ -454,7 +454,7 @@ public class EscidocServlet extends HttpServlet {
      */
     private static void doSendStringResponse(
         final HttpServletResponse httpResponse, final String httpMethod, final String result,
-        boolean compressionIsAccepted) throws IOException {
+        final boolean compressionIsAccepted) throws IOException {
 
         if (HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod) || HTTP_POST.equals(httpMethod)) {
             if (compressionIsAccepted) {
@@ -486,7 +486,7 @@ public class EscidocServlet extends HttpServlet {
      */
     private static void doRedirectResponse(
         final HttpServletResponse httpResponse, final String httpMethod, final EscidocServiceRedirectInterface result,
-        boolean compressionIsAccepted) throws IOException {
+        final boolean compressionIsAccepted) throws IOException {
 
         if (HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod) || HTTP_POST.equals(httpMethod)) {
 
@@ -515,7 +515,7 @@ public class EscidocServlet extends HttpServlet {
      *             If anything fails.
      */
     private static void doSendVoidResponse(
-        final HttpServletResponse httpResponse, final String httpMethod, boolean compressionIsAccepted)
+        final HttpServletResponse httpResponse, final String httpMethod, final boolean compressionIsAccepted)
         throws IOException {
 
         if (HTTP_DELETE.equals(httpMethod)) {
@@ -547,7 +547,7 @@ public class EscidocServlet extends HttpServlet {
      */
     private static void doSendBinaryContentResponse(
         final HttpServletResponse httpResponse, final String httpMethod, final EscidocBinaryContent binaryContent,
-        boolean compressionIsAccepted) throws IOException {
+        final boolean compressionIsAccepted) throws IOException {
 
         if (HTTP_GET.equals(httpMethod)) {
             final String externalContentRedirectUrl = binaryContent.getRedirectUrl();
@@ -623,9 +623,9 @@ public class EscidocServlet extends HttpServlet {
         if (text != null) {
             httpResponse.setContentType(XML_RESPONSE_CONTENT_TYPE);
             httpResponse.setHeader(HTTP_HEADER_CONTENT_ENCODING, HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP);
-            byte txt[] = (text.getBytes());
-            ServletOutputStream servletOut = httpResponse.getOutputStream();
-            OutputStream out = new GZIPOutputStream(servletOut);
+            final byte[] txt = (text.getBytes());
+            final ServletOutputStream servletOut = httpResponse.getOutputStream();
+            final OutputStream out = new GZIPOutputStream(servletOut);
             out.write(txt);
             out.close();
             servletOut.close();
@@ -647,7 +647,7 @@ public class EscidocServlet extends HttpServlet {
      *             If anything fails.
      */
     private static void doDeclineHttpRequest(
-        final HttpServletResponse httpResponse, final EscidocException exception, boolean compressionIsAccepted)
+        final HttpServletResponse httpResponse, final EscidocException exception, final boolean compressionIsAccepted)
         throws IOException {
         httpResponse.reset();
         initHttpResponse(httpResponse);
@@ -658,12 +658,12 @@ public class EscidocServlet extends HttpServlet {
                 httpResponse.setHeader("Location", ((SecurityException) exception).getRedirectLocation());
             }
         }
-        String body = XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition() + exception.toXmlString();
+        final String body = XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition() + exception.toXmlString();
         if (compressionIsAccepted) {
             httpResponse.setHeader(HTTP_HEADER_CONTENT_ENCODING, HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP);
-            byte txt[] = (body.getBytes());
-            ServletOutputStream servletOut = httpResponse.getOutputStream();
-            OutputStream out = new GZIPOutputStream(servletOut);
+            final byte[] txt = (body.getBytes());
+            final ServletOutputStream servletOut = httpResponse.getOutputStream();
+            final OutputStream out = new GZIPOutputStream(servletOut);
             out.write(txt);
             out.close();
             servletOut.close();
@@ -694,7 +694,7 @@ public class EscidocServlet extends HttpServlet {
      */
     private static void doRedirect(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse,
-        final SecurityException exception, boolean compressionIsAccepted) throws IOException {
+        final SecurityException exception, final boolean compressionIsAccepted) throws IOException {
 
         final String message = exception.toXmlString();
         final String redirectLocation =
@@ -738,7 +738,7 @@ public class EscidocServlet extends HttpServlet {
      */
     private static void doRedirect(
         final HttpServletResponse httpResponse, final String exceptionName, final String message,
-        final String redirectLocation, final int httpStatusCode, boolean compressionIsAccepted) throws IOException {
+        final String redirectLocation, final int httpStatusCode, final boolean compressionIsAccepted) throws IOException {
 
         initHttpResponse(httpResponse);
         try {

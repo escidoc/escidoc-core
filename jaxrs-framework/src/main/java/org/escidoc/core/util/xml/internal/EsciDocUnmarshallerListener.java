@@ -31,7 +31,7 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
         init();
     }
 
-    public EsciDocUnmarshallerListener(XMLStreamReader inputStream) {
+    public EsciDocUnmarshallerListener(final XMLStreamReader inputStream) {
         this.elementStreamFilter = new ElementStreamFilter(inputStream);
         init();
     }
@@ -61,7 +61,7 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
             final DatastreamHolder contentTO = (DatastreamHolder) target;
             beforeUnmarshalContentTO(contentTO);
         }
-        for(UnmarshallerListener unmarshallerListener : this.unmarshallerListeners) {
+        for(final UnmarshallerListener unmarshallerListener : this.unmarshallerListeners) {
             unmarshallerListener.beforeUnmarshal(target, parent);
         }
     }
@@ -72,7 +72,7 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
             final DatastreamHolder contentTO = (DatastreamHolder) target;
             afterUnmarshalContentTO(contentTO);
         }
-        for(UnmarshallerListener unmarshallerListener : this.unmarshallerListeners) {
+        for(final UnmarshallerListener unmarshallerListener : this.unmarshallerListeners) {
             unmarshallerListener.afterUnmarshal(target, parent);
         }
     }
@@ -87,7 +87,7 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
         lockStream(datastreamHolder.getDatastream());
     }
 
-    private void lockStream(Stream stream) {
+    private void lockStream(final Stream stream) {
         try {
             stream.lock();
         } catch(final IOException e) {

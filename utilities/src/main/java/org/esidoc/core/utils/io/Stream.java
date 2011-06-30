@@ -184,12 +184,12 @@ public final class Stream extends OutputStream {
         } else {
             if(isInMemory()) {
                 if(this.currentStream instanceof ByteArrayOutputStream) {
-                    ByteArrayOutputStream byteOut = (ByteArrayOutputStream) this.currentStream;
+                    final ByteArrayOutputStream byteOut = (ByteArrayOutputStream) this.currentStream;
                     if(copyOldContent && byteOut.size() > 0) {
                         byteOut.writeTo(out);
                     }
                 } else if(this.currentStream instanceof PipedOutputStream) {
-                    PipedOutputStream pipeOut = (PipedOutputStream) this.currentStream;
+                    final PipedOutputStream pipeOut = (PipedOutputStream) this.currentStream;
                     IOUtils.copyAndCloseInput(new PipedInputStream(pipeOut), out);
                 } else {
                     throw new IOException("Unknown format of currentStream");
@@ -198,10 +198,10 @@ public final class Stream extends OutputStream {
                 // read the file
                 this.currentStream.close();
                 if(copyOldContent) {
-                    FileInputStream fin = new FileInputStream(this.tempFile);
+                    final FileInputStream fin = new FileInputStream(this.tempFile);
                     IOUtils.copyAndCloseInput(fin, out);
                 }
-                boolean sucessfull = this.tempFile.delete();
+                final boolean sucessfull = this.tempFile.delete();
                 if(! sucessfull) {
                     if(LOG.isInfoEnabled()) {
                         LOG.info("Error on deleting temp file '" + tempFile.getName() + "'.");
@@ -261,7 +261,7 @@ public final class Stream extends OutputStream {
         }
         if(this.isInMemory()) {
             if(this.currentStream instanceof ByteArrayOutputStream) {
-                byte bytes[] = ((ByteArrayOutputStream) this.currentStream).toByteArray();
+                final byte[] bytes = ((ByteArrayOutputStream) this.currentStream).toByteArray();
                 out.append(IOUtils.newStringFromBytes(bytes, charsetName, 0, limit));
             } else {
                 throw new IOException("Unknown format of current stream.");
@@ -296,7 +296,7 @@ public final class Stream extends OutputStream {
         flush();
         if(isInMemory()) {
             if(this.currentStream instanceof ByteArrayOutputStream) {
-                byte[] bytes = ((ByteArrayOutputStream) this.currentStream).toByteArray();
+                final byte[] bytes = ((ByteArrayOutputStream) this.currentStream).toByteArray();
                 out.append(IOUtils.newStringFromBytes(bytes, charsetName));
             } else {
                 throw new IOException("Unknown format of currentStream");
@@ -414,7 +414,7 @@ public final class Stream extends OutputStream {
                     //ignore
                 }
             }
-            boolean sucessfull = this.tempFile.delete();
+            final boolean sucessfull = this.tempFile.delete();
             if(! sucessfull) {
                 if(LOG.isInfoEnabled()) {
                     LOG.info("Error on deleting temp file '" + tempFile.getName() + "'.");

@@ -27,7 +27,7 @@ public class EsciDocMarshallerListener extends Marshaller.Listener {
     private final FilteringXMLStreamWriter filteringXmlStreamWriter;
     private final List<MarshallerListener> marshallerListeners = new ArrayList<MarshallerListener>();
 
-    public EsciDocMarshallerListener(OutputStream outputStream) {
+    public EsciDocMarshallerListener(final OutputStream outputStream) {
         this.outputStream = outputStream;
         final XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
         final XMLStreamWriter xmlStreamWriter;
@@ -67,14 +67,14 @@ public class EsciDocMarshallerListener extends Marshaller.Listener {
                 LOG.debug("Error on writing content to stream.", e);
             }
         }
-        for(MarshallerListener marshallerListener : this.marshallerListeners) {
+        for(final MarshallerListener marshallerListener : this.marshallerListeners) {
             marshallerListener.beforeMarshal(source);
         }
     }
 
     @Override
     public void afterMarshal(final Object source) {
-        for(MarshallerListener marshallerListener : this.marshallerListeners) {
+        for(final MarshallerListener marshallerListener : this.marshallerListeners) {
             marshallerListener.afterMarshal(source);
         }
     }

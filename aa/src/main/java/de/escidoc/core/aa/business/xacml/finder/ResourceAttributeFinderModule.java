@@ -199,7 +199,7 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
             if (attributeIdValue.startsWith(AttributeIds.ITEM_ATTR_PREFIX)) {
                 final String itemXml = retrieveItem(ctx, resourceId);
                 final StaxParser sp = new StaxParser(XmlUtility.NAME_ITEM);
-                ItemStaxHandler itemStaxHandler = new ItemStaxHandler(ctx, resourceId);
+                final ItemStaxHandler itemStaxHandler = new ItemStaxHandler(ctx, resourceId);
                 sp.addHandler(itemStaxHandler);
                 try {
                     sp.parse(new ByteArrayInputStream(itemXml.getBytes(XmlUtility.CHARACTER_ENCODING)));
@@ -228,7 +228,7 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
             else if (attributeIdValue.startsWith(AttributeIds.CONTAINER_ATTR_PREFIX)) {
                 final String containerXml = retrieveContainer(ctx, resourceId);
                 final StaxParser sp = new StaxParser(XmlUtility.NAME_CONTAINER);
-                ContainerStaxHandler containerStaxHandler = new ContainerStaxHandler(ctx, resourceId);
+                final ContainerStaxHandler containerStaxHandler = new ContainerStaxHandler(ctx, resourceId);
                 sp.addHandler(containerStaxHandler);
                 try {
                     sp.parse(new ByteArrayInputStream(containerXml.getBytes(XmlUtility.CHARACTER_ENCODING)));
@@ -287,7 +287,7 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
         if (result == null) {
             final String componentXml = retrieveComponent(ctx, itemId, componentId);
             final StaxParser sp = new StaxParser(XmlUtility.NAME_COMPONENT);
-            ComponentStaxHandler componentStaxHandler = new ComponentStaxHandler(ctx, componentId);
+            final ComponentStaxHandler componentStaxHandler = new ComponentStaxHandler(ctx, componentId);
             sp.addHandler(componentStaxHandler);
             try {
                 sp.parse(new ByteArrayInputStream(componentXml.getBytes(XmlUtility.CHARACTER_ENCODING)));
@@ -422,7 +422,7 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * @param staxHandler ComponentStaxHandler.
      */
     private void handleCache(final ComponentStaxHandler staxHandler) {
-        Map<String, String> attributes = staxHandler.getAttributes();
+        final Map<String, String> attributes = staxHandler.getAttributes();
         for (final Entry<String, String> entry : attributes.entrySet()) {
             putInCache(staxHandler.getComponentId(), null, null, entry.getKey(), staxHandler.getCtx(),
                 CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
@@ -435,17 +435,17 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * @param staxHandler ItemStaxHandler.
      */
     private void handleCache(final ItemStaxHandler staxHandler) {
-        Map<String, String> stringAttributes = staxHandler.getStringAttributes();
+        final Map<String, String> stringAttributes = staxHandler.getStringAttributes();
         for (final Entry<String, String> entry : stringAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
                 CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
-        Map<String, String> superAttributes = staxHandler.getSuperAttributes();
+        final Map<String, String> superAttributes = staxHandler.getSuperAttributes();
         for (final Entry<String, String> entry : superAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
                 CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
-        Map<String, Collection<StringAttribute>> attributeAttributes = staxHandler.getAttributeAttributes();
+        final Map<String, Collection<StringAttribute>> attributeAttributes = staxHandler.getAttributeAttributes();
         for (final Entry<String, Collection<StringAttribute>> entry : attributeAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
                 new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, entry.getValue())));
@@ -458,17 +458,17 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
      * @param staxHandler ContainerStaxHandler.
      */
     private void handleCache(final ContainerStaxHandler staxHandler) {
-        Map<String, String> stringAttributes = staxHandler.getStringAttributes();
+        final Map<String, String> stringAttributes = staxHandler.getStringAttributes();
         for (final Entry<String, String> entry : stringAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
                 CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
-        Map<String, String> superAttributes = staxHandler.getSuperAttributes();
+        final Map<String, String> superAttributes = staxHandler.getSuperAttributes();
         for (final Entry<String, String> entry : superAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
                 CustomEvaluationResultBuilder.createSingleStringValueResult(entry.getValue()));
         }
-        Map<String, Collection<StringAttribute>> attributeAttributes = staxHandler.getAttributeAttributes();
+        final Map<String, Collection<StringAttribute>> attributeAttributes = staxHandler.getAttributeAttributes();
         for (final Entry<String, Collection<StringAttribute>> entry : attributeAttributes.entrySet()) {
             putInCache(staxHandler.getResourceId(), null, null, entry.getKey(), staxHandler.getCtx(),
                 new EvaluationResult(new BagAttribute(Constants.URI_XMLSCHEMA_STRING, entry.getValue())));

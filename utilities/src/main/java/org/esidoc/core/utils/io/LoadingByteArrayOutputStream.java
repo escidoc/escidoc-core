@@ -21,7 +21,7 @@ final class LoadingByteArrayOutputStream extends ByteArrayOutputStream {
         super(DEFAULT_BUFFER_SIZE);
     }
 
-    public LoadingByteArrayOutputStream(int i) {
+    public LoadingByteArrayOutputStream(final int i) {
         super(i);
     }
 

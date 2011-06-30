@@ -12,7 +12,7 @@ public class DatastreamTypeTOExtension extends DatastreamTypeTO {
         datastreamVersionTypeListTO.addDatastreamVersionTypeTOListener(listener);
     }
 
-    public void removeDatastreamVersionTypeTOListener(DatastreamVersionTypeTOListener listener) {
+    public void removeDatastreamVersionTypeTOListener(final DatastreamVersionTypeTOListener listener) {
         final DatastreamVersionTypeListTO datastreamVersionTypeListTO =
                 (DatastreamVersionTypeListTO) this.getDatastreamVersion();
         datastreamVersionTypeListTO.removeDatastreamVersionTypeTOListener(listener);

@@ -155,9 +155,9 @@ public class ElementStreamFilter implements StreamFilter {
         }
     }
 
-    private boolean isIgnoredElement(QName elementName) {
+    private boolean isIgnoredElement(final QName elementName) {
         boolean returnValue = false;
-        for(QName myIgnoredElementName : this.ignoredElements) {
+        for(final QName myIgnoredElementName : this.ignoredElements) {
             if(myIgnoredElementName.equals(elementName)) {
                 returnValue = true;
                 break;
@@ -172,7 +172,7 @@ public class ElementStreamFilter implements StreamFilter {
         }
     }
 
-    private void printEndElement(QName elementName) {
+    private void printEndElement(final QName elementName) {
         this.output.print("</");
         if(elementName.getPrefix() != null && elementName.getPrefix().trim().length() > 0) {
             this.output.print(elementName.getPrefix());

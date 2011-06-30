@@ -2140,7 +2140,7 @@ public final class XmlUtility {
         return result;
     }
 
-    public static boolean isIdentical(byte[] xml1, byte[] xml2) {
+    public static boolean isIdentical(final byte[] xml1, final byte[] xml2) {
         if (xml1 == null) {
             return xml2 == null;
         }
@@ -2150,7 +2150,7 @@ public final class XmlUtility {
         return isIdentical(IOUtils.newStringFromBytes(xml1), IOUtils.newStringFromBytes(xml2));
     }
 
-    public static boolean isIdentical(String xml1, String xml2) {
+    public static boolean isIdentical(final String xml1, final String xml2) {
         if (xml1 == null) {
             return xml2 == null;
         }
@@ -2161,7 +2161,7 @@ public final class XmlUtility {
         XMLUnit.setIgnoreAttributeOrder(true);
         XMLUnit.setIgnoreWhitespace(true);
         try {
-            Diff diff = XMLUnit.compareXML(xml1, xml2);
+            final Diff diff = XMLUnit.compareXML(xml1, xml2);
             return diff.identical();
         }
         catch (SAXException e) {

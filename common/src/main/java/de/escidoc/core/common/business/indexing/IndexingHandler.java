@@ -673,7 +673,7 @@ public class IndexingHandler implements ResourceListener {
                         + indexName + Constants.SRW_TERM_MATCHER.reset(query).replaceFirst(lastTerm));
 
                 final HttpResponse response = client.execute(httpGet);
-                String lastLastTerm;
+                final String lastLastTerm;
                 if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                     lastLastTerm = handler.getLastTerm();
                     sp.parse(new ByteArrayInputStream(EntityUtils.toByteArray(response.getEntity())));

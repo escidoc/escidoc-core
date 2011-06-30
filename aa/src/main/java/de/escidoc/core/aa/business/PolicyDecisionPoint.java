@@ -220,7 +220,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
             EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
         final String proxyPort = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
         if (proxyHostName != null && proxyHostName.trim().length() != 0) {
-            ProxyProperties proxyProps = new ProxyProperties();
+            final ProxyProperties proxyProps = new ProxyProperties();
             proxyProps.setProxyHostName(proxyHostName);
             if (proxyPort != null && proxyPort.trim().length() != 0) {
                 proxyProps.setProxyPort(Integer.parseInt(proxyPort));
