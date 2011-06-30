@@ -76,6 +76,13 @@ changes since version 1.2
     	 the phrase-search now doesnt go over field boundaries.
     	 EG: 2 fields complete-name: Hoppe, Michael and Wagner, Steffen. Search for "Michael Wagner"
     	 returned a hit. With PositionIncrementGap of 1, this search doesnt return a hit anymore.
+    	 
+    March 2011:
+    	-change escidoc-login.xml:
+    		-upgrade spring schema to 3.0
+    		-include x509-elements for SSL-auth
+    		-execute db-query with 1 instead of "true" for oracle-support
+    		-always integrate authentication-provider with jdbc-user-service
     	
 changes since version 1.1
 --------------------------
