@@ -73,7 +73,7 @@
                             + "\">Resource available under this location: "
                             + locationString + "</a></body></html>",
                             locationString,
-                            HttpServletResponse.SC_MOVED_PERMANENTLY);
+                            HttpServletResponse.SC_MOVED_PERMANENTLY, true);
       return;
   }
   else {

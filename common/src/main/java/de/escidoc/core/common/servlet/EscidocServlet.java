@@ -719,6 +719,8 @@ public class EscidocServlet extends HttpServlet {
     /**
      * Redirects the user to the provided Location using the provided statusCode.<br/>
      * Before sending, the no-cache headers are added.
+     *
+     * This method has to be public because it is called from admin.jsp.
      * 
      * @param httpResponse
      *            The http response.
@@ -736,7 +738,7 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             If an errors occurs handling the http response.
      */
-    private static void doRedirect(
+    public static void doRedirect(
         final HttpServletResponse httpResponse, final String exceptionName, final String message,
         final String redirectLocation, final int httpStatusCode, final boolean compressionIsAccepted) throws IOException {
 
@@ -894,6 +896,8 @@ public class EscidocServlet extends HttpServlet {
      * Remove the user handle from the query string and add it as cookie to the request. Return the modified query
      * string or null.
      * 
+     * This method has to be public because it is called from admin.jsp.
+     * 
      * @param httpRequest
      *            servlet request
      * @param httpResponse
@@ -902,7 +906,7 @@ public class EscidocServlet extends HttpServlet {
      * @throws ServletException
      *             thrown in case of an internal error
      */
-    private static String addCookie(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse)
+    public static String addCookie(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse)
         throws ServletException {
         // Handle problem with eSciDoc user handle information in
         // Request URL. This could be a request from a browser which
