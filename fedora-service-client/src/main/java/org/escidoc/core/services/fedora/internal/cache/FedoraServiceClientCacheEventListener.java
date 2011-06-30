@@ -38,7 +38,7 @@ public final class FedoraServiceClientCacheEventListener implements CacheEventLi
 
     private final static String[] CACHE_NAMES =
             new String[]{"Fedora.Datastreams", "Fedora.DatastreamLists", "Fedora.DatastreamProfiles",
-                    "Fedora.DatastreamHistories"};
+                    "Fedora.DatastreamHistories", "Fedora.DatastreamBinaryContent"};
 
     private CacheManager getCacheManager() {
         // Return the default cache manager.
