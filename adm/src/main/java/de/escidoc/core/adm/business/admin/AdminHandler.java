@@ -46,9 +46,7 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
-import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -77,8 +75,16 @@ public class AdminHandler {
     private FrameworkInfo frameworkInfo;
 
     @Autowired
+    @Qualifier("admin.PurgeStatus")
+    private PurgeStatus purgeStatus;
+
+    @Autowired
     @Qualifier("admin.Reindexer")
     private Reindexer reindexer;
+
+    @Autowired
+    @Qualifier("admin.ReindexStatus")
+    private ReindexStatus reindexStatus;
 
     @Autowired
     @Qualifier("common.business.indexing.IndexingHandler")
@@ -113,7 +119,6 @@ public class AdminHandler {
      */
     public String deleteObjects(final String taskParam) throws SystemException, XmlCorruptedException {
         final StringBuilder result = new StringBuilder();
-        final PurgeStatus purgeStatus = PurgeStatus.getInstance();
 
         if (purgeStatus.startMethod()) {
             final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam, false);
@@ -162,7 +167,7 @@ public class AdminHandler {
      * @throws SystemException thrown in case of an internal error
      */
     public String getPurgeStatus() {
-        return this.utility.prepareReturnXml(PurgeStatus.getInstance().toString());
+        return this.utility.prepareReturnXml(purgeStatus.toString());
     }
 
     /**
@@ -182,7 +187,7 @@ public class AdminHandler {
      */
     public void decreaseReindexStatus(final String objectType) {
         if (objectType != null) {
-            ReindexStatus.getInstance().dec(ResourceType.getResourceTypeFromUri(objectType));
+            reindexStatus.dec(ResourceType.getResourceTypeFromUri(objectType));
         }
     }
 
@@ -293,7 +298,7 @@ public class AdminHandler {
      *
      * @return Properties with name and Namespace URI of important eSciDoc schemas
      */
-    private static Map schemaNamespaces() {
+    private static Map<?, ?> schemaNamespaces() {
 
         final Properties p = new Properties();
 

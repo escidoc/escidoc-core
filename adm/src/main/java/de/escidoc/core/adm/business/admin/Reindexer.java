@@ -28,27 +28,27 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.business.indexing.IndexingHandler;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
-import de.escidoc.core.common.exceptions.system.FedoraSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.index.IndexRequest;
-import de.escidoc.core.index.IndexRequestBuilder;
-import de.escidoc.core.index.IndexService;
-import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.indexing.IndexingHandler;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.index.IndexRequest;
+import de.escidoc.core.index.IndexRequestBuilder;
+import de.escidoc.core.index.IndexService;
 
 /**
  * Provides Methods used for Re-indexing.
@@ -68,6 +68,10 @@ public class Reindexer {
     @Autowired
     @Qualifier("common.business.indexing.IndexingHandler")
     private IndexingHandler indexingHandler;
+
+    @Autowired
+    @Qualifier("admin.ReindexStatus")
+    private ReindexStatus reindexStatus;
 
     // Indexer configuration
     private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
@@ -108,7 +112,6 @@ public class Reindexer {
             return testReindexError();
         }
         final StringBuilder result = new StringBuilder();
-        final ReindexStatus reindexStatus = ReindexStatus.getInstance();
 
         if (reindexStatus.startMethod()) {
             boolean idListEmpty = true;
@@ -306,7 +309,6 @@ public class Reindexer {
         final Collection<String> result = new ArrayList<String>();
         if (contains(indexName, type)) {
             final Collection<String> queryResult = this.fedoraServiceClient.queryResourceIdsByType(type.getUri());
-            final ReindexStatus reindexStatus = ReindexStatus.getInstance();
             final String objectType = type.getUri();
             Set<String> indexedPids = new HashSet<String>();
             if (!clearIndex) {
@@ -326,10 +328,9 @@ public class Reindexer {
      * Get the current status of the running/finished reindexing process.
      *
      * @return current status (how many objects are still in the queue)
-     * @throws SystemException thrown in case of an internal error
      */
     public String getStatus() {
-        return ReindexStatus.getInstance().toString();
+        return reindexStatus.toString();
     }
 
     /**

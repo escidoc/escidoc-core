@@ -35,18 +35,7 @@ package de.escidoc.core.adm.business.admin;
  */
 public final class PurgeStatus extends AdminMethodStatus {
 
-    /**
-     * Singleton instance.
-     */
-    private static final PurgeStatus instance = new PurgeStatus();
-
     private int count;
-
-    /**
-     * Create a new PurgeStatus object.
-     */
-    private PurgeStatus() {
-    }
 
     /**
      * Decrease the number of resources which still have to be processed.
@@ -56,15 +45,6 @@ public final class PurgeStatus extends AdminMethodStatus {
         if (this.isFillingComplete() && this.count == 0) {
             finishMethod();
         }
-    }
-
-    /**
-     * Get the singleton instance.
-     *
-     * @return PurgeStatus singleton
-     */
-    public static PurgeStatus getInstance() {
-        return instance;
     }
 
     /**

@@ -38,17 +38,6 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
 public final class ReindexStatus extends AdminMethodStatus {
 
     /**
-     * Singleton instance.
-     */
-    private static final ReindexStatus instance = new ReindexStatus();
-
-    /**
-     * Create a new ReindexStatus object.
-     */
-    private ReindexStatus() {
-    }
-
-    /**
      * Decrease the number of resources of the given type which still have to be processed.
      *
      * @param type resource type
@@ -67,15 +56,6 @@ public final class ReindexStatus extends AdminMethodStatus {
         if (this.isFillingComplete() && size() == 0) {
             finishMethod();
         }
-    }
-
-    /**
-     * Get the singleton instance.
-     *
-     * @return ReindexStatus singleton
-     */
-    public static ReindexStatus getInstance() {
-        return instance;
     }
 
     /**

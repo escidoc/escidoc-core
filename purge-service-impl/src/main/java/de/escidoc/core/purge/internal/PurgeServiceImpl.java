@@ -11,6 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,6 +27,10 @@ public class PurgeServiceImpl implements PurgeService {
 
     @Autowired
     private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
+    @Qualifier("admin.PurgeStatus")
+    private PurgeStatus purgeStatus;
 
     @Override
     public void purge(final PurgeRequest purgeRequest) {
@@ -66,7 +71,7 @@ public class PurgeServiceImpl implements PurgeService {
             LOGGER.error("could not dequeue message", e);
         }
         finally {
-            PurgeStatus.getInstance().dec();
+            purgeStatus.dec();
         }
     }
 }
