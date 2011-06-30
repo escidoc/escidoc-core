@@ -2123,10 +2123,12 @@
               <showDeprecation>true</showDeprecation>
               <showWarnings>true</showWarnings>
               <verbose>true</verbose>
-              <fork>false</fork>
+              <!-- fork must be set to true in order to use the mem-settings here! -->
+              <fork>true</fork>
               <meminitial>128m</meminitial>
               <maxmem>512m</maxmem>
               <debug>true</debug>
+              <!-- optimized code for production -->
               <optimize>true</optimize>
             </configuration>
           </plugin>
@@ -2137,6 +2139,7 @@
     <profile>
       <id>test</id>
       <activation>
+        <activeByDefault>true</activeByDefault>
         <property>
           <name>environment</name>
           <value>test</value>
@@ -2154,10 +2157,12 @@
               <showDeprecation>true</showDeprecation>
               <showWarnings>true</showWarnings>
               <verbose>true</verbose>
-              <fork>false</fork>
+              <!-- fork must be set to true in order to use the mem-settings here! -->
+              <fork>true</fork>
               <meminitial>128m</meminitial>
               <maxmem>512m</maxmem>
               <debug>true</debug>
+              <!-- optimized code for test environment because of testing if optimized code is not wrong -->
               <optimize>true</optimize>
             </configuration>
           </plugin>
@@ -2185,10 +2190,12 @@
               <showDeprecation>true</showDeprecation>
               <showWarnings>true</showWarnings>
               <verbose>true</verbose>
-              <fork>false</fork>
+              <!-- fork must be set to true in order to use the mem-settings here! -->
+              <fork>true</fork>
               <meminitial>128m</meminitial>
               <maxmem>512m</maxmem>
               <debug>true</debug>
+              <!-- do NOT optimize code in dev environment because of debugging purposes -->
               <optimize>false</optimize>
             </configuration>
           </plugin>
