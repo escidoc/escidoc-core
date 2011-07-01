@@ -119,10 +119,6 @@
         <para>
             The preprocessing of statistic data selects the statistic-data records 
             dependent of an xpath defined in the aggregation-definition.
-            Therefore XPATH-functionality has to be enabled in the database.
-            For Postgres this means that at least version 8.2.3 has to be used 
-            and that the contrib-module XML2 has to be installed.
-            MySql from version 5.1.5 automatically supports XPATH-functionality.
         </para>
 		<para>
 			The processing of statistic data must not disturb the regular 
