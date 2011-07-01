@@ -86,6 +86,14 @@ public interface VersionableResource extends Resource {
     void setVersionStatus(final String versionStatus) throws IntegritySystemException;
 
     /**
+     * Set the latest release version number.
+     *
+     * @param latestReleaseVersionNumber the latest release version number
+     * @throws IntegritySystemException If data integrity of Fedora Repository is violated
+     */
+    void setLatestReleaseVersionNumber(final String latestReleaseVersionNumber) throws IntegritySystemException;
+
+    /**
      * Set the Whole Object Version (WOV) Stream.
      *
      * @param ds WOV datastream.

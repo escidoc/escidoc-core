@@ -246,24 +246,6 @@ public interface ContainerHandlerInterface extends IngestableResource {
 
     /**
      * Creates the subresource metadata record.
-     * <p/>
-     * Deprecated because of inconsistent naming. Use createMdRecord instead of.
-     *
-     * @param id      The id of the resource.
-     * @param xmlData The new value of the subresource.
-     * @return Returns the value of the subresource.
-     * @throws ContainerNotFoundException Thrown if a container with the provided id cannot be found.
-     * @throws LockingException           Thrown in case of an optimistic locking error.
-     * @throws MissingMethodParameterException
-     *                                    Thrown if a method parameter is missing
-     * @throws InvalidXmlException        TODO
-     */
-    @Deprecated
-    String createMetadataRecord(final String id, final String xmlData) throws ContainerNotFoundException,
-        InvalidXmlException, LockingException, MissingMethodParameterException;
-
-    /**
-     * Creates the subresource metadata record.
      *
      * @param id      The id of the resource.
      * @param xmlData The new value of the subresource.

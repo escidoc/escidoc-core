@@ -66,16 +66,6 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected String renderProperties() throws ContentModelNotFoundException, WebserverSystemException,
-        TripleStoreSystemException, IntegritySystemException {
-
-        final Map<String, String> values = getCommonValues(getContentModel());
-        values.putAll(getPropertiesValues(getContentModel()));
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
-        return ContentModelXmlProvider.getInstance().getContentModelPropertiesXml(values);
-    }
-
-    // TODO ContentHandlerRetrieve ?
     protected String renderResources() throws WebserverSystemException {
 
         final Map<String, String> values = getCommonValues(getContentModel());

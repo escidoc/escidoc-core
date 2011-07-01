@@ -483,9 +483,6 @@ public final class Constants {
 
     public static final String CONTENT_MODEL_OBJECT_TYPE = RESOURCES_NS_URI + "ContentModel";
 
-    @Deprecated
-    public static final String CONTENT_RELATION_OBJECT_TYPE = RESOURCES_NS_URI + "Relation";
-
     public static final String CONTENT_RELATION2_OBJECT_TYPE = RESOURCES_NS_URI + "ContentRelation";
 
     public static final String COMPONENT_OBJECT_TYPE = RESOURCES_NS_URI + "Component";

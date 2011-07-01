@@ -530,18 +530,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     /**
-     * @param ouId The id of an organizational unit object.
-     * @return The name of the organizational unit object.
-     * @throws TripleStoreSystemException If an error occurs.
-     * @deprecated Because it is only a fallback method till OU object have a valid title property.
-     */
-    @Deprecated
-    public String getOuName(final String ouId) throws TripleStoreSystemException {
-
-        return getPropertiesElements(ouId, Constants.PROPERTIES_NS_URI + "name");
-    }
-
-    /**
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
     public boolean isMemberOf(final String parentId, final String memberId) throws TripleStoreSystemException {

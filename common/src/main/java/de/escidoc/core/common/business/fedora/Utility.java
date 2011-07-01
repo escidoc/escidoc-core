@@ -641,7 +641,7 @@ public class Utility {
 
             // Update the status in the resource
             if (!Constants.STATUS_WITHDRAWN.equals(newStatus)) {
-                resource.setResourceProperties(PropertyMapKeys.CURRENT_VERSION_STATUS, newStatus);
+                resource.setVersionStatus(newStatus);
             }
         }
         else { // if (newStatus == null)
@@ -698,7 +698,7 @@ public class Utility {
 
         // last operation is to update the timestamp in RELS-EXT
         if (release) {
-            resource.setResourceProperties(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER, currentVersionProperties
+            resource.setLatestReleaseVersionNumber(currentVersionProperties
                 .get(PropertyMapKeys.CURRENT_VERSION_VERSION_NUMBER));
         }
         // write changes to RELS-EXT

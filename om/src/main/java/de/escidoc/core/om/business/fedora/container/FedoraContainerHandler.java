@@ -923,28 +923,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
     /**
      * See Interface for functional description.
-     * <p/>
-     * Deprecated because of inconsistent naming. Use createMdRecord instead of.
-     *
-     * @param id      id
-     * @param xmlData xmlData
-     * @throws ContainerNotFoundException e
-     * @throws LockingException           e
-     * @throws MissingMethodParameterException
-     *                                    e
-     * @throws InvalidXmlException        cf. Interface
-     */
-    @Override
-    @Deprecated
-    public String createMetadataRecord(final String id, final String xmlData) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, InvalidXmlException {
-
-        // TODO: implement
-        throw new UnsupportedOperationException("FedoraContainerHandler.createMetadataRecord not yet implemented");
-    }
-
-    /**
-     * See Interface for functional description.
      *
      * @param id      id
      * @param xmlData xmlData

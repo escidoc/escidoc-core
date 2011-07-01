@@ -162,13 +162,6 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     public static final String XPATH_CONTEXT_ADMIN_DESCRIPTOR =
         XPATH_CONTEXT_ADMIN_DESCRIPTORS + "/" + NAME_ADMIN_DESCRIPTOR;
 
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    public static final String XPATH_CONTEXT_ADMIN_DESCRIPTOR_DESCRIPTION =
-        XPATH_CONTEXT_ADMIN_DESCRIPTOR + "/" + NAME_DESCRIPTION;
-
     public static final String XPATH_CONTEXT_ADMIN_DESCRIPTOR_NAME = XPATH_CONTEXT_ADMIN_DESCRIPTOR + "[@name]";
 
     public static final String XPATH_CONTEXT_PROPERTIES = XPATH_CONTEXT + "/" + NAME_PROPERTIES;

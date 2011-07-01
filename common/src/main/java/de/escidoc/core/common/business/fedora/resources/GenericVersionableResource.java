@@ -273,6 +273,16 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     /**
+     * Set the latest release version number.
+     *
+     * @param latestReleaseVersionNumber the latest release version number
+     * @throws IntegritySystemException If data integrity of Fedora Repository is violated
+     */
+    public void setLatestReleaseVersionNumber(final String latestReleaseVersionNumber) throws IntegritySystemException {
+        getVersionData().put(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER, latestReleaseVersionNumber);
+    }
+
+    /**
      * Get the Number of the version. This values is ever unequal null! If the version Suffix is not set then is the
      * version Number the number of the current retrieved version.
      *
@@ -913,7 +923,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             persistWov();
             updateRelsExtVersionTimestamp(timestamp);
             persistRelsExt();
-            setResourceProperties(PropertyMapKeys.LAST_MODIFICATION_DATE, timestamp.toString());
+            setLastModificationDate(timestamp);
         }
 
         if (sync) {

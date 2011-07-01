@@ -251,7 +251,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         else if (lrvn <= cvn) {
             pid = getVersionPid(getId() + VERSION_NUMBER_SEPARATOR + lrvn);
         }
-        setResourceProperties(PropertyMapKeys.LATEST_RELEASE_PID, pid);
+        setLatestReleasePid(pid);
         setLatestReleasePid(pid);
         // }
     }

@@ -116,48 +116,6 @@ public class ContentModelHandler implements de.escidoc.core.cmm.service.interfac
         return business.retrieve(id);
     }
 
-    /**
-     * See Interface for functional description.
-     *
-     * @see package de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface #retrieve(java.lang.String)
-     */
-    @Override
-    public String retrieveProperties(final String id) throws ContentModelNotFoundException, SystemException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException {
-        return business.retrieveProperties(id);
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @see package de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
-     *      #retrieveContentStreams(java.lang.String)
-     */
-    @Override
-    public String retrieveContentStreams(final String id) throws ContentModelNotFoundException, SystemException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException {
-        return business.retrieveContentStreams(id);
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @see package de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
-     *      #retrieveContentStream(java.lang.String)
-     */
-    @Override
-    public String retrieveContentStream(final String id, final String name) throws ContentModelNotFoundException,
-        SystemException, AuthenticationException, AuthorizationException, MissingMethodParameterException {
-        return business.retrieveContentStream(id, name);
-    }
-
-    @Override
-    public EscidocBinaryContent retrieveContentStreamContent(final String id, final String name)
-        throws ContentModelNotFoundException, SystemException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, ContentStreamNotFoundException, InvalidStatusException {
-        return business.retrieveContentStreamContent(id, name);
-    }
-
     @Override
     public String retrieveResources(final String id) throws ContentModelNotFoundException, SystemException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException {

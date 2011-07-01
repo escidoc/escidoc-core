@@ -155,18 +155,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     }
 
     @Override
-    public String retrieveProperties(final String id) throws ContentModelNotFoundException, SystemException {
-        setContentModel(id);
-        return renderProperties();
-    }
-
-    @Override
-    public String retrieveContentStreams(final String id) throws ContentModelNotFoundException, SystemException {
-        setContentModel(id);
-        return renderContentStreams(true);
-    }
-
-    @Override
     public String retrieveContentStream(final String id, final String name) throws ContentModelNotFoundException,
         TripleStoreSystemException, IntegritySystemException, WebserverSystemException, FedoraSystemException {
         setContentModel(id);

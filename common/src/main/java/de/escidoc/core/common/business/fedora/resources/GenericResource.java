@@ -615,25 +615,6 @@ public class GenericResource implements FedoraResource {
     }
 
     /**
-     * This is an interims method to create a way for updating properties if the resource is changed out side of the
-     * resource classes.
-     *
-     * @param key   The properties key name.
-     * @param value The properties value.
-     * @throws WebserverSystemException Thrown in case of internal failure.
-     */
-    @Deprecated
-    public void setResourceProperties(final String key, final String value) throws WebserverSystemException {
-
-        try {
-            getResourceProperties().put(key, value);
-        }
-        catch (final TripleStoreSystemException e) {
-            throw new WebserverSystemException(e);
-        }
-    }
-
-    /**
      * Maps the keys from the TripleStore to the internal used keys (from PropertyMapKeys). This method maps all keys
      * which are used in this class.
      *

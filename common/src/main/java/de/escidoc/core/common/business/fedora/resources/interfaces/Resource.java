@@ -54,17 +54,4 @@ public interface Resource extends FedoraResource {
      */
     void setPublicStatusChange();
 
-    /**
-     * Set resource properties. Usually are all changes done class internal. This method provides the announcements of
-     * class external changes at the resource to the resource class. Resource changes outside of resource class is going
-     * to removed from the code, therefore is this method marked as deprecated.
-     *
-     * @param key   The name of the properties key
-     * @param value The value of the property
-     * @throws TripleStoreSystemException Thrown if requesting TripleStore failed.
-     * @throws WebserverSystemException   Thrown if requesting Fedora failed or in case of internal (parser) error.
-     */
-    @Deprecated
-    void setResourceProperties(final String key, final String value) throws TripleStoreSystemException,
-        WebserverSystemException;
 }
