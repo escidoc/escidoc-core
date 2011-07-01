@@ -5,7 +5,7 @@
 
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>adm</artifactId>
-	<name>eSciDoc Core - Administration Service</name>
+	<name>eSciDoc Core - Administration Service Impl.</name>
 	<version>trunk-SNAPSHOT</version>
 
 	<parent>
@@ -77,6 +77,10 @@
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>aspects</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>adm-spec</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>

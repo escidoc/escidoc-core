@@ -11,7 +11,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>tme</artifactId>
-	<name>eSciDoc Core - Technical Metadata Extraction Service</name>
+	<name>eSciDoc Core - Technical Metadata Extraction Service Impl.</name>
 	<version>trunk-SNAPSHOT</version>
 
 	<description>Technical Metadata Extraction Service package of eSciDoc Core</description>
@@ -77,6 +77,10 @@
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>aspects</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>tme-spec</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>

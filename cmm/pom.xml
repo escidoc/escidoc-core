@@ -5,7 +5,7 @@
 
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>cmm</artifactId>
-	<name>eSciDoc Core - Content Model Service</name>
+	<name>eSciDoc Core - Content Model Service Impl.</name>
 	<version>trunk-SNAPSHOT</version>
 
 	<parent>
@@ -78,6 +78,10 @@
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>aspects</artifactId>
 		</dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>cmm-spec</artifactId>
+      </dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>

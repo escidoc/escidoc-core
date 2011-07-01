@@ -85,11 +85,27 @@
 		</dependency>
         <dependency>
 			<groupId>org.escidoc.core</groupId>
+			<artifactId>aa-spec</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>om-spec</artifactId>
 		</dependency>
         <dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>st-spec</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>adm-spec</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>index-service-spec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>statistic-service-spec</artifactId>
 		</dependency>
         <dependency>
 			<groupId>org.escidoc.core</groupId>
@@ -195,15 +211,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.escidoc.core</groupId>
-			<artifactId>index-service-spec</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.escidoc.core</groupId>
-			<artifactId>statistic-service-spec</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
@@ -218,14 +225,6 @@
 			<artifactId>xalan</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>sun-xacml</groupId>
-			<artifactId>sun-xacml</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity</artifactId>

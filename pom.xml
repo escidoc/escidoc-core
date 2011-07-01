@@ -53,9 +53,13 @@
         <module>purge-service-impl</module>
         <module>common-spec</module>
         <module>common</module>
+        <module>aa-spec</module>
         <module>aa</module>
+        <module>adm-spec</module>
         <module>adm</module>
+        <module>cmm-spec</module>
         <module>cmm</module>
+        <module>oai-spec</module>
         <module>oai</module>
         <module>om-spec</module>
         <module>om</module>
@@ -66,13 +70,14 @@
         <module>sm</module>
         <module>st-spec</module>
         <module>st</module>
+        <module>tme-spec</module>
         <module>tme</module>
         <module>escidoc-core.war</module>
         <module>escidoc-core.ear</module>
         <module>assembly</module>
         <module>installer</module>
         <module>integration-tests</module>
-    </modules>
+  </modules>
 
   <build>
     <pluginManagement>
@@ -1958,9 +1963,19 @@
         <artifactId>common</artifactId>
         <version>${project.version}</version>
       </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>cmm-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>cmm</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>aa-spec</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -1988,9 +2003,19 @@
         <artifactId>oum</artifactId>
         <version>${project.version}</version>
       </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>adm-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>adm</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>oai-spec</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -2021,6 +2046,11 @@
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>st</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>tme-spec</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

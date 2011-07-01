@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
-	<classpathentry kind="src" output="common-spec/target/classes" path="common/src/main/java"/>
+	<classpathentry kind="src" output="common-spec/target/classes" path="common-spec/src/main/java"/>
 	<classpathentry kind="src" output="common-spec/target/test-classes" path="common-spec/src/test/java"/>
-    <classpathentry kind="src" output="om-spec/target/classes" path="om/src/main/java"/>
+    <classpathentry kind="src" output="om-spec/target/classes" path="om-spec/src/main/java"/>
 	<classpathentry kind="src" output="om-spec/target/test-classes" path="om-spec/src/test/java"/>
-	<classpathentry kind="src" output="st-spec/target/classes" path="st/src/main/java"/>
+	<classpathentry kind="src" output="st-spec/target/classes" path="st-spec/src/main/java"/>
 	<classpathentry kind="src" output="st-spec/target/test-classes" path="st-spec/src/test/java"/>
-	<classpathentry kind="src" output="sm-spec/target/classes" path="sm/src/main/java"/>
+	<classpathentry kind="src" output="sm-spec/target/classes" path="sm-spec/src/main/java"/>
 	<classpathentry kind="src" output="sm-spec/target/test-classes" path="sm-spec/src/test/java"/>
-    <classpathentry kind="src" output="oum-spec/target/classes" path="oum/src/main/java"/>
+    <classpathentry kind="src" output="oum-spec/target/classes" path="oum-spec/src/main/java"/>
 	<classpathentry kind="src" output="oum-spec/target/test-classes" path="oum-spec/src/test/java"/>
+	<classpathentry kind="src" output="oai-spec/target/classes" path="oai-spec/src/main/java"/>
+	<classpathentry kind="src" output="oai-spec/target/test-classes" path="oai-spec/src/test/java"/>
+	<classpathentry kind="src" output="tme-spec/target/classes" path="tme-spec/src/main/java"/>
+	<classpathentry kind="src" output="tme-spec/target/test-classes" path="tme-spec/src/test/java"/>
+	<classpathentry kind="src" output="adm-spec/target/classes" path="adm-spec/src/main/java"/>
+	<classpathentry kind="src" output="adm-spec/target/test-classes" path="adm-spec/src/test/java"/>
+	<classpathentry kind="src" output="cmm-spec/target/classes" path="cmm-spec/src/main/java"/>
+	<classpathentry kind="src" output="cmm-spec/target/test-classes" path="cmm-spec/src/test/java"/>
+	<classpathentry kind="src" output="aa-spec/target/classes" path="aa-spec/src/main/java"/>
+	<classpathentry kind="src" output="aa-spec/target/test-classes" path="aa-spec/src/test/java"/>
 	<classpathentry kind="src" output="jaxrs-framework/target/test-classes" path="jaxrs-framework/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="jaxrs-framework/target/classes" path="jaxrs-framework/src/main/resources"/>
 	<classpathentry kind="src" output="jaxrs-framework/target/classes" path="jaxrs-framework/src/main/java"/>

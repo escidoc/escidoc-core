@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<name>eSciDoc Core - Authentication and Authorization Service</name>
-	<description>User Account, Policy and Rule package of eSciDoc Core</description>
-	<parent>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.escidoc.core</groupId>
+	<artifactId>aa</artifactId>
+    <name>eSciDoc Core - Authentication and Authorization Service Impl.</name>
+	<version>trunk-SNAPSHOT</version>
+
+    <parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
 		<version>trunk-SNAPSHOT</version>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.escidoc.core</groupId>
-	<artifactId>aa</artifactId>
-	<version>trunk-SNAPSHOT</version>
 
+    <description>User Account, Policy and Rule package of eSciDoc Core</description>
 	<build>
 		<plugins>
 			<plugin>
@@ -87,11 +90,23 @@
 		</dependency>
         <dependency>
 			<groupId>org.escidoc.core</groupId>
+			<artifactId>aa-spec</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>cmm-spec</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
 			<artifactId>om-spec</artifactId>
 		</dependency>
         <dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>oum-spec</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>oai-spec</artifactId>
 		</dependency>
         <dependency>
 			<groupId>org.escidoc.core</groupId>
