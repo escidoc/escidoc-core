@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.business.fedora.mptstore;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -50,7 +49,6 @@ import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;

@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<name>eSciDoc Core - Statistic Manager</name>
-	<description>Policy &amp; Rule package of eSciDoc Core</description>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.escidoc.core</groupId>
+	<artifactId>sm</artifactId>
+    <version>trunk-SNAPSHOT</version>
+	<name>eSciDoc Core - Statistic Manager Spec.</name>
+
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
 		<version>trunk-SNAPSHOT</version>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.escidoc.core</groupId>
-	<artifactId>sm</artifactId>
-	<version>trunk-SNAPSHOT</version>
 
+    <description>Policy &amp; Rule package of eSciDoc Core</description>
 	<build>
 		<plugins>
 			<plugin>
@@ -87,6 +90,10 @@
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>aspects</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>sm-spec</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>

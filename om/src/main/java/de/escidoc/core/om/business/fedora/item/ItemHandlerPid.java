@@ -42,14 +42,12 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.PIDSystem;
 import de.escidoc.core.common.persistence.PIDSystemFactory;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
@@ -58,7 +56,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
 import org.joda.time.DateTime;
 
-import java.io.IOException;
 import java.util.Collection;
 
 /**

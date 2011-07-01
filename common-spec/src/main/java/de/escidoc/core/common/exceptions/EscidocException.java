@@ -20,9 +20,8 @@
 
 package de.escidoc.core.common.exceptions;
 
-import de.escidoc.core.common.util.xml.XmlEscaper;
-
 import javax.servlet.http.HttpServletResponse;
+import java.util.regex.Pattern;
 
 /**
  * EscidocExeption contains a HttpStatusCode and a HttpStatusMessage which should be used in the REST interface.
@@ -31,6 +30,52 @@ import javax.servlet.http.HttpServletResponse;
  * @author Frank Schwichtenberg
  */
 public class EscidocException extends Exception {
+
+    private static final String AMPERSAND = "&";
+
+    private static final String ESC_AMPERSAND = "&amp;";
+
+    private static final String LESS_THAN = "<";
+
+    private static final String ESC_LESS_THAN = "&lt;";
+
+    private static final String GREATER_THAN = ">";
+
+    private static final String ESC_GREATER_THAN = "&gt;";
+
+    private static final String APOS = "'";
+
+    private static final String ESC_APOS = "&apos;";
+
+    private static final String QUOT = "\"";
+
+    private static final String ESC_QUOT = "&quot;";
+
+    private static final Pattern PATTERN_ESCAPE_NEEDED =
+        Pattern.compile(AMPERSAND + '|' + LESS_THAN + '|' + GREATER_THAN + '|' + QUOT + '|' + APOS);
+
+    private static final Pattern PATTERN_UNESCAPE_NEEDED =
+        Pattern.compile(ESC_AMPERSAND + '|' + ESC_LESS_THAN + '|' + ESC_GREATER_THAN + '|' + ESC_QUOT + '|' + ESC_APOS);
+
+    private static final Pattern PATTERN_AMPERSAND = Pattern.compile('(' + AMPERSAND + ')');
+
+    private static final Pattern PATTERN_LESS_THAN = Pattern.compile('(' + LESS_THAN + ')');
+
+    private static final Pattern PATTERN_GREATER_THAN = Pattern.compile('(' + GREATER_THAN + ')');
+
+    private static final Pattern PATTERN_QUOT = Pattern.compile('(' + QUOT + ')');
+
+    private static final Pattern PATTERN_APOS = Pattern.compile('(' + APOS + ')');
+
+    private static final Pattern PATTERN_ESC_AMPERSAND = Pattern.compile('(' + ESC_AMPERSAND + ')');
+
+    private static final Pattern PATTERN_ESC_LESS_THAN = Pattern.compile('(' + ESC_LESS_THAN + ')');
+
+    private static final Pattern PATTERN_ESC_GREATER_THAN = Pattern.compile('(' + ESC_GREATER_THAN + ')');
+
+    private static final Pattern PATTERN_ESC_QUOT = Pattern.compile('(' + ESC_QUOT + ')');
+
+    private static final Pattern PATTERN_ESC_APOS = Pattern.compile('(' + ESC_APOS + ')');
 
     /**
      * The serial version UID.
@@ -214,9 +259,9 @@ public class EscidocException extends Exception {
         if (throwable instanceof EscidocException) {
             escidocException = (EscidocException) throwable;
             result.append("  <title><h1>");
-            result.append(XmlEscaper.escapeTextContent(String.valueOf(escidocException.getHttpStatusCode())));
+            result.append(escapeTextContent(String.valueOf(escidocException.getHttpStatusCode())));
             result.append(' ');
-            result.append(XmlEscaper.escapeTextContent(escidocException.getHttpStatusMsg()));
+            result.append(escapeTextContent(escidocException.getHttpStatusMsg()));
             result.append("</h1></title>\n");
         }
 
@@ -224,7 +269,7 @@ public class EscidocException extends Exception {
         final String throwableMessage = throwable.getMessage();
         if (throwableMessage != null) {
             result.append("  <message><p>");
-            result.append(XmlEscaper.escapeTextContent(throwableMessage));
+            result.append(escapeTextContent(throwableMessage));
             result.append("</p></message>\n");
         }
         else {
@@ -283,6 +328,19 @@ public class EscidocException extends Exception {
         }
         result.append("]]></p></stack-trace>\n");
         return result.toString();
+    }
+
+    private static String escapeTextContent(String xmlText) {
+        String result = xmlText;
+        if (result != null && PATTERN_ESCAPE_NEEDED.matcher(result).find()) {
+            result = PATTERN_AMPERSAND.matcher(result).replaceAll(ESC_AMPERSAND);
+            result = PATTERN_LESS_THAN.matcher(result).replaceAll(ESC_LESS_THAN);
+            result = PATTERN_GREATER_THAN.matcher(result).replaceAll(ESC_GREATER_THAN);
+            result = PATTERN_QUOT.matcher(result).replaceAll(ESC_QUOT);
+            result = PATTERN_APOS.matcher(result).replaceAll(ESC_APOS);
+        }
+
+        return result;
     }
 
 }

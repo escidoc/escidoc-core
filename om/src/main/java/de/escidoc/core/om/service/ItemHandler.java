@@ -30,6 +30,7 @@ package de.escidoc.core.om.service;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.filter.LuceneRequestParameters;
+import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -68,9 +69,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
-import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

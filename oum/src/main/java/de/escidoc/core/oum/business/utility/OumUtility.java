@@ -31,7 +31,6 @@ package de.escidoc.core.oum.business.utility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;

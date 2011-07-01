@@ -41,7 +41,6 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

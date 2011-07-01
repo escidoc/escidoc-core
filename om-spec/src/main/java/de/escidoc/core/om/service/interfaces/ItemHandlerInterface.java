@@ -22,6 +22,7 @@ package de.escidoc.core.om.service.interfaces;
 
 import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;

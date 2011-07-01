@@ -4,7 +4,6 @@ import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import org.springframework.security.core.context.SecurityContext;
 
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.Map;
 
 /**

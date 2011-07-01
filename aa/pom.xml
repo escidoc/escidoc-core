@@ -85,6 +85,18 @@
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>aspects</artifactId>
 		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>om-spec</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>oum-spec</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>sm-spec</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>

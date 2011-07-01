@@ -37,7 +37,6 @@ import de.escidoc.core.common.exceptions.application.notfound.AggregationDefinit
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.sm.business.filter.AggregationDefinitionFilter;

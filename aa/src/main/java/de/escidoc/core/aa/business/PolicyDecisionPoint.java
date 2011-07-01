@@ -30,7 +30,6 @@ package de.escidoc.core.aa.business;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -48,8 +47,6 @@ import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 
 import org.esidoc.core.utils.io.IOUtils;
-import org.openid4java.util.HttpClientFactory;
-import org.openid4java.util.ProxyProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,11 +87,9 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.security.helper.InvocationParser;
 import de.escidoc.core.common.util.security.persistence.MethodMapping;
 import de.escidoc.core.common.util.security.persistence.MethodMappingList;

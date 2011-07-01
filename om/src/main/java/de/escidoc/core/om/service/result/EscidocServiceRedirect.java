@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.om.service.result;
 
-import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
+import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterface;
 
 /**
  * Class encapsulating service redirection.

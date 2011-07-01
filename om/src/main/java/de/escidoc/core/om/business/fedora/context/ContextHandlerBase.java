@@ -35,7 +35,6 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusExcept
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

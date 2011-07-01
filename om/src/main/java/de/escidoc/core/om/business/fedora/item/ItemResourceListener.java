@@ -40,13 +40,7 @@ import de.escidoc.core.common.business.fedora.resources.listener.ResourceListene
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
-import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
-import de.escidoc.core.common.exceptions.system.FedoraSystemException;
-import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 
 /**
  * Handle the Item within the ResourceCache.

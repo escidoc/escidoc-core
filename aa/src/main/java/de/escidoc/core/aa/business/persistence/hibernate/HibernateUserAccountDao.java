@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.aa.business.persistence.hibernate;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

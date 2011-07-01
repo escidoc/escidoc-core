@@ -32,12 +32,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.engine.SessionFactoryImplementor;
-import org.hibernate.impl.SessionFactoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.access.BeanFactoryLocator;
-import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;

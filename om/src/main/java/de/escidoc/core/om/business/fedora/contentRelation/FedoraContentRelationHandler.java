@@ -85,11 +85,9 @@ import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssigned
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
-import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.PIDSystem;
 import de.escidoc.core.common.persistence.PIDSystemFactory;
 import de.escidoc.core.common.util.stax.StaxParser;

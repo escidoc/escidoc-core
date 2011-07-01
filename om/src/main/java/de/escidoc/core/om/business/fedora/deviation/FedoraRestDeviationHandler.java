@@ -29,9 +29,7 @@
 package de.escidoc.core.om.business.fedora.deviation;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.business.fedora.MIMETypedStream;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.om.business.indexer.IndexerResourceRequester;
 import de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface;
@@ -40,7 +38,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayInputStream;
 import java.util.Map;
 
 /**

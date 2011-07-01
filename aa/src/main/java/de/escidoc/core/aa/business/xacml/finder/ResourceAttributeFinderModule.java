@@ -30,7 +30,6 @@ package de.escidoc.core.aa.business.xacml.finder;
 
 import java.io.ByteArrayInputStream;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;

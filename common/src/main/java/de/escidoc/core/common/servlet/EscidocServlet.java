@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.servlet;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,7 +27,6 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.net.URLEncoder;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -67,7 +65,7 @@ import de.escidoc.core.common.servlet.invocation.XMLBase;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
+import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterface;
 
 /**
  * The eSciDoc servlet. Maps a REST request to the specified resource and invokes the specified (if one is configured).<br />
@@ -740,7 +738,8 @@ public class EscidocServlet extends HttpServlet {
      */
     public static void doRedirect(
         final HttpServletResponse httpResponse, final String exceptionName, final String message,
-        final String redirectLocation, final int httpStatusCode, final boolean compressionIsAccepted) throws IOException {
+        final String redirectLocation, final int httpStatusCode, final boolean compressionIsAccepted)
+        throws IOException {
 
         initHttpResponse(httpResponse);
         try {

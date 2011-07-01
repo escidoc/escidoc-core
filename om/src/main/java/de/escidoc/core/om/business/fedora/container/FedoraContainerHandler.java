@@ -86,7 +86,6 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatu
 import de.escidoc.core.common.exceptions.application.invalid.InvalidItemStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -121,7 +120,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -1287,7 +1285,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         final String label = "Container " + getContainer().getId();
-        if (Utility.checkUnlocked(getContainer().isLocked(), "Release", label, getContainer().getLockOwner())
+        if (checkUnlocked(getContainer().isLocked(), "Release", label, getContainer().getLockOwner())
             && Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
                 .getLastModificationDate(), label)) {
 
@@ -1445,7 +1443,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         checkReleased();
 
         final String label = "Container " + getContainer().getId();
-        if (Utility.checkUnlocked(getContainer().isLocked(), "Submit", label, getContainer().getLockOwner())
+        if (checkUnlocked(getContainer().isLocked(), "Submit", label, getContainer().getLockOwner())
             && Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
                 .getLastModificationDate(), label)) {
 
@@ -1504,7 +1502,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             throw new XmlCorruptedException("Missing last-modification-date");
         }
 
-        if (Utility.checkUnlocked(getContainer().isLocked(), "Submit", label, getContainer().getLockOwner())
+        if (checkUnlocked(getContainer().isLocked(), "Submit", label, getContainer().getLockOwner())
             && Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
                 .getLastModificationDate(), label)) {
 
@@ -1568,7 +1566,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         checkLatestVersion();
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         final String label = "Container " + getContainer().getId();
-        if (Utility.checkUnlocked(getContainer().isLocked(), "Withdraw", label, getContainer().getLockOwner())
+        if (checkUnlocked(getContainer().isLocked(), "Withdraw", label, getContainer().getLockOwner())
             && Utility.checkOptimisticLockingCriteria(getContainer().getLastModificationDate(), taskParameter
                 .getLastModificationDate(), label)) {
 
@@ -2559,5 +2557,23 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     private void init() {
         addContainerListener(indexingHandler);
         addContainerMemberListener(indexingHandler);
+    }
+
+    /**
+     * Check if locked is set to false. If it set to true a LockingException is thrown.
+     *
+     * @param locked    Indicates if the object is locked.
+     * @param method    The method which shall be executed.
+     * @param label     The label identifying the object.
+     * @param lockOwner The lock owner if there was one found.
+     * @return true if the object is not locked.
+     * @throws LockingException Thrown if the object is locked.
+     */
+    private static boolean checkUnlocked(
+        final boolean locked, final String method, final String label, final String lockOwner) throws LockingException {
+        if (locked) {
+            throw new LockingException(method + " failed!" + label + " is locked by " + lockOwner + '.');
+        }
+        return true;
     }
 }

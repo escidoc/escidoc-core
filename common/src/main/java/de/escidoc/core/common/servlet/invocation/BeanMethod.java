@@ -21,7 +21,6 @@
 package de.escidoc.core.common.servlet.invocation;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;

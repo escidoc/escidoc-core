@@ -16,7 +16,7 @@
 
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>common</artifactId>
-	<name>eSciDoc Core - Common</name>
+	<name>eSciDoc Core - Common Impl.</name>
 	<version>trunk-SNAPSHOT</version>
 	<description>Common package of eSciDoc Core</description>
 
@@ -80,6 +80,18 @@
 			<artifactId>aspects</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>common-spec</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>om-spec</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>st-spec</artifactId>
+		</dependency>
+        <dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>fedora-service-client</artifactId>
 		</dependency>

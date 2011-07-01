@@ -38,36 +38,41 @@
   </organization>
 
   <modules>
-    <module>jaxrs-framework</module>
-    <module>cache</module>
-    <module>jms-server</module>
-    <module>fedora-service-client</module>
-    <module>fedora-service-rest</module>
-    <module>aspects</module>
-    <module>utilities</module>
-    <module>index-service-spec</module>
-    <module>index-service-impl</module>
-    <module>statistic-service-spec</module>
-    <module>statistic-service-impl</module>
-    <module>purge-service-spec</module>
-    <module>purge-service-impl</module>
-    <module>common</module>
-    <module>aa</module>
-    <module>adm</module>
-    <module>cmm</module>
-    <module>oai</module>
-    <module>om</module>
-    <module>oum</module>
-    <module>sb</module>
-    <module>sm</module>
-    <module>st</module>
-    <module>tme</module>
-    <module>escidoc-core.war</module>
-    <module>escidoc-core.ear</module>
-    <module>assembly</module>
-    <module>installer</module>
-    <module>integration-tests</module>
-  </modules>
+        <module>jaxrs-framework</module>
+        <module>cache</module>
+        <module>jms-server</module>
+        <module>fedora-service-client</module>
+        <module>fedora-service-rest</module>
+        <module>aspects</module>
+        <module>utilities</module>
+        <module>index-service-spec</module>
+        <module>index-service-impl</module>
+        <module>statistic-service-spec</module>
+        <module>statistic-service-impl</module>
+        <module>purge-service-spec</module>
+        <module>purge-service-impl</module>
+        <module>common-spec</module>
+        <module>common</module>
+        <module>aa</module>
+        <module>adm</module>
+        <module>cmm</module>
+        <module>oai</module>
+        <module>om-spec</module>
+        <module>om</module>
+        <module>oum-spec</module>
+        <module>oum</module>
+        <module>sb</module>
+        <module>sm-spec</module>
+        <module>sm</module>
+        <module>st-spec</module>
+        <module>st</module>
+        <module>tme</module>
+        <module>escidoc-core.war</module>
+        <module>escidoc-core.ear</module>
+        <module>assembly</module>
+        <module>installer</module>
+        <module>integration-tests</module>
+    </modules>
 
   <build>
     <pluginManagement>
@@ -1943,6 +1948,11 @@
         <artifactId>utilities</artifactId>
         <version>${project.version}</version>
       </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>common-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>common</artifactId>
@@ -1958,9 +1968,19 @@
         <artifactId>aa</artifactId>
         <version>${project.version}</version>
       </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>om-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>om</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>oum-spec</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -1983,9 +2003,19 @@
         <artifactId>sb</artifactId>
         <version>${project.version}</version>
       </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>sm-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>sm</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>st-spec</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

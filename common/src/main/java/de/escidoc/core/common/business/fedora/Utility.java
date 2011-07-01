@@ -174,25 +174,6 @@ public class Utility {
     }
 
     /**
-     * Check if locked is set to false. If it set to true a LockingException is thrown.
-     *
-     * @param locked    Indicates if the object is locked.
-     * @param method    The method which shall be executed.
-     * @param label     The label identifying the object.
-     * @param lockOwner The lock owner if there was one found.
-     * @return true if the object is not locked.
-     * @throws LockingException Thrown if the object is locked.
-     */
-    public static boolean checkUnlocked(
-        final boolean locked, final String method, final String label, final String lockOwner) throws LockingException {
-
-        if (locked) {
-            throw new LockingException(method + " failed!" + label + " is locked by " + lockOwner + '.');
-        }
-        return true;
-    }
-
-    /**
      * Checks if the given dates are equal. If so the change is permitted and true is returned. Otherwise a
      * LockingException is throws.
      *

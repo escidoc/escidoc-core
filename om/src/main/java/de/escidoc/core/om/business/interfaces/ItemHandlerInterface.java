@@ -30,6 +30,7 @@ package de.escidoc.core.om.business.interfaces;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
+import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
@@ -70,7 +71,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 
 import java.util.Map;
 

@@ -18,7 +18,7 @@
  * terms.
  */
 
-package de.escidoc.core.om.service.interfaces;
+package de.escidoc.core.common.business.interfaces;
 
 public interface EscidocServiceRedirectInterface {
 

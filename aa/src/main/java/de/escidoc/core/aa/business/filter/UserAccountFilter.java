@@ -43,7 +43,6 @@ import org.joda.time.DateTime;
 import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLTermNode;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;

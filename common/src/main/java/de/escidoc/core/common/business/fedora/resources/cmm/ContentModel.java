@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.business.fedora.resources.cmm;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
