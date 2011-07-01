@@ -191,7 +191,7 @@
 		<dependency>
 			<groupId>mptstore</groupId>
 			<artifactId>mptstore-oracle</artifactId>
-			<version>0.9.4</version>
+			<version>${mptstore.oracle.version}</version>
 		</dependency>
     	<dependency>
         	<groupId>org.springframework.security</groupId>
@@ -216,7 +216,7 @@
 		<dependency>
 		    <groupId>org.springframework.security.oauth</groupId>
 		    <artifactId>spring-security-oauth</artifactId>
-    		<version>1.0.0.M3</version>
+    		<version>${springsecurity.oauth.version}</version>
 		</dependency>
 
 		<!-- DEPENDENCIES FOR FEDORAGSEARCH + SRW -->
@@ -240,7 +240,7 @@
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-demos</artifactId>
-			<version>3.0.3</version>
+			<version>${lucene.demos.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.lucene</groupId>
@@ -267,38 +267,38 @@
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-jaxrpc_1.1_spec</artifactId>
-			<version>2.1</version>
+			<version>${geronimo.jaxrpc.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org</groupId>
 			<artifactId>jrdf</artifactId>
-			<version>0.3.4.3</version>
+			<version>${jrdf.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.pdfbox</groupId>
 			<artifactId>pdfbox</artifactId>
-			<version>1.5.0</version>
+			<version>${pdfbox.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.axis</groupId>
 			<artifactId>axis-saaj</artifactId>
-			<version>1.4</version>
+			<version>${axis.saaj.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>xmlunit</groupId>
 			<artifactId>xmlunit</artifactId>
-			<version>1.3</version>
+			<version>${xmlunit.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>escidoc-analyzers</artifactId>
-			<version>1.4.0</version>
+			<version>escidoc.analyzers.version</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>3.1-beta2</version>
+			<version>${poi.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -313,7 +313,7 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-contrib</artifactId>
-			<version>3.1-beta2</version>
+			<version>${poi.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -324,7 +324,7 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-scratchpad</artifactId>
-			<version>3.1-beta2</version>
+			<version>${poi.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -335,7 +335,7 @@
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>sen</artifactId>
-			<version>1.0.0</version>
+			<version>${sen.version}</version>
 		</dependency>
 
 		<!-- ADDITIONALLY FOR SRW -->
@@ -346,7 +346,7 @@
 		<dependency>
 			<groupId>org.oclc</groupId>
 			<artifactId>Dbutils</artifactId>
-			<version>1.0.0</version>
+			<version>${dbutils.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc</groupId>
@@ -367,12 +367,12 @@
 		<dependency>
 			<groupId>org.netbeans</groupId>
 			<artifactId>copylibstask</artifactId>
-			<version>1.0.0</version>
+			<version>${copylibstask.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.ostermiller</groupId>
 			<artifactId>ostermillerutils</artifactId>
-			<version>1.0.0</version>
+			<version>${ostermillerutils.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>xalan</groupId>
@@ -381,7 +381,7 @@
       <dependency>
         <groupId>org.apache.ws.security</groupId>
         <artifactId>wss4j</artifactId>
-        <version>1.5.11</version>
+        <version>${wss4j.version}</version>
         <exclusions>
           <exclusion>
             <groupId>commons-logging</groupId>

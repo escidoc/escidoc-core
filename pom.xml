@@ -1026,6 +1026,21 @@
     <hibernate.version>3.3.2.GA</hibernate.version>
     <junit.version>4.8.2</junit.version>
     <xjavadoc.version>1.5-050611</xjavadoc.version>
+    <mptstore.oracle.version>0.9.4</mptstore.oracle.version>
+    <springsecurity.oauth.version>1.0.0.M3</springsecurity.oauth.version>
+    <lucene.demos.version>3.0.3</lucene.demos.version>
+    <geronimo.jaxrpc.version>2.1</geronimo.jaxrpc.version>
+    <jrdf.version>0.3.4.3</jrdf.version>
+    <pdfbox.version>1.5.0</pdfbox.version>
+    <axis.saaj.version>1.4</axis.saaj.version>
+    <xmlunit.version>1.3</xmlunit.version>
+    <escidoc.analyzers.version>1.4.0</escidoc.analyzers.version>
+    <poi.version>3.1-beta2</poi.version>
+    <sen.version>1.0.0</sen.version>
+    <dbutils.version>1.0.0</dbutils.version>
+    <copylibstask.version>1.0.0</copylibstask.version>
+    <ostermillerutils.version>1.0.0</ostermillerutils.version>
+    <wss4j.version>1.5.11</wss4j.version>
 
     <fcrepo.version>3.4.2</fcrepo.version>
     <lucene.version>3.3.0</lucene.version>
