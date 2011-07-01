@@ -54,7 +54,7 @@
         <module>common-spec</module>
         <module>common</module>
         <module>aa-spec</module>
-        <module>aa</module>
+        <module>aa-impl</module>
         <module>adm-spec</module>
         <module>adm</module>
         <module>cmm-spec</module>
@@ -803,7 +803,7 @@
               <outputDirectory>${basedir}/target/site/xsd</outputDirectory>
               <resources>
                 <resource>
-                  <directory>${basedir}/aa/src/main/xsd</directory>
+                  <directory>${basedir}/aa-impl/src/main/xsd</directory>
                 </resource>
                 <resource>
                   <directory>${basedir}/adm/src/main/xsd</directory>
@@ -1980,7 +1980,7 @@
       </dependency>
       <dependency>
         <groupId>org.escidoc.core</groupId>
-        <artifactId>aa</artifactId>
+        <artifactId>aa-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
         <dependency>
