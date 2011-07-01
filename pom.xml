@@ -56,7 +56,7 @@
         <module>aa-spec</module>
         <module>aa-impl</module>
         <module>adm-spec</module>
-        <module>adm</module>
+        <module>adm-impl</module>
         <module>cmm-spec</module>
         <module>cmm</module>
         <module>oai-spec</module>
@@ -454,7 +454,7 @@
 
           <!-- Only uses the following sources to generate javadocs. Skips all auto generated code and integration tests -->
           <sourcepath>${basedir}/aa/src/main/java${path.separator}
-            ${basedir}/adm/src/main/java${path.separator}
+            ${basedir}/adm-impl/src/main/java${path.separator}
             ${basedir}/cmm/src/main/java${path.separator}
             ${basedir}/common/src/main/java${path.separator}
             ${basedir}/http-client/src/main/java${path.separator}
@@ -806,7 +806,7 @@
                   <directory>${basedir}/aa-impl/src/main/xsd</directory>
                 </resource>
                 <resource>
-                  <directory>${basedir}/adm/src/main/xsd</directory>
+                  <directory>${basedir}/adm-impl/src/main/xsd</directory>
                 </resource>
                 <resource>
                   <directory>${basedir}/cmm/src/main/xsd</directory>
@@ -2010,7 +2010,7 @@
       </dependency>
       <dependency>
         <groupId>org.escidoc.core</groupId>
-        <artifactId>adm</artifactId>
+        <artifactId>adm-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
         <dependency>

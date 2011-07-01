@@ -758,7 +758,7 @@
       <sourcepath>
         <pathelement location="${basedir}/common/src/main/java" />
         <pathelement location="${basedir}/aa/src/main/java" />
-        <pathelement location="${basedir}/adm/src/main/java" />
+        <pathelement location="${basedir}/adm-impl/src/main/java" />
         <pathelement location="${basedir}/cmm/src/main/java" />
         <pathelement location="${basedir}/oai/src/main/java" />
         <pathelement location="${basedir}/om/src/main/java" />
