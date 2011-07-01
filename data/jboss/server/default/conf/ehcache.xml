@@ -128,38 +128,40 @@
     <cache name="Fedora.DigitalObjectStreams"
            maxElementsInMemory="1000"
            eternal="true"
-           overflowToDisk="true"
-           maxElementsOnDisk="1000000"/>
+           overflowToDisk="false"/>
 
     <!-- caches Fedora datastream lists
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
     <cache name="Fedora.DatastreamLists"
-           maxElementsInMemory="1000"
+           maxElementsInMemory="100"
            eternal="true"
            overflowToDisk="false"/>
 
     <!-- caches Fedora datastream profiles
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
-    <cache name="Fedora.DatastreamProfiles" maxElementsInMemory="1000" overflowToDisk="false"/>
+    <cache name="Fedora.DatastreamProfiles"
+           maxElementsInMemory="100"
+           eternal="true"
+           overflowToDisk="false"/>
 
     <!-- caches Fedora datastreams
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
     <cache name="Fedora.Datastreams"
-           maxElementsInMemory="1000"
+           maxElementsInMemory="100"
            eternal="true"
            overflowToDisk="false"/>
 
     <!-- caches Fedora datastream history
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
     <cache name="Fedora.DatastreamHistories"
-           maxElementsInMemory="1000"
+           maxElementsInMemory="100"
            eternal="true"
            overflowToDisk="false"/>
 
     <!-- caches Fedora datastream binary content
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
     <cache name="Fedora.DatastreamBinaryContent"
-           maxElementsInMemory="1000"
+           maxElementsInMemory="100"
            eternal="true"
            overflowToDisk="false"/>
 
