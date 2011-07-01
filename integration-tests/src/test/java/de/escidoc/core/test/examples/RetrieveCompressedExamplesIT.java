@@ -21,7 +21,7 @@
  */
 
 /*
- * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * Copyright 2011 Fachinformationszentrum Karlsruhe Gesellschaft
  * fuer wissenschaftlich-technische Information mbH and Max-Planck-
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
@@ -29,18 +29,17 @@
 package de.escidoc.core.test.examples;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.ProxyHost;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.junit.Test;
 
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
@@ -60,7 +59,7 @@ public class RetrieveCompressedExamplesIT extends EscidocAbstractTest {
 
         for (int i = 0; i < EXAMPLE_OU_IDS.length; ++i) {
 
-            String ou = handleXmlResult(ouClient.retrieve(EXAMPLE_OU_IDS[0]));
+            String ou = handleXmlResult(ouClient.retrieve(EXAMPLE_OU_IDS[i]));
 
             String response = null;
 
@@ -91,7 +90,7 @@ public class RetrieveCompressedExamplesIT extends EscidocAbstractTest {
                 int statusCode = client.executeMethod(getMethod);
 
                 if (statusCode != HttpStatus.SC_OK) {
-                    System.out.println("Method failed: " + getMethod.getStatusLine());
+                    throw new RuntimeException("getMethod failed:" + getMethod.getStatusLine());
                 }
                 responseBody = new GZIPInputStream(getMethod.getResponseBodyAsStream());
 
@@ -107,10 +106,7 @@ public class RetrieveCompressedExamplesIT extends EscidocAbstractTest {
 
                 response = result.toString();
             }
-            catch (HttpException e) {
-                throw new RuntimeException("Error occured in retrieving compressed example! " + e.getMessage(), e);
-            }
-            catch (IOException e) {
+            catch (Exception e) {
                 throw new RuntimeException("Error occured in retrieving compressed example! " + e.getMessage(), e);
             }
 
