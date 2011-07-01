@@ -2,7 +2,6 @@ package de.escidoc.core.tme.business.jhove;
 
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.tme.business.TmeHandlerBase;
 import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
 import edu.harvard.hul.ois.jhove.App;

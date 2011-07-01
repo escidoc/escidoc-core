@@ -20,8 +20,6 @@
 
 package de.escidoc.core.common.util.xml.factory;
 
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-
 /**
  * XmlTemplateProvider implementation using the velocity template engine.<br> This implementation uses the velocity
  * singleton pattern.

@@ -28,7 +28,6 @@ import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Helper class to change the base-url of imported schemas.

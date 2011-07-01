@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.aa.openid;
 
-import java.io.IOException;
-
 import org.openid4java.util.HttpClientFactory;
 import org.openid4java.util.ProxyProperties;
 
