@@ -1028,7 +1028,7 @@
     <xjavadoc.version>1.5-050611</xjavadoc.version>
 
     <fcrepo.version>3.4.2</fcrepo.version>
-    <lucene.version>3.1.0</lucene.version>
+    <lucene.version>3.3.0</lucene.version>
     <java.source.version>1.6</java.source.version>
     <java.target.version>1.6</java.target.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -1877,13 +1877,13 @@
         <groupId>org.escidoc</groupId>
         <artifactId>fedoragsearch</artifactId>
         <type>war</type>
-        <version>1.4.1</version>
+        <version>1.4.2</version>
       </dependency>
       <dependency>
         <groupId>org.escidoc</groupId>
         <artifactId>srw</artifactId>
         <type>war</type>
-        <version>1.4.1</version>
+        <version>1.4.2</version>
       </dependency>
       <dependency>
         <groupId>fedora.localservice</groupId>

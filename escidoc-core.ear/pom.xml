@@ -278,7 +278,7 @@
 		<dependency>
 			<groupId>org.apache.pdfbox</groupId>
 			<artifactId>pdfbox</artifactId>
-			<version>1.4.0</version>
+			<version>1.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.axis</groupId>
@@ -298,7 +298,7 @@
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>escidoc-analyzers</artifactId>
-			<version>1.3.2</version>
+			<version>1.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
