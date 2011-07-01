@@ -125,40 +125,6 @@ public class Utility {
     private TripleStoreUtility tripleStoreUtility;
 
     /**
-     * Splits a Predicate at the last slash (/).
-     *
-     * @param predicate Predicate.
-     * @return split predicate
-     */
-    public static String[] splitPredicate(final String predicate) {
-        final String[] result = new String[2];
-        final int index = predicate.lastIndexOf('/');
-        if (index != -1) {
-            result[0] = predicate.substring(predicate.lastIndexOf('/') + 1);
-            result[1] = predicate.substring(0, index);
-        }
-        return result;
-    }
-
-    /**
-     * Concatenates the two given path segments and returns a valid path, i.e. the method takes care that there is only
-     * one path separator between the path segments.
-     *
-     * @param path     The path.
-     * @param appendix The path to append.
-     * @return The concatenated path.
-     */
-    public static String concatenatePath(final String path, final String appendix) {
-        String result = path;
-        String append = appendix;
-        result = result.replace("\\", "/");
-        append = append.replace("\\", "/");
-        result +=
-            result.endsWith("/") ? append.startsWith("/") ? append.substring(1) : append : append.startsWith("/") ? append : '/' + append;
-        return result;
-    }
-
-    /**
      * Fetches the id from the link. It is the String after the last '/' in the link.
      *
      * @param link The link
