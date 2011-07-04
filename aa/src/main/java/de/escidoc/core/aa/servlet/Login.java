@@ -18,7 +18,7 @@
  * terms.
  */
 
-ackage de.escidoc.core.aa.servlet;
+package de.escidoc.core.aa.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
