@@ -482,55 +482,6 @@ public class RoleHandler implements RoleHandlerInterface {
     }
 
     /**
-     * Injects the access rights object.
-     *
-     * @param accessRights access rights from Spring
-     */
-    public void setAccessRights(final AccessRights accessRights) {
-        this.accessRights = accessRights;
-    }
-
-    /**
-     * Injects the data access object to access {@link UserAccount} objects from the database.
-     *
-     * @param userAccountDao The dao to set.
-     */
-    public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
-
-        this.userAccountDao = userAccountDao;
-    }
-
-    /**
-     * Injects the data access object to access {@link EscidocRole} objects from the database.
-     *
-     * @param roleDao The dao to set.
-     */
-    public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
-
-        this.roleDao = roleDao;
-    }
-
-    /**
-     * Injects the policy decision point bean.
-     *
-     * @param pdp The {@link PolicyDecisionPoint}.
-     */
-    public void setPdp(final PolicyDecisionPointInterface pdp) {
-
-        this.pdp = pdp;
-    }
-
-    /**
-     * Injects the renderer.
-     *
-     * @param renderer The renderer to inject.
-     */
-    public void setRenderer(final RoleRendererInterface renderer) {
-
-        this.renderer = renderer;
-    }
-
-    /**
      * Update the given role in the resource cache.
      *
      * @param role role id

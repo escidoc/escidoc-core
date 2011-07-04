@@ -79,7 +79,7 @@ public class EscidocUserDetailsService implements EscidocUserDetailsServiceInter
             // They will not be further intercepted.
             wasExternalBefore = UserContext.runAsInternalUser();
 
-            final UserDetails retrievedUserDetails = getUserAccountHandler().retrieveUserDetails(identifier);
+            final UserDetails retrievedUserDetails = this.userAccountHandler.retrieveUserDetails(identifier);
 
             LOGGER.debug(retrievedUserDetails.toString());
 
@@ -111,25 +111,4 @@ public class EscidocUserDetailsService implements EscidocUserDetailsServiceInter
             }
         }
     }
-
-    /**
-     * Gets the user account handler.
-     *
-     * @return Returns the {@link UserAccountHandlerInterface}.
-     */
-    private UserAccountHandlerInterface getUserAccountHandler() {
-
-        return this.userAccountHandler;
-    }
-
-    /**
-     * Injects the user account handler.
-     *
-     * @param userAccountHandler The {@link UserAccountHandlerInterface} implementation to be injected.
-     */
-    public void setUserAccountHandler(final UserAccountHandlerInterface userAccountHandler) {
-
-        this.userAccountHandler = userAccountHandler;
-    }
-
 }

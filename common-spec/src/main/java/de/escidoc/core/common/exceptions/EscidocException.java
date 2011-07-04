@@ -54,9 +54,6 @@ public class EscidocException extends Exception {
     private static final Pattern PATTERN_ESCAPE_NEEDED =
         Pattern.compile(AMPERSAND + '|' + LESS_THAN + '|' + GREATER_THAN + '|' + QUOT + '|' + APOS);
 
-    private static final Pattern PATTERN_UNESCAPE_NEEDED =
-        Pattern.compile(ESC_AMPERSAND + '|' + ESC_LESS_THAN + '|' + ESC_GREATER_THAN + '|' + ESC_QUOT + '|' + ESC_APOS);
-
     private static final Pattern PATTERN_AMPERSAND = Pattern.compile('(' + AMPERSAND + ')');
 
     private static final Pattern PATTERN_LESS_THAN = Pattern.compile('(' + LESS_THAN + ')');
@@ -66,16 +63,6 @@ public class EscidocException extends Exception {
     private static final Pattern PATTERN_QUOT = Pattern.compile('(' + QUOT + ')');
 
     private static final Pattern PATTERN_APOS = Pattern.compile('(' + APOS + ')');
-
-    private static final Pattern PATTERN_ESC_AMPERSAND = Pattern.compile('(' + ESC_AMPERSAND + ')');
-
-    private static final Pattern PATTERN_ESC_LESS_THAN = Pattern.compile('(' + ESC_LESS_THAN + ')');
-
-    private static final Pattern PATTERN_ESC_GREATER_THAN = Pattern.compile('(' + ESC_GREATER_THAN + ')');
-
-    private static final Pattern PATTERN_ESC_QUOT = Pattern.compile('(' + ESC_QUOT + ')');
-
-    private static final Pattern PATTERN_ESC_APOS = Pattern.compile('(' + ESC_APOS + ')');
 
     /**
      * The serial version UID.

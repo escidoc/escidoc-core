@@ -1628,69 +1628,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     }
 
     /**
-     * Injects the user account data access object.
-     *
-     * @param dao The data access object.
-     */
-    public void setDao(final UserAccountDaoInterface dao) {
-        this.dao = dao;
-    }
-
-    /**
-     * Injects the user group data access object.
-     *
-     * @param userGroupDao The data access object.
-     */
-    public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
-        this.userGroupDao = userGroupDao;
-    }
-
-    /**
-     * Injects the user group data access object.
-     *
-     * @param objectAttributeResolver The objectAttributeResolver.
-     */
-    public void setObjectAttributeResolver(final ObjectAttributeResolver objectAttributeResolver) {
-        this.objectAttributeResolver = objectAttributeResolver;
-    }
-
-    /**
-     * Injects the role data access object.
-     *
-     * @param roleDao The role data access object.
-     */
-    public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
-        this.roleDao = roleDao;
-    }
-
-    /**
-     * Injects the TripleStore utility.
-     *
-     * @param tripleStoreUtility TripleStoreUtility from Spring
-     */
-    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
-        this.tripleStoreUtility = tripleStoreUtility;
-    }
-
-    /**
-     * Injects the renderer.
-     *
-     * @param renderer The renderer to inject.
-     */
-    public void setRenderer(final UserAccountRendererInterface renderer) {
-        this.renderer = renderer;
-    }
-
-    /**
-     * Injects the permissions query generator.
-     *
-     * @param permissionsQuery The permissions query generator to inject.
-     */
-    public void setPermissionsQuery(final PermissionsQuery permissionsQuery) {
-        this.permissionsQuery = permissionsQuery;
-    }
-
-    /**
      * Sets the creation date and the created-by user in the provided <code>UserAccount</code> object.<br/> The values
      * are set with the values of modification date and modifying user of the provided user account.<br/> Before calling
      * this method, the last modification date and the modifying user must be set.
@@ -1739,24 +1676,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
                 UserContext.getId()));
         }
         return userAccount;
-    }
-
-    /**
-     * Injects the policy decision point bean.
-     *
-     * @param pdp The {@link PolicyDecisionPoint}.
-     */
-    public void setPdp(final PolicyDecisionPointInterface pdp) {
-        this.pdp = pdp;
-    }
-
-    /**
-     * Injects the userGroupHandler bean.
-     *
-     * @param userGroupHandler The {@link UserGroupHandler}.
-     */
-    public void setUserGroupHandler(final UserGroupHandlerInterface userGroupHandler) {
-        this.userGroupHandler = userGroupHandler;
     }
 
     /**

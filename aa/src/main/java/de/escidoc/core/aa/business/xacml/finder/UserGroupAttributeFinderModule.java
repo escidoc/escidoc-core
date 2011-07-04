@@ -209,13 +209,4 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
         return userGroup;
     }
 
-    /**
-     * Injects the user group data access object if "called" via Spring.
-     *
-     * @param userGroupDao The user group dao.
-     */
-    public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
-        this.userGroupDao = userGroupDao;
-    }
-
 }

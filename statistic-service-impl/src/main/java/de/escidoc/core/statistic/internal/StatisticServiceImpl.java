@@ -33,15 +33,6 @@ public class StatisticServiceImpl {
         }
     }
 
-    /**
-     * Sets the StatisticDataHandler.
-     *
-     * @param statisticDataHandler the StatisticDataHandlerInterface.
-     */
-    public void setStatisticDataHandler(final StatisticDataHandlerInterface statisticDataHandler) {
-        this.statisticDataHandler = statisticDataHandler;
-    }
-
     @Override
     public String toString() {
         return "StatisticServiceImpl{" + "statisticDataHandler=" + this.statisticDataHandler + '}';

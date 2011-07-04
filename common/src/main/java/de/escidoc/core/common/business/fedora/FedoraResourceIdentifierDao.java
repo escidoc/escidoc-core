@@ -39,8 +39,6 @@ import java.util.List;
 @Service("escidoc.core.business.FedoraResourceIdentifierDao")
 public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FedoraResourceIdentifierDao.class);
-
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
 

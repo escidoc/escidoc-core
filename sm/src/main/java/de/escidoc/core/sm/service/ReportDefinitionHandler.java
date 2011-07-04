@@ -59,17 +59,6 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
     private de.escidoc.core.sm.business.interfaces.ReportDefinitionHandlerInterface handler;
 
     /**
-     * Injects the ReportDefinition handler.
-     *
-     * @param reportDefinitionHandler The ReportDefinition handler bean to inject.
-     */
-    public void setReportDefinitionHandler(
-        final de.escidoc.core.sm.business.interfaces.ReportDefinitionHandlerInterface reportDefinitionHandler) {
-
-        this.handler = reportDefinitionHandler;
-    }
-
-    /**
      * See Interface for functional description.
      *
      * @param xmlData ReportDefinition as xml in ReportDefinition schema.

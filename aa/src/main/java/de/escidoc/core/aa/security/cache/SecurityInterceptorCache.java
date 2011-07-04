@@ -98,7 +98,6 @@ public class SecurityInterceptorCache {
      * @throws SystemException Thrown in case of an internal error.
      */
     public MethodMappingList retrieveMethodMappings(final String className, final String methodName) {
-
         return new MethodMappingList(this.requestMappingDao.retrieveMethodMappings(className, methodName));
     }
 
@@ -108,7 +107,6 @@ public class SecurityInterceptorCache {
      * @param requestMappingDao The {@link RequestMappingDaoInterface} implementation to inject.
      */
     public void setRequestMappingDao(final RequestMappingDaoInterface requestMappingDao) {
-
         this.requestMappingDao = requestMappingDao;
     }
 }

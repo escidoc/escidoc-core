@@ -312,11 +312,11 @@ public class SecurityInterceptor implements Ordered {
                 methodMappingsExist = true;
                 methodMapping = methodMappings.getBefore(i);
                 final List<Map<String, String>> requests =
-                    getInvocationParser().buildRequestsList(arguments, methodMapping);
+                    this.invocationParser.buildRequestsList(arguments, methodMapping);
 
                 // try to authorize the user
                 // throws an AuthorizationException if not authorized
-                final boolean[] accessAllowedArray = getPdp().evaluateRequestList(requests);
+                final boolean[] accessAllowedArray = this.pdp.evaluateRequestList(requests);
                 if (accessAllowedArray == null || accessAllowedArray.length == 0) {
                     throw createAuthorizationException(className, methodName);
                 }
@@ -327,7 +327,7 @@ public class SecurityInterceptor implements Ordered {
                 }
             }
             if (!methodMappingsExist) {
-                getPdp().touch();
+                this.pdp.touch();
             }
 
             return methodMappings;
@@ -355,7 +355,7 @@ public class SecurityInterceptor implements Ordered {
 
                 try {
                     final String latestReleaseVersionNumber =
-                        getTsu().getPropertiesElements((String) arguments[0],
+                        this.tsu.getPropertiesElements((String) arguments[0],
                             TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
                     if (latestReleaseVersionNumber == null) {
                         throw e;
@@ -464,32 +464,12 @@ public class SecurityInterceptor implements Ordered {
     }
 
     /**
-     * Gets the invocation parser.
-     *
-     * @return Returns the invocation parser.
-     */
-    private InvocationParser getInvocationParser() {
-
-        return this.invocationParser;
-    }
-
-    /**
      * Injects the {@link InvocationParser}.
      *
      * @param invocationParser The {@link InvocationParser} to be injected.
      */
     public void setInvocationParser(final InvocationParser invocationParser) {
         this.invocationParser = invocationParser;
-    }
-
-    /**
-     * Gets the policy decision point (PDP).
-     *
-     * @return Returns the PDP.
-     */
-    private PolicyDecisionPointInterface getPdp() {
-
-        return this.pdp;
     }
 
     /**
@@ -508,15 +488,6 @@ public class SecurityInterceptor implements Ordered {
      */
     public void setCache(final SecurityInterceptorCache cache) {
         this.cache = cache;
-    }
-
-    /**
-     * Gets the triple store utility bean.
-     *
-     * @return Returns the tsu.
-     */
-    private TripleStoreUtility getTsu() {
-        return this.tsu;
     }
 
     /**

@@ -70,14 +70,4 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(cls);
     }
 
-    /**
-     * Injects the {@link EscidocUserDetailsServiceInterface}.
-     *
-     * @param escidocUserDetailsService the escidocUserDetailsService to inject.
-     */
-    public void setEscidocUserDetailsService(final EscidocUserDetailsServiceInterface escidocUserDetailsService) {
-
-        this.escidocUserDetailsService = escidocUserDetailsService;
-    }
-
 }

@@ -188,7 +188,6 @@ public class ItemCreate extends GenericResourceCreate {
      *                   FIXME This Spring construct seams not to work.
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
-
         this.idProvider = idProvider;
     }
 
@@ -196,7 +195,6 @@ public class ItemCreate extends GenericResourceCreate {
      * Persist whole Item to Repository and force TripleStore sync.
      */
     public void persist() throws SystemException, FileNotFoundException, InvalidContentException {
-
         persist(true);
     }
 
@@ -207,11 +205,9 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws SystemException Thrown if an unexpected error occurs
      */
     public void persist(final boolean forceSync) throws SystemException, FileNotFoundException, InvalidContentException {
-
         if (getProperties().getObjectProperties().getOrigin() == null) {
             persistComponents();
         }
-
         try {
             // Do not set fedora object id earlier. Otherwise consumes
             // an unsuccessful requests an objid (and time). This is redundant

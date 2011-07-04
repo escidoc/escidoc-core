@@ -233,22 +233,4 @@ public class AggregationDataSelector {
         }
     }
 
-    /**
-     * Setter for the scopesDao.
-     *
-     * @param scopesDao The data access object.
-     */
-    public void setScopesDao(final SmScopesDaoInterface scopesDao) {
-        this.scopesDao = scopesDao;
-    }
-
-    /**
-     * Setting the directDatabaseAccessor.
-     *
-     * @param dbAccessorIn The directDatabaseAccessor to set.
-     */
-    public final void setDirectDatabaseAccessor(final DirectDatabaseAccessorInterface dbAccessorIn) {
-        this.dbAccessor = dbAccessorIn;
-    }
-
 }

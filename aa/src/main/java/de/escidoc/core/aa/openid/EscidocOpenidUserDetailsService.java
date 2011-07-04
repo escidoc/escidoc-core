@@ -44,11 +44,6 @@ import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
 public class EscidocOpenidUserDetailsService implements EscidocUserDetailsServiceInterface {
 
     /**
-     * The logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(EscidocOpenidUserDetailsService.class);
-
-    /**
      * See Interface for functional description.
      */
     @Override

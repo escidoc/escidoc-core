@@ -86,14 +86,4 @@ public class ActionHandler implements ActionHandlerInterface {
         return business.retrieveUnsecuredActions(contextId);
     }
 
-    /**
-     * Injects the business object.
-     *
-     * @param business The business layer bean
-     */
-    public void setBusiness(final ActionHandlerInterface business) {
-
-        this.business = business;
-    }
-
 }

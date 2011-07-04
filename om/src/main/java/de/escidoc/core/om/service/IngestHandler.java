@@ -50,16 +50,6 @@ public class IngestHandler implements IngestHandlerInterface {
     private de.escidoc.core.om.business.interfaces.IngestHandlerInterface handler;
 
     /**
-     * Injects the ingest handler.
-     *
-     * @param ingestHandler The ingest handler bean to inject.
-     */
-    public void setIngestHandler(final de.escidoc.core.om.business.interfaces.IngestHandlerInterface ingestHandler) {
-
-        this.handler = ingestHandler;
-    }
-
-    /**
      * Ingest method.
      *
      * @param xmlData XML representation of resource which is to create via ingest.

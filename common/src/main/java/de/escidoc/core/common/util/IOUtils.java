@@ -37,8 +37,6 @@ public final class IOUtils {
 
     public static final Charset UTF8_CHARSET = Charset.forName("UTF-8");
 
-    private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
-
     private IOUtils() {
     }
 

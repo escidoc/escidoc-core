@@ -277,13 +277,4 @@ public class ConditionParser {
         }
         return result;
     }
-
-    /**
-     * Injects the filter values object.
-     *
-     * @param values filter values object from Spring
-     */
-    public void setValues(final Values values) {
-        this.values = values;
-    }
 }

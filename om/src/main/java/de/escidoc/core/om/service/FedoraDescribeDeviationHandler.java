@@ -54,17 +54,6 @@ public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHa
     private de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface handler;
 
     /**
-     * Injects the FedoraDescribeDeviation handler.
-     *
-     * @param fedoraDescribeDeviationHandler The FedoraDescribeDeviation handler bean to inject.
-     */
-    public void setFedoraDescribeDeviationHandler(
-        final de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface fedoraDescribeDeviationHandler) {
-
-        this.handler = fedoraDescribeDeviationHandler;
-    }
-
-    /**
      * @param parameters request parameters.
      * @return String response
      * @throws Exception ex

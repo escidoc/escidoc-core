@@ -336,49 +336,4 @@ public class ObjectAttributeResolver {
         return result;
     }
 
-    /**
-     * Injects the scope handler bean.
-     *
-     * @param scopeHandler The {@link ScopeHandlerInterface} implementation.
-     */
-    public void setScopeHandler(final ScopeHandlerInterface scopeHandler) {
-        this.scopeHandler = scopeHandler;
-    }
-
-    /**
-     * Injects the triple store utility bean.
-     *
-     * @param tsu The {@link TripleStoreUtility}.
-     */
-    public void setTsu(final TripleStoreUtility tsu) {
-        this.tsu = tsu;
-    }
-
-    /**
-     * Injects the user account data access object.
-     *
-     * @param userAccountDao The data access object.
-     */
-    public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
-        this.userAccountDao = userAccountDao;
-    }
-
-    /**
-     * Injects the user group data access object.
-     *
-     * @param userGroupDao The data access object.
-     */
-    public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
-        this.userGroupDao = userGroupDao;
-    }
-
-    /**
-     * Injects the role dao.
-     *
-     * @param roleDao the {@link EscidocRoleDaoInterface} to inject.
-     */
-    public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
-        this.roleDao = roleDao;
-    }
-
 }

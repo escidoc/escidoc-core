@@ -72,19 +72,8 @@ public class OrganizationalUnitHandler
     @Qualifier("business.FedoraOrganizationalUnitHandler")
     private OrganizationalUnitHandlerInterface business;
 
-    /**
-     * Setter for the business object.
-     *
-     * @param business business object.
-     */
-    public void setBusiness(final OrganizationalUnitHandlerInterface business) {
-
-        this.business = business;
-    }
-
     @Override
     public String ingest(final String xmlData) throws EscidocException {
-
         return business.ingest(xmlData);
     }
 

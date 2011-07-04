@@ -51,15 +51,6 @@ public class FedoraIngestHandler implements IngestHandlerInterface {
     private IngestFacade ingestFacade;
 
     /**
-     * Setter for the ingest facade.
-     *
-     * @param facade Facade for ingest.
-     */
-    public void setIngestFacade(final IngestFacade facade) {
-        this.ingestFacade = facade;
-    }
-
-    /**
      * Getter for the ingest facade.
      *
      * @return ingestFacade the ingestFacade that has been injected

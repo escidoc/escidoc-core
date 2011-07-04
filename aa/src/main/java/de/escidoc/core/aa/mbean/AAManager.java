@@ -65,8 +65,7 @@ public class AAManager {
      */
     @ManagedOperation(description = "Clean up the eSciDoc user handles that have been expired.")
     public void cleanUpUserHandles() {
-
-        getUserHandleCleaner().cleanUp();
+        this.userHandleCleaner.cleanUp();
     }
 
     /**
@@ -74,7 +73,6 @@ public class AAManager {
      */
     @ManagedOperation(description = "remove everything from the PoliciesCache.")
     public void clearPoliciesCache() {
-
         securityHelper.clear();
     }
 
@@ -86,26 +84,7 @@ public class AAManager {
      */
     @ManagedAttribute(description = "The clean up period in milli seconds.", persistPeriod = 300)
     public long getCleanUpPeriod() {
-
         return EscidocConfiguration.getInstance().getAsLong("escidoc-core.aa.cleanup.period");
-    }
-
-    /**
-     * Gets the {@link UserHandleCleaner}.
-     *
-     * @return Returns the {@link UserHandleCleaner}.
-     */
-    private UserHandleCleaner getUserHandleCleaner() {
-        return this.userHandleCleaner;
-    }
-
-    /**
-     * Injects the {@link UserHandleCleaner}.
-     *
-     * @param userHandleCleaner The {@link UserHandleCleaner} to inject.
-     */
-    public void setUserHandleCleaner(final UserHandleCleaner userHandleCleaner) {
-        this.userHandleCleaner = userHandleCleaner;
     }
 
 }

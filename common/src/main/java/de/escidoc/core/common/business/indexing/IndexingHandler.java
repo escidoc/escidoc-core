@@ -838,25 +838,4 @@ public class IndexingHandler implements ResourceListener {
         return this.objectTypeParameters;
     }
 
-    /**
-     * Setting the gsearchHandler.
-     *
-     * @param gsearchHandler The gsearchHandler to set.
-     */
-    public final void setGsearchHandler(final GsearchHandler gsearchHandler) {
-        this.gsearchHandler = gsearchHandler;
-    }
-
-    public void setIndexService(final IndexService indexService) {
-        this.indexService = indexService;
-    }
-
-    /**
-     * Injects the TripleStore utility.
-     *
-     * @param tripleStoreUtility TripleStoreUtility from Spring
-     */
-    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
-        this.tripleStoreUtility = tripleStoreUtility;
-    }
 }

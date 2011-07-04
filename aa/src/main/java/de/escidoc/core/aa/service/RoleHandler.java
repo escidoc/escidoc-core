@@ -127,14 +127,4 @@ public class RoleHandler implements RoleHandlerInterface {
         return business.retrieveRoles(filter);
     }
 
-    /**
-     * Injects the business object.
-     *
-     * @param business The business layer bean
-     */
-    public void setBusiness(final de.escidoc.core.aa.business.interfaces.RoleHandlerInterface business) {
-
-        this.business = business;
-    }
-
 }

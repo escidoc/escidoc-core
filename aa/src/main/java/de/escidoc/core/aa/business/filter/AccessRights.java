@@ -543,15 +543,6 @@ public class AccessRights {
     }
 
     /**
-     * Injects the filter values object.
-     *
-     * @param values filter values object from Spring
-     */
-    public void setValues(final Values values) {
-        this.values = values;
-    }
-
-    /**
      * Return a string representation of the rights map.
      *
      * @return string representation of the rights map

@@ -44,13 +44,4 @@ public class JhoveHandler implements de.escidoc.core.tme.service.interfaces.Jhov
         TmeException {
         return business.extract(requests);
     }
-
-    /**
-     * Setter for the business object.
-     *
-     * @param business business object.
-     */
-    public void setBusiness(final JhoveHandlerInterface business) {
-        this.business = business;
-    }
 }

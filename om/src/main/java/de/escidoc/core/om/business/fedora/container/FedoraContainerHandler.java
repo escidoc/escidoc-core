@@ -212,26 +212,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     private FedoraServiceClient fedoraServiceClient;
 
     /**
-     * Gets the {@link PolicyDecisionPointInterface} implementation.
-     *
-     * @return PolicyDecisionPointInterface
-     */
-    protected PolicyDecisionPointInterface getPdp() {
-
-        return this.pdp;
-    }
-
-    /**
-     * Injects the {@link PolicyDecisionPointInterface} implementation.
-     *
-     * @param pdp the {@link PolicyDecisionPointInterface} to be injected.
-     */
-    public void setPdp(final PolicyDecisionPointInterface pdp) {
-
-        this.pdp = pdp;
-    }
-
-    /**
      * Create a container.
      *
      * @param xmlData The XML Container representation.
@@ -2511,24 +2491,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             contentRelationHandler.retrieveContentRelations(new LuceneRequestParameters(filterParams));
         return transformSearchResponse2relations(searchResponse);
 
-    }
-
-    /**
-     * Injects the content relation handler.
-     *
-     * @param contentRelationHandler The {@link FedoraContentRelationHandler}.
-     */
-    public void setContentRelationHandler(final FedoraContentRelationHandler contentRelationHandler) {
-        this.contentRelationHandler = contentRelationHandler;
-    }
-
-    /**
-     * Set the SRURequest object.
-     *
-     * @param sruRequest SRURequest
-     */
-    public void setSruRequest(final SRURequest sruRequest) {
-        this.sruRequest = sruRequest;
     }
 
     @PostConstruct

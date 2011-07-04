@@ -60,12 +60,6 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
     private boolean isParsed;
 
-    private boolean isRelsExt;
-
-    private boolean isContentRelation;
-
-    private boolean isNew;
-
     private final StaxParser parser;
 
     private int deepLevel;
@@ -135,10 +129,6 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
     // Therefore delete variables isRelsExt, isNew, isContentRelation
     @Override
     public StartElement startElement(final StartElement element) throws XMLStreamException {
-        if (path.startsWith("/RDF")) {
-            this.isRelsExt = true;
-        }
-
         this.deepLevel++;
         final String theName = element.getLocalName();
         final String nsuri = element.getNamespace();
@@ -173,17 +163,10 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         }
         if (theName.equals(pointerElement.getLocalName()) && nsuri.equals(pointerElement.getNamespace())
             && prefix.equals(pointerElement.getPrefix()) && !this.isParsed && equalAttr(this.pointerElement, element)) {
-
-            this.isNew = true;
-
             for (final StartElementWithChildElements subtreeToInsert : this.subtreesToInsert) {
                 final String subtreeName = subtreeToInsert.getLocalName();
                 final String subtreeNsUri = subtreeToInsert.getNamespace();
                 final String subtreePrefix = subtreeToInsert.getPrefix();
-                if (subtreePrefix.equals(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
-                    this.isContentRelation = true;
-                }
-
                 writeElement(subtreeNsUri, subtreeName, subtreePrefix, this.deepLevel + 1);
                 final int attCount = subtreeToInsert.getAttributeCount();
                 for (int j = 0; j < attCount; j++) {
@@ -195,16 +178,12 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                     writer.writeCharacters(subtreeText);
                     writer.flush();
                 }
-                this.isContentRelation = false;
                 final List<StartElementWithText> children = subtreeToInsert.getChildrenElements();
                 if (children != null && !children.isEmpty()) {
                     for (final StartElementWithText inserted : children) {
                         final String insertedName = inserted.getLocalName();
                         final String insertedNsUri = inserted.getNamespace();
                         final String insertedPrefix = inserted.getPrefix();
-                        if (insertedPrefix.equals(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
-                            this.isContentRelation = true;
-                        }
                         writeElement(insertedNsUri, insertedName, insertedPrefix, this.deepLevel + 2);
 
                         final int attCount2 = inserted.getAttributeCount();
@@ -218,13 +197,11 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                             writer.flush();
                         }
                         writer.writeEndElement();
-                        this.isContentRelation = false;
                     }
                 }
                 writer.writeEndElement();
                 writer.flush();
             }
-            this.isNew = false;
             this.isParsed = true;
         }
         // this have to be the last handler

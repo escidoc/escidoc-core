@@ -65,16 +65,6 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
     }
 
     /**
-     * Injects the {@link PolicyDecisionPointInterface} implementation.
-     *
-     * @param pdp the {@link PolicyDecisionPointInterface} to be injected.
-     */
-    public void setPdp(final PolicyDecisionPointInterface pdp) {
-
-        this.pdp = pdp;
-    }
-
-    /**
      * Get the xml representation of an organizational.
      *
      * @return The xml representation of an organizational unit.

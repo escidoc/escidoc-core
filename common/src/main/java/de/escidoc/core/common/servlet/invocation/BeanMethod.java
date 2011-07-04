@@ -44,8 +44,6 @@ import java.util.Map;
 @Configurable
 public class BeanMethod implements ApplicationContextAware {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BeanMethod.class);
-
     private ApplicationContext applicationContext;
 
     private final String beanId;

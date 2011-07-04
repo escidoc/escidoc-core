@@ -139,7 +139,6 @@ public class ContentModelCreate extends GenericResourceCreate {
      *                   FIXME This Spring construct seams not to work.
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
-
         this.idProvider = idProvider;
     }
 

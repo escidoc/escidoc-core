@@ -248,32 +248,4 @@ public class XacmlParser {
             IOUtils.closeStream(in);
         }
     }
-
-    /**
-     * Injects the policy parser object.
-     *
-     * @param pol policy parser from Spring
-     */
-    public void setPolicyParser(final PolicyParser pol) {
-        this.pol = pol;
-    }
-
-    /**
-     * Injects the {@link XacmlFunctionRoleIsGranted}.
-     *
-     * @param xacmlFunctionRoleIsGranted the {@link XacmlFunctionRoleIsGranted} to inject.
-     */
-    public void setXacmlFunctionRoleIsGranted(final XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted) {
-
-        this.xacmlFunctionRoleIsGranted = xacmlFunctionRoleIsGranted;
-    }
-
-    /**
-     * Injects the filter values object.
-     *
-     * @param values filter values object from Spring
-     */
-    public void setValues(final Values values) {
-        this.values = values;
-    }
 }

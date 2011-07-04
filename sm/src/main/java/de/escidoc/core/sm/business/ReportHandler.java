@@ -188,31 +188,4 @@ public class ReportHandler implements ReportHandlerInterface {
         return sql;
     }
 
-    /**
-     * Setter for the dao.
-     *
-     * @param dao The data access object.
-     */
-    public void setDao(final SmReportDefinitionsDaoInterface dao) {
-        this.dao = dao;
-    }
-
-    /**
-     * Setting the directDatabaseAccessor.
-     *
-     * @param dbAccessorIn The directDatabaseAccessor to set.
-     */
-    public final void setDirectDatabaseAccessor(final DirectDatabaseAccessorInterface dbAccessorIn) {
-        this.dbAccessor = dbAccessorIn;
-    }
-
-    /**
-     * Injects the renderer.
-     *
-     * @param renderer The renderer to inject.
-     */
-    public void setRenderer(final ReportRendererInterface renderer) {
-        this.renderer = renderer;
-    }
-
 }

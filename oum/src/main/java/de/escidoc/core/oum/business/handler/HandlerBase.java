@@ -90,16 +90,6 @@ public class HandlerBase extends DefaultHandler {
     }
 
     /**
-     * Injects the {@link TripleStoreUtility}.
-     *
-     * @param tripleStoreUtility The {@link TripleStoreUtility} to set
-     */
-    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
-
-        this.tripleStoreUtility = tripleStoreUtility;
-    }
-
-    /**
      * @return An instance of the Utility.
      */
     public Utility getUtility() {

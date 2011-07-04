@@ -66,16 +66,6 @@ public class StagingCleaner {
     private StagingFileDao stagingFileDao;
 
     /**
-     * Setting the stagingFileDao.
-     *
-     * @param stagingSessionFileDao The stagingFileDao to set.
-     */
-    public final void setStagingSessionFactory(final StagingFileDao stagingSessionFileDao) {
-
-        this.stagingFileDao = stagingSessionFileDao;
-    }
-
-    /**
      * Cleans up the staging area, i.e. removes each file in the file system associated to an expired staging file
      * object and each expired staging file whose associated file does not exist or could be removed.
      */

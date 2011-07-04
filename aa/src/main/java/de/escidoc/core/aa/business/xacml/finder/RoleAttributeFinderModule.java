@@ -194,13 +194,4 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
 
         return role;
     }
-
-    /**
-     * Injects the role dao if "called" via Spring.
-     *
-     * @param roleDao The role dao.
-     */
-    public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
-        this.roleDao = roleDao;
-    }
 }

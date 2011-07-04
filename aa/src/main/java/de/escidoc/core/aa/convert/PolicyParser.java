@@ -314,21 +314,4 @@ public class PolicyParser {
         }
     }
 
-    /**
-     * Injects the condition parser object.
-     *
-     * @param con condition parser from Spring
-     */
-    public void setConditionParser(final ConditionParser con) {
-        this.con = con;
-    }
-
-    /**
-     * Injects the filter values object.
-     *
-     * @param values filter values object from Spring
-     */
-    public void setValues(final Values values) {
-        this.values = values;
-    }
 }

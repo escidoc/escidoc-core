@@ -492,24 +492,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
 
     }
 
-    /**
-     * Injects the content relation handler.
-     *
-     * @param contentRelationHandler The {@link FedoraContentRelationHandler}.
-     */
-    public void setContentRelationHandler(final FedoraContentRelationHandler contentRelationHandler) {
-        this.contentRelationHandler = contentRelationHandler;
-    }
-
-    /**
-     * Set the SRURequest object.
-     *
-     * @param sruRequest SRURequest
-     */
-    public void setSruRequest(final SRURequest sruRequest) {
-        this.sruRequest = sruRequest;
-    }
-
     @PostConstruct
     public void init() {
         addContextListener(this.indexingHandler);

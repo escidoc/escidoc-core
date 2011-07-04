@@ -359,14 +359,4 @@ public class PermissionsQuery {
         }
         return result;
     }
-
-    /**
-     * Injects the AccessRights object.
-     *
-     * @param accessRights AccessRights from Spring
-     */
-    public void setAccessRights(final AccessRights accessRights) {
-        this.accessRights = accessRights;
-    }
-
 }

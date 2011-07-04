@@ -54,16 +54,6 @@ public class ReportHandler implements ReportHandlerInterface {
     private de.escidoc.core.sm.business.interfaces.ReportHandlerInterface handler;
 
     /**
-     * Injects the Report handler.
-     *
-     * @param reportHandler The Report handler bean to inject.
-     */
-    public void setReportHandler(final de.escidoc.core.sm.business.interfaces.ReportHandlerInterface reportHandler) {
-
-        this.handler = reportHandler;
-    }
-
-    /**
      * See Interface for functional description.
      *
      * @param xml xml with parameters (report-parameters.xsd).

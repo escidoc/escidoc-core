@@ -1183,35 +1183,6 @@ public class Utility {
     }
 
     /**
-     * Injects the staging file handler bean.
-     *
-     * @param stagingFileHandler The stanging file handler bean to inject.
-     */
-    public void setStagingFileHandler(final StagingFileHandlerInterface stagingFileHandler) {
-
-        this.stagingFileHandler = stagingFileHandler;
-    }
-
-    /**
-     * Injects the TripleStore utility.
-     *
-     * @param tripleStoreUtility TripleStoreUtility from Spring
-     */
-    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
-        this.tripleStoreUtility = tripleStoreUtility;
-    }
-
-    /**
-     * Get StagingFileHandlerBean.
-     *
-     * @return the stagingFileHandler
-     */
-    public StagingFileHandlerInterface getStagingFileHandler() {
-
-        return this.stagingFileHandler;
-    }
-
-    /**
      * Prepare the XML for the return of all task oriented methods.
      * <p/>
      * TODO either use velocity template and/or move to an own class (ReturnXY)

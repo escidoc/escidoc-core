@@ -69,17 +69,6 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
     private de.escidoc.core.om.business.interfaces.ContentRelationHandlerInterface handler;
 
     /**
-     * Injects the content relation handler.
-     *
-     * @param contentRelationHandler The contentRelationHandler bean to inject.
-     */
-    public void setContentRelationHandler(
-        final de.escidoc.core.om.business.interfaces.ContentRelationHandlerInterface contentRelationHandler) {
-
-        this.handler = contentRelationHandler;
-    }
-
-    /**
      * See Interface for functional description.
      *
      * @param xmlData to be created corresponding to XML-schema "content-relation.xsd".

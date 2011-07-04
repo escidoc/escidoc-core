@@ -474,24 +474,4 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
         }
     }
 
-    /**
-     * Injects the container handler if "called" via Spring.
-     *
-     * @param containerHandler The container handler.
-     */
-    public void setContainerHandler(final ContainerHandlerInterface containerHandler) {
-
-        this.containerHandler = containerHandler;
-    }
-
-    /**
-     * Injects the item handler if "called" via Spring.
-     *
-     * @param itemHandler The item handler.
-     */
-    public void setItemHandler(final ItemHandlerInterface itemHandler) {
-
-        this.itemHandler = itemHandler;
-    }
-
 }

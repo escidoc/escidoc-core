@@ -83,23 +83,4 @@ public class IndexOptimizerService {
             LOGGER.error("Optimizing search-indices failed.", e);
         }
     }
-
-    /**
-     * Injects the {@link GsearchHandler} to use.
-     *
-     * @param gsearchHandler The {@link GsearchHandler}.
-     */
-    public void setGsearchHandler(final GsearchHandler gsearchHandler) {
-        this.gsearchHandler = gsearchHandler;
-    }
-
-    /**
-     * Setting the errorMessageHandler.
-     *
-     * @param errorMessageHandler The ErrorMessageHandler to set.
-     */
-    public final void setErrorMessageHandler(final ErrorMessageHandler errorMessageHandler) {
-        this.errorMessageHandler = errorMessageHandler;
-    }
-
 }

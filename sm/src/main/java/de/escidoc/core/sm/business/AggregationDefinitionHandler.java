@@ -386,49 +386,4 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
         return databaseSelectVo;
     }
 
-    /**
-     * Setter for the dao.
-     *
-     * @param dao The data access object.
-     */
-    public void setDao(final SmAggregationDefinitionsDaoInterface dao) {
-        this.dao = dao;
-    }
-
-    /**
-     * Setter for the scopesDao.
-     *
-     * @param scopesDao The data access object.
-     */
-    public void setScopesDao(final SmScopesDaoInterface scopesDao) {
-        this.scopesDao = scopesDao;
-    }
-
-    /**
-     * Setting the directDatabaseAccessor.
-     *
-     * @param dbAccessorIn The directDatabaseAccessor to set.
-     */
-    public final void setDirectDatabaseAccessor(final DirectDatabaseAccessorInterface dbAccessorIn) {
-        this.dbAccessor = dbAccessorIn;
-    }
-
-    /**
-     * Setting the filterUtility.
-     *
-     * @param filterUtility The filterUtility to set.
-     */
-    public final void setFilterUtility(final SmFilterUtility filterUtility) {
-        this.filterUtility = filterUtility;
-    }
-
-    /**
-     * Injects the renderer.
-     *
-     * @param renderer The renderer to inject.
-     */
-    public void setRenderer(final AggregationDefinitionRendererInterface renderer) {
-        this.renderer = renderer;
-    }
-
 }

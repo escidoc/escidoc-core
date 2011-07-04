@@ -42,8 +42,6 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
  */
 public class OptimisticLockingStaxHandler extends DefaultHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OptimisticLockingStaxHandler.class);
-
     private final Date expectedLastModificationDate;
 
     private boolean rootElementFound;

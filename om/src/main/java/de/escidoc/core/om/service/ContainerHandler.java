@@ -87,17 +87,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
     @Qualifier("business.FedoraContainerHandler")
     private de.escidoc.core.om.business.interfaces.ContainerHandlerInterface handler;
 
-    /**
-     * Injects the container handler.
-     *
-     * @param containerHandler The container handler bean to inject.
-     */
-    public void setContainerHandler(
-        final de.escidoc.core.om.business.interfaces.ContainerHandlerInterface containerHandler) {
-
-        this.handler = containerHandler;
-    }
-
     // FIXME: exception handling
 
     /**

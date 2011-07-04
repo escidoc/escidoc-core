@@ -368,15 +368,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     }
 
     /**
-     * Set the SRURequest object.
-     *
-     * @param sruRequest SRURequest
-     */
-    public void setSruRequest(final SRURequest sruRequest) {
-        this.sruRequest = sruRequest;
-    }
-
-    /**
      * Submit the Content Relation.
      *
      * @param id    objid of ContentRelation

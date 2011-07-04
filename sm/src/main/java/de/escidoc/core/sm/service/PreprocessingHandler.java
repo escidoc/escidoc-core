@@ -52,17 +52,6 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
     private de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface handler;
 
     /**
-     * Injects the Preprocessing handler.
-     *
-     * @param preprocessingHandler The Preprocessing handler bean to inject.
-     */
-    public void setPreprocessingHandler(
-        final de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface preprocessingHandler) {
-
-        this.handler = preprocessingHandler;
-    }
-
-    /**
      * See Interface for functional description.
      *
      * @param aggregationDefinitionId id of the aggregation-definition to preprocess.

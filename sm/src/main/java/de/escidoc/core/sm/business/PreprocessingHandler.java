@@ -82,13 +82,4 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
         preprocessor.execute(handler.getStartDate(), handler.getEndDate(), aggregationDefinitionId);
     }
 
-    /**
-     * Injects the {@link StatisticPreprocessor} to use.
-     *
-     * @param preprocessor The {@link StatisticPreprocessor}.
-     */
-    public void setPreprocessor(final StatisticPreprocessor preprocessor) {
-        this.preprocessor = preprocessor;
-    }
-
 }

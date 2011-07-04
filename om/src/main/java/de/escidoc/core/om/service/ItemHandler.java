@@ -92,16 +92,6 @@ public class ItemHandler implements ItemHandlerInterface {
     @Qualifier("business.FedoraItemHandler")
     private de.escidoc.core.om.business.interfaces.ItemHandlerInterface handler;
 
-    /**
-     * Injects the item handler.
-     *
-     * @param itemHandler The item handler bean to inject.
-     */
-    public void setItemHandler(final de.escidoc.core.om.business.interfaces.ItemHandlerInterface itemHandler) {
-
-        this.handler = itemHandler;
-    }
-
     // FIXME: exception handling
 
     /**

@@ -50,17 +50,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
     private de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface handler;
 
     /**
-     * Injects the StatisticData handler.
-     *
-     * @param statisticDataHandler The StatisticData handler bean to inject.
-     */
-    public void setStatisticDataHandler(
-        final de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface statisticDataHandler) {
-
-        this.handler = statisticDataHandler;
-    }
-
-    /**
      * See Interface for functional description.
      *
      * @param xmlData statistic data as xml in statistic-data schema.

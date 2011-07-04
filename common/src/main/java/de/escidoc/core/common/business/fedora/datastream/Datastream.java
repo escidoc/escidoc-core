@@ -108,8 +108,6 @@ public class Datastream {
 
     private byte[] stream;
 
-    private String streamHash;
-
     private String controlGroupValue = CONTROL_GROUP_INTERNAL_XML;
 
     private Map<String, String> properties;

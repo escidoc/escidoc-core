@@ -1775,24 +1775,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     /**
-     * Injects the content relation handler.
-     *
-     * @param contentRelationHandler The {@link FedoraContentRelationHandler}.
-     */
-    public void setContentRelationHandler(final FedoraContentRelationHandler contentRelationHandler) {
-        this.contentRelationHandler = contentRelationHandler;
-    }
-
-    /**
-     * Set the SRURequest object.
-     *
-     * @param sruRequest SRURequest
-     */
-    public void setSruRequest(final SRURequest sruRequest) {
-        this.sruRequest = sruRequest;
-    }
-
-    /**
      * Sets the metadata datastream with name <code>name</code> for this item.
      *
      * @param name         The name of the metadata datastream.

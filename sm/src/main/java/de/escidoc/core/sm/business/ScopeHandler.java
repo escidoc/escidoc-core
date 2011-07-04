@@ -245,31 +245,4 @@ public class ScopeHandler implements ScopeHandlerInterface {
         return renderer.render(scope);
     }
 
-    /**
-     * Setter for the dao.
-     *
-     * @param dao The data access object.
-     */
-    public void setDao(final SmScopesDaoInterface dao) {
-        this.dao = dao;
-    }
-
-    /**
-     * Setting the filterUtility.
-     *
-     * @param filterUtility The filterUtility to set.
-     */
-    public final void setFilterUtility(final SmFilterUtility filterUtility) {
-        this.filterUtility = filterUtility;
-    }
-
-    /**
-     * Injects the renderer.
-     *
-     * @param renderer The renderer to inject.
-     */
-    public void setRenderer(final ScopeRendererInterface renderer) {
-        this.renderer = renderer;
-    }
-
 }

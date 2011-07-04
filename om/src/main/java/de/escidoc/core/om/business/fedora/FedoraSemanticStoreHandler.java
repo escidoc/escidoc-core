@@ -164,12 +164,4 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
         return result;
     }
 
-    /**
-     * Injects the triple store connector bean.
-     *
-     * @param tripleStoreConnector The {@link TripleStoreConnector}.
-     */
-    public void setTripleStoreConnector(final TripleStoreConnector tripleStoreConnector) {
-        this.tripleStoreConnector = tripleStoreConnector;
-    }
 }

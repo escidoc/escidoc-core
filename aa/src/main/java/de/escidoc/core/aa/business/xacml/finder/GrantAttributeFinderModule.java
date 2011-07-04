@@ -378,31 +378,4 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             throw new GrantNotFoundException(StringUtility.format("Grant with provided id does not exist", grantId));
         }
     }
-
-    /**
-     * Injects the user account data access object if "called" via Spring.
-     *
-     * @param userAccountDao The user account dao.
-     */
-    public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
-        this.userAccountDao = userAccountDao;
-    }
-
-    /**
-     * Injects the user group data access object if "called" via Spring.
-     *
-     * @param userGroupDao The user group dao.
-     */
-    public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
-        this.userGroupDao = userGroupDao;
-    }
-
-    /**
-     * Injects the triple store utility bean.
-     *
-     * @param tsu The {@link TripleStoreUtility}.
-     */
-    public void setTsu(final TripleStoreUtility tsu) {
-        this.tsu = tsu;
-    }
 }

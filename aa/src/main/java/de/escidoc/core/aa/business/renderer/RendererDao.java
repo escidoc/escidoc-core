@@ -83,13 +83,4 @@ public class RendererDao {
         }
         return title;
     }
-
-    /**
-     * Injects the triple store utility bean.
-     *
-     * @param tsu The {@link TripleStoreUtility}.
-     */
-    public void setTsu(final TripleStoreUtility tsu) {
-        this.tsu = tsu;
-    }
 }

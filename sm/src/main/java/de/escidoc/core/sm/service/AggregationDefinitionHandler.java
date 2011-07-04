@@ -57,17 +57,6 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
     private de.escidoc.core.sm.business.interfaces.AggregationDefinitionHandlerInterface handler;
 
     /**
-     * Injects the AggregationDefinition handler.
-     *
-     * @param aggregationDefinitionHandler The AggregationDefinition handler bean to inject.
-     */
-    public void setAggregationDefinitionHandler(
-        final de.escidoc.core.sm.business.interfaces.AggregationDefinitionHandlerInterface aggregationDefinitionHandler) {
-
-        this.handler = aggregationDefinitionHandler;
-    }
-
-    /**
      * See Interface for functional description.
      *
      * @param xmlData aggregationDefinition as xml in aggregationDefinition schema.

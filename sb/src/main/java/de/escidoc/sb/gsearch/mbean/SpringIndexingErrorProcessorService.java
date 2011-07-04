@@ -59,13 +59,4 @@ public class SpringIndexingErrorProcessorService {
         processor.execute(Constants.INDEXING_ERROR_LOGFILE);
     }
 
-    /**
-     * Injects the {@link ErrorQueueProcessor} to use.
-     *
-     * @param processor The {@link ErrorQueueProcessor}.
-     */
-    public void setProcessor(final ErrorQueueProcessor processor) {
-        this.processor = processor;
-    }
-
 }

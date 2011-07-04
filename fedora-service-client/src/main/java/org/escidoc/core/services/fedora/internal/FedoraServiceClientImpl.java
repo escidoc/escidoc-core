@@ -88,8 +88,6 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     private static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
-    private final static Logger LOG = LoggerFactory.getLogger(FedoraServiceClientImpl.class);
-
     private FedoraServiceRESTEndpoint fedoraService;
 
     public void setFedoraService(final FedoraServiceRESTEndpoint fedoraService) {

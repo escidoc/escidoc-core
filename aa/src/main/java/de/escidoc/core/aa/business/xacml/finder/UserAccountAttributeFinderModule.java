@@ -600,22 +600,4 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
 
         return this.userAccountDao;
     }
-
-    /**
-     * Injects the TripleStore utility.
-     *
-     * @param tripleStoreUtility TripleStoreUtility from Spring
-     */
-    public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
-        this.tripleStoreUtility = tripleStoreUtility;
-    }
-
-    /**
-     * Injects the user account data access object if "called" via Spring.
-     *
-     * @param userAccountDao The user account dao.
-     */
-    public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
-        this.userAccountDao = userAccountDao;
-    }
 }

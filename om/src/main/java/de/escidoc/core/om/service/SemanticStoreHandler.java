@@ -53,17 +53,6 @@ public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
     private de.escidoc.core.om.business.interfaces.SemanticStoreHandlerInterface handler;
 
     /**
-     * Injects the context handler.
-     *
-     * @param semanticStoreHandler The semantic store handler bean to inject.
-     */
-    public void setSemanticStoreHandler(
-        final de.escidoc.core.om.business.interfaces.SemanticStoreHandlerInterface semanticStoreHandler) {
-
-        this.handler = semanticStoreHandler;
-    }
-
-    /**
      * Retrieves a result of provided triple store query in a provided output format.
      *
      * @return Returns XML representation of the query result.

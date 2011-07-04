@@ -58,17 +58,6 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
     private de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface handler;
 
     /**
-     * Injects the FedoraRestDeviation handler.
-     *
-     * @param fedoraRestDeviationHandler The FedoraRestDeviation handler bean to inject.
-     */
-    public void setFedoraRestDeviationHandler(
-        final de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler) {
-
-        this.handler = fedoraRestDeviationHandler;
-    }
-
-    /**
      * @param pid        unused.
      * @param dsID       uri to component-content
      * @param parameters REST-GET-Parameters.

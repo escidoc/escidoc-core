@@ -240,8 +240,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
 
     private static final Pattern PATTERN_LOWER_THAN_GREATER_THAN = Pattern.compile("&lt;(.*)&gt;");
 
-    private static TripleStoreUtility mptu;
-
     /**
      * The logger.
      */
@@ -297,8 +295,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
 
         final List<String> results = executeQueryId(id, true, PROP_PARENT);
         for (final String result1 : results) {
-            // List<Node> row = results.next();
-            // String entry = row.get(0).getValue();
             String entry = result1;
             entry = XmlUtility.getIdFromURI(entry);
             result.add(entry);
@@ -318,8 +314,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
 
         final List<String> results = executeQueryForList(ids, true, PROP_PARENT);
         for (final String result1 : results) {
-            // List<Node> row = results.next();
-            // String entry = row.get(0).getValue();
             String entry = result1;
             entry = XmlUtility.getIdFromURI(entry);
             result.add(entry);
@@ -367,8 +361,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
 
         final List<String> results = executeQueryForList(queryIDs, true, PROP_MEMBER);
         for (final String result1 : results) {
-            // List<Node> row = results.next();
-            // String entry = row.get(0).getValue();
             String entry = result1;
             entry = XmlUtility.getIdFromURI(entry);
             result.add(entry);
@@ -473,8 +465,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
         String item = null;
         if (it.hasNext()) {
             // TODO throw exception if more than one result
-            // List<Node> row = results.next();
-            // String entry = row.get(0).getValue();
             String entry = it.next();
             entry = XmlUtility.getIdFromURI(entry);
             item = entry;
@@ -551,7 +541,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
     public boolean isParentOfOu(final String ouId, final String parentId) throws TripleStoreSystemException {
-
         boolean isParent = false;
         final List<String> entries = getPropertiesElementsVector(ouId, PROP_PARENT);
         for (final String entry : entries) {
@@ -580,7 +569,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      */
     public String getProperty(final String pid, final String fullQualifiedNameProperty)
         throws TripleStoreSystemException {
-
         return this.getRelation(pid, fullQualifiedNameProperty);
 
     }
@@ -627,15 +615,12 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      */
     public String getPropertiesElements(final String pid, final String fullqualifiedPropertyName)
         throws TripleStoreSystemException {
-
         String value = null;
         final List<String> results = executeQueryId(pid, false, fullqualifiedPropertyName);
-
         // work around for more than one dc:identifier
         for (final String result : results) {
             value = result;
         }
-
         return value;
     }
 
@@ -744,14 +729,12 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     // FIXME don't use triplestore?
     public List<String> getMethodNames(final String id) throws TripleStoreSystemException {
         final List<String> methodNames = new ArrayList<String>();
-
         final String cmPid = getContentModel(id);
         final List<String> sdefPids =
             getPropertiesElementsVector(cmPid, "info:fedora/fedora-system:def/model#hasService");
         for (final String sdefPid : sdefPids) {
             methodNames.add(getProperty(sdefPid, "info:fedora/fedora-system:def/model#definesMethod"));
         }
-
         return methodNames;
     }
 
@@ -782,7 +765,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     public boolean hasReferringResource(final String id) throws TripleStoreSystemException {
-
         final List<String> results = executeQueryId(id, true, PROP_CONTENT_MODEL_ID);
         final Iterator<String> it = results.iterator();
         return it.hasNext();

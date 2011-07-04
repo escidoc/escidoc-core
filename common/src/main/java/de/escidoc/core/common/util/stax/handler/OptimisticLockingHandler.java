@@ -49,10 +49,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 @Configurable
 public class OptimisticLockingHandler extends DefaultHandler {
 
-    @Autowired
-    @Qualifier("business.Utility")
-    private Utility utility;
-
     private final String objid;
 
     private final String objectType;

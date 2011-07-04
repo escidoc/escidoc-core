@@ -779,22 +779,4 @@ public class AggregationPreprocessor {
         return "";
     }
 
-    /**
-     * Setting the directDatabaseAccessor.
-     *
-     * @param dbAccessorIn The directDatabaseAccessor to set.
-     */
-    public void setDirectDatabaseAccessor(final DirectDatabaseAccessorInterface dbAccessorIn) {
-        this.dbAccessor = dbAccessorIn;
-    }
-
-    /**
-     * Setter for the preprocessingLogsDao.
-     *
-     * @param preprocessingLogsDao The data access object.
-     */
-    public void setPreprocessingLogsDao(final SmPreprocessingLogsDaoInterface preprocessingLogsDao) {
-        this.preprocessingLogsDao = preprocessingLogsDao;
-    }
-
 }

@@ -680,13 +680,4 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
 
         return longestMatch;
     }
-
-    /**
-     * Injects the triple store utility bean.
-     *
-     * @param tsu The {@link TripleStoreUtility}.
-     */
-    public void setTsu(final TripleStoreUtility tsu) {
-        this.tsu = tsu;
-    }
 }

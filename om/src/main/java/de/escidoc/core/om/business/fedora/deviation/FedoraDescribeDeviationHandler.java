@@ -118,14 +118,4 @@ public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHa
 
     }
 
-    /**
-     * See Interface for functional description.
-     *
-     * @param connectionUtility The HTTP connection utility.
-     */
-    public void setConnectionUtility(final ConnectionUtility connectionUtility) {
-
-        this.connectionUtility = connectionUtility;
-    }
-
 }

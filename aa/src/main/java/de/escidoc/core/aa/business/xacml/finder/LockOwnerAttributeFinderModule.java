@@ -94,13 +94,4 @@ public class LockOwnerAttributeFinderModule extends AbstractAttributeFinderModul
 
     }
 
-    /**
-     * Injects the lock handler if "called" via Spring.
-     *
-     * @param lockHandler The lock handler.
-     */
-    public void setLockHandler(final LockHandler lockHandler) {
-        this.lockHandler = lockHandler;
-    }
-
 }

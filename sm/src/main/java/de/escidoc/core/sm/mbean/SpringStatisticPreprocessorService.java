@@ -124,22 +124,4 @@ public class SpringStatisticPreprocessorService {
         }
     }
 
-    /**
-     * Injects the {@link StatisticPreprocessor} to use.
-     *
-     * @param preprocessor The {@link StatisticPreprocessor}.
-     */
-    public void setPreprocessor(final StatisticPreprocessor preprocessor) {
-        this.preprocessor = preprocessor;
-    }
-
-    /**
-     * Setting the errorMessageHandler.
-     *
-     * @param errorMessageHandler The ErrorMessageHandler to set.
-     */
-    public final void setErrorMessageHandler(final ErrorMessageHandler errorMessageHandler) {
-        this.errorMessageHandler = errorMessageHandler;
-    }
-
 }

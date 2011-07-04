@@ -165,15 +165,4 @@ public class NewOuParentsAttributeFinderModule extends AbstractAttributeFinderMo
         }
 
     }
-
-    /**
-     * Injects the triple store utility bean.
-     *
-     * @param tripleStoreAttributeFinderModule
-     *         The {@link TripleStoreAttributeFinderModule}.
-     */
-    public void setTripleStoreAttributeFinderModule(
-        final TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule) {
-        this.tripleStoreAttributeFinderModule = tripleStoreAttributeFinderModule;
-    }
 }

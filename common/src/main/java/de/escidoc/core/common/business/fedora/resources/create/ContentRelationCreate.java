@@ -161,7 +161,6 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @param idProvider The {@link EscidocIdProvider} to set.
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
-
         this.idProvider = idProvider;
     }
 
@@ -171,7 +170,6 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @throws SystemException Thrown if internal error occur.
      */
     public void persist() throws SystemException {
-
         persist(true);
     }
 
@@ -182,7 +180,6 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      * @throws SystemException Thrown if internal error occur.
      */
     public void persist(final boolean forceSync) throws SystemException {
-
         try {
             if (getObjid() == null) {
                 // Do not set fedora object id earlier. Otherwise consumes

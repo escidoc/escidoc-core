@@ -95,8 +95,6 @@ public class ItemHandlerCreate extends ItemResourceListener {
     private static final Pattern PATTERN_INVALID_FOXML =
         Pattern.compile("fedora.server.errors.ObjectValidityException");
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandlerCreate.class);
-
     /**
      * Render RELS-EXT of a Component.
      *

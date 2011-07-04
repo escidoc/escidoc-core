@@ -946,15 +946,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
 
     }
 
-    /**
-     * Set the SRURequest object.
-     *
-     * @param sruRequest SRURequest
-     */
-    public void setSruRequest(final SRURequest sruRequest) {
-        this.sruRequest = sruRequest;
-    }
-
     @PostConstruct
     private void init() {
         addOuListener(this.indexingHandler);

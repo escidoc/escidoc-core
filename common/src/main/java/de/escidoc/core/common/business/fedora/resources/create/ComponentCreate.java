@@ -146,7 +146,6 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      * @param idProvider The {@link EscidocIdProvider} to set.
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
-
         this.idProvider = idProvider;
     }
 

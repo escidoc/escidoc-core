@@ -57,7 +57,6 @@ public class StagingManager {
      */
     @ManagedOperation(description = "Clean up the staging file area.")
     public void cleanUp() {
-
         stagingCleaner.cleanUp();
     }
 
@@ -69,16 +68,6 @@ public class StagingManager {
      */
     @ManagedAttribute(description = "The clean up period in milli seconds.", persistPeriod = 300)
     public long getCleanUpPeriod() {
-
         return EscidocConfiguration.getInstance().getAsLong("escidoc-core.st.cleanup.period");
-    }
-
-    /**
-     * Injects the {@link StagingCleaner}.
-     *
-     * @param stagingCleaner The {@link StagingCleaner} object to use.
-     */
-    public void setStagingCleaner(final StagingCleaner stagingCleaner) {
-        this.stagingCleaner = stagingCleaner;
     }
 }

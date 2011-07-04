@@ -380,32 +380,4 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         }
     }
 
-    /**
-     * Injects the aggregation definition handler if "called" via Spring.
-     *
-     * @param aggregationDefinitionHandler The aggregateion definition handler.
-     */
-    public void setAggregationDefinitionHandler(final AggregationDefinitionHandlerInterface aggregationDefinitionHandler) {
-        this.aggregationDefinitionHandler = aggregationDefinitionHandler;
-    }
-
-    /**
-     * Injects the report definition handler if "called" via Spring.
-     *
-     * @param reportDefinitionHandler The report definition handler.
-     */
-    public void setReportDefinitionHandler(final ReportDefinitionHandlerInterface reportDefinitionHandler) {
-        this.reportDefinitionHandler = reportDefinitionHandler;
-    }
-
-    /**
-     * Injects the scope handler if "called" via Spring.
-     *
-     * @param scopeHandler The scope handler.
-     */
-    public void setScopeHandler(final ScopeHandlerInterface scopeHandler) {
-
-        this.scopeHandler = scopeHandler;
-    }
-
 }

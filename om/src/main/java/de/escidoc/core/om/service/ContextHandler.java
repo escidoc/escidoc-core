@@ -73,16 +73,6 @@ public class ContextHandler implements ContextHandlerInterface {
     @Qualifier("business.FedoraContextHandler")
     private de.escidoc.core.om.business.interfaces.ContextHandlerInterface handler;
 
-    /**
-     * Injects the context handler.
-     *
-     * @param contextHandler The context handler bean to inject.
-     */
-    public void setContextHandler(final de.escidoc.core.om.business.interfaces.ContextHandlerInterface contextHandler) {
-
-        this.handler = contextHandler;
-    }
-
     // FIXME: exception handling
 
     /**

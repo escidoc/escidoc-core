@@ -51,28 +51,15 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
     @Qualifier("business.StagingFileHandler")
     private de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface handler;
 
-    /**
-     * Injects the staging file handler.
-     *
-     * @param stagingFileHandler The item handler bean to inject.
-     */
-    public void setStagingFileHandler(
-        final de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface stagingFileHandler) {
-
-        this.handler = stagingFileHandler;
-    }
-
     @Override
     public String create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-
         return handler.create(binaryContent);
     }
 
     @Override
     public EscidocBinaryContent retrieve(final String stagingFileId) throws StagingFileNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
-
         return handler.retrieve(stagingFileId);
     }
 

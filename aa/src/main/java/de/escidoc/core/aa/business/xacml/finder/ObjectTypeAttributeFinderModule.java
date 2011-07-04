@@ -185,13 +185,4 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
         return new Object[] { result, attributeIdValue };
     }
 
-    /**
-     * Injects the object attribute resolver.
-     *
-     * @param objectAttributeResolver The objectAttributeResolver.
-     */
-    public void setObjectAttributeResolver(final ObjectAttributeResolver objectAttributeResolver) {
-        this.objectAttributeResolver = objectAttributeResolver;
-    }
-
 }

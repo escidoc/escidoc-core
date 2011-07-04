@@ -56,16 +56,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
     private de.escidoc.core.sm.business.interfaces.ScopeHandlerInterface handler;
 
     /**
-     * Injects the Scope handler.
-     *
-     * @param scopeHandler The Scope handler bean to inject.
-     */
-    public void setScopeHandler(final de.escidoc.core.sm.business.interfaces.ScopeHandlerInterface scopeHandler) {
-
-        this.handler = scopeHandler;
-    }
-
-    /**
      * See Interface for functional description.
      *
      * @param xmlData Scope as xml in Scope schema.

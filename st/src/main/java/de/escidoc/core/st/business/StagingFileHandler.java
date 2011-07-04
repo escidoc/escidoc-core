@@ -78,18 +78,15 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SqlDatabaseSystemException, WebserverSystemException {
-
         final StagingFile stagingFile = StagingUtil.generateStagingFile(true, this.dao);
         if (stagingFile == null) {
             throw new MissingMethodParameterException("Missing staging file.");
         }
-
         if (binaryContent == null || binaryContent.getContent() == null) {
             throw new MissingMethodParameterException("Binary content must be provided.");
         }
         final String token = stagingFile.getToken();
         stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil.getUploadStagingArea(), token));
-
         try {
             stagingFile.read(binaryContent.getContent());
         }
@@ -148,7 +145,6 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
     @Override
     public EscidocBinaryContent retrieve(final String stagingFileId) throws StagingFileNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
-
         final StagingFile stagingFile = getStagingFile(stagingFileId);
         final EscidocBinaryContent binaryContent = new EscidocBinaryContent();
         binaryContent.setMimeType(stagingFile.getMimeType());
@@ -159,22 +155,11 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         catch (final IOException e) {
             throw new StagingFileNotFoundException("Binary content of addressed staging file cannot be found.", e);
         }
-
         // finally, the staging file is set to expired to prevent further
         // accesses to the binary content.
         stagingFile.setExpiryTs(System.currentTimeMillis());
         dao.update(stagingFile);
-
         return binaryContent;
-    }
-
-    /**
-     * Setter for the dao.
-     *
-     * @param dao The data access object.
-     */
-    public void setDao(final StagingFileDao dao) {
-        this.dao = dao;
     }
 
     /**
@@ -188,11 +173,9 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      */
     private StagingFile getStagingFile(final String stagingFileId) throws MissingMethodParameterException,
         StagingFileNotFoundException, SqlDatabaseSystemException {
-
         if (stagingFileId == null) {
             throw new MissingMethodParameterException("staging file id must be provided.");
         }
-
         final StagingFile result = dao.findStagingFile(stagingFileId);
         if (result == null || result.isExpired()) {
             throw new StagingFileNotFoundException(StringUtility.format(

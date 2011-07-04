@@ -100,15 +100,4 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         return handler.retrieveSetDefinitions(filter);
     }
 
-    /**
-     * Injects the set definition handler.
-     *
-     * @param handler The set definition handler bean to inject.
-     */
-    public void setSetDefinitionHandler(
-        final de.escidoc.core.oai.business.interfaces.SetDefinitionHandlerInterface handler) {
-
-        this.handler = handler;
-    }
-
 }

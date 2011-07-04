@@ -342,16 +342,4 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         return result;
     }
 
-    /**
-     * Injects the set definition data access object.
-     *
-     * @param setDefinitionDao The data access object.
-     */
-    public void setSetDefinitionDao(final SetDefinitionDaoInterface setDefinitionDao) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(StringUtility.format("setDefinitionDao", setDefinitionDao));
-        }
-        this.setDefinitionDao = setDefinitionDao;
-    }
-
 }
