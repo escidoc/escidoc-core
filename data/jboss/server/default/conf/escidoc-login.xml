@@ -198,14 +198,17 @@ default-lazy-init="false">
     <!-- 
     <security:http auto-config="false"
         path-type="regex">
+		<security:session-management session-fixation-protection="none"/>
         <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
         <security:intercept-url pattern="/.*" filters="none" />
         <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
         <security:openid-login user-service-ref="openidUserDetailsService"/>
+        <security:custom-filter ref="openidFilter" before="CAS_FILTER"/>
     </security:http>
 
     <bean id="openidInitializer" class="de.escidoc.core.aa.openid.EscidocOpenidInitializer" />
 	<bean id="openidUserDetailsService" class="de.escidoc.core.aa.openid.EscidocOpenidUserDetailsService" />
+    <bean id="openidFilter" class="de.escidoc.core.aa.openid.EscidocOpenidFilter"/>
  
 	<security:authentication-manager>
     	<security:authentication-provider>
