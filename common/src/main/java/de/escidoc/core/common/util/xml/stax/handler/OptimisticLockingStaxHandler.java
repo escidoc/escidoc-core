@@ -24,9 +24,6 @@ import java.util.Date;
 
 import javax.naming.directory.NoSuchAttributeException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.LastModificationDateMissingException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;

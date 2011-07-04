@@ -47,6 +47,7 @@ public final class Constants {
     public static final Pattern PATTERN_PARSE_RESOURCE_ID = Pattern.compile("([^:]*:[^:]*)(:([^:]*)){0,1}");
 
     public static final String XMLSCHEMA_STRING = "http://www.w3.org/2001/XMLSchema#string";
+
     public static final URI URI_OBJECT_TYPE;
 
     public static final URI URI_RESOURCE_ID;

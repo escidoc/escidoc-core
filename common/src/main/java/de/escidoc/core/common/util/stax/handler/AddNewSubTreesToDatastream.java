@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.util.stax.handler;
 
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;

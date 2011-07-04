@@ -69,8 +69,6 @@ import de.escidoc.core.om.business.stax.handler.item.OneComponentPropertiesHandl
 import de.escidoc.core.om.business.stax.handler.item.OneComponentTitleHandler;
 import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
