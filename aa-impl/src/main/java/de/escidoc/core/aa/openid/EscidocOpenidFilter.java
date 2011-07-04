@@ -68,7 +68,7 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
     public Authentication attemptAuthentication(final HttpServletRequest request, final HttpServletResponse response)
         throws AuthenticationException, IOException {
         String openidIdentifier = request.getParameter(Constants.OPENID_IDENTIFIER_PARAMETER);
-        if (!openidProviderPattern.matcher(openidIdentifier).matches()) {
+        if (openidIdentifier != null && !openidProviderPattern.matcher(openidIdentifier).matches()) {
             throw new ProviderNotFoundException("specified openId-provider is not supported");
         }
         return super.attemptAuthentication(request, response);
