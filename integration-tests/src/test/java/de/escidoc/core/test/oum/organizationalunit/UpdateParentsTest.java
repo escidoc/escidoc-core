@@ -184,12 +184,10 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         final String createdNewParentXml = createSuccessfully("escidoc_ou_create.xml");
         final String id = getObjidValue(createdNewParentXml);
         createOuHierarchie();
-        open(this.ouTop1Id,
-            getTheLastModificationParam(true, this.ouTop1Id, "Opened organizational unit '" + this.ouTop1Id + "'."));
-        open(
-            this.ouChild1ParentId,
-            getTheLastModificationParam(true, this.ouChild1ParentId, "Opened organizational unit '"
-                + this.ouChild1ParentId + "'."));
+        open(this.ouTop1Id, getTheLastModificationParam(true, this.ouTop1Id, "Opened organizational unit '"
+            + this.ouTop1Id + "'."));
+        open(this.ouChild1ParentId, getTheLastModificationParam(true, this.ouChild1ParentId,
+            "Opened organizational unit '" + this.ouChild1ParentId + "'."));
 
         final String createdXml = retrieve(this.ouChild1ParentId);
         Document createdDocument = getDocument(createdXml);
@@ -426,7 +424,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
         // create OU C
         Document ouCdoc = getDocument(createSuccessfully("escidoc_ou_create.xml"));
         String ouCid = getObjidValue(ouCdoc);
-        
+
         // A parentOf B
         Node parents = selectSingleNode(ouBdoc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
         Element parent = ouBdoc.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");

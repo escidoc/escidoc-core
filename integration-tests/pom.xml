@@ -1302,20 +1302,5 @@
 				</plugins>
 			</build>
 		</profile>
-    
-    <profile>
-      <id>inject-variables</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <escidoc.oracle.database.admin.user>oraesci_adm</escidoc.oracle.database.admin.user>
-        <escidoc.oracle.database.admin.password>oraesciadm</escidoc.oracle.database.admin.password>
-        <fedora.oracle.database.admin.user>oraesci_adm</fedora.oracle.database.admin.user>
-        <fedora.oracle.database.admin.password>oraesciadm</fedora.oracle.database.admin.password>
-        <escidoc.postgres.database.admin.user>postgres</escidoc.postgres.database.admin.user>
-        <escidoc.postgres.database.admin.password>postgres</escidoc.postgres.database.admin.password>
-      </properties>
-    </profile>
 	</profiles>
 </project>
