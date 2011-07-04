@@ -299,7 +299,6 @@ public class Examples {
         XmlSchemaValidationException, AuthorizationException, IOException, SAXException, XPathExpressionException,
         ParserConfigurationException, InvalidContentException, XmlCorruptedException, AuthenticationException,
         MissingMethodParameterException {
-        final String result = null;
         final String createXml = this.contentModelHandler.create(xml);
         return getObjectId(createXml, ResourceType.CONTENT_MODEL);
     }
