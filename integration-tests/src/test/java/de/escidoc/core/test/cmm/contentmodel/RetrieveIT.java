@@ -157,19 +157,6 @@ public class RetrieveIT extends ContentModelTestBase {
      * Test retrieve ContentModel Properties.
      */
     @Test
-    public void testRetrieveContentModelProperties() throws Exception {
-        Document contentModel = getDocument(this.contentModelXml);
-        String subResource = retrieveProperties(this.contentModelId);
-        assertXmlValidContentModel(subResource);
-        validateContentModelProperties(subResource, this.contentModelId, "/properties",
-            getContentModelTitle(contentModel), getContentModelDescription(contentModel),
-            getLastModificationDateValue(contentModel));
-    }
-
-    /**
-     * Test retrieve ContentModel Properties.
-     */
-    @Test
     public void testRetrieveContentModelResources() throws Exception {
         String subResource = null;
         try {
@@ -182,28 +169,4 @@ public class RetrieveIT extends ContentModelTestBase {
         assertXmlValidContentModel(subResource);
     }
 
-    /**
-     * Test retrieve ContentModel Properties.
-     */
-    @Test
-    public void testRetrieveContentModelContentStreams() throws Exception {
-        String subResource = retrieveContentStreams(this.contentModelId);
-        selectSingleNodeAsserted(getDocument(subResource), "/content-streams");
-        assertXmlValidContentModel(subResource);
-    }
-
-    /**
-     * Test retrieve ContentModel Properties.
-     */
-    @Test
-    public void testRetrieveContentModelContentStream() throws Exception {
-        Document contentModel = getDocument(this.contentModelXml);
-        String name =
-            selectSingleNodeAsserted(contentModel, "/content-model/content-streams/content-stream[1]/@name")
-                .getNodeValue();
-
-        String subResource = retrieveContentStream(this.contentModelId, name);
-        selectSingleNodeAsserted(getDocument(subResource), "/content-stream");
-        assertXmlValidContentModel(subResource);
-    }
 }
