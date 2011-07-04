@@ -1,0 +1,13 @@
+<chapter>
+	<title>AA Overview</title>
+	<para>
+		This document is in an initial state. To get an overview of the
+		authentication and authorization component of eSciDoc, please
+		refer to the old technical specification that can be found in
+		the
+		<emphasis>doc</emphasis>
+		folder of the Escidoc project. The overall architecture of the
+		AA component that is shown there is true for the current
+		implementation, too.
+	</para>
+</chapter>

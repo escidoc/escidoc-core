@@ -1,0 +1,353 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="aa"
+>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="de.escidoc.core.aa.business.persistence.RoleGrant" 
+    table="role_grant"
+    lazy="false"
+>
+    <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="class-description" inherit="false">
+       @hibernate.class
+        table="role_grant"
+       @hibernate.mapping
+        schema="aa"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.id
+            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
+    </id>
+
+    <property
+        name="userId"
+        type="java.lang.String"
+        column="user_id"
+        length="255"
+        insert="false"
+        update="false"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="user_id"
+            length="255"
+        </meta>    
+    </property>
+
+    <property
+        name="groupId"
+        type="java.lang.String"
+        column="group_id"
+        length="255"
+        insert="false"
+        update="false"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="group_id"
+            length="255"
+        </meta>    
+    </property>
+
+    <property
+        name="roleId"
+        type="java.lang.String"
+        column="role_id"
+        length="255"
+        insert="false"
+        update="false"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="role_id"
+            length="255"
+        </meta>    
+    </property>
+
+    <property
+        name="objectId"
+        type="java.lang.String"
+        column="object_id"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="object_id"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="objectTitle"
+        type="java.lang.String"
+        column="object_title"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="object_title"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="objectHref"
+        type="java.lang.String"
+        column="object_href"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="object_href"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="grantRemark"
+        type="java.lang.String"
+        column="grant_remark"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="grant_remark"
+            length="255"
+        </meta>    
+    </property>
+
+    <property
+        name="creatorId"
+        type="java.lang.String"
+        column="creator_id"
+        length="255"
+        insert="false"
+        update="false"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="creator_id"
+            length="255"
+        </meta>    
+    </property>
+
+    <property
+        name="creationDate"
+        type="java.util.Date"
+        column="creation_date"
+        length="29"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="creation_date"
+            length="29"
+        </meta>    
+    </property>
+
+    <property
+        name="revokerId"
+        type="java.lang.String"
+        column="revoker_id"
+        length="255"
+        insert="false"
+        update="false"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="revoker_id"
+            length="255"
+        </meta>    
+    </property>
+
+    <property
+        name="revocationDate"
+        type="java.util.Date"
+        column="revocation_date"
+        length="29"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="revocation_date"
+            length="29"
+        </meta>    
+    </property>
+    <property
+        name="revocationRemark"
+        type="java.lang.String"
+        column="revocation_remark"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="revocation_remark"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="grantedFrom"
+        type="java.sql.Timestamp"
+        column="granted_from"
+        length="29"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="granted_from"
+            length="29"
+        </meta>    
+    </property>
+    <property
+        name="grantedTo"
+        type="java.sql.Timestamp"
+        column="granted_to"
+        length="29"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="granted_to"
+            length="29"
+        </meta>    
+    </property>
+
+    <!-- Associations -->
+  
+    <!-- bi-directional many-to-one association to EscidocRole -->
+    <many-to-one
+        name="escidocRole"
+        class="de.escidoc.core.aa.business.persistence.EscidocRole"
+        not-null="true"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.many-to-one
+            not-null="true"
+           @hibernate.column name="role_id"         
+        </meta>
+        <column name="role_id" />
+    </many-to-one>
+    <!-- uni-directional many-to-one association to UserAccount -->
+    <many-to-one
+        name="userAccountByRevokerId"
+        class="de.escidoc.core.aa.business.persistence.UserAccount"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.many-to-one
+           @hibernate.column name="revoker_id"         
+        </meta>
+        <column name="revoker_id" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to UserAccount -->
+    <many-to-one
+        name="userAccountByUserId"
+        class="de.escidoc.core.aa.business.persistence.UserAccount"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.many-to-one
+           @hibernate.column name="user_id"         
+        </meta>
+        <column name="user_id" />
+    </many-to-one>
+    <!-- uni-directional many-to-one association to UserAccount -->
+    <many-to-one
+        name="userAccountByCreatorId"
+        class="de.escidoc.core.aa.business.persistence.UserAccount"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.many-to-one
+           @hibernate.column name="creator_id"         
+        </meta>
+        <column name="creator_id" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to UserGroup -->
+    <many-to-one
+        name="userGroupByGroupId"
+        class="de.escidoc.core.aa.business.persistence.UserGroup"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.many-to-one
+           @hibernate.column name="group_id"         
+        </meta>
+        <column name="group_id" />
+    </many-to-one>
+</class>
+</hibernate-mapping>

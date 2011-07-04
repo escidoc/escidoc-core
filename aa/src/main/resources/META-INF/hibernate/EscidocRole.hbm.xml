@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="aa"
+>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="de.escidoc.core.aa.business.persistence.EscidocRole" 
+    table="escidoc_role"
+    lazy="false"
+>
+    <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.EscidocRoleBase </meta>
+				<meta attribute
+			="class-description" inherit="false">
+       @hibernate.class
+        table="escidoc_role"
+       @hibernate.mapping
+        schema="aa"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.EscidocRoleBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.id
+            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
+    </id>
+
+    <property
+        name="roleName"
+        type="java.lang.String"
+        column="role_name"
+        not-null="true"
+        unique="true"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.EscidocRoleBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="role_name"
+            unique="true"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="description"
+        type="java.lang.String"
+        column="description"
+        length="2147483647"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.EscidocRoleBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="description"
+            length="2147483647"
+        </meta>    
+    </property>
+    <property
+        name="creationDate"
+        type="java.util.Date"
+        column="creation_date"
+        length="29"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.EscidocRoleBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="creation_date"
+            length="29"
+        </meta>    
+    </property>
+    <property
+        name="lastModificationDate"
+        type="java.util.Date"
+        column="last_modification_date"
+        length="29"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.EscidocRoleBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="last_modification_date"
+            length="29"
+        </meta>    
+    </property>
+
+    <!-- Associations -->
+  
+    <!-- bi-directional one-to-many association to RoleGrant -->
+
+    <set
+        name="roleGrants"
+        lazy="true"
+        inverse="false"
+		cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.EscidocRoleBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="role_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.RoleGrant"
+        </meta>
+        <key>
+            <column name="role_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.RoleGrant"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to ScopeDef -->
+
+    <bag
+        name="scopeDefs"
+        lazy="false"
+        inverse="false"
+		cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.EscidocRoleBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.bag
+            lazy="false"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="role_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.ScopeDef"
+        </meta>
+        <key>
+            <column name="role_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.ScopeDef"
+        />
+    </bag>
+    <!-- bi-directional one-to-many association to EscidocPolicy -->
+
+    <bag
+        name="escidocPolicies"
+        lazy="false"
+        inverse="false"
+		cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.EscidocRoleBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.bag
+            lazy="false"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="role_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.EscidocPolicy"
+        </meta>
+        <key>
+            <column name="role_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.EscidocPolicy"
+        />
+    </bag>
+    <!-- bi-directional many-to-one association to UserAccount -->
+    <many-to-one
+        name="userAccountByModifiedById"
+        class="de.escidoc.core.aa.business.persistence.UserAccount"
+        not-null="true"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.EscidocRoleBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.many-to-one
+            not-null="true"
+           @hibernate.column name="modified_by_id"         
+        </meta>
+        <column name="modified_by_id" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to UserAccount -->
+    <many-to-one
+        name="userAccountByCreatorId"
+        class="de.escidoc.core.aa.business.persistence.UserAccount"
+        not-null="true"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.EscidocRoleBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.many-to-one
+            not-null="true"
+           @hibernate.column name="creator_id"         
+        </meta>
+        <column name="creator_id" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

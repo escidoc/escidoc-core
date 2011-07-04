@@ -46,7 +46,7 @@
 						</aspectLibrary>
 						<aspectLibrary>
 							<groupId>org.escidoc.core</groupId>
-							<artifactId>aa-impl</artifactId>
+							<artifactId>aa</artifactId>
 						</aspectLibrary>
 						<aspectLibrary>
 							<groupId>org.springframework</groupId>
@@ -93,7 +93,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
-			<artifactId>aa-impl</artifactId>
+			<artifactId>aa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>

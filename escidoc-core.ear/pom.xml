@@ -62,7 +62,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
-			<artifactId>aa-impl</artifactId>
+			<artifactId>aa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>

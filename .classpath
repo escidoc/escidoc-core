@@ -35,7 +35,7 @@
 	<classpathentry kind="src" output="fedora-service-client/target/test-classes" path="fedora-service-client/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="fedora-service-client/target/classes" path="fedora-service-client/src/main/resources"/>
 	<classpathentry kind="src" output="fedora-service-client/target/classes" path="fedora-service-client/src/main/java"/>
-	<classpathentry kind="src" path="aa-impl/target/hibernate3/generated-sources"/>
+	<classpathentry kind="src" path="aa/target/hibernate3/generated-sources"/>
 	<classpathentry kind="src" path="common/target/hibernate3/generated-sources"/>
 	<classpathentry kind="src" path="oai/target/hibernate3/generated-sources"/>
 	<classpathentry kind="src" path="sm/target/hibernate3/generated-sources"/>
@@ -46,10 +46,10 @@
 	<classpathentry excluding="**" kind="src" output="common/target/classes" path="common/src/main/resources"/>
 	<classpathentry excluding="**" kind="src" output="common/target/classes" path="common/src/main/filtered-resources"/>
 	<classpathentry kind="src" output="common/target/test-classes" path="common/src/test/java"/>
-	<classpathentry kind="src" output="aa-impl/target/classes" path="aa-impl/src/main/java"/>
-	<classpathentry excluding="**" kind="src" output="aa-impl/target/classes" path="aa-impl/src/main/resources"/>
-	<classpathentry kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/java"/>
-	<classpathentry excluding="**" kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/resources"/>
+	<classpathentry kind="src" output="aa/target/classes" path="aa/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="aa/target/classes" path="aa/src/main/resources"/>
+	<classpathentry kind="src" output="adm/target/classes" path="adm/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="adm/target/classes" path="adm/src/main/resources"/>
 	<classpathentry kind="src" output="cmm/target/classes" path="cmm/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="cmm/target/classes" path="cmm/src/main/resources"/>
 	<classpathentry kind="src" output="oai/target/classes" path="oai/src/main/java"/>

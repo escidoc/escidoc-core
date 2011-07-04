@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="aa"
+>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="de.escidoc.core.aa.business.persistence.ScopeDef" 
+    table="scope_def"
+    lazy="false"
+>
+    <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
+				<meta attribute
+			="class-description" inherit="false">
+       @hibernate.class
+        table="scope_def"
+       @hibernate.mapping
+        schema="aa"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.id
+            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
+    </id>
+
+    <property
+        name="objectType"
+        type="java.lang.String"
+        column="object_type"
+        not-null="true"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="object_type"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="attributeId"
+        type="java.lang.String"
+        column="attribute_id"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="attribute_id"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="attributeObjectType"
+        type="java.lang.String"
+        column="attribute_object_type"
+        length="255"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="attribute_object_type"
+            length="255"
+        </meta>    
+    </property>
+
+    <!-- Associations -->
+  
+    <!-- bi-directional many-to-one association to EscidocRole -->
+    <many-to-one
+        name="escidocRole"
+        class="de.escidoc.core.aa.business.persistence.EscidocRole"
+        not-null="true"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.many-to-one
+            not-null="true"
+           @hibernate.column name="role_id"         
+        </meta>
+        <column name="role_id" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>
