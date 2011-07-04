@@ -93,17 +93,6 @@ public class AdminToolTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Load the example objects into the repository.
-     *
-     * @param type examples type (only "common" allowed at the moment)
-     * @return some information about the created objects
-     * @throws Exception If anything fails.
-     */
-    protected String loadExamples(final String type) throws Exception {
-        return handleXmlResult(adminClient.loadExamples(type));
-    }
-
-    /**
      * Get some information about the repository.
      *
      * @return repository information
