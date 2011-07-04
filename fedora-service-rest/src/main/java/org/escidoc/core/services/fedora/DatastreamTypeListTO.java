@@ -9,7 +9,7 @@ import java.util.ListIterator;
 public final class DatastreamTypeListTO implements Collection<DatastreamTypeTO>, List<DatastreamTypeTO> {
 
     private final List<DatastreamTypeTOListener> datastreamTypeTOListener = new ArrayList<DatastreamTypeTOListener>();
-    private final ArrayList<DatastreamTypeTO> internalArrayList = new ArrayList<DatastreamTypeTO>();
+    private final List<DatastreamTypeTO> internalArrayList = new ArrayList<DatastreamTypeTO>();
 
     public void addDatastreamTypeTOListener(final DatastreamTypeTOListener listener) {
         this.datastreamTypeTOListener.add(listener);

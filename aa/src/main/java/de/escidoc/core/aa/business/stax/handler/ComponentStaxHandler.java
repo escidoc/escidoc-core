@@ -29,6 +29,7 @@
 package de.escidoc.core.aa.business.stax.handler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.sun.xacml.EvaluationCtx;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
@@ -54,7 +55,7 @@ public class ComponentStaxHandler extends DefaultHandler {
     /**
      * contains the extracted Attributes.
      */
-    private final HashMap<String, String> attributes = new HashMap<String, String>();
+    private final Map<String, String> attributes = new HashMap<String, String>();
 
     /**
      * The constructor.
@@ -115,7 +116,7 @@ public class ComponentStaxHandler extends DefaultHandler {
     /**
      * @return the attributes
      */
-    public HashMap<String, String> getAttributes() {
+    public Map<String, String> getAttributes() {
         return attributes;
     }
 

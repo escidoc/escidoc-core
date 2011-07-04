@@ -11,7 +11,7 @@ public final class DatastreamVersionTypeListTO
 
     private List<DatastreamVersionTypeTOListener> datastreamVersionTypeTOListener =
             new ArrayList<DatastreamVersionTypeTOListener>();
-    private final ArrayList<DatastreamVersionTypeTO> internalArrayList = new ArrayList<DatastreamVersionTypeTO>();
+    private final List<DatastreamVersionTypeTO> internalArrayList = new ArrayList<DatastreamVersionTypeTO>();
 
     public void addDatastreamVersionTypeTOListener(final DatastreamVersionTypeTOListener listener) {
         this.datastreamVersionTypeTOListener.add(listener);

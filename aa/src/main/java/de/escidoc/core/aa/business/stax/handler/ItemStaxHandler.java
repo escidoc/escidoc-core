@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Stax handler implementation that handles the attributes that have to be fetched from an item Xml representation.<br>
@@ -54,12 +55,12 @@ public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
     /**
      * contains the extracted Attributes that have value type String
      */
-    private final HashMap<String, String> stringAttributes = new HashMap<String, String>();
+    private final Map<String, String> stringAttributes = new HashMap<String, String>();
 
     /**
      * contains the extracted Attributes that have value type StringAttribute
      */
-    private final HashMap<String, Collection<StringAttribute>> attributeAttributes =
+    private final Map<String, Collection<StringAttribute>> attributeAttributes =
         new HashMap<String, Collection<StringAttribute>>();
 
     /**
@@ -117,14 +118,14 @@ public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
     /**
      * @return the stringAttributes
      */
-    public HashMap<String, String> getStringAttributes() {
+    public Map<String, String> getStringAttributes() {
         return stringAttributes;
     }
 
     /**
      * @return the attributeAttributes
      */
-    public HashMap<String, Collection<StringAttribute>> getAttributeAttributes() {
+    public Map<String, Collection<StringAttribute>> getAttributeAttributes() {
         return attributeAttributes;
     }
 

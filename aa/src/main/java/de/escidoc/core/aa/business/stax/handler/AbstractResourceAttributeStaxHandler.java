@@ -29,6 +29,7 @@
 package de.escidoc.core.aa.business.stax.handler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.sun.xacml.EvaluationCtx;
 
@@ -62,7 +63,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     /**
      * contains the by this class extracted Attributes that have value type String
      */
-    private final HashMap<String, String> superAttributes = new HashMap<String, String>();
+    private final Map<String, String> superAttributes = new HashMap<String, String>();
 
     /**
      * The constructor.
@@ -168,7 +169,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     /**
      * @return the superAttributes
      */
-    public HashMap<String, String> getSuperAttributes() {
+    public Map<String, String> getSuperAttributes() {
         return superAttributes;
     }
 
