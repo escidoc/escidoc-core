@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.oai.business.persistence.hibernate;
 
-import de.escidoc.core.aa.business.persistence.UserGroupDaoInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;

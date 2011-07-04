@@ -48,7 +48,7 @@ public class MethodMappingList {
     /**
      * Constructor.
      *
-     * @param methodMappings A <code>Collection</code> of method mappings
+     * @param methodMappings A {@code Collection} of method mappings
      */
     public MethodMappingList(final Collection<MethodMapping> methodMappings) {
 
@@ -104,7 +104,7 @@ public class MethodMappingList {
     /**
      * Gets the iterator pointing to before-mappings.
      *
-     * @return Returns an <code>Iterator</code> over before-mappings.
+     * @return Returns an {@code Iterator} over before-mappings.
      */
     public Iterator<MethodMapping> iteratorBefore() {
 
@@ -114,7 +114,7 @@ public class MethodMappingList {
     /**
      * Gets the iterator pointing to after-mappings.
      *
-     * @return Returns an <code>Iterator</code> over after-mappings.
+     * @return Returns an {@code Iterator} over after-mappings.
      */
     public Iterator<MethodMapping> iteratorAfter() {
 

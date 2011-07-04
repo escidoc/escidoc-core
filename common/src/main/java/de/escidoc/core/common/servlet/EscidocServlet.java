@@ -70,8 +70,8 @@ import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterfac
 /**
  * The eSciDoc servlet. Maps a REST request to the specified resource and invokes the specified (if one is configured).<br />
  * All methods of this class that send an http response have to assure that this response is properly initialized by
- * calling the one of the <code>initHttpResponse</code> methods.
- * 
+ * calling the one of the {@code initHttpResponse} methods.
+ *
  * @author Michael Schneider
  */
 public class EscidocServlet extends HttpServlet {
@@ -326,10 +326,10 @@ public class EscidocServlet extends HttpServlet {
     }
 
     /**
-     * Handles an <code>Exception</code>.<br>
+     * Handles an {@code Exception}.<br>
      * Depending on the exception that caused the invocation target exception, different responses are created and sent
      * to the client.
-     * 
+     *
      * @param httpRequest
      *            The http request.
      * @param httpResponse
@@ -338,7 +338,8 @@ public class EscidocServlet extends HttpServlet {
      *            The resource method that has been called and cause the exception.
      * @param e
      *            The exception to handle.
-     * @return Returns <code>true</code> if the exception has been handled.
+     * @param compressionIsAccepted
+     * @return Returns {@code true} if the exception has been handled.
      * @throws IOException
      *             In case of any failure.
      * @throws java.io.UnsupportedEncodingException
@@ -674,10 +675,10 @@ public class EscidocServlet extends HttpServlet {
     /**
      * Redirect the user to the URL provided within the exception that causes this redirect.<br/>
      * This method extracts the values from the provided exception and delegates to
-     * <code>doRedirect(HttpServletResponse, String, String
+     * {@code doRedirect(HttpServletResponse, String, String}
      * redirectLocation, int httpStatusCode)</code> <br/>
      * Before sending, the no-cache headers are added.
-     * 
+     *
      * @param httpRequest
      *            The http request.
      * @param httpResponse
@@ -689,6 +690,16 @@ public class EscidocServlet extends HttpServlet {
      * @param compressionIsAccepted
      *            defines if content will be gzip compressed
      * @throws java.io.UnsupportedEncodingException
+     * @param httpRequest
+     * @param httpResponse
+     * @param exception
+     * @param compressionIsAccepted
+     * @throws java.io.IOException
+     * @param httpRequest
+     * @param httpResponse
+     * @param exception
+     * @param compressionIsAccepted
+     * @throws java.io.IOException
      */
     private static void doRedirect(
         final HttpServletRequest httpRequest, final HttpServletResponse httpResponse,
@@ -719,11 +730,11 @@ public class EscidocServlet extends HttpServlet {
      * Before sending, the no-cache headers are added.
      *
      * This method has to be public because it is called from admin.jsp.
-     * 
+     *
      * @param httpResponse
      *            The http response.
      * @param exceptionName
-     *            The name of the exception. If this value is not <code>null</code>, an additional header named
+     *            The name of the exception. If this value is not {@code null}, an additional header named
      *            'eSciDocException' will be set using the provided value.
      * @param message
      *            The message.
@@ -786,12 +797,12 @@ public class EscidocServlet extends HttpServlet {
     }
 
     /**
-     * Initializes the provided <code>HttpServletResponse</code> object to prevent caching of the response and to
+     * Initializes the provided {@code HttpServletResponse} object to prevent caching of the response and to
      * specify the content-type.<br/>
      * The content-type is initialized to the value of XML_RESPONSE_CONTENT_TYPE.
-     * 
+     *
      * @param httpResponse
-     *            The <code>HttpServletResponse</code> object to that the no-cache headers shall be added.
+     *            The {@code HttpServletResponse} object to that the no-cache headers shall be added.
      */
     private static void initHttpResponse(final HttpServletResponse httpResponse) {
 
@@ -799,12 +810,12 @@ public class EscidocServlet extends HttpServlet {
     }
 
     /**
-     * Initializes the provided <code>HttpServletResponse</code> object to prevent caching of the response and to
+     * Initializes the provided {@code HttpServletResponse} object to prevent caching of the response and to
      * specify the content-type.<br/>
      * The content-type is initialized to the value of XML_RESPONSE_CONTENT_TYPE.
-     * 
+     *
      * @param httpResponse
-     *            The <code>HttpServletResponse</code> object to that the no-cache headers shall be added.
+     *            The {@code HttpServletResponse} object to that the no-cache headers shall be added.
      * @param contentType
      *            The value of the Content-Type header to set.
      */
@@ -842,21 +853,21 @@ public class EscidocServlet extends HttpServlet {
      * Gets the http basic authorization values from the provided http servlet request.<br>
      * The following steps are performed:
      * <ul>
-     * <li>If the provided http request contains the http authorization header <code>Authorization</code>, username and
+     * <li>If the provided http request contains the http authorization header {@code Authorization}, username and
      * password are extracted from the header and returned.</li>
      * <li>If no authorization header has been found, a cookie containing the escidoc handle is searched. If such a
      * cookie is found, the username &quot;Shibboleth-user&quot; and the handle as password are returned.</li>
      * <li>If no authorization header and no valid cookie has been found, a redirect to the escidoc login servlet is
-     * sent back and the method returns <code>null</code>.
+     * sent back and the method returns {@code null}.
      * </ul>
-     * 
+     *
      * @param request
      *            The http request.
      * @param response
      *            The http response.
-     * @return Returns an <code>String</code> array with the user name value at the first position and the password at
+     * @return Returns an {@code String} array with the user name value at the first position and the password at
      *         the second position.<br>
-     *         If no Authorization header has been set, <code>null</code> is returned.
+     *         If no Authorization header has been set, {@code null} is returned.
      * @throws IOException
      *             In case of an I/O error.
      */

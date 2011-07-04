@@ -62,7 +62,6 @@ import de.escidoc.core.aa.business.xacml.function.XacmlFunctionIsIn;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionOneAttributeInBothLists;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleInList;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -157,10 +156,10 @@ public class CustomPdp {
     /**
      * Default constructor. This creates a CustomPdp programmatically. <p/>
      * <p/>
-     * The configuration in detail: <ul> <li>As a policy finder the <code>DatabasePolicyFinderModule</code> is used</li>
-     * <li>In order to retrieve system-specific subject attributes, the <code>UserAccountAttributeFinderModule</code>
+     * The configuration in detail: <ul> <li>As a policy finder the {@code DatabasePolicyFinderModule} is used</li>
+     * <li>In order to retrieve system-specific subject attributes, the {@code UserAccountAttributeFinderModule}
      * Attribute Finder Module is used.</li> <li>In order to retrieve system-specific resource attributes, the
-     * <code>ResourceAttributeFinderModule</code> Attribute Finder Module is used.</li> </ul>
+     * {@code ResourceAttributeFinderModule} Attribute Finder Module is used.</li> </ul>
      *
      * @throws Exception exception thrown if something during setup of the configuration goes wrong.
      * @see UserAccountAttributeFinderModule
@@ -172,8 +171,6 @@ public class CustomPdp {
 
     /**
      * Initilizes the pdp.<br> This must be called before the first access to the wrapped pdp.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     @PostConstruct
     private void init() {
@@ -239,7 +236,7 @@ public class CustomPdp {
      * @param requestFile the name of a file that contains a Request
      * @return the result of the evaluation
      * @throws ParsingException         if the Request is invalid
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws java.io.FileNotFoundException
      */
     public ResponseCtx evaluate(final String requestFile) throws ParsingException, FileNotFoundException {
         // setup the request based on the file
@@ -256,7 +253,6 @@ public class CustomPdp {
      *
      * @param request the request to evaluate
      * @return the result of the evaluation
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public ResponseCtx evaluate(final RequestCtx request) {
         // evaluate the request
@@ -266,8 +262,7 @@ public class CustomPdp {
     /**
      * Gets the pdp configuration used in this PDP.
      *
-     * @return Returns the <code>PDPConfig</code> of this PDP.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @return Returns the {@code PDPConfig} of this PDP.
      */
     public PDPConfig getPdpConfig() {
         return this.pdpConfig;

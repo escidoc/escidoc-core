@@ -45,7 +45,7 @@ public interface ContentRelationInterface extends FedoraResource {
      * be done.
      *
      * @param ds A Stream representing the Fedora RELS-EXT datastream.
-     * @throws StreamNotFoundException    If there is no RELS-EXT datastream of a fedora object with <code>id</code>.
+     * @throws StreamNotFoundException    If there is no RELS-EXT datastream of a fedora object with {@code id}.
      *                                    This is probably an error cause a fedora object have to have this datastream.
      * @throws LockingException           Thrown if resource is locked.
      * @throws FedoraSystemException      Thrown if retrieving datastream from Fedora failed.
@@ -58,7 +58,7 @@ public interface ContentRelationInterface extends FedoraResource {
 
     /**
      * Gets all metadata datastreams of the item. The keys are the names of the datastreams which are unique in item
-     * context. Metadata datastreams <code>alternateId</code> is "metadata".
+     * context. Metadata datastreams {@code alternateId} is "metadata".
      *
      * @return A Map containing the metadata datastreams of this resource.
      * @throws FedoraSystemException    If Fedora reports an error.
@@ -77,12 +77,12 @@ public interface ContentRelationInterface extends FedoraResource {
     void setMdRecords(final Map<String, Datastream> mdRecords) throws LockingException, SystemException;
 
     /**
-     * Gets the metadata datastream specified by <code>name</code> of the item.
+     * Gets the metadata datastream specified by {@code name} of the item.
      *
      * @param name The name of a matadata datastream.
      * @return A metadata datastreams of this resource.
      * @throws StreamNotFoundException   If there is no metadata datastream with given name of a fedora object with
-     *                                   <code>id</code>.
+     *                                   {@code id}.
      * @throws FedoraSystemException     If Fedora reports an error.
      * @throws MdRecordNotFoundException If there exist no metadata record with the given name.
      */
@@ -90,7 +90,7 @@ public interface ContentRelationInterface extends FedoraResource {
         MdRecordNotFoundException;
 
     /**
-     * Sets the metadata datastream specified by <code>name</code> and saves it in fedora. If the datastream is already
+     * Sets the metadata datastream specified by {@code name} and saves it in fedora. If the datastream is already
      * set and unchanged, nothing will be done.
      *
      * @param name The name of a matadata datastream.

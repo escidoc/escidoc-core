@@ -78,7 +78,7 @@ public class LinkStaxHandler extends DefaultHandler {
      * @param hrefBaseUri    The base uri of the href pointing to the object that is referenced by the link that shall
      *                       be parsed by this handler.
      * @param exceptionClass The type of the exception to throw if href base uri is not matched. This parameter must not
-     *                       be <code>null</code> and must be an instance of {@link EscidocException}, but this is not
+     *                       be {@code null} and must be an instance of {@link EscidocException}, but this is not
      *                       checked!.
      */
     public LinkStaxHandler(final String elementPath, final String hrefBaseUri, final Class exceptionClass) {
@@ -91,7 +91,7 @@ public class LinkStaxHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.<br> If the current element is the link element, the xlink attributes
-     * and the objid attribute is fetched and stored. After that, <code>startLinkElement is called.</code>
+     * and the objid attribute is fetched and stored. After that, {@code startLinkElement is called.}
      *
      * @throws EscidocException Thrown exceptions depend on sub class implementations.
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
@@ -134,8 +134,8 @@ public class LinkStaxHandler extends DefaultHandler {
     /**
      * See Interface for functional description.<br> If the current element is the parent element of the link element,
      * it is checked if the link element, if it is defined as mandatoy, has been provided in the XML data. After that,
-     * <code>endParentElement</code> and <code>checkReady</code> are called.<br> If the current element is the link
-     * element, <code>endLinkElement</code> is called.
+     * {@code endParentElement} and {@code checkReady} are called.<br> If the current element is the link
+     * element, {@code endLinkElement} is called.
      *
      * @throws EscidocException Thrown exceptions depend on sub class implementation.
      * @see DefaultHandler #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
@@ -160,7 +160,7 @@ public class LinkStaxHandler extends DefaultHandler {
     /**
      * Processes the end of the parent element.<br>
      * <p/>
-     * Sub classes may override this method, but they should call <code>return super.endParentElement(element)</code>
+     * Sub classes may override this method, but they should call {@code return super.endParentElement(element)}
      * and keep in mind that this could change the ready flag.
      *
      * @param parentElement The parent element of the link element.
@@ -193,12 +193,12 @@ public class LinkStaxHandler extends DefaultHandler {
     }
 
     /**
-     * Checks if this stax handler is ready. If this is true, <code>setReady</code> is called to prevent further
+     * Checks if this stax handler is ready. If this is true, {@code setReady} is called to prevent further
      * processing of this handler. This method is called as the last operation of endElement after processing the parent
-     * element.<br> This default operation allways calls <code>setReady</code>. Sub classes may override this to define
+     * element.<br> This default operation allways calls {@code setReady}. Sub classes may override this to define
      * the end of processing by their own.
      *
-     * @param endElement The currently processed <code>EndElement</code>.
+     * @param endElement The currently processed {@code EndElement}.
      */
     protected void checkReady(final EndElement endElement) {
 

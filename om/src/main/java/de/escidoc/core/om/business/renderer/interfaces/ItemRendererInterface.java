@@ -58,9 +58,9 @@ public interface ItemRendererInterface {
     String render() throws SystemException, ItemNotFoundException, ComponentNotFoundException;
 
     /**
-     * Gets the representation of the sub resource <code>properties</code> of an item.
+     * Gets the representation of the sub resource {@code properties} of an item.
      *
-     * @return Returns the XML representation of the sub resource <code>properties</code> of an item.
+     * @return Returns the XML representation of the sub resource {@code properties} of an item.
      * @throws ItemNotFoundException    Thrown if Item could not be found.
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -100,18 +100,18 @@ public interface ItemRendererInterface {
     String renderRelations() throws SystemException;
 
     /**
-     * Gets the representation of the sub resource <code>resources</code> of an item.
+     * Gets the representation of the sub resource {@code resources} of an item.
      *
-     * @return Returns the XML representation of the sub resource <code>resources</code> of an item.
+     * @return Returns the XML representation of the sub resource {@code resources} of an item.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderResources() throws WebserverSystemException;
 
     /**
-     * Gets the representation of the virtual resource <code>items</code>.
+     * Gets the representation of the virtual resource {@code items}.
      *
      * @param items The list of items.
-     * @return Returns the XML representation of the virtual sub resource <code>items</code> of an item.
+     * @return Returns the XML representation of the virtual sub resource {@code items} of an item.
      * @throws SystemException            Thrown in case of an internal error.
      * @throws ComponentNotFoundException Thrown if Component of Item could not be found.
      */

@@ -51,7 +51,7 @@ import java.util.regex.Pattern;
  * empty. The first part cannot be automatically resolved and must be provided within the request, i.e. it must be part
  * of the context. The value for this part is retrieved from the context. If this fails, an error is "thrown".
  * Otherwise, the retrieved value is used as the starting point to resolve the second part of the attribute id by
- * recursively calling <code>getResourceAttribute</code>.<br> This finder module should be the one of the first eSciDoc
+ * recursively calling {@code getResourceAttribute}.<br> This finder module should be the one of the first eSciDoc
  * specific finder module in the chain, but must be placed after the 'standard' finder modules.
  *
  * @author Torsten Tetteroo

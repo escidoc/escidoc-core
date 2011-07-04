@@ -90,7 +90,7 @@ public class XacmlTarget extends Target {
     /**
      * @param subjects  The subjects of the target.
      * @param resources The resources of the target.
-     * @param actions   The <code>Action</code>data objects of the actions of the target.
+     * @param actions   The {@code Action}data objects of the actions of the target.
      */
     public XacmlTarget(final List subjects, final List resources, final Collection<Action> actions) {
 
@@ -101,8 +101,8 @@ public class XacmlTarget extends Target {
      * Builds the list of action matches of this target using the provided Set of action data objects holding the action
      * ids.
      *
-     * @param actions The <code>Collection</code> of the data objects of the actions defining this target.
-     * @return Returns the built <code>List</code> of action matches.
+     * @param actions The {@code Collection} of the data objects of the actions defining this target.
+     * @return Returns the built {@code List} of action matches.
      */
     private static List<List<TargetMatch>> buildActionMatches(final Collection<Action> actions) {
 

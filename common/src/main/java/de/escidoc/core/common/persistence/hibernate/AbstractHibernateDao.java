@@ -107,6 +107,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *
      * @param object The object to save or update.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     * @return
      */
     protected String saveOrUpdate(final Object object) throws SqlDatabaseSystemException {
 
@@ -143,11 +144,11 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     }
 
     /**
-     * Checks if the provided <code>HibernateException</code> contains a <code>BatchUpdateException</code> and throws an
-     * special <code>SqlDatabaseSystemException</code> in this case.
+     * Checks if the provided {@code HibernateException} contains a {@code BatchUpdateException} and throws an
+     * special {@code SqlDatabaseSystemException} in this case.
      *
      * @param e The exception to check.
-     * @throws SqlDatabaseSystemException Thrown if the provided exception contains an <code>BatchUpdateException</code>.
+     * @throws SqlDatabaseSystemException Thrown if the provided exception contains an {@code BatchUpdateException}.
      */
     private static void handleBatchUpdateException(final HibernateException e) throws SqlDatabaseSystemException {
         if (e.getCause() instanceof BatchUpdateException) {
@@ -158,11 +159,11 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     }
 
     /**
-     * Checks if the provided <code>HibernateException</code> contains a <code>FedoraSystemException</code> and throws
-     * an special <code>SqlDatabaseSystemException</code> in this case.
+     * Checks if the provided {@code HibernateException} contains a {@code FedoraSystemException} and throws
+     * an special {@code SqlDatabaseSystemException} in this case.
      *
      * @param e The exception to check.
-     * @throws SqlDatabaseSystemException Thrown if the provided exception contains an <code>FedoraSystemException</code>.
+     * @throws SqlDatabaseSystemException Thrown if the provided exception contains an {@code FedoraSystemException}.
      */
     private static void handleFedoraSystemException(final Throwable e) throws SqlDatabaseSystemException {
         if (e.getCause() != null && e.getCause().getCause() != null) {
@@ -179,11 +180,11 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     }
 
     /**
-     * Asserts the provided {@link List} contains one Object and returns it. If the list is empty, <code>null</code> is
+     * Asserts the provided {@link List} contains one Object and returns it. If the list is empty, {@code null} is
      * returned. If the list contains more than one object, a {@link NonUniqueResultException} is thrown.
      *
      * @param results The {@link List} to be asserted.
-     * @return Returns the single Object contained in the list or <code>null</code>.
+     * @return Returns the single Object contained in the list or {@code null}.
      */
     protected Object getUniqueResult(final List<Object> results) {
 
@@ -202,6 +203,8 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     /**
      * merges 2 sets into 1
      *
+     * @param s1
+     * @param s2
      * @return Set merged set
      */
     protected Set<String> mergeSets(final Set<String> s1, final Set<String> s2) {

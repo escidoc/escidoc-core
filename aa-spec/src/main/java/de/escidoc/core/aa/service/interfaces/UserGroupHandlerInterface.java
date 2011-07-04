@@ -157,7 +157,7 @@ public interface UserGroupHandlerInterface {
      * @throws XmlSchemaValidationException   Thrown if the provided XML data is not schema conform
      * @throws MissingMethodParameterException
      *                                        Thrown if either no User Group ID or no XML data is provided, i.e. it is
-     *                                        <code>null.</code>
+     *                                        {@code null.}
      * @throws MissingAttributeValueException Thrown if a mandatory attribute is not provided within the XML data.
      * @throws OptimisticLockingException     Thrown in case of an optimistic locking error.
      * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided eSciDoc user

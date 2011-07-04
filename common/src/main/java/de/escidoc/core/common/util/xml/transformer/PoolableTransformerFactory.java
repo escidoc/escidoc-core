@@ -82,7 +82,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
 
     /**
      * The default constructor.<br/> The default style sheet uri is set to the value of the constant
-     * <code>XSL_MAPPING_UNKNOWN_TO_DC</code>.
+     * {@code XSL_MAPPING_UNKNOWN_TO_DC}.
      */
     public PoolableTransformerFactory() {
         setDefaultXsltUrl(EscidocConfiguration.getInstance().appendToSelfURL(XSL_MAPPING_UNKNOWN_TO_DC));
@@ -134,7 +134,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      *
      * @param key The key for that the related style sheet shall be identified.
      * @return Returns the {@link URL} to the addressed style sheet. If no style sheet can be identified for the
-     *         provided key, the default one identified by constant <code>XSL_MAPPING_UNKNOWN_TO_DC</code> is returned.
+     *         provided key, the default one identified by constant {@code XSL_MAPPING_UNKNOWN_TO_DC} is returned.
      * @throws IOException Thrown if retrieving values from eSciDoc properties (configuration) failed.
      */
     private InputStream mapKeyToXslt(final String key) throws IOException {

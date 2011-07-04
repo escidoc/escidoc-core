@@ -34,14 +34,10 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -118,6 +114,9 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @param nsUri              Name space URI
      * @param storage            Type of storage.
      * @return FoXML representation of Component
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private String getComponentFoxmlWithVelocity(
         final String id, final String contentMimeType, final Map dataStreams,
@@ -213,7 +212,14 @@ public class ItemHandlerCreate extends ItemResourceListener {
     /**
      * Get WOV as XML representation.
      *
+     * @param id
+     * @param title
+     * @param versionNo
+     * @param lastModificationDate
+     * @param versionStatus
+     * @param comment
      * @return XML representation of WOV
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getWovDatastream(
         final String id, final String title, final String versionNo, final String lastModificationDate,
@@ -228,10 +234,6 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @param xmlData The component xml.
      * @return The xml representation of the component after creation.
      * @throws SystemException              Thrown in case of an internal system error.
-     * @throws XmlCorruptedException        If xml data is corrupt.
-     * @throws XmlSchemaValidationException If xml schema validation fails.
-     * @throws LockingException             If the item is locked and the current user is not the one who locked it.
-     * @throws InvalidStatusException       If the item is not in a status to add a component.
      * @throws FileNotFoundException        If binary content can not be retrieved.
      * @throws MissingElementValueException If a required value is missing in xml data.
      * @throws ReadonlyElementViolationException
@@ -401,6 +403,13 @@ public class ItemHandlerCreate extends ItemResourceListener {
      *
      * @param xmlData eSciDoc XML representation of Component.
      * @return objid of the new Component
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingContentException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     public String createComponent(final String xmlData) throws SystemException, FileNotFoundException,
         MissingElementValueException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
@@ -511,6 +520,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws EncodingSystemException  If encoding fails.
      * @throws WebserverSystemException In case of an internal error.
      * @throws FileNotFoundException    If binary content can not be retrieved.
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     protected void handleComponent(
         final String componentId, final Map<String, String> properties, final Map<String, String> binaryContent,

@@ -75,7 +75,6 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.sm.business.renderer.interfaces.AggregationDefinitionRendererInterface#render(AggregationDefinition)
      */
     @Override
     public String render(final AggregationDefinition aggregationDefinition) throws SystemException {
@@ -284,9 +283,9 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
     }
 
     /**
-     * Gets the <code>AggregationDefinitionXmlProvider</code> object.
+     * Gets the {@code AggregationDefinitionXmlProvider} object.
      *
-     * @return Returns the <code>AggregationDefinitionXmlProvider</code> object.
+     * @return Returns the {@code AggregationDefinitionXmlProvider} object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static AggregationDefinitionXmlProvider getAggregationDefinitionXmlProvider() {

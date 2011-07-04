@@ -869,7 +869,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     /**
      * Persists the whole object to Fedora.
      *
-     * @param sync Set <code>true</code> if TripleStore sync is to force.
+     * @param sync Set {@code true} if TripleStore sync is to force.
      * @return lastModificationDate of the resource (Attention this timestamp differs from the last-modification
      *         timestamp of the repository. See Versioning Concept.)
      * @throws FedoraSystemException    Thrown if connection to Fedora failed.
@@ -985,6 +985,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @param newStatus                   The version status of the resource.
      * @param comment                     The event comment.
      * @return The new event entry
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected String createEventXml(
         final DateTime latestModificationTimestamp, final String newStatus, final String comment)

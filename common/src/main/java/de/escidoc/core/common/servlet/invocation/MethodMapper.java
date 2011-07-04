@@ -106,7 +106,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     /**
      * Sets the names of the descriptor files and initializes this method mapper.
      *
-     * @param descriptorFilenames The <code>Collection</code> containing the paths to the descriptors.
+     * @param descriptorFilenames The {@code Collection} containing the paths to the descriptors.
      * @throws ParserConfigurationException If anything fails.
      * @throws SAXException                 If anything fails.
      * @throws IOException                  If anything fails.

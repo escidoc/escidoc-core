@@ -1576,7 +1576,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * Before the user account is retrieved, it is asserted that an user id has been provided.
      *
      * @param userId The id of the user to retrieve the data for.
-     * @return Returns the identified <code>UserAccount</code> object.
+     * @return Returns the identified {@code UserAccount} object.
      * @throws UserAccountNotFoundException Thrown if an user account with the provided id cannot be found.
      * @throws SqlDatabaseSystemException   In case of a database error.
      */
@@ -1591,7 +1591,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     }
 
     /**
-     * Asserts that the user account is provided, i.e. it is not <code>null</code>.
+     * Asserts that the user account is provided, i.e. it is not {@code null}.
      *
      * @param userId The user id for which the account should be provided (should exist).
      * @param user   The user account to assert.
@@ -1609,8 +1609,8 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
      * Fetches the current grants of the user account identified by the provided id.
      *
      * @param userId The id of the user account.
-     * @return Returns a <code>List</code> containing the grants of the user account that are currently valid. If the
-     *         user does not have a grant, an empty <code>List</code> is returned.
+     * @return Returns a {@code List} containing the grants of the user account that are currently valid. If the
+     *         user does not have a grant, an empty {@code List} is returned.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database error.
      */
     private List<RoleGrant> fetchCurrentGrants(final String userId) throws SqlDatabaseSystemException {
@@ -1628,11 +1628,11 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     }
 
     /**
-     * Sets the creation date and the created-by user in the provided <code>UserAccount</code> object.<br/> The values
+     * Sets the creation date and the created-by user in the provided {@code UserAccount} object.<br/> The values
      * are set with the values of modification date and modifying user of the provided user account.<br/> Before calling
      * this method, the last modification date and the modifying user must be set.
      *
-     * @param userAccount The <code>UserAccount</code> object to modify.
+     * @param userAccount The {@code UserAccount} object to modify.
      * @throws SystemException Thrown in case of an internal error.
      */
     private static void setCreationValues(final UserAccount userAccount) {
@@ -1645,11 +1645,13 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     }
 
     /**
-     * Sets the last modification date and the modified-by user in the provided <code>UserAccount</code> object.<br/>
+     * Sets the last modification date and the modified-by user in the provided {@code UserAccount} object.<br/>
      * The last modification date is set to the current time, and the modified by user to the user account of the
      * current, authenticated user.
      *
-     * @param userAccount The <code>UserAccount</code> object to modify.
+     * @param userAccount The {@code UserAccount} object to modify.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private void setModificationValues(final UserAccount userAccount) throws SqlDatabaseSystemException,
         WebserverSystemException {
@@ -1660,7 +1662,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
 
     /**
      * Gets the user account of the authenticated user.<br> The authenticated user is retrieved from the
-     * <code>UserContext</code>.
+     * {@code UserContext}.
      *
      * @param dao The data access object to use.
      * @return Returns the fetched user account.

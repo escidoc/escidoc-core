@@ -62,10 +62,10 @@ public interface UserGroupRendererInterface {
     String renderCurrentGrants(final UserGroup userGroup, final List<RoleGrant> currentGrants) throws SystemException;
 
     /**
-     * Gets the representation of the provided <code>RoleGrant</code> object.
+     * Gets the representation of the provided {@code RoleGrant} object.
      *
      * @param grant The {@link RoleGrant} to render.
-     * @return Returns the XML representation of the provided <code>RoleGrant</code> object.
+     * @return Returns the XML representation of the provided {@code RoleGrant} object.
      * @throws SystemException Thrown in case of an internal error.
      */
     String renderGrant(final RoleGrant grant) throws SystemException;
@@ -82,7 +82,7 @@ public interface UserGroupRendererInterface {
     /**
      * Gets the representation of a list of the provided user groups.
      *
-     * @param userGroups    The <code>List</code> of {@link UserGroup} objects to render.
+     * @param userGroups    The {@code List} of {@link UserGroup} objects to render.
      * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
      *                      'string' and 'xml'. The default is 'xml'.
      * @return Returns the XML representation of the list of user groups.

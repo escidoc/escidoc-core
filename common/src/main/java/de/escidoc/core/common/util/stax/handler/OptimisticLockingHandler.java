@@ -37,10 +37,10 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 /**
- * Verifies the attribute <code>last-modification-date</code> of a xml request. The specified value have to be the
- * <code>LastModificationDate</code> of the handled Fedora Object. If a root-element is found the value of
- * <code>last-modification-date</code> is compared with the value provided during creation of the handler. If the values
- * are not equal a <code>LockingException</code> is thrown.
+ * Verifies the attribute {@code last-modification-date} of a xml request. The specified value have to be the
+ * {@code LastModificationDate} of the handled Fedora Object. If a root-element is found the value of
+ * {@code last-modification-date} is compared with the value provided during creation of the handler. If the values
+ * are not equal a {@code LockingException} is thrown.
  *
  * @author Frank Schwichtenberg
  */

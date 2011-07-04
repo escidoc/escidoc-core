@@ -54,7 +54,7 @@ public interface SetDefinitionDaoInterface {
      * Retrieves a set definition.
      *
      * @param id The id of the set definition that shall be retrieved.
-     * @return Returns the found <code>SetDefinition</code> object or <code>null</code>.
+     * @return Returns the found {@code SetDefinition} object or {@code null}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     SetDefinition retrieveSetDefinition(final String id) throws SqlDatabaseSystemException;
@@ -68,7 +68,7 @@ public interface SetDefinitionDaoInterface {
      * @param maxResults The maximal number of results to be returned.
      * @param orderBy    The predicate that shall be used for ordering.
      * @param sorting    The kind of ordering, i.e. ascending or descending.
-     * @return Returns <code>List</code> of {@link SetDefinition} objects selected by the provided parameters. If no
+     * @return Returns {@code List} of {@link SetDefinition} objects selected by the provided parameters. If no
      *         parameter is provided, all user account objects are returned.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
@@ -82,7 +82,7 @@ public interface SetDefinitionDaoInterface {
      * @param criteria   The {@link String} containing the filter criteria as CQL query.
      * @param offset     The index of the first result to be returned.
      * @param maxResults The maximal number of results to be returned.
-     * @return Returns <code>List</code> of {@link SetDefinition} objects selected by the provided parameters. If no
+     * @return Returns {@code List} of {@link SetDefinition} objects selected by the provided parameters. If no
      *         parameter is provided, all user account objects are returned.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      * @throws SqlDatabaseSystemException  Thrown in case of an internal database error.

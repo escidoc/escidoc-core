@@ -68,6 +68,7 @@ public class OumUtility {
      * @param parentIds            The list of ids of the parents of the child organizational unit.
      * @throws OrganizationalUnitHierarchyViolationException
      *          If there are cycles in the parent ou hierarchy.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public void detectCycles(final String organizationalUnitId, final Collection<String> parentIds)
         throws OrganizationalUnitHierarchyViolationException, TripleStoreSystemException {
@@ -101,6 +102,7 @@ public class OumUtility {
      * Write the ids of the given ou's children to the global stack.
      *
      * @param currentOuId The parent ou.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void expand(final String currentOuId) throws TripleStoreSystemException {
 

@@ -53,28 +53,28 @@ public interface ContainerRendererInterface {
     String render(final Container container) throws SystemException;
 
     /**
-     * Gets the representation of the sub resource <code>properties</code> of an organizational unit.
+     * Gets the representation of the sub resource {@code properties} of an organizational unit.
      *
      * @param container The Container to render.
-     * @return Returns the XML representation of the sub resource <code>properties</code> of an organizational unit.
+     * @return Returns the XML representation of the sub resource {@code properties} of an organizational unit.
      * @throws SystemException Thrown in case of an internal error.
      */
     String renderProperties(final Container container) throws SystemException;
 
     /**
-     * Gets the representation of the sub resource <code>resources</code> of an organizational unit.
+     * Gets the representation of the sub resource {@code resources} of an organizational unit.
      *
      * @param container The Container to render.
-     * @return Returns the XML representation of the sub resource <code>resources</code> of an organizational unit.
+     * @return Returns the XML representation of the sub resource {@code resources} of an organizational unit.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderResources(final Container container) throws WebserverSystemException;
 
     /**
-     * Gets the representation of the sub resource <code>organization-details</code> of an organizational unit.
+     * Gets the representation of the sub resource {@code organization-details} of an organizational unit.
      *
      * @param container The Container to render.
-     * @return Returns the XML representation of the sub resource <code>data</code> of an organizational unit.
+     * @return Returns the XML representation of the sub resource {@code data} of an organizational unit.
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
@@ -84,12 +84,12 @@ public interface ContainerRendererInterface {
         WebserverSystemException, IntegritySystemException;
 
     /**
-     * Gets the representation of the sub resource <code>organization-details</code> of an organizational unit.
+     * Gets the representation of the sub resource {@code organization-details} of an organizational unit.
      *
      * @param container The Container to render.
      * @param mdRecord
      * @param isRootMdRecord
-     * @return Returns the XML representation of the sub resource <code>data</code> of an organizational unit.
+     * @return Returns the XML representation of the sub resource {@code data} of an organizational unit.
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
@@ -98,28 +98,28 @@ public interface ContainerRendererInterface {
         throws EncodingSystemException, FedoraSystemException, WebserverSystemException;
 
     /**
-     * Gets the representation of the sub resource <code>ou-parents</code> of an organizational unit.
+     * Gets the representation of the sub resource {@code ou-parents} of an organizational unit.
      *
      * @param container The Container to render.
-     * @return Returns the XML representation of the sub resource <code>ou-parents</code> of an organizational unit.
+     * @return Returns the XML representation of the sub resource {@code ou-parents} of an organizational unit.
      * @throws SystemException Thrown in case of an internal error.
      */
     String renderRelations(final Container container) throws SystemException;
 
     /**
-     * Gets the representation of the virtual resource <code>parents</code> of an container.
+     * Gets the representation of the virtual resource {@code parents} of an container.
      *
      * @param containerId The Container ID to render.
-     * @return Returns the XML representation of the virtual resource <code>parents</code> of an Container.
+     * @return Returns the XML representation of the virtual resource {@code parents} of an Container.
      * @throws SystemException Thrown in case of an internal error.
      */
     String renderParents(final String containerId) throws SystemException;
 
     /**
-     * Gets the representation of the virtual sub resource <code>struct-map</code> of an Container.
+     * Gets the representation of the virtual sub resource {@code struct-map} of an Container.
      *
      * @param container The Container handler.
-     * @return Returns the XML representation of the virtual sub resource <code>struct-map</code> of an Container.
+     * @return Returns the XML representation of the virtual sub resource {@code struct-map} of an Container.
      * @throws SystemException Thrown in case of an internal error.
      */
     String renderStructMap(final Container container) throws SystemException;

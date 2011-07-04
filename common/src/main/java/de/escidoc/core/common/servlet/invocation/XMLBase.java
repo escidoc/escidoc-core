@@ -232,10 +232,10 @@ public class XMLBase {
     }
 
     /**
-     * Serialize the given <code>org.w3c.Document</code> to a <code>String</code>.
+     * Serialize the given {@code org.w3c.Document} to a {@code String}.
      *
      * @param document The document.
-     * @return The <code>String</code> representation of teh document.
+     * @return The {@code String} representation of teh document.
      * @throws IOException If the serialization fails.
      */
     public static String getDocumentAsString(final Document document) throws IOException {

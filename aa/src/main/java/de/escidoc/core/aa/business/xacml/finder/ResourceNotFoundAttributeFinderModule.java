@@ -43,8 +43,8 @@ import java.util.regex.Pattern;
 /**
  * Attribute finder module implementation that checks if a resource object addressed by the resource-id exists and is of
  * the object type addressed by the id of the attribute that currently shall be resolved.<br> This finder module returns
- * either an empty <code>EvaluationResult</code> if the resource exists and is of the expected type, or it returns an
- * <code>EvaluationResult</code> reporting the appropriate <code>ResourceNotFoundException.</code> This finder module
+ * either an empty {@code EvaluationResult} if the resource exists and is of the expected type, or it returns an
+ * {@code EvaluationResult} reporting the appropriate {@code ResourceNotFoundException.} This finder module
  * must be the first eSciDoc specific finder module in the chain, but must be placed after the 'standard' finder
  * modules.
  *

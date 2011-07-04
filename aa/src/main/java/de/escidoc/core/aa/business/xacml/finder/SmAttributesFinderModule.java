@@ -264,7 +264,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      *
      * @param ctx                     The evaluation context, which will be used as key for the cache.
      * @param aggregationDefinitionId The aggregation definition id.
-     * @return Returns the XML representation of the <code>AggregationDefinition</code> identified by the provided id.
+     * @return Returns the XML representation of the {@code AggregationDefinition} identified by the provided id.
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws AggregationDefinitionNotFoundException
      *                                  Thrown if no aggregation definition with provided id exists.
@@ -307,7 +307,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      *
      * @param ctx                The evaluation context, which will be used as key for the cache.
      * @param reportDefinitionId The aggregation definition id.
-     * @return Returns the XML representation of the <code>ReportDefinition</code> identified by the provided id.
+     * @return Returns the XML representation of the {@code ReportDefinition} identified by the provided id.
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws ReportDefinitionNotFoundException
      *                                  Thrown if no report definition with provided id exists.

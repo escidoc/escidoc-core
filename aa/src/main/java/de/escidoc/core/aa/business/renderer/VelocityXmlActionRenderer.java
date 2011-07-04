@@ -30,7 +30,6 @@ package de.escidoc.core.aa.business.renderer;
 
 import de.escidoc.core.aa.business.persistence.UnsecuredActionList;
 import de.escidoc.core.aa.business.renderer.interfaces.ActionRendererInterface;
-import de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.factory.ActionXmlProvider;
 import org.springframework.stereotype.Service;

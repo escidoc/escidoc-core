@@ -1,9 +1,5 @@
 package de.escidoc.core.statistic.internal;
 
-import de.escidoc.core.statistic.LinkRequired;
-import de.escidoc.core.statistic.Parameter;
-import de.escidoc.core.statistic.StatisticRecord;
-
 import javax.xml.bind.annotation.XmlRegistry;
 
 /**

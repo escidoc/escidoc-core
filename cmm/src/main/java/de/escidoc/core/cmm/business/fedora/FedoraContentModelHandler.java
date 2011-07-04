@@ -631,6 +631,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      *
      * @param resourceDefinition The resource definition create object.
      * @return FoXML representation of service definition.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDefFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
         final Map<String, Object> valueMap = new HashMap<String, Object>();
@@ -643,6 +644,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      *
      * @param resourceDefinition The resource definition create object.
      * @return FoXML representation of service deployment.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDepFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
         final Map<String, Object> valueMap = new HashMap<String, Object>();
@@ -663,8 +665,12 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     }
 
     /**
-     * Creates Stream objects from the values in <code>contentStreamMap</code> and calls Item.setContentStreams with a
+     * Creates Stream objects from the values in {@code contentStreamMap} and calls Item.setContentStreams with a
      * HashMap which contains the metadata datastreams as Stream objects.
+     * @param contentStreams
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void setContentStreams(final Iterable<ContentStreamCreate> contentStreams) throws WebserverSystemException,
         IntegritySystemException, FedoraSystemException {
@@ -721,6 +727,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * Checks if all required values are set and consistent.
      *
      * @param item The item which is to validate.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private static void validate(final ContentModelCreate item) throws InvalidContentException {
 
@@ -767,11 +774,13 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     }
 
     /**
+     * @param xml
      * @throws WebserverSystemException       If an error occurs.
      * @throws InvalidContentException        If invalid content is found.
      * @throws MissingAttributeValueException If a required attribute can not be found.
      * @throws XmlParserSystemException       If an unexpected error occurs while parsing.
      * @throws XmlCorruptedException          Thrown if the schema validation of the provided data failed.
+     * @return
      */
     private static ContentModelCreate parseContentModel(final String xml) throws WebserverSystemException,
         InvalidContentException, MissingAttributeValueException, XmlParserSystemException, XmlCorruptedException {

@@ -427,11 +427,11 @@ public class RoleHandler implements RoleHandlerInterface {
     }
 
     /**
-     * Sets the creation date and the created-by user in the provided <code>EscidocRole</code> object.<br/> The values
+     * Sets the creation date and the created-by user in the provided {@code EscidocRole} object.<br/> The values
      * are set to the last modification date and modified-by values of the provided role.<br/> Before calling this
      * method, the last modified values must be set.
      *
-     * @param role The <code>EscidocRole</code> object to modify.
+     * @param role The {@code EscidocRole} object to modify.
      * @throws SystemException Thrown in case of an internal error.
      */
     private static void setCreationValues(final EscidocRole role) {
@@ -444,11 +444,13 @@ public class RoleHandler implements RoleHandlerInterface {
     }
 
     /**
-     * Sets the last modification date and the modified-by user in the provided <code>EscidocRole</code> object.<br/>
+     * Sets the last modification date and the modified-by user in the provided {@code EscidocRole} object.<br/>
      * The last modification date is set to the current time, and the modified-by id and title to the values of the user
      * account of the current, authenticated user.
      *
-     * @param role The <code>EscidocRole</code> object to modify.
+     * @param role The {@code EscidocRole} object to modify.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private void setModificationValues(final EscidocRole role) throws SqlDatabaseSystemException,
         WebserverSystemException {
@@ -468,8 +470,9 @@ public class RoleHandler implements RoleHandlerInterface {
      * Fetches the role identified by the provided id.
      *
      * @param id The id of the role.
-     * @return Returns the fetched <code>EscidocRoleObject</code>.
+     * @return Returns the fetched {@code EscidocRoleObject}.
      * @throws RoleNotFoundException Thrown if a role with the provided id does not exist.
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private EscidocRole fetchRole(final String id) throws RoleNotFoundException, SqlDatabaseSystemException {
 

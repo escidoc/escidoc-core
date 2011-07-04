@@ -56,7 +56,7 @@ public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvi
     /**
      * Gets the ContentRelationFoXmlProvider PROVIDER.
      *
-     * @return Returns the <code>ContentRelationFoXmlProvider</code> object.
+     * @return Returns the {@code ContentRelationFoXmlProvider} object.
      */
     public static ContentRelationFoXmlProvider getInstance() {
         return PROVIDER;

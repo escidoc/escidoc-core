@@ -41,7 +41,7 @@ public interface ContainerInterface extends VersionableResource {
      * be done.
      *
      * @param ds A Stream representing the Fedora RELS-EXT datastream.
-     * @throws StreamNotFoundException  If there is no RELS-EXT datastream of a fedora object with <code>id</code>. This
+     * @throws StreamNotFoundException  If there is no RELS-EXT datastream of a fedora object with {@code id}. This
      *                                  is probably an error cause a fedora object have to have this datastream.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */

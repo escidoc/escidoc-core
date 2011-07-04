@@ -50,10 +50,10 @@ public interface OrganizationalUnitFoXmlRendererInterface {
     String render(final Map<String, Object> values) throws SystemException;
 
     /**
-     * Gets the xml representation of the <code>RELS-EXT</code> datastream of an organizational unit.
+     * Gets the xml representation of the {@code RELS-EXT} datastream of an organizational unit.
      *
      * @param values The properites of the organizational unit to render.
-     * @return Returns the foxml representation of the <code>RELS-EXT</code> datastream of an organizational unit.
+     * @return Returns the foxml representation of the {@code RELS-EXT} datastream of an organizational unit.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderRelsExt(final Map<String, Object> values) throws WebserverSystemException;

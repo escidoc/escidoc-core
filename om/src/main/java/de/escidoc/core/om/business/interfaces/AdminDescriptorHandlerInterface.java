@@ -28,10 +28,6 @@
  */
 package de.escidoc.core.om.business.interfaces;
 
-import de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-
 /**
  * Interface of an Admin-Descrictor Handler of the business layer.
  *
@@ -45,9 +41,7 @@ public interface AdminDescriptorHandlerInterface {
      * @param xmlData The data of the resource.
      * @return Returns the XML representation of the created resource, now containing the id by which the resource can
      *         be identified in the system.
-     * @throws SystemException TODO
-     * @throws AdminDescriptorNotFoundException
-     *                         TODO
+     * @throws Exception
      */
     String create(String xmlData) throws Exception;
 
@@ -55,9 +49,7 @@ public interface AdminDescriptorHandlerInterface {
      * Deletes the specified resource.
      *
      * @param id The id of the resource.
-     * @throws SystemException TODO
-     * @throws AdminDescriptorNotFoundException
-     *                         TODO
+     * @throws Exception
      */
     void delete(String id) throws Exception;
 
@@ -66,10 +58,7 @@ public interface AdminDescriptorHandlerInterface {
      *
      * @param id The id of the resource.
      * @return Returns the XML representation of the resource.
-     * @throws SystemException           TODO
-     * @throws ResourceNotFoundException TODO
-     * @throws AdminDescriptorNotFoundException
-     *                                   TODO
+     * @throws Exception
      */
     String retrieve(String id) throws Exception;
 
@@ -79,10 +68,7 @@ public interface AdminDescriptorHandlerInterface {
      * @param id      The id of the resource.
      * @param xmlData The new data of the resource.
      * @return Returns the XML representation of the updated resource.
-     * @throws SystemException           TODO
-     * @throws ResourceNotFoundException TODO
-     * @throws AdminDescriptorNotFoundException
-     *                                   TODO
+     * @throws Exception
      */
     String update(String id, String xmlData) throws Exception;
 

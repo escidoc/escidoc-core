@@ -113,7 +113,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * Bounds a Item object to this handler. Subsequent calls to this method have no effect.
      *
      * @param id The ID of the item which should be bound to this Handler.
-     * @throws ItemNotFoundException      If there is no item with <code>id</code> in the repository.
+     * @throws ItemNotFoundException      If there is no item with {@code id} in the repository.
      * @throws XmlParserSystemException   If xml parser fails.
      * @throws TripleStoreSystemException If triple store reports an error.
      * @throws WebserverSystemException   In case of an internal error.
@@ -147,7 +147,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * Bounds a Container object to this handler. Subsequent calls to this method have no effect.
      *
      * @param id The ID of the container which should be bound to this Handler.
-     * @throws ContainerNotFoundException If there is no container with <code>id</code> in the repository.
+     * @throws ContainerNotFoundException If there is no container with {@code id} in the repository.
      * @throws SystemException            Thrown in case of an internal system error.
      */
     public void setContainer(final String id) throws ContainerNotFoundException, SystemException {
@@ -297,7 +297,7 @@ public class ContainerHandlerBase extends HandlerBase {
      *
      * @param checkStatus The status which is to validate.
      * @throws InvalidStatusException   If container version status is not equal to the requested
-     *                                  <code>checkStatus</code>.
+     *                                  {@code checkStatus}.
      * @throws IntegritySystemException Thrown if version status could not be obtained.
      */
     protected void checkVersionStatus(final String checkStatus) throws InvalidStatusException, IntegritySystemException {
@@ -409,6 +409,7 @@ public class ContainerHandlerBase extends HandlerBase {
      *
      * @param status A status.
      * @throws InvalidStatusException If container is not in the specified status .
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkStatus(final String status) throws InvalidStatusException, TripleStoreSystemException {
         final String objectStatus =
@@ -444,6 +445,7 @@ public class ContainerHandlerBase extends HandlerBase {
      *
      * @param status A status.
      * @throws InvalidStatusException If container is in the specified status.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void checkStatusNot(final String status) throws InvalidStatusException, TripleStoreSystemException {
         final String objectStatus =

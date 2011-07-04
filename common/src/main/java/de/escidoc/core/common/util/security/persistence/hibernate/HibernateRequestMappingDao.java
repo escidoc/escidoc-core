@@ -51,9 +51,8 @@ public class HibernateRequestMappingDao extends HibernateDaoSupport implements R
     /**
      * See Interface for functional description.
      * <p/>
-     * The database tables used are <code>method_mappings</code> and <code>invocation_mappings</code>.
+     * The database tables used are {@code method_mappings} and {@code invocation_mappings}.
      *
-     * @see RequestMappingDaoInterface#retrieveMethodMappings(String, String)
      */
     @Override
     @SuppressWarnings("unchecked")

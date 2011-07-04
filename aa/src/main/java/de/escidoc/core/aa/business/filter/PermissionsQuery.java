@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.aa.business.filter;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -83,8 +82,6 @@ public class PermissionsQuery {
 
     /**
      * Create a new resource cache object.
-     *
-     * @throws IOException Thrown if reading the configuration failed.
      */
     public PermissionsQuery() {
     }

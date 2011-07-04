@@ -65,7 +65,7 @@ public interface XacmlPolicyDao {
     List loadRolePolices(final String roleId);
 
     /**
-     * Loads an action from the database table <code>actions</code>.
+     * Loads an action from the database table {@code actions}.
      *
      * @param actionName The name of the action
      * @return The action object.

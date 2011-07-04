@@ -314,7 +314,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws AuthenticationException        e
      * @throws AuthorizationException         e
      * @throws SystemException                e
-     * @see UserGroupHandlerInterface#revokeGrant(String, String, String)
      */
     @Override
     public void revokeGrant(final String groupId, final String grantId, final String taskParam)

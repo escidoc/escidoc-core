@@ -52,13 +52,11 @@ import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ItemInterface;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
-import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
@@ -108,6 +106,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @param id The id of an item managed in Fedora.
      * @throws StreamNotFoundException  Thrown if data streams of Item object was not found.
      * @throws IntegritySystemException Thrown if there is an integrity error with the addressed object.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public Item(final String id) throws StreamNotFoundException, TripleStoreSystemException, WebserverSystemException,
         IntegritySystemException, ResourceNotFoundException, FedoraSystemException {
@@ -137,6 +139,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Add a Component to the Item.
      *
      * @param c The new Component. (The Component has not to be (but could) persist, this is done with with the Item.)
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public void addComponent(final Component c) throws FedoraSystemException, WebserverSystemException,
         EncodingSystemException {
@@ -151,6 +156,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @param componentId This has to be a persistent Component. This Component has already to exists within the
      *                    repository!
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     public void addComponent(final String componentId) throws FedoraSystemException, WebserverSystemException,
         EncodingSystemException {
@@ -163,6 +171,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Delete a Component from the Item.
      *
      * @param componentId The id of the Component which is to delete from the Item.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public void deleteComponent(final String componentId) throws ComponentNotFoundException, SystemException {
 
@@ -173,6 +183,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Delete a Component from the Item.
      *
      * @param c The Component which is to delete from the Item.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public void deleteComponent(final FedoraResource c) throws ComponentNotFoundException, WebserverSystemException,
         XmlParserSystemException, IntegritySystemException {
@@ -188,6 +202,12 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @param componentId The id of the component.
      * @return Component.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public Component getComponent(final String componentId) throws ComponentNotFoundException,
         WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
@@ -218,6 +238,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
     /**
      * @return A map which contains unique 'content-category' entries associated with a component object. May be used
      *         for other identifications which are possibly unique in item scope.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Map<String, Component> getComponentsByLocalName() throws WebserverSystemException,
         TripleStoreSystemException, XmlParserSystemException {
@@ -231,6 +254,10 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @param componentName The name of the Component.
      * @return Component
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
      */
     public Component getComponentByLocalName(final String componentName) throws ComponentNotFoundException,
         WebserverSystemException, TripleStoreSystemException, XmlParserSystemException {
@@ -263,6 +290,8 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Get the IDs of Components.
      *
      * @return Component IDs
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Collection<String> getComponentIds() throws XmlParserSystemException, TripleStoreSystemException {
 
@@ -298,6 +327,9 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * Initialize the Components.
      *
      * @throws ComponentNotFoundException Thrown if Component of Item could no t be found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void initComponents() throws TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
@@ -779,6 +811,11 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      *
      * @return true if a Component was updated (and with this persisted), false otherwise.
      * @throws ComponentNotFoundException Thrown if Component was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public boolean persistComponents() throws ComponentNotFoundException, TripleStoreSystemException,
         FedoraSystemException, XmlParserSystemException, WebserverSystemException, IntegritySystemException {
@@ -890,9 +927,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
      * @param componentId The component ID.
      * @throws ComponentNotFoundException Thrown if the Component with the id was not found.
      * @throws WebserverSystemException   In case of an internal error.
-     * @throws LockingException           If the iem is locked and the current user is not the one who locked it.
      * @throws TripleStoreSystemException If triple store reports an error.
-     * @throws InvalidStatusException     If component is in invalid status for removing.
      * @throws FedoraSystemException      If Fedora reports an error.
      * @throws XmlParserSystemException   If parsing of xml data fails.
      * @throws IntegritySystemException   If the integrity of the repository is violated.

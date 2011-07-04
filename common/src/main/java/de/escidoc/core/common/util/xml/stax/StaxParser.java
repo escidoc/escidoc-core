@@ -90,7 +90,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     /**
      * Sets the list of handlers.
      *
-     * @param hc A {@link List List} of DefaultHandler implementations. Same as call <code>clearHandlerChain()</code>
+     * @param hc A {@link List List} of DefaultHandler implementations. Same as call {@code clearHandlerChain()}
      *           and add every single Handler in list order.
      */
     public void setHandlerChain(final List<DefaultHandler> hc) {
@@ -293,6 +293,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
     /**
      * Inserts the specified Handler at the specified position in the handler chain. Shifts the element currently at
      * that position (if any) and any subsequent elements to the right (adds one to their indices).
+     * @param index
+     * @param dh
      */
     public void addHandler(final int index, final DefaultHandler dh) {
         handlerChain.add(index, dh);

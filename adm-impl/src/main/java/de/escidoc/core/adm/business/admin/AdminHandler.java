@@ -44,7 +44,6 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -116,6 +115,7 @@ public class AdminHandler {
      *                  should be run manually afterwards.
      * @return total number of objects deleted, ...
      * @throws SystemException thrown in case of an internal error
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     public String deleteObjects(final String taskParam) throws SystemException, XmlCorruptedException {
         final StringBuilder result = new StringBuilder();
@@ -199,7 +199,6 @@ public class AdminHandler {
      * @param indexNamePrefix name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
      * @throws SystemException             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException {
         return this.utility.prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
@@ -317,7 +316,6 @@ public class AdminHandler {
      * @param type Specifies the type of example set which is to load.
      * @return some useful information
      * @throws SystemException             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException thrown if a given search query could not be translated into a SQL query
      */
     public String loadExamples(final String type) throws SystemException {
         final StringBuilder result = new StringBuilder();

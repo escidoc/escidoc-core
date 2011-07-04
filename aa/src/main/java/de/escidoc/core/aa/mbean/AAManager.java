@@ -38,8 +38,6 @@ import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
 /**
  * Managed bean to access values and operations of the authentication and authorization component.
  *
@@ -80,7 +78,6 @@ public class AAManager {
      * Exposes the clean up period.
      *
      * @return Returns the clean up period taken from the {@link EscidocConfiguration}.
-     * @throws IOException Thrown if configuration properties are not available.
      */
     @ManagedAttribute(description = "The clean up period in milli seconds.", persistPeriod = 300)
     public long getCleanUpPeriod() {

@@ -51,7 +51,7 @@ public final class ContentModelFoXmlProvider extends InfrastructureFoXmlProvider
     /**
      * Gets the role xml PROVIDER.
      *
-     * @return Returns the <code>UserAccountXmlProvider</code> object.
+     * @return Returns the {@code UserAccountXmlProvider} object.
      */
     public static ContentModelFoXmlProvider getInstance() {
         return PROVIDER;

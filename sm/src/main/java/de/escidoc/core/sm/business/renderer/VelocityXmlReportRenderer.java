@@ -70,7 +70,6 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      *
      * @param dbResult         result from dbCall.
      * @param reportDefinition the reportDefinition Hibernate Object.
-     * @see de.escidoc.core.sm.business.renderer.interfaces.ReportRendererInterface#render(List, ReportDefinition)
      */
     @Override
     public String render(final List dbResult, final ReportDefinition reportDefinition) throws SystemException {
@@ -177,9 +176,9 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
     }
 
     /**
-     * Gets the <code>ReportXmlProvider</code> object.
+     * Gets the {@code ReportXmlProvider} object.
      *
-     * @return Returns the <code>ReportXmlProvider</code> object.
+     * @return Returns the {@code ReportXmlProvider} object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static ReportXmlProvider getReportXmlProvider() {

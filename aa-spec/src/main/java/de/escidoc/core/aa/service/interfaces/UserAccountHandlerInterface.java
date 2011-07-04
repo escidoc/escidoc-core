@@ -193,7 +193,7 @@ public interface UserAccountHandlerInterface {
      * @throws XmlSchemaValidationException   Thrown if the provided xml data is not schema conform
      * @throws MissingMethodParameterException
      *                                        Thrown if either no userId or no xml data is provided, i.e. it is
-     *                                        <code>null.</code>
+     *                                        {@code null.}
      * @throws MissingAttributeValueException Thrown if a mandatory attribute is not provided within the xml data.
      * @throws OptimisticLockingException     Thrown in case of an optimistic locking error.
      * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided

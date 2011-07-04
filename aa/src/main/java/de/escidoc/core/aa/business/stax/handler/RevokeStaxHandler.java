@@ -52,8 +52,8 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
     /**
      * The constructor.
      *
-     * @param grant The <code>RoleGrant</code> to handle.
-     * @param dao   The data access object to retrieve <code>Grant</code> objects.
+     * @param grant The {@code RoleGrant} to handle.
+     * @param dao   The data access object to retrieve {@code Grant} objects.
      * @throws AlreadyRevokedException Thrown if the provided garnt is already revoked.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException

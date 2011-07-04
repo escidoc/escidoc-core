@@ -46,7 +46,7 @@ import java.util.Collection;
 
 /**
  * StaxHandler that manages the Xacml policy (set) of a role.<br> This handler extracts the policy (set) from the xml
- * data, creates an <code>EscidocPolicy</code> object from this data and sets it in the <code>EscidocRole</code>object.
+ * data, creates an {@code EscidocPolicy} object from this data and sets it in the {@code EscidocRole}object.
  *
  * @author Torsten Tetteroo
  */
@@ -76,7 +76,7 @@ public class XacmlStaxHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.<br> If the current element is the link element, the xlink attributes
-     * and the objid attribute is fetched and stored. After that, <code>startLinkElement is called.</code>
+     * and the objid attribute is fetched and stored. After that, {@code startLinkElement is called.}
      *
      * @see DefaultHandler #startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
@@ -177,7 +177,7 @@ public class XacmlStaxHandler extends DefaultHandler {
     /**
      * Gets the xml representation of the XACML policy (set).
      *
-     * @return Returns the xml representation of the XACML policy (set) or <code>null</code> if no policy has been
+     * @return Returns the xml representation of the XACML policy (set) or {@code null} if no policy has been
      *         found.
      */
     public String getPolicyXml() {

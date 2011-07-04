@@ -46,8 +46,6 @@ import com.sun.xacml.attr.StringAttribute;
 
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.security.cache.DocumentsCache;
@@ -82,16 +80,16 @@ public class InvocationParser {
     /**
      * Builds a {@link List} of {@link Map} objects that are holding the attributes for a authorization request to the
      * PDP from the provided methodName and arguments, and from the stored user context.<br> This method delegates to
-     * <code>buildRequestsList(Object MethodMapping, boolean)</code>
+     * {@code buildRequestsList(Object MethodMapping, boolean)}
      *
      * @param arguments     The arguments
      * @param methodMapping The method mappings to use
      * @return The generated {@link List} of {@link Map} objects.
-     * @throws MissingElementValueException   Thrown if an argument does not contain a mandatory element.
-     * @throws MissingAttributeValueException Thrown if an argument does not contain a mandatory attribute .
      * @throws MissingMethodParameterException
      *                                        Thrown if an argument has not been provided but is needed for
      *                                        authorization.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     public List<Map<String, String>> buildRequestsList(final Object[] arguments, final MethodMapping methodMapping)
         throws MissingMethodParameterException, WebserverSystemException, XmlCorruptedException {
@@ -102,16 +100,16 @@ public class InvocationParser {
     /**
      * Builds a {@link List} of {@link Map} objects that are holding the attributes for a authorization request to the
      * PDP from the provided methodName and arguments, and from the stored user context.<br> This method delegates to
-     * <code>buildRequestsList(Object MethodMapping, boolean)</code>
+     * {@code buildRequestsList(Object MethodMapping, boolean)}
      *
      * @param argument      The arguments
      * @param methodMapping The method mappings to use
      * @return The generated {@link List} of {@link Map} objects.
-     * @throws MissingElementValueException   Thrown if an argument does not contain a mandatory element.
-     * @throws MissingAttributeValueException Thrown if an argument does not contain a mandatory attribute .
      * @throws MissingMethodParameterException
      *                                        Thrown if an argument has not been provided but is needed for
      *                                        authorization.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     public List<Map<String, String>> buildRequestsList(final Object argument, final MethodMapping methodMapping)
         throws MissingMethodParameterException, WebserverSystemException, XmlCorruptedException {
@@ -125,14 +123,14 @@ public class InvocationParser {
      *
      * @param arguments     The arguments
      * @param methodMapping The method mappings to use
-     * @param isArray       Flag that indicates that the given arguments parameter is an array (<code>true</code>) or
-     *                      not (<code>false</code>).
+     * @param isArray       Flag that indicates that the given arguments parameter is an array ({@code true}) or
+     *                      not ({@code false}).
      * @return The generated {@link List} of {@link Map} objects.
-     * @throws MissingElementValueException   Thrown if an argument does not contain a mandatory element.
-     * @throws MissingAttributeValueException Thrown if an argument does not contain a mandatory attribute .
      * @throws MissingMethodParameterException
      *                                        Thrown if an argument has not been provided but is needed for
      *                                        authorization.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private List<Map<String, String>> buildRequestsList(
         final Object arguments, final MethodMapping methodMapping, final boolean isArray)
@@ -181,18 +179,15 @@ public class InvocationParser {
      *
      * @param arguments          The arguments of the method call.
      * @param invocationMappings The invocation mappings for that the request shall be generated.
-     * @param isArray            Flag that indicates that the given arguments parameter is an array (<code>true</code>)
-     *                           or not (<code>false</code>).
+     * @param isArray            Flag that indicates that the given arguments parameter is an array ({@code true})
+     *                           or not ({@code false}).
      * @param index              The index of the current object.
-     * @return Returns a <code>Map</code> from attribute urn to attribute value defining the resource attributes.
+     * @return Returns a {@code Map} from attribute urn to attribute value defining the resource attributes.
      * @throws MissingMethodParameterException
      *                                        Thrown if an invocation mapping references an argument that is set to
-     *                                        <code>null</code>.
-     * @throws MissingAttributeValueException Thrown if an invocation mapping references an attribute in an argument
-     *                                        that holds XML data but the attribute cannot be found.
-     * @throws MissingElementValueException   Thrown if an invocation mapping references an element in an argument that
-     *                                        holds XML data but the element cannot be found.
+     *                                        {@code null}.
      * @throws WebserverSystemException       Thrown if there is a problem with an invocation mapping.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private Map<String, String> setupResourceAttributes(
         final Object arguments, final Iterable<InvocationMapping> invocationMappings, final boolean isArray,
@@ -243,14 +238,15 @@ public class InvocationParser {
      * Gets the {@link StringAttribute} for the provided values.
      *
      * @param arguments         The arguments of the method call.
-     * @param isArray           Flag that indicates that the given arguments parameter is an array (<code>true</code>)
-     *                          or not (<code>false</code>).
+     * @param isArray           Flag that indicates that the given arguments parameter is an array ({@code true})
+     *                          or not ({@code false}).
      * @param index             The index of the current object.
      * @param invocationMapping The {@link InvocationMapping} to get the value for.
      * @return Returns a {@link StringAttribute} with the value for the invocation mapping.
      * @throws MissingMethodParameterException
      *                                  Thrown if a mandatory method parameter is not provided.
      * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private StringAttribute getValueForInvocationMapping(
         final Object arguments, final boolean isArray, final int index, final InvocationMapping invocationMapping)

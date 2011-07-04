@@ -21,7 +21,6 @@
 package de.escidoc.core.common.business.fedora.resources.create;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -193,6 +192,9 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Persist whole Item to Repository and force TripleStore sync.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     public void persist() throws SystemException, FileNotFoundException, InvalidContentException {
         persist(true);
@@ -203,6 +205,8 @@ public class ItemCreate extends GenericResourceCreate {
      *
      * @param forceSync Set true to force synchronous sync of TripleStore.
      * @throws SystemException Thrown if an unexpected error occurs
+     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     public void persist(final boolean forceSync) throws SystemException, FileNotFoundException, InvalidContentException {
         if (getProperties().getObjectProperties().getOrigin() == null) {
@@ -510,7 +514,6 @@ public class ItemCreate extends GenericResourceCreate {
      *
      * @return FoXML representation of Item.
      * @throws SystemException              Thrown if rendering of Item or sub-elements failed.
-     * @throws UnsupportedEncodingException Thrown if conversion to default character set failed.
      */
     private String getMinimalFoXML() throws SystemException {
 
@@ -575,6 +578,9 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Persist all Components of the Item.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private void persistComponents() throws SystemException, FileNotFoundException, InvalidContentException {
 
@@ -624,6 +630,7 @@ public class ItemCreate extends GenericResourceCreate {
      * Prepare values for FOXML Template Renderer (Velocity).
      *
      * @return HashMap with template values.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private Map<String, String> preparePropertiesValueMap() throws WebserverSystemException {
 

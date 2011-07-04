@@ -85,7 +85,12 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      * used. If none is specified in the provided map (in property VAR_ESCAPER), a new XmlEscaper is created and added
      * to the map.
      *
+     * @param resource
+     * @param path
+     * @param values
      * @see XmlTemplateProvider #getXml(java.lang.String, java.lang.String, java.util.Map)
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @return
      */
     public String getXml(final String resource, final String path, final Map values) throws WebserverSystemException {
         // add escaper if none is set

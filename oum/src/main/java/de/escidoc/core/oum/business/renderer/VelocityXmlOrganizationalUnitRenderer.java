@@ -282,11 +282,12 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
     }
 
     /**
-     * Returns a <code>List</code> of <code>Maps</code> containing values for the keys <code>id</code>,
-     * <code>href</code>, and <code>title</code> for every id contained in <code>ids</code>.
+     * Returns a {@code List} of {@code Maps} containing values for the keys {@code id},
+     * {@code href}, and {@code title} for every id contained in {@code ids}.
      *
      * @param ids The list of ids.
-     * @return The expected <code>List</code> of <code>Maps</code>.
+     * @return The expected {@code List} of {@code Maps}.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private List<Map<String, String>> retrieveRefValues(final Collection<String> ids) throws TripleStoreSystemException {
         final List<Map<String, String>> entries = new ArrayList<Map<String, String>>(ids.size());
@@ -556,6 +557,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      *
      * @param organizationalUnit The organizational unit for that data shall be created.
      * @param values             The map to add values to.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void addParentsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws TripleStoreSystemException {
@@ -583,6 +585,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      *
      * @param organizationalUnit The organizational unit for that data shall be created.
      * @param values             The map to add values to.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void addPredecessorsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws TripleStoreSystemException {
@@ -617,6 +620,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      *
      * @param organizationalUnit The organizational unit for that data shall be created.
      * @param values             The map to add values to.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void addSuccessorsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws TripleStoreSystemException {

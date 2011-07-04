@@ -64,7 +64,6 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface#render(Scope)
      */
     @Override
     public String render(final Scope scope) throws SystemException {
@@ -109,8 +108,6 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *
      * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
      *                      'string' and 'xml'. The default is 'xml'.
-     * @see de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface#renderScopes(Collection,
-     *      RecordPacking)
      */
     @Override
     public String renderScopes(final Collection<Scope> scopes, final RecordPacking recordPacking)
@@ -180,9 +177,9 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
     }
 
     /**
-     * Gets the <code>ScopeXmlProvider</code> object.
+     * Gets the {@code ScopeXmlProvider} object.
      *
-     * @return Returns the <code>ScopeXmlProvider</code> object.
+     * @return Returns the {@code ScopeXmlProvider} object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static ScopeXmlProvider getScopeXmlProvider() {

@@ -50,7 +50,7 @@ public final class ScopeXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets the Scope xml PROVIDER.
      *
-     * @return Returns the <code>ScopeXmlProvider</code> object.
+     * @return Returns the {@code ScopeXmlProvider} object.
      * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static ScopeXmlProvider getInstance() {

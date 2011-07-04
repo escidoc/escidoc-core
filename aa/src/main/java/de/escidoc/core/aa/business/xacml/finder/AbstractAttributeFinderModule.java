@@ -61,8 +61,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * Abstract class for an attribute finder module.<br> Sub classes of this class must implement the method
- * <code>resolveLocalPart</code>. They may override the methods <code>assertAttribute</code>,
- * <code>fixObjectType</code>, <code>getCacheKey</code>, and <code>getSupportedDesignatorTypes</code> if the default
+ * {@code resolveLocalPart}. They may override the methods {@code assertAttribute},
+ * {@code fixObjectType}, {@code getCacheKey}, and {@code getSupportedDesignatorTypes} if the default
  * implementations do not fit their requirements.
  *
  * @author Torsten Tetteroo
@@ -179,8 +179,8 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param resourceObjid         The objid part of the resource id.
      * @param resourceVersionNumber The version number part of the resource id.
      * @param designatorType        The designator type.
-     * @return Returns <code>true</code> if the attribute finder module is responsible for this attribute,
-     *         <code>false</code> else.
+     * @return Returns {@code true} if the attribute finder module is responsible for this attribute,
+     *         {@code false} else.
      * @throws EscidocException Thrown in case of an error.
      */
     protected boolean assertAttribute(
@@ -205,7 +205,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param resourceVersionNumber The resource version number.
      * @param attributeIdValue      The id of the attribute for that the result has been cached.
      * @param ctx                   The {@link EvaluationCtx} for that the result has been cached.
-     * @return Returns the cached Object or <code>null</code>.
+     * @return Returns the cached Object or {@code null}.
      */
     protected final Object getFromCache(
         final String resourceId, final String resourceObjid, final String resourceVersionNumber,
@@ -223,6 +223,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param resourceVersionNumber The resource version number.
      * @param attributeIdValue      The id of the attribute for that the result shall be cached.
      * @param ctx                   The {@link EvaluationCtx} for that the result shall be cached.
+     * @param cacheObject
      */
     protected final void putInCache(
         final String resourceId, final String resourceObjid, final String resourceVersionNumber,
@@ -261,9 +262,9 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * @param resourceId            The id of the resource.
      * @param resourceObjid         The objid part of the resource id.
      * @param resourceVersionNumber The version number part of the resource id.
-     * @return Returns an array containing the <code>EvaluationResult</code> object holding the result for the resolved
+     * @return Returns an array containing the {@code EvaluationResult} object holding the result for the resolved
      *         part of the attribute id, and the resolved part of the attribute id. If no value can be fetched,
-     *         <code>null</code> is returned.
+     *         {@code null} is returned.
      * @throws EscidocException Thrown in case of a failure during resolving.
      */
     protected abstract Object[] resolveLocalPart(
@@ -377,16 +378,16 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
     }
 
     /**
-     * Recursively calls the <code>getResourceAttribute</code> method of the provided <code>EvaluationCtx</code>
-     * object.<br> The current resource id of the <code>EvaluationCtx</code> is stored. Then the provided newResourceId
-     * is set as the resource id and <code>EvaluationCtx.getResourceAttribute</code> is called. Finally, the stored
-     * resource id is reset as the <code>EvaluationCtx</code>'s resource id.
+     * Recursively calls the {@code getResourceAttribute} method of the provided {@code EvaluationCtx}
+     * object.<br> The current resource id of the {@code EvaluationCtx} is stored. Then the provided newResourceId
+     * is set as the resource id and {@code EvaluationCtx.getResourceAttribute} is called. Finally, the stored
+     * resource id is reset as the {@code EvaluationCtx}'s resource id.
      *
      * @param ctx            The evaluation context to fetch request data from. This data is needed in order to find the
      *                       system objects containing the request attribute.
      * @param newResourceId  The id of the resource for that the attribute shall be found.
      * @param newAttributeId The attributeId to retrieve the attribute for.
-     * @return Returns the result of <code>ctx.getResourceAttribute</code>.
+     * @return Returns the result of {@code ctx.getResourceAttribute}.
      */
     private static EvaluationResult recursivelyCallCtxGetResourceAttribute(
         final EvaluationCtx ctx, final String newResourceId, final String newAttributeId) {
@@ -414,7 +415,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
      * changed to "user-account".
      *
      * @param objectType The object type string to convert.
-     * @return Returns the corresponding object type or <code>null</code>.
+     * @return Returns the corresponding object type or {@code null}.
      */
     protected String fixObjectType(final String objectType) {
 
@@ -422,23 +423,23 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
     }
 
     /**
-     * Recursively calls the <code>getResourceAttribute</code> method of the provided <code>EvaluationCtx</code>
-     * object.<br> The current resource id of the <code>EvaluationCtx</code> is stored. Then the provided newResourceId
-     * is set as the resource id and <code>EvaluationCtx.getResourceAttribute</code> is called. Finally, the stored
-     * resource id is reset as the <code>EvaluationCtx</code>'s resource id.
+     * Recursively calls the {@code getResourceAttribute} method of the provided {@code EvaluationCtx}
+     * object.<br> The current resource id of the {@code EvaluationCtx} is stored. Then the provided newResourceId
+     * is set as the resource id and {@code EvaluationCtx.getResourceAttribute} is called. Finally, the stored
+     * resource id is reset as the {@code EvaluationCtx}'s resource id.
      *
      * @param attributeId         The attributeId to retrieve the attribute for. This is the complete attribute id that
      *                            has to be resolved.
-     * @param resolvedAttributeId The currently resolved part of the <code>attributeId</code>. This may equal to the
-     *                            complete <code>attributeId</code>. In this case, the provided
-     *                            <code>EvaluationResult</code> object is returned, as resolving the attribute id has
+     * @param resolvedAttributeId The currently resolved part of the {@code attributeId}. This may equal to the
+     *                            complete {@code attributeId}. In this case, the provided
+     *                            {@code EvaluationResult} object is returned, as resolving the attribute id has
      *                            been finished.
      * @param ctx                 The evaluation context to fetch request data from. This data is needed in order to
      *                            find the system objects containing the request attribute.
-     * @param result              The <code>EvaluationResult</code> object holding the objid(s) previously fetched and
-     *                            that are used to resolve the provided new attribute id. If this is <code>null</code>,
+     * @param result              The {@code EvaluationResult} object holding the objid(s) previously fetched and
+     *                            that are used to resolve the provided new attribute id. If this is {@code null},
      *                            an empty result is returned.
-     * @return Returns the result of <code>ctx.getResourceAttribute</code>.
+     * @return Returns the result of {@code ctx.getResourceAttribute}.
      */
     protected EvaluationResult recursivelyCallCtxGetResourceAttribute(
         final String attributeId, final String resolvedAttributeId, final EvaluationCtx ctx,
@@ -549,7 +550,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
 
     /**
      * Gets the value of the specified attribute of the current resource from the provided
-     * <code>EvaluationCtx</code>.<br>
+     * {@code EvaluationCtx}.<br>
      *
      * @param ctx         The evaluation context to fetch request data from. This data is needed in order to find the
      *                    system objects containing the request attribute.
@@ -570,16 +571,16 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
     }
 
     /**
-     * Recursively calls the <code>getResourceAttribute</code> method of the provided <code>EvaluationCtx</code> object
-     * to get a single result.<br> The current resource id of the <code>EvaluationCtx</code> is stored. Then the
-     * provided newResourceId is set as the resource id and <code>EvaluationCtx.getResourceAttribute</code> is called.
-     * Finally, the stored resource id is reset as the <code>EvaluationCtx</code>'s resource id.
+     * Recursively calls the {@code getResourceAttribute} method of the provided {@code EvaluationCtx} object
+     * to get a single result.<br> The current resource id of the {@code EvaluationCtx} is stored. Then the
+     * provided newResourceId is set as the resource id and {@code EvaluationCtx.getResourceAttribute} is called.
+     * Finally, the stored resource id is reset as the {@code EvaluationCtx}'s resource id.
      *
      * @param ctx            The evaluation context to fetch request data from. This data is needed in order to find the
      *                       system objects containing the request attribute.
      * @param newResourceId  The id of the resource for that the attribute shall be found.
      * @param newAttributeId The attributeId to retrieve the attribute for.
-     * @return Returns the result of <code>ctx.getResourceAttribute</code>.
+     * @return Returns the result of {@code ctx.getResourceAttribute}.
      * @throws WebserverSystemException  Thrown in case of an internal error.
      * @throws ResourceNotFoundException Thrown if no resource with the provided id exists.
      */
@@ -604,7 +605,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
     }
 
     /**
-     * Gets the object type of the current resource from the provided <code>EvaluationCtx</code>.<br>
+     * Gets the object type of the current resource from the provided {@code EvaluationCtx}.<br>
      *
      * @param ctx The evaluation context to fetch request data from. This data is needed in order to find the system
      *            objects containing the request attribute.
@@ -670,7 +671,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
     /**
      * Gets the appropriate resource not found exception in case of an resource not found error during resolving the
      * provided attribute id.<br> The "object-type" found in the attribute id is used to determine the correct exception
-     * name. E.g., if the provided attribute is is ...:resource:item:context:status, <code>ItemNotFoundException</code>
+     * name. E.g., if the provided attribute is is ...:resource:item:context:status, {@code ItemNotFoundException}
      * is returned.
      *
      * @param attributeIdValue The value of the attribute id.
@@ -687,7 +688,7 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
     /**
      * Gets the appropriate resource not found exception in case of an resource not found error during resolving the
      * provided attribute id.<br> The "object-type" found in the attribute id is used to determine the correct exception
-     * name. E.g., if the provided attribute id is ...:resource:item:context:status, <code>ItemNotFoundException</code>
+     * name. E.g., if the provided attribute id is ...:resource:item:context:status, {@code ItemNotFoundException}
      * is returned.
      *
      * @param attributeIdValue The value of the attribute id.
@@ -712,10 +713,10 @@ public abstract class AbstractAttributeFinderModule extends AttributeFinderModul
     }
 
     /**
-     * Checks if the provided <code>EvaluationResult</code> does not contain a attribute value.
+     * Checks if the provided {@code EvaluationResult} does not contain a attribute value.
      *
-     * @param result The <code>EvaluationResult</code> object to check.
-     * @return Returns <code>true</code> if the provided <code>EvaluationResult</code>'s attribute value is null or
+     * @param result The {@code EvaluationResult} object to check.
+     * @return Returns {@code true} if the provided {@code EvaluationResult}'s attribute value is null or
      *         empty.
      */
     protected static boolean isEmptyResult(final EvaluationResult result) {

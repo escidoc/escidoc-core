@@ -47,7 +47,7 @@ public class XacmlPolicyReference extends PolicyReference {
      * The constructor.
      *
      * @param referenceId The id of the referenced policy or policy set.
-     * @param type        The type of the reference as specified in <code>PolicyReference</code>.
+     * @param type        The type of the reference as specified in {@code PolicyReference}.
      * @param finder      The policy finder to use for resolving the reference.
      */
     public XacmlPolicyReference(final URI referenceId, final int type, final PolicyFinder finder) {

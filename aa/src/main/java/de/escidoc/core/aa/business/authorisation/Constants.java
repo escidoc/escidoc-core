@@ -86,10 +86,10 @@ public final class Constants {
 
     /**
      * Gets the URI from the given String. If the provided URI string causes an
-     * error, <code>null</code> is returned.
+     * error, {@code null} is returned.
      *
      * @param uriString The string defining the URI.
-     * @return Returns the URI for the provided string or <code>null</code>.
+     * @return Returns the URI for the provided string or {@code null}.
      */
     private static URI getURI(final String uriString) {
 

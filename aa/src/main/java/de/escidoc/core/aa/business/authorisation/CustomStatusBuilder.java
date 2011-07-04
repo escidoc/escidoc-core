@@ -58,13 +58,13 @@ public final class CustomStatusBuilder {
     }
 
     /**
-     * Creates an <code>Status</code> object holding information about an error.<br> This can be used to tunnel an
-     * exception through the XACML engine.<br> If the provided exception is not an <code>EscidocException</code>, it is
-     * wrapped by a <code>WebserverSystemException .</code><br> The created error status holds a status code with the
+     * Creates an {@code Status} object holding information about an error.<br> This can be used to tunnel an
+     * exception through the XACML engine.<br> If the provided exception is not an {@code EscidocException}, it is
+     * wrapped by a {@code WebserverSystemException .}<br> The created error status holds a status code with the
      * eSciDoc status code prefix and the name of the exception.
      *
-     * @param e The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * @param e The {@code Exception} that caused this error result.
+     * @return Returns the created {@code EvaluationResult} object.
      */
     public static Status createErrorStatus(final Exception e) {
 
@@ -72,13 +72,13 @@ public final class CustomStatusBuilder {
     }
 
     /**
-     * Creates an <code>Status</code> object holding information about an error.<br> This can be used to tunnel an
-     * exception through the XACML engine.<br> If the provided exception is not an <code>EscidocException</code>, it is
-     * wrapped by a <code>WebserverSystemException .</code>
+     * Creates an {@code Status} object holding information about an error.<br> This can be used to tunnel an
+     * exception through the XACML engine.<br> If the provided exception is not an {@code EscidocException}, it is
+     * wrapped by a {@code WebserverSystemException .}
      *
-     * @param status The status code, one of the codes defined in the class <code>com.sun.xacml.ctx.Status</code>.
-     * @param e      The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * @param status The status code, one of the codes defined in the class {@code com.sun.xacml.ctx.Status}.
+     * @param e      The {@code Exception} that caused this error result.
+     * @return Returns the created {@code EvaluationResult} object.
      */
     public static Status createErrorStatus(final String status, final Exception e) {
 
@@ -148,8 +148,8 @@ public final class CustomStatusBuilder {
     /**
      * Gets the status code for the provided exception class.
      *
-     * @param exception The resource not found exception. If tis is <code>null</code>, the
-     *                  <code>ResourceNotFoundException</code> is used.
+     * @param exception The resource not found exception. If tis is {@code null}, the
+     *                  {@code ResourceNotFoundException} is used.
      * @return Returns the error status code in case of a resource not found exception.
      */
     public static String getResourceNotFoundStatusCode(final ResourceNotFoundException exception) {

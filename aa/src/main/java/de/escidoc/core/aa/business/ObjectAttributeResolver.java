@@ -148,6 +148,8 @@ public class ObjectAttributeResolver {
      * @param objectId The objectId.
      * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private Map<String, String> getObjectFromTripleStore(final String objectId, final boolean typeOnly)
         throws TripleStoreSystemException, IntegritySystemException {
@@ -213,6 +215,7 @@ public class ObjectAttributeResolver {
      * @param objectId The objectId.
      * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private Map<String, String> getObjectFromUserAccount(final String objectId, final boolean typeOnly)
         throws SqlDatabaseSystemException {
@@ -248,6 +251,7 @@ public class ObjectAttributeResolver {
      * @param objectId The objectId.
      * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private Map<String, String> getObjectFromUserGroup(final String objectId, final boolean typeOnly)
         throws SqlDatabaseSystemException {
@@ -283,6 +287,7 @@ public class ObjectAttributeResolver {
      * @param objectId The objectId.
      * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private Map<String, String> getObjectFromRole(final String objectId, final boolean typeOnly)
         throws SqlDatabaseSystemException {
@@ -318,6 +323,7 @@ public class ObjectAttributeResolver {
      * @param objectId The objectId.
      * @param typeOnly set to true if only objectType should get returned.
      * @return HashMap with objectType and objectTitle
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private Map<String, String> getObjectFromGrant(final String objectId, final boolean typeOnly)
         throws SqlDatabaseSystemException {

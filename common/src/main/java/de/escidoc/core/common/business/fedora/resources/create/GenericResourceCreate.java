@@ -23,8 +23,6 @@ package de.escidoc.core.common.business.fedora.resources.create;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -61,7 +59,6 @@ public abstract class GenericResourceCreate {
      *
      * @param mdRecords Vector with MdRecordCreate.
      * @return MetadataReocrd FoXML.
-     * @throws SystemException Thrown if converting of characters to default character set failed.
      */
     protected List<Map<String, String>> getMetadataRecordsMap(final Iterable<MdRecordCreate> mdRecords) {
 
@@ -83,7 +80,6 @@ public abstract class GenericResourceCreate {
      * @param contentModelId ID of the content model to look for transformation instruction.
      * @return DC or null if default metadata is missing).
      * @throws WebserverSystemException Thrown if an error occurs during DC creation.
-     * @throws EncodingSystemException  Thrown if the conversion to default encoding failed.
      */
     public String getDC(final MdRecordCreate mdRecord, final String contentModelId) throws WebserverSystemException {
         return XmlUtility.createDC(mdRecord.getNameSpace(), mdRecord.getContent(), this.objid, contentModelId);

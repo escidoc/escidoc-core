@@ -47,10 +47,10 @@ public interface PolicyDecisionPointInterface
     /**
      * The method evaluates the provided authorization requests. <br/> Information about user(s), action(s) and
      * resource(s) are contained in the provided XML data string which represents the content of a
-     * <code>com.sun.xacml.ctx.RequestCtx</code> objects.<p/>
+     * {@code com.sun.xacml.ctx.RequestCtx} objects.<p/>
      * <p/>
      * For each authorization request, the following steps are executed: <ul> <li>An authorisation request object (a
-     * <code>com.sun.xacml.ctx.RequestCtx</code> object) is generated from the provided XML data and evaluated.</li>
+     * {@code com.sun.xacml.ctx.RequestCtx} object) is generated from the provided XML data and evaluated.</li>
      * <li>Attributes (for subject or resource) needed to decide on a request are fetched either from the request or (if
      * not contained in the request) directly from the system.</li> <li>The evaluation results in permission or denial
      * in form of a boolean values.</li> </ul>
@@ -80,7 +80,7 @@ public interface PolicyDecisionPointInterface
      *                     representation ist expected here.<br> This parameter is mandatory.
      * @param ids          The ids of the objects that shall be checked for retrieving them.<br> This parameter is
      *                     mandatory.
-     * @return Returns a <code>List</code> containing the ids of all objects for that the retrieval is allowed.
+     * @return Returns a {@code List} containing the ids of all objects for that the retrieval is allowed.
      * @throws MissingMethodParameterException
      *                                   Thrown if the resource name or the ids are not provided.
      * @throws ResourceNotFoundException Thrown if a resource cannot be found during evaluating the privileges.
@@ -99,7 +99,7 @@ public interface PolicyDecisionPointInterface
      * @param methodName   The name of the method.<br> This parameter is mandatory.
      * @param argumentList List of Object[], each Object[] containing the arguments for one call to the method.<br> This
      *                     parameter is mandatory.
-     * @return Returns a <code>List</code> containing the arguments of all objects for that the retrieval is allowed.
+     * @return Returns a {@code List} containing the arguments of all objects for that the retrieval is allowed.
      * @throws MissingMethodParameterException
      *                                   Thrown if the resource name or the ids are not provided.
      * @throws ResourceNotFoundException Thrown if a resource cannot be found during evaluating the privileges.

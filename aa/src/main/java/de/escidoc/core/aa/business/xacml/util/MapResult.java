@@ -137,7 +137,7 @@ public class MapResult {
     }
 
     /**
-     * @return Returns <code>true</code> if further attribute resolving is needed.
+     * @return Returns {@code true} if further attribute resolving is needed.
      */
     public boolean hasNext() {
 
@@ -227,7 +227,7 @@ public class MapResult {
      * @param objectId     The id of the resource (without the version information!) for that the current part shall be
      *                     resolved.
      * @param resourceType This parameter allows filtering the object list for a specified resource type. This parameter
-     *                     may be <code>null</code>.
+     *                     may be {@code null}.
      * @param tsu          The {@link TripleStoreUtility} to use.
      * @return Returns the where clause.
      * @throws TripleStoreSystemException e

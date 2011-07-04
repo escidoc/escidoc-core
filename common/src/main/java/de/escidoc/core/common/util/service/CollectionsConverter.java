@@ -129,7 +129,7 @@ public final class CollectionsConverter {
      *
      * @param array       The array to convert.
      * @param objectClass The type of object to generate. Has to implement List.
-     * @return The converted object or <code>null</code> if no array has been provided.
+     * @return The converted object or {@code null} if no array has been provided.
      */
     public static List convertArrayToList(final Object[] array, final Class objectClass) {
 
@@ -141,7 +141,7 @@ public final class CollectionsConverter {
      *
      * @param array       The array to convert.
      * @param objectClass The type of object to generate. Has to implement Set.
-     * @return The converted object or <code>null</code> if no array has been provided.
+     * @return The converted object or {@code null} if no array has been provided.
      */
     public static Set convertArrayToSet(final Object[] array, final Class objectClass) {
 
@@ -154,7 +154,7 @@ public final class CollectionsConverter {
      *
      * @param array       The array to convert.
      * @param objectClass The type of object to generate. Has to implement Collection.
-     * @return The converted object or <code>null</code> if no array has been provided.
+     * @return The converted object or {@code null} if no array has been provided.
      */
     public static Collection convertArrayToCollection(final Object[] array, final Class objectClass) {
 

@@ -52,7 +52,7 @@ public class AdminXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets the admin xml PROVIDER.
      *
-     * @return Returns the <code>AdminXmlProvider</code> object.
+     * @return Returns the {@code AdminXmlProvider} object.
      */
     public static AdminXmlProvider getInstance() {
         return PROVIDER;

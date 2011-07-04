@@ -54,7 +54,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
     }
 
     /**
-     * @return Returns <code>null</code> as the user credentials are unknown to the shibboleth service provider.
+     * @return Returns {@code null} as the user credentials are unknown to the shibboleth service provider.
      */
     @Override
     public Object getCredentials() {

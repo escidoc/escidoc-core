@@ -618,8 +618,8 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
      * mapping for &quot;a:b:c&quot; is chosen.
      *
      * @param attributeIdValue The value of the attribute id to map.
-     * @return Returns a <code>MapResult</code> object containing the mapped cache id for the longest found match<br> If
-     *         no match can be found, <code>null</code> is returned.
+     * @return Returns a {@code MapResult} object containing the mapped cache id for the longest found match<br> If
+     *         no match can be found, {@code null} is returned.
      */
     public MapResult mapIt(final String attributeIdValue) {
 

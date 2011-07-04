@@ -66,7 +66,7 @@ public final class ContextXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets the XML PROVIDER.
      *
-     * @return Returns the <code>ContextXmlProvider</code> object.
+     * @return Returns the {@code ContextXmlProvider} object.
      */
     public static ContextXmlProvider getInstance() {
         return PROVIDER;

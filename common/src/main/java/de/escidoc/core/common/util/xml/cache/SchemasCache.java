@@ -49,7 +49,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.SchemaBaseResourceResolver;
 
 /**
- * Cache for xml <code>Schema</code> objects.<br> This cache is used to avoid multiple parsing of the same schema.
+ * Cache for xml {@code Schema} objects.<br> This cache is used to avoid multiple parsing of the same schema.
  *
  * @author Michael Hoppe
  */
@@ -57,7 +57,7 @@ import de.escidoc.core.common.util.xml.SchemaBaseResourceResolver;
 public class SchemasCache {
 
     /**
-     * Gets the <code>Schema</code> from the cache.<br> If none exists for the provided schema URL, it is created and
+     * Gets the {@code Schema} from the cache.<br> If none exists for the provided schema URL, it is created and
      * put into the cache.
      *
      * @param schemaUri The schema URI

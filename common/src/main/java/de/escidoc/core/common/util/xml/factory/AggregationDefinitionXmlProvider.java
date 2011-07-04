@@ -50,7 +50,7 @@ public final class AggregationDefinitionXmlProvider extends InfrastructureXmlPro
     /**
      * Gets the AggregationDefinition xml PROVIDER.
      *
-     * @return Returns the <code>AggregationDefinitionXmlProvider</code> object.
+     * @return Returns the {@code AggregationDefinitionXmlProvider} object.
      */
     public static AggregationDefinitionXmlProvider getInstance() {
         return PROVIDER;

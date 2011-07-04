@@ -48,7 +48,7 @@ public final class ActionXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets the action xml PROVIDER.
      *
-     * @return Returns the <code>ActionXmlProvider</code> object.
+     * @return Returns the {@code ActionXmlProvider} object.
      */
     public static ActionXmlProvider getInstance() {
         return PROVIDER;

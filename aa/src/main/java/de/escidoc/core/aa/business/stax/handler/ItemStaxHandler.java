@@ -66,7 +66,7 @@ public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
     /**
      * The constructor.
      *
-     * @param ctx        The <code>EvaluationCtx</code> for that the item xml representation shall be parsed.
+     * @param ctx        The {@code EvaluationCtx} for that the item xml representation shall be parsed.
      * @param resourceId The id of the item resource.
      */
     public ItemStaxHandler(final EvaluationCtx ctx, final String resourceId) {

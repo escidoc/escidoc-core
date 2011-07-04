@@ -89,7 +89,7 @@ public final class FinderModuleHelper {
      * Checks if the provided resource id is the dummy id for new resources.
      *
      * @param resourceId The id to check.
-     * @return Returns <code>true</code> if the provided id is the dummy id of new resources.
+     * @return Returns {@code true} if the provided id is the dummy id of new resources.
      */
     public static boolean isNewResourceId(final String resourceId) {
 
@@ -98,13 +98,13 @@ public final class FinderModuleHelper {
 
     /**
      * Retrieves the resource attribute with type http://www.w3.org/2001/XMLSchema#string and the provided id from the
-     * provided <code>EvaluationCtx</code> object.
+     * provided {@code EvaluationCtx} object.
      *
      * @param context                   The EvaluationCtx to retrieve the attribute from
      * @param idUri                     The id of the attribute
      * @param forceEmptyResultException Flag indicating if in case of an empty result bag an exception shall be thrown
-     *                                  (<code>true</code>) or <code>null</code> shall be returned
-     *                                  (<code>false</code>).
+     *                                  ({@code true}) or {@code null} shall be returned
+     *                                  ({@code false}).
      * @return The retrieved attribute value
      * @throws ResourceNotFoundException Thrown if the attribute fetching failed because the resource from that it
      *                                   should be fetched does not exist.
@@ -120,13 +120,13 @@ public final class FinderModuleHelper {
 
     /**
      * Retrieves the subject attribute with type http://www.w3.org/2001/XMLSchema#string and the provided id from the
-     * provided <code>EvaluationCtx</code> object.
+     * provided {@code EvaluationCtx} object.
      *
      * @param context                   The EvaluationCtx to retrieve the attribute from
      * @param idUri                     The id of the attribute
      * @param forceEmptyResultException Flag indicating if in case of an empty result bag an exception shall be thrown
-     *                                  (<code>true</code>) or <code>null</code> shall be returned
-     *                                  (<code>false</code>).
+     *                                  ({@code true}) or {@code null} shall be returned
+     *                                  ({@code false}).
      * @return The retrieved attribute value
      * @throws ResourceNotFoundException Thrown if the attribute fetching failed because the resource from that it
      *                                   should be fetched does not exist.
@@ -144,11 +144,11 @@ public final class FinderModuleHelper {
      * Extracts a single string result from the provided bag.
      *
      * @param idUri                     The attribute id URI for message in case of an error.
-     * @param result                    The <code>EvaluationResult</code> object from that the single result shall be
+     * @param result                    The {@code EvaluationResult} object from that the single result shall be
      *                                  extracted.
      * @param forceEmptyResultException Flag indicating if in case of an empty result bag an exception shall be thrown
-     *                                  (<code>true</code>) or <code>null</code> shall be returned
-     *                                  (<code>false</code>).
+     *                                  ({@code true}) or {@code null} shall be returned
+     *                                  ({@code false}).
      * @return Returns the extracted single string.
      * @throws ResourceNotFoundException Thrown if the attribute fetching failed because the resource from that it
      *                                   should be fetched does not exist.
@@ -198,13 +198,13 @@ public final class FinderModuleHelper {
 
     /**
      * Retrieves the resource attribute with type http://www.w3.org/2001/XMLSchema#string and the provided id from the
-     * provided <code>EvaluationCtx</code> object.
+     * provided {@code EvaluationCtx} object.
      *
      * @param context                   The EvaluationCtx to retrieve the attribute from
      * @param idUri                     The id of the attribute
      * @param forceEmptyResultException Flag indicating if in case of an empty result bag an exception shall be thrown
-     *                                  (<code>true</code>) or <code>null</code> shall be returned
-     *                                  (<code>false</code>).
+     *                                  ({@code true}) or {@code null} shall be returned
+     *                                  ({@code false}).
      * @return The retrieved attribute values as HashSet
      * @throws ResourceNotFoundException Thrown if the attribute fetching failed because the resource from that it
      *                                   should be fetched does not exist.
@@ -222,11 +222,11 @@ public final class FinderModuleHelper {
      * Extracts a multi string result from the provided bag.
      *
      * @param idUri                     The attribute id URI for message in case of an error.
-     * @param result                    The <code>EvaluationResult</code> object from that the single result shall be
+     * @param result                    The {@code EvaluationResult} object from that the single result shall be
      *                                  extracted.
      * @param forceEmptyResultException Flag indicating if in case of an empty result bag an exception shall be thrown
-     *                                  (<code>true</code>) or <code>null</code> shall be returned
-     *                                  (<code>false</code>).
+     *                                  ({@code true}) or {@code null} shall be returned
+     *                                  ({@code false}).
      * @return Returns the extracted strings as HashSet.
      * @throws ResourceNotFoundException Thrown if the attribute fetching failed because the resource from that it
      *                                   should be fetched does not exist.
@@ -271,8 +271,8 @@ public final class FinderModuleHelper {
     /**
      * Converts the status code of the provided status to the corresponding exception.<br> If the status indicates the
      * attribute fetching has failed because the resource to fetch the attribute from could not be found, a
-     * <code>ResourceNotFoundException</code> is thrown. All other errors are thrown in a
-     * <code>WebserverSystemException</code>.
+     * {@code ResourceNotFoundException} is thrown. All other errors are thrown in a
+     * {@code WebserverSystemException}.
      *
      * @param msg        The error message.
      * @param statusCode The status code.
@@ -311,10 +311,10 @@ public final class FinderModuleHelper {
     }
 
     /**
-     * Gets the resource id from the provided <code>EvaluationCtx</code>.<br>
+     * Gets the resource id from the provided {@code EvaluationCtx}.<br>
      *
-     * @param context The <code>EvaluationCtx</code> to get the resource id from.
-     * @return Returns the resource id from the <code>EvaluationCtx</code> as a <code>String</code>.
+     * @param context The {@code EvaluationCtx} to get the resource id from.
+     * @return Returns the resource id from the {@code EvaluationCtx} as a {@code String}.
      */
     public static String getResourceId(final EvaluationCtx context) {
 
@@ -329,6 +329,7 @@ public final class FinderModuleHelper {
      * @param whereClause     The where clause to "select" the values that shall be returned. This clause should be
      *                        created by using one of the appropriate methods provided by this class.
      * @param objectId        The id of the resource object for that the values hall be retrieved.
+     * @param predicateId
      * @param tsu             The {@link TripleStoreUtility} to use.
      * @return Returns the specified attribute of the specified resource.<br> This is a list of string values and may be
      *         empty.
@@ -348,12 +349,13 @@ public final class FinderModuleHelper {
     /**
      * If an attribute for a resource is not found, this can happen, because an existing resource does not own the
      * searched attribute, or because the resource itself does not exist. In the first case, an empty list is returned.
-     * In the second case, a <code>ResourceNotFoundException</code> must be thrown.
+     * In the second case, a {@code ResourceNotFoundException} must be thrown.
      *
      * @param id  The resource id for that the attribute could not be found.
      * @param tsu The {@link TripleStoreUtility} to use.
      * @return Returns an empty list or throws an exception.
      * @throws ResourceNotFoundException Thrown if a resource with the provided id is not found.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private static List<String> handleAttributeFromTripleStoreNotFound(final String id, final TripleStoreUtility tsu)
         throws ResourceNotFoundException, TripleStoreSystemException {
@@ -370,12 +372,12 @@ public final class FinderModuleHelper {
      * Converts from value stored in triple store (e.g. http://escidoc.de/core/01/resources/OrganizationalUnit) to value
      * used in attribute-ids and scope-defs (e.g. organizational-unit)
      *
-     * @param objectType    The object type to convert. If this is <code>null</code>, <code>null</code> is returned.
-     * @param failOnNoMatch If this is <code>true</code>, an exception is thrown if the provided object type is not in
+     * @param objectType    The object type to convert. If this is {@code null}, {@code null} is returned.
+     * @param failOnNoMatch If this is {@code true}, an exception is thrown if the provided object type is not in
      *                      the format used in triple store. Otherwise the provided value is returned.
      * @return Returns the converted value or the provided value, if conversion fails and no exception shall be thrown.
      * @throws IntegritySystemException Thrown if the provided value is not in expected format and failOnNoMatch is
-     *                                  <code>true</code>.
+     *                                  {@code true}.
      */
     public static String convertObjectType(final String objectType, final boolean failOnNoMatch)
         throws IntegritySystemException {

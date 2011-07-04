@@ -33,7 +33,6 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
@@ -173,7 +172,6 @@ public class Login extends HttpServlet {
     /**
      * See Interface for functional description.
      *
-     * @see GenericServlet#init()
      */
     @Override
     public void init() throws ServletException {
@@ -389,6 +387,8 @@ public class Login extends HttpServlet {
      * @param response    Response.
      * @param userAccount The {@link UserAccount} of the user.
      * @throws IOException Thrown in case of an I/O error.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private void doLoginOfExistingUser(
         final HttpServletRequest request, final HttpServletResponse response, final UserAccount userAccount)
@@ -423,7 +423,7 @@ public class Login extends HttpServlet {
      * Retrieves the decoded parameter target from the provided request.
      *
      * @param request The http request to retrieve the parameter from.
-     * @return Returns the decoded parameter target or <code>null</code>.
+     * @return Returns the decoded parameter target or {@code null}.
      * @throws MissingParameterException Thrown if a mandatory parameter is missing.
      */
     private static String retrieveDecodedTarget(final ServletRequest request) throws MissingParameterException {
@@ -450,7 +450,7 @@ public class Login extends HttpServlet {
 
     /**
      * Sends the response in case of successfully authenticating the user.<br> The provided handle that identifies the
-     * user in the system is sent back in the <code>Authorization</code> header (to be used by the redirecting
+     * user in the system is sent back in the {@code Authorization} header (to be used by the redirecting
      * application) and via a cookie to enable handling of later calls to the servlet of the same user and to enable
      * direct accesses of the user to the framework by using a web browser.
      *
@@ -559,6 +559,7 @@ public class Login extends HttpServlet {
      * @param userHandle The eScidoc user handle.
      * @return Returns the redirectUrl containing the eScidoc user handle as a parameter.
      * @throws MissingParameterException Thrown if the target parameter is not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String createRedirectUrl(final HttpServletRequest request, final String userHandle)
         throws MissingParameterException, WebserverSystemException {
@@ -571,8 +572,9 @@ public class Login extends HttpServlet {
      *
      * @param redirectUrl The URL to that the user shall be redirected.
      * @param userHandle  The eScidoc user handle.
-     * @return Returns the redirectUrl containing the eScidoc user handle as a parameter. This is <code>null</code> if
+     * @return Returns the redirectUrl containing the eScidoc user handle as a parameter. This is {@code null} if
      *         no redirect Url has been provided.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String createRedirectUrl(final String redirectUrl, final String userHandle)
         throws WebserverSystemException {
@@ -635,7 +637,7 @@ public class Login extends HttpServlet {
     }
 
     /**
-     * Get the content of the template file as <code>String</code>.<br> The content is stored in a <code>Map</code> to
+     * Get the content of the template file as {@code String}.<br> The content is stored in a {@code Map} to
      * prevent unnecessary file resource accesses
      *
      * @param templateFileName The file name of the template that shall be retrieved/loaded.
@@ -663,7 +665,7 @@ public class Login extends HttpServlet {
     }
 
     /**
-     * Get the content of the template file as <code>String</code> from the {@link Map} of templates.<br>
+     * Get the content of the template file as {@code String} from the {@link Map} of templates.<br>
      *
      * @param templateFileName The file name of the template that shall be retrieved/loaded.
      * @return The content of the template file.

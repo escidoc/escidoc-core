@@ -86,6 +86,7 @@ public class GenericResourcePid extends GenericResource {
      * XPath for objectPid in the item XML representation is /&lt;resource&gt;/properties/pid
      * <p/>
      * ObjectPid is part of the RELS-EXT (and therefore in the TripleStore)
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public void removeObjectPid() throws WebserverSystemException {
         final Map<String, List<StartElementWithChildElements>> deleteFromRelsExt =
@@ -192,7 +193,7 @@ public class GenericResourcePid extends GenericResource {
     }
 
     /**
-     * Update RELS-EXT with object PID. The pid is written to RELS-EXT ( <code>properties/pid</code>).
+     * Update RELS-EXT with object PID. The pid is written to RELS-EXT ( {@code properties/pid}).
      *
      * @param pid persistent identifier
      * @throws FedoraSystemException      If Fedora reports an error.

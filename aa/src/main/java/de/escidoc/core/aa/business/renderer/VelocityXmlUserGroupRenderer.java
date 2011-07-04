@@ -68,7 +68,6 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface#render(UserGroup)
      */
     @Override
     public String render(final UserGroup userGroup) throws SystemException {
@@ -123,8 +122,6 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface#renderCurrentGrants
-     *      (de.escidoc.core.aa.business.UserGroup, java.util.List)
      */
     @Override
     public String renderCurrentGrants(final UserGroup userGroup, final List<RoleGrant> currentGrants)
@@ -155,8 +152,6 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface#renderGrant
-     *      (de.escidoc.core.aa.business.persistence.RoleGrant)
      */
     @Override
     public String renderGrant(final RoleGrant grant) throws WebserverSystemException {
@@ -341,9 +336,9 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     }
 
     /**
-     * Gets the <code>UserGroupXmlProvider</code> object.
+     * Gets the {@code UserGroupXmlProvider} object.
      *
-     * @return Returns the <code>UserGroupXmlProvider</code> object.
+     * @return Returns the {@code UserGroupXmlProvider} object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static UserGroupXmlProvider getUserGroupXmlProvider() {

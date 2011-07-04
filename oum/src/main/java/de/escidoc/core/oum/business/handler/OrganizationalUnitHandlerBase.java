@@ -61,6 +61,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws MissingAttributeValueException If the href is not found.
      * @throws OrganizationalUnitNotFoundException
      *                                        If the id does not point to an organizational unit.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected String checkParentRef(final StartElement element) throws MissingAttributeValueException,
         OrganizationalUnitNotFoundException, TripleStoreSystemException, IntegritySystemException {
@@ -99,6 +101,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *
      * @param property The property.
      * @return The value of the property.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getProperty(final String property) throws TripleStoreSystemException {
 

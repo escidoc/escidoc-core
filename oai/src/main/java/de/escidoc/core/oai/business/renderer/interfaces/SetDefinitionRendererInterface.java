@@ -53,7 +53,7 @@ public interface SetDefinitionRendererInterface {
     /**
      * Gets the representation of a list of the provided set definitions.
      *
-     * @param setDefinitions The <code>List</code> of {@link SetDefinition} objects to render.
+     * @param setDefinitions The {@code List} of {@link SetDefinition} objects to render.
      * @param recordPacking  A string to determine how the record should be escaped in the response. Defined values are
      *                       'string' and 'xml'. The default is 'xml'.
      * @return Returns the XML representation of the list of set definitions.

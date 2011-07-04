@@ -134,6 +134,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
 
     /**
      * Adds the values of the role that shall be rendered to the provided {@link Map}.
+     * @param role
+     * @param values
      */
     private static void addRoleValues(final EscidocRole role, final Map<String, Object> values) {
 

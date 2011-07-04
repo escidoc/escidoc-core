@@ -29,7 +29,6 @@
 package de.escidoc.core.aa.openid;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
 

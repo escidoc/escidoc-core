@@ -79,6 +79,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * Get the xml representation of the properties of an organizational unit.
      *
      * @return The xml representation of the properties of an organizational unit.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getPropertiesXml() throws WebserverSystemException {
 
@@ -89,6 +90,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * Get the xml representation of the resources of an organizational unit.
      *
      * @return The xml representation of an organizational unit
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getResourcesXml() throws WebserverSystemException {
 
@@ -99,6 +101,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * Get the xml representation of the md-records.
      *
      * @return The xml representation of the md-records of an organizational unit.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getMdRecordsXml() throws WebserverSystemException {
 
@@ -110,6 +113,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      *
      * @param name The name of teh md-record.
      * @return The xml representation of the md-record of an organizational unit.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getMdRecordXml(final String name) throws WebserverSystemException {
 

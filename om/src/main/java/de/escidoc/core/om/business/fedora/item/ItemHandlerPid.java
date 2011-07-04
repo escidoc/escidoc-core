@@ -43,7 +43,6 @@ import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
-import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
@@ -79,7 +78,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws ItemNotFoundException      Thrown if the object with id is does not exist or is no Item.
      * @throws LockingException           Thrown if the Resource is locked.
      * @throws MissingMethodParameterException
-     *                                    Thrown if a parameter is missing within <code>taskParam</code>.
+     *                                    Thrown if a parameter is missing within {@code taskParam}.
      * @throws OptimisticLockingException Thrown if Item was altered in the mean time.
      * @throws InvalidStatusException     Thrown if Item has the wrong status.
      * @throws XmlCorruptedException      Thrown if taskParam is invalid XML.
@@ -136,7 +135,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws ItemNotFoundException      Thrown if the object with id is does not exist or is no Item.
      * @throws LockingException           Thrown if the Item is locked
      * @throws MissingMethodParameterException
-     *                                    Thrown if a parameter is missing within <code>taskParam</code>.
+     *                                    Thrown if a parameter is missing within {@code taskParam}.
      * @throws OptimisticLockingException Thrown if Item was altered in the mean time.
      * @throws InvalidStatusException     Thrown if Item has the wrong status.
      * @throws XmlCorruptedException      Thrown if taskParam has invalid XML.
@@ -286,7 +285,6 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws InvalidStatusException     Thrown if the Item has invalid status to release a Item.
      * @throws TripleStoreSystemException Thrown if TripleStore request fails.
      * @throws WebserverSystemException   Thrown in case of internal failure.
-     * @throws IntegritySystemException   If the integrity of the repository is violated.
      */
     protected void checkPid() throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
         // this is part of a content model (which is currently missing)
@@ -309,6 +307,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * Check if the Item has fulfilled all pre-conditions in relation to PID for the release process.
      *
      * @return true if all pre-conditions are fulfilled otherwise false.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private boolean releasableContentPid() throws WebserverSystemException {
         boolean result;
@@ -377,7 +376,6 @@ public class ItemHandlerPid extends ItemHandlerContent {
      *
      * @return true if all pre-conditions are fulfilled otherwise false.
      * @throws WebserverSystemException   Thrown if check of existing versionPID throws Exception.
-     * @throws IntegritySystemException   If the integrity of the repository is violated.
      * @throws TripleStoreSystemException Thrown if TripleStore request failed.
      */
     protected boolean releasableVersionPid() throws WebserverSystemException, TripleStoreSystemException {

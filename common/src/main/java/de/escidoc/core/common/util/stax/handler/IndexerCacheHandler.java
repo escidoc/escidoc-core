@@ -49,6 +49,7 @@ public class IndexerCacheHandler extends DefaultHandler {
 
     /**
      * Constructor
+     * @param parser
      */
     public IndexerCacheHandler(final StaxParser parser) {
         this.parser = parser;

@@ -146,6 +146,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
      *
      * @param xmldate date in xml-format
      * @return String date in database-specific format
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private static String convertDateForInsert(final String xmldate) throws SqlDatabaseSystemException {
         try {
@@ -938,6 +939,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
 
     /**
      * Wrapper of setDataSource to enable bean stuff generation for this handler.
+     * @param myDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);

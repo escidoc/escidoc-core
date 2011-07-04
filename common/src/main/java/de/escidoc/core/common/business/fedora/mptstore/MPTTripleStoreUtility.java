@@ -76,6 +76,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Injects the data source.
+     * @param myDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);
@@ -1814,22 +1815,22 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /**
      * Builds the starting clause of a query to the triple store.
      *
-     * @param targetIsSubject     Flag indicating that the target to search for is the subject ( <code>true</code>) or
-     *                            the object ( <code>false</code>) of the specified predicate.
+     * @param targetIsSubject     Flag indicating that the target to search for is the subject ( {@code true}) or
+     *                            the object ( {@code false}) of the specified predicate.
      * @param predicateId         The predicate id. If this equals to the id predicate (see de.escidoc.core.common.business.Constants.DC_IDENTIFIER_URI),
-     *                            the provided value of the parameter <code>targetIsSubject</code> is ignored and it is
-     *                            assumed it has been set to <code>true</code>.
+     *                            the provided value of the parameter {@code targetIsSubject} is ignored and it is
+     *                            assumed it has been set to {@code true}.
      * @param expectedValue       The value that must be matched by the specified predicate. If
-     *                            <code>targetIsSubject</code> is <code>true</code>, the object of the predicate must
+     *                            {@code targetIsSubject} is {@code true}, the object of the predicate must
      *                            match the value. Otherwise the subject must match the value.<br/> In case of the id
      *                            attribute, the expected value is ignored and $s is used for creating $s
      *                            &lt;predicate&gt; $s clause part.
-     * @param targetResourceType  The object type of the target of the query. If this is <code>null</code>, no
+     * @param targetResourceType  The object type of the target of the query. If this is {@code null}, no
      *                            restriction for expected resource type is added.
      * @param contentModelTitleId The id of the predicate pointing to the title of the content model. If this is
-     *                            <code>null</code>, targets of any content model are searched.
+     *                            {@code null}, targets of any content model are searched.
      * @param contentModelTitle   The content model title that the subject must match. This must not be
-     *                            <code>null</code>, if contentModelTitleId is not <code>null</code>.
+     *                            {@code null}, if contentModelTitleId is not {@code null}.
      * @return Returns the where clause searching for the specified subjects.
      */
     @Override

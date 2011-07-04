@@ -113,6 +113,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
      *
      * @param xmldate date in xml-format
      * @return String date in database-specific format
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private static String convertDateForSelect(final String xmldate) throws SqlDatabaseSystemException {
         try {
@@ -135,6 +136,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
      *
      * @param xmldate date in xml-format
      * @return String date in database-specific format
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private static String convertDateForInsert(final String xmldate) throws SqlDatabaseSystemException {
         try {

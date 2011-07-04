@@ -50,10 +50,10 @@ public class UserAccountPropertiesStaxHandler extends UserAccountStaxHandlerBase
     /**
      * The constructor.
      *
-     * @param userAccount The <code>UserAccount</code> to handle.
-     * @param dao         The data access object to retrieve <code>UserAccount</code> objects.
-     * @param create      The flag indicating if new user data may be created ( <code>true</code> ) or data from
-     *                    database shall be updated ( <code>false</code> ).
+     * @param userAccount The {@code UserAccount} to handle.
+     * @param dao         The data access object to retrieve {@code UserAccount} objects.
+     * @param create      The flag indicating if new user data may be created ( {@code true} ) or data from
+     *                    database shall be updated ( {@code false} ).
      */
     public UserAccountPropertiesStaxHandler(final UserAccount userAccount, final UserAccountDaoInterface dao,
         final boolean create) {
@@ -111,7 +111,7 @@ public class UserAccountPropertiesStaxHandler extends UserAccountStaxHandlerBase
      * @param toBeAsserted The login name that shall be asserted.
      * @throws SqlDatabaseSystemException Thrown In case of an database error.
      * @throws UniqueConstraintViolationException
-     *                                    Thrown if the login name of the provided <code>UserAccount</code> object is
+     *                                    Thrown if the login name of the provided {@code UserAccount} object is
      *                                    not unique, i.e. it exists another account with the same loginname but a
      *                                    different user id.
      */

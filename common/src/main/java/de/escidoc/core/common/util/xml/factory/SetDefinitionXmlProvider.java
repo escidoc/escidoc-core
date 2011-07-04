@@ -53,7 +53,7 @@ public final class SetDefinitionXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets the set definition xml PROVIDER.
      *
-     * @return Returns the <code>SetDefinitionXmlProvider</code> object.
+     * @return Returns the {@code SetDefinitionXmlProvider} object.
      */
     public static SetDefinitionXmlProvider getInstance() {
         return PROVIDER;

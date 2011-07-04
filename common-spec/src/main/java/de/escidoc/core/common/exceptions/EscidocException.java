@@ -232,9 +232,9 @@ public class EscidocException extends Exception {
     }
 
     /**
-     * Gets the XML representation of the provided <code>Throwable</code>.
+     * Gets the XML representation of the provided {@code Throwable}.
      *
-     * @param throwable The <code>Throwable</code> to get the XML representation for.
+     * @param throwable The {@code Throwable} to get the XML representation for.
      * @return String xml-representation of this throwable
      */
     public static String getXml(final Throwable throwable) {
@@ -290,7 +290,7 @@ public class EscidocException extends Exception {
      * Checks if the provided EscidocException holds an http error code.
      *
      * @param e The EscidocException to check.
-     * @return Returns <code>true</code> if the http status code of the exception equals or is larger than 400 (Bad
+     * @return Returns {@code true} if the http status code of the exception equals or is larger than 400 (Bad
      *         Request).
      */
     private static boolean hasHttpErrorCode(final EscidocException e) {

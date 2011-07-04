@@ -63,7 +63,7 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets the role xml PROVIDER.
      *
-     * @return Returns the <code>UserGroupXmlProvider</code> object.
+     * @return Returns the {@code UserGroupXmlProvider} object.
      */
     public static UserGroupXmlProvider getInstance() {
         return PROVIDER;

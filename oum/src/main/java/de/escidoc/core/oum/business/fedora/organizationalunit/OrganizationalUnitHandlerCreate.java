@@ -117,6 +117,7 @@ public class OrganizationalUnitHandlerCreate extends OrganizationalUnitHandlerRe
      * @param relsExtValues The rels-ext values.
      * @param parents       The parent organizational units.
      * @return The foxml representation of the rels-ext datastream of an organizational unit.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getOrganizationalUnitRelsExt(
         final String id, final Map<String, Object> relsExtValues, final List<String> parents)

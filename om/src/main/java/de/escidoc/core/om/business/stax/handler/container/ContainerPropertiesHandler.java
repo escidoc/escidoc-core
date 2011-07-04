@@ -57,10 +57,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The PropertiesHandler. Verifies the elements <code>context</code> and <code>content-model</code> of a properties
+ * The PropertiesHandler. Verifies the elements {@code context} and {@code content-model} of a properties
  * snippet of a parsed container xml. It is checked whether referenced context and content-model exist in the framework
- * and whether URLs of a context and content-model are correct. Fetches values of the elements <code>description</code>
- * and <code>pid</code> and stores they in a Map.
+ * and whether URLs of a context and content-model are correct. Fetches values of the elements {@code description}
+ * and {@code pid} and stores they in a Map.
  */
 @Configurable
 public class ContainerPropertiesHandler extends DefaultHandler {

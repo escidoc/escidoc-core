@@ -42,7 +42,6 @@ import org.springframework.stereotype.Service;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -105,7 +104,6 @@ public class Reindexer {
      * @param indexName  name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
      * @throws SystemException             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      */
     public String reindex(final boolean clearIndex, final String indexName) throws SystemException {
         if ("errorTest".equals(indexName)) {
@@ -230,7 +228,7 @@ public class Reindexer {
 
     /**
      * @return total number of objects found, ...
-     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     public String testReindexError() throws ApplicationServerSystemException {
         sendUpdateIndexMessage("nonexistingPid", ResourceType.ITEM, null);

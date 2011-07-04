@@ -105,6 +105,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @param id The id of the organizational unit which should be bound to this Handler.
      * @throws OrganizationalUnitNotFoundException
      *          If no organizational unit with the given id exists.
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void setOrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException,
         TripleStoreSystemException, IntegritySystemException {
@@ -140,10 +142,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     /**
      * Check the name. It may neither be empty nor null. Additionally it must be unique within its scope.
      *
-     * @param id      If a create is executed, id is null. In case of an update the organizational unit already exists
-     *                and has an id.
      * @param name    The name.
-     * @param parents The list of parents.
      * @throws MissingElementValueException It the name is empty or null.
      * @throws SystemException              Thrown in case of an internal error.
      */
@@ -171,6 +170,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * Expands the given path with its parents. If there are no parents the given path is the only result.
      *
      * @param path The path to expand.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void expandPaths(final List<String> path) throws TripleStoreSystemException {
 
@@ -201,6 +201,11 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *                                        If the organizational unit does not exist.
      * @throws XmlCorruptedException          Thrown if the schema validation of the provided data failed.
      * @throws MissingMdRecordException       If the required md-record is missing
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     protected void parseIncomingXmlForCreate(final String xml, final StaxParser parser)
         throws MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
@@ -269,6 +274,11 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws OptimisticLockingException If the organizational unit was changed in the meantime.
      * @throws OrganizationalUnitNotFoundException
      *                                    If the organizational unit does not exist.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected void parseIncomingXmlForUpdate(final String xml, final StaxParser parser)
         throws OptimisticLockingException, OrganizationalUnitNotFoundException, EncodingSystemException,
@@ -337,7 +347,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
 
     /**
      * Creates and initlizes a {@link MultipleExtractor2} that uses the provided {@link StaxParser}.<br/> The created
-     * <code>MultipleExtractor2</code> extracts the pathes OU_ORGANIZATION_DETAILS_PATH.<br/> It is initilized with the
+     * {@code MultipleExtractor2} extracts the pathes OU_ORGANIZATION_DETAILS_PATH.<br/> It is initilized with the
      * prefixes for ORGANIZATIONAL_UNIT_NAMESPACE_URI and XLINK_NS_URI.
      *
      * @param sp           The {@link StaxParser} to use.

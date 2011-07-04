@@ -44,21 +44,21 @@ import java.util.regex.Pattern;
  * <p/>
  * This Interceptor is invoked every time an service calls one of its classes.<br/> It must be the first interceptor in
  * the chain.<br/> This interceptor performs user authentication, too, as the user data is needed for the
- * statistics.<br/> This interceptor stores in the thread local <code>StatisticDataVo</code> object the following
- * information before calling the handler method: <ul> <li><code>PARAM_HANDLER</code>, the name of the called
- * handler.</li> <li><code>PARAM_REQUEST</code>, the name of the called handler method.</li>
- * <li><code>PARAM_INTERNAL</code>, the flag indicating if this is an internal call from one infrastructure service to
- * another ( <code>VALUE_INTERNAL_TRUE</code>), or if it is an external call from a non-infrastructure service or
- * application (<code>VALUE_INTERNAL_FALSE</code> ).</li> <li><code>PARAM_USER_ID</code>, the id of the user performing
- * the current request.</li> <li><code>PARAM_OBJECT_ID</code>, the id of the accessed resource, if this is available in
+ * statistics.<br/> This interceptor stores in the thread local {@code StatisticDataVo} object the following
+ * information before calling the handler method: <ul> <li>{@code PARAM_HANDLER}, the name of the called
+ * handler.</li> <li>{@code PARAM_REQUEST}, the name of the called handler method.</li>
+ * <li>{@code PARAM_INTERNAL}, the flag indicating if this is an internal call from one infrastructure service to
+ * another ( {@code VALUE_INTERNAL_TRUE}), or if it is an external call from a non-infrastructure service or
+ * application ({@code VALUE_INTERNAL_FALSE} ).</li> <li>{@code PARAM_USER_ID}, the id of the user performing
+ * the current request.</li> <li>{@code PARAM_OBJECT_ID}, the id of the accessed resource, if this is available in
  * the first parameter. To check this, it is asserted that the first parameter does not seem to contain XML data, i.e.
  * does not contain a &lt;</li> </ul> After the handler method call, the interceptor adds the following information and
- * sends the statistics data to the <code>StatisticQueueHandler</code>. <ul> <li><code>PARAM_SUCCESS</code>, flag
- * indicating if the method call has successfully returned (<code>VALUE_SUCCESS_TRUE</code>) or if an exception has
- * occurred (<code>VALUE_SUCCESS_FALSE</code>).</li> <li><code>PARAM_ELAPSED_TIME</code>, the elapsed time from start of
- * this interceptor to the returning from the called method.</li> <li><code>PARAM_EXCEPTION_NAME</code>, in case of an
- * error, the name of the exception.</li> <li><code>PARAM_EXCEPTION_MESSAGE</code>, in case of an error, the message of
- * the exception.</li> <li><code>PARAM_EXCEPTION_SOURCE</code>, in case of an error, the source of the top level
+ * sends the statistics data to the {@code StatisticQueueHandler}. <ul> <li>{@code PARAM_SUCCESS}, flag
+ * indicating if the method call has successfully returned ({@code VALUE_SUCCESS_TRUE}) or if an exception has
+ * occurred ({@code VALUE_SUCCESS_FALSE}).</li> <li>{@code PARAM_ELAPSED_TIME}, the elapsed time from start of
+ * this interceptor to the returning from the called method.</li> <li>{@code PARAM_EXCEPTION_NAME}, in case of an
+ * error, the name of the exception.</li> <li>{@code PARAM_EXCEPTION_MESSAGE}, in case of an error, the message of
+ * the exception.</li> <li>{@code PARAM_EXCEPTION_SOURCE}, in case of an error, the source of the top level
  * exception. This source information consist of the full class name, the method name and the line from that the
  * exception has been thrown.</li> </ul> <br/> The called business methods may add further information to the statistic
  * data record. For information about how to access the thread local statistic data record and adding information to

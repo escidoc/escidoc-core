@@ -57,7 +57,7 @@ public final class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
     /**
      * Gets the Item FoXML PROVIDER.
      *
-     * @return Returns the <code>ItemFoXmlProvider</code> object.
+     * @return Returns the {@code ItemFoXmlProvider} object.
      */
     public static ItemFoXmlProvider getInstance() {
         return PROVIDER;

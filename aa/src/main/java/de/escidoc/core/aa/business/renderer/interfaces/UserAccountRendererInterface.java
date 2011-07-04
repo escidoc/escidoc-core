@@ -82,19 +82,19 @@ public interface UserAccountRendererInterface {
         throws SystemException;
 
     /**
-     * Gets the representation of the provided <code>RoleGrant</code> object.
+     * Gets the representation of the provided {@code RoleGrant} object.
      *
      * @param grant The {@link RoleGrant} to render.
-     * @return Returns the XML representation of the provided <code>RoleGrant</code> object.
+     * @return Returns the XML representation of the provided {@code RoleGrant} object.
      * @throws SystemException Thrown in case of an internal error.
      */
     String renderGrant(final RoleGrant grant) throws SystemException;
 
     /**
-     * Gets the representation of the provided list of <code>UserPreference</code> objects.
+     * Gets the representation of the provided list of {@code UserPreference} objects.
      *
      * @param userAccount The user account to render preferences for.
-     * @param preferences The <code>UserPreference</code> objects to render.
+     * @param preferences The {@code UserPreference} objects to render.
      * @return Returns the XML representation of the preferences.
      * @throws SystemException Thrown in case of an internal error.
      */
@@ -102,30 +102,30 @@ public interface UserAccountRendererInterface {
         throws SystemException;
 
     /**
-     * Gets the representation of the provided <code>UserPreference</code> object.
+     * Gets the representation of the provided {@code UserPreference} object.
      *
      * @param userAccount
      * @param preference The {@link UserPreference} to render.
-     * @return Returns the XML representation of the provided <code>RoleGrant</code> object.
+     * @return Returns the XML representation of the provided {@code RoleGrant} object.
      * @throws SystemException Thrown in case of an internal error.
      */
     String renderPreference(final UserAccount userAccount, final UserPreference preference) throws SystemException;
 
     /**
-     * Gets the representation of the provided list of <code>UserAttribute</code> objects.
+     * Gets the representation of the provided list of {@code UserAttribute} objects.
      *
      * @param userAccount The user account to render preferences for.
-     * @param attributes  The <code>UserAttribute</code> objects to render.
+     * @param attributes  The {@code UserAttribute} objects to render.
      * @return Returns the XML representation of the attributes.
      * @throws SystemException Thrown in case of an internal error.
      */
     String renderAttributes(final UserAccount userAccount, final Set<UserAttribute> attributes) throws SystemException;
 
     /**
-     * Gets the representation of the provided <code>UserAttribute</code> object.
+     * Gets the representation of the provided {@code UserAttribute} object.
      *
      * @param attribute The {@link UserAttribute} to render.
-     * @return Returns the XML representation of the provided <code>UserAttribute</code> object.
+     * @return Returns the XML representation of the provided {@code UserAttribute} object.
      * @throws SystemException Thrown in case of an internal error.
      */
     String renderAttribute(final UserAttribute attribute) throws SystemException;
@@ -142,7 +142,7 @@ public interface UserAccountRendererInterface {
     /**
      * Gets the representation of a list of the provided user accounts.
      *
-     * @param userAccounts  The <code>List</code> of {@link UserAccount} objects to render.
+     * @param userAccounts  The {@code List} of {@link UserAccount} objects to render.
      * @param recordPacking A string to determine how the record should be escaped in the response. Defined values are
      *                      'string' and 'xml'. The default is 'xml'.
      * @return Returns the XML representation of the list of user accounts.

@@ -102,6 +102,10 @@ public class HttpRequester {
      *
      * @param resource String resource
      * @return String response
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.security.KeyManagementException
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.io.IOException
      */
     public String doGet(final String resource) throws IOException, NoSuchAlgorithmException, KeyManagementException,
         WebserverSystemException {
@@ -143,6 +147,10 @@ public class HttpRequester {
      *
      * @param resource String resource
      * @return String response
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.security.KeyManagementException
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.io.IOException
      */
     public String doDelete(final String resource) throws IOException, NoSuchAlgorithmException, KeyManagementException,
         WebserverSystemException {
@@ -155,6 +163,11 @@ public class HttpRequester {
      * @param resource String resource
      * @param method   String method
      * @param body     String body
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.security.KeyManagementException
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.io.IOException
+     * @return
      */
     private String request(final String resource, final String method, final String body) throws IOException,
         NoSuchAlgorithmException, KeyManagementException, WebserverSystemException {
@@ -168,6 +181,10 @@ public class HttpRequester {
      * @param method   String method
      * @param body     String body
      * @return String response
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.security.KeyManagementException
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.io.IOException
      */
     // False positive: Private method is never called
     @edu.umd.cs.findbugs.annotations.SuppressWarnings
@@ -234,6 +251,8 @@ public class HttpRequester {
      * @param method   String method
      * @param body     String body
      * @return String response
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.io.IOException
      */
     private String requestNoSsl(final String resource, final String method, final String body) throws IOException,
         WebserverSystemException {

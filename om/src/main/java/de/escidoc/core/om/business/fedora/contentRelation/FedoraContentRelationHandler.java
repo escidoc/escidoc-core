@@ -617,7 +617,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      *                                     Thrown if the object with id is does not exist or is no Item.
      * @throws LockingException            Thrown if the Item is locked
      * @throws MissingMethodParameterException
-     *                                     Thrown if a parameter is missing within <code>taskParam</code>.
+     *                                     Thrown if a parameter is missing within {@code taskParam}.
      * @throws OptimisticLockingException  Thrown if Item was altered in the mean time.
      * @throws PidAlreadyAssignedException Thrown if a Content-relation is already assigned a PID.
      * @throws SystemException             Thrown in case of internal error.
@@ -712,7 +712,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @param id The ID of the Content Relation which should be bound to this Handler.
      * @return value object of Content Relation with provided objid
      * @throws ContentRelationNotFoundException
-     *                         If there is no item with <code>id</code> in the repository.
+     *                         If there is no item with {@code id} in the repository.
      * @throws SystemException Thrown in case of an internal system error.
      */
     protected ContentRelationCreate setContentRelation(final String id) throws ContentRelationNotFoundException,
@@ -989,6 +989,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws InvalidContentException        Thrown if content is invalid
      * @throws MissingAttributeValueException Thrown if attribute value is missing
      * @throws SystemException                Thrown if internal error occur
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private static ContentRelationCreate parseContentRelation(final String xml) throws MissingAttributeValueException,
         InvalidContentException, SystemException, XmlCorruptedException {

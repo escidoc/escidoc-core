@@ -50,7 +50,7 @@ public final class ContextFoXmlProvider extends InfrastructureFoXmlProvider {
     /**
      * Gets the context xml provider.
      *
-     * @return Returns the <code>ContextXmlProvider</code> object.
+     * @return Returns the {@code ContextXmlProvider} object.
      */
     public static ContextFoXmlProvider getInstance() {
         return PROVIDER;

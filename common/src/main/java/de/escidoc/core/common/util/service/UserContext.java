@@ -118,7 +118,7 @@ public final class UserContext {
      * of the internal user. If the current access is running with the privileges of the internal user, the {@link
      * Authentication} is kept unchanged.
      *
-     * @return Returns <code>true</code> if the {@link Authentication} has been changed, <code>false</code> else.
+     * @return Returns {@code true} if the {@link Authentication} has been changed, {@code false} else.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static boolean runAsInternalUser() throws WebserverSystemException {
@@ -134,7 +134,7 @@ public final class UserContext {
      * Reverts executing the following accesses with the privileges of the internal user. If the current access is not
      * executed with the internal user's privileges, the {@link Authentication} is kept unchanged.
      *
-     * @return Returns <code>true</code> if the {@link Authentication} has been changed, <code>false</code> else.
+     * @return Returns {@code true} if the {@link Authentication} has been changed, {@code false} else.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static boolean runAsExternalUser() throws WebserverSystemException {
@@ -156,7 +156,7 @@ public final class UserContext {
      * setContext method. Otherwise, an exception is thrown here.<br> This method resets the signature of the principal
      * and it has to be resigned.<br>
      *
-     * @param id The id of the user. This may be <code>null</code> or an empty string. e.g. in case of an anonymous
+     * @param id The id of the user. This may be {@code null} or an empty string. e.g. in case of an anonymous
      *           user.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
@@ -171,7 +171,7 @@ public final class UserContext {
      * the user context must be set by using the setContext method. Otherwise, an exception is thrown here.<br> This
      * method resets the signature of the principal and it has to be resigned.
      *
-     * @param realName The real name of the user. This must not be <code>null</code>.
+     * @param realName The real name of the user. This must not be {@code null}.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static void setRealName(final String realName) throws WebserverSystemException {
@@ -261,7 +261,7 @@ public final class UserContext {
      * SecurityContextHolder}.<br> Before calling this method, the user context must be set by using the setContext
      * method. Otherwise, an exception is thrown here.
      *
-     * @return Returns the real name of the user or <code>null</code> if this has not been set in the UserContext.
+     * @return Returns the real name of the user or {@code null} if this has not been set in the UserContext.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static String getRealName() throws WebserverSystemException {
@@ -285,7 +285,7 @@ public final class UserContext {
      * Checks if the stored user context is the context of an external user.<br> Before calling this method, the user
      * context must be set by using the setContext method. Otherwise, an exception is thrown here.
      *
-     * @return Returns <code>true</code> if the context has been initialized and the technical user name is the name of
+     * @return Returns {@code true} if the context has been initialized and the technical user name is the name of
      *         the external super user.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
@@ -297,7 +297,7 @@ public final class UserContext {
      * Checks if the stored user context is the context of the internal user.<br> Before calling this method, the user
      * context must be set by using the setContext method. Otherwise, an exception is thrown here.
      *
-     * @return Returns <code>true</code> if the context has been initialized and the technical user name is the name of
+     * @return Returns {@code true} if the context has been initialized and the technical user name is the name of
      *         the internal user.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
@@ -308,7 +308,7 @@ public final class UserContext {
     /**
      * Checks if the stored user context is the context of an anonymous user.
      *
-     * @return Returns <code>true</code> if the context has been initialized and the handle equals to an empty {@link
+     * @return Returns {@code true} if the context has been initialized and the handle equals to an empty {@link
      *         String}, as this identifies the anonymous user.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
@@ -320,7 +320,7 @@ public final class UserContext {
      * Checks if the provided user id matches an anonymous user.
      *
      * @param userId The user id to check.
-     * @return Returns <code>true</code> if the provided user id identifies an anonymous User. This is the case, if it
+     * @return Returns {@code true} if the provided user id identifies an anonymous User. This is the case, if it
      *         is an empty string.
      */
     public static boolean isIdOfAnonymousUser(final String userId) {
@@ -351,7 +351,7 @@ public final class UserContext {
      * Checks if the retrieve of a resource object is restricted to released versions.<br> This method may be used by
      * business logic to decide if released versions or all versions are provided for the current user.
      *
-     * @return Returns <code>true</code> if the current retrieve access is restricted to released versions.
+     * @return Returns {@code true} if the current retrieve access is restricted to released versions.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public static boolean isRetrieveRestrictedToReleased() throws WebserverSystemException {

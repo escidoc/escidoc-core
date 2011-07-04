@@ -62,6 +62,7 @@ public class VelocityXmlCommonRenderer {
      * @param href      href of resource
      * @param values    The map to add values to.
      * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public void addRelationsValues(
         final List<Map<String, String>> relations, final String href, final Map<String, Object> values)

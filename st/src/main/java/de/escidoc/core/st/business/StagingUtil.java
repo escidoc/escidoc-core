@@ -107,10 +107,10 @@ public final class StagingUtil {
      * Generates a token.<br> This method creates a new staging file object and stores it in the database. The staging
      * file's token is automatially generated during saving this staging file object.<br> In the case of using the
      * hibernate persistence layer, this is currently automatically done by hibernate using the
-     * <code>TokenGenerator</code> class which is an implementation a hibernate id generator.
+     * {@code TokenGenerator} class which is an implementation a hibernate id generator.
      *
      * @param isUpload       Flag indicating if this token shall be generated for an upload to the framework
-     *                       (<code>true</code>) or a download from the framework (<code>false</code>).
+     *                       ({@code true}) or a download from the framework ({@code false}).
      * @param stagingFileDao The data access object used to store the staging file.
      * @return The generated token.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database error.
@@ -126,9 +126,9 @@ public final class StagingUtil {
      * Creates a new Staging file with initialized token and stores it into the database.
      *
      * @param isUpload       Flag indicating if this token shall be generated for an upload to the framework
-     *                       (<code>true</code>) or a download from the framework (<code>false</code>).
+     *                       ({@code true}) or a download from the framework ({@code false}).
      * @param stagingFileDao The data access object used to store the staging file.
-     * @return Returns the created <code>StagingFile</code> object.
+     * @return Returns the created {@code StagingFile} object.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database error.
      */
     public static StagingFile generateStagingFile(final boolean isUpload, final StagingFileDao stagingFileDao)

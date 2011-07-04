@@ -113,7 +113,7 @@ public class CheckProvidedAttributeFinderModule extends AbstractAttributeFinderM
 
     /**
      * See Interface for functional description.<br> This implementation does not resolve a value but performs the check
-     * if provided references to other resource objects are correct. It always returns <code>null</code> in case of
+     * if provided references to other resource objects are correct. It always returns {@code null} in case of
      * success or throws an exception.
      */
     @Override

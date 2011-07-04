@@ -61,7 +61,7 @@ public final class CustomTargetBuilder {
      * @param attributeValue The attribute value of the target match.
      * @param designatorId   The designator id of the target match.
      * @param designatorType The designator type of the target match.
-     * @return Returns the generated <code>TargetMatch</code> object of type <code>TargetMatch.RESOURCE</code>
+     * @return Returns the generated {@code TargetMatch} object of type {@code TargetMatch.RESOURCE}
      * @throws URISyntaxException         Thrown if there is a problem with an URI.
      * @throws UnknownIdentifierException Thrown if there is a problem with an identifier
      * @throws FunctionTypeException      Thrown if there is a problem with the match id.
@@ -84,7 +84,7 @@ public final class CustomTargetBuilder {
      * @param attributeValue The attribute value of the target match.
      * @param designatorId   The designator id of the target match.
      * @param designatorType The designator type of the target match.
-     * @return Returns the generated <code>TargetMatch</code> object of type <code>TargetMatch.SUBJECT</code>
+     * @return Returns the generated {@code TargetMatch} object of type {@code TargetMatch.SUBJECT}
      * @throws URISyntaxException         Thrown if there is a problem with an URI.
      * @throws UnknownIdentifierException Thrown if there is a problem with an identifier
      * @throws FunctionTypeException      Thrown if there is a problem with the match id.

@@ -807,7 +807,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * at the resolver.
      *
      * @param id    id of the container (without version part)
-     * @param param XML snippet with dataset for persistent identifier resolver. <code> <param
+     * @param param XML snippet with dataset for persistent identifier resolver. {@code  <param}
      *              last-modification-date=""> <url>http://ResourceLocation</url> </param> </code>
      * @return last-modification-date within XML (result.xsd)
      * @throws InvalidStatusException     Thrown if a container in the current status is not allowed to to assign a new
@@ -832,7 +832,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * The method creates an identifier and write it to the persitent identifier resolver.
      *
      * @param id    id with version information of the container
-     * @param param XML snippet with dataset for persistent identifier resolver. <code> <param
+     * @param param XML snippet with dataset for persistent identifier resolver. {@code  <param}
      *              last-modification-date=""> <url>http://ResourceLocation</url> </param> </code>
      * @return last-modification-date within XML (result.xsd)
      * @throws ContainerNotFoundException Thrown if the Container with the provided id was not found.

@@ -368,9 +368,9 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
     }
 
     /**
-     * Gets the <code>UserAccountXmlProvider</code> object.
+     * Gets the {@code UserAccountXmlProvider} object.
      *
-     * @return Returns the <code>UserAccountXmlProvider</code> object.
+     * @return Returns the {@code UserAccountXmlProvider} object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static UserAccountXmlProvider getUserAccountXmlProvider() {

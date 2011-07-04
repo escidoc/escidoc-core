@@ -53,7 +53,7 @@ public interface ReportDefinitionRendererInterface {
     /**
      * Gets the representation of a list of the provided report definition.
      *
-     * @param reportDefinitions The <code>List</code> of {@link de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition}
+     * @param reportDefinitions The {@code List} of {@link de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition}
      *                          objects to render.
      * @param recordPacking     A string to determine how the record should be escaped in the response. Defined values
      *                          are 'string' and 'xml'. The default is 'xml'.

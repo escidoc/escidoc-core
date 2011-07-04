@@ -67,7 +67,6 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.sm.business.renderer.interfaces.ReportDefinitionRendererInterface#render(ReportDefinition)
      */
     @Override
     public String render(final ReportDefinition reportDefinition) throws SystemException {
@@ -214,9 +213,9 @@ public final class VelocityXmlReportDefinitionRenderer implements ReportDefiniti
     }
 
     /**
-     * Gets the <code>ReportDefinitionXmlProvider</code> object.
+     * Gets the {@code ReportDefinitionXmlProvider} object.
      *
-     * @return Returns the <code>ReportDefinitionXmlProvider</code> object.
+     * @return Returns the {@code ReportDefinitionXmlProvider} object.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static ReportDefinitionXmlProvider getReportDefinitionXmlProvider() {

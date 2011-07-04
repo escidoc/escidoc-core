@@ -171,7 +171,11 @@ public class ItemHandlerBase extends HandlerBase {
      * Bounds a Item object to this handler. Subsequent calls to this method have no effect.
      *
      * @param id The ID of the item which should be bound to this Handler.
-     * @throws ItemNotFoundException If there is no item with <code>id</code> in the repository.
+     * @throws ItemNotFoundException If there is no item with {@code id} in the repository.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     final void setItem(final String id) throws ItemNotFoundException, TripleStoreSystemException,
         IntegritySystemException, FedoraSystemException, WebserverSystemException {
@@ -194,6 +198,10 @@ public class ItemHandlerBase extends HandlerBase {
      * @return true if origin Item was loaded, false otherwise
      * @throws ItemNotFoundException  Thrown if Item with provided objid not exits.
      * @throws AuthorizationException Thrown if user has no permission to use origin Item.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     final boolean loadOrigin(final String errorMessage) throws ItemNotFoundException, AuthorizationException,
         TripleStoreSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException {
@@ -219,6 +227,10 @@ public class ItemHandlerBase extends HandlerBase {
      * Obtain right version of origin Item.
      *
      * @throws ItemNotFoundException Thrown if no Item with this objid exits.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     final void prepareAndSetOriginItem() throws ItemNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException, FedoraSystemException {
@@ -247,6 +259,7 @@ public class ItemHandlerBase extends HandlerBase {
      *
      * @param origin Objid of the origin Item
      * @return true if user has permission on origin Item, false if access with provided userid is forbidden.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     final boolean checkUserRights(final String origin) throws WebserverSystemException {
 
@@ -269,7 +282,11 @@ public class ItemHandlerBase extends HandlerBase {
      * Bounds an OriginItem of an SurrogateItem object to this handler. Subsequent calls to this method have no effect.
      *
      * @param id The ID of the item which should be bound to this Handler.
-     * @throws ItemNotFoundException If there is no item with <code>id</code> in the repository.
+     * @throws ItemNotFoundException If there is no item with {@code id} in the repository.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     final void setOriginItem(final String id) throws ItemNotFoundException, TripleStoreSystemException,
         IntegritySystemException, FedoraSystemException, WebserverSystemException {
@@ -310,6 +327,11 @@ public class ItemHandlerBase extends HandlerBase {
      * @param id ID of the component.
      * @return The requested component object or null.
      * @throws ComponentNotFoundException Thrown if Component with provided objid could not be found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     final Component getComponent(final String id) throws ComponentNotFoundException, FedoraSystemException,
         WebserverSystemException, TripleStoreSystemException, IntegritySystemException, XmlParserSystemException {
@@ -474,7 +496,7 @@ public class ItemHandlerBase extends HandlerBase {
      * Check if item version is tagged with status released.
      *
      * @param checkStatus The status which is to validate.
-     * @throws InvalidStatusException   If item version status is not equal to the requested <code>checkStatus</code>.
+     * @throws InvalidStatusException   If item version status is not equal to the requested {@code checkStatus}.
      * @throws IntegritySystemException Thrown if version status could not be obtained.
      */
     final void checkVersionStatus(final String checkStatus) throws InvalidStatusException, IntegritySystemException {

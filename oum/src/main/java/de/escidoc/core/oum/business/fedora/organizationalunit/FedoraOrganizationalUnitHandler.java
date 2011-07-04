@@ -333,7 +333,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws OrganizationalUnitHasChildrenException
      *                                e
      * @throws SystemException        e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#delete(java.lang.String)
      */
     @Override
     public void delete(final String id) throws OrganizationalUnitNotFoundException, InvalidStatusException,
@@ -369,7 +368,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws OrganizationalUnitNotFoundException
      *                         e
      * @throws SystemException e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#retrieve(java.lang.String)
      */
     @Override
     public String retrieve(final String id) throws OrganizationalUnitNotFoundException, SystemException {
@@ -389,8 +387,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws OrganizationalUnitNotFoundException
      *                                      e
      * @throws SystemException              e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#update(java.lang.String,
-     *      java.lang.String)
      */
     @Override
     public String update(final String id, final String xml) throws MissingElementValueException,
@@ -474,6 +470,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
     }
 
     /**
+     * @param parentsBeforeUpdate
+     * @param updatedParents
      * @throws OrganizationalUnitNotFoundException
      *                         e
      * @throws SystemException e
@@ -655,7 +653,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      *
      * @throws OrganizationalUnitNotFoundException
      *          e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#retrieveProperties(java.lang.String)
      */
     @Override
     public String retrieveProperties(final String id) throws OrganizationalUnitNotFoundException,
@@ -720,7 +717,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      *
      * @throws OrganizationalUnitNotFoundException
      *          e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#retrieveResources(java.lang.String)
      */
     @Override
     public String retrieveResources(final String id) throws OrganizationalUnitNotFoundException,
@@ -735,7 +731,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      *
      * @throws OrganizationalUnitNotFoundException
      *          e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#retrieveMdRecords(java.lang.String)
      */
     @Override
     public String retrieveMdRecords(final String id) throws OrganizationalUnitNotFoundException,
@@ -771,7 +766,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws OrganizationalUnitNotFoundException
      *                         e
      * @throws SystemException e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#retrieveParents(java.lang.String)
      */
     @Override
     public String retrieveParents(final String id) throws OrganizationalUnitNotFoundException, SystemException {
@@ -785,7 +779,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      *
      * @throws OrganizationalUnitNotFoundException
      *          e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#retrieveChildObjects(java.lang.String)
      */
     @Override
     public String retrieveChildObjects(final String id) throws OrganizationalUnitNotFoundException,
@@ -803,7 +796,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws OrganizationalUnitNotFoundException
      *                         e
      * @throws SystemException e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#retrieveParentObjects(java.lang.String)
      */
     @Override
     public String retrieveParentObjects(final String id) throws OrganizationalUnitNotFoundException, SystemException {
@@ -837,7 +829,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws OrganizationalUnitNotFoundException
      *                         e
      * @throws SystemException e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#retrievePathList(java.lang.String)
      */
     @Override
     public String retrievePathList(final String id) throws OrganizationalUnitNotFoundException, SystemException {
@@ -851,7 +842,6 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      *
      * @param parameters parameters from the SRU request
      * @return The list of Organizational Units matching filter parameter.
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#retrieveOrganizationalUnits(de.escidoc.core.common.business.filter.SRURequestParameters)
      */
     @Override
     public String retrieveOrganizationalUnits(final SRURequestParameters parameters) throws WebserverSystemException {
@@ -976,6 +966,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
      * @throws OrganizationalUnitNotFoundException
      *                                Thrown if under the Predecessor objid was no Organizational Unit found.
      * @throws InvalidStatusException Thrown if predecessor has same id than current OU (predecessor points to itself).
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private List<Map<String, String>> getPredessorsMap(final List<Predecessor> predecessors, final String oUobjid)
         throws OrganizationalUnitNotFoundException, InvalidStatusException, TripleStoreSystemException,

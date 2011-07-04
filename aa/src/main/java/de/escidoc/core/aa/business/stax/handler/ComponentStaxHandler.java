@@ -60,7 +60,7 @@ public class ComponentStaxHandler extends DefaultHandler {
     /**
      * The constructor.
      *
-     * @param ctx         The <code>EvaluationCtx</code> for that the item xml representation shall be parsed.
+     * @param ctx         The {@code EvaluationCtx} for that the item xml representation shall be parsed.
      * @param componentId The id of the item's component.
      */
     public ComponentStaxHandler(final EvaluationCtx ctx, final String componentId) {

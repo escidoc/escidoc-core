@@ -32,7 +32,6 @@ import de.escidoc.core.aa.business.renderer.AbstractRenderer;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.SetDefinitionXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -59,7 +58,6 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
     /**
      * See Interface for functional description.
      *
-     * @see SetDefinitionRendererInterface#render(SetDefinition)
      */
     @Override
     public String render(final SetDefinition setDefinition) throws SystemException {
@@ -130,7 +128,6 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      * Adds the common values to the provided map.
      *
      * @param values The map to add values to.
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private void addCommonValues(final Map<String, Object> values) {
 
@@ -189,7 +186,6 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      * Adds the escidoc base URL to the provided map.
      *
      * @param values The map to add values to.
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values) {
 
@@ -197,10 +193,9 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
     }
 
     /**
-     * Gets the <code>SetDefinitionXmlProvider</code> object.
+     * Gets the {@code SetDefinitionXmlProvider} object.
      *
-     * @return Returns the <code>SetDefinitionXmlProvider</code> object.
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @return Returns the {@code SetDefinitionXmlProvider} object.
      */
     private static SetDefinitionXmlProvider getSetDefinitionXmlProvider() {
 

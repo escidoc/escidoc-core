@@ -88,7 +88,7 @@ public class DummyPIDGenerator implements PIDSystem {
      *
      * @param globalPrefix The globalPrefix for generated PIDs
      * @throws MissingMethodParameterException
-     *          If <code>globalPrefix</code> is null.
+     *          If {@code globalPrefix} is null.
      */
     public void setGlobalPrefix(final String globalPrefix) throws MissingMethodParameterException {
         Utility.checkNotNull(globalPrefix, "global prefix for PID");
@@ -110,7 +110,7 @@ public class DummyPIDGenerator implements PIDSystem {
      *
      * @param separator The separator for generated PIDs
      * @throws MissingMethodParameterException
-     *          If <code>separator</code> is null.
+     *          If {@code separator} is null.
      */
     public void setSeparator(final String separator) throws MissingMethodParameterException {
         Utility.checkNotNull(separator, "separator");
@@ -122,7 +122,7 @@ public class DummyPIDGenerator implements PIDSystem {
      *
      * @param pidNamespace The name space for generated PIDs
      * @throws MissingMethodParameterException
-     *          If <code>pidNamespace</code> is null.
+     *          If {@code pidNamespace} is null.
      */
     public void setPidNamespace(final String pidNamespace) throws MissingMethodParameterException {
         Utility.checkNotNull(pidNamespace, "namespace for PID");

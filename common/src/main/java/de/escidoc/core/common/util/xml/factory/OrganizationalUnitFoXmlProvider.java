@@ -43,7 +43,7 @@ public final class OrganizationalUnitFoXmlProvider extends InfrastructureFoXmlPr
     /**
      * Gets the organizational unit foxml PROVIDER.
      *
-     * @return Returns the <code>OrganizationalUnitFoXmlProvider</code> object.
+     * @return Returns the {@code OrganizationalUnitFoXmlProvider} object.
      */
     public static OrganizationalUnitFoXmlProvider getInstance() {
         return PROVIDER;

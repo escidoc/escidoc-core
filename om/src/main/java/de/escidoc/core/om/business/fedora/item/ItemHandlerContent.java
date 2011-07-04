@@ -52,7 +52,6 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
 import de.escidoc.core.om.service.result.EscidocServiceRedirect;
 import org.esidoc.core.utils.io.Stream;
 
@@ -92,8 +91,15 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
     /**
      * @param id objid of Item
+     * @param componentId
      * @return EscidocBinaryContent
-     * @see ItemHandlerInterface#retrieveContent(String, String)
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public EscidocBinaryContent retrieveContent(final String id, final String componentId)
         throws ResourceNotFoundException, AuthorizationException, FedoraSystemException, TripleStoreSystemException,
@@ -174,6 +180,10 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @param transformer The name of the transformation (service).
      * @param param       The transformation parameter as HTTP GET String.
      * @return EscidocBinaryContent of the transformed content.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public EscidocBinaryContent retrieveContent(
         final String id, final String componentId, final String transformer, final String param)
@@ -224,6 +234,10 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @param transformer   The name of the transformation service.
      * @param clientService The client name of the transformation service.
      * @return A HTTP/HTML redirect to the client service.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public EscidocServiceRedirectInterface redirectContentService(
         final String id, final String componentId, final String transformer, final String clientService)
@@ -272,16 +286,6 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         response.setContent(getServiceRedirect(url));
 
         return response;
-    }
-
-    /**
-     * Get the URL of the digilib scaler.
-     *
-     * @return digilib scaler URL.
-     * @throws SystemException Thrown if the URL could not be obtained from configuration.
-     */
-    private static String getDigilibScalerUrl() {
-        return EscidocConfiguration.getInstance().get(EscidocConfiguration.DIGILIB_SCALER);
     }
 
     /**
@@ -344,7 +348,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     }
 
     /**
-     * Get the content of the template file as <code>String</code>.<br> The content is stored in a <code>Map</code> to
+     * Get the content of the template file as {@code String}.<br> The content is stored in a {@code Map} to
      * prevent unnecessary file resource accesses
      *
      * @param templateFileName The file name of the template that shall be retrieved/loaded.

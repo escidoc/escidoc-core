@@ -107,6 +107,9 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * getter is called.
      *
      * @param id The id of an organizational unit managed in Fedora.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public OrganizationalUnit(final String id) throws OrganizationalUnitNotFoundException, TripleStoreSystemException,
         IntegritySystemException {
@@ -282,6 +285,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * Get the list of children ids for this organizational unit from the triplestore.
      *
      * @return The list of children ids for this organizational unit.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public List<String> getChildrenIds() throws TripleStoreSystemException {
         return getTripleStoreUtility().getChildren(getId());
@@ -532,6 +536,9 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      *
      * @param ds DC datastream
      * @throws StreamNotFoundException If there is no datastream identified by name and parentId in Fedora.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public void setDc(final Datastream ds) throws StreamNotFoundException, TripleStoreSystemException,
         FedoraSystemException, WebserverSystemException {

@@ -68,7 +68,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     /**
      * The constructor.
      *
-     * @param ctx              The <code>EvaluationCtx</code> for that the item xml representation shall be parsed.
+     * @param ctx              The {@code EvaluationCtx} for that the item xml representation shall be parsed.
      * @param resourceId       The id of the item resource
      * @param urnModifiedBy    The urn of the modified-by attribute.
      * @param urnStatus        The urn of the status attribute.
@@ -111,7 +111,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      * This method handles an end element.<br> Check if this element is the mdrecords end element.
      *
      * @param element The {@link StartElement} to handle.
-     * @return Returns an end element that shall be handled by further handlers in the chain, or <code>null</code> to
+     * @return Returns an end element that shall be handled by further handlers in the chain, or {@code null} to
      *         stop the chain.
      * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.
      */

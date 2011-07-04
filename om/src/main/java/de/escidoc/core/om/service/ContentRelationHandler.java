@@ -349,7 +349,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *                                     Thrown if the object with id is does not exist or is no Item.
      * @throws LockingException            Thrown if the Item is locked
      * @throws MissingMethodParameterException
-     *                                     Thrown if a parameter is missing within <code>taskParam</code>.
+     *                                     Thrown if a parameter is missing within {@code taskParam}.
      * @throws OptimisticLockingException  Thrown if Item was altered in the mean time.
      * @throws PidAlreadyAssignedException Thrown if a Content-relation is already assigned a PID.
      * @throws InvalidXmlException         Thrown if taskParam has invalid XML.

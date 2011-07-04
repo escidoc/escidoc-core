@@ -138,7 +138,7 @@ public class Datastream {
 
     /**
      * Constructs the Stream identified by name and parentId. The version of the stream identified by timestamp is
-     * retrieved from Fedora. If timestamp is <code>null</code> the latest version is retrieved.
+     * retrieved from Fedora. If timestamp is {@code null} the latest version is retrieved.
      *
      * @param name      The name of the datastream.
      * @param parentId  The unique id the fedora object to which the datastream belongs.
@@ -181,7 +181,7 @@ public class Datastream {
 
     /**
      * Constructs the Stream identified by name and parentId. The version of the stream identified by timestamp is
-     * retrieved from Fedora. If timestamp is <code>null</code> the latest version is retrieved.
+     * retrieved from Fedora. If timestamp is {@code null} the latest version is retrieved.
      *
      * @param name              The name of the datastream.
      * @param parentId          The unique id the fedora object to which the datastream belongs.
@@ -204,7 +204,7 @@ public class Datastream {
 
     /**
      * Constructs the Stream identified by name and parentId. The version of the stream identified by timestamp is
-     * retrieved from Fedora. If timestamp is <code>null</code> the latest version is retrieved.
+     * retrieved from Fedora. If timestamp is {@code null} the latest version is retrieved.
      *
      * @param name              The name of the datastream.
      * @param parentId          The unique id the fedora object to which the datastream belongs.
@@ -339,7 +339,7 @@ public class Datastream {
 
     /**
      * Merges the datastream identified by the name and the objectId to Fedora. The datastream must already exists in
-     * Fedora. Otherwise call <code>persist()</code>.
+     * Fedora. Otherwise call {@code persist()}.
      *
      * @return timestamp of datastream (last-modification-date)
      * @throws FedoraSystemException    Thrown if writing to Fedora failed.
@@ -480,7 +480,7 @@ public class Datastream {
 
     /**
      * Mark datastream as deleted. The datastream is not purged from repository. A new version of datastream is created
-     * with <code><deleted/></code> as content.
+     * with {@code <deleted/>} as content.
      *
      * @throws FedoraSystemException    If an error ocurres in Fedora.
      * @throws WebserverSystemException If an error ocurres.
@@ -521,7 +521,7 @@ public class Datastream {
 
     /**
      * Adds an alternate ID to the {@link java.util.List List} of the alternate IDs of this datastream. A subsequent
-     * call with the same string have no effect. A value off <code>null</code> may be forbidden.
+     * call with the same string have no effect. A value off {@code null} may be forbidden.
      *
      * @param alternateId An alternate ID to add to this Stream.
      */
@@ -531,7 +531,7 @@ public class Datastream {
 
     /**
      * Replaces an alternate ID in the {@link java.util.List List} of the alternate IDs of this datastream. A subsequent
-     * call with the same string have no effect. A value off <code>null</code> may be forbidden.
+     * call with the same string have no effect. A value off {@code null} may be forbidden.
      *
      * @param alternateId An alternate ID to add to this Stream.
      * @param index       position to insert ID
@@ -594,9 +594,10 @@ public class Datastream {
 
     /**
      * Updates the string representing the datastream. The datastream may not be concurrent with Fedora unless
-     * <code>save()</code> is called.
+     * {@code save()} is called.
      *
      * @param stream The string representing the content of this datastream.
+     * @return
      */
     public boolean updateStream(final byte[] stream) {
         if (!XmlUtility.isIdentical(stream, this.stream)) {
@@ -628,7 +629,7 @@ public class Datastream {
     }
 
     /**
-     * See Interface for functional description.<br> This implementation calls <code>toStringUTF8</code>.
+     * See Interface for functional description.<br> This implementation calls {@code toStringUTF8}.
      *
      * @return The String representation of the Stream.
      */
@@ -743,12 +744,14 @@ public class Datastream {
     }
 
     /**
-     * A convenience method to support all old implementations using the {@link Datastream} object instead of the new
+     * A convenience method to support all old implementations using the  object instead of the new
      * {@link DatastreamProfileTO} object.<br/> <br/> If you want to convert an instance of {@link DatastreamProfileTO}
-     * to an instance of {@link Datastream} use the constructor {@link Datastream#Datastream(DatastreamProfileTO,
+     * to an instance of  use the constructor {@link Datastream#Datastream(DatastreamProfileTO,
      * String)}
      *
-     * @return a map containing {@link Datastream} objects representing the {@link DatastreamProfileTO} objects and the
+     * @param datastreamProfileTOs
+     * @param parentId
+     * @return a map containing  objects representing the {@link DatastreamProfileTO} objects and the
      *         datastream ID as the keys.
      */
     public static Map<String, Datastream> convertDatastreamProfileTOs(@NotNull
@@ -763,12 +766,15 @@ public class Datastream {
     }
 
     /**
-     * A convenience method to support all old implementations using the {@link Datastream} object instead of the new
+     * A convenience method to support all old implementations using the  object instead of the new
      * {@link DatastreamProfileTO} object.<br/> <br/> If you want to convert an instance of {@link DatastreamProfileTO}
-     * to an instance of {@link Datastream} use the constructor {@link Datastream#Datastream(DatastreamProfileTO,
+     * to an instance of  use the constructor {@link Datastream#Datastream(DatastreamProfileTO,
      * String)}
      *
-     * @return a map containing {@link Datastream} objects representing the {@link DatastreamProfileTO} objects and the
+     * @param datastreamProfileTOs
+     * @param parentId
+     * @param intoMap
+     * @return a map containing  objects representing the {@link DatastreamProfileTO} objects and the
      *         datastream ID as the keys.
      */
     public static void convertDatastreamProfileTOs(@NotNull

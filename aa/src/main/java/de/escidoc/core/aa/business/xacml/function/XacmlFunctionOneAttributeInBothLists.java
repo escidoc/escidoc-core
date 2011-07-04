@@ -34,7 +34,6 @@ import com.sun.xacml.attr.BagAttribute;
 import com.sun.xacml.attr.BooleanAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
-import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionBase;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 
@@ -77,7 +76,6 @@ public class XacmlFunctionOneAttributeInBothLists extends FunctionBase {
     /**
      * See Interface for functional description.
      *
-     * @see Function#evaluate(List, EvaluationCtx)
      */
     @Override
     public EvaluationResult evaluate(final List inputs, final EvaluationCtx context) {

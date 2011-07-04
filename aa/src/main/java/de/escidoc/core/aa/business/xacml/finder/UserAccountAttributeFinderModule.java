@@ -49,7 +49,6 @@ import com.sun.xacml.attr.AttributeValue;
 import com.sun.xacml.attr.BagAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
-import com.sun.xacml.finder.AttributeFinderModule;
 
 import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.aa.business.authorisation.Constants;
@@ -380,11 +379,12 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     }
 
     /**
-     * Fetches the value of the attribute <code>ATTR_USER_OU</code> for the provided user account.
+     * Fetches the value of the attribute {@code ATTR_USER_OU} for the provided user account.
      *
      * @param userAccount The user account to fetch the value from.
      * @param getChildren if also children of userAccountous are to be fetched.
-     * @return Returns the attribute value in an <code>EvaluationResult</code>.
+     * @return Returns the attribute value in an {@code EvaluationResult}.
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private EvaluationResult fetchUserAccountOus(final UserAccount userAccount, final boolean getChildren)
         throws SystemException {
@@ -426,7 +426,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      * Fetches the groupIds where user is member for the provided user account.
      *
      * @param userAccountId The id of the user account to fetch the value from.
-     * @return Returns the attribute value in an <code>EvaluationResult</code>.
+     * @return Returns the attribute value in an {@code EvaluationResult}.
      * @throws EscidocException e
      */
     private EvaluationResult fetchUserGroups(final String userAccountId) throws EscidocException {
@@ -454,7 +454,8 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      *
      * @param userAccountId The id of the user account to fetch the value from.
      * @param attributeId   The name of the attribute.
-     * @return Returns the attribute value in an <code>EvaluationResult</code>.
+     * @return Returns the attribute value in an {@code EvaluationResult}.
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private EvaluationResult fetchRoleScopes(final String userAccountId, final CharSequence attributeId)
         throws SystemException {
@@ -551,7 +552,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      *
      * @param ctx           The evaluation context, which will be used as key for the cache.
      * @param userAccountId The user account id.
-     * @return Returns the <code>UserAccount</code> identified by the provided id.
+     * @return Returns the {@code UserAccount} identified by the provided id.
      * @throws WebserverSystemException     Thrown in case of an internal error.
      * @throws UserAccountNotFoundException Thrown if no user account with provided id exists.
      */
@@ -576,7 +577,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     }
 
     /**
-     * Asserts that the user account is provided, i.e. it is not <code>null</code>.
+     * Asserts that the user account is provided, i.e. it is not {@code null}.
      *
      * @param userId      The user id for which the account should be provided (should exist).
      * @param userAccount The user account to assert.

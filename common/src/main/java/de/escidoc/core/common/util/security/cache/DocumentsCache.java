@@ -46,7 +46,7 @@ import com.googlecode.ehcache.annotations.Property;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
- * Cache for xml <code>Document</code> objects.<br> This cache is used to avoid multiple parsing of the same document.
+ * Cache for xml {@code Document} objects.<br> This cache is used to avoid multiple parsing of the same document.
  * It provides an method to retrieve a document with creation of not found documents.
  *
  * @author Michael Hoppe
@@ -57,8 +57,8 @@ public class DocumentsCache {
     /**
      * Retrieves the document for the provided document data.
      *
-     * @param documentData The object to get the xml document for, or <code>null</code> in case of an error.
-     * @return Returns the xml <code>Document</code> object representing the provided xml data.
+     * @param documentData The object to get the xml document for, or {@code null} in case of an error.
+     * @return Returns the xml {@code Document} object representing the provided xml data.
      * @throws IOException                  Thrown in case of an i/o error.
      * @throws ParserConfigurationException Thrown in case of an error in parser configuration
      * @throws SAXException                 Thrown in case of a parse error

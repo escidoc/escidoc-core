@@ -47,8 +47,8 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
      * The constructor.
      *
      * @param expectedLastModificationDate The expected last modification date. If this parameter is not
-     *                                     <code>null</code>, the last modification date extracted from the xml is
-     *                                     compared with this value. If this fails, an <code>OptimisticLockingException</code>
+     *                                     {@code null}, the last modification date extracted from the xml is
+     *                                     compared with this value. If this fails, an {@code OptimisticLockingException}
      *                                     is thrown.
      */
     public OptimisticLockingStaxHandler(final Date expectedLastModificationDate) {

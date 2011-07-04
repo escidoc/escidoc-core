@@ -625,7 +625,7 @@ public interface ItemHandlerInterface extends IngestableResource {
     void deleteContentStreams(final String id) throws ItemNotFoundException, SystemException;
 
     /**
-     * Retrieves a XML representation of the content stream specified by <code>name</code>.
+     * Retrieves a XML representation of the content stream specified by {@code name}.
      *
      * @param id   The id of the resource.
      * @param name The name of the content stream subresource.

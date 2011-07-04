@@ -48,8 +48,8 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
     /**
      * Checks if this staging file has an associated file in the file system.
      *
-     * @return Returns <code>true</code> if an existing file in the file system has been associated to this staging
-     *         file, <code>false</code> if there does not exist an associated file.
+     * @return Returns {@code true} if an existing file in the file system has been associated to this staging
+     *         file, {@code false} if there does not exist an associated file.
      */
     public boolean hasFile() {
 
@@ -62,7 +62,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
     /**
      * Checks if this file has an associated file in the file system that is readable.
      *
-     * @return Returns <code>true</code> if an existing, readable file in the file system has been associated to this
+     * @return Returns {@code true} if an existing, readable file in the file system has been associated to this
      *         staging file.
      */
     public boolean canRead() {
@@ -76,7 +76,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
     /**
      * Checks if this file has a reference set and this file would be writeable.
      *
-     * @return Returns <code>true</code> if a reference to a file in the file system has been set and the file system's
+     * @return Returns {@code true} if a reference to a file in the file system has been set and the file system's
      *         file would be writeable.
      */
     public boolean canWrite() {
@@ -90,7 +90,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
     /**
      * Checks if this staging file has been expired.
      *
-     * @return Returns <code>true</code> if this staging file has been expired.
+     * @return Returns {@code true} if this staging file has been expired.
      */
     public boolean isExpired() {
 
@@ -193,7 +193,7 @@ public class StagingFile extends de.escidoc.core.st.business.persistence.Staging
     }
 
     /**
-     * Removes the associated file from the file system and sets the internal file reference to <code>null</code>.<br>
+     * Removes the associated file from the file system and sets the internal file reference to {@code null}.<br>
      * If this staging file does not have an associated staging file, nothing is done.
      *
      * @throws IOException If clear fails.

@@ -460,12 +460,12 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
     /**
      * Handles the provided result.<br> This method examines the provided result. In case of an error result, it is
-     * checked if a <code>ResourceNotFoundException</code> has to be thrown or if another error occurred that is
-     * reported as a <code>WebserverSystemException</code>. If no error occurred, either
+     * checked if a {@code ResourceNotFoundException} has to be thrown or if another error occurred that is
+     * reported as a {@code WebserverSystemException}. If no error occurred, either
      *
      * @param result The result of evaluating the request.
-     * @return Returns <code>true</code>, if no error occurred and the provided result contains a permit decision.
-     *         Returns <code>false</code>, if no error occurred and the result does not contain a permit decision.
+     * @return Returns {@code true}, if no error occurred and the provided result contains a permit decision.
+     *         Returns {@code false}, if no error occurred and the result does not contain a permit decision.
      * @throws WebserverSystemException  Thrown in case of any error except a resource not found error.
      * @throws ResourceNotFoundException Thrown in case of a resource not found error.
      */
@@ -535,6 +535,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      *
      * @param status The XACML status to encode.
      * @return Returns the encoded status.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String encode(final Status status) throws WebserverSystemException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();

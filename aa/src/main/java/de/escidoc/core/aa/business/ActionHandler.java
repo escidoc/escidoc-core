@@ -138,14 +138,13 @@ public class ActionHandler implements ActionHandlerInterface {
             unsecuredActionList = new UnsecuredActionList(contextId, null);
         }
         return this.renderer.renderUnsecuredActionList(unsecuredActionList);
-
     }
 
     /**
      * Validates data of a unsecured action list.
      *
      * @param xmlData The xml data.
-     * @return Returns the xml data in a <code>ByteArrayInputStream</code>.
+     * @return Returns the xml data in a {@code ByteArrayInputStream}.
      * @throws XmlSchemaValidationException Thrown if data in not valid.
      * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
      * @throws WebserverSystemException     Thrown in case of any other failure.

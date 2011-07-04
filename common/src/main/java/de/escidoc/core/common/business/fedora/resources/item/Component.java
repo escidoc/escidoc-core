@@ -97,6 +97,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @param parentId  The id of the parent object.
      * @param timestamp The timestamp which specifies the version of the datastreams to retrieve.
      * @throws ResourceNotFoundException Thrown if the Component resource was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     public Component(final String id, final String parentId, final DateTime timestamp)
         throws ResourceNotFoundException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
@@ -538,8 +543,13 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * Once meant as setter-like method. Compare to setMdRecord, setMdRecords, setContent (FRS).
      *
      * @param xml    The XML with properties section of Component.
-     * @param itemId The id of the Item.
      * @return Map of Component properties.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     public Map<String, String> setProperties(final String xml) throws InvalidContentException,
         TripleStoreSystemException, EncodingSystemException, FedoraSystemException, XmlParserSystemException,

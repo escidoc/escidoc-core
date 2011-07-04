@@ -40,7 +40,6 @@ import com.sun.xacml.attr.AttributeValue;
 import com.sun.xacml.attr.BooleanAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
-import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionBase;
 
 import de.escidoc.core.aa.business.authorisation.Constants;
@@ -54,7 +53,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundEx
 /**
  * Implementation of an XACML (target) function that checks if a role has been granted to the current user (for an
  * object).<br> The first parameter holds the role name, the second one the object type of the object that shall be
- * checked. <br> This function returns <code>true</code>, <ul> <li>if the role is the dummy role holding the policies of
+ * checked. <br> This function returns {@code true}, <ul> <li>if the role is the dummy role holding the policies of
  * the default user. <li>if the role is a unlimited role and has been granted to the subject(user), or</li> <li>if the
  * role is a limited role and has been granted for the object identified by the resource-id of the context to the
  * current user (subject).</li> </ul>
@@ -91,7 +90,6 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     /**
      * See Interface for functional description.
      *
-     * @see Function#evaluate(List, EvaluationCtx)
      */
     @Override
     public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {

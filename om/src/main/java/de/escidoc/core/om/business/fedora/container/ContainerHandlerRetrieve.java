@@ -54,6 +54,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      *
      * @param container instance of Container
      * @return String with container xml
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     protected String getContainerXml(final Container container) throws SystemException {
 
@@ -87,6 +88,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      *
      * @param container instance of Container
      * @return String with relations xml
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     protected String getRelationsXml(final Container container) throws SystemException {
 
@@ -98,6 +100,10 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      *
      * @param mdRecordId The name of the mdrecord element.
      * @return String with md-record xml
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     protected String getMetadataRecordXml(final String mdRecordId) throws EncodingSystemException,
         FedoraSystemException, WebserverSystemException, MdRecordNotFoundException {
@@ -124,6 +130,10 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * Retrieves a xml representation of container subresource "md-records".
      *
      * @return String with md-records xml
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     protected String getMetadataRecordsXml() throws EncodingSystemException, FedoraSystemException,
         WebserverSystemException, IntegritySystemException {
@@ -155,6 +165,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      *
      * @param container instance of Container
      * @return String with properties xml
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     protected String getPropertiesXml(final Container container) throws SystemException {
 
@@ -165,6 +176,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * Retrieves a xml representation of container subresource "resources".
      *
      * @return String with resources xml
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     protected String getResourcesXml() throws WebserverSystemException {
 
@@ -176,6 +188,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      *
      * @param container instance of Container
      * @return String with struct-map xml
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     protected String getStructMapXml(final Container container) throws SystemException {
 

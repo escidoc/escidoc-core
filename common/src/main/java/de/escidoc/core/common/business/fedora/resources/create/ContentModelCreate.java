@@ -108,6 +108,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Set metadata record definitions.
+     * @param mdRecordDefinitions
      */
     public void setMdRecordDefinitions(final List<MdRecordDefinitionCreate> mdRecordDefinitions) {
 
@@ -116,6 +117,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Set resource definitions.
+     * @param resourceDefinitions
      */
     public void setResourceDefinitions(final Map<String, ResourceDefinitionCreate> resourceDefinitions) {
 
@@ -146,6 +148,8 @@ public class ContentModelCreate extends GenericResourceCreate {
      * Persist whole ContentModel to Repository.
      *
      * @param forceSync Set true to force synchronous sync of TripleStore.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public void persist(final boolean forceSync) throws WebserverSystemException, FedoraSystemException {
 
@@ -185,30 +189,6 @@ public class ContentModelCreate extends GenericResourceCreate {
         ingestQuery.setEncoding(XmlUtility.CHARACTER_ENCODING);
         ingestQuery.setFormat(IngestQueryParam.FOXML_FORMAT);
         ingestQuery.setLogMessage("eSciDoc object created");
-
-        // DigitalObjectTO foxmlObject = null;
-        //
-        // try {
-        // final JAXBContext jc =
-        // JAXBContext.newInstance(DigitalObjectTO.class);
-        // final Unmarshaller unmarshaller = jc.createUnmarshaller();
-        // final EsciDocUnmarshallerListener l =
-        // new EsciDocUnmarshallerListener(new
-        // ByteArrayInputStream(foxml.getBytes(XmlUtility.CHARACTER_ENCODING)));
-        // unmarshaller.setListener(l);
-        // final JAXBElement<DigitalObjectTO> element =
-        // unmarshaller.unmarshal(l.getFilteredXmlStreamReader(),
-        // DigitalObjectTO.class);
-        // foxmlObject = element.getValue();
-        // }
-        // catch (final JAXBException e) {
-        // throw new WebserverSystemException(e);
-        // }
-        // catch (final UnsupportedEncodingException e) {
-        // throw new WebserverSystemException(e);
-        // }
-        //
-        // if (foxmlObject != null) {
         this.fedoraServiceClient.ingest(ingestPath, ingestQuery, foxml);
 
         // take timestamp and prepare RELS-EXT
@@ -293,10 +273,6 @@ public class ContentModelCreate extends GenericResourceCreate {
         templateValues.put(XmlTemplateProvider.HREF, getHrefWithVersionSuffix());
 
         templateValues.put(XmlTemplateProvider.TITLE, this.properties.getObjectProperties().getTitle());
-        // templateValues.put(XmlTemplateProvider.VERSION_DATE,
-        // this.properties.getCurrentVersion().getDate().toString());
-        // templateValues.put(XmlTemplateProvider.TIMESTAMP,
-        // this.properties.getCurrentVersion().getDate().toString());
         final DateTime date = this.properties.getCurrentVersion().getDate();
         if (date == null) {
             templateValues.put(XmlTemplateProvider.VERSION_DATE, null);
@@ -342,6 +318,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * object).
      *
      * @return FoXML representation of ContentModel.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getMinimalFoXML() throws WebserverSystemException {
 
@@ -378,6 +355,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      *
      * @param resourceDefinition The resource definition create object.
      * @return FoXML representation of service definition.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDefFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
         final Map<String, Object> valueMap = new HashMap<String, Object>();
@@ -390,6 +368,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      *
      * @param resourceDefinition The resource definition create object.
      * @return FoXML representation of service deployment.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String getSDepFoXML(final ResourceDefinitionCreate resourceDefinition) throws WebserverSystemException {
         final Map<String, Object> valueMap = new HashMap<String, Object>();
@@ -434,6 +413,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * Prepare values for FOXML Template Renderer (Velocity).
      *
      * @return HashMap with template values.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private Map<String, String> preparePropertiesValueMap() throws WebserverSystemException {
 
@@ -461,12 +441,6 @@ public class ContentModelCreate extends GenericResourceCreate {
         valueMap.put(XmlTemplateProvider.CONTENT_MODEL_ID, this.properties.getObjectProperties().getContentModelId());
         valueMap.put(XmlTemplateProvider.CONTENT_MODEL_TITLE, this.properties
             .getObjectProperties().getContentModelTitle());
-
-        // add RELS-EXT current version values
-        // version pid currently not supported for create
-        // valueMap.put(XmlTemplateProvider.VERSION_PID, this.properties
-        // .getCurrentVersion().getPid());
-
         valueMap.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
 
         String date = "---";

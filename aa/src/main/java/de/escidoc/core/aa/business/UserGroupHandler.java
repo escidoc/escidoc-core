@@ -904,6 +904,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @param userGroupId       id of the user group, the member should be added to
      * @param memberCandidateId id of the member candidate user group
      * @return true if the user group hierarchy will not be violated false if the user group hierarchy will be violated
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private boolean isCycleFree(final String userGroupId, final String memberCandidateId)
         throws SqlDatabaseSystemException {
@@ -1038,6 +1039,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     /**
      * Retrieves a list of userGroupIds by querying for userId-selector.
      *
+     * @param userIds
      * @param activeOnly if true, only return active groups
      * @return HashSet userGroupIds
      * @throws UserAccountNotFoundException e
@@ -1102,6 +1104,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     /**
      * Retrieves a list of userGroupIds by querying for groupId-selector.
      *
+     * @param userGroupIds
      * @param activeOnly if true, only retrun active groups.
      * @return HashSet userGroupIds
      * @throws SqlDatabaseSystemException e
@@ -1517,8 +1520,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * Fetches the current grants of the user group identified by the provided id.
      *
      * @param groupId id of the user group
-     * @return Returns a <code>List</code> containing the grants of the user group that are currently valid. If the user
-     *         group does not have a grant, an empty <code>List</code> is returned.
+     * @return Returns a {@code List} containing the grants of the user group that are currently valid. If the user
+     *         group does not have a grant, an empty {@code List} is returned.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database error.
      */
     private List<RoleGrant> fetchCurrentGrants(final String groupId) throws SqlDatabaseSystemException {
@@ -1556,11 +1559,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     }
 
     /**
-     * Sets the creation date and the created-by user in the provided <code>UserGroup</code> object.<br/> The values are
+     * Sets the creation date and the created-by user in the provided {@code UserGroup} object.<br/> The values are
      * set with the values of modification date and modifying user of the provided user group.<br/> Before calling this
      * method, the last modification date and the modifying user must be set.
      *
-     * @param userGroup The <code>UserGroup</code> object to modify.
+     * @param userGroup The {@code UserGroup} object to modify.
      * @throws SystemException Thrown in case of an internal error.
      */
     private static void setCreationValues(final UserGroup userGroup) {
@@ -1574,14 +1577,16 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
     /**
      * Sets the last modification date, the modified-by user and all values from the given properties map in the
-     * provided <code>UserGroup</code> object. <br/> The last modification date is set to the current time, and the
+     * provided {@code UserGroup} object. <br/> The last modification date is set to the current time, and the
      * modified by user to the user account of the current, authenticated user.
      *
-     * @param userGroup       The <code>UserGroup</code> object to modify.
+     * @param userGroup       The {@code UserGroup} object to modify.
      * @param groupProperties map which contains all properties of the user group
      * @return true if the modification values were changed
      * @throws UniqueConstraintViolationException
      *          The label of the given user group has already been used.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private boolean setModificationValues(final UserGroup userGroup, final Map<String, String> groupProperties)
         throws UniqueConstraintViolationException, SqlDatabaseSystemException, WebserverSystemException {

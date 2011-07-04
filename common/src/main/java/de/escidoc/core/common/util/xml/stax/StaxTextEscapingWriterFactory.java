@@ -27,7 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 /**
- * <code>EscapingWriterFactory</code> implementation that returns escaping writers used for escaping text content.
+ * {@code EscapingWriterFactory} implementation that returns escaping writers used for escaping text content.
  *
  * @author Torsten Tetteroo
  */

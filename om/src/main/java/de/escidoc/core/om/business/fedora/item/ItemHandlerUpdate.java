@@ -53,14 +53,10 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
-import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -98,8 +94,6 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @param mdRecordsAttributes Map with XML attributes of md-record element.
      * @param nsUris              Map with name space URIs
      * @throws ComponentNotFoundException   If a component could not be found in the repository.
-     * @throws InvalidStatusException       If the operation pertaining a component is not valid because of its status.
-     * @throws LockingException             If the item is locked and the current user is not the one who locked it.
      * @throws FileNotFoundException        If binary content can not be retrieved.
      * @throws MissingContentException      If some required content is missing.
      * @throws InvalidContentException      If invalid content is found.
@@ -108,8 +102,6 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      *                                      If a read-only attribute is set.
      * @throws ReadonlyElementViolationException
      *                                      If a read-only element is set.
-     * @throws XmlSchemaValidationException If xml schema validation fails.
-     * @throws XmlCorruptedException        If xml data is corrupt.
      * @throws SystemException              Thrown in case of internal error.
      */
     protected void setComponents(
@@ -182,6 +174,12 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws FileNotFoundException      If binary content can not be retrieved.
      * @throws MissingContentException    If some required content is missing.
      * @throws ComponentNotFoundException Thrown if Component with provided id was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     protected void setComponent(
         final Component c, final Map streams, final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
@@ -229,6 +227,12 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @param mdAttributesMap      Map with XML attributes of md-record XML element.
      * @param escidocMdRecordnsUri Name space URI
      * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private static void setComponentMetadataRecords(
         final Component c, final Map<String, ByteArrayOutputStream> mdMap,
@@ -266,6 +270,11 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @return The component properties in a map.
      * @throws InvalidContentException    If xml data contains invalid content.
      * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected Map<String, String> setComponentProperties(final String id, final String xml)
         throws InvalidContentException, ComponentNotFoundException, FedoraSystemException, TripleStoreSystemException,
@@ -307,7 +316,6 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      *
      * @param xml The xml representation of the content type specific properties.
      * @throws FedoraSystemException      If Fedora reports an error.
-     * @throws LockingException           If the item is locked and the current user is not the one who locked it.
      * @throws WebserverSystemException   In case of an internal error.
      * @throws TripleStoreSystemException If triple store reports an error.
      * @throws EncodingSystemException    If encoding fails.
@@ -343,6 +351,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws InvalidContentException    If some invalid content is found in xml data.
      * @throws FileNotFoundException      If binary content can not be retrieved.
      * @throws ComponentNotFoundException Thrown if Component with provided objid was not found.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     protected void setComponentContent(
         final Component component, final String xml, final String fileName, final String mimeType)

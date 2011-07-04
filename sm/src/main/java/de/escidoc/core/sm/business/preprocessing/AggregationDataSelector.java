@@ -97,6 +97,7 @@ public class AggregationDataSelector {
      * Generates DatabaseSelectVo for DirectDatabaseAccessor. Selects statistic-records from statistic-table, matching
      * scopeId, date and xpath.
      *
+     * @param aggregationStatisticDataSelector
      * @param scopeId scopeId
      * @param date    date
      * @return DatabaseSelectVo Returns DatabaseSelectVo with recordInfo.

@@ -46,7 +46,7 @@ public interface EscidocRoleDaoInterface {
      * Checks if a role with the provided id exists.
      *
      * @param identifier An unique identifier of the {@link EscidocRole} object, either the id or the name of the role.
-     * @return Returns <code>true</code> if a role with the provided id exists, else <code>false</code>.
+     * @return Returns {@code true} if a role with the provided id exists, else {@code false}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     boolean roleExists(final String identifier) throws SqlDatabaseSystemException;
@@ -73,7 +73,7 @@ public interface EscidocRoleDaoInterface {
      * Retrieves the {@link EscidocRole} object identified by the provided parameter value.
      *
      * @param identifier An unique identifier of the {@link EscidocRole} object, either the id or the name of the role.
-     * @return Returns the identified {@link EscidocRole} object or <code>null</code>.
+     * @return Returns the identified {@link EscidocRole} object or {@code null}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database error.
      */
     EscidocRole retrieveRole(final String identifier) throws SqlDatabaseSystemException;
@@ -87,7 +87,7 @@ public interface EscidocRoleDaoInterface {
      * @param maxResults The maximal number of results to be returned.
      * @param orderBy    The predicate that shall be used for ordering.
      * @param sorting    The kind of ordering, i.e. ascending or descending.
-     * @return Returns <code>List</code> of identified {@link EscidocRole} objects. If no query or an empty query is
+     * @return Returns {@code List} of identified {@link EscidocRole} objects. If no query or an empty query is
      *         provided, all roles are selected.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database error.
      */
@@ -101,7 +101,7 @@ public interface EscidocRoleDaoInterface {
      * @param criteria   The {@link String} containing the filter criteria as CQL query.
      * @param offset     The index of the first result to be returned.
      * @param maxResults The maximal number of results to be returned.
-     * @return Returns <code>List</code> of identified {@link EscidocRole} objects. If no query or an empty query is
+     * @return Returns {@code List} of identified {@link EscidocRole} objects. If no query or an empty query is
      *         provided, all roles are selected.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      * @throws SqlDatabaseSystemException  Thrown in case of an internal database error.

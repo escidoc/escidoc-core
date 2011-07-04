@@ -195,7 +195,7 @@ public class PIDManagerRESTService implements PIDSystem {
      *
      * @param globalPrefix The globalPrefix for generated PIDs
      * @throws MissingMethodParameterException
-     *          If <code>globalPrefix</code> is null.
+     *          If {@code globalPrefix} is null.
      */
     public void setGlobalPrefix(final String globalPrefix) throws MissingMethodParameterException {
         Utility.checkNotNull(globalPrefix, "global prefix for PID");
@@ -217,7 +217,7 @@ public class PIDManagerRESTService implements PIDSystem {
      *
      * @param separator The separator for generated PIDs
      * @throws MissingMethodParameterException
-     *          If <code>separator</code> is null.
+     *          If {@code separator} is null.
      */
     public void setSeparator(final String separator) throws MissingMethodParameterException {
         Utility.checkNotNull(separator, "separator");
@@ -229,7 +229,7 @@ public class PIDManagerRESTService implements PIDSystem {
      *
      * @param pidNamespace The namespace for generated PIDs
      * @throws MissingMethodParameterException
-     *          If <code>pidNamespace</code> is null.
+     *          If {@code pidNamespace} is null.
      */
     public void setPidNamespace(final String pidNamespace) throws MissingMethodParameterException {
         Utility.checkNotNull(pidNamespace, "namespace for PID");
@@ -242,6 +242,11 @@ public class PIDManagerRESTService implements PIDSystem {
      * @param systemID Objid of resource.
      * @param param    XML parameter from assignPID user interface.
      * @return XML data structure for PID Manager enriched with objid.
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
+     * @throws javax.xml.transform.TransformerFactoryConfigurationError
+     * @throws javax.xml.transform.TransformerException
      */
     private static String preparePidManagerDatastructure(final String systemID, final String param)
         throws ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError,
@@ -279,6 +284,9 @@ public class PIDManagerRESTService implements PIDSystem {
      *
      * @param in InputStream from PIDManager.
      * @return PID
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
      */
     private static String obtainPidResult(final InputStream in) throws ParserConfigurationException, SAXException,
         IOException {

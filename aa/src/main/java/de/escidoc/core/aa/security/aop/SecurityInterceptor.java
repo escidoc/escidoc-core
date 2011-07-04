@@ -47,7 +47,6 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -122,25 +121,26 @@ public class SecurityInterceptor implements Ordered {
      * This method is called every time the Interceptor is intercepting a method call.
      * <p/>
      * It does the following steps: <ul> <li>Fetch the credentials (techUser, handle) of the current user from class
-     * <code>UserContext</code>.</li> <li>Checks the technical username. Has to be either <ul>
-     * <li><code>ShibbolethUser</code>, which means that the service has been invoked from via a webservice, </li>
-     * <li><code>internal</code>, which means that the service has been called internally from another component and
-     * <code>INTERNAL_INTERCEPTION</code> is turned off, or</li> <li><code>authorization</code>, which means that the
+     * {@code UserContext}.</li> <li>Checks the technical username. Has to be either <ul>
+     * <li>{@code ShibbolethUser}, which means that the service has been invoked from via a webservice, </li>
+     * <li>{@code internal}, which means that the service has been called internally from another component and
+     * {@code INTERNAL_INTERCEPTION} is turned off, or</li> <li>{@code authorization}, which means that the
      * service has been called internally from the authorization component.</li> </ul> <li>In case the technical
-     * username is <code>internal</code>, no further security checks are done, the intercepted method is invoked and its
+     * username is {@code internal}, no further security checks are done, the intercepted method is invoked and its
      * return value is returned to the originally invoking method.</li> <li>In case the technical username is
-     * <code>ShibbolethUser</code>, the following steps are executed.</li> <li>The private method
-     * <code>doAuthentication</code> is called, which returns the "real" username for the handle fetched from
-     * <code>UserContext</code>.</li> <li>The private method <code>doAuthorisation</code> is called, which calls the
+     * {@code ShibbolethUser}, the following steps are executed.</li> <li>The private method
+     * {@code doAuthentication} is called, which returns the "real" username for the handle fetched from
+     * {@code UserContext}.</li> <li>The private method {@code doAuthorisation} is called, which calls the
      * XACML engine with the current input parameters in order to decide whether invoking the intercepted method is
      * permitted or denied. In case of denial, an exception is thrown.</li> <li>The intercepted method is invoked,
      * returning some return values.</li> <li>If the return values are a list of objects, these have to filtered before
-     * returned to the invoking service. For this the private method <code>doFiltering</code> is called, which returns
+     * returned to the invoking service. For this the private method {@code doFiltering} is called, which returns
      * the (filtered) return value of the intercepted method.</li> <li>The (filtered) return value of the intercepted
      * method is returned back to the invoking service.</li> </ul>
      *
-     * @param joinPoint The current {@link JoinPoint}.
+     * @param joinPoint The current {@link ProceedingJoinPoint}.
      * @throws Throwable Thrown in case of an error.
+     * @return
      */
     @Around("execution(public * de.escidoc.core.*.service.*.*(..))"
         + " && !within(de.escidoc.core.aa.service.EscidocUserDetailsService)"
@@ -261,14 +261,14 @@ public class SecurityInterceptor implements Ordered {
      * Does the authorization part of the interception.
      * <p/>
      * <p/>
-     * In detail, the following steps are executed: <ul> <li>Calls <code>retrieveMethodMapping</code> of the
+     * In detail, the following steps are executed: <ul> <li>Calls {@code retrieveMethodMapping} of the
      * PolicyDecisionPointBean, providing the name of the intercepted method. Receives one or two
-     * <code>MethodMapping</code> objects, of which the first is used for this method, the second is returned back to
-     * the <code>invoke</code> method. A <code>MethodMapping</code> contains the information, which input parameter of
+     * {@code MethodMapping} objects, of which the first is used for this method, the second is returned back to
+     * the {@code invoke} method. A {@code MethodMapping} contains the information, which input parameter of
      * the intercepted method are relevant for the creation of the XACML request.</li> <li>The helper class
-     * <code>InvocationParser</code> is used to create a <code>RequestVo</code> object from the method input parameters,
-     * which contains the data needed to build an XACML request.</li> <li>Calls <code>checkUserPrivilege</code> of the
-     * PolicyDecisionPointBean, providing the <code>RequestVo</code> in order to decide on the authorization of the
+     * {@code InvocationParser} is used to create a {@code RequestVo} object from the method input parameters,
+     * which contains the data needed to build an XACML request.</li> <li>Calls {@code checkUserPrivilege} of the
+     * PolicyDecisionPointBean, providing the {@code RequestVo} in order to decide on the authorization of the
      * current method invocation.</li> <li>If the invocation of the intercepted method is not authorized, an exception
      * is thrown.</li> </ul>
      *
@@ -276,7 +276,7 @@ public class SecurityInterceptor implements Ordered {
      * @param methodName The called method name.
      * @param arguments  The arguments of the current call.
      * @return The MethodMapping object for after-call, in order to be reused during filtering and don't have to be
-     *         fetched twice from the database. If filtering is not needed, <code>null</code> is returned.
+     *         fetched twice from the database. If filtering is not needed, {@code null} is returned.
      * @throws AuthorizationException         Thrown if authorization fails.
      * @throws WebserverSystemException       Thrown in case of an internal error.
      * @throws ResourceNotFoundException      Thrown if a resource that shall be accessed cannot be found.
@@ -416,7 +416,7 @@ public class SecurityInterceptor implements Ordered {
      * Determines the correct resource not found exception sub class.
      *
      * @param methodMapping The currently checked methodMapping that raised the ResourceNotFoundException. This must not
-     *                      be <code>null</code>.
+     *                      be {@code null}.
      * @param e             The ResourceNotFoundException
      * @return Returns the determined sub class instance or the original exception if no sub class could be determined.
      * @throws WebserverSystemException Thrown in case of an identified error with a method mapping.

@@ -64,7 +64,7 @@ public interface UserGroupDaoInterface {
      * @param userGroup user group owning the grants that shall be retrieved
      * @param role      role that is granted to the user group
      * @param objId     id of the object for that the role is granted to the user group
-     * @return Returns the found <code>Grant</code> object or <code>null</code>.
+     * @return Returns the found {@code Grant} object or {@code null}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     RoleGrant retrieveCurrentGrant(final UserGroup userGroup, final EscidocRole role, final String objId)
@@ -84,7 +84,7 @@ public interface UserGroupDaoInterface {
      * Retrieves a grant.
      *
      * @param grantId The id of the grant that shall be retrieved.
-     * @return Returns the found <code>Grant</code> object or <code>null</code>.
+     * @return Returns the found {@code Grant} object or {@code null}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     RoleGrant retrieveGrant(final String grantId) throws SqlDatabaseSystemException;
@@ -93,7 +93,7 @@ public interface UserGroupDaoInterface {
      * Retrieves the grants of a user group.<br> The grants will be sorted by related role and related object.
      *
      * @param groupId The id of the user group whose grants shall be retrieved.
-     * @return Returns sorted List of <code>Grant</code> objects.
+     * @return Returns sorted List of {@code Grant} objects.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     List<RoleGrant> retrieveGrants(final String groupId) throws SqlDatabaseSystemException;
@@ -102,7 +102,7 @@ public interface UserGroupDaoInterface {
      * Retrieves a user group.
      *
      * @param groupId The id of the user group that shall be retrieved.
-     * @return Returns the found <code>UserGroup</code> object or <code>null</code>.
+     * @return Returns the found {@code UserGroup} object or {@code null}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     UserGroup retrieveUserGroup(final String groupId) throws SqlDatabaseSystemException;
@@ -116,7 +116,7 @@ public interface UserGroupDaoInterface {
      * @param maxResults The maximal number of results to be returned.
      * @param orderBy    The predicate that shall be used for ordering.
      * @param sorting    The kind of ordering, i.e. ascending or descending.
-     * @return Returns <code>List</code> of {@link UserGroup} objects selected by the provided parameters. If no
+     * @return Returns {@code List} of {@link UserGroup} objects selected by the provided parameters. If no
      *         parameter is provided, all user account objects are returned.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
@@ -130,7 +130,7 @@ public interface UserGroupDaoInterface {
      * @param criteria   The {@link String} containing the filter criteria as CQL query.
      * @param offset     The index of the first result to be returned.
      * @param maxResults The maximal number of results to be returned.
-     * @return Returns <code>List</code> of {@link UserGroup} objects selected by the provided parameters. If no
+     * @return Returns {@code List} of {@link UserGroup} objects selected by the provided parameters. If no
      *         parameter is provided, all user account objects are returned.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      * @throws SqlDatabaseSystemException  Thrown in case of an internal database access error.
@@ -142,7 +142,7 @@ public interface UserGroupDaoInterface {
      * Retrieves {@link UserGroupMember} objects using the provided values for filtering.
      *
      * @param criteria The {@link Map} containing the filter criteria. This object is kept as provided by this method.
-     * @return Returns <code>List</code> of {@link UserGroupMember} objects selected by the provided parameters. If no
+     * @return Returns {@code List} of {@link UserGroupMember} objects selected by the provided parameters. If no
      *         parameter is provided, all user group member objects are returned.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
@@ -152,7 +152,7 @@ public interface UserGroupDaoInterface {
     /**
      * Save the provided grant.
      *
-     * @param grant <code>Grant</code> object to save
+     * @param grant {@code Grant} object to save
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void save(final RoleGrant grant) throws SqlDatabaseSystemException;
@@ -176,7 +176,7 @@ public interface UserGroupDaoInterface {
     /**
      * Update the provided grant.
      *
-     * @param grant <code>Grant</code> object to save
+     * @param grant {@code Grant} object to save
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void update(final RoleGrant grant) throws SqlDatabaseSystemException;
@@ -195,7 +195,7 @@ public interface UserGroupDaoInterface {
      * Checks if a user group with the provided id exists.<br> The group is identified by either the id or the label.
      *
      * @param identityInfo The id or label of the group.
-     * @return Returns <code>true</code> if a user group with the provided identifier exists, else <code>false</code>.
+     * @return Returns {@code true} if a user group with the provided identifier exists, else {@code false}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     boolean userGroupExists(final String identityInfo) throws SqlDatabaseSystemException;

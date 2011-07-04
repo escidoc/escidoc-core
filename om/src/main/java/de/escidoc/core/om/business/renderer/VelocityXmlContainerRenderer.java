@@ -89,7 +89,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @param container Container
      * @return XML Container representation.
      * @throws SystemException If an error occurs.
-     * @see ContainerRendererInterface#render(Container)
      */
     @Override
     public String render(final Container container) throws SystemException {
@@ -157,10 +156,10 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     }
 
     /**
-     * Gets the representation of the sub resource <code>relations</code> of an item/container.
+     * Gets the representation of the sub resource {@code relations} of an item/container.
      *
      * @param container The Container.
-     * @return Returns the XML representation of the sub resource <code>ou-parents</code> of an organizational unit.
+     * @return Returns the XML representation of the sub resource {@code ou-parents} of an organizational unit.
      */
     @Override
     public String renderRelations(final Container container) throws WebserverSystemException,
@@ -177,10 +176,10 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     }
 
     /**
-     * Gets the representation of the virtual resource <code>parents</code> of an item/container.
+     * Gets the representation of the virtual resource {@code parents} of an item/container.
      *
      * @param containerId The Container.
-     * @return Returns the XML representation of the virtual resource <code>parents</code> of an container.
+     * @return Returns the XML representation of the virtual resource {@code parents} of an container.
      */
     @Override
     public String renderParents(final String containerId) throws WebserverSystemException, TripleStoreSystemException {
@@ -201,6 +200,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *
      * @param containerId The container for that data shall be created.
      * @param values      The map to add values to.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private void addParentsValues(final String containerId, final Map<String, Object> values)
         throws TripleStoreSystemException {
@@ -270,6 +270,11 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *
      * @param values    The map to add values to.
      * @param container The Container.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     private static void addPropertiesValus(final Map<String, Object> values, final Container container)
         throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
@@ -629,10 +634,10 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     }
 
     /**
-     * Gets the representation of the virtual sub resource <code>struct-map</code> of an organizational unit.
+     * Gets the representation of the virtual sub resource {@code struct-map} of an organizational unit.
      *
      * @param container The Container.
-     * @return Returns the XML representation of the virtual sub resource <code>children</code> of an organizational
+     * @return Returns the XML representation of the virtual sub resource {@code children} of an organizational
      *         unit.
      * @throws SystemException Thrown in case of an internal error.
      */

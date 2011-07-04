@@ -55,11 +55,11 @@ public class ItemUpdateHandler extends DefaultHandler {
 
     /**
      * The constructor.
-     * 
+     *
      * @param itemId
      *            The id of the item that shall be updated.
      * @param parser
-     *            The <code>StaxParser</code>.
+     *            The {@code StaxParser}.
      */
     public ItemUpdateHandler(final String itemId, final StaxParser parser) {
 
@@ -69,8 +69,7 @@ public class ItemUpdateHandler extends DefaultHandler {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
+     *
      */
     @Override
     public StartElement startElement(final StartElement element) throws InvalidContentException {

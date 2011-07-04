@@ -265,6 +265,17 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws RelationPredicateNotFoundException
      *          cf. Interface
      * @see ContainerHandlerInterface#create(String)
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private String doCreate(final String xmlData, final boolean isCreate) throws SystemException,
         ContentModelNotFoundException, ContextNotFoundException, MissingAttributeValueException,
@@ -1028,7 +1039,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     }
 
     /**
-     * Creates Stream objects from the ByteArrayOutputStreams in <code>mdMap</code> and calls Container.setMdRecords
+     * Creates Stream objects from the ByteArrayOutputStreams in {@code mdMap} and calls Container.setMdRecords
      * with a HashMap which contains the metadata datastreams as Stream objects.
      *
      * @param mdMap                A HashMap which contains the metadata datastreams as ByteArrayOutputStream.
@@ -1556,6 +1567,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      *
      * @param id              id
      * @param withdrawComment withdrawComment
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     private void withdrawMembers(final String id, final String withdrawComment) throws TripleStoreSystemException,
         IntegritySystemException, FedoraSystemException, WebserverSystemException {

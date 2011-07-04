@@ -51,58 +51,58 @@ public interface OrganizationalUnitRendererInterface {
     String render(final OrganizationalUnit organizationalUnit) throws SystemException;
 
     /**
-     * Gets the representation of the sub resource <code>properties</code> of an organizational unit.
+     * Gets the representation of the sub resource {@code properties} of an organizational unit.
      *
      * @param organizationalUnit The organizational unit to render.
-     * @return Returns the XML representation of the sub resource <code>properties</code> of an organizational unit.
+     * @return Returns the XML representation of the sub resource {@code properties} of an organizational unit.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderProperties(final OrganizationalUnit organizationalUnit) throws WebserverSystemException;
 
     /**
-     * Gets the representation of the sub resource <code>resources</code> of an organizational unit.
+     * Gets the representation of the sub resource {@code resources} of an organizational unit.
      *
      * @param organizationalUnit The organizational unit to render.
-     * @return Returns the XML representation of the sub resource <code>resources</code> of an organizational unit.
+     * @return Returns the XML representation of the sub resource {@code resources} of an organizational unit.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderResources(final OrganizationalUnit organizationalUnit) throws WebserverSystemException;
 
     /**
-     * Gets the representation of the sub resource <code>md-records</code> of an organizational unit.
+     * Gets the representation of the sub resource {@code md-records} of an organizational unit.
      *
      * @param organizationalUnit The organizational unit to render.
-     * @return Returns the XML representation of the sub resource <code>md-records</code> of an organizational unit.
+     * @return Returns the XML representation of the sub resource {@code md-records} of an organizational unit.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderMdRecords(final OrganizationalUnit organizationalUnit) throws WebserverSystemException;
 
     /**
-     * Gets the representation of a single sub resource <code>md-record</code> of an organizational unit.
+     * Gets the representation of a single sub resource {@code md-record} of an organizational unit.
      *
      * @param organizationalUnit The organizational unit to render.
      * @param name               The name of the md-record.
-     * @return Returns the XML representation of the sub resource <code>md-records</code> of an organizational unit.
+     * @return Returns the XML representation of the sub resource {@code md-records} of an organizational unit.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderMdRecord(final OrganizationalUnit organizationalUnit, final String name)
         throws WebserverSystemException;
 
     /**
-     * Gets the representation of the sub resource <code>parents</code> of an organizational unit.
+     * Gets the representation of the sub resource {@code parents} of an organizational unit.
      *
      * @param organizationalUnit The organizational unit to render.
-     * @return Returns the XML representation of the sub resource <code>parents</code> of an organizational unit.
+     * @return Returns the XML representation of the sub resource {@code parents} of an organizational unit.
      * @throws SystemException Thrown in case of an internal error.
      */
     String renderParents(final OrganizationalUnit organizationalUnit) throws SystemException;
 
     /**
-     * Gets the representation of the virtual sub resource <code>children</code> of an organizational unit.
+     * Gets the representation of the virtual sub resource {@code children} of an organizational unit.
      *
      * @param organizationalUnit The organizational unit to render.
      * @param children           The children of the organizational unit.
-     * @return Returns the XML representation of the virtual sub resource <code>children</code> of the organizational
+     * @return Returns the XML representation of the virtual sub resource {@code children} of the organizational
      *         unit.
      * @throws SystemException Thrown in case of an internal error.
      */
@@ -110,11 +110,11 @@ public interface OrganizationalUnitRendererInterface {
         throws SystemException;
 
     /**
-     * Gets the representation of the virtual sub resource <code>parents</code> of an organizational unit.
+     * Gets the representation of the virtual sub resource {@code parents} of an organizational unit.
      *
      * @param organizationalUnit The organizational unit to render.
      * @param parents            The list of parent objects of the organizational unit.
-     * @return Returns the XML representation of the virtual sub resource <code>parents</code> of an organizational
+     * @return Returns the XML representation of the virtual sub resource {@code parents} of an organizational
      *         unit.
      * @throws SystemException Thrown in case of an internal error.
      */
@@ -122,11 +122,11 @@ public interface OrganizationalUnitRendererInterface {
         throws SystemException;
 
     /**
-     * Gets the representation of the virtual sub resource <code>path-list</code> of an organizational unit.
+     * Gets the representation of the virtual sub resource {@code path-list} of an organizational unit.
      *
      * @param organizationalUnit The organizational unit to render.
      * @param pathes             The path-list of the organizational unit.
-     * @return Returns the XML representation of the virtual sub resource <code>path-list</code> of an organizational
+     * @return Returns the XML representation of the virtual sub resource {@code path-list} of an organizational
      *         unit.
      * @throws SystemException Thrown in case of an internal error.
      */
@@ -134,10 +134,10 @@ public interface OrganizationalUnitRendererInterface {
         throws SystemException;
 
     /**
-     * Gets the successor representation of the <code>organizational unit</code> .
+     * Gets the successor representation of the {@code organizational unit} .
      *
      * @param organizationalUnit The Organizational Unit.
-     * @return Returns the XML representation of the virtual sub resource <code>successors</code> of an organizational
+     * @return Returns the XML representation of the virtual sub resource {@code successors} of an organizational
      *         unit.
      * @throws SystemException Thrown in case of an internal error.
      */

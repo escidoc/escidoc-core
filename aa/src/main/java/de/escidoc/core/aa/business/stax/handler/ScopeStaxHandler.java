@@ -171,7 +171,7 @@ public class ScopeStaxHandler extends DefaultHandler {
     /**
      * Gets the unlimited flag.
      *
-     * @return Returns <code>true</code>, if a unlimited role has been parsed, <code>false</code> else.
+     * @return Returns {@code true}, if a unlimited role has been parsed, {@code false} else.
      */
     public boolean isUnlimited() {
 
@@ -182,7 +182,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * Gets the attribute id definitions of the scope defs.
      *
      * @return Returns the attribute id definitions of the scope defs. If no scope definitions have been found, an empty
-     *         <code>List</code> is returned.
+     *         {@code List} is returned.
      */
     public List<String> getScopeDefAttributeIds() {
         return this.scopeDefAttributeIds;
@@ -192,7 +192,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * Gets the resource type definitions of the scope defs.
      *
      * @return Returns the resource type definitions of the scope defs. If no scope definitions have been found, an
-     *         empty <code>List</code> is returned.
+     *         empty {@code List} is returned.
      */
     public List<String> getScopeDefResourceTypes() {
         return this.scopeDefResourceTypes;

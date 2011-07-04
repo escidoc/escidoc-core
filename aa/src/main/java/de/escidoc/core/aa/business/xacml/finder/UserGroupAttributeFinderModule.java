@@ -165,7 +165,7 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
     }
 
     /**
-     * Asserts that the user group is provided, i.e. it is not <code>null</code> .
+     * Asserts that the user group is provided, i.e. it is not {@code null} .
      *
      * @param userGroupId The userGroup id for which the account should be provided (should exist).
      * @param userGroup   The user group to assert.
@@ -185,7 +185,7 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
      *
      * @param ctx         The evaluation context, which will be used as key for the cache.
      * @param userGroupId The user group id.
-     * @return Returns the <code>UserGroup</code> identified by the provided id.
+     * @return Returns the {@code UserGroup} identified by the provided id.
      * @throws WebserverSystemException   Thrown in case of an internal error.
      * @throws UserGroupNotFoundException Thrown if no user account with provided id exists.
      */

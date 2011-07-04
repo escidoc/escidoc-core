@@ -34,7 +34,6 @@ import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -65,7 +64,6 @@ public class XacmlPolicy extends Policy {
      * @param rules                  The policy rules.
      * @param roleId                 The role id.
      * @param actions                The actions for which this policy is defined.
-     * @throws URISyntaxException Thrown if creation fails due to URI syntax error.
      */
     public XacmlPolicy(final URI policyId, final RuleCombiningAlgorithm ruleCombiningAlgorithm,
         final String description, final List targetSubjects, final List targetResources, final List rules,

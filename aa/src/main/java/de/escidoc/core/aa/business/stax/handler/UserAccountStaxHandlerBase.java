@@ -50,8 +50,8 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
     private RoleGrant grant;
 
     /**
-     * Flag indicating if new user data may be created (<code>true</code>) or data from database shall be updated
-     * (<code>false</code>).
+     * Flag indicating if new user data may be created ({@code true}) or data from database shall be updated
+     * ({@code false}).
      */
     private final boolean create;
 
@@ -59,7 +59,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * The constructor.
      *
      * @param userAccount The user account to handle.
-     * @param create      The flag indicating if new object shall be created ( <code>true</code> ), or a object shall be
+     * @param create      The flag indicating if new object shall be created ( {@code true} ), or a object shall be
      *                    updated.
      */
     protected UserAccountStaxHandlerBase(final UserAccount userAccount, final boolean create) {
@@ -72,7 +72,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * The constructor.
      *
      * @param grant  The grant to handle.
-     * @param create The flag indicating if new object shall be created ( <code>true</code> ), or a object shall be
+     * @param create The flag indicating if new object shall be created ( {@code true} ), or a object shall be
      *               updated.
      */
     protected UserAccountStaxHandlerBase(final RoleGrant grant, final boolean create) {
@@ -91,7 +91,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
     /**
      * Gets the user data from the data provider.
      *
-     * @return Returns the stored <code>UserAccount</code> object or <code>null</code>.
+     * @return Returns the stored {@code UserAccount} object or {@code null}.
      */
     protected UserAccount getUserAccount() {
 
@@ -101,7 +101,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
     /**
      * Gets the user data from the data provider.
      *
-     * @return Returns the stored <code>UserAccount</code> object or <code>null</code>.
+     * @return Returns the stored {@code UserAccount} object or {@code null}.
      */
     protected RoleGrant getGrant() {
 

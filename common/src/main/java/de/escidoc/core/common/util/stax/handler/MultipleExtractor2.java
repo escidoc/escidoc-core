@@ -265,7 +265,7 @@ public class MultipleExtractor2 extends DefaultHandler {
      * Creates a new initialized writer.<br/> The writer's prefixes are initialized to the values of the prefixMap.
      *
      * @param out
-     * @return Returns the initialized <code>XmlStreamWriter</code>X instance.
+     * @return Returns the initialized {@code XmlStreamWriter}X instance.
      * @throws javax.xml.stream.XMLStreamException
      */
     private XMLStreamWriter newInitializedWriter(final ByteArrayOutputStream out) throws XMLStreamException {

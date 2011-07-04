@@ -88,8 +88,8 @@ import de.escidoc.core.common.util.xml.transformer.PoolableTransformerFactory;
 
 /**
  * Helper class to support Xml stuff in eSciDoc.<br> This class provides the validation of XML data using specified
- * schemas.<br> The schemas are specified by providing their schema URIs from that <code>Schema</code> objects are
- * created. These <code>Schema</code> objects are thread-safe and are cached to prevent unnecessary recreation.
+ * schemas.<br> The schemas are specified by providing their schema URIs from that {@code Schema} objects are
+ * created. These {@code Schema} objects are thread-safe and are cached to prevent unnecessary recreation.
  *
  * @author Torsten Tetteroo
  */
@@ -946,15 +946,15 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds a new element to the provided <code>XMLStreamWriter</code> object containing a <code>String</code> value.
+     * Adds a new element to the provided {@code XMLStreamWriter} object containing a {@code String} value.
      *
-     * @param writer         The <code>XMLStreamWriter</code> object to add the element to.
+     * @param writer         The {@code XMLStreamWriter} object to add the element to.
      * @param elementName    The name of the new element.
-     * @param elementContent The <code>String</code> that shall be set as the value of the new element.
+     * @param elementContent The {@code String} that shall be set as the value of the new element.
      * @param namespaceUri   The namespace URI of the new element.
      * @param createEmpty    Flag indicating if a an empty element shall be created if the provided data is
-     *                       <code>null</code> ( <code>true</code> ), or if the element shall not be created (
-     *                       <code>false</code> ).
+     *                       {@code null} ( {@code true} ), or if the element shall not be created (
+     *                       {@code false} ).
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
     public static void addElement(
@@ -973,15 +973,15 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds a new element to the provided <code>XMLStreamWriter</code> object containing a date value.
+     * Adds a new element to the provided {@code XMLStreamWriter} object containing a date value.
      *
-     * @param writer         The <code>XMLStreamWriter</code> object to add the element to.
+     * @param writer         The {@code XMLStreamWriter} object to add the element to.
      * @param elementName    The name of the new element.
-     * @param elementContent The <code>Date</code> that shall be set as the value of the new element.
+     * @param elementContent The {@code Date} that shall be set as the value of the new element.
      * @param namespaceUri   The namespace URI of the new element.
      * @param createEmpty    Flag indicating if a an empty element shall be created if the provided data is
-     *                       <code>null</code> ( <code>true</code> ), or if the element shall not be created (
-     *                       <code>false</code> ).
+     *                       {@code null} ( {@code true} ), or if the element shall not be created (
+     *                       {@code false} ).
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
     public static void addElement(
@@ -1001,10 +1001,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds the "last-modification-date" attribute to the provided <code>XMLStreamWriter</code>.<br> The value of the
+     * Adds the "last-modification-date" attribute to the provided {@code XMLStreamWriter}.<br> The value of the
      * attribute is set to the value of the provided date.<br> If no date is provided, nothing is added.
      *
-     * @param writer       The <code>XMLStreamWriter</code> object to add the attribute to.
+     * @param writer       The {@code XMLStreamWriter} object to add the attribute to.
      * @param modifiedDate The date to set as the last modified date.
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
@@ -1020,10 +1020,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds the provided object id to the <code>XMLStreamWriter</code> that has been provided.<br> The object id is
+     * Adds the provided object id to the {@code XMLStreamWriter} that has been provided.<br> The object id is
      * added as the attribute "objid".
      *
-     * @param writer The <code>XMLStreamWriter</code> object to add the attribute to.
+     * @param writer The {@code XMLStreamWriter} object to add the attribute to.
      * @param objId  The object id to add.
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
@@ -1033,10 +1033,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds a new element to the provided <code>XMLStreamWriter</code> containing a simple xlink with the provided
+     * Adds a new element to the provided {@code XMLStreamWriter} containing a simple xlink with the provided
      * values. The new element is empty.
      *
-     * @param writer       The <code>XMLStreamWriter</code> object to add the element to.
+     * @param writer       The {@code XMLStreamWriter} object to add the element to.
      * @param elementName  The name of the new element.
      * @param xlinkTitle   The title of the xlink contained in the new element.
      * @param xlinkHref    The href of the xlink contained in the new element.
@@ -1053,11 +1053,11 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds the xlink attributes to the provided <code>Element</code>.<br> The attribute "xlink:type" is set to
+     * Adds the xlink attributes to the provided {@code Element}.<br> The attribute "xlink:type" is set to
      * "simple", the attributes "xlink:title" and "xlink:href" to the respective provided values.<br> If the provided
-     * title is <code>null</code>. the title attribute is skipped.
+     * title is {@code null}. the title attribute is skipped.
      *
-     * @param writer     The <code>XMLStreamWriter</code> object to add the attributes to.
+     * @param writer     The {@code XMLStreamWriter} object to add the attributes to.
      * @param xlinkTitle The title of the xlink.
      * @param xlinkHref  The href of the xlink.
      * @throws XMLStreamException Thrown in case of an xml stream error.
@@ -1073,10 +1073,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Adds the "xml:base" attribute to the provided <code>XMLStreamWriter</code>.<br> The value of the attribute is set
-     * to the value of the configuration property <code>escidoc.baseurl</code>.
+     * Adds the "xml:base" attribute to the provided {@code XMLStreamWriter}.<br> The value of the attribute is set
+     * to the value of the configuration property {@code escidoc.baseurl}.
      *
-     * @param writer The <code>XMLStreamWriter</code> object to add the attribute to.
+     * @param writer The {@code XMLStreamWriter} object to add the attribute to.
      * @throws IOException        Thrown if the base url cannot be determined.
      * @throws XMLStreamException Thrown in case of an xml stream error.
      */
@@ -1087,7 +1087,7 @@ public final class XmlUtility {
     }
 
     /**
-     * Gets the <code>Schema</code> from the cache.<br> If none exists for the provided schema URL, it is created and
+     * Gets the {@code Schema} from the cache.<br> If none exists for the provided schema URL, it is created and
      * put into the cache.
      *
      * @param schemaUri The schema URI
@@ -1101,12 +1101,12 @@ public final class XmlUtility {
     }
 
     /**
-     * Validates the provided XML data using the specified schema and creates a <code>ByteArrayInputStream</code> for
+     * Validates the provided XML data using the specified schema and creates a {@code ByteArrayInputStream} for
      * the data.
      *
      * @param xmlData   The xml data.
      * @param schemaUri The URL identifying the schema that shall be used for validation.
-     * @return Returns the xml data in a <code>ByteArrayInputStream</code>.
+     * @return Returns the xml data in a {@code ByteArrayInputStream}.
      * @throws XmlSchemaValidationException Thrown if data in not valid.
      * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
      * @throws WebserverSystemException     Thrown in case of any other failure.
@@ -1120,10 +1120,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Validates the provided XML data using the specified schema.<br> The provided <code>ByteArrayInputStream</code> is
+     * Validates the provided XML data using the specified schema.<br> The provided {@code ByteArrayInputStream} is
      * reset after validation.
      *
-     * @param byteArrayInputStream The XML data to validate in an <code>ByteArrayInputStream</code>.<br> This input
+     * @param byteArrayInputStream The XML data to validate in an {@code ByteArrayInputStream}.<br> This input
      *                             stream is reset after the validation.
      * @param schemaUri            The URL identifying the schema that shall be used for validation.
      * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
@@ -1242,10 +1242,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Converts the provided String to a <code>ByteArrayInputStream</code>.
+     * Converts the provided String to a {@code ByteArrayInputStream}.
      *
-     * @param str The string to get as <code>ByteArrayInputStream</code>.
-     * @return Returns the <code>ByteArrayInputStream</code> for the provided string.
+     * @param str The string to get as {@code ByteArrayInputStream}.
+     * @return Returns the {@code ByteArrayInputStream} for the provided string.
      */
     public static ByteArrayInputStream convertToByteArrayInputStream(final String str) {
 
@@ -1259,10 +1259,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Converts the provided String to a <code>ByteArrayOutputStream</code>.
+     * Converts the provided String to a {@code ByteArrayOutputStream}.
      *
-     * @param str The string to get as <code>ByteArrayOutputStream</code>.
-     * @return Returns the <code>ByteArrayOutputStream</code> for the provided string.
+     * @param str The string to get as {@code ByteArrayOutputStream}.
+     * @return Returns the {@code ByteArrayOutputStream} for the provided string.
      */
     public static ByteArrayOutputStream convertToByteArrayOutputStream(final String str) {
         final ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -1311,7 +1311,7 @@ public final class XmlUtility {
      * objid is extracted and returned.
      *
      * @param resourceXml The XML representation of the resource to get the objid from.
-     * @return Returns the extracted objid or <code>null</code>.
+     * @return Returns the extracted objid or {@code null}.
      */
     public static String getIdFromXml(final CharSequence resourceXml) {
 
@@ -1377,7 +1377,7 @@ public final class XmlUtility {
      * &lt;...:name&gt;...&lt;/...:name&gt; is searched and the value is returned.
      *
      * @param resourceXml The XML representation of the resource to get the name from.
-     * @return Returns the extracted name (trimmed) or <code>null</code>.
+     * @return Returns the extracted name (trimmed) or {@code null}.
      */
     public static String extractNameFromXml(final CharSequence resourceXml) {
 
@@ -1992,15 +1992,15 @@ public final class XmlUtility {
     }
 
     /**
-     * Gets an initilized <code>XMLOutputFactory2</code> instance.<br/> The returned instance is initialized as follows:
-     * <ul> <li>If the provided parameter is set to <code>true</code>, IS_REPAIRING_NAMESPACES is set to true, i.e. the
-     * created writers will automatically repair the namespaces, see <code>XMLOutputFactory</code> for details.</li>
+     * Gets an initilized {@code XMLOutputFactory2} instance.<br/> The returned instance is initialized as follows:
+     * <ul> <li>If the provided parameter is set to {@code true}, IS_REPAIRING_NAMESPACES is set to true, i.e. the
+     * created writers will automatically repair the namespaces, see {@code XMLOutputFactory} for details.</li>
      * <li>For writing escaped attribute values, the {@link StaxAttributeEscapingWriterFactory} is used<./li> <li>For
      * writing escaped text content, the {@link StaxTextEscapingWriterFactory} is used.</li> </ul>
      *
-     * @param repairing Flag indicating if the factory shall create namespace repairing writers (<code>true</code>) or
-     *                  non repairing writers (<code>false</code>).
-     * @return Returns the initalized <code>XMLOutputFactory</code> instance.
+     * @param repairing Flag indicating if the factory shall create namespace repairing writers ({@code true}) or
+     *                  non repairing writers ({@code false}).
+     * @return Returns the initalized {@code XMLOutputFactory} instance.
      */
     private static XMLOutputFactory getInitilizedXmlOutputFactory(final boolean repairing) {
         final XMLOutputFactory xmlof = XMLOutputFactory.newInstance();
@@ -2014,10 +2014,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Creates an <code>XMLStreamWriter</code> for the provided <code>OutputStream</code>.
+     * Creates an {@code XMLStreamWriter} for the provided {@code OutputStream}.
      *
-     * @param out The <code>OutputStream</code> to get the writer for.
-     * @return Returns the <code>XMLStreamWriter</code>.
+     * @param out The {@code OutputStream} to get the writer for.
+     * @return Returns the {@code XMLStreamWriter}.
      * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
     public static XMLStreamWriter createXmlStreamWriter(final OutputStream out) throws XMLStreamException {
@@ -2025,10 +2025,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Creates a namespace repairing <code>XMLStreamWriter</code> for the provided <code>OutputStream</code>.
+     * Creates a namespace repairing {@code XMLStreamWriter} for the provided {@code OutputStream}.
      *
-     * @param out The <code>OutputStream</code> to get the writer for.
-     * @return Returns the <code>XMLStreamWriter</code>.
+     * @param out The {@code OutputStream} to get the writer for.
+     * @return Returns the {@code XMLStreamWriter}.
      * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
     public static XMLStreamWriter createXmlStreamWriterNamespaceRepairing(final OutputStream out)
@@ -2038,10 +2038,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Creates an <code>XMLStreamWriter</code> for the provided <code>OutputStream</code>.
+     * Creates an {@code XMLStreamWriter} for the provided {@code OutputStream}.
      *
-     * @param writer The <code>Writer</code> to get the writer for.
-     * @return Returns the <code>XMLStreamWriter</code>.
+     * @param writer The {@code Writer} to get the writer for.
+     * @return Returns the {@code XMLStreamWriter}.
      * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
     public static XMLStreamWriter createXmlStreamWriter(final Writer writer) throws XMLStreamException {
@@ -2050,10 +2050,10 @@ public final class XmlUtility {
     }
 
     /**
-     * Creates an <code>XMLEventWriter</code> for the provided <code>Writer</code>.
+     * Creates an {@code XMLEventWriter} for the provided {@code Writer}.
      *
-     * @param writer The <code>Writer</code> to get the writer for.
-     * @return Returns the <code>XMLEventWriter</code>.
+     * @param writer The {@code Writer} to get the writer for.
+     * @return Returns the {@code XMLEventWriter}.
      * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
     public static XMLEventWriter createXmlEventWriter(final Writer writer) throws XMLStreamException {
@@ -2061,7 +2061,7 @@ public final class XmlUtility {
     }
 
     /**
-     * Throws an <code>MissingAttributeValueException</code>.
+     * Throws an {@code MissingAttributeValueException}.
      *
      * @param element       The element in that the attribute is missing.
      * @param attributeName The name of the missing attribute.

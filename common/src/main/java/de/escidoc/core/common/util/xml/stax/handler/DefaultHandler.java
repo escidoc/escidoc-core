@@ -66,7 +66,7 @@ public abstract class DefaultHandler {
      * This method handles a start element.<br> The default implementation just returns the provided object.
      *
      * @param element The {@link StartElement} to handle.
-     * @return Returns a start element that shall be handled by further handlers in the chain, or <code>null</code> to
+     * @return Returns a start element that shall be handled by further handlers in the chain, or {@code null} to
      *         stop the chain.
      * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.
      */
@@ -78,7 +78,7 @@ public abstract class DefaultHandler {
      * This method handles an end element.<br> The default implementation just returns the provided object.
      *
      * @param element The {@link StartElement} to handle.
-     * @return Returns an end element that shall be handled by further handlers in the chain, or <code>null</code> to
+     * @return Returns an end element that shall be handled by further handlers in the chain, or {@code null} to
      *         stop the chain.
      * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.
      */
@@ -91,7 +91,7 @@ public abstract class DefaultHandler {
      *
      * @param data    The character content of the element.
      * @param element The current {@link StartElement} to that the content belongs.
-     * @return Returns a {@link String} that shall be handled by further handlers in the chain, or <code>null</code> to
+     * @return Returns a {@link String} that shall be handled by further handlers in the chain, or {@code null} to
      *         stop the chain.
      * @throws Exception Thrown if anything fails. This depends on the implementation of the concrete class.
      */
@@ -117,14 +117,14 @@ public abstract class DefaultHandler {
     }
 
     /**
-     * @return Returns <code>true</code> if the ready flag is not set.
+     * @return Returns {@code true} if the ready flag is not set.
      */
     protected boolean isNotReady() {
         return !this.ready;
     }
 
     /**
-     * Marks this handler has finished by setting the ready flag to <code>true</code>.
+     * Marks this handler has finished by setting the ready flag to {@code true}.
      */
     protected void setReady() {
         this.ready = true;

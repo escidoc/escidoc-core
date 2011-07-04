@@ -58,7 +58,7 @@ public class LinkCollectionStaxHandler extends LinkStaxHandler {
      * @param hrefBaseUri    The base uri of the href pointing to the objects that are referenced by the links that
      *                       shall be parsed by this handler.
      * @param exceptionClass The type of the exception to throw if href base uri is not matched. This
-     *                       parameter must not be <code>null</code> and must be an instance of {@link
+     *                       parameter must not be {@code null} and must be an instance of {@link
      *                       EscidocException}, but this is not checked!.
      */
     public LinkCollectionStaxHandler(final String elementPath, final String hrefBaseUri, final Class exceptionClass) {

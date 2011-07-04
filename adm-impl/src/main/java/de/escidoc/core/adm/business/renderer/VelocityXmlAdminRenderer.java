@@ -80,6 +80,8 @@ public class VelocityXmlAdminRenderer implements AdminRendererInterface {
 
     /**
      * Adds the values of the indexConfiguration that shall be rendered to the provided {@link Map}.
+     * @param indexConfiguration
+     * @param values
      */
     @SuppressWarnings("unchecked")
     private static void addIndexConfigurationValues(

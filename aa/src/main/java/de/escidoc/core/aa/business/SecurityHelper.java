@@ -62,7 +62,6 @@ import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.aa.business.persistence.ScopeDef;
 import de.escidoc.core.aa.business.xacml.XacmlPolicyReference;
 import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
-import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
@@ -106,8 +105,11 @@ public class SecurityHelper {
      *
      * @param userOrGroupId The user ID or Group ID.
      * @param roleId        The role ID.
-     * @param resourceId    The resource ID. This may be <code>null</code>.
+     * @param role
+     * @param ctx
+     * @param resourceId    The resource ID. This may be {@code null}.
      * @return EvaluationResult EvaluationResult for given user- or groupId, roleId and resourceId.
+     * @throws Exception
      */
     public EvaluationResult getRoleIsGrantedEvaluationResult(
         final String userOrGroupId, final String roleId, final String resourceId, final EscidocRole role,
@@ -271,8 +273,12 @@ public class SecurityHelper {
      * <p/>
      *
      * @param userId The user ID .
-     * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the user's polices, or
-     *         <code>null</code>.
+     * @param policyFinder
+     * @return The {@code XacmlPolicySet} containing the policy set that consists of the user's polices, or
+     *         {@code null}.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.net.URISyntaxException
+     * @throws com.sun.xacml.UnknownIdentifierException
      */
     public XacmlPolicySet getUserPolicies(final String userId, final PolicyFinder policyFinder)
         throws UnknownIdentifierException, URISyntaxException, WebserverSystemException {
@@ -311,8 +317,12 @@ public class SecurityHelper {
      * <p/>
      *
      * @param groupId The group ID to use as key for HashMap.
-     * @return The <code>XacmlPolicySet</code> containing the policy set that consists of the group's polices, or
-     *         <code>null</code>.
+     * @param policyFinder
+     * @return The {@code XacmlPolicySet} containing the policy set that consists of the group's polices, or
+     *         {@code null}.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.net.URISyntaxException
+     * @throws com.sun.xacml.UnknownIdentifierException
      */
     public XacmlPolicySet getGroupPolicies(final String groupId, final PolicyFinder policyFinder)
         throws UnknownIdentifierException, URISyntaxException, WebserverSystemException {
@@ -335,7 +345,9 @@ public class SecurityHelper {
      * Gets the the user grants for the provided user ID.<br>
      *
      * @param userId The user ID to use as key for HashMap.
-     * @return The grants of the user in a <code>Map</code>, or <code>null</code>.
+     * @return The grants of the user in a {@code Map}, or {@code null}.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public Map<String, Map<String, List<RoleGrant>>> getUserGrants(final String userId)
         throws UserAccountNotFoundException, SystemException {
@@ -346,7 +358,9 @@ public class SecurityHelper {
      * Gets the the group grants for the provided group ID.<br>
      *
      * @param groupId The group ID to use as key for HashMap.
-     * @return The grants of the group in a <code>Map</code>, or <code>null</code>.
+     * @return The grants of the group in a {@code Map}, or {@code null}.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public Map<String, Map<String, List<RoleGrant>>> getGroupGrants(final String groupId)
         throws ResourceNotFoundException, SystemException {
@@ -357,7 +371,8 @@ public class SecurityHelper {
      * Gets the the user details for the provided handle.<br>
      *
      * @param handle The handle to use as key for HashMap.
-     * @return The details of the user as <code>UserDetails</code>, or <code>null</code>.
+     * @return The details of the user as {@code UserDetails}, or {@code null}.
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     public UserDetails getUserDetails(final String handle) throws SqlDatabaseSystemException {
         return policiesCache.getUserDetails(handle);
@@ -367,7 +382,9 @@ public class SecurityHelper {
      * Gets the the user groups for the provided userId.<br>
      *
      * @param userId The userId.
-     * @return The groups of the user as <code>Set</code>, or <code>null</code>.
+     * @return The groups of the user as {@code Set}, or {@code null}.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     public Set<String> getUserGroups(final String userId) throws UserAccountNotFoundException, SystemException {
         return policiesCache.getUserGroups(userId);
@@ -377,7 +394,8 @@ public class SecurityHelper {
      * Gets the policies for the provided role.
      *
      * @param idReference The reference of the role's policies set.
-     * @return Returns the <code>PolicyFinderResult</code> containing the policy set of the addressed role.
+     * @return Returns the {@code PolicyFinderResult} containing the policy set of the addressed role.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public XacmlPolicySet getRolePolicySet(final URI idReference) throws WebserverSystemException {
         return policiesCache.getRolePolicySet(idReference, policiesCache.getRole(idReference.toString()));
@@ -387,7 +405,7 @@ public class SecurityHelper {
      * Gets the role for the provided role id.
      *
      * @param roleId The role identifier.
-     * @return Returns the <code>EscidocRole</code> for the provided key.
+     * @return Returns the {@code EscidocRole} for the provided key.
      */
     public EscidocRole getRole(final String roleId) {
         return policiesCache.getRole(roleId);
@@ -611,13 +629,13 @@ public class SecurityHelper {
 
     /**
      * Retrieve all policies given to the user by his/her (restricted) roles <br> The policies are returned in a
-     * <code>XacmlPolicySet</code> with the policy combining algorithm set to ordered-permit-overrides.
+     * {@code XacmlPolicySet} with the policy combining algorithm set to ordered-permit-overrides.
      *
      * @param userId       The internal id of the user, used to identify the user account.
      * @param policyFinder the policyFinder to use.
-     * @return Returns a <code>PolicySet</code> with the policy combining algorithm set to ordered-permit-overrides or
-     *         <code>null</code>. The policy set is built up by policy references to the role policy sets. If the
-     *         provided user id matches the anonymous user, <code>null</code> is returned.
+     * @return Returns a {@code PolicySet} with the policy combining algorithm set to ordered-permit-overrides or
+     *         {@code null}. The policy set is built up by policy references to the role policy sets. If the
+     *         provided user id matches the anonymous user, {@code null} is returned.
      * @throws WebserverSystemException In case of an internal error.
      */
     private XacmlPolicySet retrieveUserRolesPolicies(final String userId, final PolicyFinder policyFinder)
@@ -643,15 +661,15 @@ public class SecurityHelper {
 
     /**
      * Retrieve all policies given to the user/group by his/her (restricted) roles <br> The policies are returned in a
-     * <code>XacmlPolicySet</code> with the policy combining algorithm set to ordered-permit-overrides.
+     * {@code XacmlPolicySet} with the policy combining algorithm set to ordered-permit-overrides.
      *
      * @param roleGrants    map with current grants of the user/group.
      * @param userOrGroupId The internal id of the user/group, used to identify the user account/user group.
      * @param policyFinder  the policyFinder to use.
      * @param isUser        boolean if user-roles are requested
-     * @return Returns a <code>PolicySet</code> with the policy combining algorithm set to ordered-permit-overrides or
-     *         <code>null</code>. The policy set is built up by policy references to the role policy sets. If the
-     *         provided user id matches the anonymous user, <code>null</code> is returned.
+     * @return Returns a {@code PolicySet} with the policy combining algorithm set to ordered-permit-overrides or
+     *         {@code null}. The policy set is built up by policy references to the role policy sets. If the
+     *         provided user id matches the anonymous user, {@code null} is returned.
      * @throws WebserverSystemException In case of an internal error.
      */
     private XacmlPolicySet retrieveRolesPolicies(
@@ -689,10 +707,10 @@ public class SecurityHelper {
 
     /**
      * Retrieves the default policies that are granted to every user.<br> The policies are fetched for the dummy role
-     * "Default". They are set in the field <code>defaultPolicies</code>.
+     * "Default". They are set in the field {@code defaultPolicies}.
      *
      * @param policyFinder the policyFinder to use.
-     * @return Returns an <code>XacmlPolicyReference</code> referencing the set of default policies.
+     * @return Returns an {@code XacmlPolicyReference} referencing the set of default policies.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private AbstractPolicy retrieveDefaultPolicies(final PolicyFinder policyFinder) throws WebserverSystemException {
@@ -712,13 +730,13 @@ public class SecurityHelper {
 
     /**
      * Retrieve all policies given to the group by their (restricted) roles <br> The policies are returned in a
-     * <code>XacmlPolicySet</code> with the policy combining algorithm set to ordered-permit-overrides.
+     * {@code XacmlPolicySet} with the policy combining algorithm set to ordered-permit-overrides.
      *
      * @param groupId      The internal id of the group.
      * @param policyFinder the policyFinder to use.
-     * @return Returns a <code>PolicySet</code> with the policy combining algorithm set to ordered-permit-overrides or
-     *         <code>null</code>. The policy set is built up by policy references to the role policy sets. If the
-     *         provided user id matches the anonymous user, <code>null</code> is returned.
+     * @return Returns a {@code PolicySet} with the policy combining algorithm set to ordered-permit-overrides or
+     *         {@code null}. The policy set is built up by policy references to the role policy sets. If the
+     *         provided user id matches the anonymous user, {@code null} is returned.
      * @throws WebserverSystemException In case of an internal error.
      */
     private XacmlPolicySet retrieveGroupRolesPolicies(final String groupId, final PolicyFinder policyFinder)

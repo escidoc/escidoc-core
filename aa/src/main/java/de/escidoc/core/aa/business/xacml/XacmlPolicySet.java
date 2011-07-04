@@ -68,10 +68,10 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
     private static final long serialVersionUID = -6321273571116516551L;
 
     /**
-     * Creates an <code>XacmlPolicySet</code> object.
+     * Creates an {@code XacmlPolicySet} object.
      *
      * @param policySetId          The id of the policy set.
-     * @param combiningAlgorithmId The <code>PolicyCombiningAlgorithm</code>.
+     * @param combiningAlgorithmId The {@code PolicyCombiningAlgorithm}.
      * @param description          The description of the policy set.
      * @param policies             The contained Policy or PolicySet objects.
      * @throws URISyntaxException         Thrown if a provided URI is invalid.
@@ -84,10 +84,10 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
     }
 
     /**
-     * Creates an <code>XacmlPolicySet</code> object.
+     * Creates an {@code XacmlPolicySet} object.
      *
      * @param policySetId          The id of the policy set.
-     * @param combiningAlgorithmId The <code>PolicyCombiningAlgorithm</code>.
+     * @param combiningAlgorithmId The {@code PolicyCombiningAlgorithm}.
      * @param description          The description of the policy set.
      * @param targetSubjects       The subjects part of the target of the policy set.
      * @param targetResources      The resources part of the target of the policy set.
@@ -104,10 +104,10 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
     }
 
     /**
-     * Creates an <code>XacmlPolicySet</code> object.
+     * Creates an {@code XacmlPolicySet} object.
      *
      * @param policySetId          The id of the policy set.
-     * @param combiningAlgorithmId The <code>PolicyCombiningAlgorithm</code>.
+     * @param combiningAlgorithmId The {@code PolicyCombiningAlgorithm}.
      * @param description          The description of the policy set.
      * @param target               The target of the policy set.
      * @param policies             The contained Policy or PolicySet objects.
@@ -121,10 +121,10 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
     }
 
     /**
-     * Gets the <code>PolicyCombiningAlgorithm</code> object for the provided combining algorithm id.
+     * Gets the {@code PolicyCombiningAlgorithm} object for the provided combining algorithm id.
      *
      * @param combiningAlgorithmId The id of the combining algorithm.
-     * @return Returns the <code>PolicyCombiningAlgorithm</code> object.
+     * @return Returns the {@code PolicyCombiningAlgorithm} object.
      * @throws UnknownIdentifierException Thrown if the provided identifier is unknown.
      * @throws URISyntaxException         Thrown if no URI can be generated for the provided id.
      */

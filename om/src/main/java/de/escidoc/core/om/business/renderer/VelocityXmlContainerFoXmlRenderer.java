@@ -33,9 +33,6 @@ public class VelocityXmlContainerFoXmlRenderer implements ContainerFoXmlRenderer
      * @param containerId          Objid of Container.
      * @param lastModificationDate Last Modification date of Container.
      * @return XML representation of Container
-     * @see de.escidoc.core.oum.business.renderer.interfaces.
-     *
-     * #render(Map)
      */
     @Override
     public String render(

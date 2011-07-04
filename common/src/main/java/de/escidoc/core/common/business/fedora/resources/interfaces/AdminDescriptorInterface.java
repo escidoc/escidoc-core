@@ -32,7 +32,7 @@ public interface AdminDescriptorInterface extends FedoraResource {
      * Gets the RELS-EXT datastream of the fedora object.
      *
      * @return The Fedora RELS-EXT datastream.
-     * @throws StreamNotFoundException If there is no RELS-EXT datastream of a fedora object with <code>id</code>.
+     * @throws StreamNotFoundException If there is no RELS-EXT datastream of a fedora object with {@code id}.
      */
     @Override
     Datastream getRelsExt() throws StreamNotFoundException;
@@ -42,7 +42,7 @@ public interface AdminDescriptorInterface extends FedoraResource {
      * be done.
      *
      * @param ds A Stream representing the Fedora RELS-EXT datastream.
-     * @throws StreamNotFoundException If there is no RELS-EXT datastream of a fedora object with <code>id</code>. This
+     * @throws StreamNotFoundException If there is no RELS-EXT datastream of a fedora object with {@code id}. This
      *                                 is probably an error cause a fedora object have to have this datastream.
      */
     @Override

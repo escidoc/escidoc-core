@@ -100,12 +100,15 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     }
 
     /**
-     * Sets the creation date and the created-by user in the provided <code>SetDefinition</code> object.<br/> The values
+     * Sets the creation date and the created-by user in the provided {@code SetDefinition} object.<br/> The values
      * are set with the values of modification date and modifying user of the provided set definition.<br/>
      *
-     * @param setDefinition definition The <code>SetDefinition</code> object to modify.
+     * @param setDefinition definition The {@code SetDefinition} object to modify.
+     * @param setProperties
      * @throws UniqueConstraintViolationException
      *          The specification of the given set definition has already been used.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private void setCreationValues(final SetDefinition setDefinition, final Map<String, String> setProperties)
         throws UniqueConstraintViolationException, SqlDatabaseSystemException, WebserverSystemException {
@@ -128,11 +131,13 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
     /**
      * Sets the last modification date, the modified-by user and all values from the given set map in the provided
-     * <code>SetDefinition</code> object. <br/> The last modification date is set to the current time, and the modified
+     * {@code SetDefinition} object. <br/> The last modification date is set to the current time, and the modified
      * by user to the user account of the current, authenticated user.
      *
-     * @param setDefinition The <code>SetDefinition</code> object to modify.
+     * @param setDefinition The {@code SetDefinition} object to modify.
      * @param setProperties map which contains all properties of the set definition
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @return
      */
     private static boolean setModificationValues(
         final SetDefinition setDefinition, final Map<String, String> setProperties) throws WebserverSystemException {

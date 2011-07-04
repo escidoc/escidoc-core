@@ -49,7 +49,7 @@ public final class RoleXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets the role xml PROVIDER.
      *
-     * @return Returns the <code>RoleXmlProvider</code> object.
+     * @return Returns the {@code RoleXmlProvider} object.
      */
     public static RoleXmlProvider getInstance() {
         return PROVIDER;

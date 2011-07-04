@@ -44,10 +44,10 @@ import java.util.Map;
 public interface UserAccountHandlerInterface extends de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface {
 
     /**
-     * Retrieves the current grants of the user with the provided id in a <code>Map</code>.
+     * Retrieves the current grants of the user with the provided id in a {@code Map}.
      *
      * @param userId The User Account ID.
-     * @return Returns the current Grants of the User Account in a <code>Map</code>.
+     * @return Returns the current Grants of the User Account in a {@code Map}.
      * @throws UserAccountNotFoundException Thrown if no user account with the provided id exists.
      * @throws SystemException              Thrown in case of an internal system error.
      */
@@ -58,7 +58,7 @@ public interface UserAccountHandlerInterface extends de.escidoc.core.aa.service.
      * Retrieves the current eScidoc user handles of an user.
      *
      * @param userId The User Account ID.
-     * @return Returns the current eSciDoc user handles of the specified User Account in a <code>Set</code>.
+     * @return Returns the current eSciDoc user handles of the specified User Account in a {@code Set}.
      * @throws UserAccountNotFoundException Thrown if no user with the provided id exists.
      * @throws SystemException              Thrown in case of an internal system error.
      */

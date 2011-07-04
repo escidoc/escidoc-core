@@ -155,7 +155,6 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      *          e.
      * @throws MissingMethodParameterException
      *          e.
-     * @see de.escidoc.core.sm.business.interfaces.ReportDefinitionHandlerInterface#delete(java.lang.String)
      */
     @Override
     public void delete(final String id) throws ReportDefinitionNotFoundException, MissingMethodParameterException,
@@ -304,6 +303,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      * @throws ScopeContextViolationException ex
      * @throws InvalidSqlException            ex
      * @throws ScopeNotFoundException         ex
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private void checkSql(final String sql, final String scopeId) throws ScopeContextViolationException,
         InvalidSqlException, ScopeNotFoundException, SqlDatabaseSystemException {

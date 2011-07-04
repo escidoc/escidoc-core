@@ -46,7 +46,7 @@ public final class ReportXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets the Report xml PROVIDER.
      *
-     * @return Returns the <code>ReportXmlProvider</code> object.
+     * @return Returns the {@code ReportXmlProvider} object.
      */
     public static ReportXmlProvider getInstance() {
         return PROVIDER;

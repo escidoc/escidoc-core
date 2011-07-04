@@ -64,7 +64,7 @@ public class EscidocRole extends EscidocRoleBase {
     /**
      * Checks if this is a limited role or an unlimited role.
      *
-     * @return Returns <code>true</code> if this is a limited role, <code>false</code> else.
+     * @return Returns {@code true} if this is a limited role, {@code false} else.
      */
     public boolean isLimited() {
         return getScopeDefs() != null && !getScopeDefs().isEmpty();
@@ -72,10 +72,10 @@ public class EscidocRole extends EscidocRoleBase {
 
     /**
      * Gets the XACML policy set representing this eSciDoc role.<br> The policies of this role are returned in a
-     * <code>XacmlRolePolicySet</code> with the policy combining algorithm set to ordered-permit-overrides. The
-     * <code>PolicySet</code> objects are cached.
+     * {@code XacmlRolePolicySet} with the policy combining algorithm set to ordered-permit-overrides. The
+     * {@code PolicySet} objects are cached.
      *
-     * @return Returns the <code>XacmlRolePolicySet</code> of this role.
+     * @return Returns the {@code XacmlRolePolicySet} of this role.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public PolicySet getXacmlPolicySet() throws WebserverSystemException {
@@ -107,7 +107,7 @@ public class EscidocRole extends EscidocRoleBase {
     /**
      * Gets the objectTypes of the role's scope definitions.
      *
-     * @return Returns the objectTypes in a <code>List</code>.
+     * @return Returns the objectTypes in a {@code List}.
      */
     public Collection<String> getObjectTypes() {
         if (this.objectTypes == null) {

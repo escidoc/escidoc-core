@@ -30,7 +30,6 @@ package de.escidoc.core.om.service;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.filter.LuceneRequestParameters;
-import de.escidoc.core.common.business.interfaces.ResourceHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -78,7 +77,6 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see ResourceHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData) throws MissingMethodParameterException, ContextNameNotUniqueException,
@@ -93,7 +91,6 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see ResourceHandlerInterface#delete(String)
      */
     @Override
     public void delete(final String id) throws ContextNotFoundException, ContextNotEmptyException,
@@ -106,7 +103,6 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see ResourceHandlerInterface#retrieve(String)
      */
     @Override
     public String retrieve(final String id) throws ContextNotFoundException, MissingMethodParameterException,

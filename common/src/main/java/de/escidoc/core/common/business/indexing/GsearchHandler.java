@@ -80,6 +80,7 @@ public class GsearchHandler {
      * @param resource  String resource.
      * @param index     String name of the index.
      * @param pidSuffix PidSuffix for latestVersion, latestRelease if both is in index.
+     * @param indexFulltextVisibilities
      * @return String response
      * @throws ApplicationServerSystemException
      *          e
@@ -433,6 +434,7 @@ public class GsearchHandler {
      * @param request  request that was send to gsearch
      * @param response response thatr was returned by gsearch
      * @param retries  numer of retries already executed
+     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     private void handleGsearchException(final String index, final String request, String response, int retries)
         throws ApplicationServerSystemException {

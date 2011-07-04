@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * The abstract TripleStoreUtility. <code>getInstance</code> returns a implementation of the subclass registered as
+ * The abstract TripleStoreUtility. {@code getInstance} returns a implementation of the subclass registered as
  * business.TripleStoreUtility.
  *
  * @author Rozita Friedman
@@ -251,11 +251,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * position of the target, must match the provided id.
      *
      * @param id              The id of the object for that a query shall be executed.
-     * @param targetIsSubject A flag indicating if the target is the subject ( <code>true</code>), i.e. the target is
+     * @param targetIsSubject A flag indicating if the target is the subject ( {@code true}), i.e. the target is
      *                        placed in the first BasicNode of the BasicTriplePattern, or if it is the object, i.e. the
      *                        target is placed in the last Basic Node of the BasicTriplePattern.
      * @param predicate       The uri string of the predicate for that the value(s) shall be retrieved.
-     * @return Returns the results of the query in a <code>QueryResults</code> object.
+     * @return Returns the results of the query in a {@code QueryResults} object.
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
     public abstract List<String> executeQueryId(final String id, final boolean targetIsSubject, final String predicate)
@@ -273,11 +273,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * provided literal.
      *
      * @param literal         The literal value.
-     * @param targetIsSubject A flag indicating if the target is the subject ( <code>true</code>), i.e. the target is
+     * @param targetIsSubject A flag indicating if the target is the subject ( {@code true}), i.e. the target is
      *                        placed in the first BasicNode of the BasicTriplePattern, or if it is the object, i.e. the
      *                        target is placed in the last Basic Node of the BasicTriplePattern.
      * @param predicate       The uri string of the predicate for that the value(s) shall be retrieved.
-     * @return Returns the results of the query in a <code>QueryResults</code> object.
+     * @return Returns the results of the query in a {@code QueryResults} object.
      * @throws TripleStoreSystemException If access to the triple store fails.
      * @throws QueryException             Thrown in case of a failed query execution.
      */
@@ -456,7 +456,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     /**
+     * @param id
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     public String getItemForComponent(final String id) throws TripleStoreSystemException {
 
@@ -520,7 +522,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     /**
+     * @param parentId
+     * @param memberId
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     public boolean isMemberOf(final String parentId, final String memberId) throws TripleStoreSystemException {
 
@@ -538,7 +543,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     /**
+     * @param ouId
+     * @param parentId
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     public boolean isParentOfOu(final String ouId, final String parentId) throws TripleStoreSystemException {
         boolean isParent = false;
@@ -555,15 +563,19 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
 
     /**
      * @param pid Objid/PID of the object.
+     * @param fullqualifiedNamedProperties
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     public abstract Map<String, String> getProperties(String pid, Collection<String> fullqualifiedNamedProperties)
         throws TripleStoreSystemException;
 
     /**
      * Returns the value of a property entry in RELS-EXT by adding a slash ('/') to the namespace. In order to retrieve
-     * an entry without an additional slash at the end of the namespace use <code>TripleStoreUtility.getRelation</code>.
+     * an entry without an additional slash at the end of the namespace use {@code TripleStoreUtility.getRelation}.
      *
+     * @param pid
+     * @param fullQualifiedNameProperty
      * @return value of property
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
@@ -589,7 +601,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * Returns the value of a relation entry in RELS-EXT. In contrast to getProperty the namespace is used as it is.
      * (Without an additional '/')
      *
+     * @param pid
+     * @param fullQualifiedPropertyName
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     public abstract String getRelation(final String pid, final String fullQualifiedPropertyName)
         throws TripleStoreSystemException;
@@ -625,7 +640,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     /**
+     * @param pid
+     * @param fullPropertyElementName
      * @throws TripleStoreSystemException If access to the triple store fails.
+     * @return
      */
     // Result is used as a vector in Context.getOrganizationalUnitHrefs()
     public List<String> getPropertiesElementsVector(final String pid, final String fullPropertyElementName)
@@ -650,7 +668,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     }
 
     /**
-     * Check if the object with the identifier <code>pid</code> exists.
+     * Check if the object with the identifier {@code pid} exists.
      *
      * @param pid The id of the requested object.
      * @return true if the object exists, false otherwise.
@@ -662,7 +680,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * Retrieves the object type of the identified object.
      *
      * @param pid The id of the object to get the type for.
-     * @return Returns the object type of the identified object or <code>null</code>.
+     * @return Returns the object type of the identified object or {@code null}.
      * @throws TripleStoreSystemException If access to the triple store fails.
      */
     public String getObjectType(final String pid) throws TripleStoreSystemException {
@@ -708,19 +726,20 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
     /**
      * Builds the starting clause of a query to the triple store.
      *
-     * @param targetIsSubject     Flag indicating that the target to search for is the subject ( <code>true</code>) or
-     *                            the object (<code>false</code>) of the specified predicate.
+     * @param targetIsSubject     Flag indicating that the target to search for is the subject ( {@code true}) or
+     *                            the object ({@code false}) of the specified predicate.
      * @param predicateId         The predicate id
      * @param expectedValue       The value that must be matched by the specified predicate. If
-     *                            <code>targetIsSubject</code> is <code>true</code>, the object of the predicate must
+     *                            {@code targetIsSubject} is {@code true}, the object of the predicate must
      *                            match the value. Otherwise the subject must match the value.
-     * @param targetResourceType  The object type of the target of the query. If this is <code>null</code>, no
+     * @param targetResourceType  The object type of the target of the query. If this is {@code null}, no
      *                            restriction for expected resource type is added.
      * @param contentModelTitleId The id of the predicate pointing to the title of the content model. If this is
-     *                            <code>null</code>, targets of any content model are searched.
+     *                            {@code null}, targets of any content model are searched.
      * @param contentModelTitle   The content model title that the subject must match. This must not be
-     *                            <code>null</code>, if contentModelTitleId is not <code>null</code>.
+     *                            {@code null}, if contentModelTitleId is not {@code null}.
      * @return Returns the where clause searching for the specified subjects.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public abstract StringBuffer getRetrieveWhereClause(
         boolean targetIsSubject, final String predicateId, final String expectedValue, final String targetResourceType,
@@ -776,9 +795,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @param objectType The type of the object. This must be one of <ul> <li>container</li> <li>content-model</li>
      *                   <li>context</li> <li>item</li> <li>component</li> <li>content-relation</li>
      *                   <li>organizational-unit</li> <li>role</li> <li>scope</li> <li>user-account</li> </ul>
-     *                   Otherwise, <code>null</code> is returned.
+     *                   Otherwise, {@code null} is returned.
      * @param objectId   The id of the object.
-     * @return Returns the href to the specified object or <code>null</code>.
+     * @return Returns the href to the specified object or {@code null}.
      */
     public String getHref(final String objectType, final String objectId) {
         String type = null;

@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * <code>Writer</code> implementation that is used to escape special XML characters.<br/> For escaping, the method
+ * {@code Writer} implementation that is used to escape special XML characters.<br/> For escaping, the method
  * escapeForbiddenXmlCharacters of {@link XmlUtility} is used.
  *
  * @author Torsten Tetteroo
@@ -36,9 +36,9 @@ public class StaxEscapingWriter extends Writer {
     private final Writer writer;
 
     /**
-     * Constructs a <code>StaxEscapingWriter</code>.
+     * Constructs a {@code StaxEscapingWriter}.
      *
-     * @param writer          The <code>Writer</code> used for output.
+     * @param writer          The {@code Writer} used for output.
      */
     public StaxEscapingWriter(final Writer writer) {
 

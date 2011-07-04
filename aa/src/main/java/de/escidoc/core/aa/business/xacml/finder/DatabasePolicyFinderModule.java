@@ -119,7 +119,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     }
 
     /**
-     * Initializes the <code>DatabasePolicyFinderModule</code> by setting the specified <code>PolicyFinder</code> to
+     * Initializes the {@code DatabasePolicyFinderModule} by setting the specified {@code PolicyFinder} to
      * help in instantiating PolicySets.
      *
      * @param finder a PolicyFinder used to help in instantiating PolicySets
@@ -192,11 +192,11 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * <p/>
      * <p/>
      * The method executes the following steps in order to fetch suitable policies: <ul> <li>Retrieve
-     * <code>subject-id</code> and <code>action-id</code> from the provided context object, which is used to narrow down
-     * the search to only policies that have this <code>subject-id</code> and <code>action-id</code> in their target
-     * part. This is done via the method <code>retrieveSingleAttribute</code>.</li>
+     * {@code subject-id} and {@code action-id} from the provided context object, which is used to narrow down
+     * the search to only policies that have this {@code subject-id} and {@code action-id} in their target
+     * part. This is done via the method {@code retrieveSingleAttribute}.</li>
      * <p/>
-     * <li>The retrieved policies are checked for matching against the current <code>EvaluationCtx</code>.</li>
+     * <li>The retrieved policies are checked for matching against the current {@code EvaluationCtx}.</li>
      * <p/>
      * <li>If a matching policy is found, it is returned.</li> </ul>
      *
@@ -239,10 +239,13 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     }
 
     /**
-     * Creates a <code>XacmlPolicySet</code> object with all policies directly attached to the user.
+     * Creates a {@code XacmlPolicySet} object with all policies directly attached to the user.
      *
      * @param userId The userId.
-     * @return Returns the created <code>XacmlPolicySet</code> object for the user.
+     * @return Returns the created {@code XacmlPolicySet} object for the user.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws java.net.URISyntaxException
+     * @throws com.sun.xacml.UnknownIdentifierException
      */
     private XacmlPolicySet getUserPolicies(final String userId) throws UnknownIdentifierException, URISyntaxException,
         WebserverSystemException {
@@ -250,11 +253,14 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     }
 
     /**
-     * Creates a <code>XacmlPolicySet</code> object with all policies attached to the user via the groups he belongs
+     * Creates a {@code XacmlPolicySet} object with all policies attached to the user via the groups he belongs
      * to.
      *
      * @param userId The userId.
-     * @return Returns the created <code>XacmlPolicySet</code> object for the user.
+     * @return Returns the created {@code XacmlPolicySet} object for the user.
+     * @throws java.net.URISyntaxException
+     * @throws com.sun.xacml.UnknownIdentifierException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private XacmlPolicySet getUserGroupPolicies(final String userId) throws UnknownIdentifierException,
         URISyntaxException, SystemException {
@@ -292,11 +298,11 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     }
 
     /**
-     * Creates a <code>PolicyFinderResult</code> object holding a processing error status and the provided exception.
+     * Creates a {@code PolicyFinderResult} object holding a processing error status and the provided exception.
      *
      * @param msg The error message.
      * @param e   The exception causing the error.
-     * @return Returns the created <code>PolicyFinderResult</code> object.
+     * @return Returns the created {@code PolicyFinderResult} object.
      */
     private static PolicyFinderResult createProcessingError(final String msg, final Exception e) {
 
@@ -308,7 +314,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     /**
      * Sets the policy finder.
      *
-     * @param policyFinder The <code>PolicyFinder</code> object to set.
+     * @param policyFinder The {@code PolicyFinder} object to set.
      */
     public void setPolicyFinder(final PolicyFinder policyFinder) {
 

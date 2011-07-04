@@ -42,12 +42,12 @@ public interface ContextInterface extends FedoraResource {
     /**
      * Sets the RELS-EXT datastream and saves it in fedora. If the datastream is
      * already set and unchanged, nothing will be done.
-     * 
+     *
      * @param ds
      *            A Stream representing the Fedora RELS-EXT datastream.
      * @throws StreamNotFoundException
      *             If there is no RELS-EXT datastream of a fedora object with
-     *             <code>id</code>. This is probably an error cause a fedora
+     *             {@code id}. This is probably an error cause a fedora
      *             object have to have this datastream.
      * @throws LockingException
      *             Thrown if Context is locked.
@@ -64,11 +64,11 @@ public interface ContextInterface extends FedoraResource {
 
     /**
      * Gets the properties datastream of the fedora object.
-     * 
+     *
      * @return The Fedora properties datastream.
      * @throws StreamNotFoundException
      *             If there is no properties datastream of a fedora object with
-     *             <code>id</code>.
+     *             {@code id}.
      * @throws FedoraSystemException
      *             Thrown if Fedora reports an error.
      */
@@ -77,12 +77,12 @@ public interface ContextInterface extends FedoraResource {
     /**
      * Sets the properties datastream and saves it in fedora. If the datastream
      * is already set and unchanged, nothing will be done.
-     * 
+     *
      * @param ds
      *            The Fedora properties datastream.
      * @throws StreamNotFoundException
      *             If there is no properties datastream of a fedora object with
-     *             <code>id</code>. This is probably an error cause a fedora
+     *             {@code id}. This is probably an error cause a fedora
      *             object have to have this datastream.
      * @throws LockingException
      *             Thrown if Context is locked
@@ -94,9 +94,9 @@ public interface ContextInterface extends FedoraResource {
     /**
      * Gets all admin-descriptor datastreams of the Context. The keys are the
      * names of the datastreams which has to be unique in Context.
-     * Admin-Descriptor datastreams <code>alternateId[0]</code> is
+     * Admin-Descriptor datastreams {@code alternateId[0]} is
      * "admin-descriptor".
-     * 
+     *
      * @return A Map containing the admin-descriptor datastreams of this
      *         resource.
      * @throws FedoraSystemException

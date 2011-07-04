@@ -44,7 +44,7 @@ public interface StagingFileDao {
      * Finds the staging file identified by the given token.
      *
      * @param token The token identifying the staging file.
-     * @return Returns the staging file object identified by the token or <code>null</code>.
+     * @return Returns the staging file object identified by the token or {@code null}.
      * @throws SqlDatabaseSystemException TODO
      */
     StagingFile findStagingFile(final String token) throws SqlDatabaseSystemException;
@@ -52,7 +52,7 @@ public interface StagingFileDao {
     /**
      * Find the staging files with expired token.
      *
-     * @return <code>List</code> containing all staging files that have an expired token, i.e. for which the expiry
+     * @return {@code List} containing all staging files that have an expired token, i.e. for which the expiry
      *         timestamp is less than the current timestamp.
      * @throws SqlDatabaseSystemException TODO
      */

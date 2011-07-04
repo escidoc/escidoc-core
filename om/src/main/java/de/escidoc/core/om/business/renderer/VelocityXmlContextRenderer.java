@@ -398,6 +398,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *
      * @param ouids Vector with IDs of OUs.
      * @return Vector with OU description (id, title, href)
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Collection<Map<String, String>> getOrganizationalUnitsContext(final Iterable<String> ouids)
         throws TripleStoreSystemException {
@@ -416,6 +417,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *
      * @param id The Id of the Organizational Unit.
      * @return HashMap with (id, title, href)
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public Map<String, String> getOrganizationalUnitContext(final String id) throws TripleStoreSystemException {
         final Map<String, String> ouContext = new HashMap<String, String>();
@@ -454,7 +456,10 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
     /**
      * Add the values to render the member list.
      *
+     * @param values
+     * @param memberList
      * @throws AuthorizationException Thrown if access to origin Item is restricted.
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private void addMemberListValues(final Map<String, Object> values, final Iterable<String> memberList)
         throws SystemException, AuthorizationException {
@@ -545,6 +550,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
     /**
      * @param id The id of the context.
      * @return Returns the name of a context.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getName(final String id) throws TripleStoreSystemException {
         return getProperty(id, TripleStoreUtility.PROP_NAME);
@@ -554,6 +560,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param id       The id of the context.
      * @param property The name of the property.
      * @return Returns a value of a property of an organizational unit.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private String getProperty(final String id, final String property) throws TripleStoreSystemException {
         return this.tripleStoreUtility.getPropertiesElements(id, property);

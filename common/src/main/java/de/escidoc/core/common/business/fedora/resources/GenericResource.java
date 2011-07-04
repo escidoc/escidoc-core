@@ -574,6 +574,8 @@ public class GenericResource implements FedoraResource {
      *
      * @param prop Name of property.
      * @return Value of property.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getProperty(final String prop) throws TripleStoreSystemException, WebserverSystemException {
 
@@ -736,6 +738,8 @@ public class GenericResource implements FedoraResource {
      * @param lock      True == lock object. False == unlock object.
      * @param lockOwner Ids who is lock the object.
      * @throws LockingException Thrown if locking fails.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     public final void setLocked(final boolean lock, final String[] lockOwner) throws SqlDatabaseSystemException,
         WebserverSystemException {
@@ -775,6 +779,8 @@ public class GenericResource implements FedoraResource {
      * @param ds The datastream.
      * @throws StreamNotFoundException Thrown if the datastream was not found.
      * @throws LockingException        Thrown if resource is locked.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     public void setDatastream(final Datastream ds) throws StreamNotFoundException, LockingException,
         FedoraSystemException, WebserverSystemException {
@@ -838,7 +844,7 @@ public class GenericResource implements FedoraResource {
     /**
      * Persists the whole object to Fedora.
      *
-     * @param sync Set <code>true</code> if TripleStore sync is to force.
+     * @param sync Set {@code true} if TripleStore sync is to force.
      * @return lastModificationDate of the resource.
      * @throws FedoraSystemException    Thrown if connection to Fedora failed.
      * @throws WebserverSystemException Thrown in case of internal error.
@@ -987,6 +993,8 @@ public class GenericResource implements FedoraResource {
      * @param resourceType Required resource type.
      * @return true if resource is from provided type.
      * @throws IntegritySystemException Thrown if object type could not retrieved
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public boolean checkResourceType(final ResourceType resourceType) throws TripleStoreSystemException,
         WebserverSystemException {
@@ -1077,6 +1085,12 @@ public class GenericResource implements FedoraResource {
 
     /**
      * TODO: There are no Exceptions thrown here.
+     * @param datastreamProfiles
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected final void initDatastreams(final List<DatastreamProfileTO> datastreamProfiles)
         throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
@@ -1089,6 +1103,12 @@ public class GenericResource implements FedoraResource {
 
     /**
      * Override this method to support more than the usual datastream types.
+     * @param profile
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected void initDatastream(final DatastreamProfileTO profile) throws WebserverSystemException,
         FedoraSystemException, TripleStoreSystemException, IntegritySystemException, StreamNotFoundException {

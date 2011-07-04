@@ -75,7 +75,7 @@ public final class UserAccountXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets the role xml PROVIDER.
      *
-     * @return Returns the <code>UserAccountXmlProvider</code> object.
+     * @return Returns the {@code UserAccountXmlProvider} object.
      */
     public static UserAccountXmlProvider getInstance() {
         return PROVIDER;

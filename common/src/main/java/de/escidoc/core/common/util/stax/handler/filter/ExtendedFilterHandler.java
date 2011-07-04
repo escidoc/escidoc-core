@@ -234,7 +234,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
 
     /**
      * Returns a Map with the filter names as keys for the filter values. A special entry is the key
-     * <code>objectsToFind</code> for a Set of object IDs.
+     * {@code objectsToFind} for a Set of object IDs.
      *
      * @return Filter Map
      */
@@ -266,7 +266,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
     /**
      * Gets the parsed ordering information.
      *
-     * @return Returns the parsed ordering information. If none has been found, <code>null</code> is returned.
+     * @return Returns the parsed ordering information. If none has been found, {@code null} is returned.
      */
     public String getOrderBy() {
         return this.orderBy;

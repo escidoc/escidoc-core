@@ -290,7 +290,7 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
     /**
      * Gets the explain XML provider.
      *
-     * @return Returns the <code>ExplainXmlProvider</code> object.
+     * @return Returns the {@code ExplainXmlProvider} object.
      * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static ExplainXmlProvider getInstance() {

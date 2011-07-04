@@ -183,6 +183,8 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param resolvableAttribute resolvable part of attribute
      * @param tail                tail after resolvable part
      * @return Object[] result
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private Object[] resolveAssignedOnAttribute(
         final EvaluationCtx ctx, final String attributeIdValue, final String resolvableAttribute, final String tail)
@@ -253,10 +255,11 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * resolve attribute created-by.
      *
      * @param ctx                 EvaluationContext
-     * @param attributeIdValue    whole attribute
      * @param resolvableAttribute resolvable part of attribute
-     * @param tail                tail after resolvable part
      * @return Object[] result
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
      */
     private Object[] resolveCreatedByAttribute(final EvaluationCtx ctx, final String resolvableAttribute)
         throws SqlDatabaseSystemException, ResourceNotFoundException, WebserverSystemException {
@@ -281,10 +284,10 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * resolve attribute role.
      *
      * @param ctx                 EvaluationContext
-     * @param attributeIdValue    whole attribute
      * @param resolvableAttribute resolvable part of attribute
-     * @param tail                tail after resolvable part
      * @return Object[] result
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
      */
     private Object[] resolveRoleAttribute(final EvaluationCtx ctx, final String resolvableAttribute)
         throws WebserverSystemException, ResourceNotFoundException {
@@ -315,7 +318,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      *
      * @param ctx     The evaluation context, which will be used as key for the cache.
      * @param grantId The grant id.
-     * @return Returns the <code>RoleGrant</code> identified by the provided id.
+     * @return Returns the {@code RoleGrant} identified by the provided id.
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws GrantNotFoundException   Thrown if no grant with provided id exists.
      */
@@ -343,7 +346,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param ctx     The evaluation context, which will be used as key for the cache.
      * @param userId  The user id.
      * @param grantId The grant id.
-     * @return Returns the <code>RoleGrant</code> identified by the provided id.
+     * @return Returns the {@code RoleGrant} identified by the provided id.
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws GrantNotFoundException   Thrown if no grant with provided id exists.
      */
@@ -366,7 +369,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
     }
 
     /**
-     * Asserts that the grant is provided, i.e. it is not <code>null</code>.
+     * Asserts that the grant is provided, i.e. it is not {@code null}.
      *
      * @param grantId   The grant id for which the grant should be provided (should exist).
      * @param roleGrant The role grant to assert.

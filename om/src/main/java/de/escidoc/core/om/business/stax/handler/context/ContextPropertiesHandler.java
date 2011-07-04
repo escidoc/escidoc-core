@@ -59,8 +59,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The PropertiesHandler. Verifies the elements <code>organizational-unit</code> of a properties snippet of a parsed
- * context XML. These elements must contain <code>xlink:href</code> attribute.
+ * The PropertiesHandler. Verifies the elements {@code organizational-unit} of a properties snippet of a parsed
+ * context XML. These elements must contain {@code xlink:href} attribute.
  */
 @Configurable
 public class ContextPropertiesHandler extends DefaultHandler {

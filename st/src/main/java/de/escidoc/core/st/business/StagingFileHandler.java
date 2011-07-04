@@ -170,6 +170,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      * @throws MissingMethodParameterException
      *                                      Thrown in case of missing id.
      * @throws StagingFileNotFoundException Thrown if no staging file with provided id exists.
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private StagingFile getStagingFile(final String stagingFileId) throws MissingMethodParameterException,
         StagingFileNotFoundException, SqlDatabaseSystemException {

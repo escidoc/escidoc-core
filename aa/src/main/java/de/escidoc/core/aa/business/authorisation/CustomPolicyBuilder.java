@@ -145,7 +145,7 @@ public final class CustomPolicyBuilder {
      * Parses the provided xml data.
      *
      * @param xmlData The xml data to parse.
-     * @return Returns the parsed <code>Document</code>.
+     * @return Returns the parsed {@code Document}.
      * @throws ParserConfigurationException Thrown in case of a parser configuration error.
      * @throws SAXException                 Thrown if parsing fails.
      * @throws IOException                  Thrown in case of an i/o error.
@@ -183,40 +183,40 @@ public final class CustomPolicyBuilder {
     // FIXME: javadoc is wrong
 
     /**
-     * Builds a <code>PolicySet</code> object from the provided <code>EscidocRole</code> object.<br> The provided
-     * <code>EscidocRole</code> object may hold one or more <code>EscidocPolicy</code> objects, each of them may hold
+     * Builds a {@code PolicySet} object from the provided {@code EscidocRole} object.<br> The provided
+     * {@code EscidocRole} object may hold one or more {@code EscidocPolicy} objects, each of them may hold
      * the XML representation of an Xacml policy, an Xacml policy set, or an condition of an Xacml policy.<br> <ol>
-     * <li>For each <code>EscidocPolicy</code> object representing an Xacml policy, its XML representation is parsed and
-     * a <code>Policy</code> object is created from the parsed data.</li> <li>For each <code>EscidocPolicy</code> object
-     * representing an Xacml policy set, its XML representation is parsed and a <code>PolicySet</code> object is created
-     * from the parsed data.</li> <li>For each <code>EscidocPolicy</code> object representing an Xacml condition, its
-     * XML representation is parsed and an <code>Apply</code> object is built from the parsed data. Then, a
-     * <code>Rule</code> object is created: <ul> <li>The rule id is constructed from the name of the provided
-     * <code>EscidocRole</code> object followed by the postfix "-policy-rule-" + index of the new rule.</li> <li>The
+     * <li>For each {@code EscidocPolicy} object representing an Xacml policy, its XML representation is parsed and
+     * a {@code Policy} object is created from the parsed data.</li> <li>For each {@code EscidocPolicy} object
+     * representing an Xacml policy set, its XML representation is parsed and a {@code PolicySet} object is created
+     * from the parsed data.</li> <li>For each {@code EscidocPolicy} object representing an Xacml condition, its
+     * XML representation is parsed and an {@code Apply} object is built from the parsed data. Then, a
+     * {@code Rule} object is created: <ul> <li>The rule id is constructed from the name of the provided
+     * {@code EscidocRole} object followed by the postfix "-policy-rule-" + index of the new rule.</li> <li>The
      * rule effect is set to permit.</li> <li>The rule target matches any subject, any resource, and any action of the
-     * <code>EscidocPolicy</code> object's action set.</li> <li>The created <code>Apply</code> object is used as the
-     * rule condition.</li> </ul> If an <code>EscidocPolicy</code> object does not hold any Xml data, a rule is
-     * constructed without a condition.<br> <br> The created <code>Rule</code> objects are combined in a new
-     * <code>Policy</code> object as follows: <ul> <li>The policy id is constructed from the name of the provided
-     * <code>EscidocRole</code> object followed by the postfix "-policy".</li> <li>The policy target matches any
-     * subject, any resource, and any action of any created <code>Rule</code> object.</li> <li>The created
-     * <code>Rule</code> objects are used as the rules of the policy.</li> <li>The rule combining algorithm is set to
-     * ordered-permit-overrides.</li> </ul> </li> <li>If more than one <code>Policy</code> object has been created by
-     * the previous steps, they are combined in a <code>PolicySet</code> object as follows <ul> <li>The policy set id is
-     * constructed from the name of the provided <code>EscidocRole</code> object with the postfix "-policies".</li>
+     * {@code EscidocPolicy} object's action set.</li> <li>The created {@code Apply} object is used as the
+     * rule condition.</li> </ul> If an {@code EscidocPolicy} object does not hold any Xml data, a rule is
+     * constructed without a condition.<br> <br> The created {@code Rule} objects are combined in a new
+     * {@code Policy} object as follows: <ul> <li>The policy id is constructed from the name of the provided
+     * {@code EscidocRole} object followed by the postfix "-policy".</li> <li>The policy target matches any
+     * subject, any resource, and any action of any created {@code Rule} object.</li> <li>The created
+     * {@code Rule} objects are used as the rules of the policy.</li> <li>The rule combining algorithm is set to
+     * ordered-permit-overrides.</li> </ul> </li> <li>If more than one {@code Policy} object has been created by
+     * the previous steps, they are combined in a {@code PolicySet} object as follows <ul> <li>The policy set id is
+     * constructed from the name of the provided {@code EscidocRole} object with the postfix "-policies".</li>
      * <li>The policy combining algorithm is set to ordered-permit-overrides.</li> <li>The policy set target matches any
-     * subject, any resource, and action.</li> </ul> </li> <li>Finally, a <code>PolicySet</code> object is created as
+     * subject, any resource, and action.</li> </ul> </li> <li>Finally, a {@code PolicySet} object is created as
      * follows and returned: <ul> <li>The policy set id is constructed from the name of the provided
-     * <code>EscidocRole</code> object.</li> <li>The policy combining algorithm is set to ordered-permit-overrides.</li>
+     * {@code EscidocRole} object.</li> <li>The policy combining algorithm is set to ordered-permit-overrides.</li>
      * <li>The policy set target matches any subject, any action, and <ul> <li>any resource, if the provided
-     * <code>EscidocRole</code> object represents the default policies,</li> <li>any resource, for that the
-     * <code>EscidocRole</code> has been granted to the subject.</li> </ul> <li>The Xacml policy/policy set of the one
-     * and only created <code>Policy</code>/<code>PolicySet</code> object is the policy or policy set created in one of
+     * {@code EscidocRole} object represents the default policies,</li> <li>any resource, for that the
+     * {@code EscidocRole} has been granted to the subject.</li> </ul> <li>The Xacml policy/policy set of the one
+     * and only created {@code Policy}/{@code PolicySet} object is the policy or policy set created in one of
      * the previous steps.</li> </ul> </li> </ol>
      *
-     * @param escidocRole The <code>EscidocRole</code> object for that the Xacml <code>PolicySet</code> object be
+     * @param escidocRole The {@code EscidocRole} object for that the Xacml {@code PolicySet} object be
      *                    built.<br>
-     * @return The generated <code>PolicySet</code> object.
+     * @return The generated {@code PolicySet} object.
      * @throws WebserverSystemException   Thrown in case of an internal error.
      * @throws URISyntaxException         Thrown if a URI syntax error occurred.
      * @throws UnknownIdentifierException Thrown in case of an unknown identifier.

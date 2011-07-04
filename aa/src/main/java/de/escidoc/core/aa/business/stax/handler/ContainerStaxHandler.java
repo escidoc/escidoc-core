@@ -69,7 +69,7 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
     /**
      * The constructor.
      *
-     * @param ctx        The <code>EvaluationCtx</code> for that the container xml representation shall be parsed.
+     * @param ctx        The {@code EvaluationCtx} for that the container xml representation shall be parsed.
      * @param resourceId The id of the item resource.
      */
     public ContainerStaxHandler(final EvaluationCtx ctx, final String resourceId) {
@@ -81,8 +81,6 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.stax.handler.AbstractResourceAttributeStaxHandler#startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element) throws MissingAttributeValueException {

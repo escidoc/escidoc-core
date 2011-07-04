@@ -1048,8 +1048,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * Checks if the provided {@link UserLoginData} objects are expired. The expired objects are removed from the
      * storage.
      *
-     * @param userLoginDatas The <code>List</code> of {@link UserLoginData} objects to check.
-     * @return Returns <code>List</code> of all non-expired {@link UserLoginData} objects of the provided list.
+     * @param userLoginDatas The {@code List} of {@link UserLoginData} objects to check.
+     * @return Returns {@code List} of all non-expired {@link UserLoginData} objects of the provided list.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     private List<UserLoginData> checkUserLoginData(final List<UserLoginData> userLoginDatas)
@@ -1075,7 +1075,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * from the storage. And object is removed from Cache.
      *
      * @param data The {@link UserLoginData} object to check.
-     * @return Returns the provided {@link UserLoginData} object or <code>null</code> if it is expired.
+     * @return Returns the provided {@link UserLoginData} object or {@code null} if it is expired.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     private UserLoginData checkUserLoginData(final UserLoginData data) throws SqlDatabaseSystemException {
@@ -1110,7 +1110,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * Checks if the provided {@link UserLoginData} object is expired.
      *
      * @param data The {@link UserLoginData} object to check.
-     * @return Returns <code>true</code> if the provided object is expired.
+     * @return Returns {@code true} if the provided object is expired.
      */
     private static boolean isExpired(final UserLoginData data) {
 
@@ -1157,7 +1157,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
     /**
      * See Interface for functional description.
      *
-     * @param preference The <code>UserPreference</code> object to save.
+     * @param preference The {@code UserPreference} object to save.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      * @see UserAccountDaoInterface #retrievePreferenceByUserId(java.lang.String)
      */

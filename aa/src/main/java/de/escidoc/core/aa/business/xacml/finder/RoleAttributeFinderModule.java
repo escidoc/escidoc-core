@@ -102,8 +102,6 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String, java.lang.String, int)
      */
     @Override
     protected boolean assertAttribute(
@@ -127,8 +125,6 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -170,7 +166,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
      *
      * @param ctx    The evaluation context, which will be used as key for the cache.
      * @param roleId The role id.
-     * @return Returns the <code>EscidocRole</code> identified by the provided id.
+     * @return Returns the {@code EscidocRole} identified by the provided id.
      * @throws WebserverSystemException Thrown in case of an internal error.
      * @throws RoleNotFoundException    Thrown if no role with provided id exists.
      */

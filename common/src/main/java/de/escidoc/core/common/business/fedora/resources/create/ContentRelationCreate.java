@@ -56,7 +56,6 @@ import org.springframework.beans.factory.annotation.Configurable;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.RepositoryIndicator;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -216,7 +215,6 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
      *
      * @return DC or null if default metadata is missing).
      * @throws WebserverSystemException Thrown if an error occurs during DC creation.
-     * @throws EncodingSystemException  Thrown if the conversion to default encoding failed.
      */
     public String getDC() {
 

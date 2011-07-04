@@ -50,7 +50,7 @@ public final class ReportDefinitionXmlProvider extends InfrastructureXmlProvider
     /**
      * Gets the ReportDefinition xml provider.
      *
-     * @return Returns the <code>ReportDefinitionXmlProvider</code> object.
+     * @return Returns the {@code ReportDefinitionXmlProvider} object.
      * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static ReportDefinitionXmlProvider getInstance() {

@@ -76,6 +76,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      *
      * @param cr ContentRelation
      * @return XML representation
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getContentRelationXml(final ContentRelationCreate cr) throws TripleStoreSystemException,
         WebserverSystemException {
@@ -103,6 +105,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      *
      * @param cr ContentRelation
      * @return XML representation of md-records.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public String getContentRelationMdRecords(final ContentRelationCreate cr) throws WebserverSystemException {
 
@@ -116,6 +119,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @param cr ContentRelation
      * @param mr meta date record
      * @return XML representation of md-record.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException
      */
     public String getContentRelationMdRecord(final ContentRelationCreate cr, final MdRecordCreate mr)
         throws MdRecordNotFoundException, WebserverSystemException {
@@ -135,6 +140,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      *
      * @param cr ContentRelation
      * @return XML representation
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public String getContentRelationPropertiesXml(final ContentRelationCreate cr) throws WebserverSystemException {
 
@@ -168,6 +174,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     /**
      * Get XML representation of ContentRelation (virtual-)resources.
      *
+     * @param cr
      * @return XML representation of resources.
      * @throws WebserverSystemException If anything fails.
      */
@@ -358,6 +365,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @param commonValues Common render values.
      * @param isRoot       Set true is md-record is to render with XML root element
      * @return XMl representation of md-record.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public String renderMdRecord(
         final ContentRelationCreate cr, final MdRecordCreate mdRecord, final Map<String, String> commonValues,
@@ -393,7 +401,11 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     }
 
     /**
+     * @param cr
+     * @param commonValues
+     * @param isRoot
      * @return XML representation off //md-records
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public String renderMdRecords(
         final ContentRelationCreate cr, final Map<String, String> commonValues, final boolean isRoot)

@@ -127,10 +127,10 @@ public interface PermissionHandlerInterface extends ResourceHandlerInterface {
 
     /**
      * Retrieves the currently valid Grants for the resource (User Account or UserGroup) specified by resourceId in a
-     * <code>Map</code>.
+     * {@code Map}.
      *
      * @param resourceId Resource ID (User Account or UserGroup)
-     * @return Returns the current grants of the resource in a <code>Map</code>.
+     * @return Returns the current grants of the resource in a {@code Map}.
      * @throws ResourceNotFoundException Thrown if no resource with the provided id exists.
      * @throws SystemException           Thrown in case of an internal system error.
      */

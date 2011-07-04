@@ -29,7 +29,6 @@
 package de.escidoc.core.aa.business.renderer;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
@@ -90,7 +89,6 @@ public class AbstractRenderer {
      * Adds the value of the escidoc base url to the provided map.
      *
      * @param values The map to add the value to.
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     protected void addEscidocBaseUrlValue(final Map<String, Object> values) {
 

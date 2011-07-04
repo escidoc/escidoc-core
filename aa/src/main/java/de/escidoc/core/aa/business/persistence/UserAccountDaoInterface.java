@@ -54,8 +54,8 @@ public interface UserAccountDaoInterface {
      * the login name.
      *
      * @param identityInfo The handle, id, or login name of the user.
-     * @return Returns <code>true</code> if a user account with the provided identifier exists, else
-     *         <code>false</code>.
+     * @return Returns {@code true} if a user account with the provided identifier exists, else
+     *         {@code false}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     boolean userAccountExists(final String identityInfo) throws SqlDatabaseSystemException;
@@ -64,7 +64,7 @@ public interface UserAccountDaoInterface {
      * Checks if a grant with the provided id exists.<br>
      *
      * @param grantId the id of the grant
-     * @return Returns <code>true</code> if a grant with the provided identifier exists, else <code>false</code>.
+     * @return Returns {@code true} if a grant with the provided identifier exists, else {@code false}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     boolean grantExists(final String grantId) throws SqlDatabaseSystemException;
@@ -114,7 +114,7 @@ public interface UserAccountDaoInterface {
      * @param maxResults The maximal number of results to be returned.
      * @param orderBy    The predicate that shall be used for ordering.
      * @param sorting    The kind of ordering, i.e. ascending or descending.
-     * @return Returns <code>List</code> of {@link UserAccount} objects selected by the provided parameters. If no
+     * @return Returns {@code List} of {@link UserAccount} objects selected by the provided parameters. If no
      *         parameter is provided, all user account objects are returned.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
@@ -128,7 +128,7 @@ public interface UserAccountDaoInterface {
      * @param criteria   The {@link String} containing the filter criteria as CQL query.
      * @param offset     The index of the first result to be returned.
      * @param maxResults The maximal number of results to be returned.
-     * @return Returns <code>List</code> of {@link UserAccount} objects selected by the provided parameters. If no
+     * @return Returns {@code List} of {@link UserAccount} objects selected by the provided parameters. If no
      *         parameter is provided, all user account objects are returned.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      * @throws SqlDatabaseSystemException  Thrown in case of an internal database access error.
@@ -165,7 +165,7 @@ public interface UserAccountDaoInterface {
      * user account.
      *
      * @param role The id of the role for that the referencing grants shall be retrieved.
-     * @return Returns sorted List of <code>Grant</code> objects.
+     * @return Returns sorted List of {@code Grant} objects.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     List<RoleGrant> retrieveGrantsByRole(final EscidocRole role) throws SqlDatabaseSystemException;
@@ -174,7 +174,7 @@ public interface UserAccountDaoInterface {
      * Retrieves the grants of an user.<br> The grants will be sorted by related role and related object.
      *
      * @param userId The id of the user whose grants shall be retrieved.
-     * @return Returns sorted List of <code>Grant</code> objects.
+     * @return Returns sorted List of {@code Grant} objects.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     List<RoleGrant> retrieveGrantsByUserId(final String userId) throws SqlDatabaseSystemException;
@@ -185,7 +185,7 @@ public interface UserAccountDaoInterface {
      * @param userAccount The user account owning the grants that shall be retrieved.
      * @param role        The role that is granted to the user.
      * @param objId       The id of the object for that the role is granted to the user.
-     * @return Returns the found <code>Grant</code> object or <code>null</code>.
+     * @return Returns the found {@code Grant} object or {@code null}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     RoleGrant retrieveCurrentGrant(final UserAccount userAccount, final EscidocRole role, final String objId)
@@ -196,7 +196,7 @@ public interface UserAccountDaoInterface {
      *
      * @param userId  The id of the user owning the grant that shall be retrieved.
      * @param grantId The id of the grant that shall be retrieved.
-     * @return Returns the found <code>Grant</code> object or <code>null</code>.
+     * @return Returns the found {@code Grant} object or {@code null}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     RoleGrant retrieveGrant(final String userId, final String grantId) throws SqlDatabaseSystemException;
@@ -207,7 +207,7 @@ public interface UserAccountDaoInterface {
      * @param criteria The {@link Map} containing the filter criteria. This object is kept as provided by this method.
      * @param orderBy  The predicate that shall be used for ordering.
      * @param sorting  The kind of ordering, i.e. ascending or descending.
-     * @return Returns <code>List</code> of {@link RoleGrant} objects selected by the provided parameters. If no
+     * @return Returns {@code List} of {@link RoleGrant} objects selected by the provided parameters. If no
      *         parameter is provided, all roleGrant objects are returned.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
@@ -221,7 +221,7 @@ public interface UserAccountDaoInterface {
      * @param offset           The index of the first result to be returned.
      * @param maxResults       The maximal number of results to be returned.
      * @param userGroupHandler business object to access methods for user groups
-     * @return Returns <code>List</code> of {@link RoleGrant} objects selected by the provided parameters. If no
+     * @return Returns {@code List} of {@link RoleGrant} objects selected by the provided parameters. If no
      *         parameter is provided, all roleGrant objects are returned.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
      * @throws SystemException             Thrown in case of an internal system error.
@@ -233,7 +233,7 @@ public interface UserAccountDaoInterface {
     /**
      * Save the provided grant.
      *
-     * @param grant The <code>Grant</code> object to save.
+     * @param grant The {@code Grant} object to save.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void save(final RoleGrant grant) throws SqlDatabaseSystemException;
@@ -241,7 +241,7 @@ public interface UserAccountDaoInterface {
     /**
      * Update the provided grant.
      *
-     * @param grant The <code>Grant</code> object to save.
+     * @param grant The {@code Grant} object to save.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void update(final RoleGrant grant) throws SqlDatabaseSystemException;
@@ -251,7 +251,7 @@ public interface UserAccountDaoInterface {
      *
      * @param userId      The id of the user owning the attribute that shall be retrieved.
      * @param attributeId The id of the attribute that shall be retrieved.
-     * @return Returns the found <code>UserAttribute</code> object or <code>null</code>.
+     * @return Returns the found {@code UserAttribute} object or {@code null}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     UserAttribute retrieveAttribute(final String userId, final String attributeId) throws SqlDatabaseSystemException;
@@ -260,7 +260,7 @@ public interface UserAccountDaoInterface {
      * Retrieves all user-attributes.
      *
      * @param userAccount The user owning the attributes that shall be retrieved.
-     * @return Returns the found list of <code>UserAttribute</code> objects or an empty list.
+     * @return Returns the found list of {@code UserAttribute} objects or an empty list.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     List<UserAttribute> retrieveAttributes(final UserAccount userAccount) throws SqlDatabaseSystemException;
@@ -270,7 +270,7 @@ public interface UserAccountDaoInterface {
      *
      * @param userAccount   The user owning the attributes that shall be retrieved.
      * @param attributeName The name of the attribute.
-     * @return Returns the found list of <code>UserAttribute</code> objects or an empty list.
+     * @return Returns the found list of {@code UserAttribute} objects or an empty list.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     List<UserAttribute> retrieveAttributes(final UserAccount userAccount, final String attributeName)
@@ -289,7 +289,7 @@ public interface UserAccountDaoInterface {
     /**
      * Save the provided grant.
      *
-     * @param attribute The <code>UserAttribute</code> object to save.
+     * @param attribute The {@code UserAttribute} object to save.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void save(final UserAttribute attribute) throws SqlDatabaseSystemException;
@@ -297,7 +297,7 @@ public interface UserAccountDaoInterface {
     /**
      * Update the provided grant.
      *
-     * @param attribute The <code>UserAttribute</code> object to save.
+     * @param attribute The {@code UserAttribute} object to save.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void update(final UserAttribute attribute) throws SqlDatabaseSystemException;
@@ -305,7 +305,7 @@ public interface UserAccountDaoInterface {
     /**
      * Delete the provided grant.
      *
-     * @param attribute The <code>UserAttribute</code> object to save.
+     * @param attribute The {@code UserAttribute} object to save.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void delete(final UserAttribute attribute) throws SqlDatabaseSystemException;
@@ -323,7 +323,7 @@ public interface UserAccountDaoInterface {
      * Get the user login data.
      *
      * @param id The users id.
-     * @return The login datas of the user in a <code>List</code>.
+     * @return The login datas of the user in a {@code List}.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     List<UserLoginData> retrieveUserLoginDataByUserId(final String id) throws SqlDatabaseSystemException;
@@ -375,7 +375,7 @@ public interface UserAccountDaoInterface {
      * Retrieves the preferences of an user.<br>
      *
      * @param userId The id of the user whose preferences shall be retrieved.
-     * @return Returns List of <code>UserPreference</code> objects.
+     * @return Returns List of {@code UserPreference} objects.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     List<UserPreference> retrievePreferencesByUserId(final String userId) throws SqlDatabaseSystemException;
@@ -383,7 +383,7 @@ public interface UserAccountDaoInterface {
     /**
      * Save the provided preference.
      *
-     * @param preference The <code>UserPreference</code> object to save.
+     * @param preference The {@code UserPreference} object to save.
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     void save(final UserPreference preference) throws SqlDatabaseSystemException;

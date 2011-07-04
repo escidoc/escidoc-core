@@ -27,7 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * Class encapsulating the information about the user stored in the user context.<br> This class implements
- * <code>UserDetails</code> and is serializable.
+ * {@code UserDetails} and is serializable.
  *
  * @author Torsten Tetteroo
  */
@@ -91,13 +91,13 @@ public class EscidocUserDetails implements UserDetails {
     /**
      * Signs the principal using the provided key.
      *
-     * @param key The key. This must not be <code>null</code>. If it is <code>null</code>, nothing is done.
+     * @param key The key. This must not be {@code null}. If it is {@code null}, nothing is done.
      */
     public void sign(final String key) {
     }
 
     /**
-     * See Interface for functional description.<br> This implementation returns <code>null</code>!
+     * See Interface for functional description.<br> This implementation returns {@code null}!
      *
      */
     @Override
@@ -107,7 +107,7 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br> This implementation returns <code>null</code>!
+     * See Interface for functional description.<br> This implementation returns {@code null}!
      *
      */
     @Override
@@ -117,7 +117,7 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br/> This delegates to <code>getRealName()</code>
+     * See Interface for functional description.<br/> This delegates to {@code getRealName()}
      *
      * @return Returns the realName of the user account.
      */
@@ -128,7 +128,7 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br> This implementation returns <code>false</code>!
+     * See Interface for functional description.<br> This implementation returns {@code false}!
      *
      */
     @Override
@@ -138,7 +138,7 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br> This implementation returns <code>false</code>!
+     * See Interface for functional description.<br> This implementation returns {@code false}!
      *
      */
     @Override
@@ -148,7 +148,7 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br> This implementation returns <code>false</code>!
+     * See Interface for functional description.<br> This implementation returns {@code false}!
      *
      */
     @Override
@@ -158,7 +158,7 @@ public class EscidocUserDetails implements UserDetails {
     }
 
     /**
-     * See Interface for functional description.<br> This implementation returns <code>false</code>!
+     * See Interface for functional description.<br> This implementation returns {@code false}!
      *
      */
     @Override

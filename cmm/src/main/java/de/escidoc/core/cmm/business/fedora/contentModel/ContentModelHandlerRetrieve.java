@@ -226,6 +226,10 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
      *
      * @param contentModel The Content Model.
      * @return Map with properties values (for velocity template)
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
      */
     private static Map<String, String> getPropertiesValues(final ContentModel contentModel)
         throws TripleStoreSystemException, WebserverSystemException, IntegritySystemException,

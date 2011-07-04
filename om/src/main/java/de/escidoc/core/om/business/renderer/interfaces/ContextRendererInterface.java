@@ -55,19 +55,19 @@ public interface ContextRendererInterface {
     String render(final FedoraContextHandler contextHandler) throws SystemException;
 
     /**
-     * Gets the representation of the sub resource <code>properties</code> of Context.
+     * Gets the representation of the sub resource {@code properties} of Context.
      *
      * @param contextHandler The Context to render.
-     * @return Returns the XML representation of the sub resource <code>properties</code> of a context.
+     * @return Returns the XML representation of the sub resource {@code properties} of a context.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderProperties(final FedoraContextHandler contextHandler) throws WebserverSystemException;
 
     /**
-     * Gets the representation of the sub resource <code>resources</code> of a Context.
+     * Gets the representation of the sub resource {@code resources} of a Context.
      *
      * @param contextHandler The FedoraContextHandler to render.
-     * @return Returns the XML representation of the sub resource <code>resources</code> a Context.
+     * @return Returns the XML representation of the sub resource {@code resources} a Context.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderResources(final FedoraContextHandler contextHandler) throws WebserverSystemException;
@@ -90,7 +90,7 @@ public interface ContextRendererInterface {
      * @param name           Name of the admin-descriptor (unique).
      * @param admDesc        The datastream of the admin-descriptor.
      * @param isRoot         Set true if render with XML root element.
-     * @return Returns the XML representation of the sub resource <code>admin-descriptor</code> of the Context.
+     * @return Returns the XML representation of the sub resource {@code admin-descriptor} of the Context.
      * @throws EncodingSystemException  Thrown if transforming of datastream to required encoding fails.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */

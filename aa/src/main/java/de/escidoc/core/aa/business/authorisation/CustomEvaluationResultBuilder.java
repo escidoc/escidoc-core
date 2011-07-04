@@ -52,13 +52,13 @@ public final class CustomEvaluationResultBuilder {
     }
 
     /**
-     * Creates an <code>EvaluationResult</code> object holding an error <code>Status</code>.<br> This can be used to
+     * Creates an {@code EvaluationResult} object holding an error {@code Status}.<br> This can be used to
      * tunnel an exception through the XACML engine.<br> If the provided exception is not an
-     * <code>EscidocException</code>, it is wrapped by a <code>WebserverSystemException .</code>
+     * {@code EscidocException}, it is wrapped by a {@code WebserverSystemException .}
      *
-     * @param status The status code, one of the codes defined in the class <code>com.sun.xacml.ctx.Status</code>.
-     * @param e      The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * @param status The status code, one of the codes defined in the class {@code com.sun.xacml.ctx.Status}.
+     * @param e      The {@code Exception} that caused this error result.
+     * @return Returns the created {@code EvaluationResult} object.
      */
     private static EvaluationResult createErrorResult(final String status, final Exception e) {
 
@@ -67,10 +67,10 @@ public final class CustomEvaluationResultBuilder {
     }
 
     /**
-     * Creates an <code>EvaluationResult</code> object holding a <code>Status</code> indicating a syntax error.
+     * Creates an {@code EvaluationResult} object holding a {@code Status} indicating a syntax error.
      *
-     * @param e The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * @param e The {@code Exception} that caused this error result.
+     * @return Returns the created {@code EvaluationResult} object.
      */
     public static EvaluationResult createSyntaxErrorResult(final Exception e) {
 
@@ -99,11 +99,11 @@ public final class CustomEvaluationResultBuilder {
     }
 
     /**
-     * Creates an <code>EvaluationResult</code> object holding a <code>Status</code> indicating a missing attribute
+     * Creates an {@code EvaluationResult} object holding a {@code Status} indicating a missing attribute
      * error.
      *
-     * @param e The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * @param e The {@code Exception} that caused this error result.
+     * @return Returns the created {@code EvaluationResult} object.
      */
     public static EvaluationResult createMissingAttributeErrorResult(final Exception e) {
 
@@ -111,10 +111,10 @@ public final class CustomEvaluationResultBuilder {
     }
 
     /**
-     * Creates an <code>EvaluationResult</code> object holding a <code>Status</code> indicating a processing error.
+     * Creates an {@code EvaluationResult} object holding a {@code Status} indicating a processing error.
      *
-     * @param e The <code>Exception</code> that caused this error result.
-     * @return Returns the created <code>EvaluationResult</code> object.
+     * @param e The {@code Exception} that caused this error result.
+     * @return Returns the created {@code EvaluationResult} object.
      */
     public static EvaluationResult createProcessingErrorResult(final Exception e) {
 
@@ -135,10 +135,10 @@ public final class CustomEvaluationResultBuilder {
     }
 
     /**
-     * Creates an error result for a <code>ResourceNotFoundException</code>.
+     * Creates an error result for a {@code ResourceNotFoundException}.
      *
-     * @param e The <code>ResourceNotFoundException</code>.
-     * @return Returns the created <code>EvaluationResult</code>.
+     * @param e The {@code ResourceNotFoundException}.
+     * @return Returns the created {@code EvaluationResult}.
      */
     public static EvaluationResult createResourceNotFoundResult(final ResourceNotFoundException e) {
 

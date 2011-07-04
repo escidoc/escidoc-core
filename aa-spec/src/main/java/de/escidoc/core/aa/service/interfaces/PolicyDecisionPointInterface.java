@@ -20,7 +20,6 @@
 
 package de.escidoc.core.aa.service.interfaces;
 
-import com.sun.xacml.ctx.RequestCtx;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -539,7 +538,7 @@ public interface PolicyDecisionPointInterface {
      *                     representation ist expected here.<br> This parameter is mandatory.
      * @param ids          The ids of the objects that shall be checked for retrieving them.<br> This parameter is
      *                     mandatory.
-     * @return Returns a <code>List</code> containing the ids of all objects for that the retrieval is allowed.
+     * @return Returns a {@code List} containing the ids of all objects for that the retrieval is allowed.
      * @throws AuthenticationException   Thrown if the authentication fails due to an invalid provided
      *                                   eSciDocUserHandle.
      * @throws AuthorizationException    Thrown if the authorization fails.
@@ -560,7 +559,7 @@ public interface PolicyDecisionPointInterface {
      * @param methodName   The name of the method.<br> This parameter is mandatory.
      * @param argumentList List of Object[], each Object[] containing the arguments for one call to the method.<br> This
      *                     parameter is mandatory.
-     * @return Returns a <code>List</code> containing the arguments of all objects for that the retrieval is allowed.
+     * @return Returns a {@code List} containing the arguments of all objects for that the retrieval is allowed.
      * @throws AuthenticationException   Thrown if the authentication fails due to an invalid provided
      *                                   eSciDocUserHandle.
      * @throws AuthorizationException    Thrown if the authorization fails.

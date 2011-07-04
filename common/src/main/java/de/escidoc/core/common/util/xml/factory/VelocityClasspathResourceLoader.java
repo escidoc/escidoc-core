@@ -29,8 +29,8 @@ import org.apache.velocity.runtime.resource.loader.ResourceLoader;
 import java.io.InputStream;
 
 /**
- * ResourceLoader implementation that wraps a <code>ClasspathResourceLoader</code> and changes the resource string by
- * adding <code>TEMPLATES_BASE</code> as prefix.
+ * ResourceLoader implementation that wraps a {@code ClasspathResourceLoader} and changes the resource string by
+ * adding {@code TEMPLATES_BASE} as prefix.
  *
  * @author Torsten Tetteroo
  */

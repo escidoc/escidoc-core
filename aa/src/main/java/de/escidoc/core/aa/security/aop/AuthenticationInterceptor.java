@@ -120,9 +120,9 @@ public class AuthenticationInterceptor implements Ordered {
      * Checks if an anonymous user tries to access the services.<br> In this case, the user id is set to the empty
      * string and the real name to "Anonymous".<br>
      * <p/>
-     * Otherwise it retrieves the eSciDoc user handle from the UserContext and calls method <code>retrieve</code> from
+     * Otherwise it retrieves the eSciDoc user handle from the UserContext and calls method {@code retrieve} from
      * UserAccountHandler using this key and extracts the internal user id and the real name of the user. <br>
-     * This method stores the user id and the user's real name in the <code>UserContext</code>. <br>
+     * This method stores the user id and the user's real name in the {@code UserContext}. <br>
      *
      * @throws AuthenticationException  Thrown if no user is found for the handle
      * @throws WebserverSystemException Thrown in case of an internal error
@@ -198,9 +198,9 @@ public class AuthenticationInterceptor implements Ordered {
 
     /**
      * Authenticates the internal user.<br> The values for authentication are fetched from the
-     * <code>UserContext</code>.
+     * {@code UserContext}.
      *
-     * @return Returns <code>true</code> in case of successfully authentication.
+     * @return Returns {@code true} in case of successfully authentication.
      * @throws WebserverSystemException Thrown in case of an internal error
      */
     private static boolean authenticateInternalUser() throws WebserverSystemException {

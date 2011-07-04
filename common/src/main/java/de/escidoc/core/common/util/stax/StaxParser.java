@@ -127,7 +127,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     /**
      * Returns the XML Base valid for the element which is processed right now. If no XML Base is found till the current
-     * position in the document the return value is <code>null</code>.
+     * position in the document the return value is {@code null}.
      *
      * @return The XML Base valid for the element which is processed right now.
      *         <p/>
@@ -140,7 +140,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     /**
      * Sets the list of handlers.
      *
-     * @param hc A {@link List List} of DefaultHandler implementations. Same as call <code>clearHandlerChain()</code>
+     * @param hc A {@link List List} of DefaultHandler implementations. Same as call {@code clearHandlerChain()}
      *           and add every single Handler in list order.
      */
     public void setHandlerChain(final List<DefaultHandler> hc) {
@@ -742,7 +742,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     /**
      * Calls endElement() for every Handler in the handler chain.
      *
-     * @param endElement The <code>{@link de.escidoc.core.common.util.xml.stax.events.EndElement EndElement}</code>
+     * @param endElement The {@code }{@link de.escidoc.core.common.util.xml.stax.events.EndElement EndElement}</code>
      * @throws ContextNotFoundException       eSciDoc specific; thrown by some Handlers.
      * @throws ContentModelNotFoundException  eSciDoc specific; thrown by some Handlers.
      * @throws MissingAttributeValueException eSciDoc specific; thrown by some Handlers.

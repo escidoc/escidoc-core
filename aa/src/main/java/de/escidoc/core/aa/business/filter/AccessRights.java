@@ -305,7 +305,6 @@ public class AccessRights {
      * @param type            resource type
      * @param roleId          role id
      * @param userId          user id
-     * @param groupIds        list of all user groups the user belongs to
      * @param userGrants      grants directly assigned to a user
      * @param userGroupGrants group grants assigned to a user
      * @param containerGrants container grants assigned to a user

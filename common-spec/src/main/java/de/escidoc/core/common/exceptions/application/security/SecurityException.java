@@ -150,7 +150,7 @@ public class SecurityException extends EscidocException {
     /**
      * Gets the redirect location (to the UserManagementWrapper).
      *
-     * @return Returns the redirect location in a <code>String</code>.
+     * @return Returns the redirect location in a {@code String}.
      */
     public String getRedirectLocation() {
         return this.redirectLocation;

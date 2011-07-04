@@ -95,7 +95,6 @@ public class OrganizationalUnitHandler
      * @throws XmlSchemaValidationException   e
      * @throws SystemException                e
      * @throws MissingMdRecordException       If required md-record is missing
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#create(java.lang.String)
      */
     @Override
     public String create(final String xml) throws AuthenticationException, AuthorizationException,
@@ -109,7 +108,6 @@ public class OrganizationalUnitHandler
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#delete(java.lang.String)
      */
     @Override
     public void delete(final String id) throws AuthenticationException, AuthorizationException,
@@ -122,8 +120,6 @@ public class OrganizationalUnitHandler
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#update(java.lang.String,
-     *      java.lang.String)
      */
     @Override
     public String update(final String id, final String user) throws AuthenticationException, AuthorizationException,
@@ -160,7 +156,6 @@ public class OrganizationalUnitHandler
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieve(java.lang.String)
      */
     @Override
     public String retrieve(final String id) throws AuthenticationException, AuthorizationException,
@@ -172,7 +167,6 @@ public class OrganizationalUnitHandler
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveProperties(java.lang.String)
      */
     @Override
     public String retrieveProperties(final String id) throws AuthenticationException, AuthorizationException,
@@ -198,7 +192,6 @@ public class OrganizationalUnitHandler
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveMdRecords(java.lang.String)
      */
     @Override
     public String retrieveMdRecords(final String id) throws AuthenticationException, AuthorizationException,
@@ -220,7 +213,6 @@ public class OrganizationalUnitHandler
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveParents(java.lang.String)
      */
     @Override
     public String retrieveParents(final String id) throws AuthenticationException, AuthorizationException,
@@ -231,7 +223,6 @@ public class OrganizationalUnitHandler
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveParentObjects(java.lang.String)
      */
     @Override
     public String retrieveParentObjects(final String ouId) throws AuthenticationException, AuthorizationException,
@@ -257,7 +248,6 @@ public class OrganizationalUnitHandler
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveChildObjects(java.lang.String)
      */
     @Override
     public String retrieveChildObjects(final String ouId) throws AuthenticationException, AuthorizationException,
@@ -269,7 +259,6 @@ public class OrganizationalUnitHandler
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrievePathList(java.lang.String)
      */
     @Override
     public String retrievePathList(final String ouId) throws AuthenticationException, AuthorizationException,
@@ -280,7 +269,6 @@ public class OrganizationalUnitHandler
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveOrganizationalUnits(Map)
      */
     @Override
     public String retrieveOrganizationalUnits(final Map<String, String[]> filter)
