@@ -49,4 +49,11 @@
 		</plugins>
 	</build>
 
+    <dependencies>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>aa-spec</artifactId>
+		</dependency>
+    </dependencies>
+
 </project>

@@ -1042,7 +1042,6 @@
     <geronimo.jaxrpc.version>2.1</geronimo.jaxrpc.version>
     <jrdf.version>0.3.4.3</jrdf.version>
     <pdfbox.version>1.5.0</pdfbox.version>
-    <axis.saaj.version>1.4</axis.saaj.version>
     <xmlunit.version>1.3</xmlunit.version>
     <escidoc.analyzers.version>1.4.0</escidoc.analyzers.version>
     <poi.version>3.1-beta2</poi.version>
@@ -1976,11 +1975,6 @@
         <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>aa-spec</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-        <dependency>
-        <groupId>org.escidoc.core</groupId>
-        <artifactId>aa-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

@@ -83,19 +83,19 @@
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>om-spec</artifactId>
 		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>cmm-spec</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
-			<artifactId>cmm</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.escidoc.core</groupId>
 			<artifactId>aa</artifactId>
 		</dependency>
-		<dependency>
+        <dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math</artifactId>
 		</dependency>
