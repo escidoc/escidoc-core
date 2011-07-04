@@ -201,6 +201,7 @@ default-lazy-init="false">
 		<security:session-management session-fixation-protection="none"/>
         <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
         <security:intercept-url pattern="/.*" filters="none" />
+        <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
         <security:openid-login user-service-ref="openidUserDetailsService"/>
         <security:custom-filter ref="openidFilter" before="CAS_FILTER"/>
     </security:http>
