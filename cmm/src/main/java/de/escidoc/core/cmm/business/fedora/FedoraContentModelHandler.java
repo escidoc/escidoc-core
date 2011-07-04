@@ -376,7 +376,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         }
 
         // check if objects refer this content model
-        if (getTripleStoreUtility().hasReferringResource(id)) {
+        if (this.tripleStoreUtility.hasReferringResource(id)) {
             throw new ResourceInUseException("The content model is referred by "
                 + "an resource and can not be deleted.");
         }
@@ -568,7 +568,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
         for (final ResourceDefinitionCreate resourceDefinition : resourceDefinitions.values()) {
             final String sdefId = sdefIdPrefix + resourceDefinition.getName();
-            if (getTripleStoreUtility().exists(sdefId)) {
+            if (this.tripleStoreUtility.exists(sdefId)) {
                 // check if href for xslt is changed
                 // /cmm/content-model/escidoc:40013/resource-\
                 // definitions/resource-definition/trans/xslt

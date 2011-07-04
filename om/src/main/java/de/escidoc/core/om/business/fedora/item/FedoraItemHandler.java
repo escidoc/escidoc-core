@@ -45,9 +45,9 @@ import java.util.TreeMap;
 
 import javax.xml.stream.XMLStreamException;
 
+import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
-import org.esidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,6 +176,10 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Autowired
     @Qualifier("business.Utility")
     private Utility utility;
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     @Override
     public String retrieve(final String id) throws ItemNotFoundException, MissingMethodParameterException,
@@ -1209,11 +1213,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             }
             // find surrogate items which reference this item by a floating
             // reference, recache them and if necessary reindex them.
-            final List<String> surrogateItemIds = getTripleStoreUtility().getSurrogates(getItem().getId());
+            final List<String> surrogateItemIds = this.tripleStoreUtility.getSurrogates(getItem().getId());
             final Collection<String> referencedSurrogateItemIds = new ArrayList<String>();
             for (final String surrogateId : surrogateItemIds) {
                 final String versionId =
-                    getTripleStoreUtility().getRelation(surrogateId, TripleStoreUtility.PROP_ORIGIN_VERSION);
+                    this.tripleStoreUtility.getRelation(surrogateId, TripleStoreUtility.PROP_ORIGIN_VERSION);
                 if (versionId == null) {
                     setOriginId(getItem().getId());
                     setOriginItem(getItem());
@@ -1309,7 +1313,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         this.utility.checkIsItem(id);
 
         final String curStatus =
-            getTripleStoreUtility().getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
+            this.tripleStoreUtility.getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus.equals(Constants.STATUS_WITHDRAWN)) {
             throw new AlreadyWithdrawnException("The object is already withdrawn");
         }
@@ -2069,7 +2073,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             // ensure, that a latest release and not a latest version
             // of the origin item will be fetched.
             final String publicStatus =
-                getTripleStoreUtility().getPropertiesElements(objid, TripleStoreUtility.PROP_PUBLIC_STATUS);
+                this.tripleStoreUtility.getPropertiesElements(objid, TripleStoreUtility.PROP_PUBLIC_STATUS);
             if (publicStatus == null) {
                 throw new InvalidContentException("A referenced Item '" + origin + "' does not exist.");
             }
@@ -2079,7 +2083,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             }
 
             final String latestReleaseNumber =
-                getTripleStoreUtility().getPropertiesElements(objid, TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
+                this.tripleStoreUtility.getPropertiesElements(objid, TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
             if (latestReleaseNumber == null) {
                 throw new InvalidStatusException("The referenced Item with id '" + origin + "' is not released.");
             }
@@ -2174,7 +2178,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     private void checkRefElement(final String targetId) throws InvalidContentException, TripleStoreSystemException,
         ReferencedResourceNotFoundException {
 
-        final String targetObjectType = getTripleStoreUtility().getObjectType(targetId);
+        final String targetObjectType = this.tripleStoreUtility.getObjectType(targetId);
         if (targetObjectType == null) {
             throw new ReferencedResourceNotFoundException("Resource with id '" + targetId + "' does not exist.");
         }

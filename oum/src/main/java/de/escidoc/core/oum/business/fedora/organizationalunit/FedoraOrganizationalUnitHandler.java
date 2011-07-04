@@ -118,6 +118,10 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
     private Utility utility;
 
     @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
+
+    @Autowired
     @Qualifier("common.business.indexing.IndexingHandler")
     private ResourceListener indexingHandler;
 
@@ -345,7 +349,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         this.getFedoraServiceClient().deleteObject(id);
         this.getFedoraServiceClient().sync();
         try {
-            this.getTripleStoreUtility().reinitialize();
+            this.tripleStoreUtility.reinitialize();
         }
         catch (TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);

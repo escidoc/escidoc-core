@@ -38,7 +38,9 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
@@ -84,6 +86,10 @@ public class GenericVersionableResource extends GenericResourcePid {
     protected static final String DATASTREAM_WOV = "version-history";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericVersionableResource.class);
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     private String description;
 
@@ -171,7 +177,7 @@ public class GenericVersionableResource extends GenericResourcePid {
 
             this.versionNumber = this.versionNumber.substring(1);
             final String latestVersionNumber =
-                getTripleStoreUtility().getPropertiesElements(getId(), TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
+                this.tripleStoreUtility.getPropertiesElements(getId(), TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
             if (latestVersionNumber == null || Integer.valueOf(this.versionId) > Integer.valueOf(latestVersionNumber)) {
                 throw new ResourceNotFoundException("The version " + this.versionNumber + " of the requested resource "
                     + "does not exist.");
@@ -183,7 +189,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         else {
             if (UserContext.isRetrieveRestrictedToReleased()) {
                 this.versionNumber =
-                    getTripleStoreUtility().getPropertiesElements(getId(),
+                    this.tripleStoreUtility.getPropertiesElements(getId(),
                         TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
                 if (this.versionNumber == null) {
                     throw new ResourceNotFoundException("Latest release not found.");
@@ -201,7 +207,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             setLastVersionData();
         }
         catch (final WebserverSystemException e) {
-            if (getTripleStoreUtility().exists(this.getId())) {
+            if (this.tripleStoreUtility.exists(this.getId())) {
                 throw new WebserverSystemException("Unexpected exception during RELS-EXT parsing.", e);
             }
             else {
@@ -468,7 +474,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         if (this.latestReleaseVersionNumber == null) {
             try {
                 this.latestReleaseVersionNumber =
-                    getTripleStoreUtility().getPropertiesElements(getId(),
+                    this.tripleStoreUtility.getPropertiesElements(getId(),
                         TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
             }
             catch (final TripleStoreSystemException tse) {
@@ -507,7 +513,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 // we can take this information from TripleStore (should be
                 // faster)
                 try {
-                    setLastModificationDate(new DateTime(getTripleStoreUtility().getPropertiesElements(getId(),
+                    setLastModificationDate(new DateTime(this.tripleStoreUtility.getPropertiesElements(getId(),
                         TripleStoreUtility.PROP_LATEST_VERSION_DATE), DateTimeZone.UTC));
                 }
                 catch (final TripleStoreSystemException e) {
@@ -775,8 +781,8 @@ public class GenericVersionableResource extends GenericResourcePid {
         setLastVersionData();
         if (getVersionNumber() == null) {
             this.description =
-                getTripleStoreUtility().getPropertiesElements(getId(),
-                    Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION);
+                this.tripleStoreUtility.getPropertiesElements(getId(), Constants.DC_NS_URI
+                    + Elements.ELEMENT_DESCRIPTION);
         }
     }
 
@@ -929,7 +935,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         if (sync) {
             this.getFedoraServiceClient().sync();
             try {
-                this.getTripleStoreUtility().reinitialize();
+                this.tripleStoreUtility.reinitialize();
             }
             catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);

@@ -39,7 +39,9 @@ import java.util.TreeMap;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
@@ -71,6 +73,10 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 public class Context extends GenericResource implements ContextInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Context.class);
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     private Datastream dc;
 
@@ -473,7 +479,7 @@ public class Context extends GenericResource implements ContextInterface {
      *             If anything fails.
      */
     public List<String> getOrganizationalUnitObjids() throws TripleStoreSystemException {
-        return getTripleStoreUtility()
+        return this.tripleStoreUtility
             .getPropertiesElementsVector(getId(), TripleStoreUtility.PROP_ORGANIZATIONAL_UNIT);
     }
 

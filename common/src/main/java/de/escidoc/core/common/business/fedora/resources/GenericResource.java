@@ -144,10 +144,6 @@ public class GenericResource implements FedoraResource {
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
     }
 
-    protected TripleStoreUtility getTripleStoreUtility() {
-        return tripleStoreUtility;
-    }
-
     protected Utility getUtility() {
         return utility;
     }
@@ -224,7 +220,7 @@ public class GenericResource implements FedoraResource {
     public String getCreationDate() throws TripleStoreSystemException {
 
         if (this.creationDate == null) {
-            this.creationDate = getTripleStoreUtility().getCreationDate(this.id);
+            this.creationDate = this.tripleStoreUtility.getCreationDate(this.id);
         }
         return this.creationDate;
     }
@@ -317,7 +313,7 @@ public class GenericResource implements FedoraResource {
     public String getTitle() throws WebserverSystemException {
         if (this.title == null) {
             try {
-                this.title = getTripleStoreUtility().getTitle(this.id);
+                this.title = this.tripleStoreUtility.getTitle(this.id);
             }
             catch (final TripleStoreSystemException e) {
                 throw new WebserverSystemException(e);
@@ -365,7 +361,7 @@ public class GenericResource implements FedoraResource {
 
         if (this.createdBy == null) {
             this.createdBy =
-                getTripleStoreUtility().getPropertiesElements(this.id, TripleStoreUtility.PROP_CREATED_BY_ID);
+                this.tripleStoreUtility.getPropertiesElements(this.id, TripleStoreUtility.PROP_CREATED_BY_ID);
         }
 
         return this.createdBy;
@@ -391,7 +387,7 @@ public class GenericResource implements FedoraResource {
      */
     public void checkResourceExist() throws ResourceNotFoundException, TripleStoreSystemException {
 
-        if (this.id == null || !getTripleStoreUtility().exists(this.id)) {
+        if (this.id == null || !this.tripleStoreUtility.exists(this.id)) {
             throw new ResourceNotFoundException("Resource with id " + this.id + " does not exist.");
         }
     }
@@ -597,7 +593,7 @@ public class GenericResource implements FedoraResource {
         // propertiesNamesCol);
 
         final Map<String, String> tripleStoreValues =
-            getTripleStoreUtility().getProperties(getId(), propertiesNamesCol);
+            this.tripleStoreUtility.getProperties(getId(), propertiesNamesCol);
 
         return mapTripleStoreKeys(tripleStoreValues);
     }
@@ -863,7 +859,7 @@ public class GenericResource implements FedoraResource {
             this.fedoraServiceClient.sync();
         }
         try {
-            this.getTripleStoreUtility().reinitialize();
+            this.tripleStoreUtility.reinitialize();
         }
         catch (final TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);

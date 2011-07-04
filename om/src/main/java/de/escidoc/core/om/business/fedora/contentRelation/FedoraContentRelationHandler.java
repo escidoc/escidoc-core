@@ -130,6 +130,10 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
+
     private PIDSystemFactory pidGenFactory;
 
     private PIDSystem pidGen;
@@ -349,7 +353,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         this.fedoraServiceClient.deleteObject(cr.getObjid());
         this.fedoraServiceClient.sync();
         try {
-            this.getTripleStoreUtility().reinitialize();
+            this.tripleStoreUtility.reinitialize();
         }
         catch (final TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
@@ -896,7 +900,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
 
         final String date;
         try {
-            date = getTripleStoreUtility().getCreationDate(objid);
+            date = this.tripleStoreUtility.getCreationDate(objid);
         }
         catch (final TripleStoreSystemException e) {
 
@@ -1082,7 +1086,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     private void validateReference(final String reference) throws TripleStoreSystemException,
         ReferencedResourceNotFoundException {
 
-        if (!getTripleStoreUtility().exists(reference)) {
+        if (!this.tripleStoreUtility.exists(reference)) {
             throw new ReferencedResourceNotFoundException("The referenced resource with objid=" + reference
                 + " does not exist.");
         }

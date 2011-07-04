@@ -211,6 +211,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
 
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
+
     /**
      * Create a container.
      *
@@ -462,7 +466,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         this.fedoraServiceClient.modifyDatastream(modifyPath, modifyQuery, stream);
         this.fedoraServiceClient.sync();
         try {
-            this.getTripleStoreUtility().reinitialize();
+            this.tripleStoreUtility.reinitialize();
         }
         catch (TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
@@ -514,15 +518,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         // check have (existing) members; they may be removed by direct purges
         // to Fedora or some incorrect behavior
-        final List<String> memberIds = getTripleStoreUtility().getMemberList(getContainer().getId(), null);
+        final List<String> memberIds = this.tripleStoreUtility.getMemberList(getContainer().getId(), null);
         for (final String memberId : memberIds) {
-            if (getTripleStoreUtility().exists(memberId)) {
+            if (this.tripleStoreUtility.exists(memberId)) {
                 throw new InvalidStatusException("Container " + getContainer().getId() + " has members.");
             }
         }
 
         // remove member entries referring this
-        final List<String> containers = getTripleStoreUtility().getContainers(getContainer().getId());
+        final List<String> containers = this.tripleStoreUtility.getContainers(getContainer().getId());
         for (final String parent : containers) {
             try {
                 final Container container = new Container(parent);
@@ -558,7 +562,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         this.fedoraServiceClient.deleteObject(getContainer().getId());
         this.fedoraServiceClient.sync();
         try {
-            this.getTripleStoreUtility().reinitialize();
+            this.tripleStoreUtility.reinitialize();
         }
         catch (TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
@@ -1260,7 +1264,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
             // check version status
             final String curStatus =
-                getTripleStoreUtility().getPropertiesElements(getContainer().getId(),
+                this.tripleStoreUtility.getPropertiesElements(getContainer().getId(),
                     TripleStoreUtility.PROP_LATEST_VERSION_STATUS);
             if (!Constants.STATUS_SUBMITTED.equals(curStatus)) {
                 throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_SUBMITTED
@@ -1296,12 +1300,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     private void releaseMembers(final String id) throws OptimisticLockingException, SystemException {
 
         // Find all members of container
-        final List<String> memberIds = getTripleStoreUtility().getMemberList(id, null);
+        final List<String> memberIds = this.tripleStoreUtility.getMemberList(id, null);
 
         // for each refered item or container
 
         for (final String memberId : memberIds) {
-            final String objectType = getTripleStoreUtility().getObjectType(memberId);
+            final String objectType = this.tripleStoreUtility.getObjectType(memberId);
 
             if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
 
@@ -1418,7 +1422,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
             // check version status
             final String curStatus =
-                getTripleStoreUtility().getPropertiesElements(getContainer().getId(),
+                this.tripleStoreUtility.getPropertiesElements(getContainer().getId(),
                     TripleStoreUtility.PROP_LATEST_VERSION_STATUS);
             if (!(Constants.STATUS_PENDING.equals(curStatus) || Constants.STATUS_IN_REVISION.equals(curStatus))) {
                 throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_PENDING + "' or '"
@@ -1477,7 +1481,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
             // check version status
             final String curStatus =
-                getTripleStoreUtility().getPropertiesElements(getContainer().getId(),
+                this.tripleStoreUtility.getPropertiesElements(getContainer().getId(),
                     TripleStoreUtility.PROP_LATEST_VERSION_STATUS);
             if (!Constants.STATUS_SUBMITTED.equals(curStatus)) {
                 throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_SUBMITTED
@@ -1514,15 +1518,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
         AlreadyWithdrawnException, ReadonlyVersionException, XmlCorruptedException {
 
-        if (id == null || !getTripleStoreUtility().exists(id)) {
+        if (id == null || !this.tripleStoreUtility.exists(id)) {
             throw new ContainerNotFoundException("Container with id " + id + " does not exist.");
         }
-        else if (!Constants.CONTAINER_OBJECT_TYPE.equals(getTripleStoreUtility().getObjectType(id))) {
+        else if (!Constants.CONTAINER_OBJECT_TYPE.equals(this.tripleStoreUtility.getObjectType(id))) {
             throw new ContainerNotFoundException(StringUtility.format("Object is no container", id));
         }
 
         final String curStatus =
-            getTripleStoreUtility().getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
+            this.tripleStoreUtility.getPropertiesElements(id, TripleStoreUtility.PROP_PUBLIC_STATUS);
 
         if (curStatus.equals(Constants.STATUS_WITHDRAWN)) {
             throw new AlreadyWithdrawnException("The object is already withdrawn");
@@ -1541,7 +1545,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
             // FIXME Under which circumstances members should be withdrawn?
             // Look for content-type-type not for name.
-            if (getTripleStoreUtility().getPropertiesElements(id, TripleStoreUtility.PROP_CONTENT_MODEL_TITLE).equals(
+            if (this.tripleStoreUtility.getPropertiesElements(id, TripleStoreUtility.PROP_CONTENT_MODEL_TITLE).equals(
                 COLLECTION)) {
                 withdrawMembers(id, taskParameter.getWithdrawComment());
                 setContainer(id);
@@ -1576,16 +1580,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         IntegritySystemException, FedoraSystemException, WebserverSystemException {
 
         // Find all members of container
-        final List<String> memberIds = getTripleStoreUtility().getMemberList(id, null);
+        final List<String> memberIds = this.tripleStoreUtility.getMemberList(id, null);
 
         // for each refered item or container
 
         for (final String memberId : memberIds) {
-            final String objectType = getTripleStoreUtility().getObjectType(memberId);
+            final String objectType = this.tripleStoreUtility.getObjectType(memberId);
 
             if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
                 final String lastModificationDate =
-                    getTripleStoreUtility()
+                    this.tripleStoreUtility
                         .getPropertiesElements(memberId, TripleStoreUtility.PROP_LATEST_VERSION_DATE);
                 final String param =
                     "<param last-modification-date=\"" + lastModificationDate + "\"><withdraw-comment>"
@@ -2104,7 +2108,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         while (it.hasNext()) {
             final String memberId = it.next();
             final String memberContentModel =
-                getTripleStoreUtility().getProperty(memberId, TripleStoreUtility.PROP_CONTENT_MODEL_ID);
+                this.tripleStoreUtility.getProperty(memberId, TripleStoreUtility.PROP_CONTENT_MODEL_ID);
             if (!tocContentModel.equals(memberContentModel)) {
                 throw new InvalidContentException("Object with id " + memberId + " must have content model "
                     + tocContentModel + '.');

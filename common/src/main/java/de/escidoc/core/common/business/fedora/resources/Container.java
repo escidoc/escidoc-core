@@ -46,6 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
@@ -92,6 +93,10 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * Constructor of Container with specified id. The datastreams are instantiated and retrieved if the related getter
@@ -554,7 +559,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
         this.getFedoraServiceClient().sync();
         try {
-            this.getTripleStoreUtility().reinitialize();
+            this.tripleStoreUtility.reinitialize();
         }
         catch (final TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
@@ -687,7 +692,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
         if (this.contextId == null) {
             try {
                 this.contextId =
-                    getTripleStoreUtility().getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_ID);
+                    this.tripleStoreUtility.getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_ID);
             }
             catch (final TripleStoreSystemException e) {
                 throw new WebserverSystemException(e);
@@ -720,7 +725,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
         try {
             contextTitle =
-                getTripleStoreUtility().getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_TITLE);
+                this.tripleStoreUtility.getPropertiesElements(getId(), TripleStoreUtility.PROP_CONTEXT_TITLE);
         }
         catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);

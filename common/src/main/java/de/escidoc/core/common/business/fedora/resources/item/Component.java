@@ -39,10 +39,13 @@ import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.common.business.fedora.Constants;
 import de.escidoc.core.common.business.fedora.Triple;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.GenericResourcePid;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
@@ -76,6 +79,10 @@ import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInte
 public class Component extends GenericResourcePid implements ComponentInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Component.class);
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     private Datastream dc;
 
@@ -234,7 +241,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             this.getFedoraServiceClient().updateObject(path, query);
             this.getFedoraServiceClient().sync();
             try {
-                this.getTripleStoreUtility().reinitialize();
+                this.tripleStoreUtility.reinitialize();
             }
             catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
@@ -253,7 +260,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         this.getFedoraServiceClient().updateObject(path, query);
         this.getFedoraServiceClient().sync();
         try {
-            this.getTripleStoreUtility().reinitialize();
+            this.tripleStoreUtility.reinitialize();
         }
         catch (final TripleStoreSystemException e) {
             throw new FedoraSystemException("Error on reinitializing triple store.", e);
@@ -337,7 +344,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             this.getFedoraServiceClient().updateObject(path, query);
             this.getFedoraServiceClient().sync();
             try {
-                this.getTripleStoreUtility().reinitialize();
+                this.tripleStoreUtility.reinitialize();
             }
             catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
@@ -451,7 +458,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 this.getFedoraServiceClient().updateObject(path, query);
                 this.getFedoraServiceClient().sync();
                 try {
-                    this.getTripleStoreUtility().reinitialize();
+                    this.tripleStoreUtility.reinitialize();
                 }
                 catch (final TripleStoreSystemException e) {
                     throw new FedoraSystemException("Error on reinitializing triple store.", e);
@@ -470,7 +477,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             this.getFedoraServiceClient().updateObject(path, query);
             this.getFedoraServiceClient().sync();
             try {
-                this.getTripleStoreUtility().reinitialize();
+                this.tripleStoreUtility.reinitialize();
             }
             catch (final TripleStoreSystemException e2) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e2);
@@ -498,7 +505,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             this.getFedoraServiceClient().updateObject(path, query);
             this.getFedoraServiceClient().sync();
             try {
-                this.getTripleStoreUtility().reinitialize();
+                this.tripleStoreUtility.reinitialize();
             }
             catch (final TripleStoreSystemException e) {
                 throw new FedoraSystemException("Error on reinitializing triple store.", e);
