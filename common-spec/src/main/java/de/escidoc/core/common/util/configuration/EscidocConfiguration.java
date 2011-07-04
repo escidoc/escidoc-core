@@ -130,6 +130,8 @@ public final class EscidocConfiguration {
     public static final String ESCIDOC_CORE_FILTER_DEFAULT_MAXIMUM_RECORDS =
         "escidoc-core.filter.default.maximumRecords";
 
+    public static final String ESCIDOC_CORE_AA_OPENID_PROVIDER_REGEX = "escidoc-core.aa.openid.provider.regex";
+
     public static final String CONTENT_RELATIONS_URL = "escidoc-core.ontology.url";
 
     public static final String SRW_URL = "srw.url";

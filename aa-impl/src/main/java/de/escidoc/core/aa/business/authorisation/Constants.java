@@ -97,6 +97,11 @@ public final class Constants {
     public static final String MULTI_VALUE_DELIMITER = "|";
 
     /**
+     * Values used by Springsecurity.
+     */
+    public static final String OPENID_IDENTIFIER_PARAMETER = "openid_identifier";
+
+    /**
      * Gets the URI from the given String. If the provided URI string causes an
      * error, <code>null</code> is returned.
      *
