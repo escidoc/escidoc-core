@@ -37,7 +37,7 @@ public class ElementStreamFilter implements StreamFilter {
         final XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         try {
             final XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(inputStream);
-            filteredXmlStreamReader = xmlInputFactory.createFilteredReader(xmlStreamReader, this);
+            this.filteredXmlStreamReader = xmlInputFactory.createFilteredReader(xmlStreamReader, this);
         } catch(XMLStreamException e) {
             final String errorMessage = "Error on creating XML reader.";
             if(LOG.isDebugEnabled()) {
@@ -47,10 +47,10 @@ public class ElementStreamFilter implements StreamFilter {
         }
     }
 
-    public ElementStreamFilter(final XMLStreamReader reader) {
+    public ElementStreamFilter(@NotNull final XMLStreamReader reader) {
         final XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         try {
-            final XMLStreamReader filteredXmlStreamReader = xmlInputFactory.createFilteredReader(reader, this);
+            this.filteredXmlStreamReader = xmlInputFactory.createFilteredReader(reader, this);
         } catch(XMLStreamException e) {
             final String errorMessage = "Error on creating XML reader.";
             if(LOG.isDebugEnabled()) {
