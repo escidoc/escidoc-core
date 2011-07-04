@@ -37,7 +37,7 @@
 									<filtering>false</filtering>
 								</resource>
 								<resource>
-									<directory>${basedir}/../adm/src/main/xsd</directory>
+									<directory>${basedir}/../adm-impl/src/main/xsd</directory>
 									<filtering>false</filtering>
 								</resource>
 								<resource>

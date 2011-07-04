@@ -454,7 +454,7 @@
 
           <!-- Only uses the following sources to generate javadocs. Skips all auto generated code and integration tests -->
           <sourcepath>${basedir}/aa/src/main/java${path.separator}
-            ${basedir}/adm/src/main/java${path.separator}
+            ${basedir}/adm-impl/src/main/java${path.separator}
             ${basedir}/cmm/src/main/java${path.separator}
             ${basedir}/common/src/main/java${path.separator}
             ${basedir}/http-client/src/main/java${path.separator}
@@ -803,10 +803,10 @@
               <outputDirectory>${basedir}/target/site/xsd</outputDirectory>
               <resources>
                 <resource>
-                  <directory>${basedir}/aa-impl/src/main/xsd</directory>
+                  <directory>${basedir}/aa/src/main/xsd</directory>
                 </resource>
                 <resource>
-                  <directory>${basedir}/adm/src/main/xsd</directory>
+                  <directory>${basedir}/adm-impl/src/main/xsd</directory>
                 </resource>
                 <resource>
                   <directory>${basedir}/cmm/src/main/xsd</directory>
