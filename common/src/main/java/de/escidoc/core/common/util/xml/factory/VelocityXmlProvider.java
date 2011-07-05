@@ -36,12 +36,12 @@ import java.io.Writer;
 import java.util.Map;
 
 /**
- * XmlTemplateProvider implementation using the velocity template engine.<br> This implementation uses the velocity
+ * XmlTemplateProviderConstants implementation using the velocity template engine.<br> This implementation uses the velocity
  * singleton pattern.
  *
  * @author Torsten Tetteroo
  */
-public abstract class VelocityXmlProvider extends XmlTemplateProvider {
+public abstract class VelocityXmlProvider {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VelocityXmlProvider.class);
 
@@ -88,14 +88,14 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      * @param resource
      * @param path
      * @param values
-     * @see XmlTemplateProvider #getXml(java.lang.String, java.lang.String, java.util.Map)
+     * @see XmlTemplateProviderConstants #getXml(java.lang.String, java.lang.String, java.util.Map)
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @return
      */
     public String getXml(final String resource, final String path, final Map values) throws WebserverSystemException {
         // add escaper if none is set
-        if (values.get(ESCAPER) == null) {
-            values.put(XmlTemplateProvider.ESCAPER, new XmlEscaper());
+        if (values.get(XmlTemplateProviderConstants.ESCAPER) == null) {
+            values.put(XmlTemplateProviderConstants.ESCAPER, new XmlEscaper());
         }
 
         final String templateFileName = getTemplateFilename(path, resource);

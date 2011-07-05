@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
@@ -71,8 +72,7 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.item.ComponentPropertiesUpdateHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
 
 /**
@@ -198,7 +198,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
         String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
         if (mimeType == null || mimeType.length() == 0) {
-            mimeType = FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
+            mimeType = FoXmlProviderConstants.MIME_TYPE_APPLICATION_OCTET_STREAM;
         }
         String fileName = properties.get(Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
         if (fileName == null || fileName.length() == 0) {
@@ -296,8 +296,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
 
         final Map<String, String> properties = cpuh.getProperties();
-        properties.put(XmlTemplateProvider.CREATED_BY_ID, UserContext.getId());
-        properties.put(XmlTemplateProvider.CREATED_BY_TITLE, UserContext.getRealName());
+        properties.put(XmlTemplateProviderConstants.CREATED_BY_ID, UserContext.getId());
+        properties.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, UserContext.getRealName());
         try {
             final Datastream newRelsExt =
                 new Datastream(Datastream.RELS_EXT_DATASTREAM, id, getComponentRelsExtWithVelocity(id, properties,
@@ -423,8 +423,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
         else {
             final Datastream content = component.getContent();
-            if (content.getControlGroup().equals(FoXmlProvider.CONTROL_GROUP_E)
-                || content.getControlGroup().equals(FoXmlProvider.CONTROL_GROUP_R)) {
+            if (content.getControlGroup().equals(FoXmlProviderConstants.CONTROL_GROUP_E)
+                || content.getControlGroup().equals(FoXmlProviderConstants.CONTROL_GROUP_R)) {
                 throw new InvalidContentException("A binary content of the component " + component.getId()
                     + " has to be referenced by a URL, " + "because the attribute 'storage' of the section"
                     + " 'content' was set to 'external-url' or " + "'external-managed' while create.");

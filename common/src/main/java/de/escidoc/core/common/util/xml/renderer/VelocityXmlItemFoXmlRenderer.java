@@ -26,7 +26,7 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
 
 import java.util.ArrayList;
@@ -90,7 +90,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
         addRelsExtNamespaceValues(values);
 
-        propertiesVersion.put(XmlTemplateProvider.LATEST_VERSION_DATE, lastModificationDate);
+        propertiesVersion.put(XmlTemplateProviderConstants.LATEST_VERSION_DATE, lastModificationDate);
 
         if (properties != null && !properties.isEmpty()) {
             values.put("properties", properties);
@@ -101,7 +101,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
             this.buildNumber = Utility.getBuildNumber();
         }
 
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
+        values.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
         values.put("itemId", itemId);
 
         // values.put("latestVersionUser",
@@ -199,23 +199,23 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         if (this.buildNumber == null) {
             this.buildNumber = Utility.getBuildNumber();
         }
-        values.put(XmlTemplateProvider.OBJECT_PID, properties.get(TripleStoreUtility.PROP_OBJECT_PID));
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
-        values.put(XmlTemplateProvider.OBJID, id);
-        values.put(XmlTemplateProvider.CREATED_BY_ID, properties.get(TripleStoreUtility.PROP_CREATED_BY_ID));
-        values.put(XmlTemplateProvider.CREATED_BY_TITLE, XmlUtility.escapeForbiddenXmlCharacters(properties
+        values.put(XmlTemplateProviderConstants.OBJECT_PID, properties.get(TripleStoreUtility.PROP_OBJECT_PID));
+        values.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
+        values.put(XmlTemplateProviderConstants.OBJID, id);
+        values.put(XmlTemplateProviderConstants.CREATED_BY_ID, properties.get(TripleStoreUtility.PROP_CREATED_BY_ID));
+        values.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, XmlUtility.escapeForbiddenXmlCharacters(properties
             .get(TripleStoreUtility.PROP_CREATED_BY_TITLE)));
 
-        values.put(XmlTemplateProvider.CONTENT_CATEGORY, XmlUtility.escapeForbiddenXmlCharacters(properties
+        values.put(XmlTemplateProviderConstants.CONTENT_CATEGORY, XmlUtility.escapeForbiddenXmlCharacters(properties
             .get(TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY)));
-        values.put(XmlTemplateProvider.VISIBILITY, XmlUtility.escapeForbiddenXmlCharacters(properties
+        values.put(XmlTemplateProviderConstants.VISIBILITY, XmlUtility.escapeForbiddenXmlCharacters(properties
             .get(TripleStoreUtility.PROP_VISIBILITY)));
         if (properties.get(TripleStoreUtility.PROP_MIME_TYPE) != null) {
-            values.put(XmlTemplateProvider.MIME_TYPE, XmlUtility.escapeForbiddenXmlCharacters(properties
+            values.put(XmlTemplateProviderConstants.MIME_TYPE, XmlUtility.escapeForbiddenXmlCharacters(properties
                 .get(TripleStoreUtility.PROP_MIME_TYPE)));
         }
         if (properties.get(TripleStoreUtility.PROP_VALID_STATUS) != null) {
-            values.put(XmlTemplateProvider.VALID_STATUS, XmlUtility.escapeForbiddenXmlCharacters(properties
+            values.put(XmlTemplateProviderConstants.VALID_STATUS, XmlUtility.escapeForbiddenXmlCharacters(properties
                 .get(TripleStoreUtility.PROP_VALID_STATUS)));
         }
         if (inCreate) {

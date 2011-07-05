@@ -25,7 +25,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import java.util.Map;
 
 /**
- * Content Model specific implementation of XmlTemplateProvider using the velocity template engine.<br> This
+ * Content Model specific implementation of XmlTemplateProviderConstants using the velocity template engine.<br> This
  * implementation uses the velocity singleton pattern.
  *
  * @author Frank Schwichtenberg

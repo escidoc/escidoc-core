@@ -25,7 +25,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidContentExcep
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.esidoc.core.utils.io.MimeTypes;
 
 import java.io.ByteArrayOutputStream;
@@ -217,12 +217,12 @@ public class MdRecordCreate implements Serializable {
 
         final Map<String, String> templateValues = new HashMap<String, String>();
 
-        templateValues.put(XmlTemplateProvider.MD_RECORD_TYPE, this.type);
-        templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA, this.schema);
-        templateValues.put(XmlTemplateProvider.MD_RECORD_NAME, this.mdRecordName);
+        templateValues.put(XmlTemplateProviderConstants.MD_RECORD_TYPE, this.type);
+        templateValues.put(XmlTemplateProviderConstants.MD_RECORD_SCHEMA, this.schema);
+        templateValues.put(XmlTemplateProviderConstants.MD_RECORD_NAME, this.mdRecordName);
 
         // add Metadata (as BLOB)
-        templateValues.put(XmlTemplateProvider.MD_RECORD_CONTENT, getContent());
+        templateValues.put(XmlTemplateProviderConstants.MD_RECORD_CONTENT, getContent());
 
         return templateValues;
     }

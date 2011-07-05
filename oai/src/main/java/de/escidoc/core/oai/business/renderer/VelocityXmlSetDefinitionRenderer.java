@@ -34,7 +34,7 @@ import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.SetDefinitionXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.oai.business.persistence.SetDefinition;
 import de.escidoc.core.oai.business.renderer.interfaces.SetDefinitionRendererInterface;
 import org.joda.time.DateTime;
@@ -62,7 +62,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
     @Override
     public String render(final SetDefinition setDefinition) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootSetDefinition", XmlTemplateProvider.TRUE);
+        values.put("isRootSetDefinition", XmlTemplateProviderConstants.TRUE);
         addCommonValues(values);
         addSetDefinitionValues(setDefinition, values);
         return getSetDefinitionXmlProvider().getSetDefinitionXml(values);
@@ -145,8 +145,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
     @Override
     protected void addStructuralRelationNamespaceValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
@@ -189,7 +189,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**

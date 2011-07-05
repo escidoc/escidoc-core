@@ -52,9 +52,9 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.WovContentRelationsRetrieveHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
+import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
 import de.escidoc.core.common.util.xml.factory.ItemXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.om.business.renderer.VelocityXmlCommonRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface;
 import org.joda.time.DateTimeZone;
@@ -99,9 +99,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         final Map<String, String> commonValues = getCommonValues(getItem());
 
         values.putAll(getPropertiesValues(getItem()));
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, renderMdRecords(commonValues, false));
-        values.put(XmlTemplateProvider.CONTENT_STREAMS, renderContentStreams(commonValues, false));
-        values.put(XmlTemplateProvider.VAR_COMPONENTS_CONTENT, renderComponents(commonValues, false));
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_CONTENT, renderMdRecords(commonValues, false));
+        values.put(XmlTemplateProviderConstants.CONTENT_STREAMS, renderContentStreams(commonValues, false));
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENTS_CONTENT, renderComponents(commonValues, false));
         values.putAll(getRelationValues(getItem()));
         values.putAll(getResourcesValues(getItem()));
         values.putAll(commonValues);
@@ -135,13 +135,13 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         final Map<String, String> values = new HashMap<String, String>();
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.TRUE);
         }
 
         final Collection<String> componentIds;
         final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
-            values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.ORIGIN, XmlTemplateProviderConstants.TRUE);
             values.putAll(getCommonValues(getOriginItem()));
             values.put("componentsTitle", "Components of Item " + getOriginId());
             values.put("componentsHref", de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId()
@@ -202,11 +202,11 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
 
         final Map<String, String> values = new HashMap<String, String>();
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.IS_ROOT, XmlTemplateProviderConstants.TRUE);
         }
         final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
-            values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.ORIGIN, XmlTemplateProviderConstants.TRUE);
             values.put("componentHref", de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId()
                 + component.getHrefPart());
             values.putAll(getCommonValues(getOriginItem()));
@@ -215,9 +215,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
             values.put("componentHref", getItem().getHref() + component.getHrefPart());
             values.putAll(getCommonValues(getItem()));
         }
-        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProviderConstants.MD_RECRORDS_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE,
+        values.put(XmlTemplateProviderConstants.MD_RECORDS_NAMESPACE,
             de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_URI);
         values.put("componentTitle", component.getTitle());
         values.put("componentHref", getItem().getHref() + component.getHrefPart());
@@ -228,7 +228,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
 
         final Datastream content = component.getContent();
         final String storage = content.getControlGroup();
-        if (storage.equals(FoXmlProvider.CONTROL_GROUP_M)) {
+        if (storage.equals(FoXmlProviderConstants.CONTROL_GROUP_M)) {
             values.put("storage", Constants.STORAGE_INTERNAL_MANAGED);
             if (getOriginItem() != null) {
                 values.put("componentContentHref", de.escidoc.core.common.business.Constants.ITEM_URL_BASE
@@ -238,7 +238,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
                 values.put("componentContentHref", getItem().getHref() + component.getHrefPart() + "/content");
             }
         }
-        else if (storage.equals(FoXmlProvider.CONTROL_GROUP_E)) {
+        else if (storage.equals(FoXmlProviderConstants.CONTROL_GROUP_E)) {
             values.put("storage", Constants.STORAGE_EXTERNAL_MANAGED);
             if (getOriginItem() != null) {
                 values.put("componentContentHref", de.escidoc.core.common.business.Constants.ITEM_URL_BASE
@@ -248,7 +248,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
                 values.put("componentContentHref", getItem().getHref() + component.getHrefPart() + "/content");
             }
         }
-        else if (storage.equals(FoXmlProvider.CONTROL_GROUP_R)) {
+        else if (storage.equals(FoXmlProviderConstants.CONTROL_GROUP_R)) {
             values.put("storage", Constants.STORAGE_EXTERNAL_URL);
             values.put("componentContentHref", content.getLocation());
         }
@@ -268,7 +268,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
 
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
             component = getComponent(id);
-            values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.ORIGIN, XmlTemplateProviderConstants.TRUE);
             values.put("componentHref", de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId()
                 + component.getHrefPart());
             values.putAll(getCommonValues(getOriginItem()));
@@ -279,7 +279,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
             values.putAll(getCommonValues(getItem()));
         }
 
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_PROPERTIES, XmlTemplateProviderConstants.TRUE);
         values.put("componentHref", getItem().getHref() + component.getHrefPart());
         values.put("componentId", component.getId());
         values.putAll(getComponentPropertiesValues(component));
@@ -318,7 +318,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         }
 
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
-            values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.ORIGIN, XmlTemplateProviderConstants.TRUE);
             final Map<String, Datastream> originMdRecords = getOriginItem().getMdRecords();
             for (final String mdRecordName : originMdRecords.keySet()) {
                 if (!mdRecords.keySet().contains(mdRecordName)) {
@@ -336,13 +336,13 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.TRUE);
         }
         values.putAll(commonValues);
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_HREF, getItem().getHref()
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_HREF, getItem().getHref()
             + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_TITLE, "Metadata Records of Item " + getItem().getId());
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, content.toString());
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_TITLE, "Metadata Records of Item " + getItem().getId());
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_CONTENT, content.toString());
 
         return ItemXmlProvider.getInstance().getMdRecordsXml(values);
     }
@@ -367,16 +367,17 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         final Datastream ds;
         if (isOrigin) {
             ds = getOriginItem().getMdRecord(name);
-            values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                + getOriginId() + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
-            if (name.equals(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)) {
-                commonValues.put(XmlTemplateProvider.TITLE, getOriginItem().getTitle());
+            values.put(XmlTemplateProviderConstants.ORIGIN, XmlTemplateProviderConstants.TRUE);
+            values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_HREF,
+                de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId()
+                    + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
+            if (name.equals(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING)) {
+                commonValues.put(XmlTemplateProviderConstants.TITLE, getOriginItem().getTitle());
             }
         }
         else {
             ds = getItem().getMdRecord(name);
-            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem().getHref()
+            values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_HREF, getItem().getHref()
                 + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
         }
 
@@ -386,25 +387,25 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
 
         final List<String> altIds = ds.getAlternateIDs();
         if (altIds.size() > 1 && !de.escidoc.core.common.business.Constants.UNKNOWN.equals(altIds.get(1))) {
-            values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
+            values.put(XmlTemplateProviderConstants.MD_RECORD_TYPE, altIds.get(1));
         }
         if (altIds.size() > 2 && !de.escidoc.core.common.business.Constants.UNKNOWN.equals(altIds.get(2))) {
-            values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
+            values.put(XmlTemplateProviderConstants.MD_RECORD_SCHEMA, altIds.get(2));
         }
         try {
-            values.put(XmlTemplateProvider.MD_RECORD_CONTENT, ds.toString(XmlUtility.CHARACTER_ENCODING));
+            values.put(XmlTemplateProviderConstants.MD_RECORD_CONTENT, ds.toString(XmlUtility.CHARACTER_ENCODING));
         }
         catch (final EncodingSystemException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.IS_ROOT_MD_RECORD, XmlTemplateProviderConstants.TRUE);
         }
         values.putAll(commonValues);
-        values.put(XmlTemplateProvider.MD_RECORD_NAME, name);
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_TITLE, name);
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem().getHref()
+        values.put(XmlTemplateProviderConstants.MD_RECORD_NAME, name);
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_TITLE, name);
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_HREF, getItem().getHref()
             + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
 
         return ItemXmlProvider.getInstance().getMdRecordXml(values);
@@ -449,22 +450,24 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         final Map<String, String> values = new HashMap<String, String>();
         final StringBuilder content = new StringBuilder();
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
-            values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.ORIGIN, XmlTemplateProviderConstants.TRUE);
             for (final String contentStreamName : getOriginItem().getContentStreams().keySet()) {
                 content.append(renderContentStream(contentStreamName, false));
             }
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF,
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAMS_HREF,
                 de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId()
                     + Constants.CONTENT_STREAMS_URL_PART);
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_TITLE, "Content streams of Item " + getOriginId());
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAMS_TITLE, "Content streams of Item "
+                + getOriginId());
         }
         else {
             for (final String contentStreamName : getItem().getContentStreams().keySet()) {
                 content.append(renderContentStream(contentStreamName, commonValues, false));
             }
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF, getItem().getHref()
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAMS_HREF, getItem().getHref()
                 + Constants.CONTENT_STREAMS_URL_PART);
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_TITLE, "Content streams of Item " + getItem().getId());
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAMS_TITLE, "Content streams of Item "
+                + getItem().getId());
 
         }
         if (content.length() == 0) {
@@ -472,10 +475,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.TRUE);
         }
         values.putAll(commonValues);
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_CONTENT, content.toString());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAMS_CONTENT, content.toString());
         return ItemXmlProvider.getInstance().getContentStreamsXml(values);
     }
 
@@ -490,29 +493,29 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         final Map<String, String> values = new HashMap<String, String>();
 
         if (isRoot) {
-            values.put("isRootContentStream", XmlTemplateProvider.TRUE);
+            values.put("isRootContentStream", XmlTemplateProviderConstants.TRUE);
         }
         final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         final Datastream ds;
         if (originObjectId != null) {
             ds = getOriginItem().getContentStream(name);
-            values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.ORIGIN, XmlTemplateProviderConstants.TRUE);
         }
         else {
             ds = getItem().getContentStream(name);
         }
         values.putAll(commonValues);
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NAME, ds.getName());
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_TITLE, ds.getLabel());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_NAME, ds.getName());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_TITLE, ds.getLabel());
         String location = ds.getLocation();
         if ("M".equals(ds.getControlGroup()) || "X".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_INTERNAL_MANAGED);
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_INTERNAL_MANAGED);
             location =
                 getItem().getHref() + Constants.CONTENT_STREAM_URL_PART + '/' + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
             if ("X".equals(ds.getControlGroup())) {
                 try {
-                    values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_CONTENT, ds.toStringUTF8());
+                    values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_CONTENT, ds.toStringUTF8());
                 }
                 catch (final EncodingSystemException e) {
                     throw new WebserverSystemException(e);
@@ -520,17 +523,17 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
             }
         }
         else if ("E".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_MANAGED);
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_MANAGED);
             location =
                 getItem().getHref() + Constants.CONTENT_STREAM_URL_PART + '/' + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
 
         }
         else if ("R".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_URL);
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_URL);
         }
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_MIME_TYPE, ds.getMimeType());
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_HREF, location);
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_MIME_TYPE, ds.getMimeType());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_HREF, location);
 
         return ItemXmlProvider.getInstance().getContentStreamXml(values);
     }
@@ -550,15 +553,15 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
             component = getComponent(componentId);
-            values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            values.put(XmlTemplateProvider.VAR_MD_RECORDS_HREF, de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                + getOriginId() + component.getHrefPart()
-                + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
+            values.put(XmlTemplateProviderConstants.ORIGIN, XmlTemplateProviderConstants.TRUE);
+            values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_HREF,
+                de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId() + component.getHrefPart()
+                    + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
             values.putAll(getCommonValues(getOriginItem()));
         }
         else {
             component = getComponent(componentId);
-            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem().getHref() + component.getHrefPart()
+            values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_HREF, getItem().getHref() + component.getHrefPart()
                 + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
             values.putAll(getCommonValues(getItem()));
         }
@@ -572,13 +575,13 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.TRUE);
         }
         values.putAll(commonValues);
         values.put("mdRecordsHref", getItem().getHref() + component.getHrefPart()
             + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
         values.put("mdRecordsTitle", "Metadata Records of Component " + component.getId());
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, content.toString());
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_CONTENT, content.toString());
         return ItemXmlProvider.getInstance().getMdRecordsXml(values);
     }
 
@@ -599,15 +602,15 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         final String originObjectId = getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
             component = getComponent(componentId);
-            values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, de.escidoc.core.common.business.Constants.ITEM_URL_BASE
-                + getOriginId() + component.getHrefPart()
-                + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
+            values.put(XmlTemplateProviderConstants.ORIGIN, XmlTemplateProviderConstants.TRUE);
+            values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_HREF,
+                de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId() + component.getHrefPart()
+                    + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
             values.putAll(getCommonValues(getOriginItem()));
         }
         else {
             component = getComponent(componentId);
-            values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem().getHref() + component.getHrefPart()
+            values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_HREF, getItem().getHref() + component.getHrefPart()
                 + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
             values.putAll(commonValues);
         }
@@ -618,24 +621,24 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         }
         final List<String> altIds = ds.getAlternateIDs();
         if (altIds.size() > 1 && !de.escidoc.core.common.business.Constants.UNKNOWN.equals(altIds.get(1))) {
-            values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
+            values.put(XmlTemplateProviderConstants.MD_RECORD_TYPE, altIds.get(1));
         }
         if (altIds.size() > 2 && !de.escidoc.core.common.business.Constants.UNKNOWN.equals(altIds.get(2))) {
-            values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
+            values.put(XmlTemplateProviderConstants.MD_RECORD_SCHEMA, altIds.get(2));
         }
         try {
-            values.put(XmlTemplateProvider.MD_RECORD_CONTENT, ds.toString(XmlUtility.CHARACTER_ENCODING));
+            values.put(XmlTemplateProviderConstants.MD_RECORD_CONTENT, ds.toString(XmlUtility.CHARACTER_ENCODING));
         }
         catch (final EncodingSystemException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.IS_ROOT_MD_RECORD, XmlTemplateProviderConstants.TRUE);
         }
-        values.put(XmlTemplateProvider.MD_RECORD_NAME, name);
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_TITLE, name);
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, getItem().getHref() + component.getHrefPart()
+        values.put(XmlTemplateProviderConstants.MD_RECORD_NAME, name);
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_TITLE, name);
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_HREF, getItem().getHref() + component.getHrefPart()
             + de.escidoc.core.common.business.Constants.MD_RECORD_URL_PART + '/' + name);
         return ItemXmlProvider.getInstance().getMdRecordXml(values);
     }
@@ -653,9 +656,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         ItemNotFoundException {
 
         final Map<String, String> values = new HashMap<String, String>();
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_PROPERTIES, XmlTemplateProviderConstants.TRUE);
         if (getOriginItem() != null) {
-            values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.ORIGIN, XmlTemplateProviderConstants.TRUE);
         }
         values.putAll(getCommonValues(getItem()));
         values.putAll(getPropertiesValues(getItem()));
@@ -674,7 +677,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         XmlParserSystemException, TripleStoreSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootRelations", XmlTemplateProvider.TRUE);
+        values.put("isRootRelations", XmlTemplateProviderConstants.TRUE);
         values.putAll(getCommonValues(getItem()));
         values.putAll(getRelationValues(getItem()));
         return ItemXmlProvider.getInstance().getItemRelationsXml(values);
@@ -691,14 +694,14 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
     public String renderResources() throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_PROPERTIES, XmlTemplateProviderConstants.TRUE);
         values.putAll(getCommonValues(getItem()));
         values.putAll(getResourcesValues(getItem()));
 
         // set this true if the reources should point to the
         // digilib client (digicat). The item XML Schema is currently not
         // compaptible with the this extension.
-        values.put("showContentTransformer", XmlTemplateProvider.FALSE);
+        values.put("showContentTransformer", XmlTemplateProviderConstants.FALSE);
         return ItemXmlProvider.getInstance().getItemResourcesXml(values);
     }
 
@@ -715,8 +718,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addStructuralRelationsValues(values);
-        values.put("isRootParents", XmlTemplateProvider.TRUE);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, ISODateTimeFormat.dateTime().withZone(
+        values.put("isRootParents", XmlTemplateProviderConstants.TRUE);
+        values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, ISODateTimeFormat.dateTime().withZone(
             DateTimeZone.UTC).print(System.currentTimeMillis()));
         addParentsValues(values, itemId);
         addParentsNamespaceValues(values);
@@ -765,7 +768,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
                 entries.add(entry);
             }
             if (!entries.isEmpty()) {
-                values.put(XmlTemplateProvider.VAR_PARENTS, entries);
+                values.put(XmlTemplateProviderConstants.VAR_PARENTS, entries);
             }
         }
     }
@@ -793,14 +796,14 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
                     + ". ResourceNotFoundException: " + e.getCause() + '.', e);
             }
         }
-        values.put(XmlTemplateProvider.VAR_ITEM_LIST_MEMBERS, renderedEntries);
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_LIST_MEMBERS, renderedEntries);
 
-        values.put(XmlTemplateProvider.VAR_ITEM_LIST_TITLE, "list of items");
-        values.put(XmlTemplateProvider.VAR_ITEM_LIST_NAMESPACE,
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_LIST_TITLE, "list of items");
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_LIST_NAMESPACE,
             de.escidoc.core.common.business.Constants.ITEM_LIST_NAMESPACE_URI);
-        values.put(XmlTemplateProvider.VAR_ITEM_LIST_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_LIST_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.ITEM_LIST_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
 
         return getItemXmlProvider().getItemListXml(values);
     }
@@ -826,149 +829,152 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, item.getHref() + Constants.PROPERTIES_URL_PART);
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_TITLE, "Properties");
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_HREF, item.getHref() + Constants.PROPERTIES_URL_PART);
 
         // surrogate item
         String origin = properties.get(PropertyMapKeys.ORIGIN);
         if (origin != null) {
-            values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.ORIGIN, XmlTemplateProviderConstants.TRUE);
             final String originVersion = properties.get(PropertyMapKeys.ORIGIN_VERSION);
             if (originVersion != null) {
                 origin = origin + ':' + originVersion;
             }
-            values.put(XmlTemplateProvider.VAR_ORIGIN_ID, origin);
-            values.put(XmlTemplateProvider.VAR_ITEM_ORIGIN_HREF,
+            values.put(XmlTemplateProviderConstants.VAR_ORIGIN_ID, origin);
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_ORIGIN_HREF,
                 de.escidoc.core.common.business.Constants.ITEM_URL_BASE + getOriginId());
-            values.put(XmlTemplateProvider.VAR_ITEM_ORIGIN_TITLE, getOriginItem().getTitle());
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_ORIGIN_TITLE, getOriginItem().getTitle());
         }
 
         try {
             final String creationDate = item.getCreationDate();
-            values.put(XmlTemplateProvider.VAR_ITEM_CREATION_DATE, creationDate);
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_CREATION_DATE, creationDate);
         }
         catch (final TripleStoreSystemException e) {
             throw new ItemNotFoundException(e);
         }
 
-        values.put(XmlTemplateProvider.VAR_ITEM_CREATED_BY_TITLE, properties.get(PropertyMapKeys.CREATED_BY_TITLE));
-        values.put(XmlTemplateProvider.VAR_ITEM_CREATED_BY_HREF,
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CREATED_BY_TITLE, properties
+            .get(PropertyMapKeys.CREATED_BY_TITLE));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CREATED_BY_HREF,
             de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
                 + properties.get(PropertyMapKeys.CREATED_BY_ID));
-        values.put(XmlTemplateProvider.VAR_ITEM_CREATED_BY_ID, properties.get(PropertyMapKeys.CREATED_BY_ID));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CREATED_BY_ID, properties.get(PropertyMapKeys.CREATED_BY_ID));
 
-        values.put(XmlTemplateProvider.VAR_ITEM_CONTEXT_TITLE, properties
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTEXT_TITLE, properties
             .get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_TITLE));
-        values.put(XmlTemplateProvider.VAR_ITEM_CONTEXT_HREF,
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTEXT_HREF,
             de.escidoc.core.common.business.Constants.CONTEXT_URL_BASE
                 + properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
-        values.put(XmlTemplateProvider.VAR_ITEM_CONTEXT_ID, properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTEXT_ID, properties
+            .get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
 
-        values.put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_TITLE, properties
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTENT_MODEL_TITLE, properties
             .get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_TITLE));
-        values.put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_HREF,
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTENT_MODEL_HREF,
             de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
                 + properties.get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
-        values.put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_ID, properties
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTENT_MODEL_ID, properties
             .get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
 
-        values.put(XmlTemplateProvider.VAR_ITEM_STATUS, item.getStatus());
-        values.put(XmlTemplateProvider.VAR_ITEM_STATUS_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(properties
-            .get(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_STATUS, item.getStatus());
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_STATUS_COMMENT, XmlUtility
+            .escapeForbiddenXmlCharacters(properties.get(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
 
         if (item.hasObjectPid()) {
-            values.put(XmlTemplateProvider.VAR_ITEM_OBJECT_PID, item.getObjectPid());
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_OBJECT_PID, item.getObjectPid());
         }
 
         if (item.isLocked()) {
-            values.put(XmlTemplateProvider.VAR_ITEM_LOCK_STATUS,
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LOCK_STATUS,
                 de.escidoc.core.common.business.Constants.STATUS_LOCKED);
-            values.put(XmlTemplateProvider.VAR_ITEM_LOCK_DATE, item.getLockDate());
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LOCK_DATE, item.getLockDate());
             final String lockOwnerId = item.getLockOwner();
-            values.put(XmlTemplateProvider.VAR_ITEM_LOCK_OWNER_ID, lockOwnerId);
-            values.put(XmlTemplateProvider.VAR_ITEM_LOCK_OWNER_HREF,
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LOCK_OWNER_ID, lockOwnerId);
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LOCK_OWNER_HREF,
                 de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE + lockOwnerId);
-            values.put(XmlTemplateProvider.VAR_ITEM_LOCK_OWNER_TITLE, item.getLockOwnerTitle());
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LOCK_OWNER_TITLE, item.getLockOwnerTitle());
             // TODO lock-date
         }
         else {
-            values.put(XmlTemplateProvider.VAR_ITEM_LOCK_STATUS,
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LOCK_STATUS,
                 de.escidoc.core.common.business.Constants.STATUS_UNLOCKED);
         }
 
         // version
         final StringBuilder versionIdBase = new StringBuilder(item.getId()).append(':');
 
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_HREF, item.getVersionHref());
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_HREF, item.getVersionHref());
         // de.escidoc.core.common.business.Constants.ITEM_URL_BASE
         // + currentVersionId);
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_ID, item.getFullId());
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_TITLE, "This Version");
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_NUMBER, item.getVersionId());
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_ID, item.getFullId());
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_TITLE, "This Version");
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_NUMBER, item.getVersionId());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_NUMBER));
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_DATE, item.getVersionDate().toString());
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_DATE, item.getVersionDate().toString());
         // properties.get(TripleStoreUtility.PROP_VERSION_DATE));
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_STATUS, item.getVersionStatus());
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_STATUS, item.getVersionStatus());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_STATUS));
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_VALID_STATUS, properties
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_VALID_STATUS, properties
             .get(PropertyMapKeys.CURRENT_VERSION_VALID_STATUS));
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_COMMENT, XmlUtility
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_COMMENT, XmlUtility
             .escapeForbiddenXmlCharacters(properties.get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
 
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_ID, properties
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_ID, properties
             .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_TITLE, properties
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_TITLE, properties
             .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
 
         // href is rest only value
-        values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_HREF,
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_HREF,
             de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
                 + properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
 
         // PID ---------------------------------------------------
         if (item.hasVersionPid()) {
-            values.put(XmlTemplateProvider.VAR_ITEM_VERSION_PID, item.getVersionPid());
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_VERSION_PID, item.getVersionPid());
         }
 
         final String latestVersionId = item.getLatestVersionId();
-        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_HREF,
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_VERSION_HREF,
             de.escidoc.core.common.business.Constants.ITEM_URL_BASE + latestVersionId);
-        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_TITLE, "Latest Version");
-        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_ID, latestVersionId);
-        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_NUMBER, properties
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_VERSION_TITLE, "Latest Version");
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_VERSION_ID, latestVersionId);
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_VERSION_NUMBER, properties
             .get(PropertyMapKeys.LATEST_VERSION_NUMBER));
-        values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_DATE, properties
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_VERSION_DATE, properties
             .get(PropertyMapKeys.LATEST_VERSION_DATE));
 
         // if item is released -------------------------------------------------
         if (properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER) != null) {
 
-            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_NUMBER, properties
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_NUMBER, properties
                 .get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
 
             // ! changes versionIdBase
             final String latestRevisonId =
                 versionIdBase.append(properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER)).toString();
-            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_HREF,
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_HREF,
                 de.escidoc.core.common.business.Constants.ITEM_URL_BASE + latestRevisonId);
-            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_TITLE, "Latest public version");
-            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_ID, latestRevisonId);
-            values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_DATE, properties
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_TITLE, "Latest public version");
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_ID, latestRevisonId);
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_DATE, properties
                 .get(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
 
             final String latestReleasePid = item.getLatestReleasePid();
             if (latestReleasePid != null) {
-                values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_PID, latestReleasePid);
+                values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_PID, latestReleasePid);
             }
         }
 
         final Datastream contentModelSpecific = item.getCts();
         if (contentModelSpecific != null) {
-            values.put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_SPECIFIC, contentModelSpecific.toStringUTF8());
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTENT_MODEL_SPECIFIC, contentModelSpecific
+                .toStringUTF8());
         }
-        values.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProviderConstants.VAR_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.ITEM_PROPERTIES_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.VAR_NAMESPACE,
+        values.put(XmlTemplateProviderConstants.VAR_NAMESPACE,
             de.escidoc.core.common.business.Constants.ITEM_PROPERTIES_NAMESPACE_URI);
 
         return values;
@@ -1038,17 +1044,18 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.OBJID, getItem().getId());
+        values.put(XmlTemplateProviderConstants.OBJID, getItem().getId());
 
         // If later while rendering of md-records the mandatory md-record
         // will be imported from the original item, the
         // title will be overridden in a this map by a title of a original item
-        values.put(XmlTemplateProvider.TITLE, getItem().getTitle());
+        values.put(XmlTemplateProviderConstants.TITLE, getItem().getTitle());
 
-        values.put(XmlTemplateProvider.HREF, getItem().getHref());
+        values.put(XmlTemplateProviderConstants.HREF, getItem().getHref());
 
         try {
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, item.getLastModificationDate().toString());
+            values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, item
+                .getLastModificationDate().toString());
         }
         catch (final FedoraSystemException e) {
             throw new WebserverSystemException(e);
@@ -1056,18 +1063,19 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
 
         values.put("itemNamespacePrefix", de.escidoc.core.common.business.Constants.ITEM_NAMESPACE_PREFIX);
         values.put("itemNamespace", de.escidoc.core.common.business.Constants.ITEM_NAMESPACE_URI);
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, de.escidoc.core.common.business.Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE,
+            de.escidoc.core.common.business.Constants.XLINK_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX,
             de.escidoc.core.common.business.Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS,
             de.escidoc.core.common.business.Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX,
             de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS,
             de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("versionNamespacePrefix", de.escidoc.core.common.business.Constants.VERSION_NS_PREFIX);
         values.put("versionNamespace", de.escidoc.core.common.business.Constants.VERSION_NS_URI);
@@ -1076,9 +1084,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         values.put("componentsNamespacePrefix", de.escidoc.core.common.business.Constants.COMPONENTS_NAMESPACE_PREFIX);
         values.put("componentsNamespace", de.escidoc.core.common.business.Constants.COMPONENTS_NAMESPACE_URI);
 
-        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProviderConstants.MD_RECRORDS_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE,
+        values.put(XmlTemplateProviderConstants.MD_RECORDS_NAMESPACE,
             de.escidoc.core.common.business.Constants.METADATARECORDS_NAMESPACE_URI);
 
         values.put("contentStreamsNamespacePrefix",
@@ -1110,23 +1118,24 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
 
     protected void addXlinkValues(final Map values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, de.escidoc.core.common.business.Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE,
+            de.escidoc.core.common.business.Constants.XLINK_NS_URI);
     }
 
     protected void addStructuralRelationsValues(final Map values) {
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX,
             de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS,
             de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     private Map<String, Object> getResourcesValues(final FedoraResource item) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
+        values.put(XmlTemplateProviderConstants.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", item.getHref() + "/resources");
 
         // add operations from Fedora service definitions
@@ -1156,51 +1165,56 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         final String baseHRef = getItem().getHref() + component.getHrefPart();
         // TODO version
         final Map<String, String> values = new HashMap<String, String>();
-        values.put(XmlTemplateProvider.VAR_COMPONENT_PROPERTIES_TITLE, "Properties");
-        values.put(XmlTemplateProvider.VAR_COMPONENT_PROPERTIES_HREF, baseHRef + Constants.PROPERTIES_URL_PART);
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_PROPERTIES_TITLE, "Properties");
+        values
+            .put(XmlTemplateProviderConstants.VAR_COMPONENT_PROPERTIES_HREF, baseHRef + Constants.PROPERTIES_URL_PART);
 
         if (properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION) != null
-            && component.getMdRecords().containsKey(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
-            && !component.getMdRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING).isDeleted()) {
-            values.put(XmlTemplateProvider.VAR_COMPONENT_DESCRIPTION, properties
+            && component.getMdRecords().containsKey(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING)
+            && !component.getMdRecord(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING).isDeleted()) {
+            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_DESCRIPTION, properties
                 .get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION));
         }
-        values.put(XmlTemplateProvider.VAR_COMPONENT_CREATION_DATE, component.getCreationDate());
-        values.put(XmlTemplateProvider.VAR_COMPONENT_CREATED_BY_TITLE, properties
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CREATION_DATE, component.getCreationDate());
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CREATED_BY_TITLE, properties
             .get(TripleStoreUtility.PROP_CREATED_BY_TITLE));
-        values.put(XmlTemplateProvider.VAR_COMPONENT_CREATED_BY_HREF,
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CREATED_BY_HREF,
             de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
                 + properties.get(TripleStoreUtility.PROP_CREATED_BY_ID));
-        values.put(XmlTemplateProvider.VAR_COMPONENT_CREATED_BY_ID, properties
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CREATED_BY_ID, properties
             .get(TripleStoreUtility.PROP_CREATED_BY_ID));
 
         if (properties.get(TripleStoreUtility.PROP_VALID_STATUS) != null) {
-            values.put(XmlTemplateProvider.VAR_COMPONENT_VALID_STATUS, properties
+            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_VALID_STATUS, properties
                 .get(TripleStoreUtility.PROP_VALID_STATUS));
         }
 
-        values.put(XmlTemplateProvider.VAR_COMPONENT_VISIBILITY, properties.get(TripleStoreUtility.PROP_VISIBILITY));
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_VISIBILITY, properties
+            .get(TripleStoreUtility.PROP_VISIBILITY));
 
-        values.put(XmlTemplateProvider.VAR_COMPONENT_CONTENT_CATEGORY, properties
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CONTENT_CATEGORY, properties
             .get(TripleStoreUtility.PROP_CONTENT_CATEGORY));
 
         if (properties.get(TripleStoreUtility.PROP_MIME_TYPE) != null) {
-            values.put(XmlTemplateProvider.VAR_COMPONENT_MIME_TYPE, properties.get(TripleStoreUtility.PROP_MIME_TYPE));
+            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_MIME_TYPE, properties
+                .get(TripleStoreUtility.PROP_MIME_TYPE));
         }
 
         if (properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE) != null
-            && component.getMdRecords().containsKey(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
-            && !component.getMdRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING).isDeleted()) {
-            values.put(XmlTemplateProvider.VAR_COMPONENT_FILE_NAME, properties
+            && component.getMdRecords().containsKey(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING)
+            && !component.getMdRecord(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING).isDeleted()) {
+            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_FILE_NAME, properties
                 .get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
         }
         if (properties.get(TripleStoreUtility.PROP_COMPONENT_PID) != null) {
-            values.put(XmlTemplateProvider.VAR_COMPONENT_PID, properties.get(TripleStoreUtility.PROP_COMPONENT_PID));
+            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_PID, properties
+                .get(TripleStoreUtility.PROP_COMPONENT_PID));
         }
 
-        values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, properties
+        values.put(XmlTemplateProviderConstants.CONTENT_CHECKSUM_ALGORITHM, properties
             .get(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM_ALGORITHM));
-        values.put(XmlTemplateProvider.CONTENT_CHECKSUM, properties.get(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM));
+        values.put(XmlTemplateProviderConstants.CONTENT_CHECKSUM, properties
+            .get(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM));
 
         return values;
     }

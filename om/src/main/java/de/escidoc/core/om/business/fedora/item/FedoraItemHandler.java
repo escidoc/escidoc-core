@@ -45,6 +45,7 @@ import java.util.TreeMap;
 
 import javax.xml.stream.XMLStreamException;
 
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
@@ -124,7 +125,6 @@ import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
@@ -573,7 +573,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         setItem(id);
         String dc;
         try {
-            final Datastream mdRecord = getItem().getMdRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
+            final Datastream mdRecord =
+                getItem().getMdRecord(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING);
             if (mdRecord.isDeleted()) {
                 throw new MdRecordNotFoundException();
             }

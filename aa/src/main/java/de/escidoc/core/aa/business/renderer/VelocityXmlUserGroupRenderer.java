@@ -39,7 +39,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.UserGroupXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.stereotype.Service;
@@ -72,7 +72,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     @Override
     public String render(final UserGroup userGroup) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootUserGroup", XmlTemplateProvider.TRUE);
+        values.put("isRootUserGroup", XmlTemplateProviderConstants.TRUE);
         addCommonValues(values);
         addUserGroupValues(userGroup, values);
         return getUserGroupXmlProvider().getUserGroupXml(values);
@@ -128,13 +128,13 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
         throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootCurrentGrants", XmlTemplateProvider.TRUE);
+        values.put("isRootCurrentGrants", XmlTemplateProviderConstants.TRUE);
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("currentGrantsTitle", "Grants of " + userGroup.getLabel());
         values.put("currentGrantsHref", XmlUtility.getUserGroupCurrentGrantsHref(userGroup.getId()));
         if (currentGrants != null && !currentGrants.isEmpty()) {
@@ -143,7 +143,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
         DateTime lmdDateTime = new DateTime(userGroup.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
+        values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, lmd);
 
         addEscidocBaseUrl(values);
         return getUserGroupXmlProvider().getCurrentGrantsXml(values);
@@ -158,13 +158,13 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootGrant", XmlTemplateProvider.TRUE);
+        values.put("isRootGrant", XmlTemplateProviderConstants.TRUE);
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("grantTitle", grant.getTitle());
         values.put("grantHref", grant.getHref());
         values.put("grantId", grant.getId());
@@ -227,7 +227,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
     public String renderResources(final UserGroup userGroup) throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootResources", XmlTemplateProvider.TRUE);
+        values.put("isRootResources", XmlTemplateProviderConstants.TRUE);
         addResourcesValues(userGroup, values);
         addCommonValues(values);
         DateTime lmdDateTime = new DateTime(userGroup.getLastModificationDate());
@@ -251,7 +251,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
         throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootUserGroup", XmlTemplateProvider.TRUE);
+        values.put("isRootUserGroup", XmlTemplateProviderConstants.TRUE);
         values.put("recordPacking", recordPacking);
         addCommonValues(values);
         addUserGroupListValues(values);
@@ -320,7 +320,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer impleme
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**

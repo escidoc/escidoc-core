@@ -135,7 +135,7 @@ import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
@@ -395,7 +395,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final List<String> structMapEntries = structMapHandler.getEntries();
         final String foxml =
             getContainerFoxml(streams, metadataHandler, containerId, contentModel, properties, structMapEntries,
-                XmlTemplateProvider.PLACEHOLDER, relationsData, createComment, propertiesAsReferences);
+                XmlTemplateProviderConstants.PLACEHOLDER, relationsData, createComment, propertiesAsReferences);
         final IngestPathParam path = new IngestPathParam();
         final IngestQueryParam query = new IngestQueryParam();
         this.fedoraServiceClient.ingest(path, query, foxml);

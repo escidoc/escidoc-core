@@ -33,7 +33,7 @@ import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ScopeXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.sm.business.persistence.hibernate.Scope;
 import de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface;
 import org.joda.time.DateTime;
@@ -67,7 +67,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
     @Override
     public String render(final Scope scope) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootScope", XmlTemplateProvider.TRUE);
+        values.put("isRootScope", XmlTemplateProviderConstants.TRUE);
         addScopeNamespaceValues(values);
         addScopeValues(scope, values);
         return getScopeXmlProvider().getScopeXml(values);
@@ -114,7 +114,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootScope", XmlTemplateProvider.FALSE);
+        values.put("isRootScope", XmlTemplateProviderConstants.FALSE);
         values.put("scopeListTitle", "Scope List");
         values.put("recordPacking", recordPacking);
         addScopeNamespaceValues(values);
@@ -146,10 +146,10 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
         addEscidocBaseUrl(values);
         values.put("scopeNamespacePrefix", Constants.SCOPE_NS_PREFIX);
         values.put("scopeNamespace", Constants.SCOPE_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
@@ -171,7 +171,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**

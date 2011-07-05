@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
@@ -63,7 +64,6 @@ import de.escidoc.core.common.util.stax.handler.WovReadHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 
@@ -975,7 +975,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         try {
             final byte[] b = getWov().getStream();
             String tmpWov = new String(b, XmlUtility.CHARACTER_ENCODING);
-            tmpWov = tmpWov.replaceAll(XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, timestamp.toString());
+            tmpWov = tmpWov.replaceAll(XmlTemplateProviderConstants.TIMESTAMP_PLACEHOLDER, timestamp.toString());
             setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), tmpWov
                 .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
         }
@@ -1000,20 +1000,21 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         final HashMap<String, String> eventValues = new HashMap<String, String>();
 
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_TYPE, newStatus);
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, 'v'
+        eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_TYPE, newStatus);
+        eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_XMLID, 'v'
             + getVersionElementData(PropertyMapKeys.LATEST_VERSION_NUMBER) + 'e' + System.currentTimeMillis());
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, getHrefWithoutVersionNumber() + "/resources/"
-            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
-        eventValues.put(XmlTemplateProvider.TIMESTAMP, latestModificationTimestamp.toString());
-        eventValues.put(XmlTemplateProvider.VAR_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(comment));
-        eventValues.put(XmlTemplateProvider.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
-        eventValues.put(XmlTemplateProvider.VAR_AGENT_TITLE, UserContext.getRealName());
-        eventValues.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
-        eventValues.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE, UserContext.getId());
-        eventValues.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
-        eventValues.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, getId());
+        eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
+        eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_VALUE, getHrefWithoutVersionNumber() + "/resources/"
+            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
+            + eventValues.get(XmlTemplateProviderConstants.VAR_EVENT_XMLID));
+        eventValues.put(XmlTemplateProviderConstants.TIMESTAMP, latestModificationTimestamp.toString());
+        eventValues.put(XmlTemplateProviderConstants.VAR_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(comment));
+        eventValues.put(XmlTemplateProviderConstants.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
+        eventValues.put(XmlTemplateProviderConstants.VAR_AGENT_TITLE, UserContext.getRealName());
+        eventValues.put(XmlTemplateProviderConstants.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        eventValues.put(XmlTemplateProviderConstants.VAR_AGENT_ID_VALUE, UserContext.getId());
+        eventValues.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        eventValues.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_VALUE, getId());
 
         return CommonFoXmlProvider.getInstance().getPremisEventXml(eventValues);
     }

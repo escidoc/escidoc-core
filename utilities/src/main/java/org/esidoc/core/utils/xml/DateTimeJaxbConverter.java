@@ -13,6 +13,9 @@ import java.util.Calendar;
  */
 public final class DateTimeJaxbConverter {
 
+    private DateTimeJaxbConverter() {
+    }
+
     public static DateTime parseDate(final String dateString) {
         if (dateString == null) {
             return null;

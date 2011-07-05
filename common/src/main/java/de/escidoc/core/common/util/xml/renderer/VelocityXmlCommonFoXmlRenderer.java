@@ -25,7 +25,7 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,35 +54,35 @@ public class VelocityXmlCommonFoXmlRenderer {
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX, Constants.WOV_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.VAR_NAMESPACE, Constants.WOV_NAMESPACE_URI);
+        values.put(XmlTemplateProviderConstants.VAR_NAMESPACE_PREFIX, Constants.WOV_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProviderConstants.VAR_NAMESPACE, Constants.WOV_NAMESPACE_URI);
         // expand the objid to escidoc:123:1 for version no 1
         if ("1".equals(versionNo)) {
-            values.put(XmlTemplateProvider.OBJID, id + ":1");
+            values.put(XmlTemplateProviderConstants.OBJID, id + ":1");
         }
         else {
-            values.put(XmlTemplateProvider.OBJID, id);
+            values.put(XmlTemplateProviderConstants.OBJID, id);
         }
-        values.put(XmlTemplateProvider.TITLE, title);
-        values.put(XmlTemplateProvider.HREF, baseUrl + id + ':' + versionNo);
-        values.put(XmlTemplateProvider.VERSION_NUMBER, versionNo);
-        values.put(XmlTemplateProvider.TIMESTAMP, lastModificationDate);
-        values.put(XmlTemplateProvider.VERSION_STATUS, versionStatus);
-        values.put(XmlTemplateProvider.VERSION_COMMENT, comment);
-        values.put(XmlTemplateProvider.TIMESTAMP, lastModificationDate);
+        values.put(XmlTemplateProviderConstants.TITLE, title);
+        values.put(XmlTemplateProviderConstants.HREF, baseUrl + id + ':' + versionNo);
+        values.put(XmlTemplateProviderConstants.VERSION_NUMBER, versionNo);
+        values.put(XmlTemplateProviderConstants.TIMESTAMP, lastModificationDate);
+        values.put(XmlTemplateProviderConstants.VERSION_STATUS, versionStatus);
+        values.put(XmlTemplateProviderConstants.VERSION_COMMENT, comment);
+        values.put(XmlTemplateProviderConstants.TIMESTAMP, lastModificationDate);
         // AGENT_TITLE AGENT_BASE_URI AGENT_ID_VALUE AGENT_ID_TYPE
         // AGENT_ID_VALUE
-        values.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE, currentUserId);
-        values.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
-        values.put(XmlTemplateProvider.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
-        values.put(XmlTemplateProvider.VAR_AGENT_TITLE, currentUserName);
+        values.put(XmlTemplateProviderConstants.VAR_AGENT_ID_VALUE, currentUserId);
+        values.put(XmlTemplateProviderConstants.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        values.put(XmlTemplateProviderConstants.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
+        values.put(XmlTemplateProviderConstants.VAR_AGENT_TITLE, currentUserName);
         // EVENT_XMLID EVENT_ID_TYPE EVENT_ID_VALUE
-        values.put(XmlTemplateProvider.VAR_EVENT_XMLID, "v1e" + System.currentTimeMillis());
-        values.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, Constants.CONTAINER_URL_BASE + id + "/resources/"
-            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' + values.get(XmlTemplateProvider.VAR_EVENT_XMLID));
-        values.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
-        values.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
-        values.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, id);
+        values.put(XmlTemplateProviderConstants.VAR_EVENT_XMLID, "v1e" + System.currentTimeMillis());
+        values.put(XmlTemplateProviderConstants.VAR_EVENT_ID_VALUE, Constants.CONTAINER_URL_BASE + id + "/resources/"
+            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' + values.get(XmlTemplateProviderConstants.VAR_EVENT_XMLID));
+        values.put(XmlTemplateProviderConstants.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
+        values.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        values.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_VALUE, id);
         return CommonFoXmlProvider.getInstance().getWov(values);
     }
 

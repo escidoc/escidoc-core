@@ -31,7 +31,7 @@ package de.escidoc.core.oum.business.renderer;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.factory.OrganizationalUnitFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitFoXmlRendererInterface;
 
 import java.util.Map;
@@ -49,11 +49,11 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer implements Organizationa
     @Override
     public String render(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE, Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put(XmlTemplateProvider.VAR_RESOURCES_ONTOLOGIES_NAMESPACE, Constants.RESOURCES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.VAR_STRUCT_RELATIONS_NAMESPACE, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.VAR_RESOURCES_ONTOLOGIES_NAMESPACE, Constants.RESOURCES_NS_URI);
         return OrganizationalUnitFoXmlProvider.getInstance().getOrganizationalUnitFoXml(values);
     }
 
@@ -63,11 +63,11 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer implements Organizationa
     @Override
     public String renderRelsExt(final Map<String, Object> values) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE, Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put(XmlTemplateProvider.VAR_RESOURCES_ONTOLOGIES_NAMESPACE, Constants.RESOURCES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.VAR_STRUCT_RELATIONS_NAMESPACE, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.VAR_RESOURCES_ONTOLOGIES_NAMESPACE, Constants.RESOURCES_NS_URI);
         return OrganizationalUnitFoXmlProvider.getInstance().getRelsExt(values);
     }
 

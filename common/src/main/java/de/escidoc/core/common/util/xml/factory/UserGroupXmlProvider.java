@@ -25,7 +25,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import java.util.Map;
 
 /**
- * XmlTemplateProvider implementation using the Velocity template engine.<br/> This implementation uses the velocity
+ * XmlTemplateProviderConstants implementation using the Velocity template engine.<br/> This implementation uses the velocity
  * singleton pattern.
  *
  * @author André Schenk

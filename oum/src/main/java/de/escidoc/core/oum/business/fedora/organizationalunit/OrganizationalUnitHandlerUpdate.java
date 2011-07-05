@@ -44,7 +44,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit;
 import org.esidoc.core.utils.io.MimeTypes;
 
@@ -134,12 +134,12 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final String buildNumber = Utility.getBuildNumber();
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, buildNumber);
-        values.put(XmlTemplateProvider.PUBLIC_STATUS, state);
-        values.put(XmlTemplateProvider.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
-        values.put(XmlTemplateProvider.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
-        values.put(XmlTemplateProvider.MODIFIED_BY_ID, getOrganizationalUnit().getModifiedBy());
-        values.put(XmlTemplateProvider.MODIFIED_BY_TITLE, getOrganizationalUnit().getModifiedByTitle());
+        values.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, buildNumber);
+        values.put(XmlTemplateProviderConstants.PUBLIC_STATUS, state);
+        values.put(XmlTemplateProviderConstants.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
+        values.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
+        values.put(XmlTemplateProviderConstants.MODIFIED_BY_ID, getOrganizationalUnit().getModifiedBy());
+        values.put(XmlTemplateProviderConstants.MODIFIED_BY_TITLE, getOrganizationalUnit().getModifiedByTitle());
 
         getOrganizationalUnit()
             .setRelsExt(

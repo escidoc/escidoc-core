@@ -34,6 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,6 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.joda.time.DateTime;
 
 @Service
@@ -100,9 +100,9 @@ public class VelocityXmlCommonRenderer {
 
     protected static void addXlinkValues(final Map values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
     }
 
     protected static void addRelationsNamespaceValues(final Map values) {
@@ -112,8 +112,8 @@ public class VelocityXmlCommonRenderer {
     }
 
     protected static void addStructuralRelationsValues(final Map values) {
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     protected static void addParentsNamespaceValues(final Map values) {
@@ -140,7 +140,7 @@ public class VelocityXmlCommonRenderer {
             throw new WebserverSystemException(e1);
         }
 
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd.toString());
+        values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, lmd.toString());
 
         addXlinkValues(values);
     }

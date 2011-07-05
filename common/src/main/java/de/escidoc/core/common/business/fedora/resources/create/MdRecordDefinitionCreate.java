@@ -25,7 +25,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -151,13 +151,13 @@ public class MdRecordDefinitionCreate {
 
         final Map<String, String> templateValues = new HashMap<String, String>();
 
-        templateValues.put(XmlTemplateProvider.MD_RECORD_TYPE, TYPE);
-        templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA, this.schemaHref);
-        templateValues.put(XmlTemplateProvider.MD_RECORD_NAME, this.mdRecordDefinitionName);
+        templateValues.put(XmlTemplateProviderConstants.MD_RECORD_TYPE, TYPE);
+        templateValues.put(XmlTemplateProviderConstants.MD_RECORD_SCHEMA, this.schemaHref);
+        templateValues.put(XmlTemplateProviderConstants.MD_RECORD_NAME, this.mdRecordDefinitionName);
 
         // add Metadata (as BLOB)
         try {
-            templateValues.put(XmlTemplateProvider.MD_RECORD_CONTENT, getMdRecordDefinition().toString(
+            templateValues.put(XmlTemplateProviderConstants.MD_RECORD_CONTENT, getMdRecordDefinition().toString(
                 XmlUtility.CHARACTER_ENCODING).trim());
         }
         catch (final UnsupportedEncodingException e) {

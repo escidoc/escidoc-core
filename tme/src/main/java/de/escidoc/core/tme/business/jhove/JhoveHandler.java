@@ -2,7 +2,7 @@ package de.escidoc.core.tme.business.jhove;
 
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.tme.business.TmeHandlerBase;
+import de.escidoc.core.tme.business.TmeUtility;
 import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
 import edu.harvard.hul.ois.jhove.App;
 import edu.harvard.hul.ois.jhove.JhoveBase;
@@ -27,7 +27,7 @@ import java.io.OutputStream;
  * @author Michael Schneider
  */
 @Service("business.JhoveHandler")
-public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterface {
+public class JhoveHandler implements JhoveHandlerInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JhoveHandlerInterface.class);
 
@@ -114,7 +114,7 @@ public class JhoveHandler extends TmeHandlerBase implements JhoveHandlerInterfac
     @Override
     public String extract(final String requests) throws SystemException, TmeException {
 
-        final String[] files = parseRequests(requests);
+        final String[] files = TmeUtility.parseRequests(requests);
         return callJhove(files);
     }
 

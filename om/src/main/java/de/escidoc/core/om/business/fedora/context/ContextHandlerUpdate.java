@@ -94,7 +94,7 @@ import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
@@ -231,7 +231,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 changedValues.put("modifiedByTitle", currentUser[1]);
             }
             final String buildNumber = Utility.getBuildNumber();
-            changedValues.put(XmlTemplateProvider.BUILD_NUMBER, buildNumber);
+            changedValues.put(XmlTemplateProviderConstants.BUILD_NUMBER, buildNumber);
             updateRelsExt(changedValues);
             getContext().persist();
             return true;
@@ -287,8 +287,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             getUtility().getCurrentUserRealName(), null));
 
         final String buildNumber = Utility.getBuildNumber();
-        updateElementsRelsExt.put(XmlTemplateProvider.BUILD_NUMBER, new StartElementWithChildElements(
-            XmlTemplateProvider.BUILD_NUMBER, "http://escidoc.de/core/01/system/", "system", null, buildNumber, null));
+        updateElementsRelsExt.put(XmlTemplateProviderConstants.BUILD_NUMBER, new StartElementWithChildElements(
+            XmlTemplateProviderConstants.BUILD_NUMBER, "http://escidoc.de/core/01/system/", "system", null,
+            buildNumber, null));
 
         updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS, new StartElementWithChildElements(
             Elements.ELEMENT_PUBLIC_STATUS, Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, null,
@@ -374,8 +375,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             getUtility().getCurrentUserRealName(), null));
 
         final String buildNumber = Utility.getBuildNumber();
-        updateElementsRelsExt.put(XmlTemplateProvider.BUILD_NUMBER, new StartElementWithChildElements(
-            XmlTemplateProvider.BUILD_NUMBER, "http://escidoc.de/core/01/system/", "system", null, buildNumber, null));
+        updateElementsRelsExt.put(XmlTemplateProviderConstants.BUILD_NUMBER, new StartElementWithChildElements(
+            XmlTemplateProviderConstants.BUILD_NUMBER, "http://escidoc.de/core/01/system/", "system", null,
+            buildNumber, null));
 
         updateElementsRelsExt.put(Elements.ELEMENT_PUBLIC_STATUS, new StartElementWithChildElements(
             Elements.ELEMENT_PUBLIC_STATUS, Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX, null,
@@ -456,9 +458,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         final TreeMap<String, StartElementWithText> updateElementsRelsExt = new TreeMap<String, StartElementWithText>();
         final Set<Entry<String, String>> changedValuesEntrySet = changedValues.entrySet();
         for (final Entry<String, String> entry : changedValuesEntrySet) {
-            if (XmlTemplateProvider.BUILD_NUMBER.equals(entry.getKey())) {
-                updateElementsRelsExt.put(XmlTemplateProvider.BUILD_NUMBER, new StartElementWithChildElements(entry
-                    .getKey(), "http://escidoc.de/core/01/system/", "system", null, entry.getValue(), null));
+            if (XmlTemplateProviderConstants.BUILD_NUMBER.equals(entry.getKey())) {
+                updateElementsRelsExt.put(XmlTemplateProviderConstants.BUILD_NUMBER, new StartElementWithChildElements(
+                    entry.getKey(), "http://escidoc.de/core/01/system/", "system", null, entry.getValue(), null));
             }
             else if ("modifiedBy".equals(entry.getKey())) {
                 final StartElementWithChildElements modifiedBy =

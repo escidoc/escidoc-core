@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.om.business.stax.handler.MetadataHandler;
 
 import java.io.ByteArrayOutputStream;
@@ -79,17 +79,17 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         final Map<String, Map<String, String>> metadataAttributes = metadataHandler.getMetadataAttributes();
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put(XmlTemplateProvider.OBJID, containerId);
+        values.put(XmlTemplateProviderConstants.OBJID, containerId);
         values.put("title", "Container " + containerId);
 
-        values.put(XmlTemplateProvider.PUBLIC_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
-        values.put(XmlTemplateProvider.VERSION_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
+        values.put(XmlTemplateProviderConstants.PUBLIC_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
+        values.put(XmlTemplateProviderConstants.VERSION_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
 
         if (properties.get(Elements.ELEMENT_PUBLIC_STATUS).equals(StatusType.RELEASED.toString())) {
             // if status release add release number and date (date is later
             // to update)
-            values.put(XmlTemplateProvider.LATEST_RELEASE_DATE, XmlTemplateProvider.PLACEHOLDER);
-            values.put(XmlTemplateProvider.LATEST_RELEASE_NUMBER, "1");
+            values.put(XmlTemplateProviderConstants.LATEST_RELEASE_DATE, XmlTemplateProviderConstants.PLACEHOLDER);
+            values.put(XmlTemplateProviderConstants.LATEST_RELEASE_NUMBER, "1");
         }
 
         // dc-mapping prototyping
@@ -98,7 +98,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
             dcXml =
                 XmlUtility.createDC(metadataHandler.getEscidocMdRecordNameSpace(),
                     ((ByteArrayOutputStream) ((Map) containerDataStreams.get(XmlUtility.NAME_MDRECORDS))
-                        .get(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING))
+                        .get(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING))
                         .toString(XmlUtility.CHARACTER_ENCODING), containerId, contentModel);
         }
         catch (final UnsupportedEncodingException e) {
@@ -106,7 +106,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         }
 
         if (dcXml != null && dcXml.trim().length() > 0) {
-            values.put(XmlTemplateProvider.DC, dcXml);
+            values.put(XmlTemplateProviderConstants.DC, dcXml);
         }
 
         for (final Entry<String, Object> entry : containerDataStreams.entrySet()) {
@@ -116,7 +116,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                 try {
                     // now we map to Velocity Variable Names
                     if (outsideKey.equals(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC)) {
-                        values.put(XmlTemplateProvider.CONTENT_MODEL_SPECIFIC, outsideValue
+                        values.put(XmlTemplateProviderConstants.CONTENT_MODEL_SPECIFIC, outsideValue
                             .toString(XmlUtility.CHARACTER_ENCODING));
                     }
                     else {
@@ -134,7 +134,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                 if (!insideHash.isEmpty()) {
                     final Collection<Map<String, String>> mdRecords =
                         new ArrayList<Map<String, String>>(insideHash.size());
-                    values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
+                    values.put(XmlTemplateProviderConstants.MD_RECORDS, mdRecords);
                     final Set content2 = insideHash.entrySet();
                     for (final Object aContent2 : content2) {
                         final Map<String, String> mdRecord = new HashMap<String, String>();
@@ -148,11 +148,11 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                             type = mdAttributes.get("type");
                         }
                         final ByteArrayOutputStream insideValue = (ByteArrayOutputStream) entry2.getValue();
-                        mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA, schema);
-                        mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, type);
-                        mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, insideKey);
+                        mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_SCHEMA, schema);
+                        mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_TYPE, type);
+                        mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_NAME, insideKey);
                         try {
-                            mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT, insideValue
+                            mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_CONTENT, insideValue
                                 .toString(XmlUtility.CHARACTER_ENCODING));
 
                         }

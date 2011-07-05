@@ -41,6 +41,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerException;
 
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.apache.xpath.XPathAPI;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
@@ -95,7 +96,6 @@ import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
@@ -544,8 +544,9 @@ public class Utility {
             getCurrentUserRealName(), null));
 
         final String buildNumber = getBuildNumber();
-        updateElementsRelsExt.put(XmlTemplateProvider.BUILD_NUMBER, new StartElementWithChildElements(
-            XmlTemplateProvider.BUILD_NUMBER, "http://escidoc.de/core/01/system/", "system", null, buildNumber, null));
+        updateElementsRelsExt.put(XmlTemplateProviderConstants.BUILD_NUMBER, new StartElementWithChildElements(
+            XmlTemplateProviderConstants.BUILD_NUMBER, "http://escidoc.de/core/01/system/", "system", null,
+            buildNumber, null));
 
         boolean release = false;
         if (newStatus != null) {
@@ -639,7 +640,7 @@ public class Utility {
             // first child
             final String newEventEntry =
                 createEventXml(resource.getId(), resBaseData.get(RESOURCE_BASE_URL), getCurrentUserRealName(),
-                    getCurrentUserId(), XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, newStatus, comment,
+                    getCurrentUserId(), XmlTemplateProviderConstants.TIMESTAMP_PLACEHOLDER, newStatus, comment,
                     currentVersionProperties);
 
             // change /version-history/version[version-number='x']/timestamp
@@ -648,7 +649,7 @@ public class Utility {
             // is not given due this parsers.)
             updateElementsWOV.put(Constants.WOV_NAMESPACE_URI + "timestamp", new StartElementWithChildElements(
                 "timestamp", Constants.WOV_NAMESPACE_URI, Constants.WOV_NAMESPACE_PREFIX, null,
-                XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, null, 1));
+                XmlTemplateProviderConstants.TIMESTAMP_PLACEHOLDER, null, 1));
 
             // do update WOV
             writeEvent(resource, newEventEntry, updateElementsWOV, elementsToAdd);
@@ -807,37 +808,39 @@ public class Utility {
         final Map<String, String> newVersionEntry = new HashMap<String, String>();
 
         // compute new latest version data
-        newVersionEntry.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX, Constants.WOV_NAMESPACE_PREFIX);
-        newVersionEntry.put(XmlTemplateProvider.VAR_NAMESPACE, Constants.WOV_NAMESPACE_URI);
-        newVersionEntry.put(XmlTemplateProvider.OBJID, resource.getId() + ':' + Integer.toString(newVersionNumberInt));
-        newVersionEntry.put(XmlTemplateProvider.TITLE, "Version " + Integer.toString(newVersionNumberInt));
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_NAMESPACE_PREFIX, Constants.WOV_NAMESPACE_PREFIX);
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_NAMESPACE, Constants.WOV_NAMESPACE_URI);
+        newVersionEntry.put(XmlTemplateProviderConstants.OBJID, resource.getId() + ':'
+            + Integer.toString(newVersionNumberInt));
+        newVersionEntry.put(XmlTemplateProviderConstants.TITLE, "Version " + Integer.toString(newVersionNumberInt));
 
-        newVersionEntry.put(XmlTemplateProvider.HREF, resource.getHref() + ':' + Integer.toString(newVersionNumberInt));
-        newVersionEntry.put(XmlTemplateProvider.VERSION_NUMBER, Integer.toString(newVersionNumberInt));
+        newVersionEntry.put(XmlTemplateProviderConstants.HREF, resource.getHref() + ':'
+            + Integer.toString(newVersionNumberInt));
+        newVersionEntry.put(XmlTemplateProviderConstants.VERSION_NUMBER, Integer.toString(newVersionNumberInt));
         // real timestamp is not clear at this point (will pre fixed lated
         // during persist)
-        // newVersionEntry.put(XmlTemplateProvider.TIMESTAMP,
+        // newVersionEntry.put(XmlTemplateProviderConstants.TIMESTAMP,
         // newLatestModificationTimestamp);
-        newVersionEntry.put(XmlTemplateProvider.TIMESTAMP, XmlTemplateProvider.TIMESTAMP_PLACEHOLDER);
-        newVersionEntry.put(XmlTemplateProvider.VAR_STATUS, currentVersionProperties
+        newVersionEntry.put(XmlTemplateProviderConstants.TIMESTAMP, XmlTemplateProviderConstants.TIMESTAMP_PLACEHOLDER);
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_STATUS, currentVersionProperties
             .get(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS));
-        newVersionEntry.put(XmlTemplateProvider.VALID_STATUS, currentVersionProperties
+        newVersionEntry.put(XmlTemplateProviderConstants.VALID_STATUS, currentVersionProperties
             .get(PropertyMapKeys.LATEST_VERSION_VALID_STATUS));
-        newVersionEntry.put(XmlTemplateProvider.VAR_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(comment));
-        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE, getCurrentUserId());
-        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
-        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
-        newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_TITLE, getCurrentUserRealName());
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(comment));
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_AGENT_ID_VALUE, getCurrentUserId());
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_AGENT_TITLE, getCurrentUserRealName());
 
-        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_TYPE, "update");
-        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_XMLID, 'v' + Integer.toString(newVersionNumberInt) + 'e'
-            + System.currentTimeMillis());
-        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, resBaseData.get(RESOURCE_BASE_URL)
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_EVENT_TYPE, "update");
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_EVENT_XMLID, 'v' + Integer.toString(newVersionNumberInt)
+            + 'e' + System.currentTimeMillis());
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_EVENT_ID_VALUE, resBaseData.get(RESOURCE_BASE_URL)
             + resource.getId() + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
-            + newVersionEntry.get(XmlTemplateProvider.VAR_EVENT_XMLID));
-        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
-        newVersionEntry.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
-        newVersionEntry.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, resource.getId());
+            + newVersionEntry.get(XmlTemplateProviderConstants.VAR_EVENT_XMLID));
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        newVersionEntry.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_VALUE, resource.getId());
         // get xml representation of new version
         return CommonFoXmlProvider.getInstance().getWovVersionEntryXml(newVersionEntry);
     }
@@ -862,20 +865,21 @@ public class Utility {
         final String comment, final Map<String, String> currentVersionProperties) throws WebserverSystemException {
 
         final HashMap<String, String> eventValues = new HashMap<String, String>();
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_TYPE, newStatus);
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, 'v'
+        eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_TYPE, newStatus);
+        eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_XMLID, 'v'
             + currentVersionProperties.get(PropertyMapKeys.LATEST_VERSION_NUMBER) + 'e' + System.currentTimeMillis());
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, resourceBaseUrl + resourceId + "/resources/"
-            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
-        eventValues.put(XmlTemplateProvider.TIMESTAMP, latestModificationTimestamp);
-        eventValues.put(XmlTemplateProvider.VAR_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(comment));
-        eventValues.put(XmlTemplateProvider.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
-        eventValues.put(XmlTemplateProvider.VAR_AGENT_TITLE, currentUserName);
-        eventValues.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
-        eventValues.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE, currentUserId);
-        eventValues.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
-        eventValues.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, resourceId);
+        eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
+        eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_VALUE, resourceBaseUrl + resourceId + "/resources/"
+            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
+            + eventValues.get(XmlTemplateProviderConstants.VAR_EVENT_XMLID));
+        eventValues.put(XmlTemplateProviderConstants.TIMESTAMP, latestModificationTimestamp);
+        eventValues.put(XmlTemplateProviderConstants.VAR_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(comment));
+        eventValues.put(XmlTemplateProviderConstants.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
+        eventValues.put(XmlTemplateProviderConstants.VAR_AGENT_TITLE, currentUserName);
+        eventValues.put(XmlTemplateProviderConstants.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        eventValues.put(XmlTemplateProviderConstants.VAR_AGENT_ID_VALUE, currentUserId);
+        eventValues.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        eventValues.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_VALUE, resourceId);
 
         return CommonFoXmlProvider.getInstance().getPremisEventXml(eventValues);
     }

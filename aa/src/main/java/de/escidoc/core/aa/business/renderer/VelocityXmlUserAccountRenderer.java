@@ -40,7 +40,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.UserAccountXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.stereotype.Service;
@@ -79,7 +79,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootUserAccount", XmlTemplateProvider.TRUE);
+        values.put("isRootUserAccount", XmlTemplateProviderConstants.TRUE);
         addCommonValues(values);
 
         addUserAccountValues(userAccount, values);
@@ -129,13 +129,13 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootCurrentGrants", XmlTemplateProvider.TRUE);
+        values.put("isRootCurrentGrants", XmlTemplateProviderConstants.TRUE);
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("currentGrantsTitle", "Grants of " + userAccount.getLoginname());
         values.put("currentGrantsHref", XmlUtility.getCurrentGrantsHref(userAccount.getId()));
         if (currentGrants != null && !currentGrants.isEmpty()) {
@@ -144,7 +144,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
+        values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, lmd);
         addEscidocBaseUrl(values);
         return getUserAccountXmlProvider().getCurrentGrantsXml(values);
     }
@@ -162,13 +162,13 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         final RecordPacking recordPacking) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootGrants", XmlTemplateProvider.TRUE);
+        values.put("isRootGrants", XmlTemplateProviderConstants.TRUE);
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("recordPacking", recordPacking);
         values.put("numberOfHits", numberOfHits);
@@ -190,13 +190,13 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootGrant", XmlTemplateProvider.TRUE);
+        values.put("isRootGrant", XmlTemplateProviderConstants.TRUE);
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("grantTitle", grant.getTitle());
         values.put("grantHref", grant.getHref());
         values.put("grantId", grant.getId());
@@ -257,7 +257,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
     public String renderResources(final UserAccount userAccount) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootResources", XmlTemplateProvider.TRUE);
+        values.put("isRootResources", XmlTemplateProviderConstants.TRUE);
         addResourcesValues(userAccount, values);
         addCommonValues(values);
         DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
@@ -279,7 +279,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootUserAccount", XmlTemplateProvider.TRUE);
+        values.put("isRootUserAccount", XmlTemplateProviderConstants.TRUE);
         values.put("recordPacking", recordPacking);
         addCommonValues(values);
         addUserAccountListValues(values);
@@ -350,7 +350,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**
@@ -392,7 +392,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
 
         addPreferencesCommonValues(values);
         if (isRootPreference) {
-            values.put("isRootPreference", XmlTemplateProvider.TRUE);
+            values.put("isRootPreference", XmlTemplateProviderConstants.TRUE);
             DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
             lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
             final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
@@ -445,7 +445,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
      */
     @Override
     public String renderAttribute(final UserAttribute attribute) throws WebserverSystemException {
-        return renderAttribute(attribute, XmlTemplateProvider.TRUE);
+        return renderAttribute(attribute, XmlTemplateProviderConstants.TRUE);
     }
 
     /**
@@ -463,11 +463,11 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
 
         values.put("isRootAttribute", isRootAttribute);
         addAttributesCommonValues(values);
-        if (XmlTemplateProvider.TRUE.equals(isRootAttribute)) {
+        if (XmlTemplateProviderConstants.TRUE.equals(isRootAttribute)) {
             DateTime lmdDateTime = new DateTime(attribute.getUserAccountByUserId().getLastModificationDate());
             lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
             final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
+            values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, lmd);
             values.put(USER_ACCOUNT_ID, attribute.getUserAccountByUserId().getId());
         }
         values.put("userAccountAttributeId", attribute.getId());
@@ -494,7 +494,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         DateTime lmdDateTime = new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
+        values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, lmd);
         values.put(USER_ACCOUNT_ID, userAccount.getId());
         addEscidocBaseUrl(values);
 

@@ -73,25 +73,26 @@ public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvi
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, cr.getBuildNumber());
+        values.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, cr.getBuildNumber());
 
-        values.put(XmlTemplateProvider.OBJID, cr.getObjid());
-        values.put(XmlTemplateProvider.TITLE, cr.getProperties().getTitle());
+        values.put(XmlTemplateProviderConstants.OBJID, cr.getObjid());
+        values.put(XmlTemplateProviderConstants.TITLE, cr.getProperties().getTitle());
 
         // RELS-EXT
         values.putAll(getRelsExtValueMap(cr));
         values.putAll(getRelsExtNamespaceValues());
 
         // add Metadata as Map
-        values.put(XmlTemplateProvider.MD_RECORDS, getMetadataRecordsMap(cr.getMetadataRecords()));
+        values.put(XmlTemplateProviderConstants.MD_RECORDS, getMetadataRecordsMap(cr.getMetadataRecords()));
 
         // DC (inclusive mapping)-------------------------
-        final MdRecordCreate defaultMd = cr.getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
+        final MdRecordCreate defaultMd =
+            cr.getMetadataRecord(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING);
         if (defaultMd != null) {
             final String dcXml = cr.getDC(defaultMd, null);
-            values.put(XmlTemplateProvider.DC, dcXml);
+            values.put(XmlTemplateProviderConstants.DC, dcXml);
         }
-        values.put(XmlTemplateProvider.IN_CREATE, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IN_CREATE, XmlTemplateProviderConstants.TRUE);
 
         return getXml(VL_CONTENT_RELATION_RESOURCE_NAME, VL_CONTENT_RELATION_PATH, values);
     }
@@ -107,10 +108,10 @@ public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvi
 
         final Map<String, String> values = getRelsExtValueMap(cr);
         values.putAll(getRelsExtNamespaceValues());
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, cr.getBuildNumber());
+        values.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, cr.getBuildNumber());
 
-        values.put(XmlTemplateProvider.OBJID, cr.getObjid());
-        values.put(XmlTemplateProvider.TITLE, cr.getProperties().getTitle());
+        values.put(XmlTemplateProviderConstants.OBJID, cr.getObjid());
+        values.put(XmlTemplateProviderConstants.TITLE, cr.getProperties().getTitle());
         return getXml(VL_RELS_EXT_RESOURCE_NAME, VL_CONTENT_RELATION_PATH, values);
     }
 
@@ -125,22 +126,22 @@ public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvi
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.CREATED_BY_ID, cr.getProperties().getCreatedById());
-        values.put(XmlTemplateProvider.CREATED_BY_TITLE, cr.getProperties().getCreatedByName());
+        values.put(XmlTemplateProviderConstants.CREATED_BY_ID, cr.getProperties().getCreatedById());
+        values.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, cr.getProperties().getCreatedByName());
 
-        values.put(XmlTemplateProvider.MODIFIED_BY_ID, cr.getProperties().getModifiedById());
-        values.put(XmlTemplateProvider.MODIFIED_BY_TITLE, cr.getProperties().getModifiedByName());
+        values.put(XmlTemplateProviderConstants.MODIFIED_BY_ID, cr.getProperties().getModifiedById());
+        values.put(XmlTemplateProviderConstants.MODIFIED_BY_TITLE, cr.getProperties().getModifiedByName());
 
-        values.put(XmlTemplateProvider.PUBLIC_STATUS, cr.getProperties().getStatus().toString());
-        values.put(XmlTemplateProvider.PUBLIC_STATUS_COMMENT, cr.getProperties().getStatusComment());
+        values.put(XmlTemplateProviderConstants.PUBLIC_STATUS, cr.getProperties().getStatus().toString());
+        values.put(XmlTemplateProviderConstants.PUBLIC_STATUS_COMMENT, cr.getProperties().getStatusComment());
 
         // relation (type, description, subject(s), object(s))
-        values.put(XmlTemplateProvider.CONTENT_RELATION_TYPE, cr.getType().toString());
-        values.put(XmlTemplateProvider.CONTENT_RELATION_DESCRIPTION, cr.getProperties().getDescription());
-        values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_ID, cr.getSubject());
-        values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_ID, cr.getObject());
-        values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_VERSION_NUMBER, cr.getSubjectVersion());
-        values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_VERSION_NUMBER, cr.getObjectVersion());
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_TYPE, cr.getType().toString());
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_DESCRIPTION, cr.getProperties().getDescription());
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_SUBJECT_ID, cr.getSubject());
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_OBJECT_ID, cr.getObject());
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_SUBJECT_VERSION_NUMBER, cr.getSubjectVersion());
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_OBJECT_VERSION_NUMBER, cr.getObjectVersion());
 
         return values;
     }
@@ -154,18 +155,19 @@ public final class ContentRelationFoXmlProvider extends InfrastructureFoXmlProvi
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELATION_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELATION_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
 
-        values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_NAMESPACE_PREFIX,
             Constants.CONTENT_RELATIONS_NEW_NS_PREFIX_IN_RELSEXT);
-        values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE, Constants.CONTENT_RELATION_NAMESPACE_URI + '/');
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_NAMESPACE,
+            Constants.CONTENT_RELATION_NAMESPACE_URI + '/');
 
-        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS, Constants.RESOURCES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RESOURCE_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RESOURCE_NS, Constants.RESOURCES_NS_URI);
 
         return values;
     }

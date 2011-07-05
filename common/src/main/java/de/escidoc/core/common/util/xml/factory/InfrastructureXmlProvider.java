@@ -21,7 +21,7 @@
 package de.escidoc.core.common.util.xml.factory;
 
 /**
- * XmlTemplateProvider implementation using the velocity template engine.<br> This implementation uses the velocity
+ * XmlTemplateProviderConstants implementation using the velocity template engine.<br> This implementation uses the velocity
  * singleton pattern.
  *
  * @author Torsten Tetteroo

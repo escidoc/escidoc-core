@@ -25,7 +25,7 @@ package de.escidoc.core.common.util.xml.factory;
  *
  * @author Steffen Wagner
  */
-public abstract class XmlTemplateProvider {
+public final class XmlTemplateProviderConstants {
 
     /*
      * Switches to control templates.
@@ -661,5 +661,8 @@ public abstract class XmlTemplateProvider {
     protected static final String CONTENT_RELATION_SUBJECT_VERSION_NUMBER = "contentRelationSubjectVersion";
 
     protected static final String CONTENT_RELATION_OBJECT_VERSION_NUMBER = "contentRelationObjectVersion";
+
+    private XmlTemplateProviderConstants() {
+    }
 
 }

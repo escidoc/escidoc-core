@@ -6,9 +6,12 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.tme.business.stax.handler.TmeRequestsStaxHandler;
 
-public class TmeHandlerBase {
+public class TmeUtility {
 
-    protected static String[] parseRequests(final String requests) throws TmeException, XmlParserSystemException {
+    private TmeUtility() {
+    }
+
+    public static String[] parseRequests(final String requests) throws TmeException, XmlParserSystemException {
 
         final StaxParser sp = new StaxParser();
         final TmeRequestsStaxHandler requestsStaxHandler = new TmeRequestsStaxHandler();

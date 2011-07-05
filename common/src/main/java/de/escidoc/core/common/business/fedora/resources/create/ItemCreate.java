@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -66,9 +67,8 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
+import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -249,7 +249,7 @@ public class ItemCreate extends GenericResourceCreate {
             }
 
             final AddDatastreamPathParam addPathVH =
-                new AddDatastreamPathParam(getObjid(), FoXmlProvider.DATASTREAM_VERSION_HISTORY);
+                new AddDatastreamPathParam(getObjid(), FoXmlProviderConstants.DATASTREAM_VERSION_HISTORY);
             final AddDatastreamQueryParam addQueryVH = new AddDatastreamQueryParam();
             addQueryVH.setDsLabel("whole object versioning datastream");
             addQueryVH.setVersionable(Boolean.FALSE);
@@ -302,7 +302,8 @@ public class ItemCreate extends GenericResourceCreate {
 
         if (this.dcXml == null) {
 
-            final MdRecordCreate mdRecord = getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
+            final MdRecordCreate mdRecord =
+                getMetadataRecord(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING);
             if (mdRecord != null) {
                 try {
                     this.dcXml = getDC(mdRecord, this.properties.getObjectProperties().getContentModelId());
@@ -451,45 +452,49 @@ public class ItemCreate extends GenericResourceCreate {
         // control template
         final HashMap<String, String> templateValues = new HashMap<String, String>();
 
-        templateValues.put(XmlTemplateProvider.OBJID, getObjidWithVersionSuffix());
-        templateValues.put(XmlTemplateProvider.HREF, getHrefWithVersionSuffix());
+        templateValues.put(XmlTemplateProviderConstants.OBJID, getObjidWithVersionSuffix());
+        templateValues.put(XmlTemplateProviderConstants.HREF, getHrefWithVersionSuffix());
 
-        templateValues.put(XmlTemplateProvider.TITLE, this.properties.getObjectProperties().getTitle());
-        //templateValues.put(XmlTemplateProvider.VERSION_DATE, this.properties.getCurrentVersion().getDate().toString());
-        //templateValues.put(XmlTemplateProvider.TIMESTAMP, this.properties.getCurrentVersion().getDate().toString());
+        templateValues.put(XmlTemplateProviderConstants.TITLE, this.properties.getObjectProperties().getTitle());
+        //templateValues.put(XmlTemplateProviderConstants.VERSION_DATE, this.properties.getCurrentVersion().getDate().toString());
+        //templateValues.put(XmlTemplateProviderConstants.TIMESTAMP, this.properties.getCurrentVersion().getDate().toString());
         final DateTime date = this.properties.getCurrentVersion().getDate();
         if (date == null) {
-            templateValues.put(XmlTemplateProvider.VERSION_DATE, null);
-            templateValues.put(XmlTemplateProvider.TIMESTAMP, null);
+            templateValues.put(XmlTemplateProviderConstants.VERSION_DATE, null);
+            templateValues.put(XmlTemplateProviderConstants.TIMESTAMP, null);
         }
         else {
-            templateValues.put(XmlTemplateProvider.VERSION_DATE, date.toString());
-            templateValues.put(XmlTemplateProvider.TIMESTAMP, date.toString());
+            templateValues.put(XmlTemplateProviderConstants.VERSION_DATE, date.toString());
+            templateValues.put(XmlTemplateProviderConstants.TIMESTAMP, date.toString());
         }
-        templateValues.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
-        templateValues.put(XmlTemplateProvider.VERSION_STATUS, this.properties
+        templateValues
+            .put(XmlTemplateProviderConstants.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
+        templateValues.put(XmlTemplateProviderConstants.VERSION_STATUS, this.properties
             .getCurrentVersion().getStatus().toString());
-        templateValues.put(XmlTemplateProvider.VERSION_COMMENT, this.properties.getCurrentVersion().getComment());
+        templateValues.put(XmlTemplateProviderConstants.VERSION_COMMENT, this.properties
+            .getCurrentVersion().getComment());
 
-        templateValues.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX, Constants.WOV_NAMESPACE_PREFIX);
-        templateValues.put(XmlTemplateProvider.VAR_NAMESPACE, Constants.WOV_NAMESPACE_URI);
+        templateValues.put(XmlTemplateProviderConstants.VAR_NAMESPACE_PREFIX, Constants.WOV_NAMESPACE_PREFIX);
+        templateValues.put(XmlTemplateProviderConstants.VAR_NAMESPACE, Constants.WOV_NAMESPACE_URI);
 
-        templateValues.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
+        templateValues
+            .put(XmlTemplateProviderConstants.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
 
         // -------------------------------------
 
-        templateValues.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
-        templateValues.put(XmlTemplateProvider.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
-        templateValues.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE, UserContext.getId());
-        templateValues.put(XmlTemplateProvider.VAR_AGENT_TITLE, UserContext.getRealName());
+        templateValues.put(XmlTemplateProviderConstants.VAR_AGENT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        templateValues.put(XmlTemplateProviderConstants.VAR_AGENT_BASE_URI, Constants.USER_ACCOUNT_URL_BASE);
+        templateValues.put(XmlTemplateProviderConstants.VAR_AGENT_ID_VALUE, UserContext.getId());
+        templateValues.put(XmlTemplateProviderConstants.VAR_AGENT_TITLE, UserContext.getRealName());
 
         // EVENT_XMLID EVENT_ID_TYPE EVENT_ID_VALUE
-        templateValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, "v1e" + System.currentTimeMillis());
-        templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, Constants.ITEM_URL_BASE + getObjid() + "/resources/"
-            + Elements.ELEMENT_WOV_VERSION_HISTORY + '#' + templateValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
-        templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
-        templateValues.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
-        templateValues.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, getObjid());
+        templateValues.put(XmlTemplateProviderConstants.VAR_EVENT_XMLID, "v1e" + System.currentTimeMillis());
+        templateValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_VALUE, Constants.ITEM_URL_BASE + getObjid()
+            + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
+            + templateValues.get(XmlTemplateProviderConstants.VAR_EVENT_XMLID));
+        templateValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
+        templateValues.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
+        templateValues.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_VALUE, getObjid());
 
         return CommonFoXmlProvider.getInstance().getWov(templateValues);
     }
@@ -516,35 +521,35 @@ public class ItemCreate extends GenericResourceCreate {
 
         final Map<String, Object> valueMap = new HashMap<String, Object>();
 
-        valueMap.put(XmlTemplateProvider.OBJID, getObjid());
+        valueMap.put(XmlTemplateProviderConstants.OBJID, getObjid());
 
-        valueMap.put(XmlTemplateProvider.TITLE, this.properties.getObjectProperties().getTitle());
+        valueMap.put(XmlTemplateProviderConstants.TITLE, this.properties.getObjectProperties().getTitle());
 
         // RELS-EXT
         valueMap.putAll(getRelsExtNamespaceValues());
         valueMap.putAll(preparePropertiesValueMap());
-        valueMap.put(XmlTemplateProvider.CONTENT_RELATIONS, prepareContentRelationsValueMap());
+        valueMap.put(XmlTemplateProviderConstants.CONTENT_RELATIONS, prepareContentRelationsValueMap());
 
         // add Metadata as Map
-        valueMap.put(XmlTemplateProvider.MD_RECORDS, getMetadataRecordsMap(this.mdRecords));
+        valueMap.put(XmlTemplateProviderConstants.MD_RECORDS, getMetadataRecordsMap(this.mdRecords));
 
         // DC (inclusive mapping)----------------------------------------------
         final String dcXml = getDC();
 
         if (dcXml != null && dcXml.length() > 0) {
-            valueMap.put(XmlTemplateProvider.DC, dcXml);
+            valueMap.put(XmlTemplateProviderConstants.DC, dcXml);
         }
-        if (!valueMap.containsKey(XmlTemplateProvider.VAR_ORIGIN_OBJECT_ID)) {
+        if (!valueMap.containsKey(XmlTemplateProviderConstants.VAR_ORIGIN_OBJECT_ID)) {
             // Content-Streams
-            valueMap.put(XmlTemplateProvider.CONTENT_STREAMS, getContentStreamsMap());
+            valueMap.put(XmlTemplateProviderConstants.CONTENT_STREAMS, getContentStreamsMap());
             // Components
-            valueMap.put(XmlTemplateProvider.COMPONENTS, getComponentIds());
+            valueMap.put(XmlTemplateProviderConstants.COMPONENTS, getComponentIds());
         }
 
         // add Content-model-specific
-        valueMap.put(XmlTemplateProvider.CONTENT_MODEL_SPECIFIC, this.properties.getContentModelSpecific());
+        valueMap.put(XmlTemplateProviderConstants.CONTENT_MODEL_SPECIFIC, this.properties.getContentModelSpecific());
 
-        valueMap.put(XmlTemplateProvider.IN_CREATE, XmlTemplateProvider.TRUE);
+        valueMap.put(XmlTemplateProviderConstants.IN_CREATE, XmlTemplateProviderConstants.TRUE);
 
         return ItemFoXmlProvider.getInstance().getItemFoXml(valueMap);
     }
@@ -559,15 +564,15 @@ public class ItemCreate extends GenericResourceCreate {
 
         final Map<String, Object> valueMap = new HashMap<String, Object>();
 
-        valueMap.put(XmlTemplateProvider.OBJID, getObjid());
+        valueMap.put(XmlTemplateProviderConstants.OBJID, getObjid());
 
         valueMap.putAll(getRelsExtNamespaceValues());
         valueMap.putAll(preparePropertiesValueMap());
 
-        valueMap.put(XmlTemplateProvider.CONTENT_RELATIONS, prepareContentRelationsValueMap());
+        valueMap.put(XmlTemplateProviderConstants.CONTENT_RELATIONS, prepareContentRelationsValueMap());
 
-        if (!valueMap.containsKey(XmlTemplateProvider.VAR_ORIGIN_OBJECT_ID)) {
-            valueMap.put(XmlTemplateProvider.COMPONENTS, getComponentIds());
+        if (!valueMap.containsKey(XmlTemplateProviderConstants.VAR_ORIGIN_OBJECT_ID)) {
+            valueMap.put(XmlTemplateProviderConstants.COMPONENTS, getComponentIds());
         }
 
         return ItemFoXmlProvider.getInstance().getItemRelsExt(valueMap);
@@ -634,60 +639,69 @@ public class ItemCreate extends GenericResourceCreate {
         final Map<String, String> valueMap = new HashMap<String, String>();
 
         // add RELS-EXT values -------------------------------------------------
-        valueMap.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, getBuildNumber());
+        valueMap.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, getBuildNumber());
 
         // add RELS-EXT object properties
-        valueMap.put(XmlTemplateProvider.CREATED_BY_ID, this.properties.getCurrentVersion().getCreatedById());
-        valueMap.put(XmlTemplateProvider.CREATED_BY_TITLE, this.properties.getCurrentVersion().getCreatedByName());
+        valueMap.put(XmlTemplateProviderConstants.CREATED_BY_ID, this.properties.getCurrentVersion().getCreatedById());
+        valueMap.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, this.properties
+            .getCurrentVersion().getCreatedByName());
 
-        valueMap.put(XmlTemplateProvider.MODIFIED_BY_ID, this.properties.getCurrentVersion().getModifiedById());
-        valueMap.put(XmlTemplateProvider.MODIFIED_BY_TITLE, this.properties.getCurrentVersion().getCreatedByName());
+        valueMap
+            .put(XmlTemplateProviderConstants.MODIFIED_BY_ID, this.properties.getCurrentVersion().getModifiedById());
+        valueMap.put(XmlTemplateProviderConstants.MODIFIED_BY_TITLE, this.properties
+            .getCurrentVersion().getCreatedByName());
 
-        valueMap.put(XmlTemplateProvider.PUBLIC_STATUS, this.properties.getObjectProperties().getStatus().toString());
-        valueMap.put(XmlTemplateProvider.PUBLIC_STATUS_COMMENT, this.properties
+        valueMap.put(XmlTemplateProviderConstants.PUBLIC_STATUS, this.properties
+            .getObjectProperties().getStatus().toString());
+        valueMap.put(XmlTemplateProviderConstants.PUBLIC_STATUS_COMMENT, this.properties
             .getObjectProperties().getStatusComment());
 
-        valueMap.put(XmlTemplateProvider.OBJECT_PID, this.properties.getObjectProperties().getPid());
+        valueMap.put(XmlTemplateProviderConstants.OBJECT_PID, this.properties.getObjectProperties().getPid());
 
-        valueMap.put(XmlTemplateProvider.CONTEXT_ID, this.properties.getObjectProperties().getContextId());
-        valueMap.put(XmlTemplateProvider.CONTEXT_TITLE, this.properties.getObjectProperties().getContextTitle());
+        valueMap.put(XmlTemplateProviderConstants.CONTEXT_ID, this.properties.getObjectProperties().getContextId());
+        valueMap.put(XmlTemplateProviderConstants.CONTEXT_TITLE, this.properties
+            .getObjectProperties().getContextTitle());
 
-        valueMap.put(XmlTemplateProvider.CONTENT_MODEL_ID, this.properties.getObjectProperties().getContentModelId());
-        valueMap.put(XmlTemplateProvider.CONTENT_MODEL_TITLE, this.properties
+        valueMap.put(XmlTemplateProviderConstants.CONTENT_MODEL_ID, this.properties
+            .getObjectProperties().getContentModelId());
+        valueMap.put(XmlTemplateProviderConstants.CONTENT_MODEL_TITLE, this.properties
             .getObjectProperties().getContentModelTitle());
 
         // add RELS-EXT current version values
         // version pid currently not supported for create
-        // valueMap.put(XmlTemplateProvider.VERSION_PID, this.properties
+        // valueMap.put(XmlTemplateProviderConstants.VERSION_PID, this.properties
         // .getCurrentVersion().getPid());
 
-        valueMap.put(XmlTemplateProvider.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
+        valueMap.put(XmlTemplateProviderConstants.VERSION_NUMBER, this.properties.getCurrentVersion().getNumber());
         final DateTime currVersionDate = this.properties.getCurrentVersion().getDate();
         if (currVersionDate == null) {
-            valueMap.put(XmlTemplateProvider.VERSION_DATE, "---");
+            valueMap.put(XmlTemplateProviderConstants.VERSION_DATE, "---");
         }
         else {
-            valueMap.put(XmlTemplateProvider.VERSION_DATE, currVersionDate.toString());
+            valueMap.put(XmlTemplateProviderConstants.VERSION_DATE, currVersionDate.toString());
         }
 
-        valueMap.put(XmlTemplateProvider.VERSION_STATUS, this.properties.getCurrentVersion().getStatus().toString());
-        valueMap.put(XmlTemplateProvider.VERSION_COMMENT, this.properties.getCurrentVersion().getComment());
+        valueMap.put(XmlTemplateProviderConstants.VERSION_STATUS, this.properties
+            .getCurrentVersion().getStatus().toString());
+        valueMap.put(XmlTemplateProviderConstants.VERSION_COMMENT, this.properties.getCurrentVersion().getComment());
 
         // add RELS-EXT latest version values
-        valueMap.put(XmlTemplateProvider.LATEST_VERSION_PID, this.properties.getLatestVersion().getPid());
+        valueMap.put(XmlTemplateProviderConstants.LATEST_VERSION_PID, this.properties.getLatestVersion().getPid());
 
-        valueMap.put(XmlTemplateProvider.LATEST_VERSION_NUMBER, this.properties.getLatestVersion().getNumber());
+        valueMap
+            .put(XmlTemplateProviderConstants.LATEST_VERSION_NUMBER, this.properties.getLatestVersion().getNumber());
         final DateTime lateVersionDate = this.properties.getLatestVersion().getDate();
         if (lateVersionDate == null) {
-            valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, null);
+            valueMap.put(XmlTemplateProviderConstants.LATEST_VERSION_DATE, null);
         }
         else {
-            valueMap.put(XmlTemplateProvider.LATEST_VERSION_DATE, lateVersionDate.toString());
+            valueMap.put(XmlTemplateProviderConstants.LATEST_VERSION_DATE, lateVersionDate.toString());
         }
 
-        valueMap.put(XmlTemplateProvider.LATEST_VERSION_STATUS, this.properties
+        valueMap.put(XmlTemplateProviderConstants.LATEST_VERSION_STATUS, this.properties
             .getLatestVersion().getStatus().toString());
-        valueMap.put(XmlTemplateProvider.LATEST_VERSION_COMMENT, this.properties.getLatestVersion().getComment());
+        valueMap.put(XmlTemplateProviderConstants.LATEST_VERSION_COMMENT, this.properties
+            .getLatestVersion().getComment());
 
         // in the case of a surrogate
         final String origin = getProperties().getObjectProperties().getOrigin();
@@ -696,27 +710,27 @@ public class ItemCreate extends GenericResourceCreate {
         if (origin != null) {
             valueMap.put("originObjectId", originObjectId);
             if (originVersionId != null) {
-                valueMap.put(XmlTemplateProvider.VAR_ORIGIN_VERSION_ID, originVersionId);
+                valueMap.put(XmlTemplateProviderConstants.VAR_ORIGIN_VERSION_ID, originVersionId);
             }
         }
 
         // add RELS-EXT latest-released-version properties
         if (this.properties.getLatestReleasedVersion() != null) {
-            valueMap.put(XmlTemplateProvider.LATEST_RELEASE_NUMBER, this.properties
+            valueMap.put(XmlTemplateProviderConstants.LATEST_RELEASE_NUMBER, this.properties
                 .getLatestReleasedVersion().getNumber());
 
             // latest release date
             if (this.properties.getLatestReleasedVersion().getDate() != null) {
-                valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE, this.properties
+                valueMap.put(XmlTemplateProviderConstants.LATEST_RELEASE_DATE, this.properties
                     .getLatestReleasedVersion().getDate().toString());
             }
             else {
-                valueMap.put(XmlTemplateProvider.LATEST_RELEASE_DATE, "---");
+                valueMap.put(XmlTemplateProviderConstants.LATEST_RELEASE_DATE, "---");
             }
 
             // latest release pid
             if (this.properties.getLatestReleasedVersion().getPid() != null) {
-                valueMap.put(XmlTemplateProvider.LATEST_RELEASE_PID, this.properties
+                valueMap.put(XmlTemplateProviderConstants.LATEST_RELEASE_PID, this.properties
                     .getLatestReleasedVersion().getPid());
             }
         }
@@ -733,26 +747,27 @@ public class ItemCreate extends GenericResourceCreate {
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS_PREFIX, Constants.VERSION_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS, Constants.VERSION_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_VERSION_NS_PREFIX, Constants.VERSION_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_VERSION_NS, Constants.VERSION_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS_PREFIX, Constants.RELEASE_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS, Constants.RELEASE_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELEASE_NS_PREFIX, Constants.RELEASE_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELEASE_NS, Constants.RELEASE_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RESOURCE_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS, Constants.RESOURCES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RESOURCE_NS, Constants.RESOURCES_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELATION_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS_PREFIX, Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELATION_NS_PREFIX,
+            Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
 
-        values.put(XmlTemplateProvider.ESCIDOC_ORIGIN_NS, Constants.ORIGIN_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_ORIGIN_NS, Constants.ORIGIN_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_ORIGIN_NS_PREFIX, Constants.ORIGIN_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_ORIGIN_NS_PREFIX, Constants.ORIGIN_NS_PREFIX);
 
         return values;
     }
@@ -902,9 +917,9 @@ public class ItemCreate extends GenericResourceCreate {
                 final RelationCreate rel = it.next();
 
                 final HashMap<String, String> relation = new HashMap<String, String>();
-                relation.put(XmlTemplateProvider.PREDICATE, rel.getPredicate());
-                relation.put(XmlTemplateProvider.PREDICATE_NS, rel.getPredicateNs());
-                relation.put(XmlTemplateProvider.OBJID, rel.getTarget());
+                relation.put(XmlTemplateProviderConstants.PREDICATE, rel.getPredicate());
+                relation.put(XmlTemplateProviderConstants.PREDICATE_NS, rel.getPredicateNs());
+                relation.put(XmlTemplateProviderConstants.OBJID, rel.getTarget());
 
                 crel.add(relation);
             }
@@ -933,20 +948,21 @@ public class ItemCreate extends GenericResourceCreate {
 
         for (final ContentStreamCreate contentStream : this.contentStreams) {
             final HashMap<String, String> valueMap = new HashMap<String, String>();
-            valueMap.put(XmlTemplateProvider.CONTROL_GROUP, contentStream
+            valueMap.put(XmlTemplateProviderConstants.CONTROL_GROUP, contentStream
                 .getContent().getStorageType().getAbbreviation());
-            valueMap.put(XmlTemplateProvider.VAR_ID, contentStream.getName());
-            valueMap.put(XmlTemplateProvider.VAR_VERSIONABLE, XmlTemplateProvider.TRUE);
-            valueMap.put(XmlTemplateProvider.VAR_ALT_IDS, "content-stream");
-            valueMap.put(XmlTemplateProvider.MIME_TYPE, contentStream.getMimeType());
+            valueMap.put(XmlTemplateProviderConstants.VAR_ID, contentStream.getName());
+            valueMap.put(XmlTemplateProviderConstants.VAR_VERSIONABLE, XmlTemplateProviderConstants.TRUE);
+            valueMap.put(XmlTemplateProviderConstants.VAR_ALT_IDS, "content-stream");
+            valueMap.put(XmlTemplateProviderConstants.MIME_TYPE, contentStream.getMimeType());
 
             // FIXME using title as label seams inconsistent
-            valueMap.put(XmlTemplateProvider.VAR_LABEL, contentStream.getTitle());
+            valueMap.put(XmlTemplateProviderConstants.VAR_LABEL, contentStream.getTitle());
 
             if (contentStream.getContent().getDataLocation() != null) {
-                valueMap.put(XmlTemplateProvider.VAR_URL, contentStream.getContent().getDataLocation().toString());
+                valueMap.put(XmlTemplateProviderConstants.VAR_URL, contentStream
+                    .getContent().getDataLocation().toString());
             }
-            valueMap.put(XmlTemplateProvider.VAR_CONTENT, contentStream.getContent().getContent());
+            valueMap.put(XmlTemplateProviderConstants.VAR_CONTENT, contentStream.getContent().getContent());
 
             contStreams.add(valueMap);
         }

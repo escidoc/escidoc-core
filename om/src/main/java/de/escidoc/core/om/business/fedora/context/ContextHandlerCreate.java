@@ -66,7 +66,7 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.om.business.renderer.VelocityXmlContextFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContextFoXmlRendererInterface;
 import de.escidoc.core.om.business.stax.handler.context.ContextPropertiesHandler;
@@ -270,11 +270,11 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         values.put("dcProperties", dcProperties);
         values.put("propertiesAsReferences", propertiesAsReferences);
 
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.VAR_STRUCT_RELATIONS_NAMESPACE, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("resourcesOntologiesNamespace", Constants.RESOURCES_NS_URI);
         values.put("contentRelationsNamespacePrefix", Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
         values.put("latestVersionUserTitle", Utility.getCurrentUser()[1]);

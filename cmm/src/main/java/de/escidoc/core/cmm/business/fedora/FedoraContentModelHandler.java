@@ -81,7 +81,7 @@ import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContentModelFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
@@ -654,13 +654,13 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     private Map<String, Object> getBehaviorValues(final ResourceDefinitionCreate resourceDefinition) {
         final Map<String, Object> valueMap = new HashMap<String, Object>();
-        valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID, getContentModel().getId());
-        valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID_UNDERSCORE, getContentModel().getId().replaceAll(
-            ":", Constants.COLON_REPLACEMENT_PID));
+        valueMap.put(XmlTemplateProviderConstants.BEHAVIOR_CONTENT_MODEL_ID, getContentModel().getId());
+        valueMap.put(XmlTemplateProviderConstants.BEHAVIOR_CONTENT_MODEL_ID_UNDERSCORE, getContentModel()
+            .getId().replaceAll(":", Constants.COLON_REPLACEMENT_PID));
 
-        valueMap.put(XmlTemplateProvider.BEHAVIOR_OPERATION_NAME, resourceDefinition.getName());
-        valueMap.put(XmlTemplateProvider.BEHAVIOR_TRANSFORM_MD, resourceDefinition.getMdRecordName());
-        valueMap.put(XmlTemplateProvider.BEHAVIOR_XSLT_HREF, resourceDefinition.getXsltHref());
+        valueMap.put(XmlTemplateProviderConstants.BEHAVIOR_OPERATION_NAME, resourceDefinition.getName());
+        valueMap.put(XmlTemplateProviderConstants.BEHAVIOR_TRANSFORM_MD, resourceDefinition.getMdRecordName());
+        valueMap.put(XmlTemplateProviderConstants.BEHAVIOR_XSLT_HREF, resourceDefinition.getXsltHref());
         return valueMap;
     }
 

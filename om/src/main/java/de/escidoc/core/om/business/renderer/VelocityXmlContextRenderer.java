@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,6 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContextXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.business.fedora.container.FedoraContainerHandler;
 import de.escidoc.core.om.business.fedora.context.Context;
 import de.escidoc.core.om.business.fedora.context.FedoraContextHandler;
@@ -107,7 +107,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         addResourcesValues(context, values);
         renderAdminDescriptors(contextHandler, values);
 
-        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.FALSE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.FALSE);
 
         return ContextXmlProvider.getInstance().getContextXml(values);
     }
@@ -148,7 +148,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         final Context context = contextHandler.getContext();
         values.put("admsHref", XmlUtility.getContextHref(context.getId()) + "/admin-descriptors");
         values.put("admsTitle", "Admin Descriptors");
-        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.TRUE);
 
         return ContextXmlProvider.getInstance().getAdminDescriptorsXml(values);
     }
@@ -178,7 +178,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
             + "/admin-descriptors/admin-descriptor/" + name);
         values.put("admName", name);
         values.put("admRecordTitle", name + " admin descriptor.");
-        values.put(XmlTemplateProvider.IS_ROOT_RESOURCES, isRoot);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_RESOURCES, isRoot);
 
         final String admContent;
         try {
@@ -206,7 +206,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         addCommonValues(context, values);
         addNamespaceValues(values);
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_PROPERTIES, XmlTemplateProviderConstants.TRUE);
         try {
             addPropertiesValues(context, values);
         }
@@ -231,7 +231,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         addCommonValues(context, values);
-        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.TRUE);
         addNamespaceValues(values);
         addResourcesValues(context, values);
 
@@ -292,7 +292,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         try {
             final DateTime lastModDate = context.getLastModificationDate();
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lastModDate.toString());
+            values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, lastModDate.toString());
         }
         catch (FedoraSystemException e) {
             e.printStackTrace();
@@ -313,10 +313,10 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     private static void addXlinkValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, System
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, System
             .getProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
     }
 
     /**
@@ -340,8 +340,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     protected static void addStructuralRelationsNamespaceValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
@@ -350,8 +350,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values Value Map for Velocity
      */
     protected static void addPropertiesNamespaceValues(final Map<String, Object> values) {
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
     }
 
     /**
@@ -365,8 +365,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         final Map<String, String> properties = context.getResourceProperties();
 
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, XmlUtility.getContextPropertiesHref(context.getId()));
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_TITLE, "Properties");
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_HREF, XmlUtility.getContextPropertiesHref(context
+            .getId()));
 
         values.put("contextName", context.getTitle());
         final String description =
@@ -436,7 +437,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     private static void addResourcesValues(final FedoraResource context, final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
+        values.put(XmlTemplateProviderConstants.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", XmlUtility.getContextResourcesHref(context.getId()));
         values.put("membersHref", XmlUtility.getContextHref(context.getId()) + "/resources/members");
         values.put("membersTitle", "Members ");

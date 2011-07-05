@@ -48,7 +48,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContainerXmlProvider;
 import de.escidoc.core.common.util.xml.factory.MetadataRecordsXmlProvider;
 import de.escidoc.core.common.util.xml.factory.RelationsXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterface;
 import de.escidoc.core.om.business.security.UserFilter;
 import org.joda.time.DateTimeZone;
@@ -131,7 +131,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);
-        values.put("isRootProperties", XmlTemplateProvider.TRUE);
+        values.put("isRootProperties", XmlTemplateProviderConstants.TRUE);
         addPropertiesValus(values, container);
         return ContainerXmlProvider.getInstance().getPropertiesXml(values);
     }
@@ -150,7 +150,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);
-        values.put("isRootResources", XmlTemplateProvider.TRUE);
+        values.put("isRootResources", XmlTemplateProviderConstants.TRUE);
         addResourcesValues(container, values);
         return ContainerXmlProvider.getInstance().getResourcesXml(values);
     }
@@ -167,7 +167,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
-        values.put("isRootRelations", XmlTemplateProvider.TRUE);
+        values.put("isRootRelations", XmlTemplateProviderConstants.TRUE);
 
         commonRenderer.addRelationsValues(container.getRelations(), container.getHref(), values);
         values.put("contentRelationsTitle", "Relations of Container");
@@ -187,9 +187,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final Map<String, Object> values = new HashMap<String, Object>();
         VelocityXmlCommonRenderer.addXlinkValues(values);
         VelocityXmlCommonRenderer.addStructuralRelationsValues(values);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, ISODateTimeFormat.dateTime().withZone(
+        values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, ISODateTimeFormat.dateTime().withZone(
             DateTimeZone.UTC).print(System.currentTimeMillis()));
-        values.put("isRootParents", XmlTemplateProvider.TRUE);
+        values.put("isRootParents", XmlTemplateProviderConstants.TRUE);
         addParentsValues(containerId, values);
         VelocityXmlCommonRenderer.addParentsNamespaceValues(values);
         return ContainerXmlProvider.getInstance().getParentsXml(values);
@@ -237,7 +237,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 entries.add(entry);
             }
             if (!entries.isEmpty()) {
-                values.put(XmlTemplateProvider.VAR_PARENTS, entries);
+                values.put(XmlTemplateProviderConstants.VAR_PARENTS, entries);
             }
         }
     }
@@ -252,10 +252,10 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         values.put("containerNamespacePrefix", Constants.CONTAINER_NAMESPACE_PREFIX);
         values.put("containerNamespace", Constants.CONTAINER_NAMESPACE_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("versionNamespacePrefix", Constants.VERSION_NS_PREFIX);
         values.put("versionNamespace", Constants.VERSION_NS_URI);
         values.put("releaseNamespacePrefix", Constants.RELEASE_NS_PREFIX);
@@ -282,13 +282,14 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         final Map<String, String> properties = container.getResourceProperties();
         final String id = container.getId();
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, XmlUtility.getContainerPropertiesHref(container.getHref()));
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_TITLE, "Properties");
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_HREF, XmlUtility.getContainerPropertiesHref(container
+            .getHref()));
         // status
         values.put("containerStatus", container.getStatus());
         values.put("containerCreationDate", container.getCreationDate());
-        values.put(XmlTemplateProvider.VAR_CONTAINER_STATUS_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(properties
-            .get(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
+        values.put(XmlTemplateProviderConstants.VAR_CONTAINER_STATUS_COMMENT, XmlUtility
+            .escapeForbiddenXmlCharacters(properties.get(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
         // name
         values.put("containerName", container.getTitle());
         // description
@@ -316,7 +317,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         // lock -status, -owner, -date
         if (container.isLocked()) {
-            values.put("containerLocked", XmlTemplateProvider.TRUE);
+            values.put("containerLocked", XmlTemplateProviderConstants.TRUE);
             final String lockOwnerId = container.getLockOwner();
             values.put("containerLockStatus", "locked");
             values.put("containerLockDate", container.getLockDate());
@@ -325,7 +326,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             values.put("containerLockOwnerTitle", container.getLockOwnerTitle());
         }
         else {
-            values.put("containerLocked", XmlTemplateProvider.FALSE);
+            values.put("containerLocked", XmlTemplateProviderConstants.FALSE);
             values.put("containerLockStatus", "unlocked");
         }
 
@@ -421,7 +422,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         try {
             final Datastream cmsDs = container.getCts();
             final String xml = cmsDs.toStringUTF8();
-            values.put(XmlTemplateProvider.CONTAINER_CONTENT_MODEL_SPECIFIC, xml);
+            values.put(XmlTemplateProviderConstants.CONTAINER_CONTENT_MODEL_SPECIFIC, xml);
         }
         catch (final StreamNotFoundException e) {
             // This element is now optional.
@@ -521,7 +522,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     private void addResourcesValues(final FedoraResource container, final Map<String, Object> values)
         throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
+        values.put(XmlTemplateProviderConstants.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", XmlUtility.getContainerResourcesHref(container.getHref()));
         values.put("membersHref", container.getHref() + "/resources/members");
         values.put("membersTitle", "Members ");
@@ -553,8 +554,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     private void addMdRecordsValues(final Container container, final Map<String, Object> values)
         throws EncodingSystemException, FedoraSystemException, WebserverSystemException, IntegritySystemException {
 
-        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX, Constants.METADATARECORDS_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
+        values.put(XmlTemplateProviderConstants.MD_RECRORDS_NAMESPACE_PREFIX,
+            Constants.METADATARECORDS_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProviderConstants.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
         values.put("mdRecordsHref", XmlUtility.getContainerMdRecordsHref(container.getHref()));
         values.put("mdRecordsTitle", "Metadata Records of Container " + container.getId());
 
@@ -567,7 +569,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             final String md = renderMetadataRecord(container, mdRecord, false);
             content.append(md);
         }
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, content.toString());
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_CONTENT, content.toString());
 
     }
 
@@ -595,19 +597,20 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         commonRenderer.addCommonValues(container, values);
         values.put("mdRecordHref", XmlUtility.getContainerMdRecordsHref(container.getHref()) + "/md-record/"
             + mdRecord.getName());
-        values.put(XmlTemplateProvider.MD_RECORD_NAME, mdRecord.getName());
+        values.put(XmlTemplateProviderConstants.MD_RECORD_NAME, mdRecord.getName());
         values.put("mdRecordTitle", mdRecord.getName());
-        values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, isRootMdRecord);
-        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX, Constants.METADATARECORDS_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_MD_RECORD, isRootMdRecord);
+        values.put(XmlTemplateProviderConstants.MD_RECRORDS_NAMESPACE_PREFIX,
+            Constants.METADATARECORDS_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProviderConstants.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
         final String mdRecordContent = mdRecord.toStringUTF8();
-        values.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecordContent);
+        values.put(XmlTemplateProviderConstants.MD_RECORD_CONTENT, mdRecordContent);
         final List<String> altIds = mdRecord.getAlternateIDs();
         if (!Constants.UNKNOWN.equals(altIds.get(1))) {
-            values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
+            values.put(XmlTemplateProviderConstants.MD_RECORD_TYPE, altIds.get(1));
         }
         if (!Constants.UNKNOWN.equals(altIds.get(2))) {
-            values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
+            values.put(XmlTemplateProviderConstants.MD_RECORD_SCHEMA, altIds.get(2));
         }
 
         return MetadataRecordsXmlProvider.getInstance().getMdRecordXml(values);
@@ -627,7 +630,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
-        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.TRUE);
         addMdRecordsValues(container, values);
 
         return MetadataRecordsXmlProvider.getInstance().getMdRecordsXml(values);
@@ -646,8 +649,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);
-        values.put("isRootStructMap", XmlTemplateProvider.TRUE);
-        values.put("isSrelNeeded", XmlTemplateProvider.TRUE);
+        values.put("isRootStructMap", XmlTemplateProviderConstants.TRUE);
+        values.put("isSrelNeeded", XmlTemplateProviderConstants.TRUE);
         addStructMapValus(container, values);
 
         return ContainerXmlProvider.getInstance().getStructMapXml(values);

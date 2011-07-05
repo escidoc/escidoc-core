@@ -86,12 +86,12 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         // put all relevant values from object into value Map
         final Map<String, String> commonValues = getCommonValues();
 
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.FALSE);
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, "/ir" + CONTENT_RELATION_PATH + '/' + cr.getObjid()
-            + "/properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Content Relation Properties");
+        values.put(XmlTemplateProviderConstants.IS_ROOT_PROPERTIES, XmlTemplateProviderConstants.FALSE);
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_HREF, "/ir" + CONTENT_RELATION_PATH + '/'
+            + cr.getObjid() + "/properties");
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_TITLE, "Content Relation Properties");
 
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, renderMdRecords(cr, commonValues, false));
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_CONTENT, renderMdRecords(cr, commonValues, false));
         values.putAll(getResourceValues(cr));
         values.putAll(getLockValues(cr));
         values.putAll(commonValues);
@@ -151,10 +151,10 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         values.putAll(getResourceValues(cr));
         values.putAll(getLockValues(cr));
         values.putAll(commonValues);
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, "/ir" + CONTENT_RELATION_PATH + '/' + cr.getObjid()
-            + "/properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Content Relation Properties");
+        values.put(XmlTemplateProviderConstants.IS_ROOT_PROPERTIES, XmlTemplateProviderConstants.TRUE);
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_HREF, "/ir" + CONTENT_RELATION_PATH + '/'
+            + cr.getObjid() + "/properties");
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_TITLE, "Content Relation Properties");
 
         return getPropertiesXml(values);
     }
@@ -182,7 +182,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
         final Map<String, String> values = getResourceValues(cr);
         values.putAll(getCommonValues());
-        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_PROPERTIES, XmlTemplateProviderConstants.TRUE);
         return getXml(RESOURCES_RESOURCE_NAME, CONTENT_RELATION_PATH, values);
     }
 
@@ -219,21 +219,22 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE_PREFIX, Constants.RELATION_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE, Constants.CONTENT_RELATION_NAMESPACE_URI);
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_NAMESPACE_PREFIX, Constants.RELATION_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_NAMESPACE, Constants.CONTENT_RELATION_NAMESPACE_URI);
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
 
-        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX, Constants.METADATARECORDS_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
+        values.put(XmlTemplateProviderConstants.MD_RECRORDS_NAMESPACE_PREFIX,
+            Constants.METADATARECORDS_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProviderConstants.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
 
         return values;
     }
@@ -249,36 +250,36 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.OBJID, cr.getObjid());
-        values.put(XmlTemplateProvider.TITLE, cr.getProperties().getTitle());
-        values.put(XmlTemplateProvider.HREF, "/ir" + CONTENT_RELATION_PATH + '/' + cr.getObjid());
+        values.put(XmlTemplateProviderConstants.OBJID, cr.getObjid());
+        values.put(XmlTemplateProviderConstants.TITLE, cr.getProperties().getTitle());
+        values.put(XmlTemplateProviderConstants.HREF, "/ir" + CONTENT_RELATION_PATH + '/' + cr.getObjid());
 
-        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Virtual Resources");
+        values.put(XmlTemplateProviderConstants.RESOURCES_TITLE, "Virtual Resources");
         values.put("resourcesHref", XmlUtility.getContentRelationHref(cr.getObjid()) + "/resources");
 
-        values.put(XmlTemplateProvider.CREATED_BY_ID, cr.getProperties().getCreatedById());
-        values.put(XmlTemplateProvider.CREATED_BY_HREF, Constants.USER_ACCOUNT_URL_BASE
+        values.put(XmlTemplateProviderConstants.CREATED_BY_ID, cr.getProperties().getCreatedById());
+        values.put(XmlTemplateProviderConstants.CREATED_BY_HREF, Constants.USER_ACCOUNT_URL_BASE
             + cr.getProperties().getCreatedById());
-        values.put(XmlTemplateProvider.CREATED_BY_TITLE, cr.getProperties().getCreatedByName());
+        values.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, cr.getProperties().getCreatedByName());
 
-        values.put(XmlTemplateProvider.MODIFIED_BY_ID, cr.getProperties().getModifiedById());
-        values.put(XmlTemplateProvider.MODIFIED_BY_HREF, Constants.USER_ACCOUNT_URL_BASE
+        values.put(XmlTemplateProviderConstants.MODIFIED_BY_ID, cr.getProperties().getModifiedById());
+        values.put(XmlTemplateProviderConstants.MODIFIED_BY_HREF, Constants.USER_ACCOUNT_URL_BASE
             + cr.getProperties().getModifiedById());
-        values.put(XmlTemplateProvider.MODIFIED_BY_TITLE, cr.getProperties().getModifiedByName());
+        values.put(XmlTemplateProviderConstants.MODIFIED_BY_TITLE, cr.getProperties().getModifiedByName());
 
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, cr
+        values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, cr
             .getProperties().getLastModificationDate().withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
-        values.put(XmlTemplateProvider.VAR_CREATION_DATE, cr.getProperties().getCreationDate().withZone(
+        values.put(XmlTemplateProviderConstants.VAR_CREATION_DATE, cr.getProperties().getCreationDate().withZone(
             DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
 
         if (cr.getProperties().getDescription() != null) {
-            values.put(XmlTemplateProvider.CONTENT_RELATION_DESCRIPTION, cr.getProperties().getDescription());
+            values.put(XmlTemplateProviderConstants.CONTENT_RELATION_DESCRIPTION, cr.getProperties().getDescription());
         }
 
-        values.put(XmlTemplateProvider.PUBLIC_STATUS, cr.getProperties().getStatus().toString());
-        values.put(XmlTemplateProvider.PUBLIC_STATUS_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(cr
+        values.put(XmlTemplateProviderConstants.PUBLIC_STATUS, cr.getProperties().getStatus().toString());
+        values.put(XmlTemplateProviderConstants.PUBLIC_STATUS_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(cr
             .getProperties().getStatusComment()));
-        values.put(XmlTemplateProvider.OBJECT_PID, cr.getProperties().getPid());
+        values.put(XmlTemplateProviderConstants.OBJECT_PID, cr.getProperties().getPid());
 
         return values;
     }
@@ -292,15 +293,17 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     private static Map<String, String> getLockValues(final ContentRelationCreate cr) {
 
         final Map<String, String> values = new HashMap<String, String>();
-        values.put(XmlTemplateProvider.LOCK_STATUS, cr.getProperties().getLockStatus().toString());
+        values.put(XmlTemplateProviderConstants.LOCK_STATUS, cr.getProperties().getLockStatus().toString());
 
         if (cr.getProperties().isLocked()) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_ID, cr.getProperties().getLockOwnerId());
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_HREF, Constants.USER_ACCOUNT_URL_BASE
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LOCK_OWNER_ID, cr
+                .getProperties().getLockOwnerId());
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LOCK_OWNER_HREF, Constants.USER_ACCOUNT_URL_BASE
                 + cr.getProperties().getLockOwnerId());
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_TITLE, cr.getProperties().getLockOwnerName());
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_DATE, cr.getProperties().getLockDate().withZone(
-                DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LOCK_OWNER_TITLE, cr
+                .getProperties().getLockOwnerName());
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LOCK_DATE, cr
+                .getProperties().getLockDate().withZone(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT));
         }
 
         return values;
@@ -320,7 +323,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         final Map<String, String> values = new HashMap<String, String>();
 
         // type -----------------
-        values.put(XmlTemplateProvider.CONTENT_RELATION_TYPE, cr.getType().toString());
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_TYPE, cr.getType().toString());
 
         // subject -----------------
         String objid = cr.getSubject();
@@ -329,14 +332,15 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         if (version != null) {
             subjectId = subjectId + ':' + version;
         }
-        values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_ID, subjectId);
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_SUBJECT_ID, subjectId);
         final String subjectType = this.tripleStoreUtility.getObjectType(objid);
         String subHref = this.tripleStoreUtility.getHref(subjectType, subjectId);
-        values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_HREF, subHref);
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_SUBJECT_HREF, subHref);
         // TODO: the title of an old version in the case of a fixed reference
         // to the old subject version
         // WRONG!!!!!
-        values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_TITLE, this.tripleStoreUtility.getTitle(objid));
+        values
+            .put(XmlTemplateProviderConstants.CONTENT_RELATION_SUBJECT_TITLE, this.tripleStoreUtility.getTitle(objid));
 
         // object -----------------
         objid = cr.getObject();
@@ -345,14 +349,14 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         if (version != null) {
             objectId = objectId + ':' + version;
         }
-        values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_ID, objectId);
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_OBJECT_ID, objectId);
         final String objectType = this.tripleStoreUtility.getObjectType(objid);
         subHref = this.tripleStoreUtility.getHref(objectType, objectId);
-        values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_HREF, subHref);
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_OBJECT_HREF, subHref);
         // TODO: the title of an old version in the case of a fixed reference
         // to the old subject version
         // WRONG!!!!!
-        values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_TITLE, this.tripleStoreUtility.getTitle(objid));
+        values.put(XmlTemplateProviderConstants.CONTENT_RELATION_OBJECT_TITLE, this.tripleStoreUtility.getTitle(objid));
 
         return values;
     }
@@ -373,28 +377,28 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_HREF, Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
             + Constants.MD_RECORD_URL_PART + '/' + mdRecord.getName());
         if (!mdRecord.getType().equals(Constants.UNKNOWN)) {
-            values.put(XmlTemplateProvider.MD_RECORD_TYPE, mdRecord.getType());
+            values.put(XmlTemplateProviderConstants.MD_RECORD_TYPE, mdRecord.getType());
         }
         if (!mdRecord.getSchema().equals(Constants.UNKNOWN)) {
-            values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, mdRecord.getSchema());
+            values.put(XmlTemplateProviderConstants.MD_RECORD_SCHEMA, mdRecord.getSchema());
         }
 
         // get md-record content
         final String content = mdRecord.getContent();
         if (content != null) {
-            values.put(XmlTemplateProvider.MD_RECORD_CONTENT, content);
+            values.put(XmlTemplateProviderConstants.MD_RECORD_CONTENT, content);
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.IS_ROOT_MD_RECORD, XmlTemplateProviderConstants.TRUE);
         }
         values.putAll(commonValues);
-        values.put(XmlTemplateProvider.MD_RECORD_NAME, mdRecord.getName());
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_TITLE, mdRecord.getName());
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
+        values.put(XmlTemplateProviderConstants.MD_RECORD_NAME, mdRecord.getName());
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_TITLE, mdRecord.getName());
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_HREF, Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
             + Constants.MD_RECORD_URL_PART + '/' + mdRecord.getName());
 
         return ItemXmlProvider.getInstance().getMdRecordXml(values);
@@ -428,13 +432,14 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         final Map<String, String> values = new HashMap<String, String>();
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.TRUE);
         }
         values.putAll(commonValues);
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_HREF, Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
-            + Constants.MD_RECORDS_URL_PART);
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_TITLE, "Metadata Records of Content Relation " + cr.getObjid());
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, content.toString());
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_HREF, Constants.CONTENT_RELATION_URL_BASE
+            + cr.getObjid() + Constants.MD_RECORDS_URL_PART);
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_TITLE, "Metadata Records of Content Relation "
+            + cr.getObjid());
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_CONTENT, content.toString());
 
         return getXml(MD_RECORDS_RESOURCE_NAME, MD_RECORDS_PATH, values);
     }

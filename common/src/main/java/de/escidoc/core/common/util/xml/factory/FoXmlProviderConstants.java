@@ -25,7 +25,7 @@ package de.escidoc.core.common.util.xml.factory;
  *
  * @author Michael Schneider
  */
-public class FoXmlProvider extends XmlTemplateProvider {
+public final class FoXmlProviderConstants {
 
     public static final String CONTROL_GROUP_M = "M";
 
@@ -44,4 +44,7 @@ public class FoXmlProvider extends XmlTemplateProvider {
     public static final String DATASTREAM_MD_RECORDS = "md-records";
 
     public static final String DATASTREAM_UPLOAD_URL = "uploadUrl";
+
+    private FoXmlProviderConstants() {
+    }
 }

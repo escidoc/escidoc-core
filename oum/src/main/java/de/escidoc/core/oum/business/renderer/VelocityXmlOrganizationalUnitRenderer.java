@@ -40,7 +40,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.MetadataRecordsXmlProvider;
 import de.escidoc.core.common.util.xml.factory.OrganizationalUnitXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit;
 import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface;
 import org.joda.time.DateTime;
@@ -117,7 +117,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
-        values.put("isRootProperties", XmlTemplateProvider.TRUE);
+        values.put("isRootProperties", XmlTemplateProviderConstants.TRUE);
         addPropertiesValues(organizationalUnit, values);
         return OrganizationalUnitXmlProvider.getInstance().getPropertiesXml(values);
     }
@@ -131,7 +131,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
     public String renderResources(final OrganizationalUnit organizationalUnit) throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
-        values.put("isRootResources", XmlTemplateProvider.TRUE);
+        values.put("isRootResources", XmlTemplateProviderConstants.TRUE);
         addResourcesValues(organizationalUnit, values);
         return OrganizationalUnitXmlProvider.getInstance().getResourcesXml(values);
     }
@@ -143,7 +143,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
     public String renderMdRecords(final OrganizationalUnit organizationalUnit) throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
-        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.TRUE);
         addMdRecordsValues(organizationalUnit, values);
         return OrganizationalUnitXmlProvider.getInstance().getMdRecordsXml(values);
     }
@@ -168,7 +168,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
         }
         addCommonValues(organizationalUnit, values);
 
-        values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_MD_RECORD, XmlTemplateProviderConstants.TRUE);
         return MetadataRecordsXmlProvider.getInstance().getMdRecordXml(values);
     }
 
@@ -183,7 +183,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
-        values.put("isRootParents", XmlTemplateProvider.TRUE);
+        values.put("isRootParents", XmlTemplateProviderConstants.TRUE);
         addParentsValues(organizationalUnit, values);
         return OrganizationalUnitXmlProvider.getInstance().getParentsXml(values);
     }
@@ -201,7 +201,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
         final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addListNamespaceValues(values);
-        values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_LIST, XmlTemplateProviderConstants.TRUE);
         values.put("listTitle", "Children of organizational unit '" + organizationalUnit.getTitle() + '\'');
         values.put("listHref", XmlUtility.getOrganizationalUnitResourcesChildObjectsHref(organizationalUnit.getId()));
         values.put("entries", children);
@@ -222,7 +222,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
         addXlinkValues(values);
         addListNamespaceValues(values);
 
-        values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_LIST, XmlTemplateProviderConstants.TRUE);
         values.put("listTitle", "Parents of organizational unit '" + organizationalUnit.getTitle() + '\'');
         values.put("listHref", XmlUtility.getOrganizationalUnitResourcesParentObjectsHref(organizationalUnit.getId()));
         values.put("entries", parents);
@@ -242,7 +242,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
         addXlinkValues(values);
         addPathListNamespaceValues(values);
 
-        values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_LIST, XmlTemplateProviderConstants.TRUE);
         values.put("listTitle", "Path list of organizational unit '" + organizationalUnit.getTitle() + '\'');
         values.put("listHref", XmlUtility.getOrganizationalUnitResourcesPathListHref(organizationalUnit.getId()));
         final Iterator<List<String>> pathIter = pathes.iterator();
@@ -268,7 +268,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put(XmlTemplateProvider.IS_ROOT, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT, XmlTemplateProviderConstants.TRUE);
         addSuccessorsNamespaceValues(values);
         addCommonValues(organizationalUnit, values);
 
@@ -314,7 +314,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
         DateTime lmd = null;
         try {
             lmd = organizationalUnit.getLastModificationDate();
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd.toString());
+            values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, lmd.toString());
         }
         catch (final Exception e) {
             throw new WebserverSystemException("Unable to parse last-modification-date '" + lmd
@@ -332,9 +332,9 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      */
     private static void addXlinkValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE_PREFIX, Constants.XLINK_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE, Constants.XLINK_NS_URI);
     }
 
     /**
@@ -347,10 +347,10 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
 
         values.put("organizationalUnitNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_PREFIX);
         values.put("organizationalUnitNamespace", Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
@@ -392,8 +392,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
         values.put("organizationalUnitNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_PREFIX);
         values.put("organizationalUnitNamespace", Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_LIST_NAMESPACE_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
@@ -406,8 +406,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
         final OrganizationalUnit organizationalUnit, final Map<String, Object> values) {
 
         try {
-            values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-            values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, XmlUtility
+            values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_TITLE, "Properties");
+            values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_HREF, XmlUtility
                 .getOrganizationalUnitPropertiesHref(organizationalUnit.getId()));
             values.put("organizationalUnitStatus", organizationalUnit.getPublicStatus());
             values.put("organizationalUnitCreationDate", organizationalUnit.getCreationDate());
@@ -423,8 +423,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
                     .getModifiedBy()));
             }
 
-            values.put(XmlTemplateProvider.VAR_NAME, organizationalUnit.getName());
-            values.put(XmlTemplateProvider.VAR_DESCRIPTION, organizationalUnit.getDescription());
+            values.put(XmlTemplateProviderConstants.VAR_NAME, organizationalUnit.getName());
+            values.put(XmlTemplateProviderConstants.VAR_DESCRIPTION, organizationalUnit.getDescription());
 
         }
         catch (final TripleStoreSystemException e) {
@@ -438,10 +438,10 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
         }
 
         if (organizationalUnit.hasChildren()) {
-            values.put("organizationalUnitHasChildren", XmlTemplateProvider.TRUE);
+            values.put("organizationalUnitHasChildren", XmlTemplateProviderConstants.TRUE);
         }
         else {
-            values.put("organizationalUnitHasChildren", XmlTemplateProvider.FALSE);
+            values.put("organizationalUnitHasChildren", XmlTemplateProviderConstants.FALSE);
         }
     }
 
@@ -455,8 +455,9 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
     private void addMdRecordsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX, Constants.METADATARECORDS_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
+        values.put(XmlTemplateProviderConstants.MD_RECRORDS_NAMESPACE_PREFIX,
+            Constants.METADATARECORDS_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProviderConstants.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
         values.put("mdRecordsHref", XmlUtility.getOrganizationalUnitMdRecordsHref(organizationalUnit.getId()));
 
         values.put("mdRecordsTitle", "Metadata");
@@ -478,11 +479,12 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
                     final Map<String, Object> mdRecordValues = new HashMap<String, Object>();
                     addCommonValues(organizationalUnit, mdRecordValues);
                     addMdRecordValues(organizationalUnit, mdRecordName, mdRecordValues);
-                    mdRecordValues.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.FALSE);
+                    mdRecordValues.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE,
+                        XmlTemplateProviderConstants.FALSE);
                     mdRecordsContent.append(MetadataRecordsXmlProvider.getInstance().getMdRecordXml(mdRecordValues));
                 }
             }
-            values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, mdRecordsContent.toString());
+            values.put(XmlTemplateProviderConstants.VAR_MD_RECORDS_CONTENT, mdRecordsContent.toString());
         }
         catch (final SystemException e) {
             throw new WebserverSystemException("Rendering of md-records failed. ", e);
@@ -510,25 +512,26 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
             throw new WebserverSystemException("Rendering of md-record failed. ", e);
         }
         addCommonValues(organizationalUnit, values);
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, XmlUtility.getOrganizationalUnitMdRecordHref(
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_HREF, XmlUtility.getOrganizationalUnitMdRecordHref(
             organizationalUnit.getId(), mdRecord.getName()));
-        values.put(XmlTemplateProvider.MD_RECORD_NAME, mdRecord.getName());
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_TITLE, mdRecord.getName() + " metadata set.");
-        values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX, Constants.METADATARECORDS_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
-        values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, XmlTemplateProvider.FALSE);
+        values.put(XmlTemplateProviderConstants.MD_RECORD_NAME, mdRecord.getName());
+        values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_TITLE, mdRecord.getName() + " metadata set.");
+        values.put(XmlTemplateProviderConstants.MD_RECRORDS_NAMESPACE_PREFIX,
+            Constants.METADATARECORDS_NAMESPACE_PREFIX);
+        values.put(XmlTemplateProviderConstants.MD_RECORDS_NAMESPACE, Constants.METADATARECORDS_NAMESPACE_URI);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_MD_RECORD, XmlTemplateProviderConstants.FALSE);
         try {
-            values.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecord.toStringUTF8());
+            values.put(XmlTemplateProviderConstants.MD_RECORD_CONTENT, mdRecord.toStringUTF8());
         }
         catch (final EncodingSystemException e) {
             throw new WebserverSystemException("Rendering of md-record failed. ", e);
         }
         final List<String> altIds = mdRecord.getAlternateIDs();
         if (!Constants.UNKNOWN.equals(altIds.get(1))) {
-            values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
+            values.put(XmlTemplateProviderConstants.MD_RECORD_TYPE, altIds.get(1));
         }
         if (!Constants.UNKNOWN.equals(altIds.get(2))) {
-            values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
+            values.put(XmlTemplateProviderConstants.MD_RECORD_SCHEMA, altIds.get(2));
         }
 
     }
@@ -540,14 +543,14 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @param values             The map to add values to.
      */
     private static void addResourcesValues(final FedoraResource organizationalUnit, final Map<String, Object> values) {
-        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
+        values.put(XmlTemplateProviderConstants.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", XmlUtility.getOrganizationalUnitResourcesHref(organizationalUnit.getId()));
         values.put("parentObjectsHref", XmlUtility.getOrganizationalUnitResourcesParentObjectsHref(organizationalUnit
             .getId()));
         values.put("childObjectsHref", XmlUtility.getOrganizationalUnitResourcesChildObjectsHref(organizationalUnit
             .getId()));
         values.put("pathListHref", XmlUtility.getOrganizationalUnitResourcesPathListHref(organizationalUnit.getId()));
-        values.put(XmlTemplateProvider.SUCCESSORS_HREF, XmlUtility
+        values.put(XmlTemplateProviderConstants.SUCCESSORS_HREF, XmlUtility
             .getOrganizationalUnitResourcesSuccessorsHref(organizationalUnit.getId()));
 
     }
@@ -576,7 +579,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
             entries.add(entry);
         }
         if (!entries.isEmpty()) {
-            values.put(XmlTemplateProvider.VAR_PARENTS, entries);
+            values.put(XmlTemplateProviderConstants.VAR_PARENTS, entries);
         }
     }
 
@@ -590,9 +593,9 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
     private void addPredecessorsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws TripleStoreSystemException {
 
-        values.put(XmlTemplateProvider.PREDECESSORS_HREF, XmlUtility
+        values.put(XmlTemplateProviderConstants.PREDECESSORS_HREF, XmlUtility
             .getOrganizationalUnitPredecessorsHref(organizationalUnit.getId()));
-        values.put(XmlTemplateProvider.PREDECESSORS_TITLE, "Predecessors");
+        values.put(XmlTemplateProviderConstants.PREDECESSORS_TITLE, "Predecessors");
 
         final List<Predecessor> predecessors = organizationalUnit.getPredecessors();
         final Iterator<Predecessor> idIter = predecessors.iterator();
@@ -603,15 +606,15 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
             final Map<String, String> entry = new HashMap<String, String>(PREDECESSOR_SET_SIZE);
 
             final Predecessor pred = idIter.next();
-            entry.put(XmlTemplateProvider.OBJID, pred.getObjid());
-            entry.put(XmlTemplateProvider.HREF, XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
-            entry.put(XmlTemplateProvider.TITLE, this.tripleStoreUtility.getTitle(pred.getObjid()));
-            entry.put(XmlTemplateProvider.PREDECESSOR_FORM, pred.getForm().getLabel());
+            entry.put(XmlTemplateProviderConstants.OBJID, pred.getObjid());
+            entry.put(XmlTemplateProviderConstants.HREF, XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
+            entry.put(XmlTemplateProviderConstants.TITLE, this.tripleStoreUtility.getTitle(pred.getObjid()));
+            entry.put(XmlTemplateProviderConstants.PREDECESSOR_FORM, pred.getForm().getLabel());
 
             entries.add(entry);
         }
         if (!entries.isEmpty()) {
-            values.put(XmlTemplateProvider.PREDECESSORS, entries);
+            values.put(XmlTemplateProviderConstants.PREDECESSORS, entries);
         }
     }
 
@@ -625,9 +628,9 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
     private void addSuccessorsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
         throws TripleStoreSystemException {
 
-        values.put(XmlTemplateProvider.SUCCESSORS_HREF, XmlUtility
+        values.put(XmlTemplateProviderConstants.SUCCESSORS_HREF, XmlUtility
             .getOrganizationalUnitSuccessorsHref(organizationalUnit.getId()));
-        values.put(XmlTemplateProvider.SUCCESSORS_TITLE, "Successors");
+        values.put(XmlTemplateProviderConstants.SUCCESSORS_TITLE, "Successors");
 
         final List<Predecessor> successors = organizationalUnit.getSuccessors();
         if (successors.isEmpty()) {
@@ -641,15 +644,15 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
             final Map<String, String> entry = new HashMap<String, String>(PREDECESSOR_SET_SIZE);
 
             final Predecessor pred = idIter.next();
-            entry.put(XmlTemplateProvider.OBJID, pred.getObjid());
-            entry.put(XmlTemplateProvider.HREF, XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
-            entry.put(XmlTemplateProvider.TITLE, this.tripleStoreUtility.getTitle(pred.getObjid()));
-            entry.put(XmlTemplateProvider.SUCCESSOR_FORM, pred.getForm().getLabel());
+            entry.put(XmlTemplateProviderConstants.OBJID, pred.getObjid());
+            entry.put(XmlTemplateProviderConstants.HREF, XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
+            entry.put(XmlTemplateProviderConstants.TITLE, this.tripleStoreUtility.getTitle(pred.getObjid()));
+            entry.put(XmlTemplateProviderConstants.SUCCESSOR_FORM, pred.getForm().getLabel());
 
             entries.add(entry);
         }
         if (!entries.isEmpty()) {
-            values.put(XmlTemplateProvider.SUCCESSORS, entries);
+            values.put(XmlTemplateProviderConstants.SUCCESSORS, entries);
         }
     }
 }

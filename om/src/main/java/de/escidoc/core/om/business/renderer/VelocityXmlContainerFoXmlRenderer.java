@@ -6,7 +6,7 @@ import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.factory.ContainerFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlCommonFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class VelocityXmlContainerFoXmlRenderer implements ContainerFoXmlRenderer
         final String containerId, final String lastModificationDate, final List<Map<String, String>> contentRelations,
         final String comment, final Map<String, String> propertiesAsReferences) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.TITLE, "Container " + containerId);
+        values.put(XmlTemplateProviderConstants.TITLE, "Container " + containerId);
         addRelsExtValues(values, properties, members, containerId, lastModificationDate, contentRelations, comment,
             propertiesAsReferences);
         return ContainerFoXmlProvider.getInstance().getContainerFoXml(values);
@@ -64,37 +64,37 @@ public class VelocityXmlContainerFoXmlRenderer implements ContainerFoXmlRenderer
         final Collection<Map<String, String>> contentRelations, final String comment,
         final Map<String, String> propertiesAsReferences) throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.VAR_STRUCT_RELATIONS_NAMESPACE, Constants.STRUCTURAL_RELATIONS_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS_PREFIX, Constants.VERSION_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS, Constants.VERSION_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_VERSION_NS_PREFIX, Constants.VERSION_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_VERSION_NS, Constants.VERSION_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS_PREFIX, Constants.RELEASE_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS, Constants.RELEASE_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELEASE_NS_PREFIX, Constants.RELEASE_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELEASE_NS, Constants.RELEASE_NS_URI);
 
         values.put("resourcesOntologiesNamespace", Constants.RESOURCES_NS_URI);
         values.put("contentRelationsNamespacePrefix", Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
 
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
+        values.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
 
         if (properties != null && !properties.isEmpty()) {
             values.put("properties", properties);
             values.put("propertiesAsReferences", propertiesAsReferences);
             // some values which are more relevant for ingest
-            values.put(XmlTemplateProvider.PUBLIC_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
-            values.put(XmlTemplateProvider.VERSION_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
+            values.put(XmlTemplateProviderConstants.PUBLIC_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
+            values.put(XmlTemplateProviderConstants.VERSION_STATUS, properties.get(Elements.ELEMENT_PUBLIC_STATUS));
             if (properties.get(Elements.ELEMENT_PUBLIC_STATUS).equals(StatusType.RELEASED.toString())) {
                 // if status release add release number and date (date ist later
                 // to update)
-                values.put(XmlTemplateProvider.LATEST_RELEASE_DATE, lastModificationDate);
-                values.put(XmlTemplateProvider.LATEST_RELEASE_NUMBER, "1");
+                values.put(XmlTemplateProviderConstants.LATEST_RELEASE_DATE, lastModificationDate);
+                values.put(XmlTemplateProviderConstants.LATEST_RELEASE_NUMBER, "1");
             }
         }
-        values.put(XmlTemplateProvider.OBJID, containerId);
+        values.put(XmlTemplateProviderConstants.OBJID, containerId);
         values.put("latestVersionDate", lastModificationDate);
         values.put("latestVersionUserTitle", Utility.getCurrentUser()[1]);
         values.put("latestVersionComment", comment);

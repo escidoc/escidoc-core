@@ -33,7 +33,7 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.AdminXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public class VelocityXmlAdminRenderer implements AdminRendererInterface {
 
         values.put("indexConfigurationNamespacePrefix", Constants.INDEX_CONFIGURATION_NS_PREFIX);
         values.put("indexConfigurationNamespace", Constants.INDEX_CONFIGURATION_NS_URI);
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**

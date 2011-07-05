@@ -31,6 +31,7 @@
  */
 package de.escidoc.core.oum.business.fedora.organizationalunit;
 
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.joda.time.DateTime;
@@ -70,7 +71,6 @@ import de.escidoc.core.common.util.stax.handler.MultipleExtractor2;
 import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
 import de.escidoc.core.oum.business.handler.OrganizationalUnitMetadataHandler;
 import de.escidoc.core.oum.business.handler.OrganizationalUnitParentsHandler;
@@ -261,17 +261,17 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
         final String[] creator = Utility.getCurrentUser();
-        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS, Constants.STATUS_OU_CREATED);
+        relsExtValues.put(XmlTemplateProviderConstants.PUBLIC_STATUS, Constants.STATUS_OU_CREATED);
 
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID, creator[0]);
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE, creator[1]);
-        relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
-        relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
-        relsExtValues.put(XmlTemplateProvider.TITLE, metadataHandler.getDcTitle());
+        relsExtValues.put(XmlTemplateProviderConstants.CREATED_BY_ID, creator[0]);
+        relsExtValues.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, creator[1]);
+        relsExtValues.put(XmlTemplateProviderConstants.MODIFIED_BY_ID, creator[0]);
+        relsExtValues.put(XmlTemplateProviderConstants.MODIFIED_BY_TITLE, creator[1]);
+        relsExtValues.put(XmlTemplateProviderConstants.TITLE, metadataHandler.getDcTitle());
 
         // add predecessors to RELS-EXT
-        relsExtValues.put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(predecessorsHandler.getPredecessors(),
-            null));
+        relsExtValues.put(XmlTemplateProviderConstants.PREDECESSORS, getPredessorsMap(predecessorsHandler
+            .getPredecessors(), null));
 
         // parents
         final List<String> parents = parentsHandler.getParentOus();
@@ -429,19 +429,19 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
         final String[] creator = Utility.getCurrentUser();
-        relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
-        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS, getOrganizationalUnit().getPublicStatus());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
-        relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
-        relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
-        relsExtValues.put(XmlTemplateProvider.TITLE, metadataHandler.getDcTitle());
+        relsExtValues.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
+        relsExtValues.put(XmlTemplateProviderConstants.PUBLIC_STATUS, getOrganizationalUnit().getPublicStatus());
+        relsExtValues.put(XmlTemplateProviderConstants.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
+        relsExtValues.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
+        relsExtValues.put(XmlTemplateProviderConstants.MODIFIED_BY_ID, creator[0]);
+        relsExtValues.put(XmlTemplateProviderConstants.MODIFIED_BY_TITLE, creator[1]);
+        relsExtValues.put(XmlTemplateProviderConstants.TITLE, metadataHandler.getDcTitle());
 
         checkName(metadataHandler.getDcTitle());
 
         // predecessors
-        relsExtValues
-            .put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(predecessorsHandler.getPredecessors(), id));
+        relsExtValues.put(XmlTemplateProviderConstants.PREDECESSORS, getPredessorsMap(predecessorsHandler
+            .getPredecessors(), id));
 
         try {
             setMdRecords((Map<String, ByteArrayOutputStream>) me.getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
@@ -554,16 +554,16 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
         final String[] creator = Utility.getCurrentUser();
-        relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
-        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS, getOrganizationalUnit().getPublicStatus());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
-        relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
-        relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
-        relsExtValues.put(XmlTemplateProvider.TITLE, metadataHandler.getDcTitle());
+        relsExtValues.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
+        relsExtValues.put(XmlTemplateProviderConstants.PUBLIC_STATUS, getOrganizationalUnit().getPublicStatus());
+        relsExtValues.put(XmlTemplateProviderConstants.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
+        relsExtValues.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
+        relsExtValues.put(XmlTemplateProviderConstants.MODIFIED_BY_ID, creator[0]);
+        relsExtValues.put(XmlTemplateProviderConstants.MODIFIED_BY_TITLE, creator[1]);
+        relsExtValues.put(XmlTemplateProviderConstants.TITLE, metadataHandler.getDcTitle());
         // add predecessors to RELS-EXT
-        relsExtValues.put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(getOrganizationalUnit().getPredecessors(),
-            null));
+        relsExtValues.put(XmlTemplateProviderConstants.PREDECESSORS, getPredessorsMap(getOrganizationalUnit()
+            .getPredecessors(), null));
         setMdRecords((Map<String, ByteArrayOutputStream>) me.getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
             metadataHandler.getMetadataAttributes(), metadataHandler.getEscidocMetadataRecordNameSpace());
         getOrganizationalUnit().setRelsExt(
@@ -621,19 +621,19 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
         final String buildNumber = Utility.getBuildNumber();
-        relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, buildNumber);
+        relsExtValues.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, buildNumber);
         relsExtValues.put(TripleStoreUtility.PROP_NAME, getOrganizationalUnit().getName());
         final String[] creator = Utility.getCurrentUser();
-        relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS, getOrganizationalUnit().getPublicStatus());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
-        relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
-        relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
-        relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
+        relsExtValues.put(XmlTemplateProviderConstants.PUBLIC_STATUS, getOrganizationalUnit().getPublicStatus());
+        relsExtValues.put(XmlTemplateProviderConstants.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
+        relsExtValues.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
+        relsExtValues.put(XmlTemplateProviderConstants.MODIFIED_BY_ID, creator[0]);
+        relsExtValues.put(XmlTemplateProviderConstants.MODIFIED_BY_TITLE, creator[1]);
         relsExtValues.put(TripleStoreUtility.PROP_TITLE, relsExtValues.get(TripleStoreUtility.PROP_NAME));
 
         // add predecessors to RELS-EXT
-        relsExtValues.put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(getOrganizationalUnit().getPredecessors(),
-            null));
+        relsExtValues.put(XmlTemplateProviderConstants.PREDECESSORS, getPredessorsMap(getOrganizationalUnit()
+            .getPredecessors(), null));
 
         getOrganizationalUnit().setRelsExt(getOrganizationalUnitRelsExt(id, relsExtValues, parents));
 
@@ -992,8 +992,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
 
                     throw new InvalidStatusException("Organizational Unit points to itself as predecessor.");
                 }
-                predecessorMap.put(XmlTemplateProvider.PREDECESSOR_FORM, predecessor.getForm().getLabel());
-                predecessorMap.put(XmlTemplateProvider.OBJID, predecessor.getObjid());
+                predecessorMap.put(XmlTemplateProviderConstants.PREDECESSOR_FORM, predecessor.getForm().getLabel());
+                predecessorMap.put(XmlTemplateProviderConstants.OBJID, predecessor.getObjid());
 
                 // add to the predecessors map
                 predecessorsMap.add(predecessorMap);

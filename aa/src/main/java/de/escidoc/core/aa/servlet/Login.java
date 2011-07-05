@@ -845,8 +845,8 @@ public class Login extends HttpServlet {
         try {
             final String configProperty =
                 EscidocConfiguration
-                    .getInstance().get(EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION).toLowerCase(Locale.ENGLISH)
-                    .trim();
+                    .getInstance().get(EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION).toLowerCase(
+                        Locale.ENGLISH).trim();
             if ("netscape".equals(configProperty) || "0".equals(configProperty)) {
                 escidocCookieVersion = (byte) 0;
             }

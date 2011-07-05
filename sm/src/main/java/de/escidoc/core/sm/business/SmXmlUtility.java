@@ -38,8 +38,10 @@ import java.util.Collection;
  *
  * @author Michael Hoppe
  */
-@Service("business.sm.XmlUtility")
 public class SmXmlUtility {
+
+    private SmXmlUtility() {
+    }
 
     /**
      * Extracts aggregation-definition-prim-keys out of the table-names of the given sql.

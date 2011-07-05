@@ -23,7 +23,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContentModelXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 
 public class ContentModelHandlerRetrieve extends HandlerBase {
 
@@ -59,7 +59,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.putAll(getPropertiesValues(getContentModel()));
         values.putAll(getMdRecordDefinitionsValues());
         values.putAll(getResourceDefinitionsValues());
-        values.put(XmlTemplateProvider.CONTENT_STREAMS, renderContentStreams(false));
+        values.put(XmlTemplateProviderConstants.CONTENT_STREAMS, renderContentStreams(false));
         values.putAll(getResourcesValues(getContentModel()));
 
         return ContentModelXmlProvider.getInstance().getContentModelXml(values);
@@ -70,7 +70,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
         final Map<String, String> values = getCommonValues(getContentModel());
         values.putAll(getResourcesValues(getContentModel()));
-        values.put(XmlTemplateProvider.IS_ROOT_RESOURCES, XmlTemplateProvider.TRUE);
+        values.put(XmlTemplateProviderConstants.IS_ROOT_RESOURCES, XmlTemplateProviderConstants.TRUE);
         return ContentModelXmlProvider.getInstance().getContentModelResourcesXml(values);
     }
 
@@ -96,9 +96,9 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         for (final String contentStreamName : getContentModel().getContentStreams().keySet()) {
             content.append(renderContentStream(contentStreamName, false));
         }
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF, getContentModel().getHref()
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAMS_HREF, getContentModel().getHref()
             + Constants.CONTENT_STREAMS_URL_PART);
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_TITLE, "Content streams of Item "
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAMS_TITLE, "Content streams of Item "
             + getContentModel().getId());
 
         if (content.length() == 0) {
@@ -106,9 +106,9 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         }
 
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.TRUE);
         }
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_CONTENT, content.toString());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAMS_CONTENT, content.toString());
         return ContentModelXmlProvider.getInstance().getContentStreamsXml(values);
 
     }
@@ -119,24 +119,24 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         if (isRoot) {
-            values.put("isRootContentStream", XmlTemplateProvider.TRUE);
+            values.put("isRootContentStream", XmlTemplateProviderConstants.TRUE);
         }
         final Map<String, String> commonValues = getCommonValues(getContentModel());
         values.putAll(commonValues);
 
         final Datastream ds = getContentModel().getContentStream(name);
 
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NAME, ds.getName());
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_TITLE, ds.getLabel());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_NAME, ds.getName());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_TITLE, ds.getLabel());
         String location = ds.getLocation();
         if ("M".equals(ds.getControlGroup()) || "X".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_INTERNAL_MANAGED);
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_INTERNAL_MANAGED);
             location =
                 getContentModel().getHref() + Constants.CONTENT_STREAM_URL_PART + '/' + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
             if ("X".equals(ds.getControlGroup())) {
                 try {
-                    values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_CONTENT, ds.toStringUTF8());
+                    values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_CONTENT, ds.toStringUTF8());
                 }
                 catch (final EncodingSystemException e) {
                     throw new WebserverSystemException(e);
@@ -144,17 +144,17 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
             }
         }
         else if ("E".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_MANAGED);
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_MANAGED);
             location =
                 getContentModel().getHref() + Constants.CONTENT_STREAM_URL_PART + '/' + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
 
         }
         else if ("R".equals(ds.getControlGroup())) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_URL);
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_STORAGE, Constants.STORAGE_EXTERNAL_URL);
         }
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_MIME_TYPE, ds.getMimeType());
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_HREF, location);
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_MIME_TYPE, ds.getMimeType());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_HREF, location);
 
         return ContentModelXmlProvider.getInstance().getContentStreamXml(values);
     }
@@ -176,44 +176,45 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.OBJID, getContentModel().getId());
-        values.put(XmlTemplateProvider.TITLE, getContentModel().getTitle());
+        values.put(XmlTemplateProviderConstants.OBJID, getContentModel().getId());
+        values.put(XmlTemplateProviderConstants.TITLE, getContentModel().getTitle());
 
-        values.put(XmlTemplateProvider.HREF, getContentModel().getHref());
+        values.put(XmlTemplateProviderConstants.HREF, getContentModel().getHref());
 
         try {
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, contentModel
+            values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, contentModel
                 .getLastModificationDate().toString());
         }
         catch (final FedoraSystemException e) {
             throw new WebserverSystemException(e);
         }
 
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.CONTENT_MODEL_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_NAMESPACE,
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_NAMESPACE,
             de.escidoc.core.common.business.Constants.CONTENT_MODEL_NAMESPACE_URI);
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.XLINK_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE, de.escidoc.core.common.business.Constants.XLINK_NS_URI);
+        values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE,
+            de.escidoc.core.common.business.Constants.XLINK_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS,
             de.escidoc.core.common.business.Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX,
             de.escidoc.core.common.business.Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX,
             de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS,
             de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("versionNamespacePrefix", de.escidoc.core.common.business.Constants.VERSION_NS_PREFIX);
         values.put("versionNamespace", de.escidoc.core.common.business.Constants.VERSION_NS_URI);
         values.put("releaseNamespacePrefix", de.escidoc.core.common.business.Constants.RELEASE_NS_PREFIX);
         values.put("releaseNamespace", de.escidoc.core.common.business.Constants.RELEASE_NS_URI);
 
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NS_PREFIX,
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_NS_PREFIX,
             de.escidoc.core.common.business.Constants.CONTENT_STREAMS_NAMESPACE_PREFIX);
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NS,
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_STREAM_NS,
             de.escidoc.core.common.business.Constants.CONTENT_STREAMS_NAMESPACE_URI);
 
         return values;
@@ -242,116 +243,120 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, contentModel.getHref() + Constants.PROPERTIES_URL_PART);
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_TITLE, "Properties");
+        values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_HREF, contentModel.getHref()
+            + Constants.PROPERTIES_URL_PART);
 
         // FIXME description not in map? (FRS)
         final String debug = contentModel.getDescription();
         // properties.get(PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
-        values.put(XmlTemplateProvider.VAR_DESCRIPTION, debug);
+        values.put(XmlTemplateProviderConstants.VAR_DESCRIPTION, debug);
 
         try {
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATION_DATE, contentModel.getCreationDate());
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CREATION_DATE, contentModel.getCreationDate());
         }
         catch (final TripleStoreSystemException e) {
             throw new ContentModelNotFoundException(e);
         }
 
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATED_BY_TITLE, properties
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CREATED_BY_TITLE, properties
             .get(PropertyMapKeys.CREATED_BY_TITLE));
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATED_BY_HREF,
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CREATED_BY_HREF,
             de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
                 + properties.get(PropertyMapKeys.CREATED_BY_ID));
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATED_BY_ID, properties.get(PropertyMapKeys.CREATED_BY_ID));
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CREATED_BY_ID, properties
+            .get(PropertyMapKeys.CREATED_BY_ID));
 
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_STATUS, contentModel.getStatus());
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_STATUS_COMMENT, properties
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_STATUS, contentModel.getStatus());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_STATUS_COMMENT, properties
             .get(PropertyMapKeys.PUBLIC_STATUS_COMMENT));
 
         if (contentModel.hasObjectPid()) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_OBJECT_PID, contentModel.getObjectPid());
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_OBJECT_PID, contentModel.getObjectPid());
         }
 
         if (contentModel.isLocked()) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_STATUS,
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LOCK_STATUS,
                 de.escidoc.core.common.business.Constants.STATUS_LOCKED);
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_DATE, contentModel.getLockDate());
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LOCK_DATE, contentModel.getLockDate());
             final String lockOwnerId = contentModel.getLockOwner();
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_ID, lockOwnerId);
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_HREF,
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LOCK_OWNER_ID, lockOwnerId);
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LOCK_OWNER_HREF,
                 de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE + lockOwnerId);
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_TITLE, contentModel.getLockOwnerTitle());
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LOCK_OWNER_TITLE, contentModel
+                .getLockOwnerTitle());
         }
         else {
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_STATUS,
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LOCK_STATUS,
                 de.escidoc.core.common.business.Constants.STATUS_UNLOCKED);
         }
 
         // version
         final StringBuilder versionIdBase = new StringBuilder(contentModel.getId()).append(':');
 
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_HREF, contentModel.getVersionHref());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CURRENT_VERSION_HREF, contentModel.getVersionHref());
         // de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
         // + currentVersionId);
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_ID, contentModel.getFullId());
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_TITLE, "This Version");
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_NUMBER, contentModel.getVersionId());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CURRENT_VERSION_ID, contentModel.getFullId());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CURRENT_VERSION_TITLE, "This Version");
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CURRENT_VERSION_NUMBER, contentModel.getVersionId());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_NUMBER));
-        values
-            .put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_DATE, contentModel.getVersionDate().toString());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CURRENT_VERSION_DATE, contentModel
+            .getVersionDate().toString());
         // properties.get(TripleStoreUtility.PROP_VERSION_DATE));
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_STATUS, contentModel.getVersionStatus());
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CURRENT_VERSION_STATUS, contentModel
+            .getVersionStatus());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_STATUS));
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_VALID_STATUS, properties
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CURRENT_VERSION_VALID_STATUS, properties
             .get(PropertyMapKeys.CURRENT_VERSION_VALID_STATUS));
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_COMMENT, properties
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CURRENT_VERSION_COMMENT, properties
             .get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT));
 
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_ID, properties
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_ID, properties
             .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_TITLE, properties
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_TITLE, properties
             .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
 
         // href is rest only value
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_HREF,
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_CURRENT_VERSION_MODIFIED_BY_HREF,
             de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
                 + properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
 
         // PID ---------------------------------------------------
         if (contentModel.hasVersionPid()) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_VERSION_PID, contentModel.getVersionPid());
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_VERSION_PID, contentModel.getVersionPid());
         }
 
         final String latestVersionId = contentModel.getLatestVersionId();
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_HREF,
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LATEST_VERSION_HREF,
             de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE + latestVersionId);
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_TITLE, "Latest Version");
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_ID, latestVersionId);
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_NUMBER, properties
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LATEST_VERSION_TITLE, "Latest Version");
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LATEST_VERSION_ID, latestVersionId);
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LATEST_VERSION_NUMBER, properties
             .get(PropertyMapKeys.LATEST_VERSION_NUMBER));
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_DATE, properties
+        values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LATEST_VERSION_DATE, properties
             .get(PropertyMapKeys.LATEST_VERSION_DATE));
 
         // if contentModel is released
         // -------------------------------------------------
         if (properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER) != null) {
 
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_NUMBER, properties
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LATEST_RELEASE_NUMBER, properties
                 .get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
 
             // ! changes versionIdBase
             final String latestRevisonId =
                 versionIdBase.append(properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER)).toString();
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_HREF,
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LATEST_RELEASE_HREF,
                 de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE + latestRevisonId);
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_TITLE, "Latest public version");
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_ID, latestRevisonId);
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_DATE, properties
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LATEST_RELEASE_TITLE, "Latest public version");
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LATEST_RELEASE_ID, latestRevisonId);
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LATEST_RELEASE_DATE, properties
                 .get(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
 
             final String latestReleasePid = contentModel.getLatestReleasePid();
             if (latestReleasePid != null) {
-                values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_PID, latestReleasePid);
+                values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_LATEST_RELEASE_PID, latestReleasePid);
             }
         }
 
@@ -382,7 +387,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         }
 
         if (!mdRecordDefinitions.isEmpty()) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_MDRECORD_DEFINITIONS, mdRecordDefinitions);
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_MDRECORD_DEFINITIONS, mdRecordDefinitions);
         }
 
         return values;
@@ -440,7 +445,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         }
 
         if (!resourceDefinitions.isEmpty()) {
-            values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_RESOURCE_DEFINITIONS, resourceDefinitions);
+            values.put(XmlTemplateProviderConstants.VAR_CONTENT_MODEL_RESOURCE_DEFINITIONS, resourceDefinitions);
         }
 
         return values;
@@ -449,7 +454,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     // TODO ContentModelHandlerRetrieve ?
     private static Map<String, String> getResourcesValues(final FedoraResource contentModel) {
         final Map<String, String> values = new HashMap<String, String>();
-        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
+        values.put(XmlTemplateProviderConstants.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", contentModel.getHref() + "/resources");
         return values;
     }

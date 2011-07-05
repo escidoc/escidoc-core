@@ -34,7 +34,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -72,10 +72,10 @@ public class OrganizationalUnitHandlerCreate extends OrganizationalUnitHandlerRe
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
-        values.put(XmlTemplateProvider.VAR_ID, id);
+        values.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
+        values.put(XmlTemplateProviderConstants.VAR_ID, id);
         // values.put("organizationDetails", organizationDetails);
-        values.put(XmlTemplateProvider.VAR_PARENTS, parents);
+        values.put(XmlTemplateProviderConstants.VAR_PARENTS, parents);
 
         if (metadataStreams != null) {
             final Collection<Map<String, String>> mdRecords =
@@ -86,15 +86,16 @@ public class OrganizationalUnitHandlerCreate extends OrganizationalUnitHandlerRe
                 if (metadataProperties != null) {
                     final Map<String, String> properties =
                         metadataProperties.get(stringByteArrayOutputStreamEntry.getKey());
-                    mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, properties.get(Elements.MD_RECORD_ATTRIBUTE_TYPE));
-                    mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA, properties
+                    mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_TYPE, properties
+                        .get(Elements.MD_RECORD_ATTRIBUTE_TYPE));
+                    mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_SCHEMA, properties
                         .get(Elements.MD_RECORD_ATTRIBUTE_SCHEMA));
                 }
-                mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, stringByteArrayOutputStreamEntry.getKey());
+                mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_NAME, stringByteArrayOutputStreamEntry.getKey());
                 try {
                     final String metadata =
                         stringByteArrayOutputStreamEntry.getValue().toString(XmlUtility.CHARACTER_ENCODING);
-                    mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT, metadata);
+                    mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_CONTENT, metadata);
                 }
                 catch (final UnsupportedEncodingException e) {
                     throw new EncodingSystemException("Metadata record '" + stringByteArrayOutputStreamEntry.getKey()
@@ -102,10 +103,10 @@ public class OrganizationalUnitHandlerCreate extends OrganizationalUnitHandlerRe
                 }
                 mdRecords.add(mdRecord);
             }
-            values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
+            values.put(XmlTemplateProviderConstants.MD_RECORDS, mdRecords);
         }
         if (dcStream != null && dcStream.trim().length() != 0) {
-            values.put(XmlTemplateProvider.DC, dcStream);
+            values.put(XmlTemplateProviderConstants.DC, dcStream);
         }
         return getFoxmlRenderer().render(values);
     }
@@ -125,8 +126,8 @@ public class OrganizationalUnitHandlerCreate extends OrganizationalUnitHandlerRe
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);
-        values.put(XmlTemplateProvider.VAR_ID, id);
-        values.put(XmlTemplateProvider.VAR_PARENTS, parents);
+        values.put(XmlTemplateProviderConstants.VAR_ID, id);
+        values.put(XmlTemplateProviderConstants.VAR_PARENTS, parents);
         return getFoxmlRenderer().renderRelsExt(values);
     }
 

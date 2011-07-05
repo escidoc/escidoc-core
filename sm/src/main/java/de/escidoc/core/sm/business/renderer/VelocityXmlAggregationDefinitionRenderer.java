@@ -33,7 +33,7 @@ import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.AggregationDefinitionXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationStatisticDataSelector;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationTable;
@@ -78,7 +78,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
     @Override
     public String render(final AggregationDefinition aggregationDefinition) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootAggregationDefinition", XmlTemplateProvider.TRUE);
+        values.put("isRootAggregationDefinition", XmlTemplateProviderConstants.TRUE);
         addAggregationDefinitionNamespaceValues(values);
         addAggregationDefinitionValues(aggregationDefinition, values);
         return getAggregationDefinitionXmlProvider().getAggregationDefinitionXml(values);
@@ -223,7 +223,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootAggregationDefinition", XmlTemplateProvider.FALSE);
+        values.put("isRootAggregationDefinition", XmlTemplateProviderConstants.FALSE);
         values.put("aggregationDefinitionListTitle", "Aggregation Definition List");
         values.put("recordPacking", recordPacking);
         addAggregationDefinitionNamespaceValues(values);
@@ -252,10 +252,10 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
         addEscidocBaseUrl(values);
         values.put("aggregationDefinitionNamespacePrefix", Constants.AGGREGATION_DEFINITION_NS_PREFIX);
         values.put("aggregationDefinitionNamespace", Constants.AGGREGATION_DEFINITION_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     /**
@@ -277,7 +277,7 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**

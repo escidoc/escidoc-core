@@ -32,7 +32,7 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ReportXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
 import de.escidoc.core.sm.business.renderer.interfaces.ReportRendererInterface;
 import org.joda.time.DateTime;
@@ -151,10 +151,10 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
         addEscidocBaseUrl(values);
         values.put("reportNamespacePrefix", Constants.REPORT_NS_PREFIX);
         values.put("reportNamespace", Constants.REPORT_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put(XmlTemplateProvider.ESCIDOC_PARAMETER_NS_PREFIX, Constants.PARAMETER_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PARAMETER_NS, Constants.PARAMETER_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PARAMETER_NS_PREFIX, Constants.PARAMETER_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PARAMETER_NS, Constants.PARAMETER_NS_URI);
     }
 
     /**
@@ -163,7 +163,7 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * @param values The map to add values to.
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values) {
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
     /**

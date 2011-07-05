@@ -53,8 +53,8 @@ import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
@@ -140,42 +140,42 @@ public class ItemHandlerCreate extends ItemResourceListener {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
             if (dcXml != null) {
-                values.put(XmlTemplateProvider.DC, dcXml);
+                values.put(XmlTemplateProviderConstants.DC, dcXml);
             }
         }
-        values.put(XmlTemplateProvider.OBJID, id);
-        values.put(XmlTemplateProvider.TITLE, "Component " + id);
+        values.put(XmlTemplateProviderConstants.OBJID, id);
+        values.put(XmlTemplateProviderConstants.TITLE, "Component " + id);
 
         if (dataStreams.get(Datastream.RELS_EXT_DATASTREAM) != null) {
-            values.put(XmlTemplateProvider.RELS_EXT, dataStreams.get(Datastream.RELS_EXT_DATASTREAM));
+            values.put(XmlTemplateProviderConstants.RELS_EXT, dataStreams.get(Datastream.RELS_EXT_DATASTREAM));
         }
 
         if (dataStreams.get("uploadUrl") != null) {
-            values.put(XmlTemplateProvider.MIME_TYPE, contentMimeType);
+            values.put(XmlTemplateProviderConstants.MIME_TYPE, contentMimeType);
             final String theUrl = Utility.processUrl((String) dataStreams.get("uploadUrl"), null, null);
-            values.put(XmlTemplateProvider.REF, theUrl);
-            values.put(XmlTemplateProvider.REF_TYPE, "URL");
+            values.put(XmlTemplateProviderConstants.REF, theUrl);
+            values.put(XmlTemplateProviderConstants.REF_TYPE, "URL");
             if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)) {
-                values.put(XmlTemplateProvider.CONTROL_GROUP, "R");
+                values.put(XmlTemplateProviderConstants.CONTROL_GROUP, "R");
             }
             else if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED)) {
-                values.put(XmlTemplateProvider.CONTROL_GROUP, "E");
+                values.put(XmlTemplateProviderConstants.CONTROL_GROUP, "E");
             }
             else if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
-                values.put(XmlTemplateProvider.CONTROL_GROUP, "M");
+                values.put(XmlTemplateProviderConstants.CONTROL_GROUP, "M");
             }
-            values.put(XmlTemplateProvider.REF_TYPE, "URL");
-            values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance().get(
+            values.put(XmlTemplateProviderConstants.REF_TYPE, "URL");
+            values.put(XmlTemplateProviderConstants.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
 
         }
 
-        if (dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS) != null) {
-            final Map mdRecordsStreams = (Map) dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS);
+        if (dataStreams.get(FoXmlProviderConstants.DATASTREAM_MD_RECORDS) != null) {
+            final Map mdRecordsStreams = (Map) dataStreams.get(FoXmlProviderConstants.DATASTREAM_MD_RECORDS);
             if (!mdRecordsStreams.isEmpty()) {
                 final Collection<Map<String, String>> mdRecords =
                     new ArrayList<Map<String, String>>(mdRecordsStreams.size());
-                values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
+                values.put(XmlTemplateProviderConstants.MD_RECORDS, mdRecords);
 
                 for (final Object o : mdRecordsStreams.keySet()) {
                     final String key = (String) o;
@@ -191,11 +191,11 @@ public class ItemHandlerCreate extends ItemResourceListener {
                         type = mdAttributes.get("type");
                     }
 
-                    mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA, schema);
-                    mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, type);
-                    mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, key);
+                    mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_SCHEMA, schema);
+                    mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_TYPE, type);
+                    mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_NAME, key);
                     try {
-                        mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecordStream
+                        mdRecord.put(XmlTemplateProviderConstants.MD_RECORD_CONTENT, mdRecordStream
                             .toString(XmlUtility.CHARACTER_ENCODING));
 
                     }
@@ -532,22 +532,22 @@ public class ItemHandlerCreate extends ItemResourceListener {
         }
         String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
         if (mimeType == null || mimeType.length() == 0) {
-            mimeType = FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
+            mimeType = FoXmlProviderConstants.MIME_TYPE_APPLICATION_OCTET_STREAM;
         }
         datastreams.put(Datastream.RELS_EXT_DATASTREAM, getComponentRelsExtWithVelocity(componentId, properties, true));
-        if (datastreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS) == null) {
-            datastreams.put(FoXmlProvider.DATASTREAM_MD_RECORDS, new HashMap());
+        if (datastreams.get(FoXmlProviderConstants.DATASTREAM_MD_RECORDS) == null) {
+            datastreams.put(FoXmlProviderConstants.DATASTREAM_MD_RECORDS, new HashMap());
         }
-        String uploadUrl = binaryContent.get(FoXmlProvider.DATASTREAM_UPLOAD_URL);
+        String uploadUrl = binaryContent.get(FoXmlProviderConstants.DATASTREAM_UPLOAD_URL);
         if (binaryContent.get(DATASTREAM_CONTENT) != null) {
             final String fileName = "component " + componentId;
             uploadUrl = uploadBase64EncodedContent(binaryContent.get(DATASTREAM_CONTENT), fileName, mimeType);
         }
-        datastreams.put(FoXmlProvider.DATASTREAM_UPLOAD_URL, uploadUrl);
+        datastreams.put(FoXmlProviderConstants.DATASTREAM_UPLOAD_URL, uploadUrl);
         try {
             final String componentFoxml =
                 getComponentFoxmlWithVelocity(componentId, mimeType, datastreams, mdRecordAttributes, nsUri,
-                    binaryContent.get(FoXmlProvider.DATASTREAM_STORAGE_ATTRIBUTE));
+                    binaryContent.get(FoXmlProviderConstants.DATASTREAM_STORAGE_ATTRIBUTE));
             final IngestPathParam path = new IngestPathParam();
             final IngestQueryParam query = new IngestQueryParam();
             this.getFedoraServiceClient().ingest(path, query, componentFoxml);

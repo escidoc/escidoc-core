@@ -62,7 +62,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContentRelationFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 
 /**
  * Content Relation.<br/> See http://colab.mpdl.mpg.de/mediawiki/ESciDoc_Content_Relations_Concept.
@@ -220,7 +220,8 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
 
         if (this.dcXml == null) {
 
-            final MdRecordCreate mdRecord = getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
+            final MdRecordCreate mdRecord =
+                getMetadataRecord(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING);
             if (mdRecord != null) {
                 try {
                     this.dcXml = getDC(mdRecord, "");

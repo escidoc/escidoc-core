@@ -30,7 +30,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.apache.commons.codec.binary.Base64;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.IngestPathParam;
@@ -163,15 +163,15 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
 
         final Map<String, Object> valueMap = new HashMap<String, Object>();
 
-        valueMap.put(XmlTemplateProvider.DC, getDC());
+        valueMap.put(XmlTemplateProviderConstants.DC, getDC());
         valueMap.putAll(preparePropertiesValueMap());
         valueMap.putAll(getRelsExtNamespaceValues());
-        valueMap.put(XmlTemplateProvider.MD_RECORDS, getMetadataRecordsMap(this.mdRecords));
+        valueMap.put(XmlTemplateProviderConstants.MD_RECORDS, getMetadataRecordsMap(this.mdRecords));
 
         valueMap.putAll(getContentValues());
         // control template
-        valueMap.put(XmlTemplateProvider.IN_CREATE, XmlTemplateProvider.TRUE);
-        valueMap.put(XmlTemplateProvider.DS_VERSIONABLE, XmlTemplateProvider.TRUE);
+        valueMap.put(XmlTemplateProviderConstants.IN_CREATE, XmlTemplateProviderConstants.TRUE);
+        valueMap.put(XmlTemplateProviderConstants.DS_VERSIONABLE, XmlTemplateProviderConstants.TRUE);
 
         return ItemFoXmlProvider.getInstance().getComponentFoXml(valueMap);
     }
@@ -186,7 +186,8 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
     public String getDC() {
 
         if (this.dcXml == null) {
-            final MdRecordCreate mdRecord = getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
+            final MdRecordCreate mdRecord =
+                getMetadataRecord(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING);
 
             if (mdRecord != null) {
                 try {
@@ -261,37 +262,37 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
 
         final Map<String, String> valueMap = new HashMap<String, String>();
 
-        valueMap.put(XmlTemplateProvider.OBJID, getObjid());
+        valueMap.put(XmlTemplateProviderConstants.OBJID, getObjid());
 
         // add RELS-EXT values -------------------------------------------------
-        valueMap.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, getBuildNumber());
+        valueMap.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, getBuildNumber());
 
         // add RELS-EXT object properties
-        valueMap.put(XmlTemplateProvider.CREATED_BY_ID, this.properties.getCreatedById());
-        valueMap.put(XmlTemplateProvider.CREATED_BY_TITLE, this.properties.getCreatedByName());
+        valueMap.put(XmlTemplateProviderConstants.CREATED_BY_ID, this.properties.getCreatedById());
+        valueMap.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, this.properties.getCreatedByName());
 
-        valueMap.put(XmlTemplateProvider.VALID_STATUS, this.properties.getValidStatus());
+        valueMap.put(XmlTemplateProviderConstants.VALID_STATUS, this.properties.getValidStatus());
 
-        valueMap.put(XmlTemplateProvider.MIME_TYPE, this.properties.getMimeType());
+        valueMap.put(XmlTemplateProviderConstants.MIME_TYPE, this.properties.getMimeType());
 
-        valueMap.put(XmlTemplateProvider.VISIBILITY, this.properties.getVisibility());
+        valueMap.put(XmlTemplateProviderConstants.VISIBILITY, this.properties.getVisibility());
 
-        valueMap.put(XmlTemplateProvider.CONTENT_CATEGORY, this.properties.getContentCatagory());
+        valueMap.put(XmlTemplateProviderConstants.CONTENT_CATEGORY, this.properties.getContentCatagory());
 
         if (this.content.getDataLocation() == null) {
             if (this.content.getDataLocation() != null) {
-                valueMap.put(XmlTemplateProvider.REF, this.content.getDataLocation().toString());
-                valueMap.put(XmlTemplateProvider.REF_TYPE, "URL");
+                valueMap.put(XmlTemplateProviderConstants.REF, this.content.getDataLocation().toString());
+                valueMap.put(XmlTemplateProviderConstants.REF_TYPE, "URL");
             }
             else {
                 this.content.setDataLocation(uploadBase64EncodedContent(getContent().getContent(), "content "
                     + getObjid(), this.properties.getMimeType()));
-                valueMap.put(XmlTemplateProvider.REF, this.content.getDataLocation().toString());
-                valueMap.put(XmlTemplateProvider.REF_TYPE, "URL");
+                valueMap.put(XmlTemplateProviderConstants.REF, this.content.getDataLocation().toString());
+                valueMap.put(XmlTemplateProviderConstants.REF_TYPE, "URL");
             }
 
         }
-        valueMap.put(XmlTemplateProvider.CONTROL_GROUP, this.content.getStorageType().getAbbreviation());
+        valueMap.put(XmlTemplateProviderConstants.CONTROL_GROUP, this.content.getStorageType().getAbbreviation());
 
         return valueMap;
 
@@ -304,21 +305,22 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
 
         final Map<String, String> values = new HashMap<String, String>();
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS_PREFIX, Constants.VERSION_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS, Constants.VERSION_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_VERSION_NS_PREFIX, Constants.VERSION_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_VERSION_NS, Constants.VERSION_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS_PREFIX, Constants.RELEASE_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS, Constants.RELEASE_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELEASE_NS_PREFIX, Constants.RELEASE_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELEASE_NS, Constants.RELEASE_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS, Constants.RESOURCES_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RESOURCE_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RESOURCE_NS, Constants.RESOURCES_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELATION_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
 
-        values.put(XmlTemplateProvider.ESCIDOC_RELATION_NS_PREFIX, Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
+        values.put(XmlTemplateProviderConstants.ESCIDOC_RELATION_NS_PREFIX,
+            Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
 
         return values;
     }
@@ -330,10 +332,10 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
      */
     private Map<String, String> getContentValues() {
         final Map<String, String> values = new HashMap<String, String>();
-        values.put(XmlTemplateProvider.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance().get(
+        values.put(XmlTemplateProviderConstants.CONTENT_CHECKSUM_ALGORITHM, EscidocConfiguration.getInstance().get(
             EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"));
-        values.put(XmlTemplateProvider.REF, this.content.getDataLocation().toString());
-        values.put(XmlTemplateProvider.REF_TYPE, "URL");
+        values.put(XmlTemplateProviderConstants.REF, this.content.getDataLocation().toString());
+        values.put(XmlTemplateProviderConstants.REF_TYPE, "URL");
         return values;
     }
 

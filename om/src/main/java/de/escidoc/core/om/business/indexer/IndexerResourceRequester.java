@@ -47,7 +47,7 @@ import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
+import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
 
 /**
  * @author Michael Hoppe
@@ -143,7 +143,7 @@ public class IndexerResourceRequester {
                 // TODO testen ob header mitgeschickt wird
                 final Header ctype = httpResponse.getFirstHeader("Content-Type");
                 final String mimeType =
-                    ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
+                    ctype != null ? ctype.getValue() : FoXmlProviderConstants.MIME_TYPE_APPLICATION_OCTET_STREAM;
 
                 final EscidocBinaryContent escidocBinaryContent = new EscidocBinaryContent();
                 escidocBinaryContent.setMimeType(mimeType);

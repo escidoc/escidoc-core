@@ -36,6 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
@@ -49,7 +50,6 @@ import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.RoleXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
 /**
  * Role renderer implementation using the velocity template engine.
@@ -80,12 +80,12 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
     public String renderResources(final EscidocRole role) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootResources", XmlTemplateProvider.TRUE);
+        values.put("isRootResources", XmlTemplateProviderConstants.TRUE);
 
         addCommonValues(values);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(role
+        values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(role
             .getLastModificationDate()));
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
+        values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
         addResourcesValues(role, values);
 
         return getRoleXmlProvider().getResourcesXml(values);
@@ -139,10 +139,10 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
      */
     private static void addRoleValues(final EscidocRole role, final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(role
+        values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, XmlUtility.normalizeDate(role
             .getLastModificationDate()));
-        values.put(XmlTemplateProvider.VAR_CREATION_DATE, XmlUtility.normalizeDate(role.getCreationDate()));
-        values.put(XmlTemplateProvider.VAR_DESCRIPTION, role.getDescription());
+        values.put(XmlTemplateProviderConstants.VAR_CREATION_DATE, XmlUtility.normalizeDate(role.getCreationDate()));
+        values.put(XmlTemplateProviderConstants.VAR_DESCRIPTION, role.getDescription());
 
         values.put("roleId", role.getId());
         final UserAccount createdBy = role.getUserAccountByCreatorId();
@@ -207,7 +207,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
      */
     private static void addResourcesValues(final EscidocRole role, final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_RESOURCES_HREF, ROLE_URL_BASE + role.getId() + RESOURCES_URL_PART);
+        values.put(XmlTemplateProviderConstants.VAR_RESOURCES_HREF, ROLE_URL_BASE + role.getId() + RESOURCES_URL_PART);
     }
 
     /**
@@ -239,8 +239,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRen
      * @param values The {@link Map} to add the values to.
      */
     private static void addXacmlNamespaceValues(final Map<String, Object> values) {
-        values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE_PREFIX, Constants.XACML_POLICY_NS_PREFIX);
-        values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE, Constants.XACML_POLICY_NS_URI);
+        values.put(XmlTemplateProviderConstants.VAR_XACML_POLICY_NAMESPACE_PREFIX, Constants.XACML_POLICY_NS_PREFIX);
+        values.put(XmlTemplateProviderConstants.VAR_XACML_POLICY_NAMESPACE, Constants.XACML_POLICY_NS_URI);
     }
 
     /**
