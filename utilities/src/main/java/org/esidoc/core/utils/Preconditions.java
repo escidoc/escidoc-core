@@ -33,7 +33,7 @@ import java.util.Collection;
 @SuppressWarnings({"JavaDoc"})
 public final class Preconditions {
 
-    private final static Logger LOG = LoggerFactory.getLogger(Preconditions.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Preconditions.class);
 
     private Preconditions() {
     }

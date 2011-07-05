@@ -23,7 +23,7 @@ import java.io.PipedOutputStream;
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Stream extends OutputStream {
 
-    private final static Logger LOG = LoggerFactory.getLogger(Stream.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Stream.class);
 
     private static final File DEFAULT_TEMP_DIR;
     private static final int DEFAULT_THRESHOLD;

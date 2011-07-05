@@ -27,7 +27,7 @@ package org.esidoc.core.utils;
  */
 public final class VoidObject {
 
-    private final static VoidObject INSTANCE = new VoidObject();
+    private static final VoidObject INSTANCE = new VoidObject();
 
     /**
      * Private constructor to avoid instantiation.

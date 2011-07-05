@@ -9,7 +9,7 @@ import static org.esidoc.core.utils.Preconditions.checkState;
  */
 public final class NextPIDQueryParam {
 
-    public final static int DEFAULT_NUMBER_OF_PIDS = 1;
+    public static final int DEFAULT_NUMBER_OF_PIDS = 1;
 
     private String namespace;
     private int numPIDs = DEFAULT_NUMBER_OF_PIDS;

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
         assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class IngestPathParam {
 
-    private final static String NEW_PID = "new";
+    private static final String NEW_PID = "new";
 
     @NotNull
     @NotEmpty

@@ -27,9 +27,9 @@ package org.esidoc.core.utils.io;
  */
 public final class Encodings {
 
-    public final static String ISO_8859_1 = "ISO8859_1";
+    public static final String ISO_8859_1 = "ISO8859_1";
 
-    public final static String UTF8 = "UTF-8";
+    public static final String UTF8 = "UTF-8";
 
     /**
      * Private contructor to avoid instantiation.

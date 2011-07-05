@@ -19,7 +19,7 @@ import java.io.UnsupportedEncodingException;
         assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class IOUtils {
 
-    private final static Logger LOG = LoggerFactory.getLogger(IOUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(IOUtils.class);
 
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
 

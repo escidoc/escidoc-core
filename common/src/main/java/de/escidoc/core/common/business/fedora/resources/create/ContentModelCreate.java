@@ -68,7 +68,7 @@ import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
 @Configurable
 public class ContentModelCreate extends GenericResourceCreate {
 
-    public final static Logger LOG = LoggerFactory.getLogger(ContentModelCreate.class);
+    public static final Logger LOG = LoggerFactory.getLogger(ContentModelCreate.class);
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;

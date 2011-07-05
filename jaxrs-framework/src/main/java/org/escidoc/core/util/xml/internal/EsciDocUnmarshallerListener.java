@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
 
-    private final static Logger LOG = LoggerFactory.getLogger(EsciDocUnmarshallerListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EsciDocUnmarshallerListener.class);
 
     private final List<UnmarshallerListener> unmarshallerListeners = new ArrayList<UnmarshallerListener>();
 

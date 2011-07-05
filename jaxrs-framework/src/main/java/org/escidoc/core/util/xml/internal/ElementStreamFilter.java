@@ -26,7 +26,7 @@ import java.util.List;
         assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public class ElementStreamFilter implements StreamFilter {
 
-    private final static Logger LOG = LoggerFactory.getLogger(ElementStreamFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ElementStreamFilter.class);
 
     private XMLStreamReader filteredXmlStreamReader;
     private PrintStream output;

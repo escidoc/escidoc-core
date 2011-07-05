@@ -36,7 +36,7 @@ import java.util.List;
 @Configurable
 public final class FedoraServiceClientCacheEventListener implements CacheEventListener, Cloneable {
 
-    private final static String[] CACHE_NAMES =
+    private static final String[] CACHE_NAMES =
             new String[]{"Fedora.Datastreams", "Fedora.DatastreamLists", "Fedora.DatastreamProfiles",
                     "Fedora.DatastreamHistories", "Fedora.DatastreamBinaryContent"};
 

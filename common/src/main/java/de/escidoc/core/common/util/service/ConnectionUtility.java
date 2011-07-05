@@ -105,7 +105,6 @@ public class ConnectionUtility {
      * @throws WebserverSystemException Thrown if connection failed.
      */
     public String getRequestURLAsString(final URL url) throws WebserverSystemException {
-
         final HttpResponse httpResponse = getRequestURL(url);
         return readResponse(httpResponse);
     }
@@ -123,7 +122,6 @@ public class ConnectionUtility {
      */
     public String getRequestURLAsString(final URL url, final String username, final String password)
         throws WebserverSystemException {
-
         final HttpResponse httpResponse = getRequestURL(url, username, password);
         return readResponse(httpResponse);
     }
@@ -139,7 +137,6 @@ public class ConnectionUtility {
      * @throws WebserverSystemException Thrown if connection failed.
      */
     public String getRequestURLAsString(final URL url, final Cookie cookie) throws WebserverSystemException {
-
         final HttpResponse httpResponse = getRequestURL(url, cookie);
         return readResponse(httpResponse);
     }
@@ -154,10 +151,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException Thrown if connection failed.
      */
     public HttpResponse getRequestURL(final URL url) throws WebserverSystemException {
-
         final String username;
         final String password;
-
         final String userinfo = url.getUserInfo();
         if (userinfo != null) {
             final String[] loginValues = SPLIT_PATTERN.split(":");
@@ -168,7 +163,6 @@ public class ConnectionUtility {
             username = EscidocConfiguration.FEDORA_USER;
             password = EscidocConfiguration.FEDORA_PASSWORD;
         }
-
         return getRequestURL(url, username, password);
     }
 
@@ -185,7 +179,6 @@ public class ConnectionUtility {
      */
     public HttpResponse getRequestURL(final URL url, final String username, final String password)
         throws WebserverSystemException {
-
         setAuthentication(url, username, password);
         return get(url.toString());
     }
@@ -199,7 +192,6 @@ public class ConnectionUtility {
      * @throws WebserverSystemException Thrown if connection failed.
      */
     public HttpResponse getRequestURL(final URL url, final Cookie cookie) throws WebserverSystemException {
-
         return get(url.toString(), cookie);
     }
 
@@ -217,7 +209,6 @@ public class ConnectionUtility {
      */
     public HttpResponse postRequestURL(final URL url, final String body, final String username, final String password)
         throws WebserverSystemException {
-
         setAuthentication(url, username, password);
         return post(url.toString(), body);
     }
@@ -231,26 +222,19 @@ public class ConnectionUtility {
      * @throws WebserverSystemException e
      */
     public void setAuthentication(final URL url, final String username, final String password) {
-
         final CredentialsProvider credsProvider = new BasicCredentialsProvider();
-
         final AuthScope authScope = new AuthScope(url.getHost(), AuthScope.ANY_PORT, AuthScope.ANY_REALM);
         final Credentials creds = new UsernamePasswordCredentials(username, password);
         credsProvider.setCredentials(authScope, creds);
-
         this.getHttpClient(null).setCredentialsProvider(credsProvider);
-
         // don't wait for auth request
         final HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
-
             @Override
             public void process(final HttpRequest request, final HttpContext context) {
-
                 final AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
                 final CredentialsProvider credsProvider =
                     (CredentialsProvider) context.getAttribute(ClientContext.CREDS_PROVIDER);
                 final HttpHost targetHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
-
                 // If not auth scheme has been initialized yet
                 if (authState.getAuthScheme() == null) {
                     final AuthScope authScope = new AuthScope(targetHost.getHostName(), targetHost.getPort());
@@ -263,9 +247,7 @@ public class ConnectionUtility {
                     }
                 }
             }
-
         };
-
         this.getHttpClient(null).addRequestInterceptor(preemptiveAuth, 0);
 
     }
@@ -356,26 +338,13 @@ public class ConnectionUtility {
                 HttpConnectionParams.setConnectionTimeout(params, this.timeout);
                 HttpConnectionParams.setSoTimeout(params, this.timeout);
             }
-
             ConnManagerParams.setMaxTotalConnections(params, HTTP_MAX_TOTAL_CONNECTIONS_FACTOR);
-
             final ConnPerRoute connPerRoute = new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
             ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute);
-
             final Scheme http = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
-
-            // Schema für SSL Verbindungen
-            // SSLSocketFactory sf = new
-            // SSLSocketFactory(SSLContext.getInstance("TLS"));
-            // sf.setHostnameVerifier(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
-            // Scheme https = new Scheme("https", sf, 443);
-
             final SchemeRegistry sr = new SchemeRegistry();
             sr.register(http);
-            // sr.register(https);
-
             final ClientConnectionManager cm = new ThreadSafeClientConnManager(params, sr);
-
             this.httpClient = new DefaultHttpClient(cm, params);
         }
         if (getProxyHost() != null && url != null) {
@@ -392,7 +361,6 @@ public class ConnectionUtility {
      * @throws WebserverSystemException If connection failed.
      */
     private HttpResponse get(final String url) throws WebserverSystemException {
-
         return get(url, null);
     }
 
@@ -405,7 +373,6 @@ public class ConnectionUtility {
      * @throws WebserverSystemException If connection failed.
      */
     private HttpResponse get(final String url, final Cookie cookie) throws WebserverSystemException {
-
         final HttpResponse httpResponse;
         try {
             final HttpGet httpGet = new HttpGet(new URI(url));
@@ -414,12 +381,9 @@ public class ConnectionUtility {
                 httpGet.setHeader("Cookie", cookie.getName() + '=' + cookie.getValue());
             }
             httpResponse = getHttpClient(url).execute(httpGet);
-
             final int responseCode = httpResponse.getStatusLine().getStatusCode();
-
             if (responseCode / HTTP_RESPONSE_CLASS != HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS) {
                 final String errorPage = readResponse(httpResponse);
-
                 // TODO logging, Url abgelöst?
                 // URLEncodedUtils.LOGGER.debug("Connection to '" + url
                 // + "' failed with response code " + responseCode);
@@ -444,7 +408,6 @@ public class ConnectionUtility {
      * @throws WebserverSystemException If connection failed.
      */
     private HttpResponse post(final String url, final String body) throws WebserverSystemException {
-
         return post(url, body, null);
     }
 
@@ -458,24 +421,20 @@ public class ConnectionUtility {
      * @throws WebserverSystemException If connection failed.
      */
     private HttpResponse post(final String url, final String body, final Cookie cookie) throws WebserverSystemException {
-
         final HttpResponse httpResponse;
         try {
             // TODO
             // entitys für Body Posts
             final HttpPost httpPost = new HttpPost(url);
-
             if (cookie != null) {
                 HttpClientParams.setCookiePolicy(httpPost.getParams(), CookiePolicy.BEST_MATCH);
                 httpPost.setHeader("Cookie", cookie.getName() + '=' + cookie.getValue());
             }
-
             httpResponse = getHttpClient(url).execute(httpPost);
         }
         catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
-
         return httpResponse;
     }
 

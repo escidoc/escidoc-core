@@ -7,11 +7,11 @@ package org.esidoc.core.utils.io;
  */
 public final class MimeTypes {
 
-    public final static String ALL = "*/*";
-    public final static String TEXT_XML = "text/xml";
-    public final static String APPLICATION_XML = "application/xml";
-    public final static String TEXT_PLAIN = "text/plain";
-    public final static String APPLICATION_JSON = "application/json";
+    public static final String ALL = "*/*";
+    public static final String TEXT_XML = "text/xml";
+    public static final String APPLICATION_XML = "application/xml";
+    public static final String TEXT_PLAIN = "text/plain";
+    public static final String APPLICATION_JSON = "application/json";
 
 
     /**

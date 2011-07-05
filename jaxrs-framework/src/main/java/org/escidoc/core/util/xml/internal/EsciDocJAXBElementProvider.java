@@ -23,7 +23,7 @@ import java.io.OutputStream;
         assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public class EsciDocJAXBElementProvider extends JAXBElementProvider {
 
-    public final static Logger LOG = LoggerFactory.getLogger(EsciDocJAXBElementProvider.class);
+    public static final Logger LOG = LoggerFactory.getLogger(EsciDocJAXBElementProvider.class);
 
     @Override
     protected Object unmarshalFromInputStream(@NotNull final Unmarshaller unmarshaller, @NotNull final InputStream is,
