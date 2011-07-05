@@ -57,11 +57,11 @@ public class SmFilterUtility {
      * @return Returns the ids of the provided objects that the current user is allowed to retrieve.
      * @throws WebserverSystemException Thrown in case of an internal error that prevents the filtering.
      */
-    public Collection<String> filterRetrievePrivilege(final String objectType, final Collection<String> objectIds)
+    public List<String> filterRetrievePrivilege(final String objectType, final List<String> objectIds)
         throws WebserverSystemException {
         final List<String> resultIds;
         try {
-            resultIds = pdp.evaluateRetrieve(objectType, (List<String>) objectIds);
+            resultIds = pdp.evaluateRetrieve(objectType, objectIds);
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);

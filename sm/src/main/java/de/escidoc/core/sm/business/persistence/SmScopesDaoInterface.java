@@ -34,6 +34,7 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.persistence.hibernate.Scope;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Database-Backend Interface for the Scopes database-table.
@@ -114,5 +115,5 @@ public interface SmScopesDaoInterface {
      * @return Collection of Scope-ids
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
-    Collection<String> retrieveScopeIds() throws SqlDatabaseSystemException;
+    List<String> retrieveScopeIds() throws SqlDatabaseSystemException;
 }

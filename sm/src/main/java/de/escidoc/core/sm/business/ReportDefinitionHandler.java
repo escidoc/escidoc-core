@@ -62,6 +62,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -217,7 +218,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
         }
         else {
             // get all scope-ids from database
-            final Collection<String> scopeIds = scopesDao.retrieveScopeIds();
+            final List<String> scopeIds = scopesDao.retrieveScopeIds();
 
             Collection<String> filteredScopeIds = null;
 

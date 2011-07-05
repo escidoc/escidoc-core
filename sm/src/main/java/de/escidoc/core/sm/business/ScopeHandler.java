@@ -53,6 +53,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -181,7 +182,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
         }
         else {
             // get all scope-ids from database
-            final Collection<String> scopeIds = dao.retrieveScopeIds();
+            final List<String> scopeIds = dao.retrieveScopeIds();
 
             Collection<String> filteredScopeIds = null;
             Collection<Scope> scopes = new ArrayList<Scope>();

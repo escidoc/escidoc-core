@@ -42,6 +42,7 @@ import org.springframework.dao.DataAccessException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Database-Backend for the Scopes database-table.
@@ -199,8 +200,8 @@ public class SmScopesHibernateDao extends AbstractHibernateDao implements SmScop
      * @see SmScopesDaoInterface #retrieveScopeIds()
      */
     @Override
-    public Collection<String> retrieveScopeIds() throws SqlDatabaseSystemException {
-        final Collection<String> scopeIds = new ArrayList<String>();
+    public List<String> retrieveScopeIds() throws SqlDatabaseSystemException {
+        final List<String> scopeIds = new ArrayList<String>();
 
         final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Scope.class, "s");
         final Collection<Scope> scopes = getHibernateTemplate().findByCriteria(detachedCriteria);

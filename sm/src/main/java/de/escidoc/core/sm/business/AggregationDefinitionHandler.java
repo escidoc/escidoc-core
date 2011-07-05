@@ -71,6 +71,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeSet;
@@ -273,7 +274,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
         }
         else {
             // get all scope ids from database
-            final Collection<String> scopeIds = scopesDao.retrieveScopeIds();
+            final List<String> scopeIds = scopesDao.retrieveScopeIds();
 
             Collection<String> filteredScopeIds = null;
 
