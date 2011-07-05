@@ -87,6 +87,11 @@ public class IndexingHandler implements ResourceListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexingHandler.class);
 
+    /**
+     * Names of fields containing Primary-Keys.
+     */
+    private static final String[] INDEX_PRIM_KEY_FIELDS = { "PID", "distinction.rootPid" };
+
     @Autowired
     @Qualifier("common.business.indexing.GsearchHandler")
     private GsearchHandler gsearchHandler;
@@ -586,11 +591,11 @@ public class IndexingHandler implements ResourceListener {
             final DefaultHttpClient client = new DefaultHttpClient(cm, params);
 
             final StringBuilder query = new StringBuilder("");
-            for (int i = 0; i < Constants.INDEX_PRIM_KEY_FIELDS.length; i++) {
+            for (int i = 0; i < INDEX_PRIM_KEY_FIELDS.length; i++) {
                 if (query.length() > 0) {
                     query.append(" or ");
                 }
-                query.append(Constants.INDEX_PRIM_KEY_FIELDS[i]).append('=').append(id);
+                query.append(INDEX_PRIM_KEY_FIELDS[i]).append('=').append(id);
             }
 
             final HttpUriRequest httpGet =

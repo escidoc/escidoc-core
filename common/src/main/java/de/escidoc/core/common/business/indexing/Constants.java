@@ -164,9 +164,4 @@ public final class Constants {
 
     public static final String LATEST_RELEASE_PID_SUFFIX = "LR";
 
-    /**
-     * Names of fields containing Primary-Keys.
-     */
-    public static final String[] INDEX_PRIM_KEY_FIELDS = { "PID", "distinction.rootPid" };
-
 }
