@@ -34,7 +34,7 @@ import java.util.List;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Configurable
-public final class FedoraServiceClientCacheEventListener implements CacheEventListener {
+public final class FedoraServiceClientCacheEventListener implements CacheEventListener, Cloneable {
 
     private final static String[] CACHE_NAMES =
             new String[]{"Fedora.Datastreams", "Fedora.DatastreamLists", "Fedora.DatastreamProfiles",
