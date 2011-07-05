@@ -304,23 +304,18 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         final Collection<String> componentIds;
 
         if (this.components == null) {
-            if (isLatestVersion()) {
-                componentIds = this.tripleStoreUtility.getComponents(getId());
+            final List<String> predicates = new ArrayList<String>();
+            predicates.add(Constants.STRUCTURAL_RELATIONS_NS_URI + "component");
+            final StaxParser sp = new StaxParser();
+            final RelsExtRefListExtractor rerle = new RelsExtRefListExtractor(predicates);
+            sp.addHandler(rerle);
+            try {
+                sp.parse(getRelsExt().getStream());
             }
-            else {
-                final List<String> predicates = new ArrayList<String>();
-                predicates.add(Constants.STRUCTURAL_RELATIONS_NS_URI + "component");
-                final StaxParser sp = new StaxParser();
-                final RelsExtRefListExtractor rerle = new RelsExtRefListExtractor(predicates);
-                sp.addHandler(rerle);
-                try {
-                    sp.parse(getRelsExt().getStream());
-                }
-                catch (final Exception e) {
-                    throw new XmlParserSystemException("Unexpected exception.", e);
-                }
-                componentIds = rerle.getEntries().get(Constants.STRUCTURAL_RELATIONS_NS_URI + "component");
+            catch (final Exception e) {
+                throw new XmlParserSystemException("Unexpected exception.", e);
             }
+            componentIds = rerle.getEntries().get(Constants.STRUCTURAL_RELATIONS_NS_URI + "component");
         }
         else {
             componentIds = this.components.keySet();
