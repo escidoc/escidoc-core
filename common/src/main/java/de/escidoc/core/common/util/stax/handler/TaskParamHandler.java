@@ -103,9 +103,9 @@ public class TaskParamHandler extends DefaultHandler {
         if (PARAM_PATH.equals(currentPath)) {
             final int index = element.indexOfAttribute(null, LAST_MODIFICATION_DATE_ATT);
             if (index != -1) {
-                final String lmd_attr;
+                final String lmdAttr;
                 try {
-                    lmd_attr = element.getAttribute(index).getValue();
+                    lmdAttr = element.getAttribute(index).getValue();
                 }
                 catch (final IndexOutOfBoundsException e1) {
                     throw new XmlCorruptedException("Error on parsing last modification date attribute", e1);
@@ -113,15 +113,15 @@ public class TaskParamHandler extends DefaultHandler {
                 // If we would have a schema for taskParam, then is the
                 // last-modifiaction-date timestamp already checked by schema
                 // validation.
-                if (this.checkLastModificationDate && lmd_attr == null) {
+                if (this.checkLastModificationDate && lmdAttr == null) {
                     throw new XmlCorruptedException("Last modification date is null");
                 }
                 try {
-                    this.lastModificationDate = new DateTime(lmd_attr, DateTimeZone.UTC);
+                    this.lastModificationDate = new DateTime(lmdAttr, DateTimeZone.UTC);
                 }
                 catch (final Exception e) {
                     if (this.checkLastModificationDate) {
-                        throw new XmlCorruptedException("Task param: last-modification-date '" + lmd_attr
+                        throw new XmlCorruptedException("Task param: last-modification-date '" + lmdAttr
                             + "' is no valid timestamp!", e);
                     }
                 }
