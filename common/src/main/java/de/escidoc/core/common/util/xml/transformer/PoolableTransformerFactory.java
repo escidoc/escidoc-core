@@ -157,7 +157,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
                             null);
                     xslt = xmltStream.getInputStream();
                 }
-                catch (final Throwable e) {
+                catch (final Exception e) {
                     // fall back to internal XSLT
                     xsltUrl = internalXsltUrl;
                     xslt = this.connectionUtility.getRequestURL(new URL(xsltUrl)).getEntity().getContent();
