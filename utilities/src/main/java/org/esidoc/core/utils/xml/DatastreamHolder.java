@@ -9,8 +9,8 @@ import org.esidoc.core.utils.io.Stream;
  */
 public interface DatastreamHolder {
 
-    final static String NAMESPACE = "http://www.escidoc.org/ignore";
-    final static String ELEMENT_NAME = "datastream";
+    String NAMESPACE = "http://www.escidoc.org/ignore";
+    String ELEMENT_NAME = "datastream";
 
     Stream getDatastream();
 
