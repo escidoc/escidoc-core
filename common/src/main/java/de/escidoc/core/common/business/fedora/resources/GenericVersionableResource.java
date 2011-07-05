@@ -509,12 +509,26 @@ public class GenericVersionableResource extends GenericResourcePid {
     public DateTime getLastModificationDate() throws WebserverSystemException, FedoraSystemException {
 
         if (this.initLastModifiedDate) {
-            try {
-                setLastModificationDate(new DateTime(getVersionElementData(Elements.ELEMENT_WOV_VERSION_TIMESTAMP),
-                    DateTimeZone.UTC));
+            if (isLatestVersion()) {
+                // we can take this information from TripleStore (should be
+                // faster)
+                try {
+                    setLastModificationDate(new DateTime(this.tripleStoreUtility.getPropertiesElements(getId(),
+                        TripleStoreUtility.PROP_LATEST_VERSION_DATE), DateTimeZone.UTC));
+                }
+                catch (final TripleStoreSystemException e) {
+                    throw new WebserverSystemException(e);
+                }
             }
-            catch (final IntegritySystemException e) {
-                throw new WebserverSystemException(e);
+            else {
+                // use a parser to get the information for older versions
+                try {
+                    setLastModificationDate(new DateTime(getVersionElementData(Elements.ELEMENT_WOV_VERSION_TIMESTAMP),
+                        DateTimeZone.UTC));
+                }
+                catch (final IntegritySystemException e) {
+                    throw new WebserverSystemException(e);
+                }
             }
             this.initLastModifiedDate = false;
         }
