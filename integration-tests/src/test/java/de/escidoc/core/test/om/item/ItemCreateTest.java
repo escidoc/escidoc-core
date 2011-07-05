@@ -195,7 +195,8 @@ public class ItemCreateTest extends ItemTestBase {
 
         // prepare a component
         Document componentDoc =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "component_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "component_for_create.xml");
 
         // add last-modification-date
         NamedNodeMap atts = componentDoc.getDocumentElement().getAttributes();
@@ -204,7 +205,7 @@ public class ItemCreateTest extends ItemTestBase {
         atts.setNamedItem(newAtt);
 
         String xml2 = createComponent(itemId, toString(componentDoc, false));
-
+        
         // TODO intensivate checks
         assertXmlValidComponent(xml2);
         assertXmlExists("Missing created Component", xml2, "/component/properties/valid-status[text() = 'valid']");

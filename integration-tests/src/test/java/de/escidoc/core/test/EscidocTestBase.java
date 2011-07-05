@@ -2546,7 +2546,7 @@ public abstract class EscidocTestBase {
      */
     public void assertXmlValidComponent(final String xmlData) throws Exception {
 
-        URL url = new URL(getFrameworkUrl() + "/xsd/rest/item/0.10/item.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/item/0.10/item.xsd");
         assertXmlValid(xmlData, url);
         assertXlinkXmlBaseExists(xmlData);
         assertAllPlaceholderResolved(xmlData);
