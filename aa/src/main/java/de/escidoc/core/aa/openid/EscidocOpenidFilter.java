@@ -28,14 +28,12 @@
  */
 package de.escidoc.core.aa.openid;
 
-import java.io.IOException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.openid.OpenIDAuthenticationFilter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.openid.OpenIDAuthenticationFilter;
+import java.io.IOException;
 
 /**
  * @author MIH
@@ -49,7 +47,7 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
      */
     @Override
     public Authentication attemptAuthentication(final HttpServletRequest request, final HttpServletResponse response)
-        throws AuthenticationException, IOException {
+        throws IOException {
         return super.attemptAuthentication(request, response);
     }
 

@@ -2,7 +2,6 @@ package de.escidoc.core.aa.shibboleth;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 
 public class ShibbolethAuthenticationProvider implements AuthenticationProvider {
 
@@ -12,7 +11,7 @@ public class ShibbolethAuthenticationProvider implements AuthenticationProvider 
      * @see AuthenticationProvider #authenticate(org.springframework.security.Authentication)
      */
     @Override
-    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(final Authentication authentication) {
 
         return supports(authentication.getClass()) ? authentication : null;
     }

@@ -21,7 +21,6 @@
 package org.escidoc.core.services.fedora.internal.cache;
 
 import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheException;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -47,7 +46,7 @@ public final class FedoraServiceClientCacheEventListener implements CacheEventLi
     }
 
     @Override
-    public void notifyElementRemoved(final Ehcache cache, final Element element) throws CacheException {
+    public void notifyElementRemoved(final Ehcache cache, final Element element) {
         final String pid = (String) element.getKey();
         for(final String cacheName : CACHE_NAMES) {
             final Cache datastreamsCache = getCacheManager().getCache(cacheName);
@@ -64,12 +63,12 @@ public final class FedoraServiceClientCacheEventListener implements CacheEventLi
     }
 
     @Override
-    public void notifyElementPut(final Ehcache cache, final Element element) throws CacheException {
+    public void notifyElementPut(final Ehcache cache, final Element element) {
         // do nothing
     }
 
     @Override
-    public void notifyElementUpdated(final Ehcache cache, final Element element) throws CacheException {
+    public void notifyElementUpdated(final Ehcache cache, final Element element) {
         // do nothing
     }
 

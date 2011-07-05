@@ -21,7 +21,6 @@
 package de.escidoc.core.common.util.xml.factory;
 
 import org.apache.commons.collections.ExtendedProperties;
-import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.resource.Resource;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.ResourceLoader;
@@ -63,7 +62,7 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
      * See Interface for functional description.
      */
     @Override
-    public InputStream getResourceStream(final String s) throws ResourceNotFoundException {
+    public InputStream getResourceStream(final String s) {
 
         final String source = TEMPLATES_BASE + s;
         return loader.getResourceStream(source);

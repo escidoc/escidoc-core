@@ -20,19 +20,17 @@
 
 package de.escidoc.core.common.util.security;
 
+import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
 
 /**
  * @author Torsten Tetteroo
@@ -49,7 +47,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
      *
      */
     @Override
-    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(final Authentication authentication) {
         final String credentials = (String) authentication.getCredentials();
         if (credentials == null || "".equals(credentials)) {
             final GrantedAuthority grantedAuthority = new GrantedAuthorityImpl("");

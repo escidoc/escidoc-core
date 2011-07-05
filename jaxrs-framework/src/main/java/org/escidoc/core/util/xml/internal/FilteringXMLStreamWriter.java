@@ -45,7 +45,7 @@ public class FilteringXMLStreamWriter implements XMLStreamWriter {
     }
 
     @Override
-    public Object getProperty(final String s) throws IllegalArgumentException {
+    public Object getProperty(final String s) {
         return xmlStreamWriter.getProperty(s);
     }
 

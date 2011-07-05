@@ -46,8 +46,7 @@ public class StartElement extends AbstractElement {
      * This is a try to extend the implementation with less effort to enable the
      * position of an element.
      */
-    // 0 = all, 1 first occurrence, ..
-    private int position;
+    private int position; // 0 = all, 1 first occurrence, ..
 
     public StartElement() {
 
@@ -92,12 +91,7 @@ public class StartElement extends AbstractElement {
         }
     }
 
-    /*
-     * public void setAttributes(List attributes) { this.attributes =
-     * attributes; }
-     */
-
-    public Attribute getAttribute(final int index) throws IndexOutOfBoundsException {
+    public Attribute getAttribute(final int index) {
         return attributes.get(index);
     }
 

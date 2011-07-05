@@ -206,8 +206,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @return StartElement startElement
      */
     @Override
-    public StartElement startElement(final StartElement element) throws MissingAttributeValueException,
-        IndexOutOfBoundsException {
+    public StartElement startElement(final StartElement element) throws MissingAttributeValueException {
         final String currentPath = parser.getCurPath();
         boolean fieldRootElement = false;
         if (TABLE_PATH.equals(currentPath)) {

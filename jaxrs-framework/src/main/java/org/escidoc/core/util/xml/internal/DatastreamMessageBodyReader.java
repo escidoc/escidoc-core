@@ -1,11 +1,10 @@
 package org.escidoc.core.util.xml.internal;
 
 import net.sf.oval.guard.Guarded;
-import org.esidoc.core.utils.io.Stream;
 import org.esidoc.core.utils.io.IOUtils;
+import org.esidoc.core.utils.io.Stream;
 
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
@@ -36,7 +35,7 @@ public class DatastreamMessageBodyReader implements MessageBodyReader<Stream> {
     @Override
     public Stream readFrom(final Class<Stream> type, final Type genericType, final Annotation[] annotations,
                            final MediaType mediaType, final MultivaluedMap<String, String> httpHeaders,
-                           @NotNull final InputStream entityStream) throws IOException, WebApplicationException {
+                           @NotNull final InputStream entityStream) throws IOException {
         final Stream cachedOutputStream = new Stream();
         IOUtils.copyAndCloseInput(entityStream, cachedOutputStream);
         cachedOutputStream.lock();

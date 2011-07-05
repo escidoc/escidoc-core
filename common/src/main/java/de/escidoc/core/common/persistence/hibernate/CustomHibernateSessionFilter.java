@@ -23,13 +23,12 @@ package de.escidoc.core.common.persistence.hibernate;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.orm.hibernate3.support.OpenSessionInViewFilter;
 
 public class CustomHibernateSessionFilter extends OpenSessionInViewFilter {
 
     @Override
-    protected Session getSession(final SessionFactory sessionFactory) throws DataAccessResourceFailureException {
+    protected Session getSession(final SessionFactory sessionFactory) {
         final Session session = super.getSession(sessionFactory);
         session.setFlushMode(FlushMode.COMMIT);
         return session;

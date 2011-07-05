@@ -4,7 +4,6 @@ import net.sf.oval.guard.Guarded;
 import org.esidoc.core.utils.io.Stream;
 
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
@@ -40,7 +39,7 @@ public class DatastreamMessageBodyWriter implements MessageBodyWriter<Stream> {
     public void writeTo(final Stream cachedOutputStream, final Class<?> type, final Type genericType,
                         final Annotation[] annotations, final MediaType mediaType,
                         final MultivaluedMap<String, Object> httpHeaders, @NotNull final OutputStream entityStream)
-            throws IOException, WebApplicationException {
+            throws IOException {
         cachedOutputStream.writeCacheTo(entityStream);
     }
 

@@ -86,7 +86,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
      * @return The character section.
      */
     @Override
-    public String characters(final String s, final StartElement element) throws NumberFormatException {
+    public String characters(final String s, final StartElement element) {
         if ("datevalue".equals(element.getLocalName())) {
             parameterVo.setDateValue(new DateTime(s));
         }

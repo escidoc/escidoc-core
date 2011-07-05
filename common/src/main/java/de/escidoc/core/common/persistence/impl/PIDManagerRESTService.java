@@ -44,7 +44,6 @@ import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
@@ -245,12 +244,10 @@ public class PIDManagerRESTService implements PIDSystem {
      * @throws javax.xml.parsers.ParserConfigurationException
      * @throws org.xml.sax.SAXException
      * @throws java.io.IOException
-     * @throws javax.xml.transform.TransformerFactoryConfigurationError
      * @throws javax.xml.transform.TransformerException
      */
     private static String preparePidManagerDatastructure(final String systemID, final String param)
-        throws ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError,
-        TransformerException {
+        throws ParserConfigurationException, SAXException, IOException, TransformerException {
 
         final String xmlParam;
 

@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.util;
 
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -42,7 +41,7 @@ public class SpringApplicationContextHolder implements ApplicationContextAware {
      * @param newContext a reference to the ApplicationContext.
      */
     @Override
-    public void setApplicationContext(final ApplicationContext newContext) throws BeansException {
+    public void setApplicationContext(final ApplicationContext newContext) {
         context = newContext;
     }
 
