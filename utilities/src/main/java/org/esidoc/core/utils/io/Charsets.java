@@ -27,7 +27,7 @@ import java.nio.charset.Charset;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-public class Charsets {
+public final class Charsets {
 
     public static final Charset UTF8_CHARSET = Charset.forName(Encodings.UTF8);
 
