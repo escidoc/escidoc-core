@@ -1829,22 +1829,22 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             getItem().setMdRecords(dsMap);
         }
         else {
-            for (final String name : mdMap.keySet()) {
-                final ByteArrayOutputStream stream = mdMap.get(name);
+            for (final Entry<String, ByteArrayOutputStream> entry : mdMap.entrySet()) {
+                final ByteArrayOutputStream stream = entry.getValue();
                 final byte[] xmlBytes = stream.toByteArray();
                 HashMap<String, String> mdProperties = null;
-                if ("escidoc".equals(name)) {
+                if ("escidoc".equals(entry.getKey())) {
                     mdProperties = new HashMap<String, String>();
                     mdProperties.put("nsUri", escidocMdRecordnsUri);
 
                 }
                 final Datastream ds =
-                    new Datastream(name, getItem().getId(), xmlBytes, MimeTypes.TEXT_XML, mdProperties);
-                final Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
+                    new Datastream(entry.getKey(), getItem().getId(), xmlBytes, MimeTypes.TEXT_XML, mdProperties);
+                final Map<String, String> mdRecordAttributes = mdAttributesMap.get(entry.getKey());
                 ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
                 ds.addAlternateId(mdRecordAttributes.get("type"));
                 ds.addAlternateId(mdRecordAttributes.get("schema"));
-                dsMap.put(name, ds);
+                dsMap.put(entry.getKey(), ds);
             }
             getItem().setMdRecords(dsMap);
         }
