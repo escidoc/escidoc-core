@@ -295,7 +295,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
             values.put(XmlTemplateProviderConstants.VAR_LAST_MODIFICATION_DATE, lastModDate.toString());
         }
         catch (FedoraSystemException e) {
-            e.printStackTrace();
+            throw new WebserverSystemException("Error on getting last modification date.", e);
         }
 
         values.put("contextId", context.getId());
