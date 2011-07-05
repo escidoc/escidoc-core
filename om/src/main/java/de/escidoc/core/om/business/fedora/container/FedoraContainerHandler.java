@@ -66,7 +66,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
@@ -195,10 +194,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     @Autowired
     @Qualifier("common.business.indexing.IndexingHandler")
     private IndexingHandler indexingHandler;
-
-    @Autowired
-    @Qualifier("service.PolicyDecisionPoint")
-    private PolicyDecisionPointInterface pdp;
 
     @Autowired
     @Qualifier("de.escidoc.core.common.business.filter.SRURequest")

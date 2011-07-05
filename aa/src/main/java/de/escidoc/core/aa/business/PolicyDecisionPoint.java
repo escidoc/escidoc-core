@@ -94,7 +94,6 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.security.helper.InvocationParser;
 import de.escidoc.core.common.util.security.persistence.MethodMapping;
 import de.escidoc.core.common.util.security.persistence.MethodMappingList;
-import de.escidoc.core.common.util.security.persistence.RequestMappingDaoInterface;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -164,10 +163,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     @Autowired
     @Qualifier("eSciDoc.core.common.SecurityInterceptorCache")
     private SecurityInterceptorCache cache;
-
-    @Autowired
-    @Qualifier("persistence.HibernateRequestMappingDao")
-    private RequestMappingDaoInterface requestMappingDao;
 
     @Autowired
     @Qualifier("persistence.EscidocRoleDao")
