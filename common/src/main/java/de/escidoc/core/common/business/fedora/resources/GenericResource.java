@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
@@ -66,12 +67,15 @@ import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Generic Resource supports object id, title, last modified, datastream, locking and sync mechanisms.
  *
  * @author Steffen Wagner
  */
 @Configurable(preConstruction = true)
+@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true, assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public class GenericResource implements FedoraResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericResource.class);
@@ -737,13 +741,10 @@ public class GenericResource implements FedoraResource {
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
-    public final void setLocked(final boolean lock, final String[] lockOwner) throws SqlDatabaseSystemException,
-        WebserverSystemException {
+    public final void setLocked(final boolean lock, @NotNull
+    final String[] lockOwner) throws SqlDatabaseSystemException, WebserverSystemException {
         // Should lock only be checked in handler? No, it is part of the
         // resource representation.
-        if (lock && lockOwner == null) {
-            throw new NullPointerException("Need lockOwner.");
-        }
         if (lock && !isLocked()) {
             this.lockHandler.lock(this.id, lockOwner);
         }

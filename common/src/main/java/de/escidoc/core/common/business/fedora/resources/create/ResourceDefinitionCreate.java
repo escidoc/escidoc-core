@@ -24,7 +24,11 @@ import de.escidoc.core.common.exceptions.application.missing.MissingAttributeVal
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
+import net.sf.oval.constraint.AssertFieldConstraints;
+import net.sf.oval.guard.Guarded;
+import org.hibernate.validator.NotEmpty;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -38,8 +42,11 @@ import java.util.Map;
  *
  * @author Frank Schwichtenberg
  */
+@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true, assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public class ResourceDefinitionCreate {
 
+    @NotNull
+    @NotEmpty
     private String name;
 
     private String xsltHref;
@@ -52,13 +59,8 @@ public class ResourceDefinitionCreate {
      * @param name Name of MdRecord.
      * @throws MissingAttributeValueException Thrown if name is an empty String.
      */
-    public void setName(final String name) throws MissingAttributeValueException {
-
-        if (name == null || name.length() == 0) {
-            throw new MissingAttributeValueException("the value of the"
-                + " \"name\" atribute of the element 'resource-definition' is missing");
-        }
-
+    public void setName(@AssertFieldConstraints
+    final String name) throws MissingAttributeValueException {
         this.name = name;
     }
 
@@ -68,7 +70,6 @@ public class ResourceDefinitionCreate {
      * @return name of metadata record.
      */
     public String getName() {
-
         return this.name;
     }
 
@@ -115,9 +116,6 @@ public class ResourceDefinitionCreate {
     }
 
     public String getFedoraId(final String parentId) {
-        if (this.name == null) {
-            throw new NullPointerException("Name must not be null to provide FedoraId.");
-        }
         return "info:fedora/sdef:" + parentId.replaceAll(":", "_") + '-' + this.name;
     }
 

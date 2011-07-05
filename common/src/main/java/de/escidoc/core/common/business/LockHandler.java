@@ -26,10 +26,12 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import javax.sql.DataSource;
+import javax.validation.constraints.NotNull;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import net.sf.oval.guard.Guarded;
 import org.hibernate.SessionFactory;
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.slf4j.Logger;
@@ -44,6 +46,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 /**
  * @author Frank Schwichtenberg
  */
+@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true, assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public class LockHandler extends JdbcDaoSupport {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LockHandler.class);
@@ -95,9 +98,6 @@ public class LockHandler extends JdbcDaoSupport {
         }
         catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
-            // TODO throw this Exception
-            // throw new SqlDatabaseSystemException("Could not lock object '"
-            // + objid + "' for user '" + lockOwner + "'!", e);
         }
     }
 
@@ -114,9 +114,6 @@ public class LockHandler extends JdbcDaoSupport {
         }
         catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
-            // TODO throw this Exception
-            // throw new SqlDatabaseSystemException("Could not unlock object '"
-            // + objid + "!", e);
         }
     }
 
@@ -127,22 +124,14 @@ public class LockHandler extends JdbcDaoSupport {
      * @return The lock owner.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    public String getLockOwner(final String objid) throws WebserverSystemException {
-
-        if (objid == null) {
-            throw new NullPointerException("Objid for lock owner check is null");
-        }
-
+    public String getLockOwner(@NotNull
+    final String objid) throws WebserverSystemException {
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
             return getJdbcTemplate().queryForObject("SELECT owner FROM om.lockstatus WHERE objid = ?",
                 new Object[] { objid }, String.class);
         }
         catch (final IncorrectResultSizeDataAccessException e) {
-            //          implementation is crud, but anyway having no lock entry mean resource is not locked
-            //            if (LOGGER.isWarnEnabled()) {
-            //                LOGGER.warn("Error on quering for lock owner.");
-            //            }
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on quering for lock owner.", e);
             }
@@ -150,9 +139,6 @@ public class LockHandler extends JdbcDaoSupport {
         }
         catch (final DataAccessException e) {
             throw new WebserverSystemException("Error on quering for lock owner.", e);
-            // TODO throw this Exception
-            // throw new SqlDatabaseSystemException(
-            // "Could not find lock owner for object '" + objid + "!", e);
         }
     }
 
@@ -180,9 +166,6 @@ public class LockHandler extends JdbcDaoSupport {
         }
         catch (final DataAccessException e) {
             throw new WebserverSystemException(e);
-            // TODO throw this Exception
-            // throw new SqlDatabaseSystemException(
-            // "Could not find lock owner for object '" + objid + "!", e);
         }
     }
 
@@ -195,7 +178,6 @@ public class LockHandler extends JdbcDaoSupport {
      */
     public String getLockDate(final String objid) throws WebserverSystemException {
         final String result;
-
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
             final Timestamp ts =
@@ -234,17 +216,12 @@ public class LockHandler extends JdbcDaoSupport {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public boolean isLocked(final String objid) throws WebserverSystemException {
-
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
             return getJdbcTemplate().queryForObject("SELECT locked FROM om.lockstatus WHERE objid = ?",
                 new Object[] { objid }, Boolean.class);
         }
         catch (final IncorrectResultSizeDataAccessException e) {
-            // implementation is crud, but anyway having no lock entry mean resource is not locked
-            // if (LOGGER.isWarnEnabled()) {
-            // LOGGER.warn("Error on quering for lock.");
-            // }
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on quering for lock.", e);
             }

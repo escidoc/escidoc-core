@@ -28,11 +28,16 @@
  */
 package de.escidoc.core.aa.business.persistence;
 
+import net.sf.oval.guard.Guarded;
+
+import javax.validation.constraints.NotNull;
+
 /**
  * Class encapsulating the information stored about the scope definition of an {@link EscidocRole}.
  *
  * @author Torsten Tetteroo
  */
+@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true, assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
 
     /**
@@ -70,15 +75,10 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      * See Interface for functional description.
      */
     @Override
-    public int compareTo(final ScopeDef o) {
-
-        if (o == null) {
-            throw new NullPointerException("Parameter may not be null");
-        }
-
+    public int compareTo(@NotNull
+    final ScopeDef o) {
         final String ownId = getId();
         final String oId = o.getId();
-
         if (ownId == null) {
             return oId == null ? 0 : -1;
         }
