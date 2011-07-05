@@ -20,8 +20,6 @@
 
 package de.escidoc.core.common.exceptions.application.security;
 
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-
 /**
  * The EscidocAuthenticationException is used to indicate that the action is not allowed because the authentication
  * fails, e.g. due to an expired eSciDocUserHandle. Status code (302) indicating that a redirect to eSciDoc login could
@@ -42,8 +40,6 @@ public class AuthenticationException extends SecurityException {
 
     /**
      * Default constructor.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public AuthenticationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -53,7 +49,6 @@ public class AuthenticationException extends SecurityException {
      * Constructor used to map an initial exception.
      *
      * @param error Throwable
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public AuthenticationException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -63,7 +58,6 @@ public class AuthenticationException extends SecurityException {
      * Constructs a new exception with the specified detail message.
      *
      * @param message - the detail message.
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public AuthenticationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -75,7 +69,6 @@ public class AuthenticationException extends SecurityException {
      *
      * @param message - the detail message.
      * @param error   Throwable
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public AuthenticationException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);

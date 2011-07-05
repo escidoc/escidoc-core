@@ -21,7 +21,6 @@
 package de.escidoc.core.common.util.xml.factory;
 
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.ArrayList;
@@ -76,7 +75,6 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
      *
      * @param mdRecords Vector with MdRecordCreate.
      * @return MetadataReocrd FoXML.
-     * @throws SystemException Thrown if converting of characters to default character set failed.
      */
     public List<Map<String, String>> getMetadataRecordsMap(final Iterable<MdRecordCreate> mdRecords) {
 

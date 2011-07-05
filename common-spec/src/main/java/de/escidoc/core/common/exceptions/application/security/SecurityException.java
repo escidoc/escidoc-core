@@ -21,7 +21,6 @@
 package de.escidoc.core.common.exceptions.application.security;
 
 import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 
 /**
@@ -48,8 +47,6 @@ public class SecurityException extends EscidocException {
 
     /**
      * Default constructor.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public SecurityException() {
 
@@ -63,7 +60,6 @@ public class SecurityException extends EscidocException {
      *
      * @param message - the detail message.
      * @param cause   Throwable
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public SecurityException(final String message, final Throwable cause) {
         super(message, cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -74,7 +70,6 @@ public class SecurityException extends EscidocException {
      * Constructs a new exception with the specified detail message.
      *
      * @param message - the detail message.
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public SecurityException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -86,7 +81,6 @@ public class SecurityException extends EscidocException {
      * Constructor used to map an initial exception.
      *
      * @param cause Throwable
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public SecurityException(final Throwable cause) {
         super(cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -98,7 +92,6 @@ public class SecurityException extends EscidocException {
      *
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public SecurityException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
@@ -113,7 +106,6 @@ public class SecurityException extends EscidocException {
      * @param cause          Throwable
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public SecurityException(final String message, final Throwable cause, final int httpStatusCode,
         final String httpStatusMsg) {
@@ -127,7 +119,6 @@ public class SecurityException extends EscidocException {
      * @param message        the detail message.
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public SecurityException(final String message, final int httpStatusCode, final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
@@ -140,7 +131,6 @@ public class SecurityException extends EscidocException {
      * @param cause          Throwable
      * @param httpStatusCode the http status code
      * @param httpStatusMsg  the http status message
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     public SecurityException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);

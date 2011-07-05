@@ -69,7 +69,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
-import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 import java.util.Map;
@@ -916,7 +915,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *                                    If a mandatory element value is missing.
      * @throws SystemException            If an unexpected error occurs.
      * @throws OptimisticLockingException Thrown in case of an optimistic locking error.
-     * @throws PidSystemException         Thrown if access to PID System failed.
      * @throws InvalidStatusException     Thrown in case of an invalid status.
      * @throws XmlCorruptedException      TODO
      * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
@@ -937,7 +935,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws MissingMethodParameterException
      *                                    Thrown if not all method parameter are provided.
      * @throws OptimisticLockingException Thrown if the resource has changed during method call.
-     * @throws PidSystemException         Thrown if the external PID System communication failed.
      * @throws InvalidStatusException     Thrown if the Item status is invalid to assign a PID.
      * @throws XmlCorruptedException      Thorwn if taskParam is invalid XML.
      * @throws ComponentNotFoundException Thrown if the Component could not be found under provided id.

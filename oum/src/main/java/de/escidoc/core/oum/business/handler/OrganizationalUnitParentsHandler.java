@@ -37,7 +37,6 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
-import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +66,6 @@ public class OrganizationalUnitParentsHandler extends OrganizationalUnitHandlerB
 
     /**
      * See Interface for functional description.
-     *
-     * @see DefaultHandler# startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element) throws OrganizationalUnitNotFoundException,

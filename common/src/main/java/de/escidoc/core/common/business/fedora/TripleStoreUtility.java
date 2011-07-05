@@ -25,7 +25,6 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import org.nsdl.mptstore.query.QueryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -279,7 +278,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport implements Tripl
      * @param predicate       The uri string of the predicate for that the value(s) shall be retrieved.
      * @return Returns the results of the query in a {@code QueryResults} object.
      * @throws TripleStoreSystemException If access to the triple store fails.
-     * @throws QueryException             Thrown in case of a failed query execution.
      */
     protected abstract List<String> executeQueryLiteral(
         final String literal, final boolean targetIsSubject, final String predicate) throws TripleStoreSystemException;

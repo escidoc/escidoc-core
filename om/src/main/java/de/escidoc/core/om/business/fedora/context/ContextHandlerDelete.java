@@ -29,7 +29,6 @@
 package de.escidoc.core.om.business.fedora.context;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
@@ -46,7 +45,6 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
      * Removes an context from repository.
      *
      * @param contextHandler FedoraContextHandler
-     * @throws ContextNotEmptyException If context depending structure exist.
      * @throws ContextNotFoundException If context could not be found.
      * @throws InvalidStatusException   If context is in invalid status.
      * @throws SystemException          If anything else fails.

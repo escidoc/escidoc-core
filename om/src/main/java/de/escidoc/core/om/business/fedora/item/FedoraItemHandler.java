@@ -127,7 +127,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
-import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
@@ -151,9 +150,9 @@ import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
  * that hold the xmlData in an Item or Component object.
  * <p/>
  * To split incoming xmlData into the datastreams it consists of, the {@link StaxParser StaxParser} is used. In order to
- * modify datastreams or handle values provided in datastreams more than one Handler (implementations of {@link
- * DefaultHandler DefaultHandler}) can be added to the StaxParser. The {@link MultipleExtractor MultipleExtractor} have
- * to be the last Handler in the HandlerChain of a StaxParser.
+ * modify datastreams or handle values provided in datastreams more than one Handler (implementations of DefaultHandler
+ * can be added to the StaxParser. The {@link MultipleExtractor MultipleExtractor} have to be the last Handler in the
+ * HandlerChain of a StaxParser.
  *
  * @author Frank Schwichtenberg
  */

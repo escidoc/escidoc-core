@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
-import java.util.NoSuchElementException;
 
 /**
  * Simple static methods to be called at the start of your own methods to verify correct arguments and state. This
@@ -23,10 +22,10 @@ import java.util.NoSuchElementException;
  * assert}</a> or a JUnit {@code assertTrue()} call.
  *
  * <p>Take care not to confuse precondition checking with other similar types of checks! Precondition exceptions --
- * including those provided here, but also {@link IndexOutOfBoundsException}, {@link NoSuchElementException}, {@link
- * UnsupportedOperationException} and others -- are used to signal that the <i>calling method</i> has made an error.
- * This tells the caller that it should not have invoked the method when it did, with the arguments it did, or perhaps
- * <i>ever</i>. Postcondition or other invariant failures should not throw these types of exceptions.
+ * including those provided here, but also {@link IndexOutOfBoundsException}, {@link UnsupportedOperationException} and
+ * others -- are used to signal that the <i>calling method</i> has made an error. This tells the caller that it should
+ * not have invoked the method when it did, with the arguments it did, or perhaps <i>ever</i>. Postcondition or other
+ * invariant failures should not throw these types of exceptions.
  *
  * @author Kevin Bourrillion
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>

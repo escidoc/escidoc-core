@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.sm.business;
 
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -79,7 +78,6 @@ public class SmXmlUtility {
      *
      * @param xmlData .
      * @return String scopeId
-     * @throws XmlParserSystemException e
      */
     public static String getScopeId(final String xmlData) {
         return xmlData.replaceFirst("(?s).*?<[^>]*?scope.*?objid=\"(.*?)\".*", "$1");

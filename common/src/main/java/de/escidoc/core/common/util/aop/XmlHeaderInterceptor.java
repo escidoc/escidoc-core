@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.util.aop;
 
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -76,7 +75,6 @@ public class XmlHeaderInterceptor implements Ordered {
      * @param result The result of the method call.
      * @return Returns the method call result with inserted xml header and an optional (in case access via REST) a style
      *         sheet definition
-     * @throws WebserverSystemException Thrown in case of an internal system error.
      */
     private static Object post(final Object result) {
         if (result == null) {

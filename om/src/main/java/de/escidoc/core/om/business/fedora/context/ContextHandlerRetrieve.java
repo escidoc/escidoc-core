@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
-import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
@@ -85,7 +84,6 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      *
      * @param contextHandler FedoraContextHandler
      * @return XML representation of all admin-descriptors.
-     * @throws ContextNotFoundException If context is not found.
      * @throws SystemException          If anything fails.
      */
     protected String getAdminDescriptorsXml(final FedoraContextHandler contextHandler) throws SystemException {

@@ -57,7 +57,6 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -192,9 +191,9 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Persist whole Item to Repository and force TripleStore sync.
-     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws FileNotFoundException
+     * @throws SystemException
+     * @throws InvalidContentException
      */
     public void persist() throws SystemException, FileNotFoundException, InvalidContentException {
         persist(true);
@@ -205,8 +204,8 @@ public class ItemCreate extends GenericResourceCreate {
      *
      * @param forceSync Set true to force synchronous sync of TripleStore.
      * @throws SystemException Thrown if an unexpected error occurs
-     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws FileNotFoundException
+     * @throws dInvalidContentException
      */
     public void persist(final boolean forceSync) throws SystemException, FileNotFoundException, InvalidContentException {
         if (getProperties().getObjectProperties().getOrigin() == null) {
@@ -298,8 +297,6 @@ public class ItemCreate extends GenericResourceCreate {
      * Precondition: objid has to be set before getDC is called.
      *
      * @return DC or null if default metadata is missing).
-     * @throws WebserverSystemException Thrown if an error occurs during DC creation.
-     * @throws EncodingSystemException  Thrown if the conversion to default encoding failed.
      */
     public String getDC() {
 
@@ -578,9 +575,9 @@ public class ItemCreate extends GenericResourceCreate {
 
     /**
      * Persist all Components of the Item.
-     * @throws de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException
-     * @throws de.escidoc.core.common.exceptions.system.SystemException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws FileNotFoundException
+     * @throws SystemException
+     * @throws InvalidContentException
      */
     private void persistComponents() throws SystemException, FileNotFoundException, InvalidContentException {
 
@@ -630,7 +627,7 @@ public class ItemCreate extends GenericResourceCreate {
      * Prepare values for FOXML Template Renderer (Velocity).
      *
      * @return HashMap with template values.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @throws WebserverSystemException
      */
     private Map<String, String> preparePropertiesValueMap() throws WebserverSystemException {
 
@@ -789,7 +786,6 @@ public class ItemCreate extends GenericResourceCreate {
      *
      * @param objid The id of the Fedora Object.
      * @return LastModificationDate of the Object (with workaround for Fedora bug).
-     * @throws FedoraSystemException Thrown if request to Fedora failed.
      */
     private DateTime getLastModificationDateByWorkaround(final String objid) {
         final GetDatastreamProfilePathParam path =

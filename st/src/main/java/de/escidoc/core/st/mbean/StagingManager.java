@@ -37,8 +37,6 @@ import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
 /**
  * Managed bean for the staging file area. This should be exposed (as a mbean) to a JMX server.
  *

@@ -31,7 +31,6 @@ package de.escidoc.core.sm.business.renderer;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ScopeXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -169,7 +168,6 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * Adds the escidoc base URL to the provided map.
      *
      * @param values The map to add values to.
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values) {
 
@@ -180,7 +178,6 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * Gets the {@code ScopeXmlProvider} object.
      *
      * @return Returns the {@code ScopeXmlProvider} object.
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static ScopeXmlProvider getScopeXmlProvider() {
 

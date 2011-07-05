@@ -32,7 +32,6 @@ import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.StatisticPreprocessingSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
 import de.escidoc.core.sm.business.persistence.SmAggregationDefinitionsDaoInterface;
@@ -293,7 +292,6 @@ public class StatisticPreprocessor {
      * @param date    date
      * @return DatabaseSelectVo Returns DatabaseSelectVo with recordInfo.
      * @throws SqlDatabaseSystemException e
-     * @throws XmlParserSystemException   e
      * @throws StatisticPreprocessingSystemException
      *                                    e
      * @throws ScopeNotFoundException     e

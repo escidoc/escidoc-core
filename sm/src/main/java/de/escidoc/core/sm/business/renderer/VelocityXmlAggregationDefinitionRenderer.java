@@ -31,7 +31,6 @@ package de.escidoc.core.sm.business.renderer;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.AggregationDefinitionXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -275,7 +274,6 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * Adds the escidoc base URL to the provided map.
      *
      * @param values The map to add values to.
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values) {
 
@@ -286,7 +284,6 @@ public final class VelocityXmlAggregationDefinitionRenderer implements Aggregati
      * Gets the {@code AggregationDefinitionXmlProvider} object.
      *
      * @return Returns the {@code AggregationDefinitionXmlProvider} object.
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static AggregationDefinitionXmlProvider getAggregationDefinitionXmlProvider() {
 

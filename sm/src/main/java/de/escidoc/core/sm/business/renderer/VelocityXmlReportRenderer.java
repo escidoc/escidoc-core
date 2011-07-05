@@ -30,7 +30,6 @@ package de.escidoc.core.sm.business.renderer;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ReportXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -74,7 +73,6 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
     @Override
     public String render(final List dbResult, final ReportDefinition reportDefinition) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
-
         addReportNamespaceValues(values);
         addReportValues(reportDefinition, values);
         addDataValues(dbResult, values);
@@ -89,19 +87,15 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * @throws SystemException Thrown in case of an internal error.
      */
     private static void addDataValues(final Collection dbResult, final Map<String, Object> values) {
-
         final Collection<List<HashMap<String, Object>>> recordsList = new ArrayList<List<HashMap<String, Object>>>();
         if (dbResult != null && !dbResult.isEmpty()) {
             // Iterate records from database
             for (final Object aDbResult : dbResult) {
                 final List<HashMap<String, Object>> recordFieldList = new ArrayList<HashMap<String, Object>>();
                 final Map map = (Map) aDbResult;
-
                 // iterate all fields of one record
                 for (final Object o : map.keySet()) {
-
                     final String fieldname = (String) o;
-
                     // depending on the fieldtype,
                     // write stringvalue, datevalue or decimalvalue-element
                     if (map.get(fieldname) != null) {
@@ -143,7 +137,6 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * @throws SystemException Thrown in case of an internal error.
      */
     private static void addReportValues(final ReportDefinition reportDefinition, final Map<String, Object> values) {
-
         values.put("reportDefinitionId", reportDefinition.getId());
         values.put("reportDefinitionName", reportDefinition.getName());
         values.put("reportDefinitionHref", XmlUtility.getReportDefinitionHref(reportDefinition.getId()));
@@ -168,10 +161,8 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * Adds the escidoc base URL to the provided map.
      *
      * @param values The map to add values to.
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values) {
-
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
     }
 
@@ -179,10 +170,8 @@ public final class VelocityXmlReportRenderer implements ReportRendererInterface 
      * Gets the {@code ReportXmlProvider} object.
      *
      * @return Returns the {@code ReportXmlProvider} object.
-     * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static ReportXmlProvider getReportXmlProvider() {
-
         return ReportXmlProvider.getInstance();
     }
 

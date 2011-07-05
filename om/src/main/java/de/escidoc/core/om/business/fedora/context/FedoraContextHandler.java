@@ -36,7 +36,6 @@ import de.escidoc.core.common.business.fedora.resources.listener.ResourceListene
 import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
-import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -172,9 +171,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
         return doCreate(xmlData, true);
     }
 
-    /**
-     * @see IngestableResource#ingest(String)
-     */
     @Override
     public String ingest(final String xmlData) throws ContextNameNotUniqueException, SystemException,
         ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,

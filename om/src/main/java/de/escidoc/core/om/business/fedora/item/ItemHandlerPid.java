@@ -52,7 +52,6 @@ import de.escidoc.core.common.persistence.PIDSystemFactory;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
 import org.joda.time.DateTime;
 
 import java.util.Collection;
@@ -85,7 +84,6 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws ComponentNotFoundException Thrown if the object with componentId does not exist or is no Component.
      * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
      * @throws SystemException            Thrown in case of internal error.
-     * @see ItemHandlerInterface #assignContentPid(java.lang.String,java.lang.String, java.lang.String)
      */
     public String assignContentPid(final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
@@ -140,7 +138,6 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws InvalidStatusException     Thrown if Item has the wrong status.
      * @throws XmlCorruptedException      Thrown if taskParam has invalid XML.
      * @throws SystemException            Thrown in case of internal error.
-     * @see ItemHandlerInterface #assignObjectPid(java.lang.String,java.lang.String)
      */
     public String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
         ItemNotFoundException, ComponentNotFoundException, LockingException, MissingMethodParameterException,
@@ -202,7 +199,6 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws XmlCorruptedException      Thrown in case of invalid XML
      * @throws SystemException            Thrown in case of internal error.
      * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
-     * @see ItemHandlerInterface #assignVersionPid(java.lang.String,java.lang.String)
      */
     public String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
         LockingException, MissingMethodParameterException, OptimisticLockingException, InvalidStatusException,

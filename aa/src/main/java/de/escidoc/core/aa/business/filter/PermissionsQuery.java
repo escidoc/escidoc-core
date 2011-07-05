@@ -47,9 +47,7 @@ import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Encapsulate the work which has to be done to get the permission filter queries for Lucene filtering.

@@ -23,7 +23,6 @@ package de.escidoc.core.common.util.stax.handler;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
@@ -76,7 +75,6 @@ public class WovReadHandler extends DefaultHandler {
      *
      * @param parser        Parser.
      * @param versionNumber The number of the object version.
-     * @throws WebserverSystemException Thrown in case of internal error.
      */
     public WovReadHandler(final StaxParser parser, final String versionNumber) {
 
@@ -88,7 +86,6 @@ public class WovReadHandler extends DefaultHandler {
      * WOV Read Handler.
      *
      * @param parser Parser.
-     * @throws WebserverSystemException Thrown in case of internal error.
      */
     public WovReadHandler(final StaxParser parser) {
 

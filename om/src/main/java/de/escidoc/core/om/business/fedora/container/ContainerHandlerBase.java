@@ -48,7 +48,6 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterface;
@@ -114,7 +113,6 @@ public class ContainerHandlerBase extends HandlerBase {
      *
      * @param id The ID of the item which should be bound to this Handler.
      * @throws ItemNotFoundException      If there is no item with {@code id} in the repository.
-     * @throws XmlParserSystemException   If xml parser fails.
      * @throws TripleStoreSystemException If triple store reports an error.
      * @throws WebserverSystemException   In case of an internal error.
      * @throws IntegritySystemException   If the integrity of the repository is violated.

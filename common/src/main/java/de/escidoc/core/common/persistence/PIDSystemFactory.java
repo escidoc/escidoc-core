@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.persistence;
 
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import org.slf4j.Logger;
@@ -110,8 +109,6 @@ public abstract class PIDSystemFactory {
      *
      * @return An instance of a PIDSystem.
      * @throws PidSystemException If no PIDSystem could be returned
-     * @throws MissingMethodParameterException
-     *                            If necessary parameter are missing.
      */
     public abstract PIDSystem getPIDGenerator() throws PidSystemException;
 }

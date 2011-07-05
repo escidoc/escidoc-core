@@ -37,7 +37,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
-import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.naming.directory.NoSuchAttributeException;
 import java.util.HashMap;
@@ -91,7 +90,6 @@ public class OrganizationalUnitMetadataHandler extends OrganizationalUnitHandler
      * @param element The element.
      * @return The element.
      * @throws MissingAttributeValueException If a required attribute is missing.
-     * @see DefaultHandler#startElement (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element) throws InvalidXmlException,
@@ -150,7 +148,6 @@ public class OrganizationalUnitMetadataHandler extends OrganizationalUnitHandler
      *
      * @param element The element.
      * @return The element.
-     * @see DefaultHandler#endElement (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
     public EndElement endElement(final EndElement element) throws MissingMdRecordException {
@@ -173,7 +170,6 @@ public class OrganizationalUnitMetadataHandler extends OrganizationalUnitHandler
      * @param s       The contents of the character section.
      * @param element The element.
      * @return The character section.
-     * @see DefaultHandler#characters (java.lang.String, de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public String characters(final String s, final StartElement element) {

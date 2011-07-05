@@ -54,7 +54,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
@@ -144,7 +143,6 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *
      * @param name    The name.
      * @throws MissingElementValueException It the name is empty or null.
-     * @throws SystemException              Thrown in case of an internal error.
      */
     protected void checkName(final String name) throws MissingElementValueException {
         if ("".equals(name) || name == null) {

@@ -30,7 +30,6 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,7 +85,6 @@ public class MdRecordDefinitionCreate {
      * Set schemaHref for metadata record.
      *
      * @param schemaHref XML SchemaHref URL
-     * @throws MalformedURLException If the given schema href is no valid URL.
      * @throws IOException           If the eSciDoc configuration file can not be read. FIXME should probably not be
      *                               thrown so late.
      */
