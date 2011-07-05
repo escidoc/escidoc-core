@@ -33,20 +33,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpringApplicationContextHolder implements ApplicationContextAware {
 
-    private static ApplicationContext CONTEXT;
+    private static ApplicationContext context;
 
     /**
      * This method is called from within the ApplicationContext once it is done starting up, it will stick a reference
      * to itself into this bean.
      *
-     * @param context a reference to the ApplicationContext.
+     * @param newContext a reference to the ApplicationContext.
      */
     @Override
-    public void setApplicationContext(final ApplicationContext context) throws BeansException {
-        CONTEXT = context;
+    public void setApplicationContext(final ApplicationContext newContext) throws BeansException {
+        context = newContext;
     }
 
     public static ApplicationContext getContext() {
-        return CONTEXT;
+        return context;
     }
 }
