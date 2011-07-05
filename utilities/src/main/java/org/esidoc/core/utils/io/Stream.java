@@ -269,22 +269,27 @@ public final class Stream extends OutputStream {
         } else {
             // read the file
             final FileInputStream fin = new FileInputStream(this.tempFile);
-            final byte bytes[] = new byte[1024];
-            int x = fin.read(bytes);
-            int count = 0;
-            while(x != - 1) {
-                if((count + x) > limit) {
-                    x = limit - count;
+            try {
+                final byte bytes[] = new byte[1024];
+                int x = fin.read(bytes);
+                int count = 0;
+                while(x != - 1) {
+                    if((count + x) > limit) {
+                        x = limit - count;
+                    }
+                    out.append(IOUtils.newStringFromBytes(bytes, charsetName, 0, x));
+                    count += x;
+                    if(count >= limit) {
+                        x = - 1;
+                    } else {
+                        x = fin.read(bytes);
+                    }
                 }
-                out.append(IOUtils.newStringFromBytes(bytes, charsetName, 0, x));
-                count += x;
-                if(count >= limit) {
-                    x = - 1;
-                } else {
-                    x = fin.read(bytes);
+            } finally {
+                if(fin != null) {
+                    fin.close();
                 }
             }
-            fin.close();
         }
     }
 
