@@ -204,7 +204,7 @@ default-lazy-init="false">
         <security:intercept-url pattern="/.*" filters="none" />
         <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
         <security:openid-login 
-        	user-service-ref="openidUserDetailsService"/>
+        	user-service-ref="openidUserDetailsService" login-page="/aa/login/openidlogin.jsp"/>
         <security:custom-filter ref="openidFilter" before="CAS_FILTER"/>
     </security:http>
 

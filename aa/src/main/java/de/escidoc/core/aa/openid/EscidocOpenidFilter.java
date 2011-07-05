@@ -28,17 +28,34 @@
  */
 package de.escidoc.core.aa.openid;
 
+import org.springframework.security.authentication.ProviderNotFoundException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.openid.OpenIDAuthenticationFilter;
+
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 /**
  * @author MIH
  */
 public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
+
+    private final Pattern openidProviderPattern;
+
+    public EscidocOpenidFilter() {
+        super();
+        String openidProviderRegex =
+            EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_AA_OPENID_PROVIDER_REGEX, ".*");
+        if (openidProviderRegex.equals("")) {
+            openidProviderRegex = ".*";
+        }
+        openidProviderPattern = Pattern.compile(openidProviderRegex);
+    }
 
     /**
      * Authentication has two phases. <ol> <li>The initial submission of the claimed OpenID. A redirect to the URL
@@ -47,7 +64,11 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
      */
     @Override
     public Authentication attemptAuthentication(final HttpServletRequest request, final HttpServletResponse response)
-        throws IOException {
+        throws AuthenticationException, IOException {
+        String openidIdentifier = request.getParameter(DEFAULT_CLAIMED_IDENTITY_FIELD);
+        if (openidIdentifier != null && !openidProviderPattern.matcher(openidIdentifier).find()) {
+            throw new ProviderNotFoundException("specified openId-provider is not supported");
+        }
         return super.attemptAuthentication(request, response);
     }
 
