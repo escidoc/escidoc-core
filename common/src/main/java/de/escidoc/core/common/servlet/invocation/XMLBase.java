@@ -261,7 +261,7 @@ public class XMLBase {
      * @return The file input stream.
      */
     public InputStream getFileInputStream(final String filename) {
-        return this.getClass().getResourceAsStream(filename);
+        return XMLBase.class.getResourceAsStream(filename);
     }
 
     /**

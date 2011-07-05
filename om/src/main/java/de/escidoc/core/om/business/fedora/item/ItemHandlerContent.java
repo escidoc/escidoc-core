@@ -360,7 +360,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         final ByteArrayOutputStream result = new ByteArrayOutputStream();
         InputStream inputStream = null;
         try {
-            inputStream = this.getClass().getResourceAsStream(templateFileName);
+            inputStream = ItemHandlerContent.class.getResourceAsStream(templateFileName);
             if (inputStream == null) {
                 throw new IOException(StringUtility.format("Template not found", templateFileName));
             }
