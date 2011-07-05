@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -388,7 +389,7 @@ public final class FinderModuleHelper {
                 final StringBuilder ret = new StringBuilder();
                 boolean hasNext;
                 do {
-                    ret.append(matcher.group(GROUP_NUMBER_FIRST_CHARACTER).toLowerCase());
+                    ret.append(matcher.group(GROUP_NUMBER_FIRST_CHARACTER).toLowerCase(Locale.ENGLISH));
                     ret.append(matcher.group(GROUP_NUMBER_TAILING_CHARACTERS));
                     hasNext = matcher.find(matcher.end());
                     if (hasNext) {

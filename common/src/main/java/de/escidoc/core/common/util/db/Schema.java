@@ -21,6 +21,7 @@
 package de.escidoc.core.common.util.db;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -76,7 +77,7 @@ public class Schema {
      * @param name schema name
      */
     public final void setName(final String name) {
-        this.name = name.toLowerCase();
+        this.name = name.toLowerCase(Locale.ENGLISH);
     }
 
     /**

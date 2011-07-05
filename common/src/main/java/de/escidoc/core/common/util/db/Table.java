@@ -20,6 +20,7 @@
 
 package de.escidoc.core.common.util.db;
 
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -151,7 +152,7 @@ public class Table implements Comparable<Object> {
         if (columns != null) {
             this.columns = new TreeSet<String>();
             for (final String column : columns) {
-                this.columns.add(column.toLowerCase());
+                this.columns.add(column.toLowerCase(Locale.ENGLISH));
             }
         }
     }
@@ -174,7 +175,7 @@ public class Table implements Comparable<Object> {
         if (foreignKeys != null) {
             this.foreignKeys = new TreeSet<String>();
             for (final String foreignKey : foreignKeys) {
-                this.foreignKeys.add(foreignKey.toLowerCase());
+                this.foreignKeys.add(foreignKey.toLowerCase(Locale.ENGLISH));
             }
         }
     }
@@ -219,7 +220,7 @@ public class Table implements Comparable<Object> {
      * @param name table name
      */
     public void setName(final String name) {
-        this.name = name.toLowerCase();
+        this.name = name.toLowerCase(Locale.ENGLISH);
     }
 
     /**
@@ -231,7 +232,7 @@ public class Table implements Comparable<Object> {
         if (primaryKeys != null) {
             this.primaryKeys = new TreeSet<String>();
             for (final String primaryKey : primaryKeys) {
-                this.primaryKeys.add(primaryKey.toLowerCase());
+                this.primaryKeys.add(primaryKey.toLowerCase(Locale.ENGLISH));
             }
         }
     }

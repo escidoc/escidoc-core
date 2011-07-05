@@ -94,6 +94,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
@@ -1165,7 +1166,7 @@ public abstract class EscidocTestBase {
         Header[] headers = httpRes.getAllHeaders();
         String contentTypeHeaderValue = null;
         for (int i = 0; i < headers.length && contentTypeHeaderValue == null; ++i) {
-            if (headers[i].getName().toLowerCase().equals("content-type")) {
+            if (headers[i].getName().toLowerCase(Locale.ENGLISH).equals("content-type")) {
                 contentTypeHeaderValue = headers[i].getValue();
             }
         }

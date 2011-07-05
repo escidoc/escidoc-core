@@ -50,6 +50,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Implementation of an XACML (target) function that checks if a role has been granted to the current user (for an
@@ -102,7 +103,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
 
             // Compare roles of user with roles in List
             if (argValues != null && argValues[0] != null) {
-                final String compareString = argValues[0].encode().toLowerCase();
+                final String compareString = argValues[0].encode().toLowerCase(Locale.ENGLISH);
                 for (final String roleName : roleNames) {
                     if (compareString.contains(roleName)) {
                         result = EvaluationResult.getInstance(true);
@@ -128,7 +129,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
     private static Collection<String> getRoleNames(final PolicyTreeElement policy, final Collection<String> roleNames) {
         if (policy != null) {
             try {
-                roleNames.add(policy.getId().getPath().toLowerCase());
+                roleNames.add(policy.getId().getPath().toLowerCase(Locale.ENGLISH));
             }
             catch (final Exception e) {
                 if (policy.getChildren() != null) {
@@ -137,7 +138,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
                         try {
                             abstractPolicy = (AbstractPolicy) o;
                             final PolicyTreeElement policyReference = abstractPolicy;
-                            roleNames.add(policyReference.getId().getPath().toLowerCase());
+                            roleNames.add(policyReference.getId().getPath().toLowerCase(Locale.ENGLISH));
                         }
                         catch (final Exception e1) {
                             getRoleNames(abstractPolicy, roleNames);

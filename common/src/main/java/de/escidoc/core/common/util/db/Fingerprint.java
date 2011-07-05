@@ -37,6 +37,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import de.escidoc.core.common.util.IOUtils;
@@ -295,7 +296,7 @@ public class Fingerprint implements Comparable<Object> {
             rs = metaData.getSchemas();
             while (rs.next()) {
                 final String schema = rs.getString(1);
-                if (KNOWN_SCHEMAS.contains(schema.toLowerCase())) {
+                if (KNOWN_SCHEMAS.contains(schema.toLowerCase(Locale.ENGLISH))) {
                     result.add(schema);
                 }
             }
@@ -343,7 +344,7 @@ public class Fingerprint implements Comparable<Object> {
             while (rs.next()) {
                 final String name = rs.getString(3);
                 // ignore dynamically created tables for statistics manager
-                if (!"sm".equalsIgnoreCase(schema) || VALID_SM_TABLES.contains(name.toLowerCase())) {
+                if (!"sm".equalsIgnoreCase(schema) || VALID_SM_TABLES.contains(name.toLowerCase(Locale.ENGLISH))) {
                     result.add(name);
                 }
             }

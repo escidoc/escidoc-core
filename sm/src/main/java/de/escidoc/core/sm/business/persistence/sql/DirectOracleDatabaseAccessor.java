@@ -55,6 +55,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -392,7 +393,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
             condition ? executionSql.replaceFirst("(?i)(.*?from).*?((where|order by|group by).*)", "$1"
                 + Matcher.quoteReplacement(replacedFromClause.toString()) + "$2") : executionSql.replaceFirst(
                 "(?i)(.*?from).*", "$1" + Matcher.quoteReplacement(replacedFromClause.toString()));
-        if (!executionSql.toLowerCase().startsWith("select")) {
+        if (!executionSql.toLowerCase(Locale.ENGLISH).startsWith("select")) {
             throw new SqlDatabaseSystemException("No read-only statement");
         }
         try {

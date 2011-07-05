@@ -31,6 +31,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -255,7 +256,7 @@ public final class EscidocConfiguration {
         Boolean result = false;
         String prop = (String) this.properties.get(name);
         if (prop != null) {
-            prop = prop.toLowerCase();
+            prop = prop.toLowerCase(Locale.ENGLISH);
             if (prop != null && (TRUE.equals(prop) || ONE.equals(prop))) {
                 result = true;
             }

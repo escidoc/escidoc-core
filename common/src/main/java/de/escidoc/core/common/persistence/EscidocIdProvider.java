@@ -26,6 +26,7 @@ import de.escidoc.core.common.persistence.interfaces.ResourceIdentifierDao;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Provider for new eSciDoc object ids.<br> This class prefetches a number of ids and provides ids on request. If no id
@@ -93,7 +94,7 @@ public class EscidocIdProvider {
         // I assume that its enough to check the first retrieved pid
         final String id = idArryList.get(0);
 
-        if (!id.equals(id.toLowerCase())) {
+        if (!id.equals(id.toLowerCase(Locale.ENGLISH))) {
             throw new SystemException("Invalid identifier prefix configured in Fedora. "
                 + "Capital letters are forbidden in eSciDoc as prefix.");
         }

@@ -42,6 +42,7 @@ import org.w3c.dom.Document;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -748,8 +749,8 @@ public class SearchIT extends SearchTestBase {
         for (int i = 1; i < records.length; i++) {
             String[] parts = valuesToCheck[i].split("\\|");
             if (!records[i].matches("(?s).*<dcterms:created.*?>" + parts[0] + ".*")
-                || !records[i].toLowerCase().matches("(?s).*<dc:title.*?>" + parts[1].toLowerCase() + ".*")) {
-                assertTrue("wrong sortorder, should: " + parts[1].toLowerCase() + ", is: " + records[i].toLowerCase(),
+                || !records[i].toLowerCase(Locale.ENGLISH).matches("(?s).*<dc:title.*?>" + parts[1].toLowerCase(Locale.ENGLISH) + ".*")) {
+                assertTrue("wrong sortorder, should: " + parts[1].toLowerCase(Locale.ENGLISH) + ", is: " + records[i].toLowerCase(Locale.ENGLISH),
                     false);
 
             }
@@ -781,10 +782,10 @@ public class SearchIT extends SearchTestBase {
                 "&#xFC;METHOD FOR DIRECT METHANE PYROLYSIS", "&#xDC;Method of measuring a borehole" };
         assertEquals(records.length, valuesToCheck.length);
         for (int i = 1; i < records.length; i++) {
-            if (!records[i].toLowerCase().matches(
-                "(?s).*<dcterms:alternative.*?>" + valuesToCheck[i].toLowerCase() + ".*")) {
-                assertTrue("wrong sortorder, should: " + valuesToCheck[i].toLowerCase() + ", is: "
-                    + records[i].toLowerCase(), false);
+            if (!records[i].toLowerCase(Locale.ENGLISH).matches(
+                "(?s).*<dcterms:alternative.*?>" + valuesToCheck[i].toLowerCase(Locale.ENGLISH) + ".*")) {
+                assertTrue("wrong sortorder, should: " + valuesToCheck[i].toLowerCase(Locale.ENGLISH) + ", is: "
+                    + records[i].toLowerCase(Locale.ENGLISH), false);
 
             }
 
@@ -811,7 +812,7 @@ public class SearchIT extends SearchTestBase {
         assertEquals(records.length, 11);
         String score = null;
         for (int i = 1; i < records.length; i++) {
-            scoreMatcher.reset(records[i].toLowerCase());
+            scoreMatcher.reset(records[i].toLowerCase(Locale.ENGLISH));
             if (scoreMatcher.find()) {
                 if (score != null && scoreMatcher.group(1).compareTo(score) > 0) {
                     assertTrue("wrong sortorder", false);
@@ -851,7 +852,7 @@ public class SearchIT extends SearchTestBase {
         String score = null;
         String savedTitle = "0";
         for (int i = 1; i < records.length; i++) {
-            scoreMatcher.reset(records[i].toLowerCase());
+            scoreMatcher.reset(records[i].toLowerCase(Locale.ENGLISH));
             if (scoreMatcher.find()) {
                 int compare = 0;
                 if (score != null) {

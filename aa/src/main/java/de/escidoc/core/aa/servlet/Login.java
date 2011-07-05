@@ -28,6 +28,7 @@ import java.net.URLDecoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -844,7 +845,7 @@ public class Login extends HttpServlet {
         try {
             final String configProperty =
                 EscidocConfiguration
-                    .getInstance().get(EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION).toLowerCase()
+                    .getInstance().get(EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION).toLowerCase(Locale.ENGLISH)
                     .trim();
             if ("netscape".equals(configProperty) || "0".equals(configProperty)) {
                 escidocCookieVersion = (byte) 0;

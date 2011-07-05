@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -373,7 +374,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         // convert the resourceName if provided in triple store format
         final String convertedResourceName = FinderModuleHelper.convertObjectType(resourceName, false);
 
-        final String className = handlerClassNames.get(convertedResourceName.toLowerCase());
+        final String className = handlerClassNames.get(convertedResourceName.toLowerCase(Locale.ENGLISH));
 
         final List<Object[]> ret = new ArrayList<Object[]>();
 
@@ -425,7 +426,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         // convert the resourceName if provided in triple store format
         final String convertedResourceName = FinderModuleHelper.convertObjectType(resourceName, false);
 
-        final String className = handlerClassNames.get(convertedResourceName.toLowerCase());
+        final String className = handlerClassNames.get(convertedResourceName.toLowerCase(Locale.ENGLISH));
 
         final List<String> ret = new ArrayList<String>();
 

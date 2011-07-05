@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1031,7 +1032,7 @@ public abstract class ClientBase {
         Header[] headers = httpRes.getAllHeaders();
         String contentTypeHeaderValue = null;
         for (int i = 0; i < headers.length && contentTypeHeaderValue == null; ++i) {
-            if (headers[i].getName().toLowerCase().equals("content-type")) {
+            if (headers[i].getName().toLowerCase(Locale.ENGLISH).equals("content-type")) {
                 contentTypeHeaderValue = headers[i].getValue();
             }
         }

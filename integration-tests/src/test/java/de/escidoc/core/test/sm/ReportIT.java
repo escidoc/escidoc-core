@@ -43,6 +43,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -363,9 +364,9 @@ public class ReportIT extends ReportTestBase {
         }
         expected = replaceYear(expected, "2009");
 
-        result = result.replaceAll("\\s+", "").toLowerCase();
+        result = result.replaceAll("\\s+", "").toLowerCase(Locale.ENGLISH);
         result = result.replaceFirst(".*?<report:report-record.*?>", "");
-        expected = expected.replaceAll("\\s+", "").toLowerCase();
+        expected = expected.replaceAll("\\s+", "").toLowerCase(Locale.ENGLISH);
         expected = expected.replaceFirst(".*?<report:report-record.*?>", "");
         if (expected.equals(result)) {
             return "OK";

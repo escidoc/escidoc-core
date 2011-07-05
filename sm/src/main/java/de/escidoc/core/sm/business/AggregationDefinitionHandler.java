@@ -71,6 +71,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -304,7 +305,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
         final Collection<DatabaseTableVo> databaseTableVos = new ArrayList<DatabaseTableVo>();
         for (final AggregationTable aggregationTable : aggregationDefinition.getAggregationTables()) {
             final DatabaseTableVo databaseTableVo = new DatabaseTableVo();
-            databaseTableVo.setTableName(aggregationTable.getName().toLowerCase());
+            databaseTableVo.setTableName(aggregationTable.getName().toLowerCase(Locale.ENGLISH));
 
             // Generate Fields
             final Collection<DatabaseTableFieldVo> databaseFieldVos = new ArrayList<DatabaseTableFieldVo>();
@@ -319,12 +320,12 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
                     || field.getFieldTypeId() == Constants.DIFFERENCE_CUMULATION_FIELD_ID
                     || field.getFieldTypeId() == Constants.TIME_REDUCTION_FIELD_ID) {
                     dbAccessor.checkReservedExpressions(field.getName());
-                    databaseTableFieldVo.setFieldName(field.getName().toLowerCase());
+                    databaseTableFieldVo.setFieldName(field.getName().toLowerCase(Locale.ENGLISH));
                     databaseTableFieldVo.setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
                 }
                 else if (field.getFieldTypeId() == Constants.INFO_FIELD_ID) {
                     dbAccessor.checkReservedExpressions(field.getName());
-                    databaseTableFieldVo.setFieldName(field.getName().toLowerCase());
+                    databaseTableFieldVo.setFieldName(field.getName().toLowerCase(Locale.ENGLISH));
                     databaseTableFieldVo.setFieldType(field.getDataType());
                 }
                 else {
@@ -340,7 +341,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
                 final Collection<DatabaseIndexVo> databaseIndexVos = new ArrayList<DatabaseIndexVo>();
                 for (final AggregationTableIndexe index : aggregationTable.getAggregationTableIndexes()) {
                     final DatabaseIndexVo databaseIndexVo = new DatabaseIndexVo();
-                    databaseIndexVo.setIndexName(index.getName().toLowerCase());
+                    databaseIndexVo.setIndexName(index.getName().toLowerCase(Locale.ENGLISH));
                     final Collection<String> indexFields = new ArrayList<String>();
                     if (index.getAggregationTableIndexFields() != null) {
                         // sort AggregationTableIndexFields
