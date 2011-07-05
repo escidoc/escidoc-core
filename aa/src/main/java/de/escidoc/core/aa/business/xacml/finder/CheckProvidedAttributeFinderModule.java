@@ -77,11 +77,11 @@ public class CheckProvidedAttributeFinderModule extends AbstractAttributeFinderM
     private static final Pattern PATTERN_ID_ATTRIBUTE_OR_NEW_ATTRIBUTE = Pattern.compile(".*:([^-]*)(-id|-new){0,1}");
 
     @SuppressWarnings( { "CanBeFinal" })
-    private static URI PROVIDED_ATTRIBUTES_ID_URI; // Ignore FindBugs
+    private static URI providedAttributesIdUri; // Ignore FindBugs
 
     static {
         try {
-            PROVIDED_ATTRIBUTES_ID_URI = new URI(PROVIDED_ATTRIBUTES_ID);
+            providedAttributesIdUri = new URI(PROVIDED_ATTRIBUTES_ID);
         }
         catch (final URISyntaxException e) {
             if (LOGGER.isWarnEnabled()) {
@@ -177,7 +177,7 @@ public class CheckProvidedAttributeFinderModule extends AbstractAttributeFinderM
      * @throws SystemException Thrown in case of an internal system error.
      */
     public static URI getAttributeId() {
-        return PROVIDED_ATTRIBUTES_ID_URI;
+        return providedAttributesIdUri;
     }
 
 }

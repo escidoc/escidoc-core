@@ -66,11 +66,11 @@ public class XacmlTarget extends Target {
     private static final String URN_ACTION_DESIGNATOR_TYPE = "http://www.w3.org/2001/XMLSchema#string";
 
     @SuppressWarnings( { "CanBeFinal" })
-    private static AttributeDesignator DESIGNATOR; // Ignore FindBugs
+    private static AttributeDesignator designator; // Ignore FindBugs
 
     static {
         try {
-            DESIGNATOR =
+            designator =
                 new AttributeDesignator(AttributeDesignator.ACTION_TARGET, new URI(URN_ACTION_DESIGNATOR_TYPE),
                     new URI(URN_ACTION_DESIGNATOR_ID), false);
         }
@@ -140,7 +140,7 @@ public class XacmlTarget extends Target {
             }
 
             // create the TargetMatch
-            return new TargetMatch(TargetMatch.ACTION, function, DESIGNATOR, value);
+            return new TargetMatch(TargetMatch.ACTION, function, designator, value);
         }
         catch (final Exception e) {
             if (LOGGER.isWarnEnabled()) {
