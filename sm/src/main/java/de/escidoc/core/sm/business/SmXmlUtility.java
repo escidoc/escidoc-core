@@ -36,7 +36,7 @@ import java.util.Collection;
  *
  * @author Michael Hoppe
  */
-public class SmXmlUtility {
+public final class SmXmlUtility {
 
     private SmXmlUtility() {
     }

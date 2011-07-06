@@ -6,7 +6,7 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.tme.business.stax.handler.TmeRequestsStaxHandler;
 
-public class TmeUtility {
+public final class TmeUtility {
 
     private TmeUtility() {
     }
