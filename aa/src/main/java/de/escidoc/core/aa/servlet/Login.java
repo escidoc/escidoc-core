@@ -351,8 +351,7 @@ public class Login extends HttpServlet {
                 final Date now = new Date();
                 userAccount.setCreationDate(now);
                 userAccount.setLastModificationDate(now);
-                // FIXME: set "random" password (until password is removed)
-                userAccount.setPassword(String.valueOf(random.nextLong()) + now);
+                userAccount.setPassword(Long.toString(random.nextLong()));
                 dao.save(userAccount);
             }
 
