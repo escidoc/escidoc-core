@@ -136,4 +136,17 @@ public interface AdminHandlerInterface {
      */
     String getRepositoryInfo() throws SystemException, AuthenticationException, AuthorizationException;
 
+    /**
+     * Loads a set of example objects into the framework.
+     *
+     * @param type Specifies the type of example set which is to load.
+     * @return some useful information
+     * @throws InvalidSearchQueryException Thrown if a given search query could not be translated into a SQL query.
+     * @throws SystemException             Thrown in case of an internal error.
+     * @throws AuthenticationException     Thrown if the authentication failed due to an invalid provided eSciDoc user
+     *                                     handle.
+     * @throws AuthorizationException      Thrown if the authorization failed.
+     */
+    String loadExamples(final String type) throws InvalidSearchQueryException, SystemException,
+        AuthenticationException, AuthorizationException;
 }

@@ -177,4 +177,20 @@ public class AdminHandler implements AdminHandlerInterface {
         return this.business.getRepositoryInfo();
     }
 
+    /**
+     * Loads an set of examples objects into the framework.
+     *
+     * @param type Specifies the type of example set which is to load.
+     * @return some useful information
+     * @throws SystemException             Thrown if a framework internal error occurs.
+     * @throws InvalidSearchQueryException thrown if a given search query could not be translated into a SQL query
+     * @throws AuthenticationException     Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                     handle.
+     * @throws AuthorizationException      Thrown if authorization fails.
+     */
+    @Override
+    public String loadExamples(final String type) throws InvalidSearchQueryException, SystemException,
+        AuthenticationException, AuthorizationException {
+        return this.business.loadExamples(type);
+    }
 }
