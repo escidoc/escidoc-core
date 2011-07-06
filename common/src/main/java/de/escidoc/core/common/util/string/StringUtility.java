@@ -20,6 +20,7 @@
 
 package de.escidoc.core.common.util.string;
 
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
@@ -116,7 +117,7 @@ public final class StringUtility {
         if (objectType != null) {
             final String[] splitted = PATTERN_MINUS.split(objectType);
             for (final String split : splitted) {
-                ret.append(split.substring(0, 1).toUpperCase());
+                ret.append(split.substring(0, 1).toUpperCase(Locale.ENGLISH));
                 ret.append(split.substring(1));
             }
         }

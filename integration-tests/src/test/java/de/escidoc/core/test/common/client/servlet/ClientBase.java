@@ -810,7 +810,7 @@ public abstract class ClientBase {
     protected void logRestServiceCall(
         final String method, final String HttpResponse, final String url, final Object body) {
         String message =
-            '[' + method + "] Calling eSciDoc with URL='" + url + "' and http method='" + HttpResponse.toUpperCase()
+            '[' + method + "] Calling eSciDoc with URL='" + url + "' and http method='" + HttpResponse.toUpperCase(Locale.ENGLISH)
                 + "'";
         // if ((Constants.HTTP_METHOD_POST.equals(HttpResponse.toUpperCase()))
         // || (Constants.HTTP_METHOD_PUT.equals(HttpResponse.toUpperCase()))) {

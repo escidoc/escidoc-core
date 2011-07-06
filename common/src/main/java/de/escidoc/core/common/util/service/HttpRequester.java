@@ -42,6 +42,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.Locale;
 
 /*
  * Created on 05.10.2006
@@ -213,7 +214,7 @@ public class HttpRequester {
         }
 
         // Set request-method and timeout
-        con.setRequestMethod(method.toUpperCase());
+        con.setRequestMethod(method.toUpperCase(Locale.ENGLISH));
         con.setReadTimeout(this.timeout);
 
         // If PUT or POST, write given body in Output-Stream
@@ -278,7 +279,7 @@ public class HttpRequester {
             }
 
             // Set request-method and timeout
-            connection.setRequestMethod(method.toUpperCase());
+            connection.setRequestMethod(method.toUpperCase(Locale.ENGLISH));
             connection.setReadTimeout(this.timeout);
 
             // If PUT or POST, write given body in Output-Stream

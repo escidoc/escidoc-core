@@ -20,6 +20,8 @@
 
 package de.escidoc.core.common.business.fedora.mptstore;
 
+import java.util.Locale;
+
 /**
  * Utility for parsing, validating, and printing strings in N-Triples format.
  *
@@ -125,7 +127,7 @@ public final class MPTStringUtil {
      */
     private static String hexString(final int num, final int len) {
         final StringBuilder out = new StringBuilder(len);
-        final String hex = Integer.toHexString(num).toUpperCase();
+        final String hex = Integer.toHexString(num).toUpperCase(Locale.ENGLISH);
         final int n = len - hex.length();
         for (int i = 0; i < n; i++) {
             out.append('0');

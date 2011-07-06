@@ -34,6 +34,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -190,7 +191,7 @@ public class HttpRequester {
         }
 
         // Set request-method and timeout
-        con.setRequestMethod(method.toUpperCase());
+        con.setRequestMethod(method.toUpperCase(Locale.ENGLISH));
         con.setReadTimeout(TIMEOUT);
 
         // If PUT or POST, write given body in Output-Stream
@@ -240,7 +241,7 @@ public class HttpRequester {
         }
 
         // Set request-method and timeout
-        con.setRequestMethod(method.toUpperCase());
+        con.setRequestMethod(method.toUpperCase(Locale.ENGLISH));
         con.setReadTimeout(TIMEOUT);
 
         // If PUT or POST, write given body in Output-Stream

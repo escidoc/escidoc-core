@@ -33,6 +33,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -173,7 +174,7 @@ public class FilterHandler extends DefaultHandler {
         else if (curPath.equals(XPATH_ORDER_BY)) {
             final int indexOfSorting = element.indexOfAttribute(null, XmlUtility.NAME_SORTING);
             if (indexOfSorting >= 0) {
-                this.sorting = ListSorting.valueOf(element.getAttribute(indexOfSorting).getValue().toUpperCase());
+                this.sorting = ListSorting.valueOf(element.getAttribute(indexOfSorting).getValue().toUpperCase(Locale.ENGLISH));
             }
         }
         return element;

@@ -64,6 +64,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
@@ -130,16 +131,16 @@ public final class HttpHelper {
         }
 
         if (method != null) {
-            if (method.toUpperCase().equals(Constants.HTTP_METHOD_DELETE)) {
+            if (method.toUpperCase(Locale.ENGLISH).equals(Constants.HTTP_METHOD_DELETE)) {
                 result = doDelete(client, url);
             }
-            else if (method.toUpperCase().equals(Constants.HTTP_METHOD_GET)) {
+            else if (method.toUpperCase(Locale.ENGLISH).equals(Constants.HTTP_METHOD_GET)) {
                 result = doGet(client, url, parameters);
             }
-            else if (method.toUpperCase().equals(Constants.HTTP_METHOD_POST)) {
+            else if (method.toUpperCase(Locale.ENGLISH).equals(Constants.HTTP_METHOD_POST)) {
                 result = doPost(client, url, body, mimeType);
             }
-            else if (method.toUpperCase().equals(Constants.HTTP_METHOD_PUT)) {
+            else if (method.toUpperCase(Locale.ENGLISH).equals(Constants.HTTP_METHOD_PUT)) {
                 result = doPut(client, url, body, mimeType);
             }
         }

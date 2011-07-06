@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.sm.business;
 
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Collection;
 

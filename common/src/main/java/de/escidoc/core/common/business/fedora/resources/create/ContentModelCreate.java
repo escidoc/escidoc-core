@@ -224,6 +224,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         final Stream stream = new Stream();
         try {
             stream.write(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
+            stream.lock();
         }
         catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
