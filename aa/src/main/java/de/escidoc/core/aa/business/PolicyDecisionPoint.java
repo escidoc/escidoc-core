@@ -173,10 +173,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     private InvocationParser invocationParser;
 
     @Autowired
-    @Qualifier("eSciDoc.core.aa.TripleStoreAttributeFinderModule")
-    private TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule;
-
-    @Autowired
     @Qualifier("convert.XacmlParser")
     private XacmlParser xacmlParser;
 
