@@ -38,7 +38,7 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     private static final String RESOURCES_PATH = "/common";
 
-    private static final ExplainXmlProvider provider = new ExplainXmlProvider();
+    private static final ExplainXmlProvider PROVIDER = new ExplainXmlProvider();
 
     /**
      * private Constructor for Singleton.
@@ -294,6 +294,6 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
      */
     public static ExplainXmlProvider getInstance() {
-        return provider;
+        return PROVIDER;
     }
 }

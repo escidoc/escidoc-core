@@ -58,7 +58,7 @@ public class PerformanceStatisticsInterceptor implements MethodInterceptor {
     /**
      * Divisor for nanosecond to millisecond.
      */
-    private static final long divisor = 1000000L;
+    private static final long DIVISOR = 1000000L;
 
     /**
      * Set statistics bean.
@@ -88,7 +88,7 @@ public class PerformanceStatisticsInterceptor implements MethodInterceptor {
         final long t1 = System.nanoTime();
         final Object rval = invocation.proceed();
         final long t2 = System.nanoTime();
-        final long executionTime = (t2 - t1) / divisor;
+        final long executionTime = (t2 - t1) / DIVISOR;
         LOGGER.trace(name + ' ' + executionTime);
         statistics.addValueToStatistics(name, executionTime);
         return rval;

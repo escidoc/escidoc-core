@@ -50,7 +50,7 @@ import java.util.List;
  */
 public class XacmlPolicySet extends PolicySet implements Serializable {
 
-    private static final CombiningAlgFactory factory = CombiningAlgFactory.getInstance();
+    private static final CombiningAlgFactory ALG_FACTORY = CombiningAlgFactory.getInstance();
 
     public static final String DEFAULT_POLICY_SET_ID = "Default-Policies";
 
@@ -130,9 +130,7 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
      */
     private static PolicyCombiningAlgorithm getPolicyCombiningAlgorithm(final String combiningAlgorithmId)
         throws UnknownIdentifierException, URISyntaxException {
-
-        return (PolicyCombiningAlgorithm) factory.createAlgorithm(new URI(combiningAlgorithmId));
-
+        return (PolicyCombiningAlgorithm) ALG_FACTORY.createAlgorithm(new URI(combiningAlgorithmId));
     }
 
     /**

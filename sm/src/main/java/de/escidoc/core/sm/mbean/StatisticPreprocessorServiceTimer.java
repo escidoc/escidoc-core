@@ -8,7 +8,7 @@ package de.escidoc.core.sm.mbean;
  */
 public final class StatisticPreprocessorServiceTimer {
 
-    private static final StatisticPreprocessorServiceTimer instance = new StatisticPreprocessorServiceTimer();
+    private static final StatisticPreprocessorServiceTimer INSTANCE = new StatisticPreprocessorServiceTimer();
 
     private long lastExecutionTime;
 
@@ -24,7 +24,7 @@ public final class StatisticPreprocessorServiceTimer {
      * @return StatisticPreprocessorServiceTimer StatisticPreprocessorServiceTimer
      */
     public static StatisticPreprocessorServiceTimer getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -33,7 +33,7 @@ public final class StatisticPreprocessorServiceTimer {
      */
     public long getLastExecutionTime() {
         final long newLastExecutionTime = System.currentTimeMillis();
-        synchronized (instance) {
+        synchronized (INSTANCE) {
             final long savedLastExecutionTime = this.lastExecutionTime;
             this.lastExecutionTime = newLastExecutionTime;
             return savedLastExecutionTime;

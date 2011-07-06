@@ -8,7 +8,7 @@ package de.escidoc.core.st.business;
  */
 public final class StagingCleanerTimer {
 
-    private static final StagingCleanerTimer instance = new StagingCleanerTimer();
+    private static final StagingCleanerTimer INSTANCE = new StagingCleanerTimer();
 
     private long lastExecutionTime;
 
@@ -24,7 +24,7 @@ public final class StagingCleanerTimer {
      * @return IndexOptimizerServiceTimer IndexOptimizerServiceTimer
      */
     public static StagingCleanerTimer getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -33,7 +33,7 @@ public final class StagingCleanerTimer {
      */
     public long getLastExecutionTime() {
         final long newLastExecutionTime = System.currentTimeMillis();
-        synchronized (instance) {
+        synchronized (INSTANCE) {
             final long savedLastExecutionTime = this.lastExecutionTime;
             this.lastExecutionTime = newLastExecutionTime;
             return savedLastExecutionTime;

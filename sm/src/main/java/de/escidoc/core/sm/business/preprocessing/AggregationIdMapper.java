@@ -39,7 +39,7 @@ import java.util.Map;
  */
 public final class AggregationIdMapper {
 
-    private static final AggregationIdMapper instance = new AggregationIdMapper();
+    private static final AggregationIdMapper INSTANCE = new AggregationIdMapper();
 
     private final Map<String, String> aggregationIdMap = new HashMap<String, String>();
 
@@ -55,7 +55,7 @@ public final class AggregationIdMapper {
      * @return AggregationIdMapper AggregationIdMapper
      */
     public static AggregationIdMapper getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**

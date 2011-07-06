@@ -8,7 +8,7 @@ package de.escidoc.sb.gsearch.mbean;
  */
 public final class IndexOptimizerServiceTimer {
 
-    private static final IndexOptimizerServiceTimer instance = new IndexOptimizerServiceTimer();
+    private static final IndexOptimizerServiceTimer INSTANCE = new IndexOptimizerServiceTimer();
 
     private long lastExecutionTime;
 
@@ -24,7 +24,7 @@ public final class IndexOptimizerServiceTimer {
      * @return IndexOptimizerServiceTimer IndexOptimizerServiceTimer
      */
     public static IndexOptimizerServiceTimer getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -33,7 +33,7 @@ public final class IndexOptimizerServiceTimer {
      */
     public long getLastExecutionTime() {
         final long newLastExecutionTime = System.currentTimeMillis();
-        synchronized (instance) {
+        synchronized (INSTANCE) {
             final long savedLastExecutionTime = this.lastExecutionTime;
             this.lastExecutionTime = newLastExecutionTime;
             return savedLastExecutionTime;
