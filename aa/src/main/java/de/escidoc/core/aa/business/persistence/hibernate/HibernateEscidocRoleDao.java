@@ -50,6 +50,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -67,30 +68,28 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao implements Esc
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(HibernateEscidocRoleDao.class);
 
-    private final Map<String, Object[]> criteriaMap;
+    private Map<String, Object[]> criteriaMap = new HashMap<String, Object[]>();
 
-    private final Map<String, String> propertiesNamesMap;
-
-    private RoleFilter roleFilter;
+    private Map<String, String> propertiesNamesMap = new HashMap<String, String>();
 
     /**
      * Constructor to initialize filter-names with RoleFilter-Class.
      */
     public HibernateEscidocRoleDao() {
         try {
-            this.roleFilter = new RoleFilter(null);
+            final RoleFilter roleFilter = new RoleFilter(null);
+            this.criteriaMap = roleFilter.getCriteriaMap();
+            this.propertiesNamesMap = roleFilter.getPropertyMap();
         }
         catch (final InvalidSearchQueryException e) {
             // Dont do anything because null-query is given.
             if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Expected exception for null-query");
+                LOGGER.warn("Exception for null-query");
             }
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Expected exception for null-query", e);
+                LOGGER.debug("Exception for null-query", e);
             }
         }
-        this.criteriaMap = roleFilter.getCriteriaMap();
-        this.propertiesNamesMap = roleFilter.getPropertyMap();
     }
 
     /**

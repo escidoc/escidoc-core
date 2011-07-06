@@ -70,18 +70,18 @@ public class HibernateUserGroupDao extends AbstractHibernateDao implements UserG
     private static final String QUERY_RETRIEVE_GRANTS_BY_GROUP_ID =
         "from " + RoleGrant.class.getName() + " g where g.userGroupByGroupId.id = ? order by role_id, object_id";
 
-    private final Map<String, Object[]> criteriaMap;
+    private Map<String, Object[]> criteriaMap = new HashMap<String, Object[]>();
 
-    private final Map<String, String> propertiesNamesMap;
-
-    private UserGroupFilter userGroupFilter;
+    private Map<String, String> propertiesNamesMap = new HashMap<String, String>();
 
     /**
      * Constructor to initialize filter-names with RoleFilter-Class.
      */
     public HibernateUserGroupDao() {
         try {
-            this.userGroupFilter = new UserGroupFilter(null);
+            final UserGroupFilter userGroupFilter = new UserGroupFilter(null);
+            this.criteriaMap = userGroupFilter.getCriteriaMap();
+            this.propertiesNamesMap = userGroupFilter.getPropertyMap();
         }
         catch (final InvalidSearchQueryException e) {
             // Dont do anything because null-query is given.
@@ -92,8 +92,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao implements UserG
                 LOGGER.debug("Expected exception for null-query", e);
             }
         }
-        this.criteriaMap = userGroupFilter.getCriteriaMap();
-        this.propertiesNamesMap = userGroupFilter.getPropertyMap();
     }
 
     /**

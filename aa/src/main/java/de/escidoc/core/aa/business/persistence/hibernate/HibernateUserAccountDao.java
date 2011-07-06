@@ -102,15 +102,11 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
 
     private static final String QUERY_RETRIEVE_USER_ACCOUNT_BY_LOGINNAME = "from UserAccount u where u.loginname = ?";
 
-    private final Map<String, Object[]> criteriaMap;
+    private Map<String, Object[]> criteriaMap = new HashMap<String, Object[]>();
 
-    private final Map<String, String> propertiesNamesMap;
+    private Map<String, String> propertiesNamesMap = new HashMap<String, String>();
 
-    private final Map<String, String> grantPropertiesNamesMap;
-
-    private UserAccountFilter userAccountFilter;
-
-    private RoleGrantFilter roleGrantFilter;
+    private Map<String, String> grantPropertiesNamesMap = new HashMap<String, String>();
 
     @Autowired
     @Qualifier("security.SecurityHelper")
@@ -121,21 +117,21 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      */
     public HibernateUserAccountDao() {
         try {
-            this.userAccountFilter = new UserAccountFilter(null);
-            this.roleGrantFilter = new RoleGrantFilter(null);
+            final UserAccountFilter userAccountFilter = new UserAccountFilter(null);
+            final RoleGrantFilter roleGrantFilter = new RoleGrantFilter(null);
+            this.criteriaMap = userAccountFilter.getCriteriaMap();
+            this.propertiesNamesMap = userAccountFilter.getPropertyMap();
+            this.grantPropertiesNamesMap = roleGrantFilter.getPropertyMap();
         }
         catch (final InvalidSearchQueryException e) {
             // Dont do anything because null-query is given
             if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Expected exception for null-query");
+                LOGGER.warn("Exception for null-query");
             }
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Expected exception for null-query", e);
+                LOGGER.debug("Exception for null-query", e);
             }
         }
-        this.criteriaMap = userAccountFilter.getCriteriaMap();
-        this.propertiesNamesMap = userAccountFilter.getPropertyMap();
-        this.grantPropertiesNamesMap = roleGrantFilter.getPropertyMap();
     }
 
     /**
