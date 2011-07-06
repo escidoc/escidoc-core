@@ -241,7 +241,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         // Currently we can not trust the internal map because the status is
         // changes out side of the resource.
-        String latestReleasedVersion = getResourcePropertiesValue(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER);
+        String latestReleasedVersion = getProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER);
         if (latestReleasedVersion == null) {
             // FIXME emergency solution because the version status is not known
             // resource internal
@@ -334,7 +334,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     @Deprecated
     public String getLatestReleasePid() throws TripleStoreSystemException, WebserverSystemException {
 
-        final String pid = getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_PID);
+        final String pid = getProperty(PropertyMapKeys.LATEST_RELEASE_PID);
         if (validPidStructure(pid)) {
             return pid;
         }
@@ -462,7 +462,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         // TODO update of the latest-release-pid even if this is wrong within
         // the inheritage structure (because release is no feature of the
         // GenericVersionableResource. But all other need more code refactoring)
-        final String latestReleasedVersion = getResourcePropertiesValue(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER);
+        final String latestReleasedVersion = getProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER);
 
         byte[] relsExt = null;
         if (latestReleasedVersion != null) {

@@ -220,7 +220,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     }
 
     public String getChecksum() throws TripleStoreSystemException, WebserverSystemException {
-        return getResourcePropertiesValue(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM);
+        return getProperty(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM);
     }
 
     /*

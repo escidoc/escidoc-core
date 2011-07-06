@@ -466,7 +466,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public String getModifiedBy() throws TripleStoreSystemException, WebserverSystemException {
-        return getResourceProperties().get(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
+        return getProperty(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
     }
 
     /**

@@ -131,12 +131,12 @@ public class GenericResourcePid extends GenericResource {
         // TODO use objectPid from the propertiesMap and avoid a second
         // parameter
         if (this.objectPid == null) {
-            this.objectPid = getResourceProperties().get(PropertyMapKeys.OBJECT_PID);
+            this.objectPid = getProperty(PropertyMapKeys.OBJECT_PID);
             // FIXME
             // sche: It seems that the key used for object PID differs between
             // Item and Component.
             if (this.objectPid == null) {
-                this.objectPid = getResourceProperties().get(TripleStoreUtility.PROP_OBJECT_PID);
+                this.objectPid = getProperty(TripleStoreUtility.PROP_OBJECT_PID);
             }
             // getTripleStoreUtility().getPropertiesElements(getId(),
             // TripleStoreUtility.PROP_OBJECT_PID);

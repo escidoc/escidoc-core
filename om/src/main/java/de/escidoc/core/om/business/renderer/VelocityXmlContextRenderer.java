@@ -363,8 +363,6 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     private void addPropertiesValues(final Context context, final Map<String, Object> values) throws SystemException {
 
-        final Map<String, String> properties = context.getResourceProperties();
-
         values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_TITLE, "Properties");
         values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_HREF, XmlUtility.getContextPropertiesHref(context
             .getId()));
@@ -377,19 +375,19 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         }
         values.put("contextCreationDate", context.getCreationDate());
 
-        values.put("contextStatus", properties.get(PropertyMapKeys.PUBLIC_STATUS));
-        values.put("contextStatusComment", properties.get(PropertyMapKeys.PUBLIC_STATUS_COMMENT));
-        values.put("contextType", properties.get(PropertyMapKeys.CONTEXT_TYPE));
+        values.put("contextStatus", context.getProperty(PropertyMapKeys.PUBLIC_STATUS));
+        values.put("contextStatusComment", context.getProperty(PropertyMapKeys.PUBLIC_STATUS_COMMENT));
+        values.put("contextType", context.getProperty(PropertyMapKeys.CONTEXT_TYPE));
         values.put("contextObjid", context.getId());
 
         values.put("contextCreatedById", context.getCreatedBy());
         values.put("contextCreatedByHref", Constants.USER_ACCOUNT_URL_BASE + context.getCreatedBy());
-        values.put("contextCreatedByTitle", properties.get(PropertyMapKeys.CREATED_BY_TITLE));
+        values.put("contextCreatedByTitle", context.getProperty(PropertyMapKeys.CREATED_BY_TITLE));
 
         values.put("contextCurrentVersionModifiedById", context.getModifiedBy());
         values.put("contextCurrentVersionModifiedByHref", Constants.USER_ACCOUNT_URL_BASE + context.getModifiedBy());
-        values.put("contextCurrentVersionModifiedByTitle", properties
-            .get(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE));
+        values.put("contextCurrentVersionModifiedByTitle", context
+            .getProperty(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE));
 
         values.put("organizational-units", getOrganizationalUnitsContext(context.getOrganizationalUnitObjids()));
     }

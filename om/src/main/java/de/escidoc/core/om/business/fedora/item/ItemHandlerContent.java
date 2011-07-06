@@ -122,7 +122,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         catch (final InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
-        final String visibility = component.getResourceProperties().get(TripleStoreUtility.PROP_VISIBILITY);
+        final String visibility = component.getProperty(TripleStoreUtility.PROP_VISIBILITY);
 
         if ("private".equals(visibility) && UserContext.isRetrieveRestrictedToReleased()) {
             throw new AuthorizationException("The Content of the component " + componentId
@@ -130,10 +130,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         }
         final EscidocBinaryContent bin = new EscidocBinaryContent();
 
-        final Map<String, String> properties = component.getResourceProperties();
-
         // set file name
-        final String fileName = properties.get(Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
+        final String fileName = component.getProperty(Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
         if (fileName != null && fileName.length() > 0) {
             bin.setFileName(fileName);
         }
@@ -142,7 +140,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         }
 
         // set mime type
-        bin.setMimeType(properties.get(TripleStoreUtility.PROP_MIME_TYPE));
+        bin.setMimeType(component.getProperty(TripleStoreUtility.PROP_MIME_TYPE));
 
         final Datastream content = component.getContent();
         final String storage = content.getControlGroup();
@@ -198,7 +196,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         catch (final InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
-        final String visibility = component.getResourceProperties().get(TripleStoreUtility.PROP_VISIBILITY);
+        final String visibility = component.getProperty(TripleStoreUtility.PROP_VISIBILITY);
 
         if ("private".equals(visibility) && UserContext.isRetrieveRestrictedToReleased()) {
             throw new AuthorizationException("The content of the component " + componentId
@@ -220,7 +218,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         catch (IOException e) {
             throw new WebserverSystemException("Error on loading binary content.", e);
         }
-        bin.setFileName(component.getResourceProperties().get(
+        bin.setFileName(component.getProperty(
             de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
         return bin;
     }
@@ -252,7 +250,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         catch (final InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
-        final String visibility = component.getResourceProperties().get(TripleStoreUtility.PROP_VISIBILITY);
+        final String visibility = component.getProperty(TripleStoreUtility.PROP_VISIBILITY);
 
         if ("private".equals(visibility) && UserContext.isRetrieveRestrictedToReleased()) {
             throw new AuthorizationException("The Content of the component " + componentId

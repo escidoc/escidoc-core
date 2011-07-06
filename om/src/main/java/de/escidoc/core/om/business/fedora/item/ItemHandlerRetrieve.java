@@ -1161,7 +1161,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
     private Map<String, String> getComponentPropertiesValues(final Component component)
         throws TripleStoreSystemException, WebserverSystemException {
 
-        final Map<String, String> properties = component.getResourceProperties();
         final String baseHRef = getItem().getHref() + component.getHrefPart();
         // TODO version
         final Map<String, String> values = new HashMap<String, String>();
@@ -1169,52 +1168,52 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         values
             .put(XmlTemplateProviderConstants.VAR_COMPONENT_PROPERTIES_HREF, baseHRef + Constants.PROPERTIES_URL_PART);
 
-        if (properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION) != null
+        if (component.getProperty(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION) != null
             && component.getMdRecords().containsKey(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING)
             && !component.getMdRecord(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING).isDeleted()) {
-            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_DESCRIPTION, properties
-                .get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION));
+            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_DESCRIPTION, component
+                .getProperty(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION));
         }
         values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CREATION_DATE, component.getCreationDate());
-        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CREATED_BY_TITLE, properties
-            .get(TripleStoreUtility.PROP_CREATED_BY_TITLE));
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CREATED_BY_TITLE, component
+            .getProperty(TripleStoreUtility.PROP_CREATED_BY_TITLE));
         values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CREATED_BY_HREF,
             de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
-                + properties.get(TripleStoreUtility.PROP_CREATED_BY_ID));
-        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CREATED_BY_ID, properties
-            .get(TripleStoreUtility.PROP_CREATED_BY_ID));
+                + component.getProperty(TripleStoreUtility.PROP_CREATED_BY_ID));
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CREATED_BY_ID, component
+            .getProperty(TripleStoreUtility.PROP_CREATED_BY_ID));
 
-        if (properties.get(TripleStoreUtility.PROP_VALID_STATUS) != null) {
-            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_VALID_STATUS, properties
-                .get(TripleStoreUtility.PROP_VALID_STATUS));
+        if (component.getProperty(TripleStoreUtility.PROP_VALID_STATUS) != null) {
+            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_VALID_STATUS, component
+                .getProperty(TripleStoreUtility.PROP_VALID_STATUS));
         }
 
-        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_VISIBILITY, properties
-            .get(TripleStoreUtility.PROP_VISIBILITY));
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_VISIBILITY, component
+            .getProperty(TripleStoreUtility.PROP_VISIBILITY));
 
-        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CONTENT_CATEGORY, properties
-            .get(TripleStoreUtility.PROP_CONTENT_CATEGORY));
+        values.put(XmlTemplateProviderConstants.VAR_COMPONENT_CONTENT_CATEGORY, component
+            .getProperty(TripleStoreUtility.PROP_CONTENT_CATEGORY));
 
-        if (properties.get(TripleStoreUtility.PROP_MIME_TYPE) != null) {
-            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_MIME_TYPE, properties
-                .get(TripleStoreUtility.PROP_MIME_TYPE));
+        if (component.getProperty(TripleStoreUtility.PROP_MIME_TYPE) != null) {
+            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_MIME_TYPE, component
+                .getProperty(TripleStoreUtility.PROP_MIME_TYPE));
         }
 
-        if (properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE) != null
+        if (component.getProperty(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE) != null
             && component.getMdRecords().containsKey(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING)
             && !component.getMdRecord(XmlTemplateProviderConstants.DEFAULT_METADATA_FOR_DC_MAPPING).isDeleted()) {
-            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_FILE_NAME, properties
-                .get(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
+            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_FILE_NAME, component
+                .getProperty(de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
         }
-        if (properties.get(TripleStoreUtility.PROP_COMPONENT_PID) != null) {
-            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_PID, properties
-                .get(TripleStoreUtility.PROP_COMPONENT_PID));
+        if (component.getProperty(TripleStoreUtility.PROP_COMPONENT_PID) != null) {
+            values.put(XmlTemplateProviderConstants.VAR_COMPONENT_PID, component
+                .getProperty(TripleStoreUtility.PROP_COMPONENT_PID));
         }
 
-        values.put(XmlTemplateProviderConstants.CONTENT_CHECKSUM_ALGORITHM, properties
-            .get(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM_ALGORITHM));
-        values.put(XmlTemplateProviderConstants.CONTENT_CHECKSUM, properties
-            .get(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM));
+        values.put(XmlTemplateProviderConstants.CONTENT_CHECKSUM_ALGORITHM, component
+            .getProperty(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM_ALGORITHM));
+        values.put(XmlTemplateProviderConstants.CONTENT_CHECKSUM, component
+            .getProperty(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM));
 
         return values;
     }

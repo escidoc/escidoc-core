@@ -394,7 +394,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
                             final String nsUri = mdProperties.get("nsUri");
                             final String dcNewContent =
                                 XmlUtility.createDC(nsUri, ds.toStringUTF8(), getId(),
-                                    getResourcePropertiesValue(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
+                                    getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
                             if (dcNewContent != null && dcNewContent.trim().length() > 0) {
                                 final Datastream dcNew;
                                 try {

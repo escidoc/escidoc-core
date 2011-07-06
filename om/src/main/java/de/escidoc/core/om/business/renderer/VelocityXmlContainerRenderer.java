@@ -280,7 +280,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         throws TripleStoreSystemException, EncodingSystemException, IntegritySystemException, FedoraSystemException,
         WebserverSystemException {
 
-        final Map<String, String> properties = container.getResourceProperties();
         final String id = container.getId();
         values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_TITLE, "Properties");
         values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_HREF, XmlUtility.getContainerPropertiesHref(container
@@ -289,7 +288,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("containerStatus", container.getStatus());
         values.put("containerCreationDate", container.getCreationDate());
         values.put(XmlTemplateProviderConstants.VAR_CONTAINER_STATUS_COMMENT, XmlUtility
-            .escapeForbiddenXmlCharacters(properties.get(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
+            .escapeForbiddenXmlCharacters(container.getProperty(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
         // name
         values.put("containerName", container.getTitle());
         // description
@@ -299,21 +298,22 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         }
 
         // context
-        values.put("containerContextId", properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
+        values.put("containerContextId", container.getProperty(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
         values.put("containerContextHref", Constants.CONTEXT_URL_BASE
-            + properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
-        values.put("containerContextTitle", properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_TITLE));
+            + container.getProperty(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
+        values.put("containerContextTitle", container.getProperty(PropertyMapKeys.CURRENT_VERSION_CONTEXT_TITLE));
         // content model
-        final String contentModelId = properties.get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
+        final String contentModelId = container.getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
         values.put("containerContentModelId", contentModelId);
         values.put("containerContentModelHref", XmlUtility.getContentModelHref(contentModelId));
-        values.put("containerContentModelTitle", properties.get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_TITLE));
+        values.put("containerContentModelTitle", container
+            .getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_TITLE));
 
         // created-by -----------
-        final String createdById = properties.get(PropertyMapKeys.CREATED_BY_ID);
+        final String createdById = container.getProperty(PropertyMapKeys.CREATED_BY_ID);
         values.put("containerCreatedById", createdById);
         values.put("containerCreatedByHref", XmlUtility.getUserAccountHref(createdById));
-        values.put("containerCreatedByTitle", properties.get(PropertyMapKeys.CREATED_BY_TITLE));
+        values.put("containerCreatedByTitle", container.getProperty(PropertyMapKeys.CREATED_BY_TITLE));
 
         // lock -status, -owner, -date
         if (container.isLocked()) {
@@ -331,7 +331,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         }
 
         final String currentVersionId = container.getFullId();
-        final String latestVersionNumber = properties.get(PropertyMapKeys.LATEST_VERSION_NUMBER);
+        final String latestVersionNumber = container.getProperty(PropertyMapKeys.LATEST_VERSION_NUMBER);
         String curVersionNumber = container.getVersionId();
         if (curVersionNumber == null) {
             curVersionNumber = latestVersionNumber;
@@ -347,14 +347,14 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("containerCurrentVersionTitle", "current version");
         values.put("containerCurrentVersionId", currentVersionId);
         values.put("containerCurrentVersionNumber", curVersionNumber);
-        values.put("containerCurrentVersionComment", XmlUtility.escapeForbiddenXmlCharacters(properties
-            .get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
+        values.put("containerCurrentVersionComment", XmlUtility.escapeForbiddenXmlCharacters(container
+            .getProperty(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
 
         // modified by
 
-        final String modifiedById = properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID);
-        values.put("containerCurrentVersionModifiedByTitle", properties
-            .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
+        final String modifiedById = container.getProperty(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID);
+        values.put("containerCurrentVersionModifiedByTitle", container
+            .getProperty(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
         values.put("containerCurrentVersionModifiedByHref", XmlUtility.getUserAccountHref(modifiedById));
         values.put("containerCurrentVersionModifiedById", modifiedById);
 
@@ -366,12 +366,11 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("containerCurrentVersionDate", container.getVersionDate());
 
         if (curVersionNumber.equals(latestVersionNumber)) {
-            final String latestVersionStatus = properties.get(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS);
+            final String latestVersionStatus = container.getProperty(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS);
             values.put("containerCurrentVersionStatus", latestVersionStatus);
 
             if (latestVersionStatus.equals(Constants.STATUS_RELEASED)) {
-                final String latestReleasePid =
-                    container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_PID);
+                final String latestReleasePid = container.getProperty(PropertyMapKeys.LATEST_RELEASE_PID);
                 if (latestReleasePid != null && latestReleasePid.length() != 0) {
                     values.put("containerCurrentVersionPID", latestReleasePid);
                 }
@@ -379,41 +378,40 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         }
         else {
-            values.put("containerCurrentVersionStatus", container.getResourceProperties().get(
-                PropertyMapKeys.CURRENT_VERSION_STATUS));
+            values.put("containerCurrentVersionStatus", container.getProperty(PropertyMapKeys.CURRENT_VERSION_STATUS));
 
             values.put("containerCurrentVersionComment", XmlUtility.escapeForbiddenXmlCharacters(container
-                .getResourceProperties().get(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
-            values.put("containerCurrentVersionModifiedById", container.getResourceProperties().get(
-                PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
+                .getProperty(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
+            values.put("containerCurrentVersionModifiedById", container
+                .getProperty(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
 
-            values.put("containerCurrentVersionModifiedByHref", container.getResourceProperties().get(
-                PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_HREF));
+            values.put("containerCurrentVersionModifiedByHref", container
+                .getProperty(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_HREF));
 
-            values.put("containerCurrentVersionModifiedByTitle", properties
-                .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
+            values.put("containerCurrentVersionModifiedByTitle", container
+                .getProperty(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
         }
 
         // latest version
         values.put("containerLatestVersionHref", container.getLatestVersionHref());
         values.put("containerLatestVersionId", container.getLatestVersionId());
         values.put("containerLatestVersionTitle", "latest version");
-        values.put("containerLatestVersionDate", properties.get(PropertyMapKeys.LATEST_VERSION_DATE));
+        values.put("containerLatestVersionDate", container.getProperty(PropertyMapKeys.LATEST_VERSION_DATE));
         values.put("containerLatestVersionNumber", latestVersionNumber);
         // latest release
         final String containerStatus = container.getStatus();
         if (containerStatus.equals(Constants.STATUS_RELEASED) || containerStatus.equals(Constants.STATUS_WITHDRAWN)) {
             values.put("containerLatestReleaseHref", container.getHrefWithoutVersionNumber() + ':'
-                + container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+                + container.getProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
 
             values.put("containerLatestReleaseId", id + ':'
-                + container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+                + container.getProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
             values.put("containerLatestReleaseTitle", "latest release");
-            values.put("containerLatestReleaseNumber", container.getResourceProperties().get(
-                PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
-            values.put("containerLatestReleaseDate", container.getResourceProperties().get(
-                PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
-            final String latestReleasePid = container.getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_PID);
+            values.put("containerLatestReleaseNumber", container
+                .getProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+            values
+                .put("containerLatestReleaseDate", container.getProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
+            final String latestReleasePid = container.getProperty(PropertyMapKeys.LATEST_RELEASE_PID);
             if (latestReleasePid != null && latestReleasePid.length() != 0) {
                 values.put("containerLatestReleasePid", latestReleasePid);
             }

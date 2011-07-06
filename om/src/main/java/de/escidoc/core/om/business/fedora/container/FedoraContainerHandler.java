@@ -505,7 +505,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         checkLocked();
 
-        final String status = getContainer().getResourceProperties().get(PropertyMapKeys.PUBLIC_STATUS);
+        final String status = getContainer().getProperty(PropertyMapKeys.PUBLIC_STATUS);
         if (!status.equals(Constants.STATUS_PENDING) && !status.equals(Constants.STATUS_IN_REVISION)) {
             throw new InvalidStatusException("Container " + getContainer().getId() + " is in status " + status
                 + ". Cannot delete.");
