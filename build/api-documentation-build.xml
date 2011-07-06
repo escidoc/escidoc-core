@@ -64,7 +64,7 @@
   <property name="xsl.dbdoclet.master.dir"      value="${basedir}/common/${documentation.src.basedir.docbook}/common"/>
 	<property name="xsl.dbdoclet.stylesheet"      value="Api.xsl" />
 	<property name="xslt.src.dir"                 value="${basedir}/escidoc-core.war/src/main/webapp/xsl" />
-  <property name="interface.descriptor.dir"     value="main/resources/META-INF/servlet"/>
+  <property name="interface.descriptor.dir"     value="src/main/resources/META-INF/servlet"/>
 
   <!-- Prefixes, Rest and Logo name -->
 	<property name="prefix.full"      value="full-" />
@@ -162,7 +162,7 @@
 			<param name="component" value="om" />
 			<param name="resource" value="context" />
 			<param name="document" value="_api_doc_OM_Context" />
-			<param name="descriptor" value="${interface.descriptor.dir}/context.xml" />
+			<param name="descriptor" value="om/${interface.descriptor.dir}/context.xml" />
 			<param name="schema.name" value="context.xsd" />
 			<param name="schema.version" value="0.7" />
 			<param name="docbook.name" value="ContextXsd.xml" />
@@ -178,7 +178,7 @@
 			<param name="resource" value="content-model" />
 			<param name="document" value="_api_doc_OM_ContentModel" />
 			<param name="docbook.name" value="ContentModelXsd.xml" />
-			<param name="descriptor" value="${interface.descriptor.dir}/content-model.xml" />
+			<param name="descriptor" value="cmm/${interface.descriptor.dir}/content-model.xml" />
 			<param name="schema.name" value="content-model.xsd" />
 			<param name="schema.version" value="0.1" />
       <param name="draft.mode" value="yes"/>
@@ -193,7 +193,7 @@
 			<param name="resource" value="content-relation" />
 			<param name="document" value="_api_doc_OM_Content_Relation" />
 			<param name="docbook.name" value="ContentRelationXsd.xml" />
-			<param name="descriptor" value="${interface.descriptor.dir}/content-relation.xml" />
+			<param name="descriptor" value="om/${interface.descriptor.dir}/content-relation.xml" />
 			<param name="schema.name" value="content-relation.xsd" />
 			<param name="schema.version" value="0.1" />
 		</antcall>
@@ -206,7 +206,7 @@
 			<param name="component" value="adm" />
 			<param name="resource" value="admin" />
 			<param name="document" value="_api_doc_ADM_Admin" />
-			<param name="descriptor" value="${interface.descriptor.dir}/admin.xml" />
+			<param name="descriptor" value="adm-impl/${interface.descriptor.dir}/admin.xml" />
 			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
@@ -218,7 +218,7 @@
 			<param name="component" value="oum" />
 			<param name="resource" value="organizational-unit" />
 			<param name="document" value="_api_doc_OM_OrganizationalUnit" />
-			<param name="descriptor" value="${interface.descriptor.dir}/organizational-unit.xml" />
+			<param name="descriptor" value="oum/${interface.descriptor.dir}/organizational-unit.xml" />
 			<param name="schema.name" value="organizational-unit.xsd" />
 			<param name="schema.version" value="0.8" />
 			<param name="docbook.name" value="OrganizationalUnitXsd.xml" />
@@ -235,7 +235,7 @@
 			<param name="component" value="oai" />
 			<param name="resource" value="set-definition" />
 			<param name="document" value="_api_doc_OAI_SetDefinition" />
-			<param name="descriptor" value="${interface.descriptor.dir}/set-definition.xml" />
+			<param name="descriptor" value="oai/${interface.descriptor.dir}/set-definition.xml" />
 			<param name="schema.name" value="set-definition.xsd" />
 			<param name="schema.version" value="0.1" />
 			<param name="docbook.name" value="SetDefinitionXsd.xml" />
@@ -253,7 +253,7 @@
 			<param name="resource" value="pdp" />
 			<param name="component" value="aa" />
 			<param name="document" value="_api_doc_AA_PolicyDecisionPoint" />
-			<param name="descriptor" value="${interface.descriptor.dir}/pdp.xml" />
+			<param name="descriptor" value="aa/${interface.descriptor.dir}/pdp.xml" />
 			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
@@ -265,7 +265,7 @@
 			<param name="resource" value="role" />
 			<param name="component" value="aa" />
 			<param name="document" value="_api_doc_AA_Role" />
-			<param name="descriptor" value="${interface.descriptor.dir}/role.xml" />
+			<param name="descriptor" value="aa/${interface.descriptor.dir}/role.xml" />
 			<param name="schema.name" value="role.xsd" />
 			<param name="schema.version" value="0.4" />
 			<param name="docbook.name" value="RoleXsd.xml" />
@@ -281,7 +281,7 @@
 			<param name="resource" value="jhove" />
 			<param name="component" value="tme" />
 			<param name="document" value="_api_doc_TME_Jhove" />
-			<param name="descriptor" value="${interface.descriptor.dir}/jhove.xml" />
+			<param name="descriptor" value="tme/${interface.descriptor.dir}/jhove.xml" />
       <param name="deprecated" value="true"/>
 		</antcall>
 	</target>
@@ -302,7 +302,7 @@
 			<param name="resource" value="user-account" />
 			<param name="component" value="aa" />
 			<param name="document" value="_api_doc_AA_UserAccount" />
-			<param name="descriptor" value="${interface.descriptor.dir}/user-account.xml" />
+			<param name="descriptor" value="aa/${interface.descriptor.dir}/user-account.xml" />
 			<param name="schema.name" value="user-account.xsd" />
 			<param name="schema.version" value="0.7" />
 			<param name="docbook.name" value="UserAccountXsd.xml" />
@@ -314,7 +314,7 @@
 			<param name="resource" value="user-group" />
 			<param name="component" value="aa" />
 			<param name="document" value="_api_doc_AA_UserGroup" />
-			<param name="descriptor" value="${interface.descriptor.dir}/user-group.xml" />
+			<param name="descriptor" value="aa/${interface.descriptor.dir}/user-group.xml" />
 			<param name="schema.name" value="user-group.xsd" />
 			<param name="schema.version" value="0.6" />
 			<param name="docbook.name" value="UserGroupXsd.xml" />
@@ -339,7 +339,7 @@
 			<param name="resource" value="statistic-data" />
 			<param name="component" value="sm" />
 			<param name="document" value="_api_doc_SM_StatisticData" />
-			<param name="descriptor" value="${interface.descriptor.dir}/statistic-data.xml" />
+			<param name="descriptor" value="sm/${interface.descriptor.dir}/statistic-data.xml" />
 			<param name="schema.name" value="statistic-data.xsd" />
 			<param name="schema.version" value="0.3" />
 			<param name="docbook.name" value="StatisticDataXsd.xml" />
@@ -354,7 +354,7 @@
       <param name="resource" value="preprocessing-information" />
       <param name="component" value="sm" />
       <param name="document" value="_api_doc_SM_Preprocessing" />
-      <param name="descriptor" value="${interface.descriptor.dir}/preprocessing.xml" />
+      <param name="descriptor" value="sm/${interface.descriptor.dir}/preprocessing.xml" />
       <param name="schema.name" value="preprocessing-information.xsd" />
       <param name="schema.version" value="0.3" />
       <param name="docbook.name" value="PreprocessingXsd.xml" />
@@ -378,7 +378,7 @@
 			<param name="resource" value="scope" />
 			<param name="component" value="sm" />
 			<param name="document" value="_api_doc_SM_Scope" />
-			<param name="descriptor" value="${interface.descriptor.dir}/scope.xml" />
+			<param name="descriptor" value="sm/${interface.descriptor.dir}/scope.xml" />
 			<param name="schema.name" value="scope.xsd" />
 			<param name="schema.version" value="0.4" />
 			<param name="docbook.name" value="ScopeXsd.xml" />
@@ -411,7 +411,7 @@
 			<param name="resource" value="aggregation-definition" />
 			<param name="component" value="sm" />
 			<param name="document" value="_api_doc_SM_AggregationDefinition" />
-			<param name="descriptor" value="${interface.descriptor.dir}/aggregation-definition.xml" />
+			<param name="descriptor" value="sm/${interface.descriptor.dir}/aggregation-definition.xml" />
 			<param name="schema.name" value="aggregation-definition.xsd" />
 			<param name="docbook.name" value="AggregationDefinitionXsd.xml" />
 			<param name="stylesheet.name" value="createAggregationDefinitionDocbook.xsl" />
@@ -453,7 +453,7 @@
 			<param name="resource" value="report-definition" />
 			<param name="component" value="sm" />
 			<param name="document" value="${report-definition-document}" />
-			<param name="descriptor" value="${interface.descriptor.dir}/report-definition.xml" />
+			<param name="descriptor" value="sm/${interface.descriptor.dir}/report-definition.xml" />
 			<param name="schema.name" value="${report-definition.schema.name}" />
 			<param name="docbook.name" value="${report-definition.docbook.name}" />
 			<param name="stylesheet.name" value="${report-definition.stylesheet.name}" />
@@ -486,7 +486,7 @@
 			<param name="resource" value="report" />
 			<param name="component" value="sm" />
 			<param name="document" value="_api_doc_SM_Report" />
-			<param name="descriptor" value="${interface.descriptor.dir}/report.xml" />
+			<param name="descriptor" value="sm/${interface.descriptor.dir}/report.xml" />
 			<param name="schema.name" value="report.xsd" />
 			<param name="docbook.name" value="ReportXsd.xml" />
 			<param name="stylesheet.name" value="createReportDocbook.xsl" />
@@ -511,7 +511,7 @@
 			<param name="resource" value="search-result" />
 			<param name="document" value="_api_doc_SB_Search" />
 			<param name="docbook.name" value="SearchResultXsd.xml" />
-			<param name="descriptor" value="${interface.descriptor.dir}/search-result.xml" />
+			<param name="descriptor" value="sb/${interface.descriptor.dir}/search-result.xml" />
 			<param name="schema.name" value="search-result.xsd" />
 			<param name="schema.version" value="0.8" />
 		</antcall>
@@ -524,7 +524,7 @@
 			<param name="resource" value="ingest" />
 			<param name="component" value="om" />
 			<param name="document" value="_api_doc_OM_Ingest" />
-			<param name="descriptor" value="${interface.descriptor.dir}/ingest.xml" />
+			<param name="descriptor" value="om/${interface.descriptor.dir}/ingest.xml" />
 			<param name="docbook.name" value="ItemXsd.xml" />
 			<param name="stylesheet.name" value="createIngestDocbook.xsl" />
 			<param name="element" value="ingest" />
@@ -540,7 +540,7 @@
 			<param name="resource" value="item" />
 			<param name="component" value="om" />
 			<param name="document" value="_api_doc_OM_Item" />
-			<param name="descriptor" value="${interface.descriptor.dir}/item.xml" />
+			<param name="descriptor" value="om/${interface.descriptor.dir}/item.xml" />
 			<param name="schema.name" value="item.xsd" />
 			<param name="schema.version" value="0.10" />
 			<param name="docbook.name" value="ItemXsd.xml" />
@@ -558,7 +558,7 @@
 			<param name="component" value="om" />
 			<param name="resource" value="container" />
 			<param name="document" value="_api_doc_OM_Container" />
-			<param name="descriptor" value="${interface.descriptor.dir}/container.xml" />
+			<param name="descriptor" value="om/${interface.descriptor.dir}/container.xml" />
 			<param name="schema.name" value="container.xsd" />
 			<param name="schema.version" value="0.9" />
 			<param name="docbook.name" value="ContainerXsd.xml" />
@@ -574,7 +574,7 @@
 			<param name="resource" value="semanticstore" />
 			<param name="component" value="om" />
 			<param name="document" value="_api_doc_OM_SemanticStore" />
-			<param name="descriptor" value="${interface.descriptor.dir}/semanticstore.xml" />
+			<param name="descriptor" value="om/${interface.descriptor.dir}/semanticstore.xml" />
 			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
@@ -592,12 +592,15 @@
 			<fileset dir="${basedir}/common/${documentation.src.basedir.docbook}/common" />
 		</copy>
 
-		<copy todir="${documentation.dist.basedir.docbook}" encoding="UTF-8" outputencoding="UTF-8">
+		<copy todir="${documentation.dist.basedir.docbook}" encoding="UTF-8" outputencoding="UTF-8" failonerror="false">
 			<fileset dir="${basedir}/${component}/${documentation.src.basedir.docbook}/${component}" />
+		</copy>
+		<copy todir="${documentation.dist.basedir.docbook}" encoding="UTF-8" outputencoding="UTF-8" failonerror="false">
+			<fileset dir="${basedir}/${component}-impl/${documentation.src.basedir.docbook}/${component}" />
 		</copy>
 
 		<copy todir="${documentation.dist.basedir.docbook}"  encoding="UTF-8" outputencoding="UTF-8"
-                        file="${basedir}/${component}/src/${descriptor}" failonerror="true" />
+                        file="${basedir}/${descriptor}" failonerror="true" />
 
     <!-- copy master document because contents will be substituted differently for each component -->
 		<copy todir="${documentation.dist.basedir.docbook}"  encoding="UTF-8" outputencoding="UTF-8"
@@ -664,7 +667,7 @@
 		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="&lt;code> = " value="&lt;code>" />
 
 		<replace file="${documentation.dist.basedir.docbook}/${xsl.dbdoclet.master.document}" token="{JAVADOC}" value="${documentation.dist.basedir.docbook}/${dbdoclet.document}" />
-		<replace file="${documentation.dist.basedir.docbook}/${xsl.dbdoclet.master.document}" token="{DESCRIPTOR}" value="${basedir}/${component}/src/${descriptor}" />
+		<replace file="${documentation.dist.basedir.docbook}/${xsl.dbdoclet.master.document}" token="{DESCRIPTOR}" value="${basedir}/${descriptor}" />
 
 		<antcall target="processXInclude">
 			<param name="input-filename" value="${documentation.dist.basedir.docbook}/${xsl.dbdoclet.master.document}" />
@@ -756,20 +759,18 @@
               additionalparam="-d ${documentation.dist.basedir.docbook} -f ${dbdoclet.document} -booktype book -id numbered -nostatistics -part" 
               packagenames="${dbdoclet.exception.packages},${dbdoclet.component.packages}">
       <sourcepath>
-        <pathelement location="${basedir}/common/src/main/java" />
-        <pathelement location="${basedir}/aa/src/main/java" />
-        <pathelement location="${basedir}/adm-impl/src/main/java" />
-        <pathelement location="${basedir}/cmm/src/main/java" />
-        <pathelement location="${basedir}/oai/src/main/java" />
-        <pathelement location="${basedir}/om/src/main/java" />
-        <pathelement location="${basedir}/oum/src/main/java" />
-        <pathelement location="${basedir}/sb/src/main/java" />
-        <pathelement location="${basedir}/sm/src/main/java" />
-        <pathelement location="${basedir}/statistic-service-impl/src/main/java" />
-        <pathelement location="${basedir}/statistic-service-spec/src/main/java" />
-        <pathelement location="${basedir}/st/src/main/java" />
-        <pathelement location="${basedir}/index-service-impl/src/main/java" />
+        <pathelement location="${basedir}/common-spec/src/main/java" />
+        <pathelement location="${basedir}/aa-spec/src/main/java" />
+        <pathelement location="${basedir}/adm-spec/src/main/java" />
+        <pathelement location="${basedir}/cmm-spec/src/main/java" />
         <pathelement location="${basedir}/index-service-spec/src/main/java" />
+        <pathelement location="${basedir}/oai-spec/src/main/java" />
+        <pathelement location="${basedir}/om-spec/src/main/java" />
+        <pathelement location="${basedir}/oum-spec/src/main/java" />
+        <pathelement location="${basedir}/sb/src/main/java" />
+        <pathelement location="${basedir}/sm-spec/src/main/java" />
+        <pathelement location="${basedir}/st/src/main/java" />
+        <pathelement location="${basedir}/statistic-service-spec/src/main/java" />
       </sourcepath>
       <classpath>
         <pathelement path="${plugin_classpath}"/>
