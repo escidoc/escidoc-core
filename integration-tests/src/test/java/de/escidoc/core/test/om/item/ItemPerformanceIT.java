@@ -55,6 +55,12 @@ import java.util.Vector;
  */
 public class ItemPerformanceIT extends ItemTestBase {
 
+    private static final String LABEL_BASE = "EscidocTestBase:";
+
+    private static final String LABEL_CREATE = LABEL_BASE + "create";
+
+    private static final String LABEL_RETRIEVE = LABEL_BASE + "retrieve";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemPerformanceIT.class);
 
     private static EtmMonitor monitor;
@@ -272,8 +278,8 @@ public class ItemPerformanceIT extends ItemTestBase {
         int noOfItems = itemObjids.size();
         Random r = new Random();
         String objid = null;
-        monitor.reset("EscidocTestBase:create");
-        monitor.reset("EscidocTestBase:retrieve");
+        monitor.reset(LABEL_CREATE);
+        monitor.reset(LABEL_RETRIEVE);
         for (int i = 0; i < ITERATIONS; i++) {
             objid = itemObjids.get(r.nextInt(noOfItems));
             monitor.start();
@@ -301,8 +307,8 @@ public class ItemPerformanceIT extends ItemTestBase {
         Random r = new Random();
         String objid = null;
 
-        monitor.reset("EscidocTestBase:create");
-        monitor.reset("EscidocTestBase:retrieve");
+        monitor.reset(LABEL_CREATE);
+        monitor.reset(LABEL_RETRIEVE);
         for (int i = 0; i < ITERATIONS; i++) {
             objid = itemObjids.get(r.nextInt(noOfItems));
             monitor.start();
@@ -352,7 +358,7 @@ public class ItemPerformanceIT extends ItemTestBase {
      *             Thrown if creating or measurement failed.
      */
     private void measureCreateMethod(final String itemXml, final String templateName) throws Exception {
-        monitor.reset("EscidocTestBase:create");
+        monitor.reset(LABEL_CREATE);
         for (int i = 0; i < ITERATIONS; i++) {
             monitor.start();
             create(itemXml);
@@ -375,8 +381,8 @@ public class ItemPerformanceIT extends ItemTestBase {
      *             Thrown if retrieving or measurement failed.
      */
     private void measureRetrieveMethod(final String objid, final String templateName) throws Exception {
-        monitor.reset("EscidocTestBase:create");
-        monitor.reset("EscidocTestBase:retrieve");
+        monitor.reset(LABEL_CREATE);
+        monitor.reset(LABEL_RETRIEVE);
         for (int i = 0; i < ITERATIONS; i++) {
             monitor.start();
             retrieve(objid);
