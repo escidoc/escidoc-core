@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -15,11 +17,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-@SuppressWarnings({"JavaDoc"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Stream extends OutputStream {
 
@@ -81,13 +83,13 @@ public final class Stream extends OutputStream {
     }
 
     public Stream() {
-        this.currentStream = new LoadingByteArrayOutputStream(2048);
+        this.currentStream = new LoadingByteArrayOutputStream(DEFAULT_THRESHOLD);
         this.setInMemory(true);
     }
 
     public Stream(final long threshold) {
         this.threshold = threshold;
-        this.currentStream = new LoadingByteArrayOutputStream(2048);
+        this.currentStream = new LoadingByteArrayOutputStream(DEFAULT_THRESHOLD);
         this.setInMemory(true);
     }
 
@@ -198,8 +200,8 @@ public final class Stream extends OutputStream {
                 // read the file
                 this.currentStream.close();
                 if(copyOldContent) {
-                    final FileInputStream fin = new FileInputStream(this.tempFile);
-                    IOUtils.copyAndCloseInput(fin, out);
+                    final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
+                    IOUtils.copyAndCloseInput(in, out);
                 }
                 final boolean sucessfull = this.tempFile.delete();
                 if(! sucessfull) {
@@ -229,8 +231,8 @@ public final class Stream extends OutputStream {
             }
         } else {
             // read the file
-            final FileInputStream fin = new FileInputStream(this.tempFile);
-            return IOUtils.readBytesFromStream(fin);
+            final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
+            return IOUtils.readBytesFromStream(in);
         }
     }
 
@@ -244,8 +246,8 @@ public final class Stream extends OutputStream {
             }
         } else {
             // read the file
-            final FileInputStream fin = new FileInputStream(this.tempFile);
-            IOUtils.copyAndCloseInput(fin, out);
+            final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
+            IOUtils.copyAndCloseInput(in, out);
         }
     }
 
@@ -268,10 +270,10 @@ public final class Stream extends OutputStream {
             }
         } else {
             // read the file
-            final FileInputStream fin = new FileInputStream(this.tempFile);
+            final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
             try {
                 final byte bytes[] = new byte[1024];
-                int x = fin.read(bytes);
+                int x = in.read(bytes);
                 int count = 0;
                 while(x != - 1) {
                     if((count + x) > limit) {
@@ -282,12 +284,12 @@ public final class Stream extends OutputStream {
                     if(count >= limit) {
                         x = - 1;
                     } else {
-                        x = fin.read(bytes);
+                        x = in.read(bytes);
                     }
                 }
             } finally {
-                if(fin != null) {
-                    fin.close();
+                if(in != null) {
+                    in.close();
                 }
             }
         }
@@ -308,14 +310,17 @@ public final class Stream extends OutputStream {
             }
         } else {
             // read the file
-            final FileInputStream fin = new FileInputStream(this.tempFile);
-            final byte bytes[] = new byte[1024];
-            int x = fin.read(bytes);
-            while(x != - 1) {
-                out.append(IOUtils.newStringFromBytes(bytes, charsetName, 0, x));
-                x = fin.read(bytes);
+            final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
+            try {
+                final byte bytes[] = new byte[1024];
+                int x = in.read(bytes);
+                while(x != - 1) {
+                    out.append(IOUtils.newStringFromBytes(bytes, charsetName, 0, x));
+                    x = in.read(bytes);
+                }
+            } finally {
+                in.close();
             }
-            fin.close();
         }
     }
 
@@ -397,7 +402,7 @@ public final class Stream extends OutputStream {
             }
         } else {
             try {
-                return new FileInputStream(this.tempFile) {
+                return new BufferedInputStream(new FileInputStream(this.tempFile)) {
                     @Override
                     public void close() throws IOException {
                         super.close();
@@ -426,7 +431,7 @@ public final class Stream extends OutputStream {
                 }
             }
             this.tempFile = null;
-            this.currentStream = new LoadingByteArrayOutputStream(1024);
+            this.currentStream = new LoadingByteArrayOutputStream(DEFAULT_THRESHOLD);
             this.setInMemory(true);
         }
     }
