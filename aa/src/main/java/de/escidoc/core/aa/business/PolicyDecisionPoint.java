@@ -72,7 +72,6 @@ import de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.aa.business.xacml.finder.CheckProvidedAttributeFinderModule;
-import de.escidoc.core.aa.business.xacml.finder.TripleStoreAttributeFinderModule;
 import de.escidoc.core.aa.convert.XacmlParser;
 import de.escidoc.core.aa.security.cache.SecurityInterceptorCache;
 import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
