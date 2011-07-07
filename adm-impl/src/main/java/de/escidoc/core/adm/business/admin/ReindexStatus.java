@@ -30,11 +30,14 @@ package de.escidoc.core.adm.business.admin;
 
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Singleton which contains all information about a running or finished reindexing process.
  *
  * @author Michael Hoppe
  */
+@Service("admin.ReindexStatus")
 public final class ReindexStatus extends AdminMethodStatus {
 
     /**

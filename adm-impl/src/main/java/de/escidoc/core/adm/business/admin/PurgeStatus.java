@@ -28,11 +28,14 @@
  */
 package de.escidoc.core.adm.business.admin;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Singleton which contains all information about a running or finished purging process.
  *
  * @author André Schenk
  */
+@Service("admin.PurgeStatus")
 public final class PurgeStatus extends AdminMethodStatus {
 
     private int count;

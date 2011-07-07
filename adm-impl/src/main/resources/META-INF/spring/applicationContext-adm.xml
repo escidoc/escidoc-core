@@ -22,6 +22,4 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="escidoc-core.DataSource"/>
         </property>
     </bean>
-    <bean id="admin.PurgeStatus" class="de.escidoc.core.adm.business.admin.PurgeStatus" scope="singleton"/>
-    <bean id="admin.ReindexStatus" class="de.escidoc.core.adm.business.admin.ReindexStatus" scope="singleton"/>
 </beans>
