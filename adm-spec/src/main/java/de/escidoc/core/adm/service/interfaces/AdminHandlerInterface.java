@@ -39,14 +39,27 @@ public interface AdminHandlerInterface {
      * the user, e.g. the total number of objects to delete. <b>Example:</b><br/> <br/>
      * <p/>
      * <pre>
-     * {@code
-     * <?xml version="1.0" encoding="UTF-8"?>
-     * <param>
-     *   <id>escidoc:1</id>
-     *   <id>escidoc:2</id>
-     *   <id>escidoc:3</id>
-     * </param>
-     * }
+     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+     * </pre>
+     * <p/>
+     * <pre>
+     * &lt;param&gt;
+     * </pre>
+     * <p/>
+     * <pre>
+     *   &lt;id&gt;escidoc:1&lt;/id&gt;
+     * </pre>
+     * <p/>
+     * <pre>
+     *   &lt;id&gt;escidoc:2&lt;/id&gt;
+     * </pre>
+     * <p/>
+     * <pre>
+     *   &lt;id&gt;escidoc:3&lt;/id&gt;
+     * </pre>
+     * <p/>
+     * <pre>
+     * &lt;/param&gt;
      * </pre>
      *
      * @param taskParam list of object ids to delete<br/> boolean value to signal if the search index and the Resource
