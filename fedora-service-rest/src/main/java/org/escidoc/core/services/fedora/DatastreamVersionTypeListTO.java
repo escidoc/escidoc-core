@@ -9,7 +9,7 @@ import java.util.ListIterator;
 public final class DatastreamVersionTypeListTO
         implements Collection<DatastreamVersionTypeTO>, List<DatastreamVersionTypeTO> {
 
-    private List<DatastreamVersionTypeTOListener> datastreamVersionTypeTOListener =
+    private final List<DatastreamVersionTypeTOListener> datastreamVersionTypeTOListener =
             new ArrayList<DatastreamVersionTypeTOListener>();
     private final List<DatastreamVersionTypeTO> internalArrayList = new ArrayList<DatastreamVersionTypeTO>();
 

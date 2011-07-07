@@ -28,7 +28,7 @@ public class ElementStreamFilter implements StreamFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ElementStreamFilter.class);
 
-    private XMLStreamReader filteredXmlStreamReader;
+    private final XMLStreamReader filteredXmlStreamReader;
     private PrintStream output;
     private boolean active = false;
     private final List<QName> ignoredElements = new ArrayList<QName>();
