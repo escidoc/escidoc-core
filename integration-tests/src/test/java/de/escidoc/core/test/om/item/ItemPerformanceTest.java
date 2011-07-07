@@ -52,11 +52,17 @@ import java.util.Vector;
 
 /**
  * Measure performance of Item create.
- *
+ * 
  * @author Steffen Wagner
  */
 @RunWith(value = Parameterized.class)
 public class ItemPerformanceTest extends ItemTestBase {
+
+    private static final String LABEL_BASE = "EscidocTestBase:";
+
+    private static final String LABEL_CREATE = LABEL_BASE + "create";
+
+    private static final String LABEL_RETRIEVE = LABEL_BASE + "retrieve";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemPerformanceTest.class);
 
@@ -77,8 +83,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -105,8 +112,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure create of minimal-item-01.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testCreate01() throws Exception {
@@ -116,8 +124,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure create of minimal-item-02.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testCreate02() throws Exception {
@@ -127,8 +136,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure create of minimal-item-03.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testCreate03() throws Exception {
@@ -138,8 +148,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure create of minimal-item-04.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testCreate04() throws Exception {
@@ -149,8 +160,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure create of Item with many components.
-     *
-     * @throws Exception If creation failed.
+     * 
+     * @throws Exception
+     *             If creation failed.
      */
     @Test
     public void testCreate05() throws Exception {
@@ -164,8 +176,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure retrieve of minimal-item-01.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieve01() throws Exception {
@@ -180,8 +193,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure retrieve of minimal-item-02.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieve02() throws Exception {
@@ -196,8 +210,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure retrieve of minimal-item-03.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieve03() throws Exception {
@@ -212,8 +227,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure retrieve of minimal-item-04.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieve04() throws Exception {
@@ -228,8 +244,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure retrieve of escidoc_item_with_3_components-01.xml.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieve05() throws Exception {
@@ -245,8 +262,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure retrieve of escidoc_item_with_many_components-01.xml.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieve06() throws Exception {
@@ -262,8 +280,9 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure retrieve Items randomly.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveRandom() throws Exception {
@@ -272,11 +291,8 @@ public class ItemPerformanceTest extends ItemTestBase {
         int noOfItems = itemObjids.size();
         Random r = new Random();
         String objid = null;
-
-        System.out.println("Number of Items: " + noOfItems);
-
-        monitor.reset("EscidocTestBase:create");
-        monitor.reset("EscidocTestBase:retrieve");
+        monitor.reset(LABEL_CREATE);
+        monitor.reset(LABEL_RETRIEVE);
         for (int i = 0; i < ITERATIONS; i++) {
             objid = itemObjids.get(r.nextInt(noOfItems));
             monitor.start();
@@ -292,8 +308,9 @@ public class ItemPerformanceTest extends ItemTestBase {
     /**
      * Measure retrieve Items and afterwards one Component of the Item randomly. Measure time for Item and Component
      * retrieve.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveRandom2() throws Exception {
@@ -303,10 +320,8 @@ public class ItemPerformanceTest extends ItemTestBase {
         Random r = new Random();
         String objid = null;
 
-        System.out.println("Number of Items: " + noOfItems);
-
-        monitor.reset("EscidocTestBase:create");
-        monitor.reset("EscidocTestBase:retrieve");
+        monitor.reset(LABEL_CREATE);
+        monitor.reset(LABEL_RETRIEVE);
         for (int i = 0; i < ITERATIONS; i++) {
             objid = itemObjids.get(r.nextInt(noOfItems));
             monitor.start();
@@ -333,9 +348,11 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure the create Item method.
-     *
-     * @param template Name of the template file.
-     * @throws Exception Thrown if creating or measurement failed.
+     * 
+     * @param template
+     *            Name of the template file.
+     * @throws Exception
+     *             Thrown if creating or measurement failed.
      */
     private void measureCreateMethod(final String template) throws Exception {
 
@@ -345,13 +362,16 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure the create Item method.
-     *
-     * @param itemXml      The XML of the Item.
-     * @param templateName Name of the template file.
-     * @throws Exception Thrown if creating or measurement failed.
+     * 
+     * @param itemXml
+     *            The XML of the Item.
+     * @param templateName
+     *            Name of the template file.
+     * @throws Exception
+     *             Thrown if creating or measurement failed.
      */
     private void measureCreateMethod(final String itemXml, final String templateName) throws Exception {
-        monitor.reset("EscidocTestBase:create");
+        monitor.reset(LABEL_CREATE);
         for (int i = 0; i < ITERATIONS; i++) {
             monitor.start();
             create(itemXml);
@@ -365,14 +385,17 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Measure the retrieve Item method.
-     *
-     * @param objid        Objid of Item.
-     * @param templateName Name of the template file.
-     * @throws Exception Thrown if retrieving or measurement failed.
+     * 
+     * @param objid
+     *            Objid of Item.
+     * @param templateName
+     *            Name of the template file.
+     * @throws Exception
+     *             Thrown if retrieving or measurement failed.
      */
     private void measureRetrieveMethod(final String objid, final String templateName) throws Exception {
-        monitor.reset("EscidocTestBase:create");
-        monitor.reset("EscidocTestBase:retrieve");
+        monitor.reset(LABEL_CREATE);
+        monitor.reset(LABEL_RETRIEVE);
         for (int i = 0; i < ITERATIONS; i++) {
             monitor.start();
             retrieve(objid);
@@ -386,10 +409,12 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     /**
      * Fill the Environment object with values.
-     *
-     * @param te The Environment object.
+     * 
+     * @param te
+     *            The Environment object.
      * @return The updated Environment.
-     * @throws Exception Thrown if obtaining values failed.
+     * @throws Exception
+     *             Thrown if obtaining values failed.
      */
     private Environment setTestEnviromentValues(final Environment te) throws Exception {
 
@@ -402,7 +427,8 @@ public class ItemPerformanceTest extends ItemTestBase {
         }
 
         String v = obtainFrameworkVersion();
-        te.setFwSeries(v);
+
+        te.setFwSeries(getFrameworkSeries(v));
         te.setFwBuild(v);
 
         te.setJavaVersion(System.getProperty("java.version"));
@@ -411,4 +437,27 @@ public class ItemPerformanceTest extends ItemTestBase {
         return te;
     }
 
+    /**
+     * Calculate framework series from build number.
+     * 
+     * @param buildNumber
+     *            Build number
+     * 
+     * @return framework series
+     */
+    private String getFrameworkSeries(final String buildNumber) {
+
+        String fwSeries = null;
+
+        if (buildNumber.equals("trunk-SNAPSHOT")) {
+            // trunk-SNAPSHOT
+            fwSeries = "trunk";
+        }
+        else {
+            // 1.3[.x][-SNAPSHOT|RC|?]
+            fwSeries = buildNumber.substring(0, 3);
+        }
+
+        return fwSeries;
+    }
 }
