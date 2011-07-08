@@ -47,6 +47,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.openid.OpenIDAttribute;
+import org.springframework.security.openid.OpenIDAuthenticationToken;
 
 import de.escidoc.core.aa.business.SecurityHelper;
 import de.escidoc.core.aa.business.persistence.UserAccount;
@@ -55,6 +57,7 @@ import de.escidoc.core.aa.business.persistence.UserAttribute;
 import de.escidoc.core.aa.business.persistence.UserLoginData;
 import de.escidoc.core.aa.ldap.EscidocLdapUserDetails;
 import de.escidoc.core.aa.openid.EscidocOpenidUserDetails;
+import de.escidoc.core.aa.openid.EscidocOpenidUserDetailsService;
 import de.escidoc.core.aa.shibboleth.ShibbolethUser;
 import de.escidoc.core.common.exceptions.application.missing.MissingParameterException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -325,9 +328,11 @@ public class Login extends HttpServlet {
                 attributes = shibUser.getStringAttributes();
             }
             else if (principal instanceof EscidocOpenidUserDetails) {
+                ((EscidocOpenidUserDetails) principal).addAttributes(((OpenIDAuthenticationToken) authentication)
+                    .getAttributes());
                 loginname = ((EscidocUserDetails) principal).getId();
                 username = loginname;
-                attributes = null;
+                attributes = ((EscidocOpenidUserDetails) principal).getStringAttributes();
             }
             else {
                 loginname = authentication.getName();
