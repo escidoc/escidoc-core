@@ -215,6 +215,7 @@ default-lazy-init="false">
     	<property name="authenticationManager" ref="authenticationManager"/>
 		<property name="consumer" ref="myOpenID4JavaConsumer" />
 		<property name="openidProviderRegex" value=".*" />
+		<property name="providerRegexFailureUrl" value="/aa/login/openidlogin.jsp?login_error=true" />
 	</bean>
  	<bean id="openIDAuthenticationProvider" class="org.springframework.security.openid.OpenIDAuthenticationProvider">
   		<property name="userDetailsService" ref="openidUserDetailsService" />

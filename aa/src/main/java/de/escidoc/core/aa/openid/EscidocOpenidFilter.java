@@ -34,7 +34,6 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.security.authentication.ProviderNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.openid.OpenIDAuthenticationFilter;
@@ -48,10 +47,15 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
 
     private String openidProviderRegex = null;
 
+    private String providerRegexFailureUrl = null;
+
     /**
-     * Authentication has two phases. <ol> <li>The initial submission of the claimed OpenID. A redirect to the URL
-     * returned from the consumer will be performed and null will be returned.</li> <li>The redirection from the OpenID
-     * server to the return_to URL, once it has authenticated the user</li> </ol>
+     * Authentication has two phases.
+     * <ol>
+     * <li>The initial submission of the claimed OpenID. A redirect to the URL returned from the consumer will be
+     * performed and null will be returned.</li>
+     * <li>The redirection from the OpenID server to the return_to URL, once it has authenticated the user</li>
+     * </ol>
      */
     @Override
     public Authentication attemptAuthentication(final HttpServletRequest request, final HttpServletResponse response)
@@ -59,15 +63,17 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
         String openidIdentifier = request.getParameter(DEFAULT_CLAIMED_IDENTITY_FIELD);
         if (openidIdentifier != null && openidProviderPattern != null
             && !openidProviderPattern.matcher(openidIdentifier).find()) {
-            throw new ProviderNotFoundException("specified openId-provider is not supported");
+            response.sendRedirect(providerRegexFailureUrl + "&message=specified OpenID Provider is not supported");
+            return null;
         }
         return super.attemptAuthentication(request, response);
     }
 
     /**
      * Sets the openid-provider-regex
-     *
-     * @param openidProviderRegex openidProviderRegex
+     * 
+     * @param openidProviderRegex
+     *            openidProviderRegex
      */
     public void setOpenidProviderRegex(String openidProviderRegex) {
         this.openidProviderRegex = openidProviderRegex;
@@ -77,6 +83,16 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
         else {
             openidProviderPattern = Pattern.compile(openidProviderRegex);
         }
+    }
+
+    /**
+     * Sets the url to redirect to if providerUrl does not match the openidProviderRegex
+     * 
+     * @param providerRegexFailureUrl
+     *            providerRegexFailureUrl
+     */
+    public void setProviderRegexFailureUrl(String providerRegexFailureUrl) {
+        this.providerRegexFailureUrl = providerRegexFailureUrl;
     }
 
 }

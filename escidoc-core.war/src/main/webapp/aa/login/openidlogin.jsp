@@ -1,4 +1,33 @@
-<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt' %>
+<%
+ /*
+  * CDDL HEADER START
+  *
+  * The contents of this file are subject to the terms of the
+  * Common Development and Distribution License, Version 1.0 only
+  * (the "License").  You may not use this file except in compliance
+  * with the License.
+  *
+  * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+  * or http://www.escidoc.de/license.
+  * See the License for the specific language governing permissions
+  * and limitations under the License.
+  *
+  * When distributing Covered Code, include this CDDL HEADER in each
+  * file and include the License file at license/ESCIDOC.LICENSE.
+  * If applicable, add the following below this CDDL HEADER, with the
+  * fields enclosed by brackets "[]" replaced with your own identifying
+  * information: Portions Copyright [yyyy] [name of copyright owner]
+  *
+  * CDDL HEADER END
+  */
+
+ /*
+  * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft
+  * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+  * Gesellschaft zur Foerderung der Wissenschaft e.V.
+  * All rights reserved.  Use is subject to license terms.
+  */
+%>
 
 <html>
 <head>
@@ -32,12 +61,13 @@
       	<%-- this form-login-page form is also used as the
          form-error-page to ask for a login again.
          --%>
-    	<c:if test="${not empty param.login_error}">
-      		<font face="Arial, Helvetica, sans-serif" color="red">
-        	Your login attempt was not successful, try again.<br/><br/>
-        	Reason: <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
-      		</font>
-    	</c:if>
+        <%
+        	if (request.getParameter("login_error") != null) {
+        		out.println("<font face=\"Arial, Helvetica, sans-serif\" color=\"red\">"
+        				+ "Your login attempt was not successful, try again.<br/><br/>"
+        				+ "Reason: " + request.getParameter("message") + "</font>");
+        	}
+        %>
     </td>
       <td width="3%">&nbsp;</td>
     </tr>
