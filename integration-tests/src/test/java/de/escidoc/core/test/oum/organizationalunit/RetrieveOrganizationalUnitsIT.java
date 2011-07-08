@@ -28,18 +28,23 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
-import de.escidoc.core.test.EscidocAbstractTest;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import de.escidoc.core.test.EscidocAbstractTest;
 
 public class RetrieveOrganizationalUnitsIT extends OrganizationalUnitTestBase {
 
@@ -56,6 +61,8 @@ public class RetrieveOrganizationalUnitsIT extends OrganizationalUnitTestBase {
     static final String FORMAT_TSV = "TSV";
 
     static final String FLUSH = "true";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RetrieveOrganizationalUnitsIT.class);
 
     /**
      * Test retrieving a list of organizational units that are top level organizational units.
@@ -337,6 +344,8 @@ public class RetrieveOrganizationalUnitsIT extends OrganizationalUnitTestBase {
 
         // create child ou
         final String childXml = createSuccessfully("escidoc_ou_create.xml");
+        LOGGER.info("starting testOumFrou12 at "
+            + new DateTime(System.currentTimeMillis() + (60 * 60 * 1000), DateTimeZone.UTC).toString());
 
         Document toBeUpdatedDocument = getDocument(childXml);
 
