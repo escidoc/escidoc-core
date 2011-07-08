@@ -3045,9 +3045,8 @@
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd"
-    default-autowire="no"
-    default-lazy-init="true""&gt;
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
+    default-lazy-init="false""&gt;
 
     &lt;security:http auto-config="false" path-type="regex" ...&gt;
         &lt;security:intercept-url 
@@ -3190,8 +3189,10 @@
     &lt;property name="userDetailsContextMapper"&gt;
         &lt;bean class="de.escidoc.core.aa.ldap.EscidocLdapContextMapper"/&gt;
     &lt;/property&gt;
-    &lt;security:custom-authentication-provider /&gt;
 &lt;/bean&gt;
+	&lt;security:authentication-manager&gt;
+    	&lt;security:authentication-provider ref="ldapAuthProvider" /&gt;
+    &lt;/security:authentication-manager&gt;
             </programlisting>
         </section>
         <section>
@@ -3249,10 +3250,14 @@
         pattern="/aa/login[^/].*$" 
         access="IS_AUTHENTICATED_FULLY"/&gt;
     &lt;security:intercept-url pattern="/.*" filters="none" /&gt;
+    &lt;security:custom-filter ref="shibFilter" before="CAS_FILTER"/&gt;
 &lt;/security:http&gt;
 
 &lt;!-- Definition of authentication providers 
      and additionally needed beans --&gt;
+	&lt;security:authentication-manager&gt;
+    	&lt;security:authentication-provider ref="shibProvider" /&gt;
+	&lt;/security:authentication-manager&gt;    
 &lt;bean id="shibFilter" 
     class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationFilter"&gt;
     &lt;security:custom-filter before="AUTHENTICATION_PROCESSING_FILTER"/&gt;
@@ -3264,7 +3269,6 @@
 &lt;/bean&gt;
 &lt;bean id="shibProvider" 
     class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationProvider"&gt;
-    &lt;security:custom-authentication-provider /&gt;
 &lt;/bean&gt;
 		    </programlisting>
         </section>
@@ -3298,12 +3302,74 @@
 
 &lt;!-- Definition of authentication providers 
      and additionally needed beans --&gt;
+&lt;security:authentication-manager&gt;
 &lt;security:authentication-provider&gt;
     &lt;security:jdbc-user-service
         data-source-ref="escidoc-core.DataSource"
         users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
         authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" /&gt;
 &lt;/security:authentication-provider&gt;
+&lt;/security:authentication-manager&gt;
+            </programlisting>
+        </section>
+        <section>
+            <title>Login via OpenID</title>
+            <para>OpenID-Login logs in via an OpenID-Provider. 
+            The OpenID-Provider is retrived from the OpenID-Url provided by the user in the login-form.
+            Supported OpenID-Providers are restrictable by providing an openidProviderRegex in the openIdFilter-bean.
+            If the OpenID-Provider is not supported, the user is redirected to the login-page that displays the error-message.
+            One can configure, which of the attributes the OpenID-Provider returns should get saved as user-attributes in the eSciDOc internal Database
+            by providing the attributes in the myOpenID4JavaConsumer-bean as a list of OpenIdAttributes.</para>
+            
+            <programlisting>
+    &lt;bean id="openidInitializer" class="de.escidoc.core.aa.openid.EscidocOpenidInitializer" /&gt;
+    &lt;security:http auto-config="false"
+        path-type="regex"&gt;
+		&lt;security:session-management session-fixation-protection="none"/&gt;
+        &lt;security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/&gt;
+        &lt;security:intercept-url pattern="/.*" filters="none" /&gt;
+        &lt;security:openid-login 
+        	user-service-ref="openidUserDetailsService" 
+        	login-page="/aa/login/openidlogin.jsp"
+        	authentication-failure-url="/aa/login/openidlogin.jsp?login_error=true" /&gt;
+        &lt;security:custom-filter ref="openidFilter" before="CAS_FILTER"/&gt;
+    &lt;/security:http&gt;
+
+	&lt;bean id="openidUserDetailsService" class="de.escidoc.core.aa.openid.EscidocOpenidUserDetailsService" /&gt;
+    &lt;bean id="openidFilter" class="de.escidoc.core.aa.openid.EscidocOpenidFilter"&gt;
+    	&lt;property name="authenticationManager" ref="authenticationManager"/&gt;
+		&lt;property name="consumer" ref="myOpenID4JavaConsumer" /&gt;
+		&lt;property name="openidProviderRegex" value=".*" /&gt;
+		&lt;property name="providerRegexFailureUrl" value="/aa/login/openidlogin.jsp?login_error=true" /&gt;
+	&lt;/bean&gt;
+ 	&lt;bean id="openIDAuthenticationProvider" class="org.springframework.security.openid.OpenIDAuthenticationProvider"&gt;
+  		&lt;property name="userDetailsService" ref="openidUserDetailsService" /&gt;
+ 	&lt;/bean&gt;
+	 &lt;bean id="myOpenID4JavaConsumer" class="org.springframework.security.openid.OpenID4JavaConsumer"&gt;
+	  &lt;constructor-arg index="0"&gt;
+	  	&lt;bean class="org.openid4java.consumer.ConsumerManager"/&gt;
+	  &lt;/constructor-arg&gt;
+	  &lt;constructor-arg index="1"&gt;
+	   &lt;list value-type="org.springframework.security.openid.OpenIDAttribute"&gt;
+	    &lt;bean class="org.springframework.security.openid.OpenIDAttribute"&gt;
+	     &lt;constructor-arg index="0" value="email"/&gt;
+	     &lt;constructor-arg index="1" value="http://axschema.org/contact/email"/&gt;
+	     &lt;property name="required" value="true"/&gt;
+	     &lt;property name="count" value="1"/&gt;
+	    &lt;/bean&gt;
+	    &lt;bean class="org.springframework.security.openid.OpenIDAttribute"&gt;
+	     &lt;constructor-arg index="0" value="fullname"/&gt;
+	     &lt;constructor-arg index="1" value="http://axschema.org/namePerson"/&gt;
+	     &lt;property name="required" value="true"/&gt;
+	     &lt;property name="count" value="1"/&gt;
+	    &lt;/bean&gt;
+	   &lt;/list&gt;
+	  &lt;/constructor-arg&gt;
+	 &lt;/bean&gt;
+	  
+	&lt;security:authentication-manager alias="authenticationManager"&gt;
+    	&lt;security:authentication-provider ref="openIDAuthenticationProvider"/&gt;
+	&lt;/security:authentication-manager&gt;
             </programlisting>
         </section>
     </section>
