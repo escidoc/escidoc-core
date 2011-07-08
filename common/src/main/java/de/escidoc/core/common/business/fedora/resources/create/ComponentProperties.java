@@ -40,7 +40,7 @@ public class ComponentProperties {
 
     private String validStatus;
 
-    private String mimeType = "application/octet-stream";
+    private String mimeType;
 
     /**
      * Component Properties POJO for create.
