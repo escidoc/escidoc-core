@@ -206,17 +206,7 @@ default-lazy-init="false">
         <security:openid-login 
         	user-service-ref="openidUserDetailsService" 
         	login-page="/aa/login/openidlogin.jsp"
-        	authentication-failure-url="/aa/login/openidlogin.jsp?login_error=true">
-        	<security:attribute-exchange>
-	            <security:openid-attribute name="oiNamePersonFullname" type="http://schema.openid.net/namePerson" required="false"/>
-	            <security:openid-attribute name="axContactEmail" type="http://axschema.org/contact/email" required="false"/>
-	            <security:openid-attribute name="oiContactEmail" type="http://schema.openid.net/contact/email" required="false"/>
-	            <security:openid-attribute name="axNamePersonFullname" type="http://axschema.org/namePerson" required="false"/>
-	            <security:openid-attribute name="axNamePersonFriendlyName" type="http://axschema.org/namePerson/friendly" required="false"/>
-	            <security:openid-attribute name="axNamePersonFirstName" type="http://axschema.org/namePerson/first" required="false"/>
-	            <security:openid-attribute name="axNamePersonLastName" type="http://axschema.org/namePerson/last" required="false"/>
-	        </security:attribute-exchange>
-		</security:openid-login>
+        	authentication-failure-url="/aa/login/openidlogin.jsp?login_error=true" />
         <security:custom-filter ref="openidFilter" before="CAS_FILTER"/>
     </security:http>
 
@@ -224,6 +214,7 @@ default-lazy-init="false">
     <bean id="openidFilter" class="de.escidoc.core.aa.openid.EscidocOpenidFilter">
     	<property name="authenticationManager" ref="authenticationManager"/>
 		<property name="consumer" ref="myOpenID4JavaConsumer" />
+		<property name="openidProviderRegex" value=".*" />
 	</bean>
  	<bean id="openIDAuthenticationProvider" class="org.springframework.security.openid.OpenIDAuthenticationProvider">
   		<property name="userDetailsService" ref="openidUserDetailsService" />
@@ -237,6 +228,12 @@ default-lazy-init="false">
 	    <bean class="org.springframework.security.openid.OpenIDAttribute">
 	     <constructor-arg index="0" value="email"/>
 	     <constructor-arg index="1" value="http://axschema.org/contact/email"/>
+	     <property name="required" value="true"/>
+	     <property name="count" value="1"/>
+	    </bean>
+	    <bean class="org.springframework.security.openid.OpenIDAttribute">
+	     <constructor-arg index="0" value="fullname"/>
+	     <constructor-arg index="1" value="http://axschema.org/namePerson"/>
 	     <property name="required" value="true"/>
 	     <property name="count" value="1"/>
 	    </bean>
