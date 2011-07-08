@@ -204,7 +204,19 @@ default-lazy-init="false">
         <security:intercept-url pattern="/.*" filters="none" />
         <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
         <security:openid-login 
-        	user-service-ref="openidUserDetailsService" login-page="/aa/login/openidlogin.jsp"/>
+        	user-service-ref="openidUserDetailsService" 
+        	login-page="/aa/login/openidlogin3.jsp"
+        	authentication-failure-url="/aa/login/openidlogin3.jsp?login_error=true">
+        	<security:attribute-exchange>
+	            <security:openid-attribute name="oiNamePersonFullname" type="http://schema.openid.net/namePerson" required="false"/>
+	            <security:openid-attribute name="axContactEmail" type="http://axschema.org/contact/email" required="false"/>
+	            <security:openid-attribute name="oiContactEmail" type="http://schema.openid.net/contact/email" required="false"/>
+	            <security:openid-attribute name="axNamePersonFullname" type="http://axschema.org/namePerson" required="false"/>
+	            <security:openid-attribute name="axNamePersonFriendlyName" type="http://axschema.org/namePerson/friendly" required="false"/>
+	            <security:openid-attribute name="axNamePersonFirstName" type="http://axschema.org/namePerson/first" required="false"/>
+	            <security:openid-attribute name="axNamePersonLastName" type="http://axschema.org/namePerson/last" required="false"/>
+	        </security:attribute-exchange>
+		</security:openid-login>
         <security:custom-filter ref="openidFilter" before="CAS_FILTER"/>
     </security:http>
 
@@ -212,7 +224,6 @@ default-lazy-init="false">
     <bean id="openidFilter" class="de.escidoc.core.aa.openid.EscidocOpenidFilter">
     	<property name="authenticationManager" ref="authenticationManager"/>
     </bean>
- 
  	<bean id="openIDAuthenticationProvider" class="org.springframework.security.openid.OpenIDAuthenticationProvider">
   		<property name="userDetailsService" ref="openidUserDetailsService" />
  	</bean>
