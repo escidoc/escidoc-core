@@ -205,8 +205,8 @@ default-lazy-init="false">
         <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
         <security:openid-login 
         	user-service-ref="openidUserDetailsService" 
-        	login-page="/aa/login/openidlogin3.jsp"
-        	authentication-failure-url="/aa/login/openidlogin3.jsp?login_error=true">
+        	login-page="/aa/login/openidlogin.jsp"
+        	authentication-failure-url="/aa/login/openidlogin.jsp?login_error=true">
         	<security:attribute-exchange>
 	            <security:openid-attribute name="oiNamePersonFullname" type="http://schema.openid.net/namePerson" required="false"/>
 	            <security:openid-attribute name="axContactEmail" type="http://axschema.org/contact/email" required="false"/>
@@ -228,53 +228,22 @@ default-lazy-init="false">
  	<bean id="openIDAuthenticationProvider" class="org.springframework.security.openid.OpenIDAuthenticationProvider">
   		<property name="userDetailsService" ref="openidUserDetailsService" />
  	</bean>
-	 <beans:bean id="myOpenID4JavaConsumer" class="org.springframework.security.openid.OpenID4JavaConsumer">
-	  <beans:constructor-arg index="0" ref="myConsumerManager"></beans:constructor-arg>
-	  <beans:constructor-arg index="1">
-	   <beans:list value-type="org.springframework.security.openid.OpenIDAttribute">
-	    <beans:bean class="org.springframework.security.openid.OpenIDAttribute">
-	     <beans:constructor-arg index="0" value="email"/>
-	     <beans:constructor-arg index="1" value="http://axschema.org/contact/email"/>
-	     <beans:property name="required" value="true"/>
-	    </beans:bean>
-	   </beans:list>
-	  </beans:constructor-arg>
-	 </beans:bean>
+	 <bean id="myOpenID4JavaConsumer" class="org.springframework.security.openid.OpenID4JavaConsumer">
+	  <constructor-arg index="0">
+	  	<bean class="org.openid4java.consumer.ConsumerManager"/>
+	  </constructor-arg>
+	  <constructor-arg index="1">
+	   <list value-type="org.springframework.security.openid.OpenIDAttribute">
+	    <bean class="org.springframework.security.openid.OpenIDAttribute">
+	     <constructor-arg index="0" value="email"/>
+	     <constructor-arg index="1" value="http://axschema.org/contact/email"/>
+	     <property name="required" value="true"/>
+	     <property name="count" value="1"/>
+	    </bean>
+	   </list>
+	  </constructor-arg>
+	 </bean>
 	  
-	 <beans:bean id="myConsumerManager" class="org.openid4java.consumer.ConsumerManager">
-	  <beans:constructor-arg index="0" ref="myRealmVerifierFactory"></beans:constructor-arg>
-	  <beans:constructor-arg index="1" ref="myDiscovery"></beans:constructor-arg>
-	  <beans:constructor-arg index="2" ref="myHttpFetcherFactory"></beans:constructor-arg>
-	 </beans:bean>
-	  
-	 <beans:bean id="myRealmVerifierFactory" class="org.openid4java.server.RealmVerifierFactory">
-	  <beans:constructor-arg index="0" ref="myYadisResolver"></beans:constructor-arg>
-	 </beans:bean>
-	  
-	 <beans:bean id="myYadisResolver" class="org.openid4java.discovery.yadis.YadisResolver">
-	  <beans:constructor-arg index="0" ref="myHttpFetcherFactory"></beans:constructor-arg>
-	 </beans:bean>
-	  
-	 <beans:bean id="myHttpFetcherFactory" class="org.openid4java.util.HttpFetcherFactory">
-	  <beans:constructor-arg index="0" ref="myProvider"></beans:constructor-arg>
-	 </beans:bean>
-	  
-	 <beans:bean id="myProvider" class="com.technowobble.security.MyHttpCacheProvider"></beans:bean>
-	  
-	 <beans:bean id="myDiscovery" class="org.openid4java.discovery.Discovery">
-	  <beans:constructor-arg index="0" ref="myHtmlResolver"></beans:constructor-arg>
-	  <beans:constructor-arg index="1" ref="myYadisResolver"></beans:constructor-arg>
-	  <beans:constructor-arg index="2" ref="myXriResolver"></beans:constructor-arg>
-	 </beans:bean>
-	  
-	 <beans:bean id="myHtmlResolver" class="org.openid4java.discovery.html.HtmlResolver">
-	  <beans:constructor-arg index="0" ref="myHttpFetcherFactory"></beans:constructor-arg>
-	 </beans:bean>
-	  
-	 <beans:bean id="myXriResolver" class="org.openid4java.discovery.xri.XriDotNetProxyResolver">
-	  <beans:constructor-arg index="0" ref="myHttpFetcherFactory"></beans:constructor-arg>
-	 </beans:bean>
-
 	<security:authentication-manager alias="authenticationManager">
     	<security:authentication-provider ref="openIDAuthenticationProvider"/>
     	<security:authentication-provider>
