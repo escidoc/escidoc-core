@@ -52,6 +52,7 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
 import de.escidoc.core.om.service.result.EscidocServiceRedirect;
 import org.esidoc.core.utils.io.Stream;
 
@@ -62,6 +63,8 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import org.esidoc.core.utils.io.MimeStream;
 
 /**
  * Content relevant methods for Item.
@@ -139,9 +142,6 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             bin.setFileName("Content of component " + componentId);
         }
 
-        // set mime type
-        bin.setMimeType(component.getProperty(TripleStoreUtility.PROP_MIME_TYPE));
-
         final Datastream content = component.getContent();
         final String storage = content.getControlGroup();
 
@@ -152,14 +152,26 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             try {
                 // bin content can be got with the Stream (getContent()),
                 // but try to stream
-                final Stream stream =
-                    this.getFedoraServiceClient().getBinaryContent(component.getId(), "content",
+                final MimeStream mimeStream =
+                    this.getFedoraServiceClient().getMimeTypedBinaryContent(component.getId(), "content",
                         getItem().getVersionDate());
+
                 try {
-                    bin.setContent(stream.getInputStream());
+                    bin.setContent(mimeStream.getStream().getInputStream());
                 }
                 catch (IOException e) {
                     throw new WebserverSystemException("Error on loading binary content.", e);
+                }
+
+                // set mime-type:
+                if (mimeStream.getMimeType() != null) {
+                    bin.setMimeType(mimeStream.getMimeType());
+                }
+                else if (component.getProperty(TripleStoreUtility.PROP_MIME_TYPE) != null) {
+                    bin.setMimeType(component.getProperty(TripleStoreUtility.PROP_MIME_TYPE));
+                }
+                else {
+                    bin.setMimeType(FoXmlProviderConstants.MIME_TYPE_APPLICATION_OCTET_STREAM);
                 }
             }
             catch (final Exception e) {
@@ -219,7 +231,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             throw new WebserverSystemException("Error on loading binary content.", e);
         }
         bin.setFileName(component.getProperty(
-            de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
+                de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
         return bin;
     }
 
