@@ -774,21 +774,14 @@ public class ItemLifecycleIT extends ItemTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOMRvi7() throws Exception {
 
         String param = getTheLastModificationParam(false);
         submit(theItemId, param);
         param = getTheLastModificationParam(false);
 
-        try {
-            revise(theItemId, null);
-            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Revising without id failed with unexpected exception. ",
-                MissingMethodParameterException.class, e);
-        }
+        revise(theItemId, null);
     }
 
     /**
@@ -796,22 +789,14 @@ public class ItemLifecycleIT extends ItemTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOMRvi8() throws Exception {
 
         String param = getTheLastModificationParam(false);
         submit(theItemId, param);
         param = "<param />";
 
-        try {
-            revise(theItemId, null);
-            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                "Revising without last modification date failed with unexpected exception. ",
-                MissingMethodParameterException.class, e);
-        }
+        revise(theItemId, null);
     }
 
     /**
@@ -819,22 +804,14 @@ public class ItemLifecycleIT extends ItemTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = XmlCorruptedException.class)
     public void testOMRvi9() throws Exception {
 
         String param = getTheLastModificationParam(false);
         submit(theItemId, param);
         param = "<param";
 
-        try {
-            revise(theItemId, param);
-            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                "Revising without last modification date failed with unexpected exception. ",
-                XmlCorruptedException.class, e);
-        }
+        revise(theItemId, param);
     }
 
     /**
@@ -842,21 +819,13 @@ public class ItemLifecycleIT extends ItemTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = OptimisticLockingException.class)
     public void testOMRvi10() throws Exception {
 
         String param = getTheLastModificationParam(false);
         submit(theItemId, param);
 
-        try {
-            revise(theItemId, param);
-            EscidocAbstractTest.failMissingException(OptimisticLockingException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(
-                "Revising with outdated last modification date failed with unexpected exception. ",
-                OptimisticLockingException.class, e);
-        }
+        revise(theItemId, param);
     }
 
     /**

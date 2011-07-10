@@ -474,7 +474,8 @@ public class OuSearchIT extends SearchTestBase {
         for (int i = 1; i < records.length; i++) {
             String[] parts = valuesToCheck[i].split("\\|");
             if (!records[i].matches("(?s).*<.*?organization-type.*?>" + parts[0] + ".*")
-                || !records[i].toLowerCase(Locale.ENGLISH).matches("(?s).*<.*?identifier.*?>" + parts[1].toLowerCase(Locale.ENGLISH) + ".*")) {
+                || !records[i].toLowerCase(Locale.ENGLISH).matches(
+                    "(?s).*<.*?identifier.*?>" + parts[1].toLowerCase(Locale.ENGLISH) + ".*")) {
                 assertTrue("wrong sortorder", false);
 
             }

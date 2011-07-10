@@ -286,7 +286,8 @@ public class ContainerReviseIT extends ContainerTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    // Till 13.06.2011 an XmlCorruptedException was checked. But it seems that an OptimisticaLockingException is the better choice.
+    @Test(expected = OptimisticLockingException.class)
     public void testOMRvc8() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -295,15 +296,7 @@ public class ContainerReviseIT extends ContainerTestBase {
 
         param = "<param />";
 
-        try {
-            revise(theContainerId, param);
-            // TODO should be XmlCorruptedException ???
-            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Revising without last modification date failed with"
-                + " unexpected exception. ", XmlCorruptedException.class, e);
-        }
+        revise(theContainerId, param);
     }
 
     /**

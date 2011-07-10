@@ -20,12 +20,8 @@
 
 package de.escidoc.core.aa.service.interfaces;
 
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.openid.OpenIDAttribute;
 
 /**
  * Interface to EscidocUserDetailsService.
@@ -42,5 +38,4 @@ public interface EscidocUserDetailsServiceInterface extends UserDetailsService {
      */
     @Override
     UserDetails loadUserByUsername(final String identifier);
-
 }

@@ -230,8 +230,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         catch (IOException e) {
             throw new WebserverSystemException("Error on loading binary content.", e);
         }
-        bin.setFileName(component.getProperty(
-                de.escidoc.core.common.business.Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE));
+        bin.setFileName(component.getProperty(de.escidoc.core.common.business.Constants.DC_NS_URI
+            + Elements.ELEMENT_DC_TITLE));
         return bin;
     }
 

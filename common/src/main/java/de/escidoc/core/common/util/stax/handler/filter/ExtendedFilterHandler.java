@@ -181,7 +181,8 @@ public class ExtendedFilterHandler extends DefaultHandler {
         else if (curPath.equals(XPATH_ORDER_BY)) {
             final int indexOfSorting = element.indexOfAttribute(null, XmlUtility.NAME_SORTING);
             if (indexOfSorting >= 0) {
-                this.sorting = ListSorting.valueOf(element.getAttribute(indexOfSorting).getValue().toUpperCase(Locale.ENGLISH));
+                this.sorting =
+                    ListSorting.valueOf(element.getAttribute(indexOfSorting).getValue().toUpperCase(Locale.ENGLISH));
             }
         }
         return element;

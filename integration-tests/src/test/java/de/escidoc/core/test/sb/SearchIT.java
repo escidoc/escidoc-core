@@ -749,9 +749,10 @@ public class SearchIT extends SearchTestBase {
         for (int i = 1; i < records.length; i++) {
             String[] parts = valuesToCheck[i].split("\\|");
             if (!records[i].matches("(?s).*<dcterms:created.*?>" + parts[0] + ".*")
-                || !records[i].toLowerCase(Locale.ENGLISH).matches("(?s).*<dc:title.*?>" + parts[1].toLowerCase(Locale.ENGLISH) + ".*")) {
-                assertTrue("wrong sortorder, should: " + parts[1].toLowerCase(Locale.ENGLISH) + ", is: " + records[i].toLowerCase(Locale.ENGLISH),
-                    false);
+                || !records[i].toLowerCase(Locale.ENGLISH).matches(
+                    "(?s).*<dc:title.*?>" + parts[1].toLowerCase(Locale.ENGLISH) + ".*")) {
+                assertTrue("wrong sortorder, should: " + parts[1].toLowerCase(Locale.ENGLISH) + ", is: "
+                    + records[i].toLowerCase(Locale.ENGLISH), false);
 
             }
 

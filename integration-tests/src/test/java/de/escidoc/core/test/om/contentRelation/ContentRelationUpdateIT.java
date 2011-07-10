@@ -30,7 +30,6 @@ package de.escidoc.core.test.om.contentRelation;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -41,11 +40,10 @@ import org.w3c.dom.NodeList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 /**
  * Test content relation create implementation.
- *
+ * 
  * @author Steffen Wagner
  */
 public class ContentRelationUpdateIT extends ContentRelationTestBase {
@@ -56,8 +54,9 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -68,25 +67,21 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
 
     /**
      * Update with empty XML.
-     *
-     * @throws Exception Thrown if no or wrong exception is thrown
+     * 
+     * @throws Exception
+     *             Thrown if no or wrong exception is thrown
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testUpdateWithEmptyXML() throws Exception {
 
-        try {
-            update(this.relationId, "");
-        }
-        catch (final Exception e) {
-            Class<?> ec = MissingMethodParameterException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
+        update(this.relationId, "");
     }
 
     /**
      * Delete md-record and add new with same name again.
-     *
-     * @throws Exception Thrown if behaviour differs from expected
+     * 
+     * @throws Exception
+     *             Thrown if behaviour differs from expected
      */
     @Test
     public void testAddMdRecordAfterDelete() throws Exception {
@@ -143,8 +138,9 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
 
     /**
      * Test adding a second md-record to ContentRelation. One md-record already exists.
-     *
-     * @throws Exception Thrown if adding one md-record failed.
+     * 
+     * @throws Exception
+     *             Thrown if adding one md-record failed.
      */
     @Test
     public void testAddMdRecord() throws Exception {
@@ -178,10 +174,11 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
 
     /**
      * Test to add a second md-record.
-     *
-     * @throws Exception Thrown if adding of additional md-record failed.
+     * 
+     * @throws Exception
+     *             Thrown if adding of additional md-record failed.
      */
-    @Test
+    @Test(expected = InvalidContentException.class)
     public void testAddSecondEscidocMdRecord() throws Exception {
         Document relationCreated = getDocument(relationXml);
 
@@ -196,21 +193,14 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         selectSingleNode(relationCreated, "/content-relation/md-records").appendChild(mdRecord);
         String relationWithNewMdRecord = toString(relationCreated, false);
 
-        try {
-            update(this.relationId, relationWithNewMdRecord);
-            fail("No exception on update content relation with" + " two md-records with the same name.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = InvalidContentException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
-
+        update(this.relationId, relationWithNewMdRecord);
     }
 
     /**
      * Test delete md-record.
-     *
-     * @throws Exception Thrown if deletion of md-record failed.
+     * 
+     * @throws Exception
+     *             Thrown if deletion of md-record failed.
      */
     @Test
     public void testDeleteMdRecord() throws Exception {
@@ -236,8 +226,9 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
 
     /**
      * Test update description of Content Relation.
-     *
-     * @throws Exception Thrown if description is not updated or other (unexpected) values are changed.
+     * 
+     * @throws Exception
+     *             Thrown if description is not updated or other (unexpected) values are changed.
      */
     @Test
     public void testUpdateDescription() throws Exception {
@@ -271,8 +262,9 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
 
     /**
      * Test update subject of Content Relation.
-     *
-     * @throws Exception Thrown if description is not updated or other (unexpected) values are changed.
+     * 
+     * @throws Exception
+     *             Thrown if description is not updated or other (unexpected) values are changed.
      */
     @Test
     public void testUpdateSubject() throws Exception {
@@ -280,16 +272,11 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         // change subject
         Document relationCreated = getDocument(relationXml);
 
-        String newSubject = createItemFromTemplate("item_without_component.xml");
+        String newSubject = "/ir/item/" + createItemFromTemplate("item_without_component.xml");
 
-        String oldSubject = null;
-        Node subject = null;
-        subject = selectSingleNode(relationCreated, "/content-relation/subject/@href");
-        newSubject = "/ir/item/" + newSubject;
-
-        oldSubject = selectSingleNode(relationCreated, "/content-relation/subject/@href").getNodeValue();
-
+        Node subject = selectSingleNode(relationCreated, "/content-relation/subject/@href");
         subject.setNodeValue(newSubject);
+        String oldSubject = selectSingleNode(relationCreated, "/content-relation/subject/@href").getNodeValue();
 
         String relationToUdate = toString(relationCreated, false);
 
@@ -321,8 +308,9 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
 
     /**
      * Test update object of Content Relation.
-     *
-     * @throws Exception Thrown if description is not updated or other (unexpected) values are changed.
+     * 
+     * @throws Exception
+     *             Thrown if description is not updated or other (unexpected) values are changed.
      */
     @Test
     public void testUpdateObject() throws Exception {
@@ -330,15 +318,12 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         // change subject
         Document relationCreated = getDocument(relationXml);
 
-        String newSubject = createItemFromTemplate("item_without_component.xml");
+        String newSubject = "/ir/item/" + createItemFromTemplate("item_without_component.xml");
 
-        String oldSubject = null;
         Node subject = selectSingleNode(relationCreated, "/content-relation/object/@href");
-        newSubject = "/ir/item/" + newSubject;
-
-        oldSubject = selectSingleNode(relationCreated, "/content-relation/object/@href").getNodeValue();
-
         subject.setNodeValue(newSubject);
+
+        String oldSubject = selectSingleNode(relationCreated, "/content-relation/object/@href").getNodeValue();
 
         String relationToUdate = toString(relationCreated, false);
 
