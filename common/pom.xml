@@ -249,10 +249,6 @@
 			<groupId>org.codehaus.woodstox</groupId>
 			<artifactId>woodstox-core-asl</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.escidoc.core</groupId>
-			<artifactId>http-client</artifactId>
-		</dependency>
         <dependency>
             <groupId>xmlunit</groupId>
             <artifactId>xmlunit</artifactId>
