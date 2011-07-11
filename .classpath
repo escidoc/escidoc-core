@@ -48,8 +48,8 @@
 	<classpathentry kind="src" output="common/target/test-classes" path="common/src/test/java"/>
 	<classpathentry kind="src" output="aa/target/classes" path="aa/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="aa/target/classes" path="aa/src/main/resources"/>
-	<classpathentry kind="src" output="adm/target/classes" path="adm/src/main/java"/>
-	<classpathentry excluding="**" kind="src" output="adm/target/classes" path="adm/src/main/resources"/>
+	<classpathentry kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/resources"/>
 	<classpathentry kind="src" output="cmm/target/classes" path="cmm/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="cmm/target/classes" path="cmm/src/main/resources"/>
 	<classpathentry kind="src" output="oai/target/classes" path="oai/src/main/java"/>
@@ -66,7 +66,6 @@
 	<classpathentry excluding="**" kind="src" output="st/target/classes" path="st/src/main/resources"/>
 	<classpathentry kind="src" output="tme/target/classes" path="tme/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="tme/target/classes" path="tme/src/main/resources"/>
-	<classpathentry excluding="**" kind="src" output="escidoc-core.ear/target/classes" path="escidoc-core.ear/src/main/resources"/>
 	<classpathentry kind="src" output="integration-tests/target/test-classes" path="integration-tests/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="integration-tests/target/test-classes" path="integration-tests/src/test/resources"/>
 	<classpathentry kind="src" output="jms-server/target/classes" path="jms-server/src/main/java"/>
