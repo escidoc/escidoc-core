@@ -6,12 +6,12 @@
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>oai</artifactId>
 	<name>eSciDoc Core - OAI-PMH Service Impl.</name>
-	<version>trunk-SNAPSHOT</version>
+	<version>1.4-SNAPSHOT</version>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>trunk-SNAPSHOT</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 
 	<description>OAI-PMH Service package of eSciDoc Core</description>

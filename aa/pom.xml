@@ -7,12 +7,12 @@
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>aa</artifactId>
     <name>eSciDoc Core - Authentication and Authorization Service Impl.</name>
-	<version>trunk-SNAPSHOT</version>
+	<version>1.4-SNAPSHOT</version>
 
     <parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>trunk-SNAPSHOT</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 
     <description>User Account, Policy and Rule package of eSciDoc Core</description>

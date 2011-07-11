@@ -6,13 +6,13 @@
 
     <groupId>org.escidoc.core</groupId>
 	<artifactId>sm</artifactId>
-    <version>trunk-SNAPSHOT</version>
+    <version>1.4-SNAPSHOT</version>
 	<name>eSciDoc Core - Statistic Manager Spec.</name>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>trunk-SNAPSHOT</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 
     <description>Policy &amp; Rule package of eSciDoc Core</description>

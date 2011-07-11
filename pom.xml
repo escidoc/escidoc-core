@@ -17,7 +17,7 @@
   <artifactId>eSciDocCore</artifactId>
   <packaging>pom</packaging>
   <name>eSciDoc Core</name>
-  <version>trunk-SNAPSHOT</version>
+  <version>1.4-SNAPSHOT</version>
   <url>https://www.escidoc.org</url>
 
   <issueManagement>
@@ -457,7 +457,6 @@
             ${basedir}/adm-impl/src/main/java${path.separator}
             ${basedir}/cmm/src/main/java${path.separator}
             ${basedir}/common/src/main/java${path.separator}
-            ${basedir}/http-client/src/main/java${path.separator}
             ${basedir}/index-service-impl/src/main/java${path.separator}
             ${basedir}/index-service-spec/src/main/java${path.separator}
             ${basedir}/oai/src/main/java${path.separator}
@@ -2066,11 +2065,6 @@
         <groupId>org.escidoc.core</groupId>
         <artifactId>escidoc-core-war</artifactId>
         <type>war</type>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.escidoc.core</groupId>
-        <artifactId>http-client</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

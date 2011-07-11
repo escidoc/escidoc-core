@@ -5,14 +5,14 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>trunk-SNAPSHOT</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>tme</artifactId>
 	<name>eSciDoc Core - Technical Metadata Extraction Service Impl.</name>
-	<version>trunk-SNAPSHOT</version>
+	<version>1.4-SNAPSHOT</version>
 
 	<description>Technical Metadata Extraction Service package of eSciDoc Core</description>
 	<build>

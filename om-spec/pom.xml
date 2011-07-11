@@ -28,12 +28,12 @@
     <groupId>org.escidoc.core</groupId>
     <artifactId>om-spec</artifactId>
     <name>eSciDoc Core - Object Service Spec.</name>
-    <version>trunk-SNAPSHOT</version>
+    <version>1.4-SNAPSHOT</version>
 
     <parent>
         <artifactId>eSciDocCore</artifactId>
         <groupId>org.escidoc.core</groupId>
-        <version>trunk-SNAPSHOT</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
 
     <dependencies>

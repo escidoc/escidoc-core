@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>trunk-SNAPSHOT</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
 	<artifactId>escidoc-core-war</artifactId>
 	<packaging>war</packaging>
 	<name>eSciDoc Core - Web Archive</name>
-	<version>trunk-SNAPSHOT</version>
+	<version>1.4-SNAPSHOT</version>
 	<description>eSciDoc Core Web Archive package</description>
 
 	<build>
