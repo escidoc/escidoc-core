@@ -20,8 +20,6 @@
 
 package de.escidoc.core.common.business.fedora;
 
-import java.util.regex.Pattern;
-
 /**
  * Constants.
  *
@@ -54,10 +52,6 @@ public final class Constants {
     public static final String STORAGE_EXTERNAL_URL = "external-url";
 
     public static final String STORAGE_EXTERNAL_MANAGED = "external-managed";
-
-    public static final Pattern TABULATOR = Pattern.compile("\\S+");
-
-    public static final String MIME_TYPE_DELETED = "application/deleted";
 
     /**
      * Private constructor to avoid instanziation.
